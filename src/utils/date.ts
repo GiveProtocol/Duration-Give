@@ -1,32 +1,32 @@
 export const formatDate = (dateString: string, includeTime = false): string => {
-  if (!dateString) return '';
-  
+  if (!dateString) return "";
+
   try {
     const date = new Date(dateString);
-    
+
     if (isNaN(date.getTime())) {
-      return '';
+      return "";
     }
-    
+
     if (includeTime) {
-      return date.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
+      return date.toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
       });
     }
-    
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
+
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     });
   } catch (error) {
-    console.error('Error formatting date:', error);
+    console.error("Error formatting date:", error);
     return dateString;
   }
 };
@@ -37,36 +37,36 @@ export const isValidDate = (dateString: string): boolean => {
 };
 
 export const formatDateForInput = (dateString: string): string => {
-  if (!dateString) return '';
-  
+  if (!dateString) return "";
+
   try {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
+    return date.toISOString().split("T")[0];
   } catch (error) {
-    return '';
+    return "";
   }
 };
 
-export const getDateRange = (period: string): { start: Date, end: Date } => {
+export const getDateRange = (period: string): { start: Date; end: Date } => {
   const end = new Date();
   const start = new Date();
-  
+
   switch (period) {
-    case 'week':
+    case "week":
       start.setDate(end.getDate() - 7);
       break;
-    case 'month':
+    case "month":
       start.setMonth(end.getMonth() - 1);
       break;
-    case 'quarter':
+    case "quarter":
       start.setMonth(end.getMonth() - 3);
       break;
-    case 'year':
+    case "year":
       start.setFullYear(end.getFullYear() - 1);
       break;
     default:
       start.setFullYear(end.getFullYear() - 100); // All time
   }
-  
+
   return { start, end };
 };
