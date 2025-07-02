@@ -34,7 +34,7 @@ export class RateLimiter {
     return this.instance;
   }
 
-  isRateLimited(key: string, isAuth: boolean = false): boolean {
+  isRateLimited(key: string, isAuth = false): boolean {
     const config = isAuth ? this.authConfig : this.authConfig;
     const now = Date.now();
     const record = this.store.get(key);
