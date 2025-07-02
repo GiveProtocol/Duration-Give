@@ -1,4 +1,3 @@
-```typescript
 // API Response Types
 export interface ApiResponse<T> {
   data: T | null;
@@ -88,4 +87,3 @@ export interface QueryOptions {
 export interface InfiniteQueryOptions extends QueryOptions {
   cursor?: string;
 }
-```

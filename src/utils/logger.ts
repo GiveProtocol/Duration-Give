@@ -1,4 +1,3 @@
-import type LogLevel from 'loglevel';
 import * as Sentry from '@sentry/react';
 
 type LogLevel = 'info' | 'warn' | 'error';

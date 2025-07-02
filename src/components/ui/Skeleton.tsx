@@ -1,4 +1,3 @@
-```typescript
 import React from 'react';
 import { cn } from '@/utils/cn';
 
@@ -52,4 +51,3 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     </>
   );
 };
-```

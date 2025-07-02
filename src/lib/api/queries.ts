@@ -1,4 +1,3 @@
-```typescript
 import { apiClient } from './client';
 import { CharityData, CauseData, QueryOptions, ApiResponse } from './types';
 import { ErrorHandler } from '@/utils/errorBoundary';
@@ -56,4 +55,3 @@ export async function getCharityCauses(
     return ErrorHandler.handle(error, 'Failed to fetch charity causes');
   }
 }
-```
