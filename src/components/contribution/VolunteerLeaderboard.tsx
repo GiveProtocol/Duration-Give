@@ -22,6 +22,19 @@ interface VolunteerLeaderboardProps {
   section?: 'hours' | 'endorsements';
 }
 
+const getRankColor = (rank: number): string => {
+  switch (rank) {
+    case 1:
+      return 'bg-yellow-500';
+    case 2:
+      return 'bg-gray-400';
+    case 3:
+      return 'bg-amber-600';
+    default:
+      return 'bg-gray-300';
+  }
+};
+
 const fetchVolunteerLeaders = async (sortBy: 'hours' | 'endorsements'): Promise<VolunteerLeader[]> => {
   // Simulated API call
   // skipcq: SCT-A000 - These are placeholder test Ethereum addresses for mock data, not real secrets
@@ -223,17 +236,4 @@ export const VolunteerLeaderboard: React.FC<VolunteerLeaderboardProps> = ({
       )}
     </div>
   );
-};
-
-const getRankColor = (rank: number): string => {
-  switch (rank) {
-    case 1:
-      return 'bg-yellow-500';
-    case 2:
-      return 'bg-gray-400';
-    case 3:
-      return 'bg-amber-600';
-    default:
-      return 'bg-gray-300';
-  }
 };
