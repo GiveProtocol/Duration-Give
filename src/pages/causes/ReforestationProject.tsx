@@ -1,31 +1,33 @@
-import React from 'react';
-import { DonationButton } from '@/components/web3/donation/DonationButton';
-import { formatCurrency } from '@/utils/money';
+import React from "react";
+import { DonationButton } from "@/components/web3/donation/DonationButton";
+import { formatCurrency } from "@/utils/money";
 
 const ReforestationProject: React.FC = () => {
   const cause = {
-    id: '3',
-    name: 'Reforestation Project',
-    description: 'Restoring forest ecosystems and biodiversity through community-led reforestation initiatives and sustainable land management practices.',
+    id: "3",
+    name: "Reforestation Project",
+    description:
+      "Restoring forest ecosystems and biodiversity through community-led reforestation initiatives and sustainable land management practices.",
     targetAmount: 100000,
     raisedAmount: 60000,
-    charityId: '3',
-    category: 'Environment',
-    image: 'https://images.unsplash.com/photo-1498925008800-019c7d59d903?auto=format&fit=crop&w=800',
+    charityId: "3",
+    category: "Environment",
+    image:
+      "https://images.unsplash.com/photo-1498925008800-019c7d59d903?auto=format&fit=crop&w=800",
     impact: [
-      'Planted 100,000+ native trees',
-      'Restored 500 hectares of forest',
-      'Protected 50 endangered species',
-      'Engaged 1,000 local community members'
+      "Planted 100,000+ native trees",
+      "Restored 500 hectares of forest",
+      "Protected 50 endangered species",
+      "Engaged 1,000 local community members",
     ],
-    timeline: '2024-2025',
-    location: 'Amazon Rainforest',
+    timeline: "2024-2025",
+    location: "Amazon Rainforest",
     partners: [
-      'Climate Action Now',
-      'Indigenous Communities',
-      'Environmental Scientists',
-      'Local Conservation Groups'
-    ]
+      "Climate Action Now",
+      "Indigenous Communities",
+      "Environmental Scientists",
+      "Local Conservation Groups",
+    ],
   };
 
   return (
@@ -46,17 +48,24 @@ const ReforestationProject: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Funding Progress</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Funding Progress
+            </h2>
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between text-sm text-gray-500 mb-1">
                   <span>Progress</span>
-                  <span>{formatCurrency(cause.raisedAmount)} of {formatCurrency(cause.targetAmount)}</span>
+                  <span>
+                    {formatCurrency(cause.raisedAmount)} of{" "}
+                    {formatCurrency(cause.targetAmount)}
+                  </span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
                     className="bg-indigo-600 h-2 rounded-full"
-                    style={{ width: `${(cause.raisedAmount / cause.targetAmount) * 100}%` }}
+                    style={{
+                      width: `${(cause.raisedAmount / cause.targetAmount) * 100}%`,
+                    }}
                   />
                 </div>
               </div>
@@ -68,7 +77,9 @@ const ReforestationProject: React.FC = () => {
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Project Details</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Project Details
+            </h2>
             <div className="space-y-3">
               <div>
                 <p className="text-sm text-gray-500">Timeline</p>
@@ -82,7 +93,9 @@ const ReforestationProject: React.FC = () => {
                 <p className="text-sm text-gray-500">Key Partners</p>
                 <ul className="list-disc list-inside">
                   {cause.partners.map((partner) => (
-                    <li key={partner} className="text-gray-700">{partner}</li>
+                    <li key={partner} className="text-gray-700">
+                      {partner}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -91,7 +104,9 @@ const ReforestationProject: React.FC = () => {
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Impact Highlights</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Impact Highlights
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {cause.impact.map((item) => (
               <div key={item} className="flex items-start">
