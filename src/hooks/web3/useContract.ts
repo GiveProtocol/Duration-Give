@@ -113,7 +113,7 @@ export function useContract(contractType: ContractType, config: ContractConfig =
 
   const validateTransaction = useCallback(async (
     method: string,
-    args: any[]
+    args: unknown[]
   ): Promise<boolean> => {
     if (!contract) return false;
 
