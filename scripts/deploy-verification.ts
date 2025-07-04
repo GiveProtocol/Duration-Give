@@ -1,3 +1,4 @@
+// skipcq: JS-0263 - This is a deployment script where process.exit() usage is appropriate for proper exit codes
 import { ethers } from "hardhat";
 import { Logger } from "../src/utils/logger";
 

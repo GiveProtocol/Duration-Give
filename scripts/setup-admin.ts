@@ -4,6 +4,9 @@
  * 
  * This script allows you to grant admin privileges to existing users.
  * Run with: npx tsx scripts/setup-admin.ts
+ * 
+ * Note: This is a CLI script where process.exit() usage is appropriate
+ * skipcq: JS-0263 - CLI scripts should use process.exit() for proper exit codes
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -26,6 +29,7 @@ if (!supabaseUrl || !supabaseServiceKey) {
   console.error('Please ensure the following are set in your .env file:');
   console.error('- VITE_SUPABASE_URL');
   console.error('- SUPABASE_SERVICE_ROLE_KEY (get this from Supabase dashboard > Settings > API)');
+  // skipcq: JS-0263 - Appropriate use of process.exit() in CLI script for configuration error
   process.exit(1);
 }
 
