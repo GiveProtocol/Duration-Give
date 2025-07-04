@@ -6,10 +6,8 @@ enabled = true
 
   [analyzers.meta]
   plugins = ["react"]
-
-[[analyzers]]
-name = "typescript"
-enabled = true
+  environment = ["nodejs"]
+  style_guide = "standard"
 
 [[analyzers]]
 name = "secrets"
