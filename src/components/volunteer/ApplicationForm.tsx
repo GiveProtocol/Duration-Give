@@ -42,8 +42,8 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
     certifications: '',
     interests: '',
     references: [
-      { name: '', contact: '' },
-      { name: '', contact: '' }
+      { id: 'ref-1', name: '', contact: '' },
+      { id: 'ref-2', name: '', contact: '' }
     ],
     workSamples: ''
   });
@@ -347,7 +347,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
             <div className="space-y-4">
               <h3 className="text-lg font-medium text-gray-900">References</h3>
               {formData.references.map((ref, index) => (
-                <div key={index} className="space-y-2">
+                <div key={ref.id} className="space-y-2">
                   <Input
                     label={`Reference ${index + 1} Name`}
                     value={ref.name}

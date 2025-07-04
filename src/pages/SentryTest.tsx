@@ -146,6 +146,7 @@ export default function SentryTest() {
               <p className="text-gray-500">No test results yet. Click a button above to test.</p>
             ) : (
               <ul className="space-y-2">
+                {/* skipcq: JS-0437 - Test results are append-only log entries, index is appropriate */}
                 {testResults.map((result, index) => (
                   <li key={index} className="text-sm font-mono">
                     {result}

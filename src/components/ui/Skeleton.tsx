@@ -36,6 +36,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
 
   return (
     <>
+      {/* skipcq: JS-0437 - Skeleton placeholders are identical elements, index is appropriate */}
       {items.map((index) => (
         <div
           key={index}
