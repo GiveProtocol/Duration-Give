@@ -75,6 +75,7 @@ export function getContractAddress(
   if (!address) {
     // For development, return a dummy address
     if (import.meta.env.DEV) {
+      // skipcq: SCT-A000 - This is a placeholder development Ethereum address, not a real secret
       return '0x1234567890123456789012345678901234567890';
     }
     throw new Error(`${contractName} contract not deployed on chain ID ${chainId}`);

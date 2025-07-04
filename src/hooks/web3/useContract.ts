@@ -45,6 +45,7 @@ export function useContract(contractType: ContractType, config: ContractConfig =
       } catch (err) {
         // Use development address if contract address is not found
         Logger.warn('Using development contract address', { contractType });
+        // skipcq: SCT-A000 - These are placeholder development Ethereum addresses, not real secrets
         address = contractType === 'donation' 
           ? '0x1234567890123456789012345678901234567890'
           : '0x2345678901234567890123456789012345678901';

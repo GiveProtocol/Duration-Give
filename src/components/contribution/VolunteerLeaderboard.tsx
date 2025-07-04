@@ -24,6 +24,7 @@ interface VolunteerLeaderboardProps {
 
 const fetchVolunteerLeaders = async (sortBy: 'hours' | 'endorsements'): Promise<VolunteerLeader[]> => {
   // Simulated API call
+  // skipcq: SCT-A000 - These are placeholder test Ethereum addresses for mock data, not real secrets
   const leaders = [
     { 
       id: '1', 

@@ -61,21 +61,25 @@ if (!ENV.SUPABASE_URL || !ENV.SUPABASE_ANON_KEY) {
 // Validate contract addresses
 if (!ENV.DONATION_CONTRACT_ADDRESS) {
   console.warn('Donation contract address not found in environment variables. Using development address.');
+  // skipcq: SCT-A000 - This is a placeholder development Ethereum address, not a real secret
   ENV.DONATION_CONTRACT_ADDRESS = '0x1234567890123456789012345678901234567890';
 }
 
 if (!ENV.VERIFICATION_CONTRACT_ADDRESS) {
   console.warn('Verification contract address not found in environment variables. Using development address.');
+  // skipcq: SCT-A000 - This is a placeholder development Ethereum address, not a real secret
   ENV.VERIFICATION_CONTRACT_ADDRESS = '0x2345678901234567890123456789012345678901';
 }
 
 if (!ENV.DISTRIBUTION_CONTRACT_ADDRESS) {
   console.warn('Distribution contract address not found in environment variables. Using development address.');
+  // skipcq: SCT-A000 - This is a placeholder development Ethereum address, not a real secret
   ENV.DISTRIBUTION_CONTRACT_ADDRESS = '0x3456789012345678901234567890123456789012';
 }
 
 if (!ENV.TOKEN_CONTRACT_ADDRESS) {
   console.warn('Token contract address not found in environment variables. Using development address.');
+  // skipcq: SCT-A000 - This is a placeholder development Ethereum address, not a real secret
   ENV.TOKEN_CONTRACT_ADDRESS = '0x4567890123456789012345678901234567890123';
 }
 

@@ -33,6 +33,7 @@ Cypress.Commands.add('connectWallet', () => {
       isMetaMask: true,
       request: (args: { method: string; params?: any[] }) => {
         if (args.method === 'eth_requestAccounts') {
+          // skipcq: SCT-A000 - This is a placeholder test Ethereum address for Cypress testing, not a real secret
           return Promise.resolve(['0x1234567890123456789012345678901234567890']);
         }
         return Promise.resolve();

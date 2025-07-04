@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/Input';
 
 const fetchLeaderboardData = async (): Promise<LeaderboardEntry[]> => {
   // Simulated API call
+  // skipcq: SCT-A000 - These are placeholder test Ethereum addresses for mock data, not real secrets
   return [
     { id: '1', alias: 'Anonymous Hero', walletAddress: '0x1234567890123456789012345678901234567890', totalDonated: 50000, rank: 1 },
     { id: '2', alias: 'Giving Soul', walletAddress: '0x2345678901234567890123456789012345678901', totalDonated: 35000, rank: 2 },
