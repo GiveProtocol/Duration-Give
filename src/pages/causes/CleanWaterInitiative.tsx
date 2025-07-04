@@ -1,30 +1,32 @@
-import React from 'react';
-import { DonationButton } from '@/components/web3/donation/DonationButton';
-import { formatCurrency } from '@/utils/money';
+import React from "react";
+import { DonationButton } from "@/components/web3/donation/DonationButton";
+import { formatCurrency } from "@/utils/money";
 
 const CleanWaterInitiative: React.FC = () => {
   const cause = {
-    id: '1',
-    name: 'Clean Water Initiative',
-    description: 'Providing clean water access to rural communities through sustainable infrastructure and community engagement.',
+    id: "1",
+    name: "Clean Water Initiative",
+    description:
+      "Providing clean water access to rural communities through sustainable infrastructure and community engagement.",
     targetAmount: 50000,
     raisedAmount: 25000,
-    charityId: '1',
-    category: 'Water & Sanitation',
-    image: 'https://images.unsplash.com/photo-1538300342682-cf57afb97285?auto=format&fit=crop&w=800',
+    charityId: "1",
+    category: "Water & Sanitation",
+    image:
+      "https://images.unsplash.com/photo-1538300342682-cf57afb97285?auto=format&fit=crop&w=800",
     impact: [
-      'Provided clean water to 10,000+ people',
-      'Built 50 sustainable water wells',
-      'Trained 100 local water technicians',
-      'Reduced waterborne diseases by 60%'
+      "Provided clean water to 10,000+ people",
+      "Built 50 sustainable water wells",
+      "Trained 100 local water technicians",
+      "Reduced waterborne diseases by 60%",
     ],
-    timeline: '2024-2025',
-    location: 'East Africa',
+    timeline: "2024-2025",
+    location: "East Africa",
     partners: [
-      'Global Water Foundation',
-      'Local Community Leaders',
-      'Engineering Volunteers'
-    ]
+      "Global Water Foundation",
+      "Local Community Leaders",
+      "Engineering Volunteers",
+    ],
   };
 
   return (
@@ -45,17 +47,24 @@ const CleanWaterInitiative: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Funding Progress</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Funding Progress
+            </h2>
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between text-sm text-gray-500 mb-1">
                   <span>Progress</span>
-                  <span>{formatCurrency(cause.raisedAmount)} of {formatCurrency(cause.targetAmount)}</span>
+                  <span>
+                    {formatCurrency(cause.raisedAmount)} of{" "}
+                    {formatCurrency(cause.targetAmount)}
+                  </span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
                     className="bg-indigo-600 h-2 rounded-full"
-                    style={{ width: `${(cause.raisedAmount / cause.targetAmount) * 100}%` }}
+                    style={{
+                      width: `${(cause.raisedAmount / cause.targetAmount) * 100}%`,
+                    }}
                   />
                 </div>
               </div>
@@ -67,7 +76,9 @@ const CleanWaterInitiative: React.FC = () => {
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Project Details</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Project Details
+            </h2>
             <div className="space-y-3">
               <div>
                 <p className="text-sm text-gray-500">Timeline</p>
@@ -81,7 +92,9 @@ const CleanWaterInitiative: React.FC = () => {
                 <p className="text-sm text-gray-500">Key Partners</p>
                 <ul className="list-disc list-inside">
                   {cause.partners.map((partner) => (
-                    <li key={partner} className="text-gray-700">{partner}</li>
+                    <li key={partner} className="text-gray-700">
+                      {partner}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -90,7 +103,9 @@ const CleanWaterInitiative: React.FC = () => {
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Impact Highlights</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Impact Highlights
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {cause.impact.map((item) => (
               <div key={item} className="flex items-start">

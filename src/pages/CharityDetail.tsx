@@ -1,9 +1,9 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { DonationButton } from '@/components/web3/donation/DonationButton';
-import { ScheduledDonationButton } from '@/components/web3/donation/ScheduledDonationButton';
-import { formatCurrency } from '@/utils/money';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { DonationButton } from "@/components/web3/donation/DonationButton";
+import { ScheduledDonationButton } from "@/components/web3/donation/ScheduledDonationButton";
+import { formatCurrency } from "@/utils/money";
+import { Link } from "react-router-dom";
 
 interface CharityStats {
   totalDonated: number;
@@ -17,24 +17,27 @@ const CharityDetail: React.FC = () => {
   // Sample data - replace with actual API call
   const charity = {
     id,
-    name: 'Ocean Conservation Alliance',
-    description: 'Protecting marine ecosystems and promoting sustainable ocean practices through innovative conservation programs, research initiatives, and community engagement.',
-    category: 'Environmental',
-    image: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=800',
+    name: "Ocean Conservation Alliance",
+    description:
+      "Protecting marine ecosystems and promoting sustainable ocean practices through innovative conservation programs, research initiatives, and community engagement.",
+    category: "Environmental",
+    image:
+      "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=800",
     verified: true,
-    country: 'United States',
+    country: "United States",
     stats: {
       totalDonated: 750000,
       donorCount: 1250,
-      projectsCompleted: 15
+      projectsCompleted: 15,
     } as CharityStats,
-    mission: 'Our mission is to protect and restore ocean ecosystems through science-based conservation actions, policy advocacy, and public education.',
+    mission:
+      "Our mission is to protect and restore ocean ecosystems through science-based conservation actions, policy advocacy, and public education.",
     impact: [
-      'Protected over 100,000 acres of marine habitat',
-      'Rescued and rehabilitated 500+ marine animals',
-      'Removed 50 tons of plastic waste from oceans',
-      'Educated 10,000 students about marine conservation'
-    ]
+      "Protected over 100,000 acres of marine habitat",
+      "Rescued and rehabilitated 500+ marine animals",
+      "Removed 50 tons of plastic waste from oceans",
+      "Educated 10,000 students about marine conservation",
+    ],
   };
 
   return (
@@ -61,7 +64,9 @@ const CharityDetail: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Impact Statistics</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Impact Statistics
+            </h2>
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <p className="text-sm text-gray-500">Total Donated</p>
@@ -85,7 +90,9 @@ const CharityDetail: React.FC = () => {
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Giving Options</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Giving Options
+            </h2>
             <div className="space-y-4">
               <DonationButton
                 charityName={charity.name}
@@ -97,7 +104,7 @@ const CharityDetail: React.FC = () => {
                 charityAddress={charity.id}
                 buttonText="Give Monthly"
               />
-              <Link 
+              <Link
                 to="/docs/giving-options"
                 className="block text-sm text-indigo-600 hover:text-indigo-800 mt-2 text-center"
               >
@@ -109,12 +116,16 @@ const CharityDetail: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Our Mission</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Our Mission
+            </h2>
             <p className="text-gray-600">{charity.mission}</p>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Impact Highlights</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Impact Highlights
+            </h2>
             <ul className="space-y-2">
               {charity.impact.map((item) => (
                 <li key={item} className="flex items-center text-gray-600">

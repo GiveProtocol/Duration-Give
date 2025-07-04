@@ -1,33 +1,69 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Trophy, Search } from 'lucide-react';
-import { formatCurrency } from '@/utils/money';
-import { LeaderboardEntry } from '@/types/contribution';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import { FixedSizeList } from 'react-window';
-import { useWalletAlias } from '@/hooks/useWalletAlias';
-import { Input } from '@/components/ui/Input';
+import React, { useMemo, useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Trophy, Search } from "lucide-react";
+import { formatCurrency } from "@/utils/money";
+import { LeaderboardEntry } from "@/types/contribution";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { FixedSizeList } from "react-window";
+import { useWalletAlias } from "@/hooks/useWalletAlias";
+import { Input } from "@/components/ui/Input";
 
 const fetchLeaderboardData = async (): Promise<LeaderboardEntry[]> => {
   // Simulated API call
   // skipcq: SCT-A000 - These are placeholder test Ethereum addresses for mock data, not real secrets
   return [
-    { id: '1', alias: 'Anonymous Hero', walletAddress: '0x1234567890123456789012345678901234567890', totalDonated: 50000, rank: 1 },
-    { id: '2', alias: 'Giving Soul', walletAddress: '0x2345678901234567890123456789012345678901', totalDonated: 35000, rank: 2 },
-    { id: '3', alias: 'Kind Heart', walletAddress: '0x3456789012345678901234567890123456789012', totalDonated: 25000, rank: 3 },
-    { id: '4', alias: 'Hope Giver', walletAddress: '0x4567890123456789012345678901234567890123', totalDonated: 15000, rank: 4 },
-    { id: '5', alias: 'Change Maker', walletAddress: '0x5678901234567890123456789012345678901234', totalDonated: 10000, rank: 5 }
+    {
+      id: "1",
+      alias: "Anonymous Hero",
+      walletAddress: "0x1234567890123456789012345678901234567890",
+      totalDonated: 50000,
+      rank: 1,
+    },
+    {
+      id: "2",
+      alias: "Giving Soul",
+      walletAddress: "0x2345678901234567890123456789012345678901",
+      totalDonated: 35000,
+      rank: 2,
+    },
+    {
+      id: "3",
+      alias: "Kind Heart",
+      walletAddress: "0x3456789012345678901234567890123456789012",
+      totalDonated: 25000,
+      rank: 3,
+    },
+    {
+      id: "4",
+      alias: "Hope Giver",
+      walletAddress: "0x4567890123456789012345678901234567890123",
+      totalDonated: 15000,
+      rank: 4,
+    },
+    {
+      id: "5",
+      alias: "Change Maker",
+      walletAddress: "0x5678901234567890123456789012345678901234",
+      totalDonated: 10000,
+      rank: 5,
+    },
   ];
 };
 
 export const DonationLeaderboard: React.FC = () => {
-  const { data: leaderboard, isLoading, error } = useQuery({
-    queryKey: ['donationLeaderboard'],
-    queryFn: fetchLeaderboardData
+  const {
+    data: leaderboard,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["donationLeaderboard"],
+    queryFn: fetchLeaderboardData,
   });
   const { getAliasForAddress } = useWalletAlias();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [displayLeaderboard, setDisplayLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [displayLeaderboard, setDisplayLeaderboard] = useState<
+    LeaderboardEntry[]
+  >([]);
 
   // Update display names with aliases when available
   useEffect(() => {
@@ -39,9 +75,9 @@ export const DonationLeaderboard: React.FC = () => {
           const alias = await getAliasForAddress(entry.walletAddress);
           return {
             ...entry,
-            displayName: alias || entry.alias
+            displayName: alias || entry.alias,
           };
-        })
+        }),
       );
       setDisplayLeaderboard(updatedLeaderboard);
     };
@@ -52,9 +88,9 @@ export const DonationLeaderboard: React.FC = () => {
   // Filter leaderboard based on search term
   const filteredLeaderboard = useMemo(() => {
     if (!displayLeaderboard) return [];
-    
-    return displayLeaderboard.filter(entry => 
-      entry.displayName?.toLowerCase().includes(searchTerm.toLowerCase())
+
+    return displayLeaderboard.filter((entry) =>
+      entry.displayName?.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [displayLeaderboard, searchTerm]);
 
@@ -70,7 +106,13 @@ export const DonationLeaderboard: React.FC = () => {
     );
   }
 
-  const Row = ({ index, style }: { index: number; style: React.CSSProperties }) => {
+  const Row = ({
+    index,
+    style,
+  }: {
+    index: number;
+    style: React.CSSProperties;
+  }) => {
     const entry = filteredLeaderboard[index];
     if (!entry) return null;
 
@@ -109,7 +151,7 @@ export const DonationLeaderboard: React.FC = () => {
         />
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
       </div>
-      
+
       <div className="h-[400px]">
         {filteredLeaderboard.length > 0 ? (
           <FixedSizeList
@@ -133,12 +175,12 @@ export const DonationLeaderboard: React.FC = () => {
 const getRankColor = (rank: number): string => {
   switch (rank) {
     case 1:
-      return 'bg-yellow-500';
+      return "bg-yellow-500";
     case 2:
-      return 'bg-gray-400';
+      return "bg-gray-400";
     case 3:
-      return 'bg-amber-600';
+      return "bg-amber-600";
     default:
-      return 'bg-gray-300';
+      return "bg-gray-300";
   }
 };

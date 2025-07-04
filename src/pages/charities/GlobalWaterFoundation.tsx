@@ -1,30 +1,33 @@
-import React from 'react';
-import { DonationButton } from '@/components/web3/donation/DonationButton';
-import { ScheduledDonationButton } from '@/components/web3/donation/ScheduledDonationButton';
-import { formatCurrency } from '@/utils/money';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { DonationButton } from "@/components/web3/donation/DonationButton";
+import { ScheduledDonationButton } from "@/components/web3/donation/ScheduledDonationButton";
+import { formatCurrency } from "@/utils/money";
+import { Link } from "react-router-dom";
 
 const GlobalWaterFoundation: React.FC = () => {
   const charity = {
-    id: '1',
-    name: 'Global Water Foundation',
-    description: 'Providing clean water solutions worldwide through innovative technology, community engagement, and sustainable infrastructure development.',
-    category: 'Water & Sanitation',
-    image: 'https://images.unsplash.com/photo-1538300342682-cf57afb97285?auto=format&fit=crop&w=800',
+    id: "1",
+    name: "Global Water Foundation",
+    description:
+      "Providing clean water solutions worldwide through innovative technology, community engagement, and sustainable infrastructure development.",
+    category: "Water & Sanitation",
+    image:
+      "https://images.unsplash.com/photo-1538300342682-cf57afb97285?auto=format&fit=crop&w=800",
     verified: true,
-    country: 'United States',
+    country: "United States",
     stats: {
       totalDonated: 750000,
       donorCount: 1250,
-      projectsCompleted: 15
+      projectsCompleted: 15,
     },
-    mission: 'Our mission is to ensure universal access to clean water through sustainable solutions and community empowerment.',
+    mission:
+      "Our mission is to ensure universal access to clean water through sustainable solutions and community empowerment.",
     impact: [
-      'Provided clean water access to 500,000+ people',
-      'Built 1,000+ sustainable water systems',
-      'Trained 2,000+ local water technicians',
-      'Reduced waterborne diseases by 60% in target areas'
-    ]
+      "Provided clean water access to 500,000+ people",
+      "Built 1,000+ sustainable water systems",
+      "Trained 2,000+ local water technicians",
+      "Reduced waterborne diseases by 60% in target areas",
+    ],
   };
 
   return (
@@ -51,7 +54,9 @@ const GlobalWaterFoundation: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Impact Statistics</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Impact Statistics
+            </h2>
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <p className="text-sm text-gray-500">Total Donated</p>
@@ -75,7 +80,9 @@ const GlobalWaterFoundation: React.FC = () => {
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Giving Options</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Giving Options
+            </h2>
             <div className="space-y-4">
               <DonationButton
                 charityName={charity.name}
@@ -87,7 +94,7 @@ const GlobalWaterFoundation: React.FC = () => {
                 charityAddress={charity.id}
                 buttonText="Give Monthly"
               />
-              <Link 
+              <Link
                 to="/docs/giving-options"
                 className="block text-sm text-indigo-600 hover:text-indigo-800 mt-2 text-center"
               >
@@ -99,12 +106,16 @@ const GlobalWaterFoundation: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Our Mission</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Our Mission
+            </h2>
             <p className="text-gray-600">{charity.mission}</p>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Impact Highlights</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Impact Highlights
+            </h2>
             <ul className="space-y-2">
               {charity.impact.map((item) => (
                 <li key={item} className="flex items-center text-gray-600">

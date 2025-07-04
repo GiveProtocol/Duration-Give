@@ -1,106 +1,114 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/Button';
-import { Logger } from '@/utils/logger';
-import { captureCustomEvent } from '@/lib/sentry';
-import { useAuth } from '@/hooks/useAuth';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { Logger } from "@/utils/logger";
+import { captureCustomEvent } from "@/lib/sentry";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SentryTest() {
   const [testResults, setTestResults] = useState<string[]>([]);
   const { user } = useAuth();
 
   const addResult = (result: string) => {
-    setTestResults(prev => [...prev, `${new Date().toLocaleTimeString()}: ${result}`]);
+    setTestResults((prev) => [
+      ...prev,
+      `${new Date().toLocaleTimeString()}: ${result}`,
+    ]);
   };
 
   const testJavaScriptError = () => {
     try {
-      addResult('Throwing JavaScript error...');
-      throw new Error('Test JavaScript Error - This is a test error from Sentry integration');
+      addResult("Throwing JavaScript error...");
+      throw new Error(
+        "Test JavaScript Error - This is a test error from Sentry integration",
+      );
     } catch (error) {
-      addResult('Error thrown and should be captured by Sentry');
+      addResult("Error thrown and should be captured by Sentry");
       throw error; // Re-throw to let Sentry catch it
     }
   };
 
   const testLoggerInfo = () => {
-    addResult('Sending info log...');
-    Logger.info('Test Info Log', {
-      testType: 'manual',
+    addResult("Sending info log...");
+    Logger.info("Test Info Log", {
+      testType: "manual",
       timestamp: new Date().toISOString(),
-      user: user?.email
+      user: user?.email,
     });
-    addResult('Info log sent to Logger (and Sentry in production)');
+    addResult("Info log sent to Logger (and Sentry in production)");
   };
 
   const testLoggerWarning = () => {
-    addResult('Sending warning log...');
-    Logger.warn('Test Warning Log', {
-      testType: 'manual',
-      warningLevel: 'medium',
-      details: 'This is a test warning'
+    addResult("Sending warning log...");
+    Logger.warn("Test Warning Log", {
+      testType: "manual",
+      warningLevel: "medium",
+      details: "This is a test warning",
     });
-    addResult('Warning log sent to Logger (and Sentry in production)');
+    addResult("Warning log sent to Logger (and Sentry in production)");
   };
 
   const testLoggerError = () => {
-    addResult('Sending error log...');
-    Logger.error('Test Error Log', {
-      error: new Error('Test error object'),
-      severity: 'high',
-      context: 'SentryTest component'
+    addResult("Sending error log...");
+    Logger.error("Test Error Log", {
+      error: new Error("Test error object"),
+      severity: "high",
+      context: "SentryTest component",
     });
-    addResult('Error log sent to Logger (and Sentry in production)');
+    addResult("Error log sent to Logger (and Sentry in production)");
   };
 
   const testCustomEvent = () => {
-    addResult('Sending custom event...');
-    captureCustomEvent('test_custom_event', {
-      action: 'button_click',
-      component: 'SentryTest',
-      timestamp: new Date().toISOString()
+    addResult("Sending custom event...");
+    captureCustomEvent("test_custom_event", {
+      action: "button_click",
+      component: "SentryTest",
+      timestamp: new Date().toISOString(),
     });
-    addResult('Custom event sent directly to Sentry (in production)');
+    addResult("Custom event sent directly to Sentry (in production)");
   };
 
   const testAsyncError = async () => {
-    addResult('Triggering async error...');
+    addResult("Triggering async error...");
     setTimeout(() => {
-      throw new Error('Test Async Error - Delayed error after 2 seconds');
+      throw new Error("Test Async Error - Delayed error after 2 seconds");
     }, 2000);
-    addResult('Async error will be thrown in 2 seconds...');
+    addResult("Async error will be thrown in 2 seconds...");
   };
 
   const testNetworkError = async () => {
-    addResult('Triggering network error...');
+    addResult("Triggering network error...");
     try {
-      await fetch('https://nonexistent-api-endpoint.example.com/test');
+      await fetch("https://nonexistent-api-endpoint.example.com/test");
     } catch (error) {
-      addResult('Network error occurred and should be captured');
-      Logger.error('Network request failed', { error });
+      addResult("Network error occurred and should be captured");
+      Logger.error("Network request failed", { error });
     }
   };
 
   const testReferenceError = () => {
-    addResult('Triggering reference error...');
+    addResult("Triggering reference error...");
     // @ts-ignore - Intentionally causing error
     nonExistentFunction(); // This will cause a ReferenceError
   };
 
   const clearResults = () => {
     setTestResults([]);
-    addResult('Test results cleared');
+    addResult("Test results cleared");
   };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Sentry Integration Test Page</h1>
-        
+        <h1 className="text-3xl font-bold mb-6">
+          Sentry Integration Test Page
+        </h1>
+
         <div className="bg-yellow-50 border border-yellow-200 p-4 mb-6 rounded-lg">
           <p className="text-sm text-yellow-800">
-            <strong>Note:</strong> Sentry is only active in production by default. 
-            To test in development, temporarily modify <code>src/lib/sentry.ts</code> line 6:
-            change <code>if (!import.meta.env.PROD)</code> to <code>if (false)</code>
+            <strong>Note:</strong> Sentry is only active in production by
+            default. To test in development, temporarily modify{" "}
+            <code>src/lib/sentry.ts</code> line 6: change{" "}
+            <code>if (!import.meta.env.PROD)</code> to <code>if (false)</code>
           </p>
         </div>
 
@@ -143,7 +151,9 @@ export default function SentryTest() {
           </div>
           <div className="bg-gray-50 rounded p-4 min-h-[200px]">
             {testResults.length === 0 ? (
-              <p className="text-gray-500">No test results yet. Click a button above to test.</p>
+              <p className="text-gray-500">
+                No test results yet. Click a button above to test.
+              </p>
             ) : (
               <ul className="space-y-2">
                 {/* skipcq: JS-0437 - Test results are append-only log entries, index is appropriate */}
