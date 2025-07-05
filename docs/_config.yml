@@ -45,7 +45,7 @@ nav_title: "Give Protocol"
 nav_logo: "/assets/images/logo.svg"
 
 # Footer
-footer_content: "Copyright &copy; 2024 Give Protocol. All rights reserved."
+footer_content: "Copyright &copy; 2025 Give Protocol. All rights reserved."
 
 # Search
 search_enabled: true
@@ -54,9 +54,9 @@ search_tokenizer_separator: /[\s/]+/
 # External links
 external_links:
   - title: "Main Website"
-    url: "https://giveprotocol.org"
+    url: "https://giveprotocol.io"
   - title: "GitHub"
-    url: "https://github.com/give-protocol"
+    url: "https://github.com/GiveProtocol/Duration-Give"
 
 # Exclude from build
 exclude:
