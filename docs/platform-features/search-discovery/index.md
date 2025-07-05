@@ -50,6 +50,7 @@ graph TD
 ### Basic Search
 
 **Query Types Supported:**
+
 - Simple keyword search
 - Phrase matching with quotes
 - Boolean operators (AND, OR, NOT)
@@ -57,6 +58,7 @@ graph TD
 - Geographic search
 
 **Example Queries:**
+
 ```
 education "New York"
 environmental AND conservation
@@ -68,11 +70,13 @@ disaster relief -administrative
 ### Advanced Search
 
 **Search Syntax:**
+
 ```
 field:value AND (field2:value2 OR field3:value3) NOT field4:value4
 ```
 
 **Searchable Fields:**
+
 - `name`: Organization or campaign name
 - `category`: Cause category
 - `location`: Geographic location
@@ -84,6 +88,7 @@ field:value AND (field2:value2 OR field3:value3) NOT field4:value4
 ### Natural Language Processing
 
 **Understanding Intent:**
+
 ```javascript
 // Query: "I want to help children in Africa with education"
 {
@@ -96,6 +101,7 @@ field:value AND (field2:value2 OR field3:value3) NOT field4:value4
 ```
 
 **Synonym Expansion:**
+
 - "kids" → "children", "youth", "minors"
 - "help" → "support", "assist", "aid"
 - "education" → "schools", "learning", "literacy"
@@ -105,23 +111,24 @@ field:value AND (field2:value2 OR field3:value3) NOT field4:value4
 ### Personalized Recommendations
 
 **Recommendation Algorithm:**
+
 ```python
 def get_recommendations(user_id, context):
     # Collaborative filtering
     similar_users = find_similar_users(user_id)
     cf_recommendations = aggregate_preferences(similar_users)
-    
+
     # Content-based filtering
     user_interests = get_user_interests(user_id)
     cb_recommendations = match_content(user_interests)
-    
+
     # Hybrid approach
     recommendations = merge_recommendations(
-        cf_recommendations, 
+        cf_recommendations,
         cb_recommendations,
         weights={'cf': 0.6, 'cb': 0.4}
     )
-    
+
     # Context adjustment
     return adjust_for_context(recommendations, context)
 ```
@@ -129,6 +136,7 @@ def get_recommendations(user_id, context):
 ### Trending Discoveries
 
 **Trend Calculation:**
+
 - Recent donation velocity
 - Social media mentions
 - News coverage
@@ -136,6 +144,7 @@ def get_recommendations(user_id, context):
 - Emergency response needs
 
 **Categories:**
+
 - Trending Now
 - Rising Stars
 - Seasonal Causes
@@ -145,6 +154,7 @@ def get_recommendations(user_id, context):
 ### Geographic Discovery
 
 **Location-Based Features:**
+
 - Automatic location detection
 - Radius-based search
 - Regional cause mapping
@@ -152,19 +162,20 @@ def get_recommendations(user_id, context):
 - Community impact visualization
 
 **Map Integration:**
+
 ```javascript
 // Initialize map view
 const mapView = new GiveProtocolMap({
   center: userLocation,
   zoom: 12,
-  layers: ['organizations', 'opportunities', 'events']
+  layers: ["organizations", "opportunities", "events"],
 });
 
 // Add search results to map
 mapView.addResults(searchResults, {
   clustering: true,
   heatmap: true,
-  filters: activeFilters
+  filters: activeFilters,
 });
 ```
 
@@ -173,6 +184,7 @@ mapView.addResults(searchResults, {
 ### Category Filters
 
 **Primary Categories:**
+
 - Animals & Wildlife
 - Arts & Culture
 - Community Development
@@ -185,6 +197,7 @@ mapView.addResults(searchResults, {
 - Religion & Spirituality
 
 **Sub-category Examples:**
+
 ```json
 {
   "Education": [
@@ -201,6 +214,7 @@ mapView.addResults(searchResults, {
 ### Advanced Filters
 
 **Organization Filters:**
+
 - Verification level
 - Tax-deductible status
 - Size (budget/staff)
@@ -209,6 +223,7 @@ mapView.addResults(searchResults, {
 - Payment methods accepted
 
 **Campaign Filters:**
+
 - Funding goal range
 - Deadline
 - Matching funds available
@@ -216,6 +231,7 @@ mapView.addResults(searchResults, {
 - Update frequency
 
 **Volunteer Filters:**
+
 - Time commitment
 - Skill requirements
 - Virtual/in-person
@@ -231,13 +247,13 @@ const filterManager = new FilterManager({
   onChange: (filters) => {
     // Update results without page reload
     searchAPI.updateResults(filters);
-    
+
     // Update URL for sharing
     updateURLParams(filters);
-    
+
     // Track filter usage
-    analytics.track('filter_applied', filters);
-  }
+    analytics.track("filter_applied", filters);
+  },
 });
 
 // Smart filter suggestions
@@ -249,22 +265,27 @@ filterManager.suggestFilters(searchResults);
 ### Relevance Scoring
 
 **Factors Considered:**
+
 1. **Text Relevance** (30%)
+
    - Title matches
    - Description relevance
    - Tag alignment
 
 2. **User Behavior** (25%)
+
    - Click-through rate
    - Conversion rate
    - Dwell time
 
 3. **Entity Quality** (20%)
+
    - Verification status
    - Completeness score
    - Update recency
 
 4. **Social Signals** (15%)
+
    - User ratings
    - Social shares
    - Testimonials
@@ -303,6 +324,7 @@ GET /api/v1/search
 ```
 
 **Parameters:**
+
 - `q` (required): Search query
 - `type`: Entity type (organization, campaign, opportunity)
 - `category`: Filter by category
@@ -314,6 +336,7 @@ GET /api/v1/search
 - `limit`: Results per page
 
 **Example Request:**
+
 ```http
 GET /api/v1/search?q=education&type=organization&location=NYC&radius=50&verified=true&sort=relevance&page=1&limit=20
 ```
@@ -378,10 +401,12 @@ Response:
 ```html
 <!-- Advanced search bar component -->
 <div class="search-container">
-  <input type="text" 
-         id="search-input" 
-         placeholder="Search causes, organizations, or opportunities..."
-         autocomplete="off">
+  <input
+    type="text"
+    id="search-input"
+    placeholder="Search causes, organizations, or opportunities..."
+    autocomplete="off"
+  />
   <div class="search-filters">
     <button class="filter-btn" data-filter="location">
       <i class="icon-location"></i> Near me
@@ -416,12 +441,8 @@ const ResultCard = ({ result }) => (
       <span className="rating">★ {result.rating}</span>
     </div>
     <div className="result-actions">
-      <button onClick={() => viewDetails(result.id)}>
-        Learn More
-      </button>
-      <button onClick={() => quickDonate(result.id)}>
-        Donate Now
-      </button>
+      <button onClick={() => viewDetails(result.id)}>Learn More</button>
+      <button onClick={() => quickDonate(result.id)}>Donate Now</button>
     </div>
   </div>
 );
@@ -433,16 +454,16 @@ const ResultCard = ({ result }) => (
 // Dynamic filter component
 const FilterPanel = ({ availableFilters, onFilterChange }) => {
   const [activeFilters, setActiveFilters] = useState({});
-  
+
   const handleFilterChange = (filterType, value) => {
     const newFilters = {
       ...activeFilters,
-      [filterType]: value
+      [filterType]: value,
     };
     setActiveFilters(newFilters);
     onFilterChange(newFilters);
   };
-  
+
   return (
     <div className="filter-panel">
       {Object.entries(availableFilters).map(([type, options]) => (
@@ -467,36 +488,37 @@ const FilterPanel = ({ availableFilters, onFilterChange }) => {
 // Search analytics tracking
 const searchAnalytics = {
   trackSearch: (query, filters, results) => {
-    gtag('event', 'search', {
+    gtag("event", "search", {
       search_term: query,
       filters_used: Object.keys(filters),
       results_count: results.length,
-      has_results: results.length > 0
+      has_results: results.length > 0,
     });
   },
-  
+
   trackClick: (result, position) => {
-    gtag('event', 'search_result_click', {
+    gtag("event", "search_result_click", {
       result_id: result.id,
       result_type: result.type,
       position: position,
-      search_query: currentQuery
+      search_query: currentQuery,
     });
   },
-  
+
   trackConversion: (result, action) => {
-    gtag('event', 'search_conversion', {
+    gtag("event", "search_conversion", {
       result_id: result.id,
       action: action, // 'donate', 'volunteer', 'share'
-      value: result.amount || 0
+      value: result.amount || 0,
     });
-  }
+  },
 };
 ```
 
 ### Performance Metrics
 
 **Key Metrics:**
+
 - Average search latency
 - Click-through rate by position
 - Conversion rate by query type
@@ -504,9 +526,10 @@ const searchAnalytics = {
 - Query refinement rate
 
 **Dashboard Example:**
+
 ```sql
 -- Top performing searches
-SELECT 
+SELECT
   query,
   COUNT(*) as search_count,
   AVG(click_through_rate) as avg_ctr,
@@ -527,21 +550,21 @@ LIMIT 100;
 const mobileSearch = {
   init: () => {
     // Voice search
-    if ('webkitSpeechRecognition' in window) {
+    if ("webkitSpeechRecognition" in window) {
       enableVoiceSearch();
     }
-    
+
     // Location-based search
-    if ('geolocation' in navigator) {
+    if ("geolocation" in navigator) {
       enableLocationSearch();
     }
-    
+
     // Infinite scroll
     enableInfiniteScroll({
       threshold: 100,
-      loadMore: loadNextPage
+      loadMore: loadNextPage,
     });
-  }
+  },
 };
 ```
 
@@ -549,12 +572,13 @@ const mobileSearch = {
 
 ```javascript
 // Service worker for offline search
-self.addEventListener('fetch', event => {
-  if (event.request.url.includes('/api/search')) {
+self.addEventListener("fetch", (event) => {
+  if (event.request.url.includes("/api/search")) {
     event.respondWith(
-      caches.match(event.request)
-        .then(response => response || fetch(event.request))
-        .catch(() => caches.match('/offline-search'))
+      caches
+        .match(event.request)
+        .then((response) => response || fetch(event.request))
+        .catch(() => caches.match("/offline-search")),
     );
   }
 });
@@ -568,10 +592,13 @@ self.addEventListener('fetch', event => {
 <!-- SEO-friendly search results -->
 <div itemscope itemtype="http://schema.org/SearchResultsPage">
   <h1>Search Results for "education"</h1>
-  <meta itemprop="about" content="education charities">
+  <meta itemprop="about" content="education charities" />
   <div itemprop="mainEntity" itemscope itemtype="http://schema.org/ItemList">
-    <link itemprop="itemListOrder" href="http://schema.org/ItemListOrderDescending"/>
-    <meta itemprop="numberOfItems" content="50"/>
+    <link
+      itemprop="itemListOrder"
+      href="http://schema.org/ItemListOrderDescending"
+    />
+    <meta itemprop="numberOfItems" content="50" />
     <!-- Individual results -->
   </div>
 </div>
@@ -596,6 +623,7 @@ self.addEventListener('fetch', event => {
 ### For Users
 
 1. **Effective Searching**
+
    - Use specific keywords
    - Apply relevant filters
    - Try different search terms
@@ -610,6 +638,7 @@ self.addEventListener('fetch', event => {
 ### For Organizations
 
 1. **Optimization**
+
    - Complete all profile fields
    - Use relevant keywords
    - Update content regularly
@@ -624,6 +653,7 @@ self.addEventListener('fetch', event => {
 ### For Developers
 
 1. **Integration**
+
    - Cache frequent searches
    - Implement pagination properly
    - Handle errors gracefully

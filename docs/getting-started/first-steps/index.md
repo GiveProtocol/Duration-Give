@@ -9,14 +9,18 @@ Welcome to Give Protocol! Now that you've created your account and connected you
 ## Getting Oriented
 
 ### Your Dashboard
+
 Your dashboard is your home base on Give Protocol. Here you'll find:
+
 - **Account overview** and balance
 - **Recent activity** and transaction history
 - **Recommended organizations** based on your interests
 - **Quick actions** for common tasks
 
 ### Navigation Menu
+
 Familiarize yourself with the main sections:
+
 - **Discover**: Browse organizations and campaigns
 - **My Activity**: Track your donations and volunteering
 - **Wallet**: Manage your connected wallets and assets
@@ -25,6 +29,7 @@ Familiarize yourself with the main sections:
 ## Making Your First Donation
 
 ### Step 1: Find an Organization
+
 1. Click **"Discover"** in the main navigation
 2. **Browse by category** (Education, Health, Environment, etc.)
 3. **Use the search bar** to find specific causes
@@ -32,7 +37,9 @@ Familiarize yourself with the main sections:
 5. **Check verification badges** for trusted organizations
 
 ### Step 2: Review Organization Profile
+
 Before donating, review:
+
 - **Mission statement** and goals
 - **Impact metrics** and achievements
 - **Financial transparency** and fund usage
@@ -40,6 +47,7 @@ Before donating, review:
 - **Verification status** and credentials
 
 ### Step 3: Choose Donation Amount
+
 1. Click **"Donate"** on the organization's page
 2. **Select cryptocurrency** (ETH, USDC, MATIC, etc.)
 3. **Enter donation amount**
@@ -47,6 +55,7 @@ Before donating, review:
 5. **Review transaction details**
 
 ### Step 4: Complete Transaction
+
 1. Click **"Donate Now"**
 2. **Confirm in your wallet** (MetaMask, etc.)
 3. **Wait for confirmation** (usually 1-3 minutes)
@@ -57,12 +66,14 @@ Before donating, review:
 Make consistent impact with automated giving:
 
 ### Benefits of Recurring Giving
+
 - **Consistent support** for organizations
 - **Automatic donations** without manual effort
 - **Better tax planning** with predictable giving
 - **Increased impact** through sustained funding
 
 ### How to Set Up
+
 1. Visit your chosen organization's page
 2. Click **"Set Up Recurring Donation"**
 3. **Choose frequency**: Weekly, Monthly, or Quarterly
@@ -71,6 +82,7 @@ Make consistent impact with automated giving:
 6. **Authorize smart contract** in your wallet
 
 ### Managing Recurring Donations
+
 - **View all subscriptions** in your dashboard
 - **Pause or cancel** anytime
 - **Modify amounts** or frequency
@@ -81,12 +93,14 @@ Make consistent impact with automated giving:
 If you have time to offer, not just money:
 
 ### Finding Opportunities
+
 1. Go to **"Volunteer"** section
 2. **Filter by skills** (Marketing, Development, Design, etc.)
 3. **Choose remote or local** opportunities
 4. **Select time commitment** (One-time, Ongoing, Project-based)
 
 ### Applying to Volunteer
+
 1. **Read opportunity details** carefully
 2. **Check requirements** and qualifications
 3. **Submit application** with relevant experience
@@ -94,6 +108,7 @@ If you have time to offer, not just money:
 5. **Complete background check** if required
 
 ### Time Tracking
+
 - **Log hours** through the platform
 - **Get verification** from organizations
 - **Build volunteer resume** with verified experience
@@ -102,11 +117,13 @@ If you have time to offer, not just money:
 ## Understanding Transaction Fees
 
 ### Network Fees
+
 - **Polygon**: Usually $0.01-0.10 per transaction
 - **Ethereum**: $5-50 depending on network congestion
 - **Platform Fee**: 2.5% of donation amount
 
 ### Fee Optimization Tips
+
 - **Use Polygon network** for smaller donations
 - **Time transactions** during low congestion periods
 - **Batch multiple donations** when possible
@@ -115,12 +132,14 @@ If you have time to offer, not just money:
 ## Tax Receipt Management
 
 ### Automatic Receipts
+
 - **Generated automatically** for all donations
 - **Sent to registered email** address
 - **Available in dashboard** for download
 - **Compliant with tax regulations** in your jurisdiction
 
 ### Tax Planning
+
 - **Track annual giving** in your dashboard
 - **Set giving goals** for tax optimization
 - **Download year-end summaries**
@@ -129,18 +148,21 @@ If you have time to offer, not just money:
 ## Security Best Practices
 
 ### Account Security
+
 - **Enable two-factor authentication** immediately
 - **Use strong, unique passwords**
 - **Review account activity** regularly
 - **Update contact information** when needed
 
 ### Wallet Security
+
 - **Never share private keys** or seed phrases
 - **Verify transaction details** before confirming
 - **Use hardware wallets** for large amounts
 - **Keep wallet software updated**
 
 ### Donation Safety
+
 - **Verify organization credentials** before donating
 - **Start with small amounts** to test
 - **Double-check wallet addresses**
@@ -149,12 +171,14 @@ If you have time to offer, not just money:
 ## Building Your Profile
 
 ### Public Profile
+
 - **Add profile picture** and bio
 - **Share your giving interests**
 - **Connect social media** accounts (optional)
 - **Set privacy preferences**
 
 ### Privacy Settings
+
 - **Control profile visibility**
 - **Manage donation history sharing**
 - **Set communication preferences**
@@ -163,12 +187,14 @@ If you have time to offer, not just money:
 ## Tracking Your Impact
 
 ### Dashboard Metrics
+
 - **Total donations** made
 - **Number of organizations** supported
 - **Volunteer hours** contributed
 - **Impact stories** from recipients
 
 ### Sharing Your Impact
+
 - **Generate impact reports**
 - **Share on social media**
 - **Invite friends** to join
@@ -177,18 +203,21 @@ If you have time to offer, not just money:
 ## Common First-Time Mistakes to Avoid
 
 ### Donation Mistakes
+
 - **Not checking verification status** of organizations
 - **Sending to wrong network** (ETH vs Polygon)
 - **Insufficient gas fees** causing failed transactions
 - **Not saving tax receipts**
 
 ### Security Mistakes
+
 - **Not enabling 2FA** immediately
 - **Sharing wallet information** with others
 - **Not backing up seed phrases** properly
 - **Ignoring security warnings**
 
 ### Planning Mistakes
+
 - **Not setting giving budgets**
 - **Impulse donations** without research
 - **Not tracking donations** for taxes
@@ -197,12 +226,14 @@ If you have time to offer, not just money:
 ## Getting Help and Support
 
 ### Self-Service Resources
+
 - **[Help Center](/docs/help-center/)** - Comprehensive guides
 - **[FAQ](/docs/help-center/faq/)** - Common questions
 - **[Community Forums](/docs/community/forums/)** - Peer support
 - **[Video Tutorials](/docs/resources/)** - Step-by-step guides
 
 ### Contact Support
+
 - **Email**: support@giveprotocol.org
 - **Response time**: Within 24 hours
 - **Live chat**: Available during business hours
@@ -211,12 +242,14 @@ If you have time to offer, not just money:
 ## Joining the Community
 
 ### Connect with Others
+
 - **[Community Forums](/docs/community/forums/)** - Discussions and Q&A
 - **[Social Media](/docs/community/social/)** - Follow for updates
 - **Local meetups** - In-person events (where available)
 - **Online events** - Webinars and virtual meetups
 
 ### Contributing to the Platform
+
 - **Provide feedback** on features
 - **Report bugs** or issues
 - **Suggest improvements**
@@ -225,12 +258,14 @@ If you have time to offer, not just money:
 ## Setting Long-Term Goals
 
 ### Giving Goals
+
 - **Annual giving targets**
 - **Cause-specific allocations**
 - **Impact measurement objectives**
 - **Tax optimization planning**
 
 ### Volunteer Goals
+
 - **Skill development targets**
 - **Time commitment goals**
 - **Cause area focus**
@@ -250,6 +285,7 @@ Congratulations on taking your first steps with Give Protocol! You're now part o
 ## Quick Reference
 
 ### Essential Actions
+
 - ✓ Create account and verify email
 - ✓ Connect cryptocurrency wallet
 - ✓ Enable two-factor authentication
@@ -259,6 +295,7 @@ Congratulations on taking your first steps with Give Protocol! You're now part o
 - ✓ Join community
 
 ### Important Links
+
 - **Dashboard**: Your home base
 - **Discover**: Find organizations
 - **Wallet**: Manage funds
