@@ -9,13 +9,16 @@ Your safety and well-being are our top priorities at Give Protocol. This guide p
 ## Safety First Principles
 
 ### 1. Personal Safety Assessment
+
 Before accepting any volunteer opportunity:
+
 - **Evaluate the location** - Research the area and venue
 - **Check organization credentials** - Verify the charity's legitimacy
 - **Review activity details** - Understand what's expected
 - **Trust your instincts** - If something feels wrong, don't proceed
 
 ### 2. Pre-Volunteering Checklist
+
 - [ ] Verify the organization through our platform verification badge
 - [ ] Read all volunteer requirements and expectations
 - [ ] Ensure you have appropriate skills/physical ability for the task
@@ -25,7 +28,9 @@ Before accepting any volunteer opportunity:
 ## During Volunteer Activities
 
 ### Communication Guidelines
+
 1. **Stay Connected**
+
    - Keep your phone charged and accessible
    - Share your volunteer location with a trusted contact
    - Use our in-app messaging for all volunteer communications
@@ -38,18 +43,21 @@ Before accepting any volunteer opportunity:
 ### Physical Safety
 
 #### Indoor Volunteering
+
 - Familiarize yourself with emergency exits
 - Follow all facility safety rules
 - Report unsafe conditions immediately
 - Use proper equipment and protective gear when provided
 
 #### Outdoor Volunteering
+
 - Dress appropriately for weather conditions
 - Stay hydrated and take regular breaks
 - Use sun protection (sunscreen, hat, sunglasses)
 - Be aware of environmental hazards (uneven terrain, wildlife)
 
 #### Heavy Lifting and Physical Work
+
 - Use proper lifting techniques (bend knees, not back)
 - Ask for help with heavy items
 - Take breaks to prevent overexertion
@@ -58,12 +66,14 @@ Before accepting any volunteer opportunity:
 ## Health and Hygiene
 
 ### General Health Guidelines
+
 1. **Stay home if you're sick** - Protect yourself and others
 2. **Practice good hygiene** - Wash hands frequently
 3. **Follow health protocols** - Comply with any COVID-19 or other health requirements
 4. **Bring necessary medications** - Keep personal medications accessible
 
 ### Food Safety (for food-related volunteering)
+
 - Follow all food handling guidelines
 - Wear gloves and hairnets as required
 - Report any food safety concerns
@@ -72,12 +82,14 @@ Before accepting any volunteer opportunity:
 ## Personal Information Protection
 
 ### What to Share
+
 - ✓ First name only (unless organization requires full name)
 - ✓ General availability
 - ✓ Relevant skills and experience
 - ✓ Emergency contact (with organization only)
 
 ### What NOT to Share
+
 - ✗ Home address (unless absolutely necessary)
 - ✗ Financial information
 - ✗ Social Security number (except for verified background checks)
@@ -87,6 +99,7 @@ Before accepting any volunteer opportunity:
 ## Handling Uncomfortable Situations
 
 ### If You Feel Unsafe
+
 1. **Remove yourself** from the situation immediately
 2. **Contact** the volunteer coordinator or supervisor
 3. **Document** the incident with details
@@ -94,6 +107,7 @@ Before accepting any volunteer opportunity:
 5. **Seek help** if you need immediate assistance
 
 ### Dealing with Difficult People
+
 - Remain calm and professional
 - Set clear boundaries
 - Involve a supervisor if needed
@@ -103,6 +117,7 @@ Before accepting any volunteer opportunity:
 ## Transportation Safety
 
 ### Getting to Volunteer Sites
+
 - **Plan your route** in advance
 - **Use reliable transportation** methods
 - **Arrive during daylight** hours when possible
@@ -110,6 +125,7 @@ Before accepting any volunteer opportunity:
 - **Carpool through platform** connections when available
 
 ### If Driving Others
+
 - Verify insurance coverage
 - Never transport more people than seatbelts
 - Follow all traffic laws
@@ -120,18 +136,21 @@ Before accepting any volunteer opportunity:
 ### Working with Vulnerable Populations
 
 #### Children
+
 - Never be alone with a child
 - Follow organization's child protection policies
 - Report any concerns about child welfare
 - Maintain appropriate boundaries
 
 #### Elderly or Disabled Individuals
+
 - Respect personal space and dignity
 - Ask before providing physical assistance
 - Follow care protocols exactly
 - Be patient and compassionate
 
 ### Disaster Relief Volunteering
+
 - Only volunteer through authorized organizations
 - Ensure you have proper training
 - Bring required safety equipment
@@ -141,12 +160,14 @@ Before accepting any volunteer opportunity:
 ## Insurance and Liability
 
 ### Understanding Coverage
+
 - Check if the organization provides volunteer insurance
 - Understand what activities are covered
 - Know your personal insurance coverage
 - Report incidents immediately for documentation
 
 ### Liability Waivers
+
 - Read all waivers carefully before signing
 - Ask questions about unclear terms
 - Keep copies of signed documents
@@ -155,12 +176,14 @@ Before accepting any volunteer opportunity:
 ## Reporting Safety Issues
 
 ### How to Report
+
 1. **In-app reporting** - Use our safety report feature
 2. **Contact organization** - Notify volunteer coordinator
 3. **Emergency services** - Call 911 for immediate dangers
 4. **Platform support** - Contact our safety team
 
 ### What to Include in Reports
+
 - Date, time, and location
 - People involved
 - Description of incident
@@ -171,13 +194,16 @@ Before accepting any volunteer opportunity:
 ## Safety Resources
 
 ### Training Opportunities
+
 - First Aid/CPR certification
 - Volunteer safety workshops
 - Specialized training for specific roles
 - Online safety courses through our platform
 
 ### Safety Equipment
+
 Common safety items to consider:
+
 - First aid kit
 - Work gloves
 - Safety glasses
@@ -188,12 +214,14 @@ Common safety items to consider:
 ## Platform Safety Features
 
 ### Verification Badges
+
 - 🔵 **Verified Organization** - Confirmed legitimate charity
 - 🟢 **Background Checked** - Volunteers screened by organization
 - 🟡 **Training Required** - Special skills or certification needed
 - 🔴 **High Risk** - Additional safety precautions required
 
 ### Safety Alerts
+
 - Real-time notifications about safety concerns
 - Weather alerts for outdoor activities
 - Emergency broadcasts for your volunteer area
@@ -202,6 +230,7 @@ Common safety items to consider:
 ## Emergency Procedures
 
 ### Emergency Action Plan
+
 1. **Assess** the situation
 2. **Ensure** your safety first
 3. **Call** for help (911 or local emergency)
@@ -210,7 +239,9 @@ Common safety items to consider:
 6. **Document** everything
 
 ### Important Numbers
+
 Keep these readily accessible:
+
 - Emergency: 911
 - Platform Safety Hotline: [Your safety number]
 - Organization emergency contact
@@ -219,6 +250,7 @@ Keep these readily accessible:
 ## After Volunteering
 
 ### Post-Activity Safety
+
 - Check in with your emergency contact
 - Report completion through the app
 - Note any safety concerns encountered
@@ -233,5 +265,5 @@ If you have any safety concerns or questions, don't hesitate to contact our volu
 
 ---
 
-*Last updated: December 2024*  
-*For immediate safety concerns, always contact local emergency services first*
+_Last updated: December 2024_  
+_For immediate safety concerns, always contact local emergency services first_

@@ -22,12 +22,14 @@ Give Protocol's verification system establishes trust between donors, organizati
 ### Basic Verification
 
 **Requirements:**
+
 - Email confirmation
 - Phone number verification
 - Basic profile completion
 - Terms of service acceptance
 
 **Features Unlocked:**
+
 - Create and browse listings
 - Send and receive messages
 - Basic platform access
@@ -36,12 +38,14 @@ Give Protocol's verification system establishes trust between donors, organizati
 ### Standard Verification
 
 **Requirements:**
+
 - Government-issued ID
 - Address verification
 - Social media linking
 - Background check consent
 
 **Features Unlocked:**
+
 - Full platform features
 - Higher transaction limits
 - Priority support
@@ -50,12 +54,14 @@ Give Protocol's verification system establishes trust between donors, organizati
 ### Enhanced Verification
 
 **Requirements:**
+
 - Video verification call
 - Professional references
 - Financial documentation
 - Extended background check
 
 **Features Unlocked:**
+
 - Premium features access
 - Unlimited transactions
 - API access
@@ -66,12 +72,15 @@ Give Protocol's verification system establishes trust between donors, organizati
 ### Nonprofit Status Verification
 
 **Required Documents:**
+
 1. **Tax-Exempt Status**
+
    - IRS 501(c)(3) determination letter (US)
    - Charity registration (International)
    - Current tax-exempt certificate
 
 2. **Governance Documents**
+
    - Articles of incorporation
    - Bylaws
    - Board of directors list
@@ -112,12 +121,14 @@ flowchart TD
 ### International Organizations
 
 **Additional Requirements:**
+
 - Country-specific charity registration
 - Translated documents (certified)
 - International banking verification
 - Local compliance certificates
 
 **Supported Countries:**
+
 - United States
 - Canada
 - United Kingdom
@@ -130,12 +141,15 @@ flowchart TD
 ### Identity Verification
 
 **Standard KYC Process:**
+
 1. **Document Upload**
+
    - Government-issued photo ID
    - Selfie with ID
    - Proof of address
 
 2. **Automated Checks**
+
    - Document authenticity
    - Facial recognition matching
    - Address validation
@@ -150,16 +164,19 @@ flowchart TD
 ### Verification Tiers
 
 **Tier 1 - Basic ($0-$1,000/year)**
+
 - Email verification only
 - No documentation required
 - Anonymous donations allowed
 
 **Tier 2 - Standard ($1,001-$10,000/year)**
+
 - ID verification required
 - Address confirmation
 - Source of funds declaration
 
 **Tier 3 - Enhanced ($10,001+/year)**
+
 - Enhanced due diligence
 - Wealth verification
 - Ongoing monitoring
@@ -168,12 +185,14 @@ flowchart TD
 ### Privacy Protection
 
 **Data Handling:**
+
 - End-to-end encryption
 - Minimal data retention
 - GDPR/CCPA compliant
 - Right to deletion
 
 **Anonymity Options:**
+
 - Anonymous donations under thresholds
 - Pseudonymous giving
 - Private donor advised funds
@@ -184,12 +203,14 @@ flowchart TD
 ### Background Checks
 
 **Standard Screening:**
+
 - Identity verification
 - Criminal background check
 - Sex offender registry
 - Reference checks
 
 **Enhanced Screening (for sensitive roles):**
+
 - FBI fingerprinting
 - Child abuse clearances
 - Professional license verification
@@ -198,12 +219,14 @@ flowchart TD
 ### Skills Verification
 
 **Professional Skills:**
+
 - License verification
 - Certification validation
 - Portfolio review
 - Skill assessments
 
 **Verification Partners:**
+
 - Sterling background checks
 - Checkr integration
 - Professional boards
@@ -214,6 +237,7 @@ flowchart TD
 ### Verification API
 
 **Initiate Verification:**
+
 ```http
 POST /api/v1/verification/initiate
 Authorization: Bearer your_api_key
@@ -233,6 +257,7 @@ Content-Type: application/json
 ```
 
 **Check Status:**
+
 ```http
 GET /api/v1/verification/status/{entity_id}
 Authorization: Bearer your_api_key
@@ -254,6 +279,7 @@ Response:
 ### Webhook Events
 
 **Verification Events:**
+
 ```javascript
 // Verification completed
 {
@@ -284,26 +310,27 @@ Response:
 ### SDK Integration
 
 **JavaScript Example:**
+
 ```javascript
-import { Verification } from '@give-protocol/sdk';
+import { Verification } from "@give-protocol/sdk";
 
 const verification = new Verification({
-  apiKey: 'your_api_key'
+  apiKey: "your_api_key",
 });
 
 // Start organization verification
 const result = await verification.initiate({
-  entityType: 'organization',
-  entityId: 'org_123',
+  entityType: "organization",
+  entityId: "org_123",
   documents: [
-    { type: '501c3', file: file1 },
-    { type: 'board_list', file: file2 }
-  ]
+    { type: "501c3", file: file1 },
+    { type: "board_list", file: file2 },
+  ],
 });
 
 // Monitor progress
-const status = await verification.getStatus('org_123');
-console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
+const status = await verification.getStatus("org_123");
+console.log(`Verification ${status.complete ? "completed" : "in progress"}`);
 ```
 
 ## Verification Standards
@@ -311,12 +338,14 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Document Requirements
 
 **Acceptable Formats:**
+
 - PDF (preferred)
 - JPG/PNG (for IDs)
 - DOC/DOCX (for letters)
 - Maximum file size: 10MB
 
 **Document Quality:**
+
 - Clear and legible
 - Complete documents only
 - Recent dates (within 12 months)
@@ -325,12 +354,14 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Compliance Framework
 
 **Regulatory Compliance:**
+
 - FinCEN guidelines
 - OFAC screening
 - State regulations
 - International standards
 
 **Industry Standards:**
+
 - FATF recommendations
 - ISO 27001 certification
 - SOC 2 Type II compliance
@@ -341,12 +372,14 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Renewal Requirements
 
 **Annual Review:**
+
 - Updated documentation
 - Continued compliance
 - Activity verification
 - Fee payment (if applicable)
 
 **Triggers for Re-verification:**
+
 - Change in leadership
 - Address changes
 - Suspicious activity
@@ -355,12 +388,14 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Verification Revocation
 
 **Grounds for Revocation:**
+
 - Fraudulent documentation
 - Criminal activity
 - Terms of service violations
 - Regulatory non-compliance
 
 **Revocation Process:**
+
 1. Notice of concern
 2. Opportunity to remedy
 3. Final determination
@@ -371,12 +406,14 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Verification Badges
 
 **Badge Types:**
+
 - Basic Verified ✓
 - Standard Verified ✓✓
 - Enhanced Verified ✓✓✓
 - Specialized badges (e.g., "Child Safety Verified")
 
 **Display Guidelines:**
+
 - Prominent profile placement
 - Search result indicators
 - Transaction confirmations
@@ -385,6 +422,7 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Trust Score
 
 **Calculation Factors:**
+
 - Verification level
 - Platform history
 - User feedback
@@ -392,6 +430,7 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 - Update frequency
 
 **Score Ranges:**
+
 - 0-40: New/Unverified
 - 41-70: Basic Trust
 - 71-90: High Trust
@@ -402,12 +441,14 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Detection Systems
 
 **Automated Monitoring:**
+
 - Pattern recognition
 - Anomaly detection
 - Cross-reference checking
 - Real-time alerts
 
 **Red Flags:**
+
 - Duplicate applications
 - Mismatched information
 - Suspicious documentation
@@ -416,6 +457,7 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Response Procedures
 
 **Investigation Process:**
+
 1. Automated flag trigger
 2. Manual review initiation
 3. Entity notification
@@ -423,6 +465,7 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 5. Decision and action
 
 **Protective Actions:**
+
 - Account suspension
 - Transaction holds
 - Enhanced monitoring
@@ -433,12 +476,14 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Verification Support
 
 **Help Resources:**
+
 - Detailed guides
 - Video tutorials
 - Live chat support
 - Email assistance
 
 **Common Issues:**
+
 - Document quality
 - Missing information
 - Technical problems
@@ -447,12 +492,14 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### Appeals Process
 
 **Filing an Appeal:**
+
 1. Submit appeal form
 2. Provide new documentation
 3. Explain circumstances
 4. Await review
 
 **Appeal Timeline:**
+
 - Initial review: 48 hours
 - Full review: 5-7 business days
 - Final decision: 10 business days
@@ -462,11 +509,13 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### For Organizations
 
 1. **Prepare Documents Early**
+
    - Gather all required documents
    - Ensure current dates
    - Verify document quality
 
 2. **Maintain Compliance**
+
    - Update documents annually
    - Report changes promptly
    - Keep records organized
@@ -479,6 +528,7 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### For Donors
 
 1. **Verify at Appropriate Level**
+
    - Match verification to giving level
    - Provide accurate information
    - Keep documents updated
@@ -491,6 +541,7 @@ console.log(`Verification ${status.complete ? 'completed' : 'in progress'}`);
 ### For Developers
 
 1. **Implement Properly**
+
    - Use webhooks for updates
    - Handle errors gracefully
    - Cache verification status
