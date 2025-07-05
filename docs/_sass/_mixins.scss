@@ -1,0 +1,253 @@
+// Mixins for Give Protocol Documentation Theme
+
+// Responsive breakpoints
+@mixin mobile {
+  @media (max-width: #{$mobile - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$mobile}) and (max-width: #{$desktop - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop}) {
+    @content;
+  }
+}
+
+@mixin desktop-lg {
+  @media (min-width: #{$desktop-lg}) {
+    @content;
+  }
+}
+
+// Button mixins
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition-base);
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  user-select: none;
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--indigo-200);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: var(--indigo-600);
+  color: white;
+  
+  &:hover:not(:disabled) {
+    background-color: var(--indigo-700);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background-color: white;
+  color: var(--primary-700);
+  border-color: var(--primary-300);
+  
+  &:hover:not(:disabled) {
+    background-color: var(--primary-50);
+    border-color: var(--primary-400);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+@mixin button-ghost {
+  @include button-base;
+  background-color: transparent;
+  color: var(--primary-600);
+  
+  &:hover:not(:disabled) {
+    background-color: var(--primary-100);
+    color: var(--primary-800);
+  }
+}
+
+// Card mixins
+@mixin card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--primary-200);
+  transition: var(--transition-base);
+}
+
+@mixin card-hover {
+  &:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+}
+
+// Text styles
+@mixin text-heading-1 {
+  font-size: 3rem;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  
+  @include mobile {
+    font-size: 2.25rem;
+  }
+}
+
+@mixin text-heading-2 {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  
+  @include mobile {
+    font-size: 1.875rem;
+  }
+}
+
+@mixin text-heading-3 {
+  font-size: 1.875rem;
+  line-height: 1.3;
+  font-weight: 600;
+  
+  @include mobile {
+    font-size: 1.5rem;
+  }
+}
+
+@mixin text-heading-4 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  font-weight: 600;
+  
+  @include mobile {
+    font-size: 1.25rem;
+  }
+}
+
+@mixin text-body-large {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+@mixin text-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+@mixin text-body-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+// Container mixins
+@mixin container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+  @include tablet {
+    padding: 0 1.5rem;
+  }
+  
+  @include desktop {
+    padding: 0 2rem;
+  }
+}
+
+@mixin container-narrow {
+  width: 100%;
+  max-width: $content-max-width-narrow;
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+  @include tablet {
+    padding: 0 1.5rem;
+  }
+}
+
+// Utility mixins
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Animation mixins
+@mixin fade-in($duration: 0.3s) {
+  animation: fadeIn $duration ease-in-out;
+}
+
+@mixin slide-up($duration: 0.3s) {
+  animation: slideUp $duration ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

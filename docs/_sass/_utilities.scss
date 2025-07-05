@@ -1,0 +1,276 @@
+// Utility classes for Give Protocol Documentation
+
+// Display utilities
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-inline { display: inline !important; }
+.d-inline-block { display: inline-block !important; }
+.d-flex { display: flex !important; }
+.d-inline-flex { display: inline-flex !important; }
+.d-grid { display: grid !important; }
+
+// Flexbox utilities
+.flex-row { flex-direction: row !important; }
+.flex-column { flex-direction: column !important; }
+.flex-wrap { flex-wrap: wrap !important; }
+.flex-nowrap { flex-wrap: nowrap !important; }
+.flex-fill { flex: 1 1 auto !important; }
+.flex-grow-0 { flex-grow: 0 !important; }
+.flex-grow-1 { flex-grow: 1 !important; }
+.flex-shrink-0 { flex-shrink: 0 !important; }
+.flex-shrink-1 { flex-shrink: 1 !important; }
+
+// Justify content
+.justify-start { justify-content: flex-start !important; }
+.justify-end { justify-content: flex-end !important; }
+.justify-center { justify-content: center !important; }
+.justify-between { justify-content: space-between !important; }
+.justify-around { justify-content: space-around !important; }
+.justify-evenly { justify-content: space-evenly !important; }
+
+// Align items
+.align-start { align-items: flex-start !important; }
+.align-end { align-items: flex-end !important; }
+.align-center { align-items: center !important; }
+.align-baseline { align-items: baseline !important; }
+.align-stretch { align-items: stretch !important; }
+
+// Text alignment
+.text-left { text-align: left !important; }
+.text-center { text-align: center !important; }
+.text-right { text-align: right !important; }
+.text-justify { text-align: justify !important; }
+
+// Text transform
+.text-lowercase { text-transform: lowercase !important; }
+.text-uppercase { text-transform: uppercase !important; }
+.text-capitalize { text-transform: capitalize !important; }
+
+// Font weight
+.fw-light { font-weight: 300 !important; }
+.fw-normal { font-weight: 400 !important; }
+.fw-medium { font-weight: 500 !important; }
+.fw-semibold { font-weight: 600 !important; }
+.fw-bold { font-weight: 700 !important; }
+
+// Font style
+.font-italic { font-style: italic !important; }
+.font-normal { font-style: normal !important; }
+
+// Text decoration
+.text-decoration-none { text-decoration: none !important; }
+.text-decoration-underline { text-decoration: underline !important; }
+
+// Text color utilities
+.text-primary { color: var(--indigo-600) !important; }
+.text-secondary { color: var(--brand-text-secondary) !important; }
+.text-success { color: var(--green-600) !important; }
+.text-danger { color: var(--red-600) !important; }
+.text-warning { color: #f59e0b !important; }
+.text-info { color: var(--indigo-500) !important; }
+.text-light { color: var(--primary-400) !important; }
+.text-dark { color: var(--brand-text) !important; }
+.text-muted { color: var(--brand-text-muted) !important; }
+.text-white { color: white !important; }
+
+// Background color utilities
+.bg-primary { background-color: var(--indigo-600) !important; }
+.bg-secondary { background-color: var(--primary-200) !important; }
+.bg-success { background-color: var(--green-600) !important; }
+.bg-danger { background-color: var(--red-600) !important; }
+.bg-warning { background-color: #f59e0b !important; }
+.bg-info { background-color: var(--indigo-500) !important; }
+.bg-light { background-color: var(--primary-100) !important; }
+.bg-dark { background-color: var(--primary-800) !important; }
+.bg-white { background-color: white !important; }
+.bg-transparent { background-color: transparent !important; }
+
+// Border utilities
+.border { border: 1px solid var(--primary-200) !important; }
+.border-0 { border: 0 !important; }
+.border-top { border-top: 1px solid var(--primary-200) !important; }
+.border-right { border-right: 1px solid var(--primary-200) !important; }
+.border-bottom { border-bottom: 1px solid var(--primary-200) !important; }
+.border-left { border-left: 1px solid var(--primary-200) !important; }
+
+// Border radius
+.rounded { border-radius: var(--radius-md) !important; }
+.rounded-sm { border-radius: var(--radius-sm) !important; }
+.rounded-lg { border-radius: var(--radius-lg) !important; }
+.rounded-xl { border-radius: var(--radius-xl) !important; }
+.rounded-pill { border-radius: 50rem !important; }
+.rounded-circle { border-radius: 50% !important; }
+.rounded-0 { border-radius: 0 !important; }
+
+// Position utilities
+.position-static { position: static !important; }
+.position-relative { position: relative !important; }
+.position-absolute { position: absolute !important; }
+.position-fixed { position: fixed !important; }
+.position-sticky { position: sticky !important; }
+
+// Overflow utilities
+.overflow-auto { overflow: auto !important; }
+.overflow-hidden { overflow: hidden !important; }
+.overflow-visible { overflow: visible !important; }
+.overflow-scroll { overflow: scroll !important; }
+
+// Width utilities
+.w-25 { width: 25% !important; }
+.w-50 { width: 50% !important; }
+.w-75 { width: 75% !important; }
+.w-100 { width: 100% !important; }
+.w-auto { width: auto !important; }
+
+// Height utilities
+.h-25 { height: 25% !important; }
+.h-50 { height: 50% !important; }
+.h-75 { height: 75% !important; }
+.h-100 { height: 100% !important; }
+.h-auto { height: auto !important; }
+
+// Max width utilities
+.mw-100 { max-width: 100% !important; }
+
+// Max height utilities
+.mh-100 { max-height: 100% !important; }
+
+// Spacing utilities (margin and padding)
+$spacers: (
+  0: 0,
+  1: var(--spacing-xs),
+  2: var(--spacing-sm),
+  3: var(--spacing-md),
+  4: var(--spacing-lg),
+  5: var(--spacing-xl),
+  6: var(--spacing-2xl),
+  7: var(--spacing-3xl)
+);
+
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @each $size, $length in $spacers {
+    .#{$abbrev}-#{$size} { #{$prop}: #{$length} !important; }
+    .#{$abbrev}t-#{$size} { #{$prop}-top: #{$length} !important; }
+    .#{$abbrev}r-#{$size} { #{$prop}-right: #{$length} !important; }
+    .#{$abbrev}b-#{$size} { #{$prop}-bottom: #{$length} !important; }
+    .#{$abbrev}l-#{$size} { #{$prop}-left: #{$length} !important; }
+    .#{$abbrev}x-#{$size} {
+      #{$prop}-left: #{$length} !important;
+      #{$prop}-right: #{$length} !important;
+    }
+    .#{$abbrev}y-#{$size} {
+      #{$prop}-top: #{$length} !important;
+      #{$prop}-bottom: #{$length} !important;
+    }
+  }
+}
+
+// Negative margin utilities
+.m-n1 { margin: calc(var(--spacing-xs) * -1) !important; }
+.m-n2 { margin: calc(var(--spacing-sm) * -1) !important; }
+.m-n3 { margin: calc(var(--spacing-md) * -1) !important; }
+.m-n4 { margin: calc(var(--spacing-lg) * -1) !important; }
+.m-n5 { margin: calc(var(--spacing-xl) * -1) !important; }
+
+// Shadow utilities
+.shadow-none { box-shadow: none !important; }
+.shadow-sm { box-shadow: var(--shadow-sm) !important; }
+.shadow { box-shadow: var(--shadow-md) !important; }
+.shadow-lg { box-shadow: var(--shadow-lg) !important; }
+.shadow-xl { box-shadow: var(--shadow-xl) !important; }
+
+// Opacity utilities
+.opacity-0 { opacity: 0 !important; }
+.opacity-25 { opacity: 0.25 !important; }
+.opacity-50 { opacity: 0.5 !important; }
+.opacity-75 { opacity: 0.75 !important; }
+.opacity-100 { opacity: 1 !important; }
+
+// Visibility utilities
+.visible { visibility: visible !important; }
+.invisible { visibility: hidden !important; }
+
+// Screen reader utilities
+.sr-only {
+  @include sr-only;
+}
+
+.sr-only-focusable {
+  @include sr-only;
+  
+  &:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+// Clearfix utility
+.clearfix {
+  @include clearfix;
+}
+
+// Text truncation
+.text-truncate {
+  @include truncate;
+}
+
+// User select utilities
+.user-select-all { user-select: all !important; }
+.user-select-auto { user-select: auto !important; }
+.user-select-none { user-select: none !important; }
+
+// Pointer events
+.pe-none { pointer-events: none !important; }
+.pe-auto { pointer-events: auto !important; }
+
+// Cursor utilities
+.cursor-pointer { cursor: pointer !important; }
+.cursor-default { cursor: default !important; }
+.cursor-not-allowed { cursor: not-allowed !important; }
+
+// Responsive utilities
+@include mobile {
+  .d-mobile-none { display: none !important; }
+  .d-mobile-block { display: block !important; }
+  .d-mobile-inline { display: inline !important; }
+  .d-mobile-inline-block { display: inline-block !important; }
+  .d-mobile-flex { display: flex !important; }
+  .d-mobile-inline-flex { display: inline-flex !important; }
+  
+  .text-mobile-left { text-align: left !important; }
+  .text-mobile-center { text-align: center !important; }
+  .text-mobile-right { text-align: right !important; }
+}
+
+@include tablet {
+  .d-tablet-none { display: none !important; }
+  .d-tablet-block { display: block !important; }
+  .d-tablet-inline { display: inline !important; }
+  .d-tablet-inline-block { display: inline-block !important; }
+  .d-tablet-flex { display: flex !important; }
+  .d-tablet-inline-flex { display: inline-flex !important; }
+}
+
+@include desktop {
+  .d-desktop-none { display: none !important; }
+  .d-desktop-block { display: block !important; }
+  .d-desktop-inline { display: inline !important; }
+  .d-desktop-inline-block { display: inline-block !important; }
+  .d-desktop-flex { display: flex !important; }
+  .d-desktop-inline-flex { display: inline-flex !important; }
+}
+
+// Animation utilities
+.fade-in {
+  @include fade-in;
+}
+
+.slide-up {
+  @include slide-up;
+}

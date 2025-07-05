@@ -6,7 +6,7 @@ baseurl: "" # Leave empty if deploying to root of domain
 url: "https://docs.giveprotocol.io" # Custom domain for documentation
 
 # Theme and styling
-theme: minima
+# Using custom theme - no external theme needed
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
