@@ -21,6 +21,7 @@ Give Protocol is a blockchain-based charitable giving platform that connects don
 ### Is Give Protocol free to use?
 
 Give Protocol charges minimal platform fees to sustain operations:
+
 - **Platform fee**: 2.5% of donation amount
 - **Network fees**: Variable based on blockchain network (usually $1-5)
 - No fees for browsing, searching, or creating accounts
@@ -39,6 +40,7 @@ Give Protocol charges minimal platform fees to sustain operations:
 ### What wallets are supported?
 
 We support major Web3 wallets including:
+
 - MetaMask
 - WalletConnect
 - Coinbase Wallet
@@ -49,6 +51,7 @@ We support major Web3 wallets including:
 ### Is my information secure?
 
 Yes, we implement industry-standard security measures:
+
 - End-to-end encryption for sensitive data
 - Multi-factor authentication options
 - Regular security audits
@@ -60,6 +63,7 @@ Yes, we implement industry-standard security measures:
 ### What cryptocurrencies can I donate?
 
 We support multiple cryptocurrencies including:
+
 - Ethereum (ETH)
 - Bitcoin (BTC)
 - USDC
@@ -70,6 +74,7 @@ We support multiple cryptocurrencies including:
 ### Can I get a tax receipt?
 
 Yes! Eligible donations receive automatic tax receipts:
+
 - Generated automatically after donation confirmation
 - Sent to your registered email
 - Available in your account dashboard
@@ -85,6 +90,7 @@ Yes! Eligible donations receive automatic tax receipts:
 ### How can I track my donation?
 
 Every donation is tracked on the blockchain:
+
 1. View transaction hash immediately after donation
 2. Track status in your dashboard
 3. See real-time updates from organizations
@@ -96,6 +102,7 @@ Every donation is tracked on the blockchain:
 ### How do organizations get verified?
 
 Organizations must complete our verification process:
+
 1. Submit registration application
 2. Provide legal documentation (501(c)(3) status, etc.)
 3. Pass compliance review
@@ -105,6 +112,7 @@ Organizations must complete our verification process:
 ### What fees do organizations pay?
 
 Organizations benefit from low fees:
+
 - No setup or monthly fees
 - Only pay standard platform fee (2.5%)
 - Reduced fees for high-volume organizations
@@ -122,6 +130,7 @@ Organizations benefit from low fees:
 ### How does volunteer time tracking work?
 
 Our volunteer system includes:
+
 - Digital time clock for accurate tracking
 - Organization verification of hours
 - Blockchain-recorded service history
@@ -131,6 +140,7 @@ Our volunteer system includes:
 ### Can I volunteer remotely?
 
 Yes! We support remote volunteering:
+
 - Virtual opportunities available
 - Skills-based remote projects
 - Online mentoring programs
@@ -140,6 +150,7 @@ Yes! We support remote volunteering:
 ### Do volunteer hours have value?
 
 While volunteer hours aren't paid:
+
 - Build verified service history
 - Earn recognition badges
 - Qualify for exclusive opportunities
@@ -151,6 +162,7 @@ While volunteer hours aren't paid:
 ### What blockchain does Give Protocol use?
 
 We operate on multiple blockchains:
+
 - Primary: Ethereum mainnet
 - Layer 2: Polygon, Arbitrum, Optimism
 - Additional: Binance Smart Chain
@@ -159,6 +171,7 @@ We operate on multiple blockchains:
 ### Are smart contracts audited?
 
 Yes, our smart contracts are:
+
 - Audited by leading security firms
 - Open source and verifiable
 - Regularly updated and re-audited
@@ -167,6 +180,7 @@ Yes, our smart contracts are:
 ### What about gas fees?
 
 We help minimize gas fees by:
+
 - Supporting Layer 2 solutions
 - Batching transactions when possible
 - Providing gas estimates upfront
@@ -177,6 +191,7 @@ We help minimize gas fees by:
 ### My donation didn't go through
 
 If your donation fails:
+
 1. Check wallet balance and gas fees
 2. Verify network connection
 3. Ensure correct network selected
@@ -186,6 +201,7 @@ If your donation fails:
 ### I can't connect my wallet
 
 Common wallet connection fixes:
+
 - Update wallet browser extension
 - Clear browser cache
 - Try different browser
@@ -195,6 +211,7 @@ Common wallet connection fixes:
 ### I didn't receive my tax receipt
 
 To retrieve tax receipts:
+
 1. Check spam/junk folder
 2. Verify email address in account
 3. Download from dashboard
@@ -203,7 +220,7 @@ To retrieve tax receipts:
 
 ## More Help
 
-Can't find what you're looking for? 
+Can't find what you're looking for?
 
 - Email: support@giveprotocol.org
 - Live Chat: Available Monday-Friday, 9 AM - 5 PM EST

@@ -15,12 +15,14 @@ Our Time Value Calculator helps you quantify the monetary value of your voluntee
 ### How to Use the Time Value Calculator
 
 1. **Select Your Skill Level**
+
    - Entry Level: Basic tasks, no special skills required
-   - Skilled: Specific training or experience needed  
+   - Skilled: Specific training or experience needed
    - Professional: Specialized expertise (teaching, healthcare, legal)
    - Executive: Strategic planning, board service
 
 2. **Enter Your Details**
+
    - Hours volunteered per week/month
    - Type of volunteer work
    - Your professional hourly rate (optional)
@@ -34,14 +36,14 @@ Our Time Value Calculator helps you quantify the monetary value of your voluntee
 
 ### Value Rates by Category
 
-| Skill Level | National Average | Examples |
-|------------|------------------|----------|
-| General | $29.95/hour | Event support, sorting donations |
-| Skilled | $45.50/hour | Tutoring, basic IT support |
-| Professional | $85.00/hour | Legal advice, medical services |
-| Executive | $150.00/hour | Board service, strategic consulting |
+| Skill Level  | National Average | Examples                            |
+| ------------ | ---------------- | ----------------------------------- |
+| General      | $29.95/hour      | Event support, sorting donations    |
+| Skilled      | $45.50/hour      | Tutoring, basic IT support          |
+| Professional | $85.00/hour      | Legal advice, medical services      |
+| Executive    | $150.00/hour     | Board service, strategic consulting |
 
-*Rates based on Independent Sector's value of volunteer time*
+_Rates based on Independent Sector's value of volunteer time_
 
 ## Tax Deduction Calculator
 
@@ -52,12 +54,15 @@ Calculate potential tax deductions from your charitable activities, including bo
 ### Deductible Volunteer Expenses
 
 #### What You CAN Deduct
+
 - **Transportation**
+
   - Mileage at $0.14 per mile (2024 rate)
   - Parking fees and tolls
   - Public transportation costs
 
 - **Supplies**
+
   - Materials purchased for volunteer work
   - Uniforms required by organization
   - Safety equipment
@@ -68,6 +73,7 @@ Calculate potential tax deductions from your charitable activities, including bo
   - Conference registration fees
 
 #### What You CANNOT Deduct
+
 - Value of your time or services
 - Personal expenses
 - Childcare costs
@@ -76,6 +82,7 @@ Calculate potential tax deductions from your charitable activities, including bo
 ### Using the Tax Calculator
 
 1. **Input Donations**
+
    ```
    Cash Donations: $______
    Property Donations: $______
@@ -83,6 +90,7 @@ Calculate potential tax deductions from your charitable activities, including bo
    ```
 
 2. **Add Volunteer Expenses**
+
    ```
    Miles Driven: _____ × $0.14 = $______
    Supplies Purchased: $______
@@ -90,6 +98,7 @@ Calculate potential tax deductions from your charitable activities, including bo
    ```
 
 3. **Select Tax Information**
+
    - Filing status
    - Tax bracket
    - Standard vs. itemized deductions
@@ -109,24 +118,28 @@ Understand how your donations translate into real-world impact across different 
 ### Impact Examples by Sector
 
 #### Education
+
 - **$25**: Provides school supplies for one student
 - **$100**: Sponsors a child's monthly tutoring
 - **$500**: Funds a classroom technology upgrade
 - **$1,000**: Provides a semester scholarship
 
 #### Hunger Relief
+
 - **$1**: Provides 3 meals through food bank
 - **$50**: Feeds a family of 4 for a week
 - **$250**: Stocks a food pantry for a month
 - **$1,000**: Provides 3,000 meals
 
 #### Healthcare
+
 - **$10**: Provides basic medical supplies
 - **$75**: Funds a medical screening
 - **$350**: Covers emergency medical treatment
 - **$2,500**: Funds minor surgery in developing country
 
 #### Environmental
+
 - **$5**: Plants one tree
 - **$25**: Protects 100 sq ft of rainforest
 - **$100**: Removes 1,000 lbs of ocean plastic
@@ -152,6 +165,7 @@ Many employers offer matching gift programs. Calculate how corporate matching ca
 ### How Matching Works
 
 1. **Common Match Ratios**
+
    - 1:1 (100% match) - Most common
    - 2:1 (200% match) - Doubles your impact
    - 0.5:1 (50% match) - Adds half your donation
@@ -191,11 +205,13 @@ Help organizations understand the value volunteers bring to their mission.
 ### Calculation Factors
 
 1. **Direct Value**
+
    - Hours worked × hourly value
    - Skills-based multiplier
    - Project completion value
 
 2. **Indirect Benefits**
+
    - Community engagement
    - Donor conversion rate
    - Social media reach
@@ -234,11 +250,13 @@ Calculate the future value of planned gifts and understand various legacy giving
 ### Types of Legacy Gifts
 
 1. **Bequest in Will**
+
    - Specific amount or percentage
    - Residual estate
    - Contingent bequest
 
 2. **Charitable Remainder Trust**
+
    - Income during lifetime
    - Remainder to charity
    - Tax benefits today
@@ -271,22 +289,24 @@ Plan your annual giving to maximize impact while maintaining financial health.
 ### Recommended Giving Guidelines
 
 | Income Level | Suggested Giving % | Monthly Amount |
-|--------------|-------------------|----------------|
-| $30,000 | 2-3% | $50-75 |
-| $50,000 | 3-5% | $125-208 |
-| $75,000 | 5-7% | $312-437 |
-| $100,000 | 7-10% | $583-833 |
-| $150,000+ | 10%+ | $1,250+ |
+| ------------ | ------------------ | -------------- |
+| $30,000      | 2-3%               | $50-75         |
+| $50,000      | 3-5%               | $125-208       |
+| $75,000      | 5-7%               | $312-437       |
+| $100,000     | 7-10%              | $583-833       |
+| $150,000+    | 10%+               | $1,250+        |
 
 ### Creating Your Giving Plan
 
 1. **Calculate Capacity**
+
    - Annual income
    - Essential expenses
    - Savings goals
    - Discretionary income
 
 2. **Allocate by Priority**
+
    - 40% - Primary cause
    - 30% - Secondary cause
    - 20% - Community/local
@@ -303,12 +323,14 @@ Plan your annual giving to maximize impact while maintaining financial health.
 ### Sharing Your Impact
 
 1. **Social Media**
+
    - Share calculator results
    - Inspire others to give
    - Tag organizations
    - Use #GiveProtocolImpact
 
 2. **Tax Documentation**
+
    - Print calculator summaries
    - Save with tax records
    - Share with tax preparer
@@ -332,6 +354,7 @@ Plan your annual giving to maximize impact while maintaining financial health.
 ### Multi-Year Projections
 
 Calculate long-term impact of sustained giving:
+
 - Compound impact over time
 - Inflation adjustments
 - Growth projections
@@ -340,6 +363,7 @@ Calculate long-term impact of sustained giving:
 ### Comparative Analysis
 
 Compare different giving strategies:
+
 - Lump sum vs. recurring
 - Direct vs. DAF giving
 - Time vs. money trade-offs
@@ -348,6 +372,7 @@ Compare different giving strategies:
 ### Currency Conversion
 
 For international giving:
+
 - Real-time exchange rates
 - Purchasing power parity
 - Local impact values
@@ -358,11 +383,13 @@ For international giving:
 ### Strategic Giving
 
 1. **Bundle Donations**
+
    - Reduce transaction fees
    - Simplify record keeping
    - Qualify for recognition tiers
 
 2. **Time Your Gifts**
+
    - Year-end tax planning
    - Matching campaigns
    - Giving days
@@ -384,6 +411,7 @@ For international giving:
 ## Mobile Calculator Access
 
 Access all calculators on-the-go:
+
 - Mobile-optimized interface
 - Offline capability
 - Sync across devices
@@ -404,6 +432,6 @@ Every contribution matters. Use our calculators to make informed decisions and m
 
 ---
 
-*Calculator values updated quarterly based on current data*  
-*Tax information for general guidance only - consult your tax advisor*  
-*Impact examples based on partner organization reports*
+_Calculator values updated quarterly based on current data_  
+_Tax information for general guidance only - consult your tax advisor_  
+_Impact examples based on partner organization reports_

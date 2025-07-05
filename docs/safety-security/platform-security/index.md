@@ -21,7 +21,9 @@ Give Protocol implements multiple layers of security to protect our users:
 ### Creating a Secure Account
 
 #### Strong Password Requirements
+
 Your password must include:
+
 - Minimum 12 characters
 - Uppercase and lowercase letters
 - Numbers and special characters
@@ -29,6 +31,7 @@ Your password must include:
 - Not used on other sites
 
 #### Password Best Practices
+
 - Use a unique password for Give Protocol
 - Consider using a password manager
 - Never share your password
@@ -38,7 +41,9 @@ Your password must include:
 ### Multi-Factor Authentication (MFA)
 
 #### Why Enable MFA?
+
 MFA adds an extra layer of security by requiring:
+
 1. Something you know (password)
 2. Something you have (phone/device)
 3. Optional: Something you are (biometrics)
@@ -46,11 +51,13 @@ MFA adds an extra layer of security by requiring:
 #### Setting Up MFA
 
 1. **Navigate to Security Settings**
+
    - Go to Account Settings
    - Select Security tab
    - Click "Enable Two-Factor Authentication"
 
 2. **Choose Your Method**
+
    - **SMS Text**: Receive codes via text
    - **Authenticator App**: Use Google Authenticator, Authy, etc.
    - **Security Key**: Physical USB device
@@ -64,6 +71,7 @@ MFA adds an extra layer of security by requiring:
 ### Account Recovery
 
 #### Recovery Options
+
 - Email verification
 - SMS verification
 - Security questions
@@ -71,6 +79,7 @@ MFA adds an extra layer of security by requiring:
 - Identity verification
 
 #### If You Lose Access
+
 1. Click "Can't access account?"
 2. Choose recovery method
 3. Follow verification steps
@@ -82,6 +91,7 @@ MFA adds an extra layer of security by requiring:
 ### Personal Information Security
 
 #### What We Protect
+
 - Personal identification information
 - Financial data and transaction history
 - Communication records
@@ -89,6 +99,7 @@ MFA adds an extra layer of security by requiring:
 - Volunteer activity history
 
 #### How We Protect It
+
 - **Encryption at rest**: All stored data encrypted
 - **Encryption in transit**: Secure connections only
 - **Access controls**: Limited to necessary personnel
@@ -98,12 +109,15 @@ MFA adds an extra layer of security by requiring:
 ### Privacy Controls
 
 #### Managing Your Privacy
+
 1. **Profile Visibility**
+
    - Public: Name and general location
    - Private: All personal details
    - Custom: Choose what to share
 
 2. **Communication Preferences**
+
    - Platform notifications
    - Email communications
    - SMS alerts
@@ -120,6 +134,7 @@ MFA adds an extra layer of security by requiring:
 ### Secure Donations
 
 #### Payment Protection
+
 - PCI-DSS compliant processing
 - Tokenized payment information
 - Fraud detection systems
@@ -127,13 +142,16 @@ MFA adds an extra layer of security by requiring:
 - Transaction monitoring
 
 #### Safe Payment Methods
+
 ✅ **Accepted**:
+
 - Credit/debit cards
 - Bank transfers (ACH)
 - Digital wallets (PayPal, Apple Pay)
 - Donor-advised funds
 
 ❌ **Never Required**:
+
 - Wire transfers to individuals
 - Gift cards
 - Cryptocurrency (unless verified)
@@ -142,6 +160,7 @@ MFA adds an extra layer of security by requiring:
 ### Transaction Verification
 
 #### Before Donating
+
 - Verify organization badge ✓
 - Check SSL certificate 🔒
 - Review transaction details
@@ -149,6 +168,7 @@ MFA adds an extra layer of security by requiring:
 - Save confirmations
 
 #### After Donating
+
 - Receive instant confirmation
 - Get email receipt
 - Download tax documentation
@@ -160,6 +180,7 @@ MFA adds an extra layer of security by requiring:
 ### Secure Messaging
 
 #### Platform Messaging Features
+
 - End-to-end encryption available
 - No external email exposure
 - Message history retention
@@ -167,6 +188,7 @@ MFA adds an extra layer of security by requiring:
 - Block and report functions
 
 #### Safe Communication Practices
+
 - Keep conversations on platform
 - Never share passwords
 - Avoid sharing personal contact info
@@ -176,7 +198,9 @@ MFA adds an extra layer of security by requiring:
 ### Phishing Protection
 
 #### Recognizing Phishing Attempts
+
 🚩 **Warning Signs**:
+
 - Urgent action required
 - Requests for passwords
 - Suspicious links
@@ -184,7 +208,9 @@ MFA adds an extra layer of security by requiring:
 - Unofficial sender addresses
 
 #### Official Communications
+
 ✅ **Give Protocol will**:
+
 - Send from @giveprotocol.org
 - Include your name
 - Provide clear context
@@ -192,6 +218,7 @@ MFA adds an extra layer of security by requiring:
 - Include security footer
 
 ❌ **Give Protocol won't**:
+
 - Request passwords via email
 - Send suspicious attachments
 - Use threatening language
@@ -203,6 +230,7 @@ MFA adds an extra layer of security by requiring:
 ### Security Dashboard
 
 Access your security dashboard to:
+
 - View recent account activity
 - Check active sessions
 - Review security settings
@@ -212,6 +240,7 @@ Access your security dashboard to:
 ### Activity Monitoring
 
 #### What We Track
+
 - Login attempts and locations
 - Password changes
 - Transaction activity
@@ -219,6 +248,7 @@ Access your security dashboard to:
 - Security setting updates
 
 #### Alerts You'll Receive
+
 - New device login
 - Password reset requests
 - Large transactions
@@ -228,6 +258,7 @@ Access your security dashboard to:
 ### Session Management
 
 #### Active Session Controls
+
 - View all active sessions
 - See device and location info
 - Terminate suspicious sessions
@@ -239,6 +270,7 @@ Access your security dashboard to:
 ### App Security Features
 
 #### Built-in Protections
+
 - Biometric authentication
 - Secure data storage
 - Automatic logouts
@@ -246,7 +278,9 @@ Access your security dashboard to:
 - Jailbreak/root detection
 
 #### Mobile Best Practices
+
 1. **Keep App Updated**
+
    - Enable automatic updates
    - Check for updates regularly
    - Read update notes
@@ -262,13 +296,16 @@ Access your security dashboard to:
 ### How to Report
 
 #### Security Vulnerabilities
+
 Email: security@giveprotocol.org
+
 - Describe the issue clearly
 - Include steps to reproduce
 - Attach relevant screenshots
 - Avoid public disclosure
 
 #### Account Compromises
+
 1. Change password immediately
 2. Review recent activity
 3. Terminate all sessions
@@ -278,6 +315,7 @@ Email: security@giveprotocol.org
 ### Bug Bounty Program
 
 We reward responsible disclosure:
+
 - **Scope**: Platform vulnerabilities
 - **Rewards**: $100-$10,000
 - **Process**: Coordinated disclosure
@@ -286,6 +324,7 @@ We reward responsible disclosure:
 ## Best Practices Checklist
 
 ### Daily Security Habits
+
 - [ ] Check for suspicious emails
 - [ ] Verify before clicking links
 - [ ] Log out when finished
@@ -293,6 +332,7 @@ We reward responsible disclosure:
 - [ ] Keep software updated
 
 ### Weekly Security Review
+
 - [ ] Review account activity
 - [ ] Check active sessions
 - [ ] Update passwords if needed
@@ -300,6 +340,7 @@ We reward responsible disclosure:
 - [ ] Review privacy settings
 
 ### Monthly Security Audit
+
 - [ ] Update recovery information
 - [ ] Review connected accounts
 - [ ] Check transaction history
@@ -311,18 +352,21 @@ We reward responsible disclosure:
 ### Recommended Tools
 
 #### Password Managers
+
 - 1Password
 - Bitwarden
 - LastPass
 - Dashlane
 
 #### Authenticator Apps
+
 - Google Authenticator
 - Microsoft Authenticator
 - Authy
 - Duo Mobile
 
 #### Security Keys
+
 - YubiKey
 - Google Titan
 - Thetis
@@ -333,6 +377,7 @@ We reward responsible disclosure:
 ### Our Security Standards
 
 #### Industry Compliance
+
 - **PCI-DSS Level 1**: Payment security
 - **SOC 2 Type II**: Security controls
 - **GDPR**: Data protection
@@ -340,6 +385,7 @@ We reward responsible disclosure:
 - **ISO 27001**: Information security
 
 #### Regular Audits
+
 - Annual security assessments
 - Quarterly penetration testing
 - Monthly vulnerability scans
@@ -349,6 +395,7 @@ We reward responsible disclosure:
 ## Data Rights
 
 ### Your Rights Include
+
 - **Access**: Request your data
 - **Correction**: Fix inaccuracies
 - **Deletion**: Remove your data
@@ -356,6 +403,7 @@ We reward responsible disclosure:
 - **Objection**: Opt-out of processing
 
 ### Exercising Your Rights
+
 1. Go to Privacy Settings
 2. Select "Data Rights"
 3. Choose your request type
@@ -367,6 +415,7 @@ We reward responsible disclosure:
 ### If Your Account Is Compromised
 
 #### Immediate Actions
+
 1. **Change Password** - Use a strong, unique password
 2. **Enable MFA** - Add extra security layer
 3. **Review Activity** - Check for unauthorized actions
@@ -374,6 +423,7 @@ We reward responsible disclosure:
 5. **Contact Support** - Report the incident
 
 #### Follow-up Steps
+
 - Update other accounts if password was reused
 - Scan devices for malware
 - Review financial statements
@@ -385,12 +435,14 @@ We reward responsible disclosure:
 ### Getting Help
 
 #### Security Support
+
 - Email: security@giveprotocol.org
 - Chat: Available 24/7
 - Phone: 1-800-GIVE-SAFE
 - Help Center: Security section
 
 #### Educational Resources
+
 - Security webinars
 - Best practices guides
 - Video tutorials
@@ -400,6 +452,7 @@ We reward responsible disclosure:
 ## Stay Informed
 
 ### Security Updates
+
 - Platform announcements
 - Email notifications
 - Mobile push alerts
@@ -407,7 +460,9 @@ We reward responsible disclosure:
 - Social media updates
 
 ### Subscribe to Alerts
+
 Get notified about:
+
 - Security patches
 - New features
 - Threat warnings
@@ -422,6 +477,6 @@ Together, we can ensure Give Protocol remains a safe, secure platform for making
 
 ---
 
-*Security Contact: security@giveprotocol.org*  
-*Emergency Hotline: 1-800-GIVE-SAFE*  
-*Last Updated: December 2024*
+_Security Contact: security@giveprotocol.org_  
+_Emergency Hotline: 1-800-GIVE-SAFE_  
+_Last Updated: December 2024_

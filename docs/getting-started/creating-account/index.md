@@ -9,6 +9,7 @@ Welcome to Give Protocol! Creating an account is your first step towards making 
 ## Before You Begin
 
 ### Requirements
+
 - A valid email address
 - Access to a Web3 wallet (we'll help you set one up if needed)
 - Basic personal information
@@ -22,7 +23,7 @@ Give Protocol offers three types of accounts:
 2. **Organization Account** - For charities and non-profits
 3. **Volunteer Account** - For individuals offering their time and skills
 
-*Note: You can upgrade or switch account types later if needed.*
+_Note: You can upgrade or switch account types later if needed._
 
 ## Step-by-Step Registration
 
@@ -43,12 +44,14 @@ Give Protocol offers three types of accounts:
 ### Step 3: Enter Basic Information
 
 #### For All Account Types:
+
 - **Email Address**: Your primary contact email
 - **Password**: Minimum 8 characters with uppercase, lowercase, number, and special character
 - **Display Name**: How you want to appear on the platform
 - **Country**: Your country of residence
 
 #### Additional for Organizations:
+
 - **Organization Name**: Legal registered name
 - **Registration Number**: Charity/Non-profit number
 - **Website**: Your organization's website (optional)
@@ -78,7 +81,7 @@ This step is essential for making or receiving donations. See our [Wallet Connec
 We strongly recommend enabling 2FA:
 
 1. Go to **Settings** → **Security**
-2. Click **"Enable 2FA"**  
+2. Click **"Enable 2FA"**
 3. Choose your preferred method (Authenticator App recommended)
 4. Follow the setup instructions
 5. Save your backup codes securely
@@ -94,18 +97,21 @@ If you created an organization account:
 ## Account Features by Type
 
 ### Donor Account
+
 - Browse verified organizations
 - Make donations
 - Track donation history
 - Download tax receipts
 
 ### Organization Account
+
 - Create fundraising campaigns
 - Accept cryptocurrency donations
 - Issue tax receipts
 - Manage volunteer opportunities
 
 ### Volunteer Account
+
 - Browse volunteer opportunities
 - Track volunteer hours
 - Build skill portfolio

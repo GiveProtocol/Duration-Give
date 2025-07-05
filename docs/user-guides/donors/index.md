@@ -9,6 +9,7 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ## Getting Started as a Donor
 
 ### Your Donor Journey
+
 1. **Create Account** - Set up your donor profile
 2. **Connect Wallet** - Link your cryptocurrency wallet
 3. **Discover Causes** - Find organizations you care about
@@ -16,6 +17,7 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 5. **Track Impact** - Monitor your charitable giving over time
 
 ### First-Time Setup
+
 - **Complete profile** with your giving interests
 - **Set privacy preferences** for donation visibility
 - **Enable two-factor authentication** for security
@@ -26,6 +28,7 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ### Discovery Tools
 
 #### Browse by Category
+
 - **Education**: Schools, scholarships, literacy programs
 - **Health**: Medical research, healthcare access, mental health
 - **Environment**: Conservation, climate action, sustainability
@@ -34,6 +37,7 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 - **Human Rights**: Advocacy, justice, equality initiatives
 
 #### Search and Filter Options
+
 - **Geographic location**: Local, national, or international
 - **Organization size**: Large NGOs or grassroots organizations
 - **Verification status**: Fully verified organizations only
@@ -43,6 +47,7 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ### Due Diligence
 
 #### What to Check
+
 - **Verification Badge**: Ensure organization is verified
 - **Registration Details**: 501(c)(3) or equivalent status
 - **Impact Reports**: Review past performance
@@ -50,6 +55,7 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 - **Community Reviews**: Read other donors' experiences
 
 #### Red Flags to Avoid
+
 - Unverified organizations
 - Vague mission statements
 - No impact reporting
@@ -61,16 +67,19 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ### Step-by-Step Process
 
 1. **Select Organization**
+
    - Click on organization profile
    - Review their current campaigns
    - Check recent activity
 
 2. **Choose Campaign**
+
    - Read campaign description
    - Note funding goal and deadline
    - Review fund allocation plan
 
 3. **Select Amount**
+
    - Enter donation amount
    - Choose cryptocurrency
    - Review exchange rate
@@ -85,6 +94,7 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ### Cryptocurrency Options
 
 #### Supported Currencies
+
 - **Ethereum (ETH)**: Primary network
 - **Bitcoin (BTC)**: Via wrapped tokens
 - **Stablecoins**: USDC, USDT, DAI
@@ -92,6 +102,7 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 - **Layer 2**: Polygon, Arbitrum support
 
 #### Choosing the Right Currency
+
 - **For stability**: Use stablecoins (USDC, DAI)
 - **For lower fees**: Use Layer 2 networks
 - **For simplicity**: Use ETH on mainnet
@@ -100,22 +111,26 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ## Donation Strategies
 
 ### One-Time Giving
+
 - **Best for**: Testing new organizations
 - **Benefits**: Flexibility, immediate impact
 - **Considerations**: Higher transaction fees per donation
 
 ### Recurring Donations
+
 - **Best for**: Long-term support
 - **Benefits**: Predictable funding for organizations
 - **Setup**: Choose frequency and amount
 - **Management**: Easy to modify or cancel
 
 ### Campaign-Based Giving
+
 - **Best for**: Specific projects
 - **Benefits**: Clear impact tracking
 - **Approach**: Support time-bound initiatives
 
 ### Portfolio Giving
+
 - **Best for**: Diversified impact
 - **Strategy**: Support multiple causes
 - **Management**: Track all donations in one place
@@ -123,18 +138,21 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ## Tax Benefits
 
 ### Tax Receipt Generation
+
 - **Automatic**: Receipts generated for eligible donations
 - **Format**: PDF with all required information
 - **Storage**: Available in your dashboard
 - **Annual Summary**: Year-end giving statement
 
 ### Maximizing Deductions
+
 - **Donate appreciated crypto**: Avoid capital gains tax
 - **Bunch donations**: Concentrate giving in high-income years
 - **Keep records**: Save all receipts and transaction details
 - **Consult advisor**: Get professional tax advice
 
 ### International Considerations
+
 - **Cross-border**: Check local tax laws
 - **Documentation**: May need additional forms
 - **Currency conversion**: Track exchange rates
@@ -145,18 +163,21 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ### Smart Giving Tools
 
 #### Impact Calculator
+
 - Estimate donation impact
 - Compare organizations
 - Project long-term effects
 - Optimize giving strategy
 
 #### Donation Splitting
+
 - Support multiple organizations
 - Set percentage allocations
 - Single transaction convenience
 - Reduced fees
 
 #### Conditional Donations
+
 - Set milestones for release
 - Escrow functionality
 - Automatic triggers
@@ -165,12 +186,14 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ### Privacy Options
 
 #### Anonymous Donations
+
 - **Full anonymity**: No public record
 - **Partial privacy**: Hide amount only
 - **Pseudonymous**: Use display name
 - **Tax considerations**: Still receive receipts
 
 #### Privacy Best Practices
+
 - Use separate wallet for donations
 - Consider privacy coins
 - Review organization's privacy policy
@@ -179,18 +202,21 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ## Tracking Your Impact
 
 ### Dashboard Features
+
 - **Donation History**: Complete transaction log
 - **Impact Metrics**: See your cumulative effect
 - **Organization Updates**: Progress reports
 - **Tax Documents**: All receipts in one place
 
 ### Annual Giving Report
+
 - Total donations by category
 - Tax-deductible summary
 - Impact achievements
 - Year-over-year comparison
 
 ### Social Features
+
 - Share impact (optional)
 - Join donor communities
 - Participate in challenges
@@ -199,18 +225,21 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ## Security Best Practices
 
 ### Account Security
+
 - **Strong password**: Unique and complex
 - **2FA enabled**: Extra protection layer
 - **Regular reviews**: Check account activity
 - **Secure email**: Protect linked email account
 
 ### Wallet Security
+
 - **Hardware wallet**: For large amounts
 - **Backup phrases**: Store securely offline
 - **Test transactions**: Start with small amounts
 - **Network verification**: Always check you're on correct network
 
 ### Transaction Safety
+
 - **Double-check addresses**: No way to reverse
 - **Verify amounts**: Including decimals
 - **Gas estimation**: Ensure sufficient funds
@@ -219,17 +248,20 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ## Common Questions
 
 ### Minimum Donations
+
 - Platform minimum: $1 USD equivalent
 - Network fees may exceed small donations
 - Consider batching small donations
 
 ### Failed Transactions
+
 - Check wallet balance
 - Verify gas fees
 - Ensure network compatibility
 - Contact support if needed
 
 ### Refund Policy
+
 - Blockchain transactions are irreversible
 - Organization may offer refunds
 - Dispute resolution available
@@ -238,24 +270,28 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ## Tips for Effective Giving
 
 ### Research First
+
 - Spend time understanding organizations
 - Read impact reports thoroughly
 - Check community feedback
 - Verify all claims
 
 ### Start Small
+
 - Test with small donations first
 - Build trust over time
 - Increase giving as comfortable
 - Learn platform features gradually
 
 ### Engage Beyond Money
+
 - Follow organization updates
 - Share their mission
 - Volunteer if possible
 - Provide feedback
 
 ### Track and Adjust
+
 - Monitor donation impact
 - Adjust strategy based on results
 - Try different approaches
@@ -264,12 +300,14 @@ Welcome to the comprehensive guide for donors on Give Protocol. Whether you're n
 ## Getting Support
 
 ### Help Resources
+
 - **FAQ Section**: Common questions answered
 - **Video Tutorials**: Visual guides
 - **Community Forums**: Peer support
 - **Live Chat**: Real-time assistance
 
 ### Contact Options
+
 - Email: donors@giveprotocol.org
 - Support ticket system
 - Community Discord

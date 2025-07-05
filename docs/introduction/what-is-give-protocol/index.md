@@ -11,6 +11,7 @@ Give Protocol is a next-generation charitable giving platform that leverages blo
 ## Our Mission
 
 To revolutionize charitable giving by:
+
 - **Eliminating barriers** between donors and causes they care about
 - **Ensuring transparency** in how donations are used
 - **Reducing costs** associated with traditional donation processing
@@ -20,36 +21,42 @@ To revolutionize charitable giving by:
 ## Key Features
 
 ### 🌐 Global Accessibility
+
 - Accept donations from anywhere in the world
 - No geographical restrictions or banking limitations
 - Support for multiple cryptocurrencies
 - Instant cross-border transactions
 
 ### 🔍 Complete Transparency
+
 - Every donation tracked on the blockchain
 - Public verification of fund allocation
 - Real-time tracking of campaign progress
 - Immutable transaction records
 
 ### 💰 Low Fees
+
 - Minimal platform fees (2.5%)
 - No hidden charges or processing fees
 - Transparent fee structure
 - Lower costs than traditional payment processors
 
 ### ⚡ Instant Transactions
+
 - Real-time donation processing
 - Immediate confirmation for donors
 - No waiting for bank transfers
 - 24/7 availability
 
 ### 🛡️ Secure & Verified
+
 - Blockchain-secured transactions
 - Verified organization profiles
 - Multi-signature wallet protection
 - Regular security audits
 
 ### 📱 User-Friendly
+
 - Intuitive interface for all users
 - Mobile-responsive design
 - Simple wallet connection
@@ -58,6 +65,7 @@ To revolutionize charitable giving by:
 ## How It Works
 
 ### For Donors
+
 1. **Create Account**: Sign up with email and connect your crypto wallet
 2. **Browse Causes**: Explore verified organizations and campaigns
 3. **Make Donations**: Send cryptocurrency directly to organizations
@@ -65,6 +73,7 @@ To revolutionize charitable giving by:
 5. **Get Receipts**: Receive tax-deductible receipts automatically
 
 ### For Organizations
+
 1. **Apply & Verify**: Complete our verification process
 2. **Create Profile**: Share your mission and impact stories
 3. **Launch Campaigns**: Set fundraising goals and timelines
@@ -72,6 +81,7 @@ To revolutionize charitable giving by:
 5. **Engage Donors**: Provide updates and impact reports
 
 ### For Volunteers
+
 1. **Create Profile**: Showcase your skills and interests
 2. **Find Opportunities**: Browse local and remote volunteer positions
 3. **Track Hours**: Log volunteer time digitally
@@ -81,12 +91,14 @@ To revolutionize charitable giving by:
 ## Technology Stack
 
 ### Blockchain Infrastructure
+
 - **Primary Network**: Ethereum mainnet for security
 - **Layer 2 Solutions**: Polygon, Arbitrum for lower fees
 - **Cross-Chain Support**: Binance Smart Chain, Solana
 - **Smart Contracts**: Audited and open-source
 
 ### Platform Architecture
+
 - **Frontend**: React.js with TypeScript
 - **Backend**: Node.js with Express
 - **Database**: PostgreSQL with Supabase
@@ -96,6 +108,7 @@ To revolutionize charitable giving by:
 ## Benefits
 
 ### For Donors
+
 - **Direct Impact**: Donations go directly to organizations
 - **Tax Benefits**: Automatic tax receipt generation
 - **Portfolio Tracking**: Monitor all donations in one place
@@ -103,6 +116,7 @@ To revolutionize charitable giving by:
 - **Community**: Connect with like-minded donors
 
 ### For Organizations
+
 - **Reduced Costs**: Lower transaction fees
 - **Instant Access**: Immediate fund availability
 - **Global Donors**: Accept donations worldwide
@@ -110,6 +124,7 @@ To revolutionize charitable giving by:
 - **Tools**: Modern fundraising features
 
 ### For the Charitable Sector
+
 - **Increased Trust**: Blockchain verification
 - **Better Efficiency**: Reduced administrative costs
 - **Innovation**: Modern giving methods
@@ -119,30 +134,35 @@ To revolutionize charitable giving by:
 ## Use Cases
 
 ### Disaster Relief
+
 - Rapid response fundraising
 - Direct aid distribution
 - Transparent fund allocation
 - Real-time impact tracking
 
 ### Education Initiatives
+
 - Scholarship funding
 - School infrastructure projects
 - Educational resource distribution
 - Student sponsorship programs
 
 ### Healthcare Campaigns
+
 - Medical treatment funding
 - Hospital equipment purchases
 - Research project support
 - Community health programs
 
 ### Environmental Causes
+
 - Conservation projects
 - Climate action initiatives
 - Wildlife protection
 - Sustainable development
 
 ### Community Development
+
 - Local infrastructure projects
 - Small business support
 - Skills training programs
@@ -151,24 +171,28 @@ To revolutionize charitable giving by:
 ## Why Blockchain?
 
 ### Transparency & Trust
+
 - Immutable donation records
 - Public ledger verification
 - No hidden intermediaries
 - Complete audit trails
 
 ### Efficiency & Speed
+
 - Instant global transactions
 - No banking delays
 - 24/7 operation
 - Automated processes
 
 ### Security & Control
+
 - Cryptographic protection
 - User-controlled wallets
 - No central point of failure
 - Fraud prevention
 
 ### Innovation & Future
+
 - Programmable donations
 - Smart contract automation
 - NFT certificates
@@ -179,6 +203,7 @@ To revolutionize charitable giving by:
 Give Protocol is more than a platform – it's a movement to transform charitable giving. Whether you're a donor looking to make a difference, an organization seeking support, or a volunteer wanting to contribute your time, Give Protocol provides the tools and transparency to maximize your impact.
 
 ### Get Started Today
+
 - [Create an Account]({{ '/docs/getting-started/creating-account/' | relative_url }})
 - [Browse Organizations]({{ '/docs/platform-features/search-discovery/' | relative_url }})
 - [Learn About Security]({{ '/docs/safety-security/' | relative_url }})
