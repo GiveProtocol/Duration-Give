@@ -12,7 +12,7 @@ The documentation URL is configured in `/src/config/docs.ts`:
 
 ```typescript
 export const DOCS_CONFIG = {
-  url: process.env.VITE_DOCS_URL || 'https://give-protocol.gitbook.io',
+  url: process.env.VITE_DOCS_URL || "https://give-protocol.gitbook.io",
 };
 ```
 
@@ -39,7 +39,7 @@ You can also update the default URL in `/src/config/docs.ts`:
 ```typescript
 export const DOCS_CONFIG = {
   // Change from GitBook to Jekyll site
-  url: process.env.VITE_DOCS_URL || 'https://docs.giveprotocol.org',
+  url: process.env.VITE_DOCS_URL || "https://docs.giveprotocol.org",
 };
 ```
 
@@ -72,7 +72,11 @@ In your default layout (typically `_layouts/default.html`), add the logo to the 
 <header>
   <nav>
     <a href="{{ site.baseurl }}/" class="logo">
-      <img src="{{ site.baseurl }}{{ site.logo }}" alt="Give Protocol" height="32">
+      <img
+        src="{{ site.baseurl }}{{ site.logo }}"
+        alt="Give Protocol"
+        height="32"
+      />
       <span>{{ site.title }}</span>
     </a>
     <!-- Rest of navigation -->
@@ -111,17 +115,20 @@ The following files have been updated to use the centralized documentation confi
 ## Testing the Integration
 
 1. Start your Jekyll documentation site:
+
    ```bash
    cd /mnt/c/Projects/Duration-Give/_docs
    bundle exec jekyll serve
    ```
 
 2. Update the `.env` file in the Duration project to point to your local Jekyll site:
+
    ```bash
    VITE_DOCS_URL=http://localhost:4000
    ```
 
 3. Start the Duration development server:
+
    ```bash
    npm run dev
    ```
