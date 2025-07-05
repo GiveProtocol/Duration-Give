@@ -61,7 +61,7 @@ function App() {
             <AuthProvider>
               <SettingsProvider>
                 <Web3Provider>
-                  <BrowserRouter>
+                  <BrowserRouter future={{ v7_relativeSplatPath: true }}>
                     <Layout>
                       <AppRoutes />
                     </Layout>

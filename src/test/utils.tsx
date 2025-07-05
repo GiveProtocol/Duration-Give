@@ -13,7 +13,7 @@ export function renderWithProviders(
 
   return render(ui, {
     wrapper: ({ children }: PropsWithChildren) => (
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_relativeSplatPath: true }}>
         <ToastProvider>
           <AuthProvider>
             <Web3Provider>
