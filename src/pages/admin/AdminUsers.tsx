@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -96,23 +96,23 @@ const AdminUsers: React.FC = () => {
     );
   });
 
-  const handleView = (user: UserProfile) => {
+  const handleView = useCallback((user: UserProfile) => {
     setSelectedUser(user);
     setIsViewModalOpen(true);
-  };
+  }, []);
 
-  const handleEdit = (user: UserProfile) => {
+  const handleEdit = useCallback((user: UserProfile) => {
     setSelectedUser(user);
     setEditUserType(user.type);
     setIsEditModalOpen(true);
-  };
+  }, []);
 
-  const handleDelete = (user: UserProfile) => {
+  const handleDelete = useCallback((user: UserProfile) => {
     setSelectedUser(user);
     setIsDeleteModalOpen(true);
-  };
+  }, []);
 
-  const confirmDelete = async () => {
+  const confirmDelete = useCallback(async () => {
     if (!selectedUser) return;
 
     try {
@@ -142,9 +142,9 @@ const AdminUsers: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedUser, fetchUsers]);
 
-  const handleSaveEdit = async () => {
+  const handleSaveEdit = useCallback(async () => {
     if (!selectedUser) return;
 
     try {
@@ -172,7 +172,23 @@ const AdminUsers: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedUser, editUserType, fetchUsers]);
+
+  const closeViewModal = useCallback(() => {
+    setIsViewModalOpen(false);
+  }, []);
+
+  const closeEditModal = useCallback(() => {
+    setIsEditModalOpen(false);
+  }, []);
+
+  const closeDeleteModal = useCallback(() => {
+    setIsDeleteModalOpen(false);
+  }, []);
+
+  const handleUserTypeChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setEditUserType(e.target.value as 'donor' | 'charity' | 'admin');
+  }, []);
 
   if (loading && users.length === 0) {
     return (
@@ -315,7 +331,7 @@ const AdminUsers: React.FC = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setIsViewModalOpen(false)}
+                  onClick={closeViewModal}
                 >
                   <XCircle className="h-5 w-5" />
                 </Button>
@@ -365,7 +381,7 @@ const AdminUsers: React.FC = () => {
             </div>
             <div className="p-6 border-t border-gray-200 flex justify-end">
               <Button
-                onClick={() => setIsViewModalOpen(false)}
+                onClick={closeViewModal}
               >
                 Close
               </Button>
@@ -384,7 +400,7 @@ const AdminUsers: React.FC = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setIsEditModalOpen(false)}
+                  onClick={closeEditModal}
                 >
                   <XCircle className="h-5 w-5" />
                 </Button>
@@ -402,7 +418,7 @@ const AdminUsers: React.FC = () => {
                 </label>
                 <select
                   value={editUserType}
-                  onChange={(e) => setEditUserType(e.target.value as 'donor' | 'charity' | 'admin')}
+                  onChange={handleUserTypeChange}
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 >
                   <option value="donor">Donor</option>
@@ -432,7 +448,7 @@ const AdminUsers: React.FC = () => {
             <div className="p-6 border-t border-gray-200 flex justify-end space-x-3">
               <Button
                 variant="secondary"
-                onClick={() => setIsEditModalOpen(false)}
+                onClick={closeEditModal}
               >
                 Cancel
               </Button>
@@ -464,7 +480,7 @@ const AdminUsers: React.FC = () => {
               <div className="flex justify-center space-x-3">
                 <Button
                   variant="secondary"
-                  onClick={() => setIsDeleteModalOpen(false)}
+                  onClick={closeDeleteModal}
                 >
                   Cancel
                 </Button>

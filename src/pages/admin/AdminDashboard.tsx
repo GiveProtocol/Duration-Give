@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useProfile } from '@/hooks/useProfile';
@@ -36,6 +36,15 @@ const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<AdminTab>('dashboard');
   const [error, setError] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const handleTabChange = useCallback((tab: AdminTab) => {
+    setActiveTab(tab);
+    if (window.innerWidth < 768) setSidebarOpen(false);
+  }, []);
+
+  const toggleSidebar = useCallback(() => {
+    setSidebarOpen(!sidebarOpen);
+  }, [sidebarOpen]);
 
   if (!user) {
     return <Navigate to="/login" />;
@@ -95,7 +104,7 @@ const AdminDashboard: React.FC = () => {
         <Button
           variant="secondary"
           size="sm"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
+          onClick={toggleSidebar}
           className="rounded-full p-2 shadow-md"
         >
           {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -112,10 +121,7 @@ const AdminDashboard: React.FC = () => {
           <ul className="space-y-2 px-4">
             <li>
               <button
-                onClick={() => {
-                  setActiveTab('dashboard');
-                  if (window.innerWidth < 768) setSidebarOpen(false);
-                }}
+                onClick={() => handleTabChange('dashboard')}
                 className={`flex items-center w-full px-4 py-2 text-sm font-medium rounded-md ${
                   activeTab === 'dashboard'
                     ? 'bg-indigo-50 text-indigo-700'
@@ -128,10 +134,7 @@ const AdminDashboard: React.FC = () => {
             </li>
             <li>
               <button
-                onClick={() => {
-                  setActiveTab('charities');
-                  if (window.innerWidth < 768) setSidebarOpen(false);
-                }}
+                onClick={() => handleTabChange('charities')}
                 className={`flex items-center w-full px-4 py-2 text-sm font-medium rounded-md ${
                   activeTab === 'charities'
                     ? 'bg-indigo-50 text-indigo-700'
@@ -144,10 +147,7 @@ const AdminDashboard: React.FC = () => {
             </li>
             <li>
               <button
-                onClick={() => {
-                  setActiveTab('donations');
-                  if (window.innerWidth < 768) setSidebarOpen(false);
-                }}
+                onClick={() => handleTabChange('donations')}
                 className={`flex items-center w-full px-4 py-2 text-sm font-medium rounded-md ${
                   activeTab === 'donations'
                     ? 'bg-indigo-50 text-indigo-700'
@@ -160,10 +160,7 @@ const AdminDashboard: React.FC = () => {
             </li>
             <li>
               <button
-                onClick={() => {
-                  setActiveTab('users');
-                  if (window.innerWidth < 768) setSidebarOpen(false);
-                }}
+                onClick={() => handleTabChange('users')}
                 className={`flex items-center w-full px-4 py-2 text-sm font-medium rounded-md ${
                   activeTab === 'users'
                     ? 'bg-indigo-50 text-indigo-700'
@@ -176,10 +173,7 @@ const AdminDashboard: React.FC = () => {
             </li>
             <li>
               <button
-                onClick={() => {
-                  setActiveTab('withdrawals');
-                  if (window.innerWidth < 768) setSidebarOpen(false);
-                }}
+                onClick={() => handleTabChange('withdrawals')}
                 className={`flex items-center w-full px-4 py-2 text-sm font-medium rounded-md ${
                   activeTab === 'withdrawals'
                     ? 'bg-indigo-50 text-indigo-700'
@@ -192,10 +186,7 @@ const AdminDashboard: React.FC = () => {
             </li>
             <li>
               <button
-                onClick={() => {
-                  setActiveTab('verifications');
-                  if (window.innerWidth < 768) setSidebarOpen(false);
-                }}
+                onClick={() => handleTabChange('verifications')}
                 className={`flex items-center w-full px-4 py-2 text-sm font-medium rounded-md ${
                   activeTab === 'verifications'
                     ? 'bg-indigo-50 text-indigo-700'
@@ -208,10 +199,7 @@ const AdminDashboard: React.FC = () => {
             </li>
             <li>
               <button
-                onClick={() => {
-                  setActiveTab('logs');
-                  if (window.innerWidth < 768) setSidebarOpen(false);
-                }}
+                onClick={() => handleTabChange('logs')}
                 className={`flex items-center w-full px-4 py-2 text-sm font-medium rounded-md ${
                   activeTab === 'logs'
                     ? 'bg-indigo-50 text-indigo-700'
@@ -224,10 +212,7 @@ const AdminDashboard: React.FC = () => {
             </li>
             <li>
               <button
-                onClick={() => {
-                  setActiveTab('settings');
-                  if (window.innerWidth < 768) setSidebarOpen(false);
-                }}
+                onClick={() => handleTabChange('settings')}
                 className={`flex items-center w-full px-4 py-2 text-sm font-medium rounded-md ${
                   activeTab === 'settings'
                     ? 'bg-indigo-50 text-indigo-700'

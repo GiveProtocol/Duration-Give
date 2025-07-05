@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import { Search, CheckCircle, XCircle, Edit, Trash, Eye } from 'lucide-react';
+import { Search, CheckCircle, XCircle, Edit, Trash, Eye, Building, AlertTriangle } from 'lucide-react';
 import { Logger } from '@/utils/logger';
 
 interface CharityDetails {
@@ -76,22 +76,22 @@ const AdminCharities: React.FC = () => {
     charity.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleView = (charity: CharityDetails) => {
+  const handleView = useCallback((charity: CharityDetails) => {
     setSelectedCharity(charity);
     setIsViewModalOpen(true);
-  };
+  }, []);
 
-  const handleEdit = (charity: CharityDetails) => {
+  const handleEdit = useCallback((charity: CharityDetails) => {
     setSelectedCharity(charity);
     setIsEditModalOpen(true);
-  };
+  }, []);
 
-  const handleDelete = (charity: CharityDetails) => {
+  const handleDelete = useCallback((charity: CharityDetails) => {
     setSelectedCharity(charity);
     setIsDeleteModalOpen(true);
-  };
+  }, []);
 
-  const confirmDelete = async () => {
+  const confirmDelete = useCallback(async () => {
     if (!selectedCharity) return;
 
     try {
@@ -126,9 +126,27 @@ const AdminCharities: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCharity, fetchCharities]);
 
-  const handleSaveEdit = async (updatedCharity: Partial<CharityDetails>) => {
+  const closeViewModal = useCallback(() => {
+    setIsViewModalOpen(false);
+  }, []);
+
+  const closeEditModal = useCallback(() => {
+    setIsEditModalOpen(false);
+  }, []);
+
+  const closeDeleteModal = useCallback(() => {
+    setIsDeleteModalOpen(false);
+  }, []);
+
+  const handleCharityInputChange = useCallback((field: keyof CharityDetails, value: string) => {
+    if (selectedCharity) {
+      setSelectedCharity({...selectedCharity, [field]: value});
+    }
+  }, [selectedCharity]);
+
+  const handleSaveEdit = useCallback(async (updatedCharity: Partial<CharityDetails>) => {
     if (!selectedCharity) return;
 
     try {
@@ -159,7 +177,7 @@ const AdminCharities: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCharity, fetchCharities]);
 
   if (loading && charities.length === 0) {
     return (
@@ -300,7 +318,7 @@ const AdminCharities: React.FC = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setIsViewModalOpen(false)}
+                  onClick={closeViewModal}
                 >
                   <XCircle className="h-5 w-5" />
                 </Button>
@@ -359,7 +377,7 @@ const AdminCharities: React.FC = () => {
             </div>
             <div className="p-6 border-t border-gray-200 flex justify-end">
               <Button
-                onClick={() => setIsViewModalOpen(false)}
+                onClick={closeViewModal}
               >
                 Close
               </Button>
@@ -378,7 +396,7 @@ const AdminCharities: React.FC = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setIsEditModalOpen(false)}
+                  onClick={closeEditModal}
                 >
                   <XCircle className="h-5 w-5" />
                 </Button>
@@ -389,7 +407,7 @@ const AdminCharities: React.FC = () => {
                 <Input
                   label="Name"
                   value={selectedCharity.name}
-                  onChange={(e) => setSelectedCharity({...selectedCharity, name: e.target.value})}
+                  onChange={(e) => handleCharityInputChange('name', e.target.value)}
                 />
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -397,7 +415,7 @@ const AdminCharities: React.FC = () => {
                   </label>
                   <textarea
                     value={selectedCharity.description}
-                    onChange={(e) => setSelectedCharity({...selectedCharity, description: e.target.value})}
+                    onChange={(e) => handleCharityInputChange('description', e.target.value)}
                     rows={4}
                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                   />
@@ -405,19 +423,19 @@ const AdminCharities: React.FC = () => {
                 <Input
                   label="Category"
                   value={selectedCharity.category}
-                  onChange={(e) => setSelectedCharity({...selectedCharity, category: e.target.value})}
+                  onChange={(e) => handleCharityInputChange('category', e.target.value)}
                 />
                 <Input
                   label="Image URL"
                   value={selectedCharity.image_url || ''}
-                  onChange={(e) => setSelectedCharity({...selectedCharity, image_url: e.target.value})}
+                  onChange={(e) => handleCharityInputChange('image_url', e.target.value)}
                 />
               </form>
             </div>
             <div className="p-6 border-t border-gray-200 flex justify-end space-x-3">
               <Button
                 variant="secondary"
-                onClick={() => setIsEditModalOpen(false)}
+                onClick={closeEditModal}
               >
                 Cancel
               </Button>
@@ -449,7 +467,7 @@ const AdminCharities: React.FC = () => {
               <div className="flex justify-center space-x-3">
                 <Button
                   variant="secondary"
-                  onClick={() => setIsDeleteModalOpen(false)}
+                  onClick={closeDeleteModal}
                 >
                   Cancel
                 </Button>
