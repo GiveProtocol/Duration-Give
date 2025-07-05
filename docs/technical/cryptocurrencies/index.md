@@ -23,18 +23,21 @@ Give Protocol provides seamless cryptocurrency donation capabilities, enabling o
 ### Primary Currencies
 
 **Bitcoin (BTC)**
+
 - Network: Bitcoin mainnet
 - Minimum donation: 0.0001 BTC
 - Confirmation requirement: 3 blocks
 - Average processing time: 30 minutes
 
 **Ethereum (ETH)**
+
 - Network: Ethereum mainnet
 - Minimum donation: 0.001 ETH
 - Confirmation requirement: 12 blocks
 - Average processing time: 3 minutes
 
 **USD Coin (USDC)**
+
 - Network: Ethereum, Polygon, Solana
 - Minimum donation: 1 USDC
 - Stable value pegged to USD
@@ -43,11 +46,13 @@ Give Protocol provides seamless cryptocurrency donation capabilities, enabling o
 ### Additional Supported Tokens
 
 **Stablecoins:**
+
 - Tether (USDT) - Ethereum, Tron, BSC
 - DAI - Ethereum mainnet
 - BUSD - Binance Smart Chain
 
 **Major Cryptocurrencies:**
+
 - Litecoin (LTC)
 - Bitcoin Cash (BCH)
 - Polygon (MATIC)
@@ -79,6 +84,7 @@ const wallet = await generateWallet({
 ### Address Management
 
 **HD Wallet Structure:**
+
 ```
 Master Seed
 ├── Organization Wallets (m/44'/0'/0')
@@ -93,6 +99,7 @@ Master Seed
 ### Transaction Monitoring
 
 **Blockchain Monitoring Service:**
+
 ```javascript
 // WebSocket connection for real-time updates
 const ws = new WebSocket('wss://api.give.io/crypto/monitor');
@@ -122,6 +129,7 @@ ws.on('message', (data) => {
 ### API Integration
 
 **Generate Donation Address:**
+
 ```http
 POST /api/v1/crypto/addresses
 Authorization: Bearer your_api_key
@@ -137,12 +145,13 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "address": "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
   "currency": "BTC",
   "amount": 0.01,
-  "amount_usd": 435.50,
+  "amount_usd": 435.5,
   "expires_at": "2024-01-15T11:30:00Z",
   "qr_code": "data:image/png;base64,...",
   "payment_uri": "bitcoin:bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh?amount=0.01"
@@ -152,54 +161,56 @@ Content-Type: application/json
 ### SDK Implementation
 
 **JavaScript SDK:**
+
 ```javascript
-import { CryptoGateway } from '@give-protocol/crypto-sdk';
+import { CryptoGateway } from "@give-protocol/crypto-sdk";
 
 const gateway = new CryptoGateway({
-  apiKey: 'your_api_key',
-  environment: 'production'
+  apiKey: "your_api_key",
+  environment: "production",
 });
 
 // Create donation widget
 const widget = await gateway.createWidget({
-  organizationId: 'org_123',
-  currencies: ['BTC', 'ETH', 'USDC'],
+  organizationId: "org_123",
+  currencies: ["BTC", "ETH", "USDC"],
   fiatAmount: 100,
   onSuccess: (transaction) => {
-    console.log('Donation received:', transaction);
+    console.log("Donation received:", transaction);
   },
   onError: (error) => {
-    console.error('Donation failed:', error);
-  }
+    console.error("Donation failed:", error);
+  },
 });
 
 // Embed in page
-widget.mount('#crypto-donation-container');
+widget.mount("#crypto-donation-container");
 ```
 
 ### Smart Contract Integration
 
 **Donation Contract (Ethereum):**
+
 ```solidity
 pragma solidity ^0.8.0;
 
 contract GiveProtocolDonations {
     mapping(address => uint256) public organizationBalances;
     mapping(address => bool) public verifiedOrganizations;
-    
+
     event DonationReceived(
         address indexed donor,
         address indexed organization,
         uint256 amount,
         uint256 timestamp
     );
-    
+
     function donate(address organization) external payable {
         require(verifiedOrganizations[organization], "Organization not verified");
         require(msg.value > 0, "Donation must be greater than 0");
-        
+
         organizationBalances[organization] += msg.value;
-        
+
         emit DonationReceived(
             msg.sender,
             organization,
@@ -207,11 +218,11 @@ contract GiveProtocolDonations {
             block.timestamp
         );
     }
-    
+
     function withdraw(uint256 amount) external {
         require(verifiedOrganizations[msg.sender], "Not a verified organization");
         require(organizationBalances[msg.sender] >= amount, "Insufficient balance");
-        
+
         organizationBalances[msg.sender] -= amount;
         payable(msg.sender).transfer(amount);
     }
@@ -223,6 +234,7 @@ contract GiveProtocolDonations {
 ### Automatic Conversion
 
 **Configuration Options:**
+
 ```json
 {
   "conversion_settings": {
@@ -236,13 +248,14 @@ contract GiveProtocolDonations {
 ```
 
 **Conversion Flow:**
+
 ```mermaid
 sequenceDiagram
   participant Donor
   participant Platform
   participant Exchange
   participant Organization
-  
+
   Donor->>Platform: Send crypto donation
   Platform->>Platform: Confirm transaction
   Platform->>Exchange: Request conversion
@@ -254,25 +267,22 @@ sequenceDiagram
 ### Exchange Integration
 
 **Liquidity Providers:**
+
 ```javascript
 // Exchange rate aggregation
 const getExchangeRate = async (currency, amount) => {
-  const providers = [
-    'coinbase',
-    'kraken',
-    'binance'
-  ];
-  
+  const providers = ["coinbase", "kraken", "binance"];
+
   const rates = await Promise.all(
-    providers.map(provider => 
-      fetchRate(provider, currency, amount)
-    )
+    providers.map((provider) => fetchRate(provider, currency, amount)),
   );
-  
+
   return {
-    bestRate: Math.max(...rates.map(r => r.rate)),
-    provider: rates.find(r => r.rate === Math.max(...rates.map(r => r.rate))).provider,
-    timestamp: new Date().toISOString()
+    bestRate: Math.max(...rates.map((r) => r.rate)),
+    provider: rates.find(
+      (r) => r.rate === Math.max(...rates.map((r) => r.rate)),
+    ).provider,
+    timestamp: new Date().toISOString(),
   };
 };
 ```
@@ -282,80 +292,79 @@ const getExchangeRate = async (currency, amount) => {
 ### Key Management
 
 **Hardware Security Module (HSM):**
+
 ```javascript
 // HSM integration for key storage
-const { HSMClient } = require('@give-protocol/hsm');
+const { HSMClient } = require("@give-protocol/hsm");
 
 const hsm = new HSMClient({
   endpoint: process.env.HSM_ENDPOINT,
   credentials: {
     keyId: process.env.HSM_KEY_ID,
-    secret: process.env.HSM_SECRET
-  }
+    secret: process.env.HSM_SECRET,
+  },
 });
 
 // Generate new wallet
 const wallet = await hsm.generateKey({
-  algorithm: 'ECDSA',
-  curve: 'secp256k1',
-  label: `org_${organizationId}_wallet`
+  algorithm: "ECDSA",
+  curve: "secp256k1",
+  label: `org_${organizationId}_wallet`,
 });
 
 // Sign transaction
 const signature = await hsm.sign({
   keyLabel: wallet.label,
-  message: transactionHash
+  message: transactionHash,
 });
 ```
 
 ### Multi-Signature Wallets
 
 **Configuration:**
+
 ```javascript
 // Multi-sig setup for high-value transactions
 const multiSigWallet = {
   threshold: 2,
-  signers: [
-    'org_admin_1',
-    'org_admin_2',
-    'platform_escrow'
-  ],
+  signers: ["org_admin_1", "org_admin_2", "platform_escrow"],
   timelock: 86400, // 24 hours
   dailyLimit: {
     BTC: 1,
     ETH: 10,
-    USD: 10000
-  }
+    USD: 10000,
+  },
 };
 ```
 
 ### Transaction Validation
 
 **Security Checks:**
+
 ```javascript
 const validateTransaction = async (tx) => {
   // Check transaction format
   if (!isValidTransactionFormat(tx)) {
-    throw new Error('Invalid transaction format');
+    throw new Error("Invalid transaction format");
   }
-  
+
   // Verify signature
   const isValid = await verifySignature(tx);
   if (!isValid) {
-    throw new Error('Invalid signature');
+    throw new Error("Invalid signature");
   }
-  
+
   // Check for double-spend
   const isDuplicate = await checkDoubleSpend(tx);
   if (isDuplicate) {
-    throw new Error('Transaction already processed');
+    throw new Error("Transaction already processed");
   }
-  
+
   // Validate amount limits
   if (tx.amount > limits[tx.currency]) {
-    throw new Error('Amount exceeds limits');
+    throw new Error("Amount exceeds limits");
   }
-  
+
   return true;
 };
 ```
@@ -365,35 +374,37 @@ const validateTransaction = async (tx) => {
 ### KYC/AML Requirements
 
 **Threshold-Based Verification:**
+
 ```javascript
 const kycRequirements = {
   anonymous: {
     maxUSD: 1000,
-    required: []
+    required: [],
   },
   basic: {
     maxUSD: 10000,
-    required: ['email', 'name']
+    required: ["email", "name"],
   },
   enhanced: {
     maxUSD: null,
-    required: ['email', 'name', 'address', 'id_verification']
-  }
+    required: ["email", "name", "address", "id_verification"],
+  },
 };
 ```
 
 ### Transaction Reporting
 
 **IRS Form 8283 Generation:**
+
 ```javascript
 // Generate tax documentation for crypto donations
 const generateForm8283 = async (donation) => {
   const fairMarketValue = await getFMV(
     donation.currency,
     donation.amount,
-    donation.timestamp
+    donation.timestamp,
   );
-  
+
   return {
     donorInfo: donation.donor,
     organizationInfo: donation.organization,
@@ -401,8 +412,8 @@ const generateForm8283 = async (donation) => {
     cryptocurrency: donation.currency,
     amount: donation.amount,
     fairMarketValueUSD: fairMarketValue,
-    costBasis: 'Not provided',
-    method: 'Cryptocurrency donation'
+    costBasis: "Not provided",
+    method: "Cryptocurrency donation",
   };
 };
 ```
@@ -410,30 +421,31 @@ const generateForm8283 = async (donation) => {
 ### Blockchain Analytics
 
 **Transaction Screening:**
+
 ```javascript
 // Integration with blockchain analytics
-const { ChainAnalysis } = require('@give-protocol/compliance');
+const { ChainAnalysis } = require("@give-protocol/compliance");
 
 const screenTransaction = async (tx) => {
   const risk = await ChainAnalysis.assess({
     address: tx.from,
     currency: tx.currency,
-    amount: tx.amount
+    amount: tx.amount,
   });
-  
+
   if (risk.score > 0.7) {
     return {
-      action: 'block',
-      reason: risk.factors
+      action: "block",
+      reason: risk.factors,
     };
   } else if (risk.score > 0.4) {
     return {
-      action: 'review',
-      reason: risk.factors
+      action: "review",
+      reason: risk.factors,
     };
   }
-  
-  return { action: 'approve' };
+
+  return { action: "approve" };
 };
 ```
 
@@ -443,21 +455,22 @@ const screenTransaction = async (tx) => {
 
 ```html
 <!-- Embeddable donation widget -->
-<div id="give-crypto-widget" 
-     data-organization="org_123"
-     data-currencies="BTC,ETH,USDC"
-     data-theme="light">
-</div>
+<div
+  id="give-crypto-widget"
+  data-organization="org_123"
+  data-currencies="BTC,ETH,USDC"
+  data-theme="light"
+></div>
 
 <script src="https://cdn.give.io/crypto-widget.js"></script>
 <script>
   GiveCrypto.init({
-    organizationId: 'org_123',
-    currencies: ['BTC', 'ETH', 'USDC'],
+    organizationId: "org_123",
+    currencies: ["BTC", "ETH", "USDC"],
     defaultAmount: 100,
     onComplete: (donation) => {
-      console.log('Donation complete:', donation);
-    }
+      console.log("Donation complete:", donation);
+    },
   });
 </script>
 ```
@@ -468,12 +481,12 @@ const screenTransaction = async (tx) => {
 // Generate QR codes for crypto addresses
 const generateQRCode = (address, amount, currency) => {
   const uri = buildPaymentURI(address, amount, currency);
-  
+
   return QRCode.toDataURL(uri, {
-    errorCorrectionLevel: 'H',
-    type: 'image/png',
+    errorCorrectionLevel: "H",
+    type: "image/png",
     width: 256,
-    margin: 2
+    margin: 2,
   });
 };
 
@@ -482,9 +495,9 @@ const buildPaymentURI = (address, amount, currency) => {
   const formats = {
     BTC: `bitcoin:${address}?amount=${amount}`,
     ETH: `ethereum:${address}?value=${amount * 1e18}`,
-    USDC: `ethereum:${USDC_CONTRACT}/transfer?address=${address}&uint256=${amount * 1e6}`
+    USDC: `ethereum:${USDC_CONTRACT}/transfer?address=${address}&uint256=${amount * 1e6}`,
   };
-  
+
   return formats[currency];
 };
 ```
@@ -497,41 +510,42 @@ const buildPaymentURI = (address, amount, currency) => {
 // Testnet endpoints
 const networks = {
   development: {
-    BTC: 'testnet',
-    ETH: 'goerli',
+    BTC: "testnet",
+    ETH: "goerli",
     endpoints: {
-      BTC: 'https://testnet.blockchain.info',
-      ETH: 'https://goerli.infura.io/v3/YOUR_KEY'
-    }
+      BTC: "https://testnet.blockchain.info",
+      ETH: "https://goerli.infura.io/v3/YOUR_KEY",
+    },
   },
   production: {
-    BTC: 'mainnet',
-    ETH: 'mainnet',
+    BTC: "mainnet",
+    ETH: "mainnet",
     endpoints: {
-      BTC: 'https://blockchain.info',
-      ETH: 'https://mainnet.infura.io/v3/YOUR_KEY'
-    }
-  }
+      BTC: "https://blockchain.info",
+      ETH: "https://mainnet.infura.io/v3/YOUR_KEY",
+    },
+  },
 };
 ```
 
 ### Testing Tools
 
 **Mock Transactions:**
+
 ```javascript
 // Generate test transactions
 const createTestTransaction = async (params) => {
   const faucet = getFaucet(params.currency);
   const testAddress = await generateTestAddress();
-  
+
   return {
     txId: generateMockTxId(),
     from: faucet.address,
     to: testAddress,
     amount: params.amount,
     currency: params.currency,
-    status: 'pending',
-    confirmations: 0
+    status: "pending",
+    confirmations: 0,
   };
 };
 ```
@@ -544,18 +558,18 @@ const createTestTransaction = async (params) => {
 // Redis caching for exchange rates
 const getCachedRate = async (currency) => {
   const cached = await redis.get(`rate:${currency}`);
-  
+
   if (cached && Date.now() - cached.timestamp < 60000) {
     return cached.rate;
   }
-  
+
   const rate = await fetchLiveRate(currency);
   await redis.setex(
     `rate:${currency}`,
     60,
-    JSON.stringify({ rate, timestamp: Date.now() })
+    JSON.stringify({ rate, timestamp: Date.now() }),
   );
-  
+
   return rate;
 };
 ```
@@ -565,16 +579,16 @@ const getCachedRate = async (currency) => {
 ```javascript
 // Batch transaction processing
 const processBatch = async (transactions) => {
-  const grouped = groupBy(transactions, 'currency');
-  
+  const grouped = groupBy(transactions, "currency");
+
   for (const [currency, txs] of Object.entries(grouped)) {
     const provider = getProvider(currency);
     const results = await provider.batchProcess(txs);
-    
+
     await Promise.all(
-      results.map(result => 
-        updateTransactionStatus(result.txId, result.status)
-      )
+      results.map((result) =>
+        updateTransactionStatus(result.txId, result.status),
+      ),
     );
   }
 };

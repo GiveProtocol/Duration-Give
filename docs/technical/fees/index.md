@@ -22,12 +22,14 @@ Give Protocol implements a transparent and competitive fee structure designed to
 ### 1. Platform Fees
 
 **Standard Platform Fee: 2.5%**
+
 - Applied to all donations
 - Covers platform operations
 - Includes basic features
 - No monthly minimums
 
 **Reduced Fee Tiers:**
+
 - **Bronze** (>$10K/month): 2.25%
 - **Silver** (>$50K/month): 2.0%
 - **Gold** (>$100K/month): 1.75%
@@ -36,6 +38,7 @@ Give Protocol implements a transparent and competitive fee structure designed to
 ### 2. Payment Processing Fees
 
 **Credit/Debit Cards:**
+
 ```
 Base Rate: 2.9% + $0.30 per transaction
 International Cards: +1.5%
@@ -43,6 +46,7 @@ Currency Conversion: +1%
 ```
 
 **Bank Transfers (ACH):**
+
 ```
 Flat Fee: $0.50 per transaction
 No percentage fee
@@ -50,6 +54,7 @@ No percentage fee
 ```
 
 **Cryptocurrency:**
+
 ```
 Network Fees: Variable (paid by sender)
 Conversion Fee: 1% (if converting to fiat)
@@ -59,6 +64,7 @@ No platform markup on network fees
 ### 3. Additional Service Fees
 
 **Optional Services:**
+
 - **Instant Payouts**: $2.00 per transfer
 - **International Wire**: $25.00 per transfer
 - **Chargeback Handling**: $15.00 per incident
@@ -74,9 +80,9 @@ No platform markup on network fees
 // Payment method: Credit Card
 // Organization tier: Standard
 
-const donation = 100.00;
+const donation = 100.0;
 const platformFee = donation * 0.025; // 2.5% = $2.50
-const processingFee = (donation * 0.029) + 0.30; // 2.9% + $0.30 = $3.20
+const processingFee = donation * 0.029 + 0.3; // 2.9% + $0.30 = $3.20
 const totalFees = platformFee + processingFee; // $5.70
 const netToCharity = donation - totalFees; // $94.30
 ```
@@ -103,9 +109,10 @@ const netToCharity = usdValue - totalFees; // $434.25
 **Endpoint:** `POST /api/v1/fees/calculate`
 
 **Request:**
+
 ```json
 {
-  "amount": 100.00,
+  "amount": 100.0,
   "currency": "USD",
   "payment_method": "card",
   "organization_id": "org_123abc",
@@ -117,20 +124,21 @@ const netToCharity = usdValue - totalFees; // $434.25
 ```
 
 **Response:**
+
 ```json
 {
   "breakdown": {
-    "donation_amount": 100.00,
-    "platform_fee": 2.50,
-    "processing_fee": 3.20,
-    "additional_fees": 0.00,
-    "total_fees": 5.70,
-    "net_amount": 94.30
+    "donation_amount": 100.0,
+    "platform_fee": 2.5,
+    "processing_fee": 3.2,
+    "additional_fees": 0.0,
+    "total_fees": 5.7,
+    "net_amount": 94.3
   },
   "rates": {
     "platform_rate": 0.025,
     "processing_rate": 0.029,
-    "processing_fixed": 0.30
+    "processing_fixed": 0.3
   },
   "organization_tier": "standard"
 }
@@ -139,6 +147,7 @@ const netToCharity = usdValue - totalFees; // $434.25
 ### Fee Models
 
 **Database Schema:**
+
 ```sql
 CREATE TABLE fee_structures (
   id UUID PRIMARY KEY,
@@ -169,7 +178,7 @@ sequenceDiagram
   participant Platform
   participant Payment
   participant Organization
-  
+
   Donor->>Platform: Initiate donation
   Platform->>Platform: Calculate fees
   Platform->>Donor: Show fee breakdown
@@ -184,30 +193,32 @@ sequenceDiagram
 ### SDK Implementation
 
 **JavaScript SDK:**
+
 ```javascript
-import { GiveProtocol } from '@give-protocol/sdk';
+import { GiveProtocol } from "@give-protocol/sdk";
 
 const give = new GiveProtocol({
-  apiKey: 'your_api_key'
+  apiKey: "your_api_key",
 });
 
 // Calculate fees before donation
 const feeBreakdown = await give.fees.calculate({
   amount: 100,
-  paymentMethod: 'card',
-  organizationId: 'org_123'
+  paymentMethod: "card",
+  organizationId: "org_123",
 });
 
 // Create donation with fee coverage option
 const donation = await give.donations.create({
   amount: 100,
   coverFees: true, // Donor covers fees
-  organizationId: 'org_123',
-  paymentMethod: 'card'
+  organizationId: "org_123",
+  paymentMethod: "card",
 });
 ```
 
 **Python SDK:**
+
 ```python
 from give_protocol import GiveProtocol
 
@@ -232,16 +243,17 @@ donation = give.donations.create(
 ### Webhook Events
 
 **Fee-Related Events:**
+
 ```json
 {
   "event": "fee.calculated",
   "data": {
     "donation_id": "don_abc123",
-    "amount": 100.00,
+    "amount": 100.0,
     "fees": {
-      "platform": 2.50,
-      "processing": 3.20,
-      "total": 5.70
+      "platform": 2.5,
+      "processing": 3.2,
+      "total": 5.7
     }
   }
 }
@@ -256,10 +268,10 @@ Organizations can enable donors to cover fees:
 ```javascript
 // Implementation example
 const donationWithCoveredFees = {
-  baseAmount: 100.00,
-  fees: 5.70,
-  totalCharge: 105.70,
-  netToCharity: 100.00
+  baseAmount: 100.0,
+  fees: 5.7,
+  totalCharge: 105.7,
+  netToCharity: 100.0,
 };
 ```
 
@@ -282,11 +294,13 @@ Organizations can choose to absorb fees:
 ### Nonprofit Discounts
 
 **Eligibility Requirements:**
+
 - Valid 501(c)(3) status
 - Annual revenue under $1M
 - Application approval
 
 **Discount Structure:**
+
 - 50% off platform fees
 - Reduced to 1.25% base rate
 - Same processing fees apply
@@ -294,12 +308,14 @@ Organizations can choose to absorb fees:
 ### High-Volume Processing
 
 **Benefits:**
+
 - Negotiated rates
 - Dedicated support
 - Custom integration
 - Priority processing
 
 **Requirements:**
+
 - Minimum $100K monthly volume
 - 6-month commitment
 - Annual review
@@ -307,6 +323,7 @@ Organizations can choose to absorb fees:
 ### International Transactions
 
 **Additional Considerations:**
+
 - Currency conversion fees
 - Cross-border fees
 - Local tax implications
@@ -317,6 +334,7 @@ Organizations can choose to absorb fees:
 ### Monthly Statements
 
 **Included Information:**
+
 - Transaction-level fee details
 - Summary by fee type
 - Tier progression tracking
@@ -325,6 +343,7 @@ Organizations can choose to absorb fees:
 ### API Access
 
 **Reporting Endpoints:**
+
 ```
 GET /api/v1/fees/report?start_date=2024-01-01&end_date=2024-01-31
 GET /api/v1/fees/summary?period=monthly
@@ -334,6 +353,7 @@ GET /api/v1/fees/export?format=csv
 ### Tax Documentation
 
 **Available Documents:**
+
 - Fee receipts
 - Annual summaries
 - 1099-K forms (if applicable)
@@ -344,11 +364,13 @@ GET /api/v1/fees/export?format=csv
 ### Reducing Fees
 
 1. **Increase Monthly Volume**
+
    - Reach higher tiers
    - Batch processing
    - Consolidated campaigns
 
 2. **Payment Method Selection**
+
    - Encourage ACH transfers
    - Promote recurring donations
    - Offer crypto options
@@ -366,18 +388,18 @@ const optimizeDonation = async (amount, options) => {
   // Check if ACH is available for lower fees
   if (amount > 100 && options.achAvailable) {
     return {
-      method: 'ach',
-      fee: 0.50,
-      savingsMessage: 'Save $5.20 by using bank transfer'
+      method: "ach",
+      fee: 0.5,
+      savingsMessage: "Save $5.20 by using bank transfer",
     };
   }
-  
+
   // Suggest fee coverage for full donation impact
   if (!options.coveringFees) {
-    const fees = calculateFees(amount, 'card');
+    const fees = calculateFees(amount, "card");
     return {
       suggestion: `Add ${fees} to cover fees?`,
-      impact: 'Ensure 100% goes to charity'
+      impact: "Ensure 100% goes to charity",
     };
   }
 };

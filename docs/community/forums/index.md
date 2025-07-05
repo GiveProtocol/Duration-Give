@@ -19,6 +19,7 @@ Join thousands of volunteers, donors, and nonprofit organizations in our vibrant
 ### Forum Structure
 
 #### Main Categories
+
 - **General Discussion**: Open conversation about volunteering and giving
 - **Volunteer Opportunities**: Share and discover volunteering chances
 - **Nonprofit Showcase**: Organizations highlight their work
@@ -31,9 +32,11 @@ Join thousands of volunteers, donors, and nonprofit organizations in our vibrant
 ### 🗣️ General Discussion
 
 #### Purpose
+
 Open space for all topics related to charitable giving, volunteering, and community impact.
 
 #### Popular Topics
+
 - New volunteer experiences
 - Giving advice and tips
 - Platform feature discussions
@@ -41,6 +44,7 @@ Open space for all topics related to charitable giving, volunteering, and commun
 - General questions and support
 
 #### Guidelines
+
 - Keep discussions respectful and constructive
 - Stay on topic related to charitable giving
 - No promotional content without permission
@@ -49,20 +53,24 @@ Open space for all topics related to charitable giving, volunteering, and commun
 ### 🤝 Volunteer Opportunities
 
 #### Purpose
+
 Share volunteer opportunities, seek volunteers, and coordinate group activities.
 
 #### How to Post
+
 1. **Use clear titles**: Include location and cause area
 2. **Provide details**: Date, time, location, requirements
 3. **Contact information**: How to sign up or get more info
 4. **Update posts**: Mark as filled when complete
 
 #### Examples
+
 - "Beach cleanup volunteers needed - San Diego, March 15"
 - "Reading tutors for elementary school - Chicago area"
 - "Habitat for Humanity build day - Team forming"
 
 #### Safety Reminders
+
 - Always verify opportunities through official channels
 - Meet in public spaces for initial coordination
 - Trust your instincts about safety
@@ -71,15 +79,18 @@ Share volunteer opportunities, seek volunteers, and coordinate group activities.
 ### 🏢 Nonprofit Showcase
 
 #### Purpose
+
 Platform for verified nonprofits to share their mission, impact, and needs.
 
 #### Posting Requirements
+
 - Must be verified organization
 - Include organization name and mission
 - Share specific impact stories
 - Provide clear calls to action
 
 #### Content Ideas
+
 - Impact reports and success stories
 - Behind-the-scenes looks at your work
 - Volunteer spotlights and recognition
@@ -89,9 +100,11 @@ Platform for verified nonprofits to share their mission, impact, and needs.
 ### 💼 Skills & Resources
 
 #### Purpose
+
 Connect skilled professionals with nonprofits needing specialized expertise.
 
 #### Skills Categories
+
 - **Legal**: Pro bono legal services
 - **Technology**: Web development, IT support
 - **Marketing**: Social media, communications
@@ -100,6 +113,7 @@ Connect skilled professionals with nonprofits needing specialized expertise.
 - **Consulting**: Strategy, operations
 
 #### How It Works
+
 1. **Professionals** post available skills and time
 2. **Nonprofits** request specific expertise
 3. **Community** facilitates introductions
@@ -108,15 +122,18 @@ Connect skilled professionals with nonprofits needing specialized expertise.
 ### 📍 Regional Communities
 
 #### Purpose
+
 Connect with local volunteers and organizations in your area.
 
 #### Available Regions
+
 - **North America**: US states, Canadian provinces
 - **Europe**: Countries and major cities
 - **Asia-Pacific**: Countries and regions
 - **Global**: International and remote opportunities
 
 #### Local Forum Features
+
 - Regional volunteer calendars
 - Local nonprofit directory
 - Meetup coordination
@@ -126,9 +143,11 @@ Connect with local volunteers and organizations in your area.
 ### 🌟 Success Stories
 
 #### Purpose
+
 Celebrate achievements, share inspiring stories, and motivate others.
 
 #### Story Categories
+
 - **Personal Impact**: Individual volunteer experiences
 - **Organization Success**: Nonprofit achievements
 - **Community Impact**: Group efforts and results
@@ -136,6 +155,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - **Milestones**: Reaching goals and targets
 
 #### Sharing Guidelines
+
 - Include specific details and outcomes
 - Add photos or videos when appropriate
 - Give credit to all contributors
@@ -147,6 +167,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Discussion Tools
 
 #### Post Types
+
 - **Text Posts**: Standard forum discussions
 - **Image Posts**: Photos with descriptions
 - **Link Sharing**: Relevant articles and resources
@@ -154,6 +175,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - **Q&A Format**: Structured question and answer
 
 #### Interaction Options
+
 - **Upvote/Downvote**: Rate helpful content
 - **Comments**: Respond to posts and discussions
 - **Direct Messages**: Private conversations
@@ -163,6 +185,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### User Profiles
 
 #### Profile Information
+
 - Basic info (name, location, interests)
 - Volunteer experience and skills
 - Organization affiliations
@@ -170,6 +193,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - Contribution statistics
 
 #### Privacy Controls
+
 - Choose what information to display
 - Control who can message you
 - Set notification preferences
@@ -178,6 +202,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Search and Discovery
 
 #### Search Features
+
 - **Keyword Search**: Find specific topics
 - **Category Filtering**: Browse by forum section
 - **User Search**: Find specific community members
@@ -185,6 +210,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - **Advanced Filters**: Date, location, post type
 
 #### Trending Content
+
 - Hot topics and active discussions
 - Most upvoted posts
 - Recent activity highlights
@@ -195,24 +221,28 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Code of Conduct
 
 #### Be Respectful
+
 - Treat all community members with dignity
 - Avoid personal attacks or harassment
 - Respect different opinions and perspectives
 - Use inclusive language
 
 #### Stay On Topic
+
 - Keep discussions relevant to charitable giving
 - Post in appropriate forum categories
 - Don't hijack others' threads
 - Create new topics when necessary
 
 #### Provide Value
+
 - Share helpful information and experiences
 - Contribute constructively to discussions
 - Offer support and encouragement
 - Help newcomers feel welcome
 
 #### Maintain Safety
+
 - Protect personal information
 - Report suspicious activity
 - Verify opportunities independently
@@ -221,6 +251,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Prohibited Content
 
 #### Not Allowed
+
 - Spam or promotional content
 - Harassment or hate speech
 - Fraudulent opportunities
@@ -229,6 +260,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - Inappropriate images or content
 
 #### Consequences
+
 - Warning for minor violations
 - Temporary suspension for repeated issues
 - Permanent ban for serious violations
@@ -239,12 +271,14 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Community Moderators
 
 #### Volunteer Moderators
+
 - **Experienced users** who help maintain forum quality
-- **Regional specialists** familiar with local contexts  
+- **Regional specialists** familiar with local contexts
 - **Subject experts** in specific cause areas
 - **Organization liaisons** representing nonprofits
 
 #### Moderator Responsibilities
+
 - Enforce community guidelines
 - Help resolve conflicts
 - Welcome new members
@@ -254,12 +288,14 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Reporting System
 
 #### How to Report
+
 1. **Click "Report" button** on problematic content
 2. **Select violation type** from dropdown menu
 3. **Provide details** about the issue
 4. **Submit report** for moderator review
 
 #### What Happens Next
+
 - Moderator reviews within 24 hours
 - Action taken based on guidelines
 - Reporter notified of outcome
@@ -270,6 +306,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Best Practices
 
 #### For New Users
+
 1. **Read pinned posts** in each forum section
 2. **Search before posting** to avoid duplicates
 3. **Complete your profile** to build trust
@@ -277,6 +314,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 5. **Follow community leaders** for insights
 
 #### For Active Contributors
+
 - Share expertise generously
 - Mentor newcomers
 - Provide constructive feedback
@@ -286,6 +324,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Building Connections
 
 #### Networking Tips
+
 - Engage authentically in discussions
 - Offer help before asking for it
 - Follow up on commitments made
@@ -293,6 +332,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - Share resources and opportunities
 
 #### Professional Development
+
 - Connect with others in your field
 - Learn about new cause areas
 - Develop leadership skills
@@ -302,6 +342,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ## Mobile Forum Access
 
 ### Mobile App Features
+
 - **Full forum functionality** on smartphones
 - **Push notifications** for replies and mentions
 - **Offline reading** of downloaded content
@@ -309,6 +350,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - **Voice-to-text** for easy posting
 
 ### Mobile Best Practices
+
 - Use Wi-Fi for uploading photos/videos
 - Enable notifications for active discussions
 - Bookmark important threads for offline reading
@@ -319,12 +361,14 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Regular Activities
 
 #### Weekly Features
+
 - **Monday Motivation**: Inspirational stories
 - **Wednesday Q&A**: Expert responses to questions
 - **Friday Highlights**: Best posts of the week
 - **Weekend Opportunities**: Volunteer activities
 
 #### Monthly Events
+
 - **AMA Sessions**: Ask Me Anything with nonprofit leaders
 - **Challenge Themes**: Community-wide volunteer challenges
 - **Spotlight Series**: Featured organizations and volunteers
@@ -333,12 +377,14 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Special Occasions
 
 #### Annual Events
+
 - **Give Protocol Awards**: Community recognition
 - **Volunteer Week**: Celebration and challenges
 - **Giving Tuesday**: Coordinated giving campaigns
 - **Year-end Reflection**: Impact sharing and planning
 
 #### Seasonal Activities
+
 - Holiday volunteer opportunities
 - Summer youth programs
 - Back-to-school initiatives
@@ -349,6 +395,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Community Health
 
 #### Activity Indicators
+
 - Daily active users
 - Posts and comments per day
 - Response rates to questions
@@ -356,6 +403,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - Cross-forum participation
 
 #### Quality Measures
+
 - User satisfaction ratings
 - Successful connections made
 - Problems solved through forums
@@ -364,6 +412,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Your Impact
 
 #### Track Your Contributions
+
 - Posts and comments created
 - Helpful votes received
 - Connections made
@@ -375,6 +424,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Premium Forum Benefits
 
 #### Give Protocol Pro Members
+
 - **Priority support** in help forums
 - **Extended messaging** capabilities
 - **Advanced search** features
@@ -384,6 +434,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ### Integration Features
 
 #### Platform Connections
+
 - **Activity feed** integration
 - **Volunteer matching** from forum posts
 - **Event creation** from opportunity posts
@@ -393,6 +444,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ## Accessibility
 
 ### Inclusive Features
+
 - **Screen reader** compatibility
 - **Keyboard navigation** support
 - **High contrast** mode available
@@ -400,6 +452,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - **Language translation** tools
 
 ### Support Resources
+
 - Accessibility help documentation
 - Video tutorials with captions
 - Community support for new users
@@ -408,6 +461,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ## Forum Analytics
 
 ### Personal Dashboard
+
 - Your posting activity
 - Engagement metrics
 - Popular content you've shared
@@ -415,6 +469,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - Impact of your contributions
 
 ### Community Insights
+
 - Forum growth and activity
 - Popular topics and trends
 - Regional activity comparisons
@@ -423,6 +478,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 ## Getting Help
 
 ### Forum Support
+
 - **Forum FAQ**: Common questions answered
 - **Tutorial Videos**: How-to guides
 - **Community Help**: Peer assistance
@@ -430,6 +486,7 @@ Celebrate achievements, share inspiring stories, and motivate others.
 - **Staff Support**: Technical issues
 
 ### Contact Options
+
 - In-forum help posts
 - Direct message to moderators
 - Email support team
@@ -451,6 +508,6 @@ Together, we can amplify our impact and create positive change in the world!
 
 ---
 
-*Forums available 24/7 with community moderation*  
-*New features and sections added regularly*  
-*Mobile app includes full forum functionality*
+_Forums available 24/7 with community moderation_  
+_New features and sections added regularly_  
+_Mobile app includes full forum functionality_
