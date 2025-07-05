@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -94,23 +94,23 @@ const AdminWithdrawals: React.FC = () => {
     );
   });
 
-  const handleView = (withdrawal: WithdrawalRequest) => {
+  const handleView = useCallback((withdrawal: WithdrawalRequest) => {
     setSelectedWithdrawal(withdrawal);
     setIsViewModalOpen(true);
-  };
+  }, []);
 
-  const handleApprove = (withdrawal: WithdrawalRequest) => {
+  const handleApprove = useCallback((withdrawal: WithdrawalRequest) => {
     setSelectedWithdrawal(withdrawal);
     setIsApproveModalOpen(true);
-  };
+  }, []);
 
-  const handleReject = (withdrawal: WithdrawalRequest) => {
+  const handleReject = useCallback((withdrawal: WithdrawalRequest) => {
     setSelectedWithdrawal(withdrawal);
     setRejectReason('');
     setIsRejectModalOpen(true);
-  };
+  }, []);
 
-  const confirmApprove = async () => {
+  const confirmApprove = useCallback(async () => {
     if (!selectedWithdrawal) return;
 
     try {
@@ -186,9 +186,9 @@ const AdminWithdrawals: React.FC = () => {
       setLoading(false);
       setProcessingTransaction(false);
     }
-  };
+  }, [selectedWithdrawal, withdraw, fetchWithdrawals]);
 
-  const confirmReject = async () => {
+  const confirmReject = useCallback(async () => {
     if (!selectedWithdrawal) return;
 
     try {
@@ -218,7 +218,23 @@ const AdminWithdrawals: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedWithdrawal, fetchWithdrawals]);
+
+  const closeViewModal = useCallback(() => {
+    setIsViewModalOpen(false);
+  }, []);
+
+  const closeApproveModal = useCallback(() => {
+    setIsApproveModalOpen(false);
+  }, []);
+
+  const closeRejectModal = useCallback(() => {
+    setIsRejectModalOpen(false);
+  }, []);
+
+  const handleRejectReasonChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setRejectReason(e.target.value);
+  }, []);
 
   if (loading && withdrawals.length === 0) {
     return (
@@ -357,7 +373,7 @@ const AdminWithdrawals: React.FC = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setIsViewModalOpen(false)}
+                  onClick={closeViewModal}
                 >
                   <XCircle className="h-5 w-5" />
                 </Button>
@@ -417,7 +433,7 @@ const AdminWithdrawals: React.FC = () => {
             </div>
             <div className="p-6 border-t border-gray-200 flex justify-end">
               <Button
-                onClick={() => setIsViewModalOpen(false)}
+                onClick={closeViewModal}
               >
                 Close
               </Button>
@@ -451,7 +467,7 @@ const AdminWithdrawals: React.FC = () => {
               <div className="flex justify-center space-x-3">
                 <Button
                   variant="secondary"
-                  onClick={() => setIsApproveModalOpen(false)}
+                  onClick={closeApproveModal}
                   disabled={processingTransaction || loading}
                 >
                   Cancel
@@ -488,7 +504,7 @@ const AdminWithdrawals: React.FC = () => {
                 </label>
                 <textarea
                   value={rejectReason}
-                  onChange={(e) => setRejectReason(e.target.value)}
+                  onChange={handleRejectReasonChange}
                   rows={3}
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                   placeholder="Enter reason for rejection..."
@@ -497,7 +513,7 @@ const AdminWithdrawals: React.FC = () => {
               <div className="flex justify-center space-x-3">
                 <Button
                   variant="secondary"
-                  onClick={() => setIsRejectModalOpen(false)}
+                  onClick={closeRejectModal}
                 >
                   Cancel
                 </Button>
