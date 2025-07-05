@@ -1,15 +1,15 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Contract, ContractInterface } from 'ethers';
-import { useWeb3 } from '@/contexts/Web3Context';
-import { Logger } from '@/utils/logger';
-import { getContractAddress } from '@/config/contracts';
-import DurationDonationABI from '@/contracts/DurationDonation.sol/DurationDonation.json';
+import { useState, useEffect, useCallback } from "react";
+import { Contract, ContractInterface } from "ethers";
+import { useWeb3 } from "@/contexts/Web3Context";
+import { Logger } from "@/utils/logger";
+import { getContractAddress } from "@/config/contracts";
+import DurationDonationABI from "@/contracts/DurationDonation.sol/DurationDonation.json";
 
 const CONTRACT_ABIS = {
-  donation: DurationDonationABI.abi
+  donation: DurationDonationABI.abi,
 };
 
-type ContractType = 'donation';
+type ContractType = "donation";
 
 interface ContractConfig {
   maxRetries?: number;
@@ -21,13 +21,16 @@ const DEFAULT_CONFIG: ContractConfig = {
   maxRetries: 3,
   retryDelay: 1000,
   fallbackRPCs: [
-    'https://rpc.api.moonbase.moonbeam.network',
-    'https://moonbase-alpha.public.blastapi.io',
-    'https://moonbase.unitedbloc.com:1000'
-  ]
+    "https://rpc.api.moonbase.moonbeam.network",
+    "https://moonbase-alpha.public.blastapi.io",
+    "https://moonbase.unitedbloc.com:1000",
+  ],
 };
 
-export function useContract(contractType: ContractType, config: ContractConfig = DEFAULT_CONFIG) {
+export function useContract(
+  contractType: ContractType,
+  config: ContractConfig = DEFAULT_CONFIG,
+) {
   const { provider, chainId } = useWeb3();
   const [contract, setContract] = useState<Contract | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -37,18 +40,19 @@ export function useContract(contractType: ContractType, config: ContractConfig =
     if (!provider || !chainId) return;
 
     try {
-      const contractName = contractType === 'donation' ? 'DONATION' : 'TOKEN';
+      const contractName = contractType === "donation" ? "DONATION" : "TOKEN";
       let address: string;
 
       try {
         address = getContractAddress(contractName, chainId);
       } catch (err) {
         // Use development address if contract address is not found
-        Logger.warn('Using development contract address', { contractType });
+        Logger.warn("Using development contract address", { contractType });
         // skipcq: SCT-A000 - These are placeholder development Ethereum addresses, not real secrets
-        address = contractType === 'donation' 
-          ? '0x1234567890123456789012345678901234567890'
-          : '0x2345678901234567890123456789012345678901';
+        address =
+          contractType === "donation"
+            ? "0x1234567890123456789012345678901234567890"
+            : "0x2345678901234567890123456789012345678901";
       }
 
       const abi = CONTRACT_ABIS[contractType];
@@ -59,11 +63,15 @@ export function useContract(contractType: ContractType, config: ContractConfig =
       }
 
       // Create contract instance with proper typing
-      const contract = new Contract(address, abi as ContractInterface, provider);
-      
+      const contract = new Contract(
+        address,
+        abi as ContractInterface,
+        provider,
+      );
+
       // Check if contract is deployed - but don't throw if not in development
       const code = await provider.getCode(address);
-      if (code === '0x' && import.meta.env.PROD) {
+      if (code === "0x" && import.meta.env.PROD) {
         throw new Error(`Contract not deployed at ${address}`);
       }
 
@@ -71,32 +79,39 @@ export function useContract(contractType: ContractType, config: ContractConfig =
       setError(null);
       setRetryCount(0);
 
-      Logger.info(`${contractType} contract initialized`, { 
+      Logger.info(`${contractType} contract initialized`, {
         address,
-        chainId
+        chainId,
       });
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to initialize contract';
-      
+      const message =
+        err instanceof Error ? err.message : "Failed to initialize contract";
+
       // In development, just log a warning
       if (!import.meta.env.PROD) {
-        Logger.warn('Contract initialization failed (development)', { 
+        Logger.warn("Contract initialization failed (development)", {
           error: err,
           contractType,
-          retryCount
+          retryCount,
         });
         return;
       }
 
       setError(new Error(message));
-      Logger.error(`Failed to initialize ${contractType} contract`, { error: err });
+      Logger.error(`Failed to initialize ${contractType} contract`, {
+        error: err,
+      });
 
       // Attempt retry with fallback RPC
       if (retryCount < (config.maxRetries || DEFAULT_CONFIG.maxRetries!)) {
-        const delay = (config.retryDelay || DEFAULT_CONFIG.retryDelay!) * Math.pow(2, retryCount);
-        setRetryCount(prev => prev + 1);
+        const delay =
+          (config.retryDelay || DEFAULT_CONFIG.retryDelay!) *
+          Math.pow(2, retryCount);
+        setRetryCount((prev) => prev + 1);
         setTimeout(() => {
-          const fallbackRPC = config.fallbackRPCs?.[retryCount] || DEFAULT_CONFIG.fallbackRPCs![retryCount];
+          const fallbackRPC =
+            config.fallbackRPCs?.[retryCount] ||
+            DEFAULT_CONFIG.fallbackRPCs![retryCount];
           if (fallbackRPC && provider) {
             // Note: This approach needs to be updated as provider.url is not directly accessible in ethers v6
             // This is a placeholder for the actual implementation
@@ -111,39 +126,41 @@ export function useContract(contractType: ContractType, config: ContractConfig =
     initializeContract();
   }, [initializeContract]);
 
-  const validateTransaction = useCallback(async (
-    method: string,
-    args: unknown[]
-  ): Promise<boolean> => {
-    if (!contract) return false;
+  const validateTransaction = useCallback(
+    async (method: string, args: unknown[]): Promise<boolean> => {
+      if (!contract) return false;
 
-    try {
-      // Estimate gas to validate transaction
-      // Note: In ethers v6, the syntax for estimating gas has changed
-      const gasEstimate = await contract.getFunction(method).estimateGas(...args);
-      
-      // Check if gas estimate is reasonable
-      const maxGas = 1000000n; // 1M gas units
-      if (gasEstimate > maxGas) {
-        throw new Error('Transaction would require too much gas');
+      try {
+        // Estimate gas to validate transaction
+        // Note: In ethers v6, the syntax for estimating gas has changed
+        const gasEstimate = await contract
+          .getFunction(method)
+          .estimateGas(...args);
+
+        // Check if gas estimate is reasonable
+        const maxGas = 1000000n; // 1M gas units
+        if (gasEstimate > maxGas) {
+          throw new Error("Transaction would require too much gas");
+        }
+
+        return true;
+      } catch (error) {
+        Logger.error("Transaction validation failed", {
+          contract: contractType,
+          method,
+          args,
+          error,
+        });
+        return false;
       }
+    },
+    [contract, contractType],
+  );
 
-      return true;
-    } catch (error) {
-      Logger.error('Transaction validation failed', {
-        contract: contractType,
-        method,
-        args,
-        error
-      });
-      return false;
-    }
-  }, [contract, contractType]);
-
-  return { 
-    contract, 
+  return {
+    contract,
     error,
     validateTransaction,
-    retryCount 
+    retryCount,
   };
 }

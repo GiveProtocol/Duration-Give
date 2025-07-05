@@ -1,4 +1,4 @@
-import '@testing-library/cypress/add-commands';
+import "@testing-library/cypress/add-commands";
 
 declare global {
   namespace Cypress {
@@ -9,37 +9,39 @@ declare global {
   }
 }
 
-Cypress.Commands.add('login', (
-  email = 'test@example.com',
-  password = 'password'
-) => {
-  cy.session([email, password], () => {
-    cy.request({
-      method: 'POST',
-      url: '/auth/login',
-      body: { email, password }
-    }).then((response) => {
-      window.localStorage.setItem(
-        'supabase.auth.token',
-        JSON.stringify(response.body)
-      );
+Cypress.Commands.add(
+  "login",
+  (email = "test@example.com", password = "password") => {
+    cy.session([email, password], () => {
+      cy.request({
+        method: "POST",
+        url: "/auth/login",
+        body: { email, password },
+      }).then((response) => {
+        window.localStorage.setItem(
+          "supabase.auth.token",
+          JSON.stringify(response.body),
+        );
+      });
     });
-  });
-});
+  },
+);
 
-Cypress.Commands.add('connectWallet', () => {
+Cypress.Commands.add("connectWallet", () => {
   cy.window().then((win) => {
     win.ethereum = {
       isMetaMask: true,
       request: (args: { method: string; params?: any[] }) => {
-        if (args.method === 'eth_requestAccounts') {
+        if (args.method === "eth_requestAccounts") {
           // skipcq: SCT-A000 - This is a placeholder test Ethereum address for Cypress testing, not a real secret
-          return Promise.resolve(['0x1234567890123456789012345678901234567890']);
+          return Promise.resolve([
+            "0x1234567890123456789012345678901234567890",
+          ]);
         }
         return Promise.resolve();
       },
       on: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     };
   });
 
