@@ -3,7 +3,7 @@ title: Give Protocol Documentation
 description: Official documentation for the Give Protocol charitable giving platform
 author: Give Protocol Team
 baseurl: "" # Leave empty if deploying to root of domain
-url: "https://docs.giveprotocol.org" # Update with your actual domain
+url: "https://docs.giveprotocol.io" # Custom domain for documentation
 
 # Theme and styling
 theme: minima

@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '_docs/**'
+      - 'docs/**'
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 
@@ -30,14 +30,14 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
-          working-directory: '_docs'
+          working-directory: 'docs'
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Build with Jekyll
         run: |
-          cd _docs
+          cd docs
           bundle install
           bundle exec jekyll build --config _config.yml,_config.production.yml
         env:
@@ -46,7 +46,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '_docs/_site'
+          path: 'docs/_site'
 
   deploy:
     environment:

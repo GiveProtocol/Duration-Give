@@ -1,13 +1,9 @@
 # Production-specific Jekyll configuration
 # This file overrides settings in _config.yml when building for production
 
-# GitHub Pages configuration
-baseurl: "/Duration" # If deploying to github.io/Duration
-url: "https://givprotocol.github.io" # Update with your GitHub Pages URL
-
-# Or if using custom domain:
-# baseurl: ""
-# url: "https://docs.giveprotocol.org"
+# Custom domain configuration
+baseurl: ""
+url: "https://docs.giveprotocol.io"
 
 # Production optimizations
 sass:
