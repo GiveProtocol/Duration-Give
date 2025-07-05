@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from '@/components/Logo';
+import { DOCS_CONFIG } from '@/config/docs';
 
 export const Footer: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ export const Footer: React.FC = () => {
               <ul className="mt-4 space-y-4">
                 <li>
                   <a 
-                    href="https://give-protocol.gitbook.io"
+                    href={DOCS_CONFIG.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 hover:text-gray-900"

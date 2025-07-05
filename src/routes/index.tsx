@@ -32,6 +32,7 @@ const CreateOpportunity = lazy(() => import('@/pages/charity/CreateOpportunity')
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const VerifyContribution = lazy(() => import('@/pages/volunteer/VerifyContribution'));
 const ScheduledDonationsPage = lazy(() => import('@/pages/donor/ScheduledDonationsPage'));
+const Documentation = lazy(() => import('@/pages/Documentation'));
 
 // Admin routes
 const AdminDashboard = lazy(() => import('@/pages/admin/AdminDashboard'));
@@ -338,7 +339,17 @@ export function AppRoutes() {
         <Route
           path="/docs"
           element={
-            <Navigate to="https://give-protocol.gitbook.io" replace />
+            <Navigate to="/documentation" replace />
+          }
+        />
+        <Route
+          path="/documentation"
+          element={
+            <RouteTransition>
+              <Suspense fallback={<LoadingFallback />}>
+                <Documentation />
+              </Suspense>
+            </RouteTransition>
           }
         />
         <Route

@@ -1,0 +1,68 @@
+# Jekyll configuration for Give Protocol Documentation
+title: Give Protocol Documentation
+description: Official documentation for the Give Protocol charitable giving platform
+author: Give Protocol Team
+baseurl: "" # Leave empty if deploying to root of domain
+url: "https://docs.giveprotocol.org" # Update with your actual domain
+
+# Theme and styling
+theme: minima
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Markdown settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+
+# Collections
+collections:
+  guides:
+    output: true
+    permalink: /guides/:path/
+
+# Default values
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      nav_exclude: false
+  - scope:
+      path: ""
+      type: "guides"
+    values:
+      layout: "guide"
+
+# Navigation
+nav_title: "Give Protocol"
+nav_logo: "/assets/images/logo.svg"
+
+# Footer
+footer_content: "Copyright &copy; 2024 Give Protocol. All rights reserved."
+
+# Search
+search_enabled: true
+search_tokenizer_separator: /[\s/]+/
+
+# External links
+external_links:
+  - title: "Main Website"
+    url: "https://giveprotocol.org"
+  - title: "GitHub"
+    url: "https://github.com/give-protocol"
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - README.md
+  - LICENSE

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DOCS_CONFIG } from '@/config/docs';
 
 export const Documentation: React.FC = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Redirect to GitBook documentation
-    window.location.href = 'https://give-protocol.gitbook.io';
+    // Redirect to documentation site
+    window.location.href = DOCS_CONFIG.url;
     
     // Fallback navigation if redirect fails
     const fallbackTimeout = setTimeout(() => {
@@ -25,7 +26,7 @@ export const Documentation: React.FC = () => {
         <p className="text-gray-600">
           If you are not redirected automatically,{' '}
           <a 
-            href="https://give-protocol.gitbook.io"
+            href={DOCS_CONFIG.url}
             className="text-indigo-600 hover:text-indigo-800"
           >
             click here

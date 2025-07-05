@@ -6,6 +6,7 @@ import { SettingsMenu } from './SettingsMenu';
 import { Menu, X, Calendar } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useAuth } from '@/contexts/AuthContext';
+import { DOCS_CONFIG } from '@/config/docs';
 
 export const AppNavbar: React.FC = () => {
   const location = useLocation();
@@ -123,7 +124,7 @@ export const AppNavbar: React.FC = () => {
                     <span>{t('nav.about')}</span>
                   </Link>
                   <a
-                    href="https://give-protocol.gitbook.io"
+                    href={DOCS_CONFIG.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-700 hover:bg-primary-50`}
@@ -243,7 +244,7 @@ export const AppNavbar: React.FC = () => {
                   {t('nav.about')}
                 </Link>
                 <a
-                  href="https://give-protocol.gitbook.io"
+                  href={DOCS_CONFIG.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-primary-50"

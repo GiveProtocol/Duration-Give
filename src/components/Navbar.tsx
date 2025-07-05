@@ -4,6 +4,7 @@ import { Logo } from './Logo';
 import { SettingsMenu } from './SettingsMenu';
 import { Menu, X } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { DOCS_CONFIG } from '@/config/docs';
 
 export const Navbar: React.FC = () => {
   const location = useLocation();
@@ -34,7 +35,7 @@ export const Navbar: React.FC = () => {
                 {t('nav.about')}
               </Link>
               <a
-                href="https://give-protocol.gitbook.io"
+                href={DOCS_CONFIG.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-700 hover:bg-primary-50`}
@@ -91,7 +92,7 @@ export const Navbar: React.FC = () => {
               {t('nav.about')}
             </Link>
             <a
-              href="https://give-protocol.gitbook.io"
+              href={DOCS_CONFIG.url}
               target="_blank"
               rel="noopener noreferrer"
               className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-primary-50"
