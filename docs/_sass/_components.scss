@@ -447,6 +447,134 @@
   }
 }
 
+// Settings dropdown
+.settings-dropdown {
+  position: relative;
+  
+  .settings-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    
+    svg {
+      flex-shrink: 0;
+    }
+  }
+  
+  .settings-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid var(--primary-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    padding: var(--spacing-lg);
+    min-width: 250px;
+    z-index: $z-index-dropdown;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: var(--transition-base);
+    
+    &.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+  
+  .settings-section {
+    &:not(:last-child) {
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-lg);
+      border-bottom: 1px solid var(--primary-200);
+    }
+  }
+  
+  .settings-heading {
+    @include text-body-small;
+    font-weight: 600;
+    color: var(--brand-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 var(--spacing-sm) 0;
+  }
+  
+  .theme-options,
+  .language-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .theme-option,
+  .language-option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--primary-200);
+    background: white;
+    color: var(--brand-text-secondary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transition-base);
+    width: 100%;
+    text-align: left;
+    
+    &:hover {
+      background-color: var(--primary-50);
+      border-color: var(--primary-300);
+      color: var(--brand-text);
+    }
+    
+    &.active {
+      background-color: var(--indigo-50);
+      border-color: var(--indigo-300);
+      color: var(--indigo-800);
+      font-weight: 500;
+    }
+    
+    svg {
+      flex-shrink: 0;
+    }
+    
+    .flag {
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// Dark mode styles for settings dropdown
+body.dark-mode {
+  .settings-menu {
+    background: var(--brand-background-secondary);
+    border-color: var(--primary-300);
+  }
+  
+  .theme-option,
+  .language-option {
+    background: var(--brand-background);
+    border-color: var(--primary-300);
+    color: var(--brand-text-secondary);
+    
+    &:hover {
+      background-color: var(--primary-200);
+      border-color: var(--primary-400);
+      color: var(--brand-text);
+    }
+    
+    &.active {
+      background-color: var(--indigo-900);
+      border-color: var(--indigo-600);
+      color: var(--indigo-200);
+    }
+  }
+}
+
 // Mobile menu
 .mobile-menu {
   position: fixed;

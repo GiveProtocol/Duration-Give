@@ -67,6 +67,75 @@
           <a href="https://giveprotocol.org" class="btn btn-ghost">Main Site</a>
           <a href="{{ '/help-center/' | relative_url }}" class="btn btn-ghost">Help Center</a>
           <a href="{{ '/help-center/contact/' | relative_url }}" class="btn btn-primary">Contact</a>
+          
+          <!-- Settings Dropdown -->
+          <div class="settings-dropdown">
+            <button class="settings-toggle btn btn-ghost" aria-label="Settings" aria-expanded="false" aria-haspopup="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="m12 1 1.68 2.32 2.32-1.68v3.36h3.36l-1.68 2.32L20 12l-2.32 1.68 1.68 2.32H16l-2.32-1.68L12 17l-1.68-2.32L8 16.68H4.64l1.68-2.32L4 12l2.32-1.68L4.64 8H8l2.32 1.68L12 7z"></path>
+              </svg>
+              <span>Settings</span>
+            </button>
+            
+            <div class="settings-menu" role="menu" aria-hidden="true">
+              <div class="settings-section">
+                <h4 class="settings-heading">Theme</h4>
+                <div class="theme-options">
+                  <button class="theme-option active" data-theme="light" role="menuitem">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="5"></circle>
+                      <line x1="12" y1="1" x2="12" y2="3"></line>
+                      <line x1="12" y1="21" x2="12" y2="23"></line>
+                      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                      <line x1="1" y1="12" x2="3" y2="12"></line>
+                      <line x1="21" y1="12" x2="23" y2="12"></line>
+                      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    Light
+                  </button>
+                  <button class="theme-option" data-theme="dark" role="menuitem">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+              
+              <div class="settings-section">
+                <h4 class="settings-heading">Language</h4>
+                <div class="language-options">
+                  <button class="language-option active" data-lang="en" role="menuitem">
+                    <span class="flag">🇺🇸</span>
+                    English
+                  </button>
+                  <button class="language-option" data-lang="es" role="menuitem">
+                    <span class="flag">🇪🇸</span>
+                    Español
+                  </button>
+                  <button class="language-option" data-lang="fr" role="menuitem">
+                    <span class="flag">🇫🇷</span>
+                    Français
+                  </button>
+                  <button class="language-option" data-lang="de" role="menuitem">
+                    <span class="flag">🇩🇪</span>
+                    Deutsch
+                  </button>
+                  <button class="language-option" data-lang="it" role="menuitem">
+                    <span class="flag">🇮🇹</span>
+                    Italiano
+                  </button>
+                  <button class="language-option" data-lang="pt" role="menuitem">
+                    <span class="flag">🇵🇹</span>
+                    Português
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </nav>
         
         <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -343,8 +412,110 @@
 
   <!-- JavaScript for interactive features -->
   <script>
-    // Mobile menu toggle
+    // Theme and settings management
+    function initSettings() {
+      // Get saved preferences or defaults
+      const savedTheme = localStorage.getItem('docs-theme') || 'light';
+      const savedLang = localStorage.getItem('docs-language') || 'en';
+      
+      applyTheme(savedTheme);
+      applyLanguage(savedLang);
+      updateSettingsUI();
+    }
+
+    function applyTheme(theme) {
+      const body = document.body;
+      
+      if (theme === 'dark') {
+        body.classList.add('dark-mode');
+      } else {
+        body.classList.remove('dark-mode');
+      }
+      
+      localStorage.setItem('docs-theme', theme);
+    }
+
+    function applyLanguage(lang) {
+      // For now, just save the preference
+      // In a full implementation, this would switch content language
+      localStorage.setItem('docs-language', lang);
+    }
+
+    function updateSettingsUI() {
+      const savedTheme = localStorage.getItem('docs-theme') || 'light';
+      const savedLang = localStorage.getItem('docs-language') || 'en';
+      
+      // Update theme option active states
+      document.querySelectorAll('.theme-option').forEach(option => {
+        option.classList.toggle('active', option.dataset.theme === savedTheme);
+      });
+      
+      // Update language option active states
+      document.querySelectorAll('.language-option').forEach(option => {
+        option.classList.toggle('active', option.dataset.lang === savedLang);
+      });
+    }
+
+    function toggleSettingsMenu() {
+      const settingsMenu = document.querySelector('.settings-menu');
+      const settingsToggle = document.querySelector('.settings-toggle');
+      
+      if (settingsMenu && settingsToggle) {
+        const isOpen = settingsMenu.classList.contains('open');
+        settingsMenu.classList.toggle('open');
+        settingsToggle.setAttribute('aria-expanded', !isOpen);
+        settingsMenu.setAttribute('aria-hidden', isOpen);
+      }
+    }
+
+    // Close settings menu when clicking outside
+    function closeSettingsOnOutsideClick(event) {
+      const settingsDropdown = document.querySelector('.settings-dropdown');
+      const settingsMenu = document.querySelector('.settings-menu');
+      
+      if (settingsDropdown && settingsMenu && !settingsDropdown.contains(event.target)) {
+        settingsMenu.classList.remove('open');
+        document.querySelector('.settings-toggle').setAttribute('aria-expanded', 'false');
+        settingsMenu.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    // Initialize settings immediately to prevent flash
+    initSettings();
+
     document.addEventListener('DOMContentLoaded', function() {
+      // Settings dropdown toggle
+      const settingsToggle = document.querySelector('.settings-toggle');
+      if (settingsToggle) {
+        settingsToggle.addEventListener('click', toggleSettingsMenu);
+      }
+
+      // Theme selection
+      document.querySelectorAll('.theme-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const theme = this.dataset.theme;
+          applyTheme(theme);
+          updateSettingsUI();
+        });
+      });
+
+      // Language selection
+      document.querySelectorAll('.language-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const lang = this.dataset.lang;
+          applyLanguage(lang);
+          updateSettingsUI();
+          
+          // In a full implementation, this would reload the page with the new language
+          // For now, just show a message
+          console.log('Language changed to:', lang);
+        });
+      });
+
+      // Close settings menu when clicking outside
+      document.addEventListener('click', closeSettingsOnOutsideClick);
+
+      // Mobile menu toggle
       const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
       const mobileMenu = document.querySelector('.mobile-menu');
       
