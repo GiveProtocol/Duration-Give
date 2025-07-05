@@ -17,7 +17,7 @@ export const StaticPageLayout: React.FC<StaticPageLayoutProps> = ({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Header section matching home page style */}
       <div className="text-center mb-16">
-        <h1 className="text-4xl font-bold text-gray-900 sm:text-6xl">
+        <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">
           {title}
         </h1>
         {subtitle && (
@@ -41,7 +41,7 @@ export const StaticPageLayout: React.FC<StaticPageLayoutProps> = ({
           prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-4
           prose-p:mb-4 prose-p:leading-relaxed
           prose-ul:mb-4 prose-ul:pl-6
-          prose-li:mb-2
+          prose-li:mb-0
           prose-strong:font-semibold prose-strong:text-gray-900">
           {children}
         </div>

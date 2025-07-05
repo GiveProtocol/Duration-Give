@@ -187,11 +187,6 @@ export const Privacy: React.FC = () => {
           
           <div className="mt-4 p-4 bg-gray-50 rounded-lg">
             <p><strong>Email:</strong> privacy@giveprotocol.io</p>
-            <p className="mt-2"><strong>Address:</strong><br />
-            Give Protocol Foundation<br />
-            7404 Executive Place<br />
-            Suite 400 #1078<br />
-            Lanham, MD 20706, United States</p>
           </div>
         </section>
       </div>

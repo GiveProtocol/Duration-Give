@@ -117,13 +117,7 @@ export const Legal: React.FC = () => {
           <p>If you have any questions about these Terms, please contact us at:</p>
           
           <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-            <p><strong>By Mail:</strong><br />
-            Give Protocol Foundation<br />
-            7404 Executive Place<br />
-            Suite 400 #1078<br />
-            Lanham, MD 20706, United States</p>
-            
-            <p className="mt-2"><strong>By Email:</strong> legal@giveprotocol.io</p>
+            <p><strong>Email:</strong> legal@giveprotocol.io</p>
           </div>
         </section>
       </div>
