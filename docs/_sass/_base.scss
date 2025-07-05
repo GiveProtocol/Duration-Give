@@ -11,7 +11,7 @@ h2 {
   @include text-heading-2;
   color: var(--brand-text);
   margin: var(--spacing-2xl) 0 var(--spacing-md) 0;
-  
+
   &:first-child {
     margin-top: 0;
   }
@@ -29,7 +29,8 @@ h4 {
   margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
 }
 
-h5, h6 {
+h5,
+h6 {
   font-size: 1.125rem;
   line-height: 1.5;
   font-weight: 600;
@@ -41,29 +42,31 @@ p {
   @include text-body;
   color: var(--brand-text-secondary);
   margin: 0 0 var(--spacing-md) 0;
-  
+
   &:last-child {
     margin-bottom: 0;
   }
 }
 
 // Lists
-ul, ol {
+ul,
+ol {
   @include text-body;
   color: var(--brand-text-secondary);
   margin: 0 0 var(--spacing-md) 0;
   padding-left: var(--spacing-lg);
-  
+
   li {
     margin-bottom: var(--spacing-xs);
-    
+
     &:last-child {
       margin-bottom: 0;
     }
   }
-  
+
   // Nested lists
-  ul, ol {
+  ul,
+  ol {
     margin-top: var(--spacing-xs);
     margin-bottom: 0;
   }
@@ -76,12 +79,12 @@ a {
   text-decoration-color: transparent;
   text-underline-offset: 2px;
   transition: var(--transition-base);
-  
+
   &:hover {
     color: var(--indigo-700);
     text-decoration-color: currentColor;
   }
-  
+
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px var(--indigo-200);
@@ -109,7 +112,7 @@ pre {
   font-family: var(--font-mono);
   font-size: 0.875rem;
   line-height: 1.5;
-  
+
   code {
     background: none;
     color: inherit;
@@ -124,20 +127,20 @@ blockquote {
   margin: var(--spacing-lg) 0;
   background-color: var(--indigo-50);
   border-radius: var(--radius-md);
-  
+
   p {
     margin: 0;
     font-style: italic;
     color: var(--indigo-800);
   }
-  
+
   cite {
     display: block;
     margin-top: var(--spacing-sm);
     @include text-body-small;
     color: var(--indigo-600);
     font-style: normal;
-    
+
     &:before {
       content: "— ";
     }
@@ -158,7 +161,8 @@ thead {
   background-color: var(--primary-100);
 }
 
-th, td {
+th,
+td {
   padding: var(--spacing-sm) var(--spacing-md);
   text-align: left;
   border-bottom: 1px solid var(--primary-200);
@@ -199,11 +203,11 @@ img {
 
 figure {
   margin: var(--spacing-lg) 0;
-  
+
   img {
     width: 100%;
   }
-  
+
   figcaption {
     margin-top: var(--spacing-sm);
     @include text-body-small;
@@ -214,7 +218,9 @@ figure {
 }
 
 // Form elements
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -261,18 +267,46 @@ input, textarea, select {
 }
 
 // Spacing utilities
-.mt-0 { margin-top: 0; }
-.mt-1 { margin-top: var(--spacing-xs); }
-.mt-2 { margin-top: var(--spacing-sm); }
-.mt-3 { margin-top: var(--spacing-md); }
-.mt-4 { margin-top: var(--spacing-lg); }
-.mt-5 { margin-top: var(--spacing-xl); }
-.mt-6 { margin-top: var(--spacing-2xl); }
+.mt-0 {
+  margin-top: 0;
+}
+.mt-1 {
+  margin-top: var(--spacing-xs);
+}
+.mt-2 {
+  margin-top: var(--spacing-sm);
+}
+.mt-3 {
+  margin-top: var(--spacing-md);
+}
+.mt-4 {
+  margin-top: var(--spacing-lg);
+}
+.mt-5 {
+  margin-top: var(--spacing-xl);
+}
+.mt-6 {
+  margin-top: var(--spacing-2xl);
+}
 
-.mb-0 { margin-bottom: 0; }
-.mb-1 { margin-bottom: var(--spacing-xs); }
-.mb-2 { margin-bottom: var(--spacing-sm); }
-.mb-3 { margin-bottom: var(--spacing-md); }
-.mb-4 { margin-bottom: var(--spacing-lg); }
-.mb-5 { margin-bottom: var(--spacing-xl); }
-.mb-6 { margin-bottom: var(--spacing-2xl); }
+.mb-0 {
+  margin-bottom: 0;
+}
+.mb-1 {
+  margin-bottom: var(--spacing-xs);
+}
+.mb-2 {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-3 {
+  margin-bottom: var(--spacing-md);
+}
+.mb-4 {
+  margin-bottom: var(--spacing-lg);
+}
+.mb-5 {
+  margin-bottom: var(--spacing-xl);
+}
+.mb-6 {
+  margin-bottom: var(--spacing-2xl);
+}
