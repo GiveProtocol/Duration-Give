@@ -34,6 +34,9 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   
+  <!-- Search JavaScript -->
+  <script src="{{ '/assets/js/simple-jekyll-search.min.js' | relative_url }}"></script>
+  
   <!-- JSON-LD Schema for SEO -->
   <script type="application/ld+json">
   {
@@ -154,11 +157,12 @@
       <aside class="sidebar" role="navigation" aria-label="Documentation navigation">
         <!-- Search -->
         <div class="search-container">
-          <input type="text" class="search-input" placeholder="Search documentation..." aria-label="Search documentation">
+          <input type="text" class="search-input" id="search-input" placeholder="Search documentation..." aria-label="Search documentation">
           <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.35-4.35"></path>
           </svg>
+          <div class="search-results" id="search-results"></div>
         </div>
 
         <!-- Navigation -->
@@ -538,12 +542,44 @@
         }
       });
 
-      // Simple search functionality (enhance with actual search later)
-      const searchInput = document.querySelector('.search-input');
-      if (searchInput) {
+      // Initialize search functionality
+      if (window.SimpleJekyllSearch) {
+        window.simpleJekyllSearch = SimpleJekyllSearch({
+          searchInput: document.getElementById('search-input'),
+          resultsContainer: document.getElementById('search-results'),
+          json: '{{ "/search.json" | relative_url }}',
+          searchResultTemplate: '<div class="search-result"><a href="{url}" class="result-link"><div class="result-title">{title}</div><div class="result-excerpt">{content}</div></a></div>',
+          noResultsText: '<div class="search-no-results">No results found</div>',
+          limit: 10,
+          fuzzy: false,
+          exclude: ['Welcome']
+        });
+      }
+
+      // Handle search input focus/blur for results container
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+      
+      if (searchInput && searchResults) {
+        searchInput.addEventListener('focus', function() {
+          if (this.value.trim()) {
+            searchResults.style.display = 'block';
+          }
+        });
+
         searchInput.addEventListener('input', function() {
-          // Placeholder for search functionality
-          console.log('Search:', this.value);
+          if (this.value.trim()) {
+            searchResults.style.display = 'block';
+          } else {
+            searchResults.style.display = 'none';
+          }
+        });
+
+        // Hide search results when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.style.display = 'none';
+          }
         });
       }
     });
