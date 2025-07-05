@@ -1,7 +1,7 @@
 ---
 title: Contact Us
 description: Get in touch with Give Protocol support, community team, and resources
-permalink: /docs/community/contact/
+permalink: /community/contact/
 ---
 
 We're here to help you make the most of your charitable giving experience. Whether you have questions, need support, or want to share feedback, we have multiple ways to connect with our team and community.

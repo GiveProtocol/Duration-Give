@@ -1,7 +1,7 @@
 ---
 title: First Steps
 description: Your first steps after creating a Give Protocol account
-permalink: /docs/getting-started/first-steps/
+permalink: /getting-started/first-steps/
 ---
 
 Welcome to Give Protocol! Now that you've created your account and connected your wallet, let's walk through your first steps to start making an impact.

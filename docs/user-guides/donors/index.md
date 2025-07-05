@@ -1,7 +1,7 @@
 ---
 title: Donors
 description: Complete guide for donors using Give Protocol to make charitable donations
-permalink: /docs/user-guides/donors/
+permalink: /user-guides/donors/
 ---
 
 Welcome to the comprehensive guide for donors on Give Protocol. Whether you're new to cryptocurrency giving or an experienced philanthropist, this guide will help you maximize your impact while giving securely and efficiently.

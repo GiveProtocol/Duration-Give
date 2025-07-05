@@ -1,7 +1,7 @@
 ---
 title: Smart Giving
 description: Guide to making informed, impactful donations and avoiding charity scams
-permalink: /docs/safety-security/smart-giving/
+permalink: /safety-security/smart-giving/
 ---
 
 Make your charitable contributions count. This guide helps you donate wisely, maximize your impact, and protect yourself from fraudulent charities.

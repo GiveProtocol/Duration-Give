@@ -1,7 +1,7 @@
 ---
 title: Time Tracking
 description: Track, manage, and maximize your volunteer time with Give Protocol's comprehensive time tracking tools
-permalink: /docs/resources/time-tracking/
+permalink: /resources/time-tracking/
 ---
 
 Maximize your volunteer impact with Give Protocol's comprehensive time tracking system. Monitor your contributions, meet requirements, and demonstrate your commitment to making a difference.

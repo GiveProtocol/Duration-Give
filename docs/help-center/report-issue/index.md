@@ -1,7 +1,7 @@
 ---
 title: Report Issue
 description: Report problems, safety concerns, and technical issues on the Give Protocol platform
-permalink: /docs/help-center/report-issue/
+permalink: /help-center/report-issue/
 ---
 
 Your reports help us maintain a safe, secure, and reliable platform for everyone. Use this guide to report issues effectively and get the fastest resolution possible.

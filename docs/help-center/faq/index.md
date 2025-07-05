@@ -1,7 +1,7 @@
 ---
 title: Frequently Asked Questions
 description: Find answers to common questions about Give Protocol
-permalink: /docs/help-center/faq/
+permalink: /help-center/faq/
 ---
 
 Find answers to common questions about Give Protocol, donations, and platform features.

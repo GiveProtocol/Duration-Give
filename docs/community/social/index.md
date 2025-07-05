@@ -1,7 +1,7 @@
 ---
 title: Social Impact & Sharing
 description: Share your charitable journey, connect on social media, and inspire others to give back
-permalink: /docs/community/social/
+permalink: /community/social/
 ---
 
 Amplify your charitable impact by sharing your giving journey on social media. Connect with fellow changemakers, inspire others to get involved, and build a community around the causes you care about.

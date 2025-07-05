@@ -1,7 +1,7 @@
 ---
 title: Impact Calculator
 description: Calculate the value and impact of your time donations and charitable contributions
-permalink: /docs/resources/calculator/
+permalink: /resources/calculator/
 ---
 
 Measure the true value of your charitable contributions. Our comprehensive calculators help you understand the financial impact of your time donations, tax benefits, and overall charitable giving.

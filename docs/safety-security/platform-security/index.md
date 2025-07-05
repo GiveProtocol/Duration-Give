@@ -1,7 +1,7 @@
 ---
 title: Platform Security
 description: Comprehensive guide to Give Protocol's security features and best practices for protecting your account
-permalink: /docs/safety-security/platform-security/
+permalink: /safety-security/platform-security/
 ---
 
 Your security is our priority. This guide explains Give Protocol's security features and provides best practices for protecting your account, data, and transactions on our platform.

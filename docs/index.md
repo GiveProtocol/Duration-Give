@@ -1,7 +1,7 @@
 ---
 title: Documentation
 description: Complete documentation for Give Protocol
-permalink: /docs/
+permalink: /
 ---
 
 <div class="search-callout">

@@ -1,7 +1,7 @@
 ---
 title: How To Join
 description: Complete guide to joining Give Protocol and starting your charitable giving journey
-permalink: /docs/introduction/how-to-join/
+permalink: /introduction/how-to-join/
 ---
 
 Welcome to Give Protocol! Join thousands of volunteers and donors who are making a real difference in their communities and around the world. This guide will walk you through everything you need to know to get started.

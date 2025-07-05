@@ -1,7 +1,7 @@
 ---
 title: Community Forums
 description: Connect with fellow volunteers, share experiences, and get support from the Give Protocol community
-permalink: /docs/community/forums/
+permalink: /community/forums/
 ---
 
 Join thousands of volunteers, donors, and nonprofit organizations in our vibrant community forums. Share experiences, ask questions, find opportunities, and connect with like-minded people who are passionate about making a difference.
