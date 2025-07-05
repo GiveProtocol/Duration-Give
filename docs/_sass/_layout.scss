@@ -16,7 +16,7 @@
   top: 0;
   z-index: $z-index-sticky;
   height: var(--header-height);
-  
+
   .header-content {
     @include container;
     display: flex;
@@ -24,7 +24,7 @@
     justify-content: space-between;
     height: 100%;
   }
-  
+
   .site-title {
     display: flex;
     align-items: center;
@@ -32,34 +32,34 @@
     color: var(--brand-text);
     font-weight: 700;
     font-size: 1.25rem;
-    
+
     &:hover {
       text-decoration: none;
       color: var(--indigo-600);
     }
-    
+
     .logo {
       height: 32px;
       width: auto;
       margin-right: var(--spacing-sm);
     }
   }
-  
+
   .header-nav {
     display: flex;
     align-items: center;
     gap: var(--spacing-lg);
-    
+
     @include mobile {
       display: none;
     }
   }
-  
+
   .mobile-menu-toggle {
     display: none;
     @include button-ghost;
     padding: var(--spacing-sm);
-    
+
     @include mobile {
       display: flex;
     }
@@ -73,7 +73,7 @@
   max-width: var(--max-width);
   margin: 0 auto;
   width: 100%;
-  
+
   @include mobile {
     flex-direction: column;
   }
@@ -89,7 +89,7 @@
   position: sticky;
   top: var(--header-height);
   height: calc(100vh - var(--header-height));
-  
+
   @include mobile {
     width: 100%;
     position: static;
@@ -97,10 +97,10 @@
     border-right: none;
     border-bottom: 1px solid var(--primary-200);
   }
-  
+
   &.collapsed {
     width: var(--sidebar-width-collapsed);
-    
+
     .nav-text {
       display: none;
     }
@@ -111,12 +111,12 @@
 .site-nav {
   .nav-section {
     margin-bottom: var(--spacing-xl);
-    
+
     &:last-child {
       margin-bottom: 0;
     }
   }
-  
+
   .nav-heading {
     @include text-body-small;
     font-weight: 600;
@@ -126,16 +126,16 @@
     margin-bottom: var(--spacing-sm);
     padding: 0 var(--spacing-sm);
   }
-  
+
   .nav-list {
     list-style: none;
     padding: 0;
     margin: 0;
   }
-  
+
   .nav-item {
     margin-bottom: var(--spacing-xs);
-    
+
     .nav-link {
       display: flex;
       align-items: center;
@@ -145,19 +145,19 @@
       color: var(--brand-text-secondary);
       transition: var(--transition-base);
       @include text-body-small;
-      
+
       &:hover {
         background-color: var(--primary-100);
         color: var(--brand-text);
         text-decoration: none;
       }
-      
+
       &.active {
         background-color: var(--indigo-100);
         color: var(--indigo-800);
         font-weight: 500;
       }
-      
+
       .nav-icon {
         width: 16px;
         height: 16px;
@@ -165,12 +165,12 @@
         flex-shrink: 0;
       }
     }
-    
+
     // Nested navigation
     .nav-list {
       margin-top: var(--spacing-xs);
       margin-left: var(--spacing-lg);
-      
+
       .nav-link {
         padding-left: var(--spacing-lg);
         font-size: 0.8125rem;
@@ -184,7 +184,7 @@
   flex: 1;
   padding: var(--spacing-2xl);
   min-width: 0; // Prevent flex item from overflowing
-  
+
   @include mobile {
     padding: var(--spacing-lg) var(--spacing-md);
   }
@@ -195,17 +195,17 @@
   margin-bottom: var(--spacing-2xl);
   padding-bottom: var(--spacing-lg);
   border-bottom: 1px solid var(--primary-200);
-  
+
   .page-title {
     margin: 0 0 var(--spacing-sm) 0;
   }
-  
+
   .page-description {
     @include text-body-large;
     color: var(--brand-text-secondary);
     margin: 0;
   }
-  
+
   .page-meta {
     display: flex;
     align-items: center;
@@ -213,7 +213,7 @@
     margin-top: var(--spacing-md);
     @include text-body-small;
     color: var(--brand-text-muted);
-    
+
     .meta-item {
       display: flex;
       align-items: center;
@@ -225,7 +225,7 @@
 // Content sections
 .content-section {
   margin-bottom: var(--spacing-3xl);
-  
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -234,16 +234,16 @@
 // Article content
 .article-content {
   max-width: 65ch; // Optimal reading width
-  
+
   // Add more space around headings in articles
   h2 {
     margin-top: var(--spacing-3xl);
-    
+
     &:first-child {
       margin-top: 0;
     }
   }
-  
+
   h3 {
     margin-top: var(--spacing-2xl);
   }
@@ -255,38 +255,38 @@
   border-top: 1px solid var(--primary-200);
   padding: var(--spacing-xl) 0;
   margin-top: auto;
-  
+
   .footer-content {
     @include container;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
     @include mobile {
       flex-direction: column;
       gap: var(--spacing-md);
       text-align: center;
     }
   }
-  
+
   .footer-text {
     @include text-body-small;
     color: var(--brand-text-muted);
   }
-  
+
   .footer-links {
     display: flex;
     gap: var(--spacing-lg);
-    
+
     @include mobile {
       gap: var(--spacing-md);
     }
-    
+
     a {
       @include text-body-small;
       color: var(--brand-text-secondary);
       text-decoration: none;
-      
+
       &:hover {
         color: var(--indigo-600);
         text-decoration: underline;
@@ -298,7 +298,7 @@
 // Breadcrumbs
 .breadcrumbs {
   margin-bottom: var(--spacing-lg);
-  
+
   .breadcrumb-list {
     display: flex;
     align-items: center;
@@ -307,27 +307,27 @@
     margin: 0;
     @include text-body-small;
   }
-  
+
   .breadcrumb-item {
     display: flex;
     align-items: center;
-    
+
     &:not(:last-child)::after {
       content: "›";
       margin: 0 var(--spacing-sm);
       color: var(--brand-text-muted);
     }
-    
+
     a {
       color: var(--brand-text-secondary);
       text-decoration: none;
-      
+
       &:hover {
         color: var(--indigo-600);
         text-decoration: underline;
       }
     }
-    
+
     &:last-child {
       color: var(--brand-text-muted);
     }
@@ -341,33 +341,33 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-lg);
   margin: var(--spacing-lg) 0;
-  
+
   .toc-title {
     font-weight: 600;
     margin: 0 0 var(--spacing-sm) 0;
     @include text-body;
   }
-  
+
   .toc-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    
+
     li {
       margin-bottom: var(--spacing-xs);
-      
+
       a {
         @include text-body-small;
         color: var(--brand-text-secondary);
         text-decoration: none;
-        
+
         &:hover {
           color: var(--indigo-600);
           text-decoration: underline;
         }
       }
     }
-    
+
     // Nested list items
     .toc-list {
       margin-top: var(--spacing-xs);
@@ -391,7 +391,7 @@
 
 .show-mobile {
   display: none !important;
-  
+
   @include mobile {
     display: block !important;
   }
