@@ -2,8 +2,8 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 /**
@@ -32,7 +32,7 @@ contract VolunteerVerification is Ownable, ReentrancyGuard, Pausable {
         bytes32 hoursHash;
         address volunteer;
         address charity;
-        uint256 hours;
+        uint256 hoursWorked;
         uint256 timestamp;
         bool isVerified;
     }
@@ -55,7 +55,7 @@ contract VolunteerVerification is Ownable, ReentrancyGuard, Pausable {
         bytes32 indexed hoursHash,
         address indexed volunteer,
         address indexed charity,
-        uint256 hours,
+        uint256 hoursWorked,
         uint256 timestamp
     );
     
@@ -167,7 +167,7 @@ contract VolunteerVerification is Ownable, ReentrancyGuard, Pausable {
             hoursHash: _hoursHash,
             volunteer: _volunteer,
             charity: msg.sender,
-            hours: _hours,
+            hoursWorked: _hours,
             timestamp: block.timestamp,
             isVerified: true
         });
@@ -178,7 +178,10 @@ contract VolunteerVerification is Ownable, ReentrancyGuard, Pausable {
     /**
      * @dev Check if an application hash is verified
      * @param _applicationHash The hash to check
-     * @return A tuple containing verification status, applicant, charity, and timestamp
+     * @return isVerified Verification status
+     * @return applicant Applicant address
+     * @return charity Charity address
+     * @return timestamp Timestamp of verification
      */
     function checkApplicationVerification(bytes32 _applicationHash) 
         external 
@@ -192,15 +195,19 @@ contract VolunteerVerification is Ownable, ReentrancyGuard, Pausable {
     /**
      * @dev Check if hours hash is verified
      * @param _hoursHash The hash to check
-     * @return A tuple containing verification status, volunteer, charity, hours, and timestamp
+     * @return isVerified Verification status
+     * @return volunteer Volunteer address
+     * @return charity Charity address
+     * @return hoursWorked Number of hours worked
+     * @return timestamp Timestamp of verification
      */
     function checkHoursVerification(bytes32 _hoursHash) 
         external 
         view 
-        returns (bool isVerified, address volunteer, address charity, uint256 hours, uint256 timestamp) 
+        returns (bool isVerified, address volunteer, address charity, uint256 hoursWorked, uint256 timestamp) 
     {
-        VolunteerHours storage hours = volunteerHours[_hoursHash];
-        return (hours.isVerified, hours.volunteer, hours.charity, hours.hours, hours.timestamp);
+        VolunteerHours storage hoursRecord = volunteerHours[_hoursHash];
+        return (hoursRecord.isVerified, hoursRecord.volunteer, hoursRecord.charity, hoursRecord.hoursWorked, hoursRecord.timestamp);
     }
 
     /**

@@ -26,14 +26,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Compile contracts with JS config
-        run: npx hardhat compile --config hardhat.config.js
+      - name: Compile contracts with CommonJS config
+        run: npx hardhat compile --config hardhat.config.cjs
 
       - name: Run Slither
         uses: crytic/slither-action@v0.4.1
         with:
           target: '.'
-          slither-args: '--hardhat-config hardhat.config.js --compile-force-framework hardhat --filter-paths "node_modules|test|scripts" contracts/'
+          slither-args: '--hardhat-config hardhat.config.cjs --compile-force-framework hardhat --filter-paths "node_modules|test|scripts" contracts/'
           sarif: results.sarif
           fail-on: none
           slither-version: 0.10.0
