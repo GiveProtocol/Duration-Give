@@ -147,10 +147,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         <div className="p-4 bg-white rounded-lg shadow-lg border border-gray-200 space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="country-filter" className="block text-sm font-medium text-gray-700 mb-1">
                 Country
               </label>
               <select
+                id="country-filter"
                 value={filters.country}
                 onChange={(e) => handleCountryChange(e.target.value)}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -161,10 +162,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="category-filter" className="block text-sm font-medium text-gray-700 mb-1">
                 Category
               </label>
               <select
+                id="category-filter"
                 value={filters.category}
                 onChange={(e) => handleCategoryChange(e.target.value)}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -181,10 +183,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="status-filter" className="block text-sm font-medium text-gray-700 mb-1">
                 Status
               </label>
               <select
+                id="status-filter"
                 value={filters.status}
                 onChange={(e) => handleFilterChange('status', e.target.value)}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -196,10 +199,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="sort-filter" className="block text-sm font-medium text-gray-700 mb-1">
                 Sort By
               </label>
               <select
+                id="sort-filter"
                 value={filters.sortBy}
                 onChange={(e) => handleFilterChange('sortBy', e.target.value)}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"

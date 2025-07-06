@@ -14,6 +14,7 @@ export const RegionFilter: React.FC<RegionFilterProps> = ({ value, onChange }) =
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        aria-label="Filter by region"
       >
         <option value="all">All Regions</option>
         <option value="na">North America</option>

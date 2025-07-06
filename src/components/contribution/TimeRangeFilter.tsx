@@ -14,6 +14,7 @@ export const TimeRangeFilter: React.FC<TimeRangeFilterProps> = ({ value, onChang
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        aria-label="Filter by time range"
       >
         <option value="all">All Time</option>
         <option value="year">This Year</option>
