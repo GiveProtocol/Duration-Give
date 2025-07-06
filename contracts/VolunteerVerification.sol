@@ -101,10 +101,10 @@ contract VolunteerVerification is Ownable, ReentrancyGuard, Pausable {
     
     /**
      * @dev Verify a volunteer application
-     * @param _applicationHash The hash of the application to verify
-     * @param _applicant The address of the applicant
+     * @param applicationHash The hash of the application to verify
+     * @param applicant The address of the applicant
      */
-    function verifyApplication(bytes32 _applicationHash, address _applicant) 
+    function verifyApplication(bytes32 applicationHash, address applicant) 
         external 
         nonReentrant 
         whenNotPaused 
@@ -117,32 +117,32 @@ contract VolunteerVerification is Ownable, ReentrancyGuard, Pausable {
             revert CharityNotActive(msg.sender);
         }
         
-        if (_applicationHash == bytes32(0)) {
+        if (applicationHash == bytes32(0)) {
             revert InvalidHash();
         }
         
-        if (applications[_applicationHash].isVerified) {
-            revert HashAlreadyVerified(_applicationHash);
+        if (applications[applicationHash].isVerified) {
+            revert HashAlreadyVerified(applicationHash);
         }
         
-        applications[_applicationHash] = VolunteerApplication({
-            applicationHash: _applicationHash,
-            applicant: _applicant,
+        applications[applicationHash] = VolunteerApplication({
+            applicationHash: applicationHash,
+            applicant: applicant,
             charity: msg.sender,
             timestamp: block.timestamp,
             isVerified: true
         });
         
-        emit ApplicationVerified(_applicationHash, _applicant, msg.sender, block.timestamp);
+        emit ApplicationVerified(applicationHash, applicant, msg.sender, block.timestamp);
     }
     
     /**
      * @dev Verify volunteer hours
-     * @param _hoursHash The hash of the hours record
-     * @param _volunteer The address of the volunteer
-     * @param _hours The number of hours worked
+     * @param hoursHash The hash of the hours record
+     * @param volunteer The address of the volunteer
+     * @param hoursWorked The number of hours worked
      */
-    function verifyHours(bytes32 _hoursHash, address _volunteer, uint256 _hours) 
+    function verifyHours(bytes32 hoursHash, address volunteer, uint256 hoursWorked) 
         external 
         nonReentrant 
         whenNotPaused 
@@ -155,58 +155,58 @@ contract VolunteerVerification is Ownable, ReentrancyGuard, Pausable {
             revert CharityNotActive(msg.sender);
         }
         
-        if (_hoursHash == bytes32(0)) {
+        if (hoursHash == bytes32(0)) {
             revert InvalidHash();
         }
         
-        if (volunteerHours[_hoursHash].isVerified) {
-            revert HashAlreadyVerified(_hoursHash);
+        if (volunteerHours[hoursHash].isVerified) {
+            revert HashAlreadyVerified(hoursHash);
         }
         
-        volunteerHours[_hoursHash] = VolunteerHours({
-            hoursHash: _hoursHash,
-            volunteer: _volunteer,
+        volunteerHours[hoursHash] = VolunteerHours({
+            hoursHash: hoursHash,
+            volunteer: volunteer,
             charity: msg.sender,
-            hoursWorked: _hours,
+            hoursWorked: hoursWorked,
             timestamp: block.timestamp,
             isVerified: true
         });
         
-        emit HoursVerified(_hoursHash, _volunteer, msg.sender, _hours, block.timestamp);
+        emit HoursVerified(hoursHash, volunteer, msg.sender, hoursWorked, block.timestamp);
     }
     
     /**
      * @dev Check if an application hash is verified
-     * @param _applicationHash The hash to check
+     * @param applicationHash The hash to check
      * @return isVerified Verification status
      * @return applicant Applicant address
      * @return charity Charity address
      * @return timestamp Timestamp of verification
      */
-    function checkApplicationVerification(bytes32 _applicationHash) 
+    function checkApplicationVerification(bytes32 applicationHash) 
         external 
         view 
         returns (bool isVerified, address applicant, address charity, uint256 timestamp) 
     {
-        VolunteerApplication storage app = applications[_applicationHash];
+        VolunteerApplication storage app = applications[applicationHash];
         return (app.isVerified, app.applicant, app.charity, app.timestamp);
     }
     
     /**
      * @dev Check if hours hash is verified
-     * @param _hoursHash The hash to check
+     * @param hoursHash The hash to check
      * @return isVerified Verification status
      * @return volunteer Volunteer address
      * @return charity Charity address
      * @return hoursWorked Number of hours worked
      * @return timestamp Timestamp of verification
      */
-    function checkHoursVerification(bytes32 _hoursHash) 
+    function checkHoursVerification(bytes32 hoursHash) 
         external 
         view 
         returns (bool isVerified, address volunteer, address charity, uint256 hoursWorked, uint256 timestamp) 
     {
-        VolunteerHours storage hoursRecord = volunteerHours[_hoursHash];
+        VolunteerHours storage hoursRecord = volunteerHours[hoursHash];
         return (hoursRecord.isVerified, hoursRecord.volunteer, hoursRecord.charity, hoursRecord.hoursWorked, hoursRecord.timestamp);
     }
 

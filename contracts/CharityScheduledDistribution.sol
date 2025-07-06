@@ -213,12 +213,12 @@ contract CharityScheduledDistribution is Ownable, ReentrancyGuard, Pausable {
         // Calculate remaining amount
         uint256 remainingAmount = schedule.amountPerMonth * schedule.monthsRemaining;
         
-        // Transfer remaining tokens back to donor
-        IERC20(schedule.token).safeTransfer(schedule.donor, remainingAmount);
-        
-        // Mark schedule as inactive
+        // Mark schedule as inactive BEFORE external call (check-effects-interactions pattern)
         schedule.active = false;
         schedule.monthsRemaining = 0;
+        
+        // Transfer remaining tokens back to donor
+        IERC20(schedule.token).safeTransfer(schedule.donor, remainingAmount);
         
         emit ScheduleCancelled(scheduleId);
     }
