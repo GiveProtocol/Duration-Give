@@ -26,19 +26,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install ts-node for TypeScript support
-        run: npm install --no-save ts-node @types/node
-
-      - name: Compile contracts
-        run: |
-          export NODE_OPTIONS="--loader ts-node/esm --no-warnings"
-          npx hardhat compile
+      - name: Compile contracts with JS config
+        run: npx hardhat compile --config hardhat.config.js
 
       - name: Run Slither
         uses: crytic/slither-action@v0.4.1
         with:
           target: '.'
-          slither-args: '--compile-force-framework hardhat --filter-paths "node_modules|test|scripts" contracts/'
+          slither-args: '--hardhat-config hardhat.config.js --compile-force-framework hardhat --filter-paths "node_modules|test|scripts" contracts/'
           sarif: results.sarif
           fail-on: none
           slither-version: 0.10.0
