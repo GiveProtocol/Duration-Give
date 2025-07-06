@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  /* Fix text-size-adjust browser compatibility */
+  html,
+  :host {
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+  
   body {
     @apply bg-[#F0EEE7] min-h-screen text-gray-900;
   }
