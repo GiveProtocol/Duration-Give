@@ -28,11 +28,11 @@ jobs:
 
       - name: Compile contracts with CommonJS config
         run: npx hardhat compile --config hardhat.config.cjs
+        working-directory: .
 
       - name: Run Slither
         uses: crytic/slither-action@v0.4.1
         with:
-          target: 'contracts/'
           slither-args: '--compile-force-framework hardhat --filter-paths "node_modules|test|scripts"'
           sarif: results.sarif
           fail-on: none
