@@ -192,13 +192,39 @@ img {
   height: auto;
 }
 
+// Hide Google Translate elements we don't want to show
+.goog-te-banner-frame,
+.goog-te-gadget,
+.goog-te-ftab,
+.goog-logo-link {
+  display: none !important;
+}
+
+// Ensure translated content maintains proper styling
+.translated-content {
+  font-family: var(--font-sans) !important;
+}
+
+// Fix any layout issues caused by Google Translate
+body.translated-rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+body.translated-rtl .site-nav,
+body.translated-rtl .header-nav {
+  direction: rtl;
+}
+
 // Print styles
 @media print {
   .sidebar,
   .header,
   .footer,
   .navigation,
-  .search-container {
+  .search-container,
+  .goog-te-banner-frame,
+  .goog-te-gadget {
     display: none !important;
   }
   

@@ -37,6 +37,19 @@
   <!-- Search JavaScript -->
   <script src="{{ '/assets/js/simple-jekyll-search.min.js' | relative_url }}"></script>
   
+  <!-- Google Translate -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
   <!-- JSON-LD Schema for SEO -->
   <script type="application/ld+json">
   {
@@ -56,6 +69,9 @@
 <body>
   <!-- Skip to main content link for accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Hidden Google Translate Element -->
+  <div id="google_translate_element" style="display: none;"></div>
 
   <div class="site">
     <!-- Header -->
@@ -117,21 +133,45 @@
                     <span class="flag">🇪🇸</span>
                     Español
                   </button>
-                  <button class="language-option" data-lang="fr" role="menuitem">
-                    <span class="flag">🇫🇷</span>
-                    Français
-                  </button>
                   <button class="language-option" data-lang="de" role="menuitem">
                     <span class="flag">🇩🇪</span>
                     Deutsch
                   </button>
-                  <button class="language-option" data-lang="it" role="menuitem">
-                    <span class="flag">🇮🇹</span>
-                    Italiano
+                  <button class="language-option" data-lang="fr" role="menuitem">
+                    <span class="flag">🇫🇷</span>
+                    Français
                   </button>
-                  <button class="language-option" data-lang="pt" role="menuitem">
-                    <span class="flag">🇵🇹</span>
-                    Português
+                  <button class="language-option" data-lang="ja" role="menuitem">
+                    <span class="flag">🇯🇵</span>
+                    日本語
+                  </button>
+                  <button class="language-option" data-lang="zh-CN" role="menuitem">
+                    <span class="flag">🇨🇳</span>
+                    简体中文
+                  </button>
+                  <button class="language-option" data-lang="zh-TW" role="menuitem">
+                    <span class="flag">🇹🇼</span>
+                    繁體中文
+                  </button>
+                  <button class="language-option" data-lang="th" role="menuitem">
+                    <span class="flag">🇹🇭</span>
+                    ไทย
+                  </button>
+                  <button class="language-option" data-lang="vi" role="menuitem">
+                    <span class="flag">🇻🇳</span>
+                    Tiếng Việt
+                  </button>
+                  <button class="language-option" data-lang="ko" role="menuitem">
+                    <span class="flag">🇰🇷</span>
+                    한국어
+                  </button>
+                  <button class="language-option" data-lang="ar" role="menuitem">
+                    <span class="flag">🇸🇦</span>
+                    العربية
+                  </button>
+                  <button class="language-option" data-lang="hi" role="menuitem">
+                    <span class="flag">🇮🇳</span>
+                    हिन्दी
                   </button>
                 </div>
               </div>
@@ -437,9 +477,50 @@
     }
 
     function applyLanguage(lang) {
-      // For now, just save the preference
-      // In a full implementation, this would switch content language
+      // Save preference
       localStorage.setItem('docs-language', lang);
+      
+      // Trigger Google Translate
+      if (lang === 'en') {
+        // Reset to original English
+        window.location.href = window.location.pathname;
+      } else {
+        // Use Google Translate API to change language
+        triggerGoogleTranslate(lang);
+      }
+    }
+    
+    function triggerGoogleTranslate(targetLang) {
+      // Wait for Google Translate to be ready
+      if (typeof google !== 'undefined' && google.translate) {
+        // Get the translate element
+        const translateElement = google.translate.TranslateElement.getInstance();
+        if (translateElement) {
+          // Find the language selector in the Google Translate widget
+          const selectElement = document.querySelector('#google_translate_element select');
+          if (selectElement) {
+            // Set the value to trigger translation
+            selectElement.value = targetLang;
+            selectElement.dispatchEvent(new Event('change'));
+          }
+        } else {
+          // If translate element isn't ready, try a different approach
+          setTimeout(() => {
+            const iframe = document.querySelector('.goog-te-menu-frame');
+            if (iframe) {
+              const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+              const langLink = iframeDoc.querySelector(`[data-value="${targetLang}"]`);
+              if (langLink) {
+                langLink.click();
+              }
+            }
+          }, 100);
+        }
+      } else {
+        // Fallback: reload page with Google Translate hash
+        window.location.href = window.location.pathname + '#googtrans(en|' + targetLang + ')';
+        window.location.reload();
+      }
     }
 
     function updateSettingsUI() {
@@ -507,9 +588,8 @@
           applyLanguage(lang);
           updateSettingsUI();
           
-          // In a full implementation, this would reload the page with the new language
-          // For now, just show a message
-          console.log('Language changed to:', lang);
+          // Close settings menu after language selection
+          toggleSettingsMenu();
         });
       });
 
