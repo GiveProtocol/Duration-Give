@@ -26,8 +26,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install ts-node for TypeScript support
+        run: npm install --no-save ts-node @types/node
+
       - name: Compile contracts
-        run: npx hardhat compile
+        run: |
+          export NODE_OPTIONS="--loader ts-node/esm --no-warnings"
+          npx hardhat compile
 
       - name: Run Slither
         uses: crytic/slither-action@v0.4.1
