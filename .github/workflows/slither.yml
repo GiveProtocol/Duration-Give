@@ -26,13 +26,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Compile contracts
+        run: npx hardhat compile
+
       - name: Run Slither
         uses: crytic/slither-action@v0.4.1
         with:
-          target: 'contracts/'
-          slither-args: '--compile-force-framework hardhat'
+          target: '.'
+          slither-args: '--compile-force-framework hardhat --filter-paths "node_modules|test|scripts" contracts/'
           sarif: results.sarif
           fail-on: none
+          slither-version: 0.10.0
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
