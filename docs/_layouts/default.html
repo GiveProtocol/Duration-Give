@@ -1,665 +1,1018 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
-  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="{{ page.url | absolute_url }}">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ page.url | absolute_url }}">
-  <meta property="og:title" content="{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta property="og:image" content="{{ '/assets/images/logo.svg' | absolute_url }}">
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="{{ page.url | absolute_url }}">
-  <meta property="twitter:title" content="{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta property="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta property="twitter:image" content="{{ '/assets/images/logo.svg' | absolute_url }}">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/logo.svg' | relative_url }}">
-  
-  <!-- Preconnect to external domains for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  
-  <!-- Search JavaScript -->
-  <script src="{{ '/assets/js/simple-jekyll-search.min.js' | relative_url }}"></script>
-  
-  <!-- Google Translate -->
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        includedLanguages: 'en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false
-      }, 'google_translate_element');
-    }
-  </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  
-  <!-- JSON-LD Schema for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "{{ site.title }}",
-    "description": "{{ site.description }}",
-    "url": "{{ site.url }}",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "{{ site.url }}/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-  </script>
-</head>
-<body>
-  <!-- Skip to main content link for accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  
-  <!-- Hidden Google Translate Element -->
-  <div id="google_translate_element" style="display: none;"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <div class="site">
-    <!-- Header -->
-    <header class="site-header" role="banner">
-      <div class="header-content">
-        <a href="{{ '/' | relative_url }}" class="site-title" aria-label="Give Protocol Documentation Home">
-          <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Give Protocol" class="logo">
-          <span>Give Protocol Docs</span>
-        </a>
-        
-        <nav class="header-nav" role="navigation" aria-label="Header navigation">
-          <a href="https://giveprotocol.io" class="btn btn-ghost">Main Site</a>
-          
-          <!-- Settings Dropdown -->
-          <div class="settings-dropdown">
-            <button class="settings-toggle btn btn-ghost" aria-label="Settings" aria-expanded="false" aria-haspopup="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-              <span>Settings</span>
-            </button>
-            
-            <div class="settings-menu" role="menu" aria-hidden="true">
-              <div class="settings-section">
-                <h4 class="settings-heading">Theme</h4>
-                <div class="theme-options">
-                  <button class="theme-option active" data-theme="light" role="menuitem">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="4"></circle>
-                      <path d="m12 2v2"></path>
-                      <path d="m12 20v2"></path>
-                      <path d="m4.93 4.93 1.41 1.41"></path>
-                      <path d="m17.66 17.66 1.41 1.41"></path>
-                      <path d="M2 12h2"></path>
-                      <path d="M20 12h2"></path>
-                      <path d="m6.34 17.66-1.41 1.41"></path>
-                      <path d="m19.07 4.93-1.41 1.41"></path>
-                    </svg>
-                    Light
-                  </button>
-                  <button class="theme-option" data-theme="dark" role="menuitem">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                    </svg>
-                    Dark
-                  </button>
-                </div>
-              </div>
-              
-              <div class="settings-section">
-                <h4 class="settings-heading">Language</h4>
-                <div class="language-options">
-                  <button class="language-option active" data-lang="en" role="menuitem">
-                    <span class="flag">🇺🇸</span>
-                    English
-                  </button>
-                  <button class="language-option" data-lang="es" role="menuitem">
-                    <span class="flag">🇪🇸</span>
-                    Español
-                  </button>
-                  <button class="language-option" data-lang="de" role="menuitem">
-                    <span class="flag">🇩🇪</span>
-                    Deutsch
-                  </button>
-                  <button class="language-option" data-lang="fr" role="menuitem">
-                    <span class="flag">🇫🇷</span>
-                    Français
-                  </button>
-                  <button class="language-option" data-lang="ja" role="menuitem">
-                    <span class="flag">🇯🇵</span>
-                    日本語
-                  </button>
-                  <button class="language-option" data-lang="zh-CN" role="menuitem">
-                    <span class="flag">🇨🇳</span>
-                    简体中文
-                  </button>
-                  <button class="language-option" data-lang="zh-TW" role="menuitem">
-                    <span class="flag">🇹🇼</span>
-                    繁體中文
-                  </button>
-                  <button class="language-option" data-lang="th" role="menuitem">
-                    <span class="flag">🇹🇭</span>
-                    ไทย
-                  </button>
-                  <button class="language-option" data-lang="vi" role="menuitem">
-                    <span class="flag">🇻🇳</span>
-                    Tiếng Việt
-                  </button>
-                  <button class="language-option" data-lang="ko" role="menuitem">
-                    <span class="flag">🇰🇷</span>
-                    한국어
-                  </button>
-                  <button class="language-option" data-lang="ar" role="menuitem">
-                    <span class="flag">🇸🇦</span>
-                    العربية
-                  </button>
-                  <button class="language-option" data-lang="hi" role="menuitem">
-                    <span class="flag">🇮🇳</span>
-                    हिन्दी
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
-        
-        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
-          <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-    </header>
+    <title>
+      {% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{
+      site.title }}{% endif %}
+    </title>
+    <meta
+      name="description"
+      content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"
+    />
 
-    <!-- Main content area -->
-    <main class="site-main">
-      <!-- Sidebar navigation -->
-      <aside class="sidebar" role="navigation" aria-label="Documentation navigation">
-        <!-- Search -->
-        <div class="search-container">
-          <input type="text" class="search-input" id="search-input" placeholder="Search documentation..." aria-label="Search documentation">
-          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-          </svg>
-          <div class="search-results" id="search-results"></div>
-        </div>
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ page.url | absolute_url }}" />
 
-        <!-- Navigation -->
-        <nav class="site-nav">
-          <div class="nav-section">
-            <h3 class="nav-heading">Getting Started</h3>
-            <ul class="nav-list">
-              <li class="nav-item">
-                <a href="{{ '/introduction/what-is-give-protocol/' | relative_url }}" class="nav-link">What is Give Protocol?</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/introduction/how-to-join/' | relative_url }}" class="nav-link">How to Join</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/getting-started/creating-account/' | relative_url }}" class="nav-link">Creating Account</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/getting-started/wallet-connection/' | relative_url }}" class="nav-link">Wallet Connection</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/getting-started/first-steps/' | relative_url }}" class="nav-link">First Steps</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/getting-started/dashboard/' | relative_url }}" class="nav-link">Dashboard Guide</a>
-              </li>
-            </ul>
-          </div>
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ page.url | absolute_url }}" />
+    <meta
+      property="og:title"
+      content="{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}"
+    />
+    <meta
+      property="og:description"
+      content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"
+    />
+    <meta
+      property="og:image"
+      content="{{ '/assets/images/logo.svg' | absolute_url }}"
+    />
 
-          <div class="nav-section">
-            <h3 class="nav-heading">User Guides</h3>
-            <ul class="nav-list">
-              <li class="nav-item">
-                <a href="{{ '/user-guides/donors/' | relative_url }}" class="nav-link">For Donors</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/user-guides/organizations/' | relative_url }}" class="nav-link">For Organizations</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/user-guides/volunteers/' | relative_url }}" class="nav-link">For Volunteers</a>
-              </li>
-            </ul>
-          </div>
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="{{ page.url | absolute_url }}" />
+    <meta
+      property="twitter:title"
+      content="{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}"
+    />
+    <meta
+      property="twitter:description"
+      content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"
+    />
+    <meta
+      property="twitter:image"
+      content="{{ '/assets/images/logo.svg' | absolute_url }}"
+    />
 
-          <div class="nav-section">
-            <h3 class="nav-heading">Platform Features</h3>
-            <ul class="nav-list">
-              <li class="nav-item">
-                <a href="{{ '/platform-features/verification/' | relative_url }}" class="nav-link">Verification System</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/platform-features/search-discovery/' | relative_url }}" class="nav-link">Search & Discovery</a>
-              </li>
-            </ul>
-          </div>
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="{{ '/assets/images/logo.svg' | relative_url }}"
+    />
 
-          <div class="nav-section">
-            <h3 class="nav-heading">Resources</h3>
-            <ul class="nav-list">
-              <li class="nav-item">
-                <a href="{{ '/resources/time-tracking/' | relative_url }}" class="nav-link">Time Tracking</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/resources/calculator/' | relative_url }}" class="nav-link">Impact Calculator</a>
-              </li>
-            </ul>
-          </div>
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-          <div class="nav-section">
-            <h3 class="nav-heading">Safety & Security</h3>
-            <ul class="nav-list">
-              <li class="nav-item">
-                <a href="{{ '/safety-security/platform-security/' | relative_url }}" class="nav-link">Platform Security</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/safety-security/smart-giving/' | relative_url }}" class="nav-link">Smart Giving</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/safety-security/volunteer-safety/' | relative_url }}" class="nav-link">Volunteer Safety</a>
-              </li>
-            </ul>
-          </div>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
 
-          <div class="nav-section">
-            <h3 class="nav-heading">Technical</h3>
-            <ul class="nav-list">
-              <li class="nav-item">
-                <a href="{{ '/technical/cryptocurrencies/' | relative_url }}" class="nav-link">Cryptocurrencies</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/technical/fees/' | relative_url }}" class="nav-link">Fee Structure</a>
-              </li>
-            </ul>
-          </div>
+    <!-- Search JavaScript -->
+    <script src="{{ '/assets/js/simple-jekyll-search.min.js' | relative_url }}"></script>
 
-          <div class="nav-section">
-            <h3 class="nav-heading">Community</h3>
-            <ul class="nav-list">
-              <li class="nav-item">
-                <a href="{{ '/community/forums/' | relative_url }}" class="nav-link">Forums</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/community/social/' | relative_url }}" class="nav-link">Social Impact</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/community/contact/' | relative_url }}" class="nav-link">Contact Us</a>
-              </li>
-            </ul>
-          </div>
+    <!-- Google Translate -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
 
-          <div class="nav-section">
-            <h3 class="nav-heading">Help & Support</h3>
-            <ul class="nav-list">
-              <li class="nav-item">
-                <a href="{{ '/help-center/faq/' | relative_url }}" class="nav-link">FAQ</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/help-center/need-help/' | relative_url }}" class="nav-link">Need Help?</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ '/help-center/report-issue/' | relative_url }}" class="nav-link">Report Issue</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </aside>
+    <!-- JSON-LD Schema for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "{{ site.title }}",
+        "description": "{{ site.description }}",
+        "url": "{{ site.url }}",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "{{ site.url }}/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-      <!-- Main content -->
-      <div class="main-content" id="main-content" role="main">
-        <!-- Breadcrumbs -->
-        {% if page.url != "/" %}
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol class="breadcrumb-list">
-            <li class="breadcrumb-item">
-              <a href="{{ '/' | relative_url }}">Home</a>
-            </li>
-            {% assign crumbs = page.url | remove:'/index.html' | split: '/' %}
-            {% for crumb in crumbs offset: 1 %}
-              {% unless forloop.last %}
-                <li class="breadcrumb-item">
-                  {% capture crumb_url %}{% for c in crumbs limit: forloop.index %}{{ c | append: '/' }}{% endfor %}{% endcapture %}
-                  <a href="{{ crumb_url | relative_url }}">{{ crumb | replace:'-',' ' | capitalize }}</a>
-                </li>
-              {% else %}
-                <li class="breadcrumb-item">{{ crumb | replace:'-',' ' | capitalize }}</li>
-              {% endunless %}
-            {% endfor %}
-          </ol>
-        </nav>
-        {% endif %}
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element" style="display: none"></div>
 
-        <!-- Page header -->
-        {% if page.title %}
-        <header class="page-header">
-          <h1 class="page-title">{{ page.title }}</h1>
-          {% if page.description %}
-          <p class="page-description">{{ page.description }}</p>
-          {% endif %}
-          {% if page.date or page.last_modified_at %}
-          <div class="page-meta">
-            {% if page.date %}
-            <div class="meta-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              Published: {{ page.date | date: "%B %d, %Y" }}
-            </div>
-            {% endif %}
-            {% if page.last_modified_at %}
-            <div class="meta-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="23 4 23 10 17 10"></polyline>
-                <polyline points="1 20 1 14 7 14"></polyline>
-                <path d="m3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-              </svg>
-              Updated: {{ page.last_modified_at | date: "%B %d, %Y" }}
-            </div>
-            {% endif %}
-          </div>
-          {% endif %}
-        </header>
-        {% endif %}
-
-        <!-- Article content -->
-        <article class="article-content">
-          {{ content }}
-        </article>
-
-        <!-- Edit this page link -->
-        {% if page.path %}
-        <div class="mt-6 pt-4 border-top">
-          <a href="https://github.com/GiveProtocol/Duration-Give/edit/main/docs/{{ page.path }}" class="btn btn-ghost btn-sm" target="_blank" rel="noopener">
-            <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="m18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-            </svg>
-            Edit this page
+    <div class="site">
+      <!-- Header -->
+      <header class="site-header" role="banner">
+        <div class="header-content">
+          <a
+            href="{{ '/' | relative_url }}"
+            class="site-title"
+            aria-label="Give Protocol Documentation Home"
+          >
+            <img
+              src="{{ '/assets/images/logo.svg' | relative_url }}"
+              alt="Give Protocol"
+              class="logo"
+            />
+            <span>Give Protocol Docs</span>
           </a>
+
+          <nav
+            class="header-nav"
+            role="navigation"
+            aria-label="Header navigation"
+          >
+            <a href="https://giveprotocol.io" class="btn btn-ghost"
+              >Main Site</a
+            >
+
+            <!-- Settings Dropdown -->
+            <div class="settings-dropdown">
+              <button
+                class="settings-toggle btn btn-ghost"
+                aria-label="Settings"
+                aria-expanded="false"
+                aria-haspopup="true"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+                  ></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <span>Settings</span>
+              </button>
+
+              <div class="settings-menu" role="menu" aria-hidden="true">
+                <div class="settings-section">
+                  <h4 class="settings-heading">Theme</h4>
+                  <div class="theme-options">
+                    <button
+                      class="theme-option active"
+                      data-theme="light"
+                      role="menuitem"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="m12 2v2"></path>
+                        <path d="m12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path>
+                        <path d="m19.07 4.93-1.41 1.41"></path>
+                      </svg>
+                      Light
+                    </button>
+                    <button
+                      class="theme-option"
+                      data-theme="dark"
+                      role="menuitem"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                      </svg>
+                      Dark
+                    </button>
+                  </div>
+                </div>
+
+                <div class="settings-section">
+                  <h4 class="settings-heading">Language</h4>
+                  <div class="language-options">
+                    <button
+                      class="language-option active"
+                      data-lang="en"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇺🇸</span>
+                      English
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="es"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇪🇸</span>
+                      Español
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="de"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇩🇪</span>
+                      Deutsch
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="fr"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇫🇷</span>
+                      Français
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="ja"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇯🇵</span>
+                      日本語
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="zh-CN"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇨🇳</span>
+                      简体中文
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="zh-TW"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇹🇼</span>
+                      繁體中文
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="th"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇹🇭</span>
+                      ไทย
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="vi"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇻🇳</span>
+                      Tiếng Việt
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="ko"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇰🇷</span>
+                      한국어
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="ar"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇸🇦</span>
+                      العربية
+                    </button>
+                    <button
+                      class="language-option"
+                      data-lang="hi"
+                      role="menuitem"
+                    >
+                      <span class="flag">🇮🇳</span>
+                      हिन्दी
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+          <button
+            class="mobile-menu-toggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <svg
+              class="menu-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
         </div>
-        {% endif %}
-      </div>
-    </main>
+      </header>
 
-    <!-- Footer -->
-    <footer class="site-footer" role="contentinfo">
-      <div class="footer-content">
-        <div class="footer-text">
-          {{ site.footer_content | default: "© 2025 Give Protocol. All rights reserved." }}
+      <!-- Main content area -->
+      <main class="site-main">
+        <!-- Sidebar navigation -->
+        <aside
+          class="sidebar"
+          role="navigation"
+          aria-label="Documentation navigation"
+        >
+          <!-- Search -->
+          <div class="search-container">
+            <input
+              type="text"
+              class="search-input"
+              id="search-input"
+              placeholder="Search documentation..."
+              aria-label="Search documentation"
+            />
+            <svg
+              class="search-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <div class="search-results" id="search-results"></div>
+          </div>
+
+          <!-- Navigation -->
+          <nav class="site-nav">
+            <div class="nav-section">
+              <h3 class="nav-heading">Getting Started</h3>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a
+                    href="{{ '/introduction/what-is-give-protocol/' | relative_url }}"
+                    class="nav-link"
+                    >What is Give Protocol?</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/introduction/how-to-join/' | relative_url }}"
+                    class="nav-link"
+                    >How to Join</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/getting-started/creating-account/' | relative_url }}"
+                    class="nav-link"
+                    >Creating Account</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/getting-started/wallet-connection/' | relative_url }}"
+                    class="nav-link"
+                    >Wallet Connection</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/getting-started/first-steps/' | relative_url }}"
+                    class="nav-link"
+                    >First Steps</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/getting-started/dashboard/' | relative_url }}"
+                    class="nav-link"
+                    >Dashboard Guide</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <h3 class="nav-heading">User Guides</h3>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a
+                    href="{{ '/user-guides/donors/' | relative_url }}"
+                    class="nav-link"
+                    >For Donors</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/user-guides/organizations/' | relative_url }}"
+                    class="nav-link"
+                    >For Organizations</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/user-guides/volunteers/' | relative_url }}"
+                    class="nav-link"
+                    >For Volunteers</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <h3 class="nav-heading">Platform Features</h3>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a
+                    href="{{ '/platform-features/verification/' | relative_url }}"
+                    class="nav-link"
+                    >Verification System</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/platform-features/search-discovery/' | relative_url }}"
+                    class="nav-link"
+                    >Search & Discovery</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <h3 class="nav-heading">Resources</h3>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a
+                    href="{{ '/resources/time-tracking/' | relative_url }}"
+                    class="nav-link"
+                    >Time Tracking</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/resources/calculator/' | relative_url }}"
+                    class="nav-link"
+                    >Impact Calculator</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <h3 class="nav-heading">Safety & Security</h3>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a
+                    href="{{ '/safety-security/platform-security/' | relative_url }}"
+                    class="nav-link"
+                    >Platform Security</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/safety-security/smart-giving/' | relative_url }}"
+                    class="nav-link"
+                    >Smart Giving</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/safety-security/volunteer-safety/' | relative_url }}"
+                    class="nav-link"
+                    >Volunteer Safety</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <h3 class="nav-heading">Technical</h3>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a
+                    href="{{ '/technical/cryptocurrencies/' | relative_url }}"
+                    class="nav-link"
+                    >Cryptocurrencies</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/technical/fees/' | relative_url }}"
+                    class="nav-link"
+                    >Fee Structure</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <h3 class="nav-heading">Community</h3>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a
+                    href="{{ '/community/forums/' | relative_url }}"
+                    class="nav-link"
+                    >Forums</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/community/social/' | relative_url }}"
+                    class="nav-link"
+                    >Social Impact</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/community/contact/' | relative_url }}"
+                    class="nav-link"
+                    >Contact Us</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <h3 class="nav-heading">Help & Support</h3>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a
+                    href="{{ '/help-center/faq/' | relative_url }}"
+                    class="nav-link"
+                    >FAQ</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/help-center/need-help/' | relative_url }}"
+                    class="nav-link"
+                    >Need Help?</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="{{ '/help-center/report-issue/' | relative_url }}"
+                    class="nav-link"
+                    >Report Issue</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Main content -->
+        <div class="main-content" id="main-content" role="main">
+          <!-- Breadcrumbs -->
+          {% if page.url != "/" %}
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <ol class="breadcrumb-list">
+              <li class="breadcrumb-item">
+                <a href="{{ '/' | relative_url }}">Home</a>
+              </li>
+              {% assign crumbs = page.url | remove:'/index.html' | split: '/' %}
+              {% for crumb in crumbs offset: 1 %} {% unless forloop.last %}
+              <li class="breadcrumb-item">
+                {% capture crumb_url %}{% for c in crumbs limit: forloop.index
+                %}{{ c | append: '/' }}{% endfor %}{% endcapture %}
+                <a href="{{ crumb_url | relative_url }}"
+                  >{{ crumb | replace:'-',' ' | capitalize }}</a
+                >
+              </li>
+              {% else %}
+              <li class="breadcrumb-item">
+                {{ crumb | replace:'-',' ' | capitalize }}
+              </li>
+              {% endunless %} {% endfor %}
+            </ol>
+          </nav>
+          {% endif %}
+
+          <!-- Page header -->
+          {% if page.title %}
+          <header class="page-header">
+            <h1 class="page-title">{{ page.title }}</h1>
+            {% if page.description %}
+            <p class="page-description">{{ page.description }}</p>
+            {% endif %} {% if page.date or page.last_modified_at %}
+            <div class="page-meta">
+              {% if page.date %}
+              <div class="meta-item">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Published: {{ page.date | date: "%B %d, %Y" }}
+              </div>
+              {% endif %} {% if page.last_modified_at %}
+              <div class="meta-item">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <polyline points="1 20 1 14 7 14"></polyline>
+                  <path
+                    d="m3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"
+                  ></path>
+                </svg>
+                Updated: {{ page.last_modified_at | date: "%B %d, %Y" }}
+              </div>
+              {% endif %}
+            </div>
+            {% endif %}
+          </header>
+          {% endif %}
+
+          <!-- Article content -->
+          <article class="article-content">{{ content }}</article>
+
+          <!-- Edit this page link -->
+          {% if page.path %}
+          <div class="mt-6 pt-4 border-top">
+            <a
+              href="https://github.com/GiveProtocol/Duration-Give/edit/main/docs/{{ page.path }}"
+              class="btn btn-ghost btn-sm"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                class="btn-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                ></path>
+                <path
+                  d="m18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                ></path>
+              </svg>
+              Edit this page
+            </a>
+          </div>
+          {% endif %}
         </div>
-        <nav class="footer-links" aria-label="Footer navigation">
-          <a href="https://giveprotocol.io">Main Site</a>
-          <a href="https://github.com/GiveProtocol/Duration-Give">GitHub</a>
-        </nav>
-      </div>
-    </footer>
-  </div>
+      </main>
 
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <nav class="mobile-nav" role="navigation" aria-label="Mobile navigation">
-      <!-- Same navigation structure as sidebar -->
-      <div class="nav-section">
-        <h3 class="nav-heading">Getting Started</h3>
-        <ul class="nav-list">
-          <li class="nav-item">
-            <a href="{{ '/introduction/what-is-give-protocol/' | relative_url }}" class="nav-link">What is Give Protocol?</a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ '/introduction/how-to-join/' | relative_url }}" class="nav-link">How to Join</a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ '/getting-started/creating-account/' | relative_url }}" class="nav-link">Creating Account</a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ '/getting-started/wallet-connection/' | relative_url }}" class="nav-link">Wallet Connection</a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ '/getting-started/first-steps/' | relative_url }}" class="nav-link">First Steps</a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ '/getting-started/dashboard/' | relative_url }}" class="nav-link">Dashboard Guide</a>
-          </li>
-        </ul>
-      </div>
-      <!-- Include other nav sections here for mobile -->
-    </nav>
-  </div>
+      <!-- Footer -->
+      <footer class="site-footer" role="contentinfo">
+        <div class="footer-content">
+          <div class="footer-text">
+            {{ site.footer_content | default: "© 2025 Give Protocol. All rights
+            reserved." }}
+          </div>
+          <nav class="footer-links" aria-label="Footer navigation">
+            <a href="https://giveprotocol.io">Main Site</a>
+            <a href="https://github.com/GiveProtocol/Duration-Give">GitHub</a>
+          </nav>
+        </div>
+      </footer>
+    </div>
 
-  <!-- JavaScript for interactive features -->
-  <script>
-    // Theme and settings management
-    function initSettings() {
-      // Get saved preferences or defaults
-      const savedTheme = localStorage.getItem('docs-theme') || 'light';
-      const savedLang = localStorage.getItem('docs-language') || 'en';
-      
-      applyTheme(savedTheme);
-      applyLanguage(savedLang);
-      updateSettingsUI();
-    }
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <nav class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+        <!-- Same navigation structure as sidebar -->
+        <div class="nav-section">
+          <h3 class="nav-heading">Getting Started</h3>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a
+                href="{{ '/introduction/what-is-give-protocol/' | relative_url }}"
+                class="nav-link"
+                >What is Give Protocol?</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                href="{{ '/introduction/how-to-join/' | relative_url }}"
+                class="nav-link"
+                >How to Join</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                href="{{ '/getting-started/creating-account/' | relative_url }}"
+                class="nav-link"
+                >Creating Account</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                href="{{ '/getting-started/wallet-connection/' | relative_url }}"
+                class="nav-link"
+                >Wallet Connection</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                href="{{ '/getting-started/first-steps/' | relative_url }}"
+                class="nav-link"
+                >First Steps</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                href="{{ '/getting-started/dashboard/' | relative_url }}"
+                class="nav-link"
+                >Dashboard Guide</a
+              >
+            </li>
+          </ul>
+        </div>
+        <!-- Include other nav sections here for mobile -->
+      </nav>
+    </div>
 
-    function applyTheme(theme) {
-      const body = document.body;
-      
-      if (theme === 'dark') {
-        body.classList.add('dark-mode');
-      } else {
-        body.classList.remove('dark-mode');
+    <!-- JavaScript for interactive features -->
+    <script>
+      // Theme and settings management
+      function initSettings() {
+        // Get saved preferences or defaults
+        const savedTheme = localStorage.getItem("docs-theme") || "light";
+        const savedLang = localStorage.getItem("docs-language") || "en";
+
+        applyTheme(savedTheme);
+        applyLanguage(savedLang);
+        updateSettingsUI();
       }
-      
-      localStorage.setItem('docs-theme', theme);
-    }
 
-    function applyLanguage(lang) {
-      // Save preference
-      localStorage.setItem('docs-language', lang);
-      
-      // Trigger Google Translate
-      if (lang === 'en') {
-        // Reset to original English
-        window.location.href = window.location.pathname;
-      } else {
-        // Use Google Translate API to change language
-        triggerGoogleTranslate(lang);
+      function applyTheme(theme) {
+        const body = document.body;
+
+        if (theme === "dark") {
+          body.classList.add("dark-mode");
+        } else {
+          body.classList.remove("dark-mode");
+        }
+
+        localStorage.setItem("docs-theme", theme);
       }
-    }
-    
-    function triggerGoogleTranslate(targetLang) {
-      // Wait for Google Translate to be ready
-      if (typeof google !== 'undefined' && google.translate) {
-        // Get the translate element
-        const translateElement = google.translate.TranslateElement.getInstance();
-        if (translateElement) {
-          // Find the language selector in the Google Translate widget
-          const selectElement = document.querySelector('#google_translate_element select');
-          if (selectElement) {
-            // Set the value to trigger translation
-            selectElement.value = targetLang;
-            selectElement.dispatchEvent(new Event('change'));
+
+      function applyLanguage(lang) {
+        // Save preference
+        localStorage.setItem("docs-language", lang);
+
+        // Trigger Google Translate
+        if (lang === "en") {
+          // Reset to original English
+          window.location.href = window.location.pathname;
+        } else {
+          // Use Google Translate API to change language
+          triggerGoogleTranslate(lang);
+        }
+      }
+
+      function triggerGoogleTranslate(targetLang) {
+        // Wait for Google Translate to be ready
+        if (typeof google !== "undefined" && google.translate) {
+          // Get the translate element
+          const translateElement =
+            google.translate.TranslateElement.getInstance();
+          if (translateElement) {
+            // Find the language selector in the Google Translate widget
+            const selectElement = document.querySelector(
+              "#google_translate_element select",
+            );
+            if (selectElement) {
+              // Set the value to trigger translation
+              selectElement.value = targetLang;
+              selectElement.dispatchEvent(new Event("change"));
+            }
+          } else {
+            // If translate element isn't ready, try a different approach
+            setTimeout(() => {
+              const iframe = document.querySelector(".goog-te-menu-frame");
+              if (iframe) {
+                const iframeDoc =
+                  iframe.contentDocument || iframe.contentWindow.document;
+                const langLink = iframeDoc.querySelector(
+                  `[data-value="${targetLang}"]`,
+                );
+                if (langLink) {
+                  langLink.click();
+                }
+              }
+            }, 100);
           }
         } else {
-          // If translate element isn't ready, try a different approach
-          setTimeout(() => {
-            const iframe = document.querySelector('.goog-te-menu-frame');
-            if (iframe) {
-              const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-              const langLink = iframeDoc.querySelector(`[data-value="${targetLang}"]`);
-              if (langLink) {
-                langLink.click();
-              }
-            }
-          }, 100);
+          // Fallback: reload page with Google Translate hash
+          window.location.href =
+            window.location.pathname + "#googtrans(en|" + targetLang + ")";
+          window.location.reload();
         }
-      } else {
-        // Fallback: reload page with Google Translate hash
-        window.location.href = window.location.pathname + '#googtrans(en|' + targetLang + ')';
-        window.location.reload();
-      }
-    }
-
-    function updateSettingsUI() {
-      const savedTheme = localStorage.getItem('docs-theme') || 'light';
-      const savedLang = localStorage.getItem('docs-language') || 'en';
-      
-      // Update theme option active states
-      document.querySelectorAll('.theme-option').forEach(option => {
-        option.classList.toggle('active', option.dataset.theme === savedTheme);
-      });
-      
-      // Update language option active states
-      document.querySelectorAll('.language-option').forEach(option => {
-        option.classList.toggle('active', option.dataset.lang === savedLang);
-      });
-    }
-
-    function toggleSettingsMenu() {
-      const settingsMenu = document.querySelector('.settings-menu');
-      const settingsToggle = document.querySelector('.settings-toggle');
-      
-      if (settingsMenu && settingsToggle) {
-        const isOpen = settingsMenu.classList.contains('open');
-        settingsMenu.classList.toggle('open');
-        settingsToggle.setAttribute('aria-expanded', !isOpen);
-        settingsMenu.setAttribute('aria-hidden', isOpen);
-      }
-    }
-
-    // Close settings menu when clicking outside
-    function closeSettingsOnOutsideClick(event) {
-      const settingsDropdown = document.querySelector('.settings-dropdown');
-      const settingsMenu = document.querySelector('.settings-menu');
-      
-      if (settingsDropdown && settingsMenu && !settingsDropdown.contains(event.target)) {
-        settingsMenu.classList.remove('open');
-        document.querySelector('.settings-toggle').setAttribute('aria-expanded', 'false');
-        settingsMenu.setAttribute('aria-hidden', 'true');
-      }
-    }
-
-    // Initialize settings immediately to prevent flash
-    initSettings();
-
-    document.addEventListener('DOMContentLoaded', function() {
-      // Settings dropdown toggle
-      const settingsToggle = document.querySelector('.settings-toggle');
-      if (settingsToggle) {
-        settingsToggle.addEventListener('click', toggleSettingsMenu);
       }
 
-      // Theme selection
-      document.querySelectorAll('.theme-option').forEach(option => {
-        option.addEventListener('click', function() {
-          const theme = this.dataset.theme;
-          applyTheme(theme);
-          updateSettingsUI();
+      function updateSettingsUI() {
+        const savedTheme = localStorage.getItem("docs-theme") || "light";
+        const savedLang = localStorage.getItem("docs-language") || "en";
+
+        // Update theme option active states
+        document.querySelectorAll(".theme-option").forEach((option) => {
+          option.classList.toggle(
+            "active",
+            option.dataset.theme === savedTheme,
+          );
         });
-      });
 
-      // Language selection
-      document.querySelectorAll('.language-option').forEach(option => {
-        option.addEventListener('click', function() {
-          const lang = this.dataset.lang;
-          applyLanguage(lang);
-          updateSettingsUI();
-          
-          // Close settings menu after language selection
-          toggleSettingsMenu();
+        // Update language option active states
+        document.querySelectorAll(".language-option").forEach((option) => {
+          option.classList.toggle("active", option.dataset.lang === savedLang);
         });
-      });
+      }
+
+      function toggleSettingsMenu() {
+        const settingsMenu = document.querySelector(".settings-menu");
+        const settingsToggle = document.querySelector(".settings-toggle");
+
+        if (settingsMenu && settingsToggle) {
+          const isOpen = settingsMenu.classList.contains("open");
+          settingsMenu.classList.toggle("open");
+          settingsToggle.setAttribute("aria-expanded", !isOpen);
+          settingsMenu.setAttribute("aria-hidden", isOpen);
+        }
+      }
 
       // Close settings menu when clicking outside
-      document.addEventListener('click', closeSettingsOnOutsideClick);
+      function closeSettingsOnOutsideClick(event) {
+        const settingsDropdown = document.querySelector(".settings-dropdown");
+        const settingsMenu = document.querySelector(".settings-menu");
 
-      // Mobile menu toggle
-      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-      const mobileMenu = document.querySelector('.mobile-menu');
-      
-      if (mobileMenuToggle && mobileMenu) {
-        mobileMenuToggle.addEventListener('click', function() {
-          const isOpen = mobileMenu.classList.contains('open');
-          mobileMenu.classList.toggle('open');
-          mobileMenuToggle.setAttribute('aria-expanded', !isOpen);
-          mobileMenu.setAttribute('aria-hidden', isOpen);
-        });
+        if (
+          settingsDropdown &&
+          settingsMenu &&
+          !settingsDropdown.contains(event.target)
+        ) {
+          settingsMenu.classList.remove("open");
+          document
+            .querySelector(".settings-toggle")
+            .setAttribute("aria-expanded", "false");
+          settingsMenu.setAttribute("aria-hidden", "true");
+        }
       }
 
-      // Set active navigation links
-      const currentPath = window.location.pathname;
-      const navLinks = document.querySelectorAll('.nav-link');
-      
-      navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPath) {
-          link.classList.add('active');
+      // Initialize settings immediately to prevent flash
+      initSettings();
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Settings dropdown toggle
+        const settingsToggle = document.querySelector(".settings-toggle");
+        if (settingsToggle) {
+          settingsToggle.addEventListener("click", toggleSettingsMenu);
+        }
+
+        // Theme selection
+        document.querySelectorAll(".theme-option").forEach((option) => {
+          option.addEventListener("click", function () {
+            const theme = this.dataset.theme;
+            applyTheme(theme);
+            updateSettingsUI();
+          });
+        });
+
+        // Language selection
+        document.querySelectorAll(".language-option").forEach((option) => {
+          option.addEventListener("click", function () {
+            const lang = this.dataset.lang;
+            applyLanguage(lang);
+            updateSettingsUI();
+
+            // Close settings menu after language selection
+            toggleSettingsMenu();
+          });
+        });
+
+        // Close settings menu when clicking outside
+        document.addEventListener("click", closeSettingsOnOutsideClick);
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+        const mobileMenu = document.querySelector(".mobile-menu");
+
+        if (mobileMenuToggle && mobileMenu) {
+          mobileMenuToggle.addEventListener("click", function () {
+            const isOpen = mobileMenu.classList.contains("open");
+            mobileMenu.classList.toggle("open");
+            mobileMenuToggle.setAttribute("aria-expanded", !isOpen);
+            mobileMenu.setAttribute("aria-hidden", isOpen);
+          });
+        }
+
+        // Set active navigation links
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        navLinks.forEach((link) => {
+          if (link.getAttribute("href") === currentPath) {
+            link.classList.add("active");
+          }
+        });
+
+        // Initialize search functionality
+        if (window.SimpleJekyllSearch) {
+          window.simpleJekyllSearch = SimpleJekyllSearch({
+            searchInput: document.getElementById("search-input"),
+            resultsContainer: document.getElementById("search-results"),
+            json: '{{ "/search.json" | relative_url }}',
+            searchResultTemplate:
+              '<div class="search-result"><a href="{url}" class="result-link"><div class="result-title">{title}</div><div class="result-excerpt">{content}</div></a></div>',
+            noResultsText:
+              '<div class="search-no-results">No results found</div>',
+            limit: 10,
+            fuzzy: false,
+            exclude: ["Welcome"],
+          });
+        }
+
+        // Handle search input focus/blur for results container
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+
+        if (searchInput && searchResults) {
+          searchInput.addEventListener("focus", function () {
+            if (this.value.trim()) {
+              searchResults.style.display = "block";
+            }
+          });
+
+          searchInput.addEventListener("input", function () {
+            if (this.value.trim()) {
+              searchResults.style.display = "block";
+            } else {
+              searchResults.style.display = "none";
+            }
+          });
+
+          // Hide search results when clicking outside
+          document.addEventListener("click", function (e) {
+            if (
+              !searchInput.contains(e.target) &&
+              !searchResults.contains(e.target)
+            ) {
+              searchResults.style.display = "none";
+            }
+          });
         }
       });
-
-      // Initialize search functionality
-      if (window.SimpleJekyllSearch) {
-        window.simpleJekyllSearch = SimpleJekyllSearch({
-          searchInput: document.getElementById('search-input'),
-          resultsContainer: document.getElementById('search-results'),
-          json: '{{ "/search.json" | relative_url }}',
-          searchResultTemplate: '<div class="search-result"><a href="{url}" class="result-link"><div class="result-title">{title}</div><div class="result-excerpt">{content}</div></a></div>',
-          noResultsText: '<div class="search-no-results">No results found</div>',
-          limit: 10,
-          fuzzy: false,
-          exclude: ['Welcome']
-        });
-      }
-
-      // Handle search input focus/blur for results container
-      const searchInput = document.getElementById('search-input');
-      const searchResults = document.getElementById('search-results');
-      
-      if (searchInput && searchResults) {
-        searchInput.addEventListener('focus', function() {
-          if (this.value.trim()) {
-            searchResults.style.display = 'block';
-          }
-        });
-
-        searchInput.addEventListener('input', function() {
-          if (this.value.trim()) {
-            searchResults.style.display = 'block';
-          } else {
-            searchResults.style.display = 'none';
-          }
-        });
-
-        // Hide search results when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-            searchResults.style.display = 'none';
-          }
-        });
-      }
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
