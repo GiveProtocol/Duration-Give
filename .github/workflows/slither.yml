@@ -32,8 +32,8 @@ jobs:
       - name: Run Slither
         uses: crytic/slither-action@v0.4.1
         with:
-          target: '.'
-          slither-args: '--hardhat-config hardhat.config.cjs --compile-force-framework hardhat --filter-paths "node_modules|test|scripts" contracts/'
+          target: 'contracts/'
+          slither-args: '--compile-force-framework hardhat --filter-paths "node_modules|test|scripts"'
           sarif: results.sarif
           fail-on: none
           slither-version: 0.10.0
