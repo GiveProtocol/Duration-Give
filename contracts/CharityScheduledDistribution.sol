@@ -2,6 +2,7 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
@@ -11,6 +12,8 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
  * @dev Allows donors to schedule token distributions to charities on a monthly basis
  */
 contract CharityScheduledDistribution is Ownable, ReentrancyGuard, Pausable {
+    using SafeERC20 for IERC20;
+    
     // Struct to track donation schedules
     struct DonationSchedule {
         address donor;
@@ -134,7 +137,7 @@ contract CharityScheduledDistribution is Ownable, ReentrancyGuard, Pausable {
         require(amountPerMonth > 0, "Monthly amount too small");
         
         // Transfer tokens from donor to this contract
-        IERC20(token).transferFrom(msg.sender, address(this), totalAmount);
+        IERC20(token).safeTransferFrom(msg.sender, address(this), totalAmount);
         
         // Create schedule
         uint256 scheduleId = nextScheduleId++;
@@ -175,7 +178,7 @@ contract CharityScheduledDistribution is Ownable, ReentrancyGuard, Pausable {
                 block.timestamp >= schedule.nextDistributionTimestamp
             ) {
                 // Transfer monthly amount to charity
-                IERC20(schedule.token).transfer(schedule.charity, schedule.amountPerMonth);
+                IERC20(schedule.token).safeTransfer(schedule.charity, schedule.amountPerMonth);
                 
                 // Update schedule
                 schedule.monthsRemaining--;
@@ -211,7 +214,7 @@ contract CharityScheduledDistribution is Ownable, ReentrancyGuard, Pausable {
         uint256 remainingAmount = schedule.amountPerMonth * schedule.monthsRemaining;
         
         // Transfer remaining tokens back to donor
-        IERC20(schedule.token).transfer(schedule.donor, remainingAmount);
+        IERC20(schedule.token).safeTransfer(schedule.donor, remainingAmount);
         
         // Mark schedule as inactive
         schedule.active = false;
