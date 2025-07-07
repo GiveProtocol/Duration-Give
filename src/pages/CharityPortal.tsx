@@ -35,8 +35,6 @@ export const CharityPortal: React.FC = () => {
   const [pendingHours, setPendingHours] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [retryCount, setRetryCount] = useState(0);
-  const MAX_RETRIES = 3;
 
   useEffect(() => {
     if (profile?.id) {
@@ -289,9 +287,6 @@ export const CharityPortal: React.FC = () => {
       
       setPendingHours(formattedHours);
       
-      // Reset retry count on success
-      setRetryCount(0);
-      
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : String(err);
       const errorStack = err instanceof Error ? err.stack : '';
@@ -300,21 +295,12 @@ export const CharityPortal: React.FC = () => {
         error: errorMessage,
         stack: errorStack,
         state: {
-          profileId: profile?.id,
-          retryCount
+          profileId: profile?.id
         }
       });
       
-      // Implement retry with exponential backoff
-      if (retryCount < MAX_RETRIES) {
-        const nextRetry = Math.pow(2, retryCount) * 1000; // Exponential backoff
-        Logger.info(`Retrying in ${nextRetry}ms (attempt ${retryCount + 1}/${MAX_RETRIES})`);
-        
-        setRetryCount(prev => prev + 1);
-        setTimeout(() => fetchCharityData(), nextRetry);
-      } else {
-        setError('Failed to load charity data. Please try again later.');
-      }
+      // Don't automatically retry - let user manually retry
+      setError('Failed to load charity data. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -346,7 +332,10 @@ export const CharityPortal: React.FC = () => {
         <div className="bg-red-50 p-4 rounded-md text-red-700">
           {error}
           <Button 
-            onClick={() => fetchCharityData()} 
+            onClick={() => {
+              setError(null);
+              fetchCharityData();
+            }} 
             variant="secondary" 
             className="mt-4"
           >
