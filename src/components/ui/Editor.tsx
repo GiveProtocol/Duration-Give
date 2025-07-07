@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
@@ -41,6 +41,45 @@ export const Editor: React.FC<EditorProps> = ({
     }
   });
 
+  const handleBold = useCallback(() => {
+    editor?.chain().focus().toggleBold().run();
+  }, [editor]);
+
+  const handleItalic = useCallback(() => {
+    editor?.chain().focus().toggleItalic().run();
+  }, [editor]);
+
+  const handleHeading1 = useCallback(() => {
+    editor?.chain().focus().toggleHeading({ level: 1 }).run();
+  }, [editor]);
+
+  const handleHeading2 = useCallback(() => {
+    editor?.chain().focus().toggleHeading({ level: 2 }).run();
+  }, [editor]);
+
+  const handleBulletList = useCallback(() => {
+    editor?.chain().focus().toggleBulletList().run();
+  }, [editor]);
+
+  const handleOrderedList = useCallback(() => {
+    editor?.chain().focus().toggleOrderedList().run();
+  }, [editor]);
+
+  const handleLink = useCallback(() => {
+    const url = window.prompt('Enter URL');
+    if (url) {
+      editor?.chain().focus().setLink({ href: url }).run();
+    }
+  }, [editor]);
+
+  const handleUndo = useCallback(() => {
+    editor?.chain().focus().undo().run();
+  }, [editor]);
+
+  const handleRedo = useCallback(() => {
+    editor?.chain().focus().redo().run();
+  }, [editor]);
+
   if (!editor) {
     return null;
   }
@@ -64,60 +103,55 @@ export const Editor: React.FC<EditorProps> = ({
     <div className={cn('border border-gray-200 rounded-lg', className)}>
       <div className="border-b border-gray-200 p-2 flex flex-wrap gap-1">
         <MenuButton
-          onClick={() => editor.chain().focus().toggleBold().run()}
+          onClick={handleBold}
           active={editor.isActive('bold')}
           icon={Bold}
           title="Bold"
         />
         <MenuButton
-          onClick={() => editor.chain().focus().toggleItalic().run()}
+          onClick={handleItalic}
           active={editor.isActive('italic')}
           icon={Italic}
           title="Italic"
         />
         <MenuButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+          onClick={handleHeading1}
           active={editor.isActive('heading', { level: 1 })}
           icon={Heading1}
           title="Heading 1"
         />
         <MenuButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          onClick={handleHeading2}
           active={editor.isActive('heading', { level: 2 })}
           icon={Heading2}
           title="Heading 2"
         />
         <MenuButton
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          onClick={handleBulletList}
           active={editor.isActive('bulletList')}
           icon={List}
           title="Bullet List"
         />
         <MenuButton
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          onClick={handleOrderedList}
           active={editor.isActive('orderedList')}
           icon={ListOrdered}
           title="Numbered List"
         />
         <MenuButton
-          onClick={() => {
-            const url = window.prompt('Enter URL');
-            if (url) {
-              editor.chain().focus().setLink({ href: url }).run();
-            }
-          }}
+          onClick={handleLink}
           active={editor.isActive('link')}
           icon={LinkIcon}
           title="Add Link"
         />
         <div className="ml-auto flex gap-1">
           <MenuButton
-            onClick={() => editor.chain().focus().undo().run()}
+            onClick={handleUndo}
             icon={Undo}
             title="Undo"
           />
           <MenuButton
-            onClick={() => editor.chain().focus().redo().run()}
+            onClick={handleRedo}
             icon={Redo}
             title="Redo"
           />

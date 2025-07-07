@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useProfile } from '@/hooks/useProfile';
@@ -306,11 +306,36 @@ export const CharityPortal: React.FC = () => {
     }
   };
 
-  const handleVerificationCreated = (hash: string) => {
+  const handleVerificationCreated = useCallback((hash: string) => {
     Logger.info('Verification created with hash:', hash);
     // Refresh data after verification
     fetchCharityData();
-  };
+  }, []);
+
+  const handleRetry = useCallback(() => {
+    setError(null);
+    fetchCharityData();
+  }, []);
+
+  const handleTransactionsTab = useCallback(() => {
+    setActiveTab('transactions');
+  }, []);
+
+  const handleVolunteersTab = useCallback(() => {
+    setActiveTab('volunteers');
+  }, []);
+
+  const handleApplicationsTab = useCallback(() => {
+    setActiveTab('applications');
+  }, []);
+
+  const handleOpportunitiesTab = useCallback(() => {
+    setActiveTab('opportunities');
+  }, []);
+
+  const handleShowExportModal = useCallback(() => {
+    setShowExportModal(true);
+  }, []);
 
   if (!user) {
     return <Navigate to="/login?type=charity" />;
@@ -332,10 +357,7 @@ export const CharityPortal: React.FC = () => {
         <div className="bg-red-50 p-4 rounded-md text-red-700">
           {error}
           <Button 
-            onClick={() => {
-              setError(null);
-              fetchCharityData();
-            }} 
+            onClick={handleRetry}
             variant="secondary" 
             className="mt-4"
           >
@@ -422,7 +444,7 @@ export const CharityPortal: React.FC = () => {
         <div className="border-b border-gray-200">
           <nav className="-mb-px flex space-x-8">
             <button
-              onClick={() => setActiveTab('transactions')}
+              onClick={handleTransactionsTab}
               className={`py-4 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'transactions'
                   ? 'border-indigo-500 text-indigo-600'
@@ -432,7 +454,7 @@ export const CharityPortal: React.FC = () => {
               {t('charity.transactions')}
             </button>
             <button
-              onClick={() => setActiveTab('volunteers')}
+              onClick={handleVolunteersTab}
               className={`py-4 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'volunteers'
                   ? 'border-indigo-500 text-indigo-600'
@@ -442,7 +464,7 @@ export const CharityPortal: React.FC = () => {
               {t('charity.volunteers')}
             </button>
             <button
-              onClick={() => setActiveTab('applications')}
+              onClick={handleApplicationsTab}
               className={`py-4 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'applications'
                   ? 'border-indigo-500 text-indigo-600'
@@ -452,7 +474,7 @@ export const CharityPortal: React.FC = () => {
               {t('charity.applications')}
             </button>
             <button
-              onClick={() => setActiveTab('opportunities')}
+              onClick={handleOpportunitiesTab}
               className={`py-4 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'opportunities'
                   ? 'border-indigo-500 text-indigo-600'
@@ -472,7 +494,7 @@ export const CharityPortal: React.FC = () => {
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold text-gray-900">{t('charity.transactions')}</h2>
               <Button
-                onClick={() => setShowExportModal(true)}
+                onClick={handleShowExportModal}
                 variant="secondary"
                 className="flex items-center"
               >

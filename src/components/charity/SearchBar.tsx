@@ -86,10 +86,34 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     handleFilterChange('category', categoryId);
   }, [categories, handleFilterChange, onCategorySelect]);
 
-  const clearSearch = () => {
+  const clearSearch = useCallback(() => {
     setQuery('');
     onSearch('', filters);
-  };
+  }, [filters, onSearch]);
+
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleSearch(e.target.value);
+  }, [handleSearch]);
+
+  const handleCountrySelectChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleCountryChange(e.target.value);
+  }, [handleCountryChange]);
+
+  const handleCategorySelectChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleCategoryChange(e.target.value);
+  }, [handleCategoryChange]);
+
+  const handleStatusChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleFilterChange('status', e.target.value);
+  }, [handleFilterChange]);
+
+  const handleSortByChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleFilterChange('sortBy', e.target.value);
+  }, [handleFilterChange]);
+
+  const toggleFilters = useCallback(() => {
+    setShowFilters(!showFilters);
+  }, [showFilters]);
 
   const renderCountryOption = (country: Country) => {
     const flagEmoji = country.flag || '';
@@ -110,7 +134,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           <input
             type="text"
             value={query}
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={handleInputChange}
             placeholder={placeholder}
             disabled={isLoading}
             className={cn(
@@ -130,7 +154,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         </div>
         <Button
           variant="secondary"
-          onClick={() => setShowFilters(!showFilters)}
+          onClick={toggleFilters}
           className="ml-2"
         >
           Filters
@@ -153,7 +177,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
               <select
                 id="country-filter"
                 value={filters.country}
-                onChange={(e) => handleCountryChange(e.target.value)}
+                onChange={handleCountrySelectChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               >
                 <option value="">All Countries</option>
@@ -168,7 +192,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
               <select
                 id="category-filter"
                 value={filters.category}
-                onChange={(e) => handleCategoryChange(e.target.value)}
+                onChange={handleCategorySelectChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               >
                 <option value="">All Categories</option>
@@ -189,7 +213,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
               <select
                 id="status-filter"
                 value={filters.status}
-                onChange={(e) => handleFilterChange('status', e.target.value)}
+                onChange={handleStatusChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               >
                 <option value="all">All</option>
@@ -205,7 +229,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
               <select
                 id="sort-filter"
                 value={filters.sortBy}
-                onChange={(e) => handleFilterChange('sortBy', e.target.value)}
+                onChange={handleSortByChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               >
                 <option value="popularity">Popularity</option>
