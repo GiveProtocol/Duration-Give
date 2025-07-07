@@ -1,14 +1,14 @@
 [build]
-  command = "npm run build"
+  command = "npm ci --legacy-peer-deps && npm run build"
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "18"
-  NPM_FLAGS = "--no-audit --no-fund"
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--no-audit --no-fund --legacy-peer-deps"
 
 # Production context
 [context.production]
-  command = "npm run build"
+  command = "npm ci --legacy-peer-deps && npm run build"
 
 # Asset optimization
 [build.processing]
