@@ -1,3 +1,5 @@
+import { Logger } from '@/utils/logger';
+
 export const formatDate = (dateString: string, includeTime = false): string => {
   if (!dateString) return '';
   
@@ -25,7 +27,7 @@ export const formatDate = (dateString: string, includeTime = false): string => {
       day: 'numeric'
     });
   } catch (error) {
-    console.error('Error formatting date:', error);
+    Logger.error('Error formatting date:', error);
     return dateString;
   }
 };

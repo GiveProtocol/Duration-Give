@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useProfile } from '@/hooks/useProfile';
 import { WithdrawalRequest } from '@/types/charity';
+import { Logger } from '@/utils/logger';
 
 interface Withdrawal {
   id: string;
@@ -32,7 +33,7 @@ export const useWithdrawals = () => {
         setWithdrawals(data || []);
       } catch (err) {
         setError('Error fetching withdrawals');
-        console.error('Error:', err);
+        Logger.error('Error:', err);
       } finally {
         setLoading(false);
       }

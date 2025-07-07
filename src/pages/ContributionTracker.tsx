@@ -13,6 +13,7 @@ import { TimeRangeFilter } from '@/components/contribution/TimeRangeFilter';
 import { useWalletAlias } from '@/hooks/useWalletAlias';
 import { useWeb3 } from '@/contexts/Web3Context';
 import { useToast } from '@/contexts/ToastContext';
+import { Logger } from '@/utils/logger';
 
 type TimeRange = 'all' | 'year' | 'month' | 'week';
 type Region = 'all' | 'na' | 'eu' | 'asia' | 'africa' | 'sa' | 'oceania';
@@ -40,7 +41,7 @@ export const ContributionTracker: React.FC = () => {
 
   const handleExport = (format: 'csv' | 'pdf') => {
     // Implement export functionality
-    console.log(`Exporting as ${format}`);
+    Logger.info(`Exporting contributions as ${format}`, { format });
   };
 
   const handleSetAlias = async () => {

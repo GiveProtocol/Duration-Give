@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useProfile } from '@/hooks/useProfile';
 import { CharityDetails } from '@/types/charity';
+import { Logger } from '@/utils/logger';
 
 export const useCharityProfile = () => {
   const { profile } = useProfile();
@@ -24,7 +25,7 @@ export const useCharityProfile = () => {
         setCharityProfile(data);
       } catch (err) {
         setError('Error fetching charity profile');
-        console.error('Error:', err);
+        Logger.error('Error:', err);
       } finally {
         setLoading(false);
       }
@@ -47,7 +48,7 @@ export const useCharityProfile = () => {
       setCharityProfile(prev => prev ? { ...prev, ...updates } : null);
     } catch (err) {
       setError('Error updating charity profile');
-      console.error('Error:', err);
+      Logger.error('Error:', err);
     } finally {
       setLoading(false);
     }

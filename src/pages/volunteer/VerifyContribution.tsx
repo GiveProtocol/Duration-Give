@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
 import { VolunteerVerificationCard } from '@/components/volunteer/VolunteerVerificationCard';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { Logger } from '@/utils/logger';
 
 const VerifyContribution: React.FC = () => {
   const { hash } = useParams<{ hash: string }>();
@@ -21,7 +22,7 @@ const VerifyContribution: React.FC = () => {
           setVerification(result);
           setVerificationChecked(true);
         } catch (err) {
-          console.error('Verification lookup failed:', err);
+          Logger.error('Verification lookup failed:', err);
           setVerificationChecked(true);
         }
       };

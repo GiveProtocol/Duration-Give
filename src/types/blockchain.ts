@@ -29,30 +29,11 @@ export type TransactionStatus =
   | 'confirmed'
   | 'failed';
 
-export interface TransactionReceipt {
-  transactionHash: TransactionHash;
-  blockNumber: BlockNumber;
-  gasUsed: string;
-  status: boolean;
-  events: TransactionEvent[];
-}
-
-export interface TransactionEvent {
-  event: string;
-  address: Address;
-  returnValues: Record<string, unknown>;
-  blockNumber: BlockNumber;
-}
-
-export interface Web3Provider {
-  readonly name: string;
-  readonly icon: string;
-  isInstalled(): boolean;
-  connect(): Promise<Address>;
-  disconnect(): Promise<void>;
-  signMessage(message: string): Promise<string>;
-  sendTransaction(tx: TransactionRequest): Promise<TransactionHash>;
-}
+// Note: Unused types removed to improve code quality
+// If these types are needed in the future, they can be re-added:
+// - TransactionReceipt
+// - TransactionEvent  
+// - IWeb3Provider (renamed from Web3Provider to avoid naming conflict with React component)
 
 export interface TransactionRequest {
   to: Address;

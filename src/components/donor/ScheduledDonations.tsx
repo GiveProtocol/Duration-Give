@@ -6,6 +6,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { Calendar, AlertTriangle, XCircle } from 'lucide-react';
 import { formatDate } from '@/utils/date';
 import { useToast } from '@/contexts/ToastContext';
+import { Logger } from '@/utils/logger';
 
 interface ScheduledDonation {
   id: number;
@@ -37,7 +38,7 @@ export const ScheduledDonations: React.FC = () => {
       const donorSchedules = await getDonorSchedules();
       setSchedules(donorSchedules);
     } catch (err) {
-      console.error('Failed to fetch scheduled donations:', err);
+      Logger.error('Failed to fetch scheduled donations:', err);
     } finally {
       setLoadingSchedules(false);
     }

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useProfile } from '@/hooks/useProfile';
-import { DollarSign, Users, Clock, Download, Award, TrendingUp, ExternalLink, Plus, CheckCircle, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { DollarSign, Users, Clock, Download, Award, ExternalLink, Plus, CheckCircle, X, ChevronUp, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Transaction } from '@/types/contribution';

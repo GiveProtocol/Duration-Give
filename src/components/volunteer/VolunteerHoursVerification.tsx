@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
 import { formatDate } from '@/utils/date';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Logger } from '@/utils/logger';
 
 interface VolunteerHoursVerificationProps {
   hoursId: string;
@@ -38,7 +39,7 @@ export const VolunteerHoursVerification: React.FC<VolunteerHoursVerificationProp
         onVerified?.(hash);
       }
     } catch (err) {
-      console.error('Verification failed:', err);
+      Logger.error('Verification failed:', err);
     }
   };
 

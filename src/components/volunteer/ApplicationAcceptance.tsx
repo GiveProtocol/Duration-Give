@@ -3,6 +3,7 @@ import { CheckCircle, X, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Logger } from '@/utils/logger';
 
 interface ApplicationAcceptanceProps {
   applicationId: string;
@@ -31,7 +32,7 @@ export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({
         onAccepted?.(hash);
       }
     } catch (err) {
-      console.error('Acceptance failed:', err);
+      Logger.error('Acceptance failed:', err);
     }
   };
 

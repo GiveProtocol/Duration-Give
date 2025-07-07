@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
 import { VolunteerVerificationCard } from './VolunteerVerificationCard';
+import { Logger } from '@/utils/logger';
 
 export const VerificationLookup: React.FC = () => {
   const [hash, setHash] = useState('');
@@ -20,7 +21,7 @@ export const VerificationLookup: React.FC = () => {
       setVerification(result);
       setSearchPerformed(true);
     } catch (err) {
-      console.error('Verification lookup failed:', err);
+      Logger.error('Verification lookup failed:', err);
     }
   };
 

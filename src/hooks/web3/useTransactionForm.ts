@@ -1,20 +1,17 @@
 import { useState } from 'react';
-import { useSubstrateTransaction } from '@/hooks/substrate/useSubstrateTransaction';
 import { validateAmount } from '@/utils/validation';
 import { Logger } from '@/utils/logger';
 
 interface TransactionFormConfig {
-  pallet: string;
-  method: string;
   onSuccess?: () => void;
 }
 
-export function useTransactionForm({ pallet, method, onSuccess }: TransactionFormConfig) {
+export function useTransactionForm({ onSuccess }: TransactionFormConfig) {
   const [amount, setAmount] = useState('');
   const [validationError, setValidationError] = useState('');
-  const { execute, loading } = useSubstrateTransaction({ pallet, method });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent, args: unknown[] = []) => {
+  const handleSubmit = async (e: React.FormEvent, executeFn: (amount: string) => Promise<void>) => {
     e.preventDefault();
     setValidationError('');
 
@@ -25,23 +22,22 @@ export function useTransactionForm({ pallet, method, onSuccess }: TransactionFor
     }
 
     try {
-      await execute(...args, amount);
+      setLoading(true);
+      await executeFn(amount);
       setAmount('');
       onSuccess?.();
 
       Logger.info('Transaction successful', {
-        pallet,
-        method,
         amount
       });
     } catch (err) {
       Logger.error('Transaction failed', {
-        error: err,
-        pallet,
-        method,
+        error: err instanceof Error ? err.message : String(err),
         amount
       });
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
