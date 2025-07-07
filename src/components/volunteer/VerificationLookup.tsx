@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Search, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
-import { VolunteerVerificationCard } from './VolunteerVerificationCard';
-import { Logger } from '@/utils/logger';
+import React, { useState } from "react";
+import { Search, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { useVolunteerVerification } from "@/hooks/useVolunteerVerification";
+import { VolunteerVerificationCard } from "./VolunteerVerificationCard";
+import { Logger } from "@/utils/logger";
 
 export const VerificationLookup: React.FC = () => {
-  const [hash, setHash] = useState('');
+  const [hash, setHash] = useState("");
   const [searchPerformed, setSearchPerformed] = useState(false);
   const { getVerificationByHash, loading, error } = useVolunteerVerification();
   const [verification, setVerification] = useState<any | null>(null);
@@ -21,7 +21,7 @@ export const VerificationLookup: React.FC = () => {
       setVerification(result);
       setSearchPerformed(true);
     } catch (err) {
-      Logger.error('Verification lookup failed:', err);
+      Logger.error("Verification lookup failed:", err);
     }
   };
 
@@ -30,7 +30,7 @@ export const VerificationLookup: React.FC = () => {
       <h2 className="text-xl font-semibold text-gray-900 mb-4">
         Verify Volunteer Contribution
       </h2>
-      
+
       <form onSubmit={handleSearch} className="mb-6">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-grow">
@@ -47,7 +47,7 @@ export const VerificationLookup: React.FC = () => {
             className="whitespace-nowrap"
           >
             <Search className="h-4 w-4 mr-2" />
-            {loading ? 'Searching...' : 'Verify Hash'}
+            {loading ? "Searching..." : "Verify Hash"}
           </Button>
         </div>
       </form>
@@ -58,23 +58,31 @@ export const VerificationLookup: React.FC = () => {
             <VolunteerVerificationCard
               verification={{
                 id: verification.id,
-                applicantName: verification.profiles?.name || 'Unknown Volunteer',
-                opportunityTitle: verification.volunteer_opportunities?.title || 'Unknown Opportunity',
-                charityName: verification.volunteer_opportunities?.charity_details?.name || 'Unknown Organization',
+                applicantName:
+                  verification.profiles?.name || "Unknown Volunteer",
+                opportunityTitle:
+                  verification.volunteer_opportunities?.title ||
+                  "Unknown Opportunity",
+                charityName:
+                  verification.volunteer_opportunities?.charity_details?.name ||
+                  "Unknown Organization",
                 acceptanceHash: verification.acceptanceHash,
                 verificationHash: verification.verificationHash,
                 acceptedAt: verification.acceptedAt,
                 verifiedAt: verification.verifiedAt,
-                blockchainReference: verification.blockchainReference
+                blockchainReference: verification.blockchainReference,
               }}
             />
           ) : (
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-start">
               <AlertCircle className="h-5 w-5 text-yellow-500 mt-0.5 mr-3 flex-shrink-0" />
               <div>
-                <h3 className="text-sm font-medium text-yellow-800">Verification Not Found</h3>
+                <h3 className="text-sm font-medium text-yellow-800">
+                  Verification Not Found
+                </h3>
                 <p className="mt-1 text-sm text-yellow-700">
-                  The hash you provided could not be found in our records. Please check the hash and try again.
+                  The hash you provided could not be found in our records.
+                  Please check the hash and try again.
                 </p>
               </div>
             </div>

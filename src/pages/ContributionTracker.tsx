@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Globe, Search, Download, Filter } from 'lucide-react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Card } from '@/components/ui/Card';
-import { DonationLeaderboard } from '@/components/contribution/DonationLeaderboard';
-import { VolunteerLeaderboard } from '@/components/contribution/VolunteerLeaderboard';
-import { GlobalStats } from '@/components/contribution/GlobalStats';
-import { RegionFilter } from '@/components/contribution/RegionFilter';
-import { TimeRangeFilter } from '@/components/contribution/TimeRangeFilter';
-import { useWalletAlias } from '@/hooks/useWalletAlias';
-import { useWeb3 } from '@/contexts/Web3Context';
-import { useToast } from '@/contexts/ToastContext';
-import { Logger } from '@/utils/logger';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Globe, Search, Download, Filter } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Card } from "@/components/ui/Card";
+import { DonationLeaderboard } from "@/components/contribution/DonationLeaderboard";
+import { VolunteerLeaderboard } from "@/components/contribution/VolunteerLeaderboard";
+import { GlobalStats } from "@/components/contribution/GlobalStats";
+import { RegionFilter } from "@/components/contribution/RegionFilter";
+import { TimeRangeFilter } from "@/components/contribution/TimeRangeFilter";
+import { useWalletAlias } from "@/hooks/useWalletAlias";
+import { useWeb3 } from "@/contexts/Web3Context";
+import { useToast } from "@/contexts/ToastContext";
+import { Logger } from "@/utils/logger";
 
-type TimeRange = 'all' | 'year' | 'month' | 'week';
-type Region = 'all' | 'na' | 'eu' | 'asia' | 'africa' | 'sa' | 'oceania';
+type TimeRange = "all" | "year" | "month" | "week";
+type Region = "all" | "na" | "eu" | "asia" | "africa" | "sa" | "oceania";
 
 export const ContributionTracker: React.FC = () => {
   const location = useLocation();
-  const [timeRange, setTimeRange] = useState<TimeRange>('all');
-  const [region, setRegion] = useState<Region>('all');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [timeRange, setTimeRange] = useState<TimeRange>("all");
+  const [region, setRegion] = useState<Region>("all");
+  const [searchTerm, setSearchTerm] = useState("");
   const [showOptOut, setShowOptOut] = useState(false);
   const [showAliasModal, setShowAliasModal] = useState(false);
-  const [newAlias, setNewAlias] = useState('');
+  const [newAlias, setNewAlias] = useState("");
   const { alias, setWalletAlias } = useWalletAlias();
   const { isConnected, address } = useWeb3();
   const { showToast } = useToast();
-  const [activeTab, setActiveTab] = useState<'donations' | 'volunteer'>(
-    (location.state?.activeTab as 'donations' | 'volunteer') || 'donations'
+  const [activeTab, setActiveTab] = useState<"donations" | "volunteer">(
+    (location.state?.activeTab as "donations" | "volunteer") || "donations",
   );
 
   useEffect(() => {
@@ -39,25 +39,29 @@ export const ContributionTracker: React.FC = () => {
     }
   }, [location.state]);
 
-  const handleExport = (format: 'csv' | 'pdf') => {
+  const handleExport = (format: "csv" | "pdf") => {
     // Implement export functionality
     Logger.info(`Exporting contributions as ${format}`, { format });
   };
 
   const handleSetAlias = async () => {
     if (!isConnected || !address) {
-      showToast('error', 'Wallet not connected', 'Please connect your wallet to set an alias');
+      showToast(
+        "error",
+        "Wallet not connected",
+        "Please connect your wallet to set an alias",
+      );
       return;
     }
 
     if (!newAlias.trim()) {
-      showToast('error', 'Invalid alias', 'Please enter a valid alias');
+      showToast("error", "Invalid alias", "Please enter a valid alias");
       return;
     }
 
     const success = await setWalletAlias(newAlias);
     if (success) {
-      setNewAlias('');
+      setNewAlias("");
       setShowAliasModal(false);
     }
   };
@@ -66,7 +70,9 @@ export const ContributionTracker: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Global Impact Rankings</h1>
+        <h1 className="text-3xl font-bold text-gray-900">
+          Global Impact Rankings
+        </h1>
         <p className="mt-2 text-gray-600">
           Track and celebrate the collective impact of our community
         </p>
@@ -90,13 +96,16 @@ export const ContributionTracker: React.FC = () => {
               />
             </div>
           </div>
-          
-          <TimeRangeFilter value={timeRange} onChange={(value) => setTimeRange(value as TimeRange)} />
-          
+
+          <TimeRangeFilter
+            value={timeRange}
+            onChange={(value) => setTimeRange(value as TimeRange)}
+          />
+
           <div className="flex items-center space-x-2">
             <Button
               variant="secondary"
-              onClick={() => handleExport('csv')}
+              onClick={() => handleExport("csv")}
               className="flex items-center"
             >
               <Download className="h-4 w-4 mr-2" />
@@ -104,7 +113,7 @@ export const ContributionTracker: React.FC = () => {
             </Button>
             <Button
               variant="secondary"
-              onClick={() => handleExport('pdf')}
+              onClick={() => handleExport("pdf")}
               className="flex items-center"
             >
               <Download className="h-4 w-4 mr-2" />
@@ -115,8 +124,11 @@ export const ContributionTracker: React.FC = () => {
 
         <div className="mt-4 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
           <div className="flex items-center space-x-4">
-            <RegionFilter value={region} onChange={(value) => setRegion(value as Region)} />
-            
+            <RegionFilter
+              value={region}
+              onChange={(value) => setRegion(value as Region)}
+            />
+
             <label className="flex items-center space-x-2 text-sm text-gray-600">
               <input
                 type="checkbox"
@@ -127,12 +139,15 @@ export const ContributionTracker: React.FC = () => {
               <span>Hide my contributions from rankings</span>
             </label>
           </div>
-          
+
           {isConnected && (
             <div>
               {alias ? (
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600">Your alias: <span className="font-medium text-indigo-600">{alias}</span></span>
+                  <span className="text-sm text-gray-600">
+                    Your alias:{" "}
+                    <span className="font-medium text-indigo-600">{alias}</span>
+                  </span>
                   <Button
                     variant="secondary"
                     size="sm"
@@ -163,9 +178,12 @@ export const ContributionTracker: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
             <div className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Set Wallet Alias</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Set Wallet Alias
+              </h2>
               <p className="text-gray-600 mb-4">
-                Your alias will be displayed on the contribution tracker instead of your wallet address.
+                Your alias will be displayed on the contribution tracker instead
+                of your wallet address.
               </p>
               <Input
                 label="Alias"
@@ -181,11 +199,7 @@ export const ContributionTracker: React.FC = () => {
                 >
                   Cancel
                 </Button>
-                <Button
-                  onClick={handleSetAlias}
-                >
-                  Save Alias
-                </Button>
+                <Button onClick={handleSetAlias}>Save Alias</Button>
               </div>
             </div>
           </div>
@@ -193,7 +207,14 @@ export const ContributionTracker: React.FC = () => {
       )}
 
       {/* Rankings Tabs */}
-      <Tabs defaultValue={activeTab} value={activeTab} onValueChange={(value: string) => setActiveTab(value as 'donations' | 'volunteer')} className="space-y-6">
+      <Tabs
+        defaultValue={activeTab}
+        value={activeTab}
+        onValueChange={(value: string) =>
+          setActiveTab(value as "donations" | "volunteer")
+        }
+        className="space-y-6"
+      >
         <TabsList>
           <TabsTrigger value="donations">Donation Rankings</TabsTrigger>
           <TabsTrigger value="volunteer">Volunteer Rankings</TabsTrigger>
