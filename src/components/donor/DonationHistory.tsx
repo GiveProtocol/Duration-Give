@@ -1,35 +1,37 @@
-import React, { useState } from 'react';
-import { Download, Filter, Calendar } from 'lucide-react';
-import { formatCurrency } from '@/utils/money';
-import { formatDate } from '@/utils/date';
-import { Button } from '@/components/ui/Button';
-import { Transaction } from '@/types/contribution';
-import { DonationExportModal } from '@/components/contribution/DonationExportModal';
+import React, { useState } from "react";
+import { Download, Filter, Calendar } from "lucide-react";
+import { formatCurrency } from "@/utils/money";
+import { formatDate } from "@/utils/date";
+import { Button } from "@/components/ui/Button";
+import { Transaction } from "@/types/contribution";
+import { DonationExportModal } from "@/components/contribution/DonationExportModal";
 
 interface DonationHistoryProps {
   donations: Transaction[];
 }
 
-export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) => {
+export const DonationHistory: React.FC<DonationHistoryProps> = ({
+  donations,
+}) => {
   const [showExportModal, setShowExportModal] = useState(false);
-  const [timeFilter, setTimeFilter] = useState('all');
+  const [timeFilter, setTimeFilter] = useState("all");
 
-  const filteredDonations = donations.filter(donation => {
-    if (timeFilter === 'all') return true;
-    
+  const filteredDonations = donations.filter((donation) => {
+    if (timeFilter === "all") return true;
+
     const donationDate = new Date(donation.timestamp);
     const now = new Date();
-    
+
     switch (timeFilter) {
-      case 'week':
+      case "week":
         const weekAgo = new Date();
         weekAgo.setDate(now.getDate() - 7);
         return donationDate >= weekAgo;
-      case 'month':
+      case "month":
         const monthAgo = new Date();
         monthAgo.setMonth(now.getMonth() - 1);
         return donationDate >= monthAgo;
-      case 'year':
+      case "year":
         const yearAgo = new Date();
         yearAgo.setFullYear(now.getFullYear() - 1);
         return donationDate >= yearAgo;
@@ -42,7 +44,9 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
     <div className="bg-white rounded-lg shadow-md">
       <div className="p-6 border-b border-gray-200">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
-          <h2 className="text-xl font-semibold text-gray-900">Donation History</h2>
+          <h2 className="text-xl font-semibold text-gray-900">
+            Donation History
+          </h2>
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <Calendar className="h-5 w-5 text-gray-400" />
@@ -73,12 +77,24 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Charity</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fiat Value</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction ID</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Date
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Charity
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Amount
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Fiat Value
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Transaction ID
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -88,17 +104,19 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
                   {formatDate(donation.timestamp, true)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {donation.metadata?.organization || 'Unknown'}
+                  {donation.metadata?.organization || "Unknown"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {donation.amount} {donation.cryptoType || 'GLMR'}
+                  {donation.amount} {donation.cryptoType || "GLMR"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {donation.fiatValue ? formatCurrency(donation.fiatValue) : 'N/A'}
+                  {donation.fiatValue
+                    ? formatCurrency(donation.fiatValue)
+                    : "N/A"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {donation.hash ? (
-                    <a 
+                    <a
                       href={`https://moonscan.io/tx/${donation.hash}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -107,18 +125,21 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
                       {donation.hash.substring(0, 10)}...
                     </a>
                   ) : (
-                    'N/A'
+                    "N/A"
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    donation.status === 'completed' 
-                      ? 'bg-green-100 text-green-800'
-                      : donation.status === 'pending'
-                      ? 'bg-yellow-100 text-yellow-800'
-                      : 'bg-red-100 text-red-800'
-                  }`}>
-                    {donation.status.charAt(0).toUpperCase() + donation.status.slice(1)}
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      donation.status === "completed"
+                        ? "bg-green-100 text-green-800"
+                        : donation.status === "pending"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {donation.status.charAt(0).toUpperCase() +
+                      donation.status.slice(1)}
                   </span>
                 </td>
               </tr>
