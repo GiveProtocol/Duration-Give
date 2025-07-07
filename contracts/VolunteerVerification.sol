@@ -70,33 +70,33 @@ contract VolunteerVerification is Ownable, ReentrancyGuard, Pausable {
     
     /**
      * @dev Register a new charity
-     * @param _charityAddress The address of the charity to register
+     * @param charityAddress The address of the charity to register
      */
-    function registerCharity(address payable _charityAddress) external onlyOwner {
-        require(_charityAddress != address(0), "Invalid charity address");
-        require(!charities[_charityAddress].isRegistered, "Charity already registered");
+    function registerCharity(address payable charityAddress) external onlyOwner {
+        require(charityAddress != address(0), "Invalid charity address");
+        require(!charities[charityAddress].isRegistered, "Charity already registered");
         
-        charities[_charityAddress] = Charity({
+        charities[charityAddress] = Charity({
             isRegistered: true,
-            walletAddress: _charityAddress,
+            walletAddress: charityAddress,
             isActive: true
         });
         
-        emit CharityRegistered(_charityAddress, block.timestamp);
+        emit CharityRegistered(charityAddress, block.timestamp);
     }
 
     /**
      * @dev Update charity active status
-     * @param _charityAddress The address of the charity
-     * @param _isActive New active status
+     * @param charityAddress The address of the charity
+     * @param isActive New active status
      */
-    function updateCharityStatus(address _charityAddress, bool _isActive) external onlyOwner {
-        if (!charities[_charityAddress].isRegistered) {
-            revert CharityNotRegistered(_charityAddress);
+    function updateCharityStatus(address charityAddress, bool isActive) external onlyOwner {
+        if (!charities[charityAddress].isRegistered) {
+            revert CharityNotRegistered(charityAddress);
         }
         
-        charities[_charityAddress].isActive = _isActive;
-        emit CharityStatusUpdated(_charityAddress, _isActive);
+        charities[charityAddress].isActive = isActive;
+        emit CharityStatusUpdated(charityAddress, isActive);
     }
     
     /**

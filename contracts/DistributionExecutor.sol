@@ -8,7 +8,7 @@ import "./CharityScheduledDistribution.sol";
  * @dev Automates the execution of distributions
  */
 contract DistributionExecutor {
-    CharityScheduledDistribution public distribution;
+    CharityScheduledDistribution public immutable distribution;
     
     constructor(address distributionAddress) {
         distribution = CharityScheduledDistribution(distributionAddress);

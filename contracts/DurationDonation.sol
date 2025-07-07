@@ -53,70 +53,70 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
     
     /**
      * @dev Register a new charity
-     * @param _charityAddress The address of the charity to register
+     * @param charityAddress The address of the charity to register
      */
-    function registerCharity(address payable _charityAddress) external onlyOwner {
-        require(_charityAddress != address(0), "Invalid charity address");
-        require(!charities[_charityAddress].isRegistered, "Charity already registered");
+    function registerCharity(address payable charityAddress) external onlyOwner {
+        require(charityAddress != address(0), "Invalid charity address");
+        require(!charities[charityAddress].isRegistered, "Charity already registered");
         
-        charities[_charityAddress] = Charity({
+        charities[charityAddress] = Charity({
             isRegistered: true,
-            walletAddress: _charityAddress,
+            walletAddress: charityAddress,
             totalReceived: 0,
             availableBalance: 0,
             isActive: true,
             lastWithdrawal: 0
         });
         
-        emit CharityRegistered(_charityAddress, block.timestamp);
+        emit CharityRegistered(charityAddress, block.timestamp);
     }
 
     /**
      * @dev Update charity active status
-     * @param _charityAddress The address of the charity
-     * @param _isActive New active status
+     * @param charityAddress The address of the charity
+     * @param isActive New active status
      */
-    function updateCharityStatus(address _charityAddress, bool _isActive) external onlyOwner {
-        if (!charities[_charityAddress].isRegistered) {
-            revert CharityNotRegistered(_charityAddress);
+    function updateCharityStatus(address charityAddress, bool isActive) external onlyOwner {
+        if (!charities[charityAddress].isRegistered) {
+            revert CharityNotRegistered(charityAddress);
         }
         
-        charities[_charityAddress].isActive = _isActive;
-        emit CharityStatusUpdated(_charityAddress, _isActive);
+        charities[charityAddress].isActive = isActive;
+        emit CharityStatusUpdated(charityAddress, isActive);
     }
     
     /**
      * @dev Make a donation to a charity
-     * @param _charityAddress The address of the charity to donate to
+     * @param charityAddress The address of the charity to donate to
      */
-    function donate(address _charityAddress) external payable nonReentrant whenNotPaused {
-        if (!charities[_charityAddress].isRegistered) {
-            revert CharityNotRegistered(_charityAddress);
+    function donate(address charityAddress) external payable nonReentrant whenNotPaused {
+        if (!charities[charityAddress].isRegistered) {
+            revert CharityNotRegistered(charityAddress);
         }
         
-        if (!charities[_charityAddress].isActive) {
-            revert CharityNotActive(_charityAddress);
+        if (!charities[charityAddress].isActive) {
+            revert CharityNotActive(charityAddress);
         }
         
         if (msg.value < MINIMUM_DONATION || msg.value > MAXIMUM_DONATION) {
             revert InvalidAmount(msg.value, "Amount outside allowed range");
         }
         
-        Charity storage charity = charities[_charityAddress];
+        Charity storage charity = charities[charityAddress];
         
         // Update balances
         charity.totalReceived += msg.value;
         charity.availableBalance += msg.value;
-        donations[msg.sender][_charityAddress] += msg.value;
+        donations[msg.sender][charityAddress] += msg.value;
         
-        emit DonationReceived(msg.sender, _charityAddress, msg.value, block.timestamp);
+        emit DonationReceived(msg.sender, charityAddress, msg.value, block.timestamp);
     }
     
     /**
      * @dev Withdraw funds from charity balance
-     * @param _amount Amount to withdraw
+     * @param amount Amount to withdraw
      */
-    function withdraw(uint256 _amount) external nonReentrant whenNotPaused {
+    function withdraw(uint256 amount) external nonReentrant whenNotPaused {
         Charity storage charity = charities[msg.sender];
         
         if (!charity.isRegistered) {
@@ -127,8 +127,8 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
             revert CharityNotActive(msg.sender);
         }
         
-        if (_amount == 0 || _amount > charity.availableBalance) {
-            revert InsufficientBalance(_amount, charity.availableBalance);
+        if (amount == 0 || amount > charity.availableBalance) {
+            revert InsufficientBalance(amount, charity.availableBalance);
         }
         
         // Check withdrawal cooldown
@@ -138,20 +138,20 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
             );
         }
         
-        charity.availableBalance -= _amount;
+        charity.availableBalance -= amount;
         charity.lastWithdrawal = block.timestamp;
         
         // Transfer using Address library's sendValue for safety
-        charity.walletAddress.sendValue(_amount);
+        charity.walletAddress.sendValue(amount);
         
-        emit WithdrawalProcessed(msg.sender, _amount, block.timestamp);
+        emit WithdrawalProcessed(msg.sender, amount, block.timestamp);
     }
     
     /**
      * @dev Get charity information
-     * @param _charityAddress The address of the charity
+     * @param charityAddress The address of the charity
      */
-    function getCharityInfo(address _charityAddress) external view returns (
+    function getCharityInfo(address charityAddress) external view returns (
         bool isRegistered,
         address walletAddress,
         uint256 totalReceived,
@@ -159,7 +159,7 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
         bool isActive,
         uint256 lastWithdrawal
     ) {
-        Charity storage charity = charities[_charityAddress];
+        Charity storage charity = charities[charityAddress];
         return (
             charity.isRegistered,
             charity.walletAddress,
@@ -172,14 +172,14 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
     
     /**
      * @dev Get donation amount from donor to charity
-     * @param _donor The donor address
-     * @param _charity The charity address
+     * @param donor The donor address
+     * @param charity The charity address
      */
     function getDonationAmount(
-        address _donor,
-        address _charity
+        address donor,
+        address charity
     ) external view returns (uint256) {
-        return donations[_donor][_charity];
+        return donations[donor][charity];
     }
 
     /**
