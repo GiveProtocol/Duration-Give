@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useProfile } from '@/hooks/useProfile';
-import { DollarSign, Users, Clock, Download, Award, TrendingUp, ExternalLink, Plus, CheckCircle, X } from 'lucide-react';
+import { DollarSign, Users, Clock, Download, Award, TrendingUp, ExternalLink, Plus, CheckCircle, X, ChevronUp, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Transaction } from '@/types/contribution';
@@ -19,6 +19,10 @@ export const CharityPortal: React.FC = () => {
   const { profile, loading: profileLoading } = useProfile();
   const [activeTab, setActiveTab] = useState<'transactions' | 'volunteers' | 'applications' | 'opportunities'>('transactions');
   const [showExportModal, setShowExportModal] = useState(false);
+  const [sortConfig, setSortConfig] = useState<{
+    key: 'date' | 'type' | 'status' | 'organization' | null;
+    direction: 'asc' | 'desc';
+  }>({ key: null, direction: 'asc' });
   const { t } = useTranslation();
   
   // State for charity statistics
@@ -189,7 +193,8 @@ export const CharityPortal: React.FC = () => {
         status: 'completed',
         purpose: 'Donation',
         metadata: {
-          organization: donation?.donor?.id ? 'Donor' : 'Anonymous',
+          organization: donation?.donor?.id ? `Donor (${donation.donor.id.substring(0, 8)}...)` : 'Anonymous',
+          donor: donation?.donor?.id ? `Donor (${donation.donor.id.substring(0, 8)}...)` : 'Anonymous',
           category: 'Donation'
         }
       }));
@@ -336,6 +341,60 @@ export const CharityPortal: React.FC = () => {
   const handleShowExportModal = useCallback(() => {
     setShowExportModal(true);
   }, []);
+
+  const handleSort = useCallback((key: 'date' | 'type' | 'status' | 'organization') => {
+    setSortConfig(prevConfig => ({
+      key,
+      direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
+    }));
+  }, []);
+
+  const sortedTransactions = useCallback(() => {
+    if (!sortConfig.key) return transactions;
+
+    return [...transactions].sort((a, b) => {
+      let aValue: string | number;
+      let bValue: string | number;
+
+      switch (sortConfig.key) {
+        case 'date':
+          aValue = new Date(a.timestamp).getTime();
+          bValue = new Date(b.timestamp).getTime();
+          break;
+        case 'type':
+          aValue = a.purpose.toLowerCase();
+          bValue = b.purpose.toLowerCase();
+          break;
+        case 'status':
+          aValue = a.status.toLowerCase();
+          bValue = b.status.toLowerCase();
+          break;
+        case 'organization':
+          aValue = (a.metadata?.organization || a.metadata?.donor || 'Anonymous').toLowerCase();
+          bValue = (b.metadata?.organization || b.metadata?.donor || 'Anonymous').toLowerCase();
+          break;
+        default:
+          return 0;
+      }
+
+      if (aValue < bValue) {
+        return sortConfig.direction === 'asc' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+  }, [transactions, sortConfig]);
+
+  const getSortIcon = useCallback((columnKey: 'date' | 'type' | 'status' | 'organization') => {
+    if (sortConfig.key !== columnKey) {
+      return <ChevronUp className="h-4 w-4 text-gray-300" />;
+    }
+    return sortConfig.direction === 'asc' 
+      ? <ChevronUp className="h-4 w-4 text-gray-600" />
+      : <ChevronDown className="h-4 w-4 text-gray-600" />;
+  }, [sortConfig]);
 
   if (!user) {
     return <Navigate to="/login?type=charity" />;
@@ -508,16 +567,48 @@ export const CharityPortal: React.FC = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.date')}</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.type')}</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('donor.volunteer', 'Donor/Volunteer')}</th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                      onClick={() => handleSort('date')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>{t('contributions.date')}</span>
+                        {getSortIcon('date')}
+                      </div>
+                    </th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                      onClick={() => handleSort('type')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>{t('contributions.type')}</span>
+                        {getSortIcon('type')}
+                      </div>
+                    </th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                      onClick={() => handleSort('organization')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>{t('donor.volunteer', 'Donor/Volunteer')}</span>
+                        {getSortIcon('organization')}
+                      </div>
+                    </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.details')}</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.status')}</th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                      onClick={() => handleSort('status')}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <span>{t('contributions.status')}</span>
+                        {getSortIcon('status')}
+                      </div>
+                    </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.verification')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {transactions.map((transaction) => (
+                  {sortedTransactions().map((transaction) => (
                     <tr key={transaction.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {formatDate(transaction.timestamp, true)}
@@ -526,7 +617,7 @@ export const CharityPortal: React.FC = () => {
                         {t(`contribution.type.${transaction.purpose.toLowerCase().replace(' ', '')}`, transaction.purpose)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {transaction.metadata?.donor || t('donor.anonymous', 'Anonymous')}
+                        {transaction.metadata?.organization || transaction.metadata?.donor || t('donor.anonymous', 'Anonymous')}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         <span>
