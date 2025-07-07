@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
@@ -26,7 +26,7 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
     mapping(address => mapping(address => uint256)) public donations; // donor => charity => amount
     
     uint256 public constant MINIMUM_DONATION = 0.0001 ether; // Minimum donation amount
-    uint256 public constant MAXIMUM_DONATION = 1000000 ether; // Maximum donation amount (1M)
+    uint256 public constant MAXIMUM_DONATION = 1e6 ether; // Maximum donation amount (1M)
     uint256 public constant WITHDRAWAL_COOLDOWN = 1 days; // Minimum time between withdrawals
     
     event CharityRegistered(address indexed charity, uint256 timestamp);
