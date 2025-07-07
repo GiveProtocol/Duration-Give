@@ -9,15 +9,14 @@ export const formatDate = (dateString: string, includeTime: boolean = false): st
     }
     
     if (includeTime) {
-      return date.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-      });
+      // Format as DDMMMYY HH:MM UTC
+      const day = date.getUTCDate().toString().padStart(2, '0');
+      const month = date.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
+      const year = date.getUTCFullYear().toString().slice(-2);
+      const hours = date.getUTCHours().toString().padStart(2, '0');
+      const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+      
+      return `${day}${month}${year} ${hours}:${minutes} UTC`;
     }
     
     return date.toLocaleDateString('en-US', {

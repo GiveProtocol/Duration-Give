@@ -85,7 +85,7 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
             {filteredDonations.map((donation) => (
               <tr key={donation.id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {formatDate(donation.timestamp)}
+                  {formatDate(donation.timestamp, true)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {donation.metadata?.organization || 'Unknown'}
