@@ -1,4 +1,4 @@
-export const formatDate = (dateString: string, includeTime: boolean = false): string => {
+export const formatDate = (dateString: string, includeTime = false): string => {
   if (!dateString) return '';
   
   try {

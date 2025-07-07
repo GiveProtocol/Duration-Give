@@ -20,7 +20,7 @@ const MAX_RECOVERY_ATTEMPTS = 3;
 const RECOVERY_COOLDOWN = 5000; // 5 seconds
 
 export class ErrorBoundary extends Component<Props, State> {
-  private lastRecoveryAttempt: number = 0;
+  private lastRecoveryAttempt = 0;
 
   constructor(props: Props) {
     super(props);

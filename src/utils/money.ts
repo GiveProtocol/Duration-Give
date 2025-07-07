@@ -40,7 +40,7 @@ export const CURRENCY_SYMBOLS: Record<string, string> = {
 };
 
 // Utility functions for money formatting and calculations
-export const formatCurrency = (amount: number, currencyCode: string = 'USD'): string => {
+export const formatCurrency = (amount: number, currencyCode = 'USD'): string => {
   // Convert amount to the target currency
   const rate = EXCHANGE_RATES[currencyCode] || 1;
   const convertedAmount = amount * rate;
