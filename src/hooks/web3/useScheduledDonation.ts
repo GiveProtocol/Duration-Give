@@ -37,7 +37,17 @@ export function useScheduledDonation() {
       setError(null);
 
       // Get the distribution contract address
-      const distributionAddress = getContractAddress('DISTRIBUTION');
+      let distributionAddress: string;
+      try {
+        distributionAddress = getContractAddress('DISTRIBUTION');
+      } catch (err) {
+        throw new Error('Distribution contract not deployed. Please check with the development team.');
+      }
+      
+      // Check if we're using the dummy development address
+      if (distributionAddress === '0x1234567890123456789012345678901234567890') {
+        throw new Error('Scheduled donations are not available in development mode.');
+      }
       
       // Create contract instance
       const signer = await provider.getSigner();
@@ -112,7 +122,17 @@ export function useScheduledDonation() {
       setError(null);
 
       // Get the distribution contract address
-      const distributionAddress = getContractAddress('DISTRIBUTION');
+      let distributionAddress: string;
+      try {
+        distributionAddress = getContractAddress('DISTRIBUTION');
+      } catch (err) {
+        throw new Error('Distribution contract not deployed. Please check with the development team.');
+      }
+      
+      // Check if we're using the dummy development address
+      if (distributionAddress === '0x1234567890123456789012345678901234567890') {
+        throw new Error('Scheduled donations are not available in development mode.');
+      }
       
       // Create contract instance
       const signer = await provider.getSigner();
@@ -160,7 +180,19 @@ export function useScheduledDonation() {
       setError(null);
 
       // Get the distribution contract address
-      const distributionAddress = getContractAddress('DISTRIBUTION');
+      let distributionAddress: string;
+      try {
+        distributionAddress = getContractAddress('DISTRIBUTION');
+      } catch (err) {
+        Logger.warn('Distribution contract not deployed, returning empty schedules');
+        return [];
+      }
+      
+      // Check if we're using the dummy development address
+      if (distributionAddress === '0x1234567890123456789012345678901234567890') {
+        Logger.warn('Using dummy contract address in development mode, returning empty schedules');
+        return [];
+      }
       
       // Create contract instance
       const distributionContract = new ethers.Contract(
