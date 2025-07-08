@@ -69,7 +69,11 @@
     <script type="text/javascript">
       function googleTranslateElementInit() {
         try {
-          if (typeof google !== 'undefined' && google.translate && google.translate.TranslateElement) {
+          if (
+            typeof google !== "undefined" &&
+            google.translate &&
+            google.translate.TranslateElement
+          ) {
             new google.translate.TranslateElement(
               {
                 pageLanguage: "en",
@@ -830,13 +834,18 @@
 
       function triggerGoogleTranslate(targetLang) {
         // Wait for Google Translate to be ready
-        if (typeof google !== "undefined" && google.translate && google.translate.TranslateElement) {
+        if (
+          typeof google !== "undefined" &&
+          google.translate &&
+          google.translate.TranslateElement
+        ) {
           try {
             // Get the translate element - check if getInstance method exists
-            const translateElement = google.translate.TranslateElement.getInstance 
+            const translateElement = google.translate.TranslateElement
+              .getInstance
               ? google.translate.TranslateElement.getInstance()
               : null;
-              
+
             if (translateElement) {
               // Find the language selector in the Google Translate widget
               const selectElement = document.querySelector(
@@ -850,9 +859,11 @@
               }
             }
           } catch (e) {
-            console.warn("Google Translate not ready, trying alternative method");
+            console.warn(
+              "Google Translate not ready, trying alternative method",
+            );
           }
-          
+
           // If translate element isn't ready, try a different approach
           setTimeout(() => {
             try {
@@ -871,7 +882,7 @@
             } catch (e) {
               console.warn("Alternative translation method failed", e);
             }
-            
+
             // Final fallback: reload page with Google Translate hash
             window.location.href =
               window.location.pathname + "#googtrans(en|" + targetLang + ")";
