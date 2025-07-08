@@ -1,0 +1,350 @@
+// Enhanced search styles
+.search-results-overlay {
+  &.active {
+    .search-results-container {
+      animation: slideUp 0.2s ease-out;
+    }
+  }
+  
+  .search-results-container {
+    max-height: 70vh;
+    
+    .search-header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 10;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    
+    #search-results {
+      max-height: calc(70vh - 60px);
+      overflow-y: auto;
+      
+      // Enhanced search result styling
+      .search-result {
+        padding: 16px 24px;
+        border-bottom: 1px solid #f9fafb;
+        transition: all 0.15s ease;
+        position: relative;
+        
+        &:hover,
+        &.selected {
+          background: #f8fafc;
+          
+          .result-link {
+            transform: translateX(4px);
+          }
+        }
+        
+        &.selected {
+          background: #eef2ff;
+          border-left: 3px solid #4f46e5;
+        }
+        
+        .result-link {
+          display: block;
+          text-decoration: none;
+          color: inherit;
+          transition: transform 0.15s ease;
+        }
+        
+        .result-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 8px;
+        }
+        
+        .result-title {
+          font-size: 16px;
+          font-weight: 600;
+          color: #111827;
+          line-height: 1.4;
+          
+          mark {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 1px 2px;
+            border-radius: 2px;
+          }
+        }
+        
+        .result-category {
+          font-size: 12px;
+          color: #6b7280;
+          background: #f3f4f6;
+          padding: 2px 8px;
+          border-radius: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-weight: 500;
+        }
+        
+        .result-excerpt {
+          font-size: 14px;
+          color: #4b5563;
+          line-height: 1.5;
+          margin-bottom: 8px;
+          
+          mark {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 1px 2px;
+            border-radius: 2px;
+          }
+        }
+        
+        .result-meta {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 12px;
+          color: #9ca3af;
+        }
+        
+        .result-score {
+          background: #f3f4f6;
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+      }
+      
+      // No results styling
+      .search-no-results {
+        padding: 40px 24px;
+        text-align: center;
+        color: #6b7280;
+        
+        .no-results-icon {
+          margin-bottom: 16px;
+          
+          i {
+            font-size: 48px;
+            color: #d1d5db;
+          }
+        }
+        
+        .no-results-text {
+          h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #374151;
+            margin: 0 0 8px 0;
+          }
+          
+          p {
+            font-size: 14px;
+            color: #6b7280;
+            margin: 0;
+          }
+        }
+      }
+      
+      // Custom scrollbar for search results
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background: #f9fafb;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 3px;
+        
+        &:hover {
+          background: #9ca3af;
+        }
+      }
+    }
+  }
+}
+
+// Search input enhancements
+.header-search {
+  .search-wrapper {
+    input {
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        border-color: #4f46e5;
+      }
+      
+      &::placeholder {
+        color: #9ca3af;
+      }
+    }
+    
+    .search-icon {
+      transition: color 0.15s ease;
+    }
+    
+    &:hover .search-icon {
+      color: #4b5563;
+    }
+  }
+}
+
+// Search keyboard shortcuts hint
+.search-shortcuts {
+  padding: 12px 24px;
+  background: #f9fafb;
+  border-top: 1px solid #f3f4f6;
+  font-size: 12px;
+  color: #6b7280;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .shortcut {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    
+    kbd {
+      background: #fff;
+      border: 1px solid #d1d5db;
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-family: inherit;
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Mobile search adjustments
+@media (max-width: 768px) {
+  .search-results-overlay {
+    .search-results-container {
+      margin: 16px;
+      max-height: calc(100vh - 32px);
+      
+      .search-header {
+        padding: 12px 16px;
+        
+        h3 {
+          font-size: 14px;
+        }
+      }
+      
+      #search-results {
+        .search-result {
+          padding: 12px 16px;
+          
+          .result-title {
+            font-size: 15px;
+          }
+          
+          .result-excerpt {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dark mode support
+.dark-mode {
+  .search-results-overlay {
+    .search-results-container {
+      background: #1f2937;
+      
+      .search-header {
+        background: #1f2937;
+        border-bottom-color: #374151;
+        
+        h3 {
+          color: #f9fafb;
+        }
+        
+        .close-search {
+          color: #9ca3af;
+          
+          &:hover {
+            color: #f9fafb;
+          }
+        }
+      }
+      
+      #search-results {
+        .search-result {
+          border-bottom-color: #374151;
+          
+          &:hover,
+          &.selected {
+            background: #374151;
+          }
+          
+          &.selected {
+            background: #1e3a8a;
+            border-left-color: #6366f1;
+          }
+          
+          .result-title {
+            color: #f9fafb;
+            
+            mark {
+              background: #92400e;
+              color: #fef3c7;
+            }
+          }
+          
+          .result-excerpt {
+            color: #d1d5db;
+            
+            mark {
+              background: #92400e;
+              color: #fef3c7;
+            }
+          }
+          
+          .result-category {
+            background: #374151;
+            color: #9ca3af;
+          }
+          
+          .result-score {
+            background: #374151;
+            color: #9ca3af;
+          }
+        }
+        
+        .search-no-results {
+          color: #9ca3af;
+          
+          .no-results-text {
+            h3 {
+              color: #d1d5db;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .search-shortcuts {
+    background: #374151;
+    border-top-color: #4b5563;
+    color: #9ca3af;
+    
+    kbd {
+      background: #1f2937;
+      border-color: #4b5563;
+      color: #d1d5db;
+    }
+  }
+}

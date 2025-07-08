@@ -1,0 +1,62 @@
+# Supported languages for the documentation site
+# Primary languages for full translation
+primary:
+  en:
+    name: "English"
+    native: "English"
+    direction: "ltr"
+    enabled: true
+  es:
+    name: "Spanish" 
+    native: "Español"
+    direction: "ltr"
+    enabled: true
+  zh:
+    name: "Chinese (Simplified)"
+    native: "中文"
+    direction: "ltr"
+    enabled: true
+
+# Secondary languages (Google Translate only)
+secondary:
+  de:
+    name: "German"
+    native: "Deutsch"
+    direction: "ltr"
+    enabled: true
+  fr:
+    name: "French"
+    native: "Français"
+    direction: "ltr"
+    enabled: true
+  ja:
+    name: "Japanese"
+    native: "日本語"
+    direction: "ltr"
+    enabled: true
+  pt:
+    name: "Portuguese"
+    native: "Português"
+    direction: "ltr"
+    enabled: true
+  ko:
+    name: "Korean"
+    native: "한국어"
+    direction: "ltr"
+    enabled: true
+  ar:
+    name: "Arabic"
+    native: "العربية"
+    direction: "rtl"
+    enabled: true
+  hi:
+    name: "Hindi"
+    native: "हिन्दी"
+    direction: "ltr"
+    enabled: true
+
+# Default language
+default: "en"
+
+# Current language (will be set by Jekyll)
+current: "en"
