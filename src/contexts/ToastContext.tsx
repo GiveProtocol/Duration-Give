@@ -31,6 +31,10 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     setToasts(prev => prev.filter(t => t.id !== id));
   }, []);
 
+  const createRemoveHandler = useCallback((id: string) => {
+    return () => removeToast(id);
+  }, [removeToast]);
+
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
@@ -41,7 +45,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             type={toast.type}
             title={toast.title}
             message={toast.message}
-            onClose={() => removeToast(toast.id)}
+            onClose={createRemoveHandler(toast.id)}
           />
         ))}
       </div>

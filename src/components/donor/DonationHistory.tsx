@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Download, Filter, Calendar } from 'lucide-react';
 import { formatCurrency } from '@/utils/money';
 import { formatDate } from '@/utils/date';
@@ -13,6 +13,18 @@ interface DonationHistoryProps {
 export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) => {
   const [showExportModal, setShowExportModal] = useState(false);
   const [timeFilter, setTimeFilter] = useState('all');
+
+  const handleTimeFilterChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTimeFilter(e.target.value);
+  }, []);
+
+  const handleShowExportModal = useCallback(() => {
+    setShowExportModal(true);
+  }, []);
+
+  const handleCloseExportModal = useCallback(() => {
+    setShowExportModal(false);
+  }, []);
 
   const filteredDonations = donations.filter(donation => {
     if (timeFilter === 'all') return true;
@@ -48,7 +60,7 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
               <Calendar className="h-5 w-5 text-gray-400" />
               <select
                 value={timeFilter}
-                onChange={(e) => setTimeFilter(e.target.value)}
+                onChange={handleTimeFilterChange}
                 className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 aria-label="Filter by time period"
               >
@@ -59,7 +71,7 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
               </select>
             </div>
             <Button
-              onClick={() => setShowExportModal(true)}
+              onClick={handleShowExportModal}
               variant="secondary"
               className="flex items-center"
             >
@@ -131,7 +143,7 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
       {showExportModal && (
         <DonationExportModal
           donations={donations}
-          onClose={() => setShowExportModal(false)}
+          onClose={handleCloseExportModal}
         />
       )}
     </div>

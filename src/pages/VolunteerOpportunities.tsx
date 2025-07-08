@@ -134,7 +134,6 @@ const VolunteerOpportunities: React.FC = () => {
   const handleConsentDecline = () => {
     setShowConsentForm(false);
     setSelectedOpportunity(null);
-    showToast('info', 'Application Cancelled', 'You must accept the consent form to proceed with your application.');
   };
 
   const handleApplicationClose = () => {

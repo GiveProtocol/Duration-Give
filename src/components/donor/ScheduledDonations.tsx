@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useScheduledDonation } from '@/hooks/web3/useScheduledDonation';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -44,11 +44,19 @@ export const ScheduledDonations: React.FC = () => {
     }
   };
 
-  const handleCancelClick = (schedule: ScheduledDonation) => {
+  const handleCancelClick = useCallback((schedule: ScheduledDonation) => {
     setSelectedSchedule(schedule);
     setCancelError(null);
     setIsCancelModalOpen(true);
-  };
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsCancelModalOpen(false);
+  }, []);
+
+  const createCancelHandler = useCallback((schedule: ScheduledDonation) => {
+    return () => handleCancelClick(schedule);
+  }, [handleCancelClick]);
 
   const handleConfirmCancel = async () => {
     if (!selectedSchedule) return;
@@ -135,7 +143,7 @@ export const ScheduledDonations: React.FC = () => {
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() => handleCancelClick(schedule)}
+                  onClick={createCancelHandler(schedule)}
                   disabled={loading}
                   className="mt-4 md:mt-0"
                 >
@@ -171,7 +179,7 @@ export const ScheduledDonations: React.FC = () => {
               <div className="flex justify-center space-x-3">
                 <Button
                   variant="secondary"
-                  onClick={() => setIsCancelModalOpen(false)}
+                  onClick={handleCloseModal}
                 >
                   Keep Schedule
                 </Button>
