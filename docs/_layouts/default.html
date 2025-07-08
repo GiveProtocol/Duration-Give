@@ -68,15 +68,21 @@
     <!-- Google Translate -->
     <script type="text/javascript">
       function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false,
-          },
-          "google_translate_element",
-        );
+        try {
+          if (typeof google !== 'undefined' && google.translate && google.translate.TranslateElement) {
+            new google.translate.TranslateElement(
+              {
+                pageLanguage: "en",
+                includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false,
+              },
+              "google_translate_element",
+            );
+          }
+        } catch (e) {
+          console.warn("Google Translate initialization error:", e);
+        }
       }
     </script>
     <script
@@ -824,23 +830,32 @@
 
       function triggerGoogleTranslate(targetLang) {
         // Wait for Google Translate to be ready
-        if (typeof google !== "undefined" && google.translate) {
-          // Get the translate element
-          const translateElement =
-            google.translate.TranslateElement.getInstance();
-          if (translateElement) {
-            // Find the language selector in the Google Translate widget
-            const selectElement = document.querySelector(
-              "#google_translate_element select",
-            );
-            if (selectElement) {
-              // Set the value to trigger translation
-              selectElement.value = targetLang;
-              selectElement.dispatchEvent(new Event("change"));
+        if (typeof google !== "undefined" && google.translate && google.translate.TranslateElement) {
+          try {
+            // Get the translate element - check if getInstance method exists
+            const translateElement = google.translate.TranslateElement.getInstance 
+              ? google.translate.TranslateElement.getInstance()
+              : null;
+              
+            if (translateElement) {
+              // Find the language selector in the Google Translate widget
+              const selectElement = document.querySelector(
+                "#google_translate_element select",
+              );
+              if (selectElement) {
+                // Set the value to trigger translation
+                selectElement.value = targetLang;
+                selectElement.dispatchEvent(new Event("change"));
+                return;
+              }
             }
-          } else {
-            // If translate element isn't ready, try a different approach
-            setTimeout(() => {
+          } catch (e) {
+            console.warn("Google Translate not ready, trying alternative method");
+          }
+          
+          // If translate element isn't ready, try a different approach
+          setTimeout(() => {
+            try {
               const iframe = document.querySelector(".goog-te-menu-frame");
               if (iframe) {
                 const iframeDoc =
@@ -850,15 +865,23 @@
                 );
                 if (langLink) {
                   langLink.click();
+                  return;
                 }
               }
-            }, 100);
-          }
+            } catch (e) {
+              console.warn("Alternative translation method failed", e);
+            }
+            
+            // Final fallback: reload page with Google Translate hash
+            window.location.href =
+              window.location.pathname + "#googtrans(en|" + targetLang + ")";
+            window.location.reload();
+          }, 500);
         } else {
-          // Fallback: reload page with Google Translate hash
-          window.location.href =
-            window.location.pathname + "#googtrans(en|" + targetLang + ")";
-          window.location.reload();
+          // Google Translate not loaded yet, wait and retry
+          setTimeout(() => {
+            triggerGoogleTranslate(targetLang);
+          }, 1000);
         }
       }
 
