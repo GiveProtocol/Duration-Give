@@ -1,0 +1,179 @@
+en:
+  ui:
+    search:
+      placeholder: "Search documentation..."
+      aria_label: "Search documentation"
+      no_results: "No results found"
+    settings:
+      title: "Settings"
+      theme: "Theme"
+      light: "Light"
+      dark: "Dark"
+      language: "Language"
+    navigation:
+      home: "Home"
+      edit_page: "Edit this page"
+      mobile_menu: "Toggle mobile menu"
+    languages:
+      en: "English"
+      es: "Spanish"
+      de: "German"
+      fr: "French"
+      ja: "Japanese"
+      zh: "Chinese (Simplified)"
+      zh_TW: "Chinese (Traditional)"
+      th: "Thai"
+      vi: "Vietnamese"
+      ko: "Korean"
+      ar: "Arabic"
+      hi: "Hindi"
+
+es:
+  ui:
+    search:
+      placeholder: "Buscar documentación..."
+      aria_label: "Buscar documentación"
+      no_results: "No se encontraron resultados"
+    settings:
+      title: "Configuración"
+      theme: "Tema"
+      light: "Claro"
+      dark: "Oscuro"
+      language: "Idioma"
+    navigation:
+      home: "Inicio"
+      edit_page: "Editar esta página"
+      mobile_menu: "Alternar menú móvil"
+    languages:
+      en: "Inglés"
+      es: "Español"
+      de: "Alemán"
+      fr: "Francés"
+      ja: "Japonés"
+      zh: "Chino (Simplificado)"
+      zh_TW: "Chino (Tradicional)"
+      th: "Tailandés"
+      vi: "Vietnamita"
+      ko: "Coreano"
+      ar: "Árabe"
+      hi: "Hindi"
+
+de:
+  ui:
+    search:
+      placeholder: "Dokumentation durchsuchen..."
+      aria_label: "Dokumentation durchsuchen"
+      no_results: "Keine Ergebnisse gefunden"
+    settings:
+      title: "Einstellungen"
+      theme: "Thema"
+      light: "Hell"
+      dark: "Dunkel"
+      language: "Sprache"
+    navigation:
+      home: "Startseite"
+      edit_page: "Diese Seite bearbeiten"
+      mobile_menu: "Mobile Menü umschalten"
+    languages:
+      en: "Englisch"
+      es: "Spanisch"
+      de: "Deutsch"
+      fr: "Französisch"
+      ja: "Japanisch"
+      zh: "Chinesisch (Vereinfacht)"
+      zh_TW: "Chinesisch (Traditionell)"
+      th: "Thailändisch"
+      vi: "Vietnamesisch"
+      ko: "Koreanisch"
+      ar: "Arabisch"
+      hi: "Hindi"
+
+fr:
+  ui:
+    search:
+      placeholder: "Rechercher dans la documentation..."
+      aria_label: "Rechercher dans la documentation"
+      no_results: "Aucun résultat trouvé"
+    settings:
+      title: "Paramètres"
+      theme: "Thème"
+      light: "Clair"
+      dark: "Sombre"
+      language: "Langue"
+    navigation:
+      home: "Accueil"
+      edit_page: "Modifier cette page"
+      mobile_menu: "Basculer le menu mobile"
+    languages:
+      en: "Anglais"
+      es: "Espagnol"
+      de: "Allemand"
+      fr: "Français"
+      ja: "Japonais"
+      zh: "Chinois (Simplifié)"
+      zh_TW: "Chinois (Traditionnel)"
+      th: "Thaï"
+      vi: "Vietnamien"
+      ko: "Coréen"
+      ar: "Arabe"
+      hi: "Hindi"
+
+ja:
+  ui:
+    search:
+      placeholder: "ドキュメントを検索..."
+      aria_label: "ドキュメントを検索"
+      no_results: "結果が見つかりません"
+    settings:
+      title: "設定"
+      theme: "テーマ"
+      light: "ライト"
+      dark: "ダーク"
+      language: "言語"
+    navigation:
+      home: "ホーム"
+      edit_page: "このページを編集"
+      mobile_menu: "モバイルメニューを切り替え"
+    languages:
+      en: "英語"
+      es: "スペイン語"
+      de: "ドイツ語"
+      fr: "フランス語"
+      ja: "日本語"
+      zh: "中国語（簡体字）"
+      zh_TW: "中国語（繁体字）"
+      th: "タイ語"
+      vi: "ベトナム語"
+      ko: "韓国語"
+      ar: "アラビア語"
+      hi: "ヒンディー語"
+
+zh:
+  ui:
+    search:
+      placeholder: "搜索文档..."
+      aria_label: "搜索文档"
+      no_results: "未找到结果"
+    settings:
+      title: "设置"
+      theme: "主题"
+      light: "浅色"
+      dark: "深色"
+      language: "语言"
+    navigation:
+      home: "首页"
+      edit_page: "编辑此页"
+      mobile_menu: "切换移动菜单"
+    languages:
+      en: "英语"
+      es: "西班牙语"
+      de: "德语"
+      fr: "法语"
+      ja: "日语"
+      zh: "中文（简体）"
+      zh_TW: "中文（繁体）"
+      th: "泰语"
+      vi: "越南语"
+      ko: "韩语"
+      ar: "阿拉伯语"
+      hi: "印地语"

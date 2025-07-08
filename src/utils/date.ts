@@ -11,10 +11,10 @@ export const formatDate = (dateString: string, includeTime = false): string => {
     }
     
     if (includeTime) {
-      // Format as DDMMMYY HH:MM UTC
+      // Format as DDMMMYYYY HH:MM UTC
       const day = date.getUTCDate().toString().padStart(2, '0');
       const month = date.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
-      const year = date.getUTCFullYear().toString().slice(-2);
+      const year = date.getUTCFullYear().toString();
       const hours = date.getUTCHours().toString().padStart(2, '0');
       const minutes = date.getUTCMinutes().toString().padStart(2, '0');
       

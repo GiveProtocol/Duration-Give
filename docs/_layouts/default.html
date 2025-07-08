@@ -162,12 +162,12 @@
                   ></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
-                <span>Settings</span>
+                <span class="settings-title">Settings</span>
               </button>
 
               <div class="settings-menu" role="menu" aria-hidden="true">
                 <div class="settings-section">
-                  <h4 class="settings-heading">Theme</h4>
+                  <h4 class="settings-heading theme-heading">Theme</h4>
                   <div class="theme-options">
                     <button
                       class="theme-option active"
@@ -219,7 +219,7 @@
                 </div>
 
                 <div class="settings-section">
-                  <h4 class="settings-heading">Language</h4>
+                  <h4 class="settings-heading language-heading">Language</h4>
                   <div class="language-options">
                     <button
                       class="language-option active"
@@ -364,6 +364,7 @@
               id="search-input"
               placeholder="Search documentation..."
               aria-label="Search documentation"
+              title="Search documentation..."
             />
             <svg
               class="search-icon"
@@ -818,13 +819,19 @@
         // Save preference
         localStorage.setItem("docs-language", lang);
 
-        // Trigger Google Translate
-        if (lang === "en") {
-          // Reset to original English
-          window.location.href = window.location.pathname;
-        } else {
-          // Use Google Translate API to change language
-          triggerGoogleTranslate(lang);
+        // Only trigger translation if user explicitly changed language
+        // Don't auto-translate on page load to prevent refresh loops
+        if (window.userRequestedLanguageChange) {
+          if (lang === "en") {
+            // Reset to original English without refresh
+            if (window.location.hash.includes('googtrans')) {
+              window.location.href = window.location.pathname;
+            }
+          } else {
+            // Use Google Translate API to change language
+            triggerGoogleTranslate(lang);
+          }
+          window.userRequestedLanguageChange = false;
         }
       }
 
@@ -878,10 +885,18 @@
             window.location.reload();
           }, 500);
         } else {
-          // Google Translate not loaded yet, wait and retry
-          setTimeout(() => {
-            triggerGoogleTranslate(targetLang);
-          }, 1000);
+          // Google Translate not loaded yet, wait and retry (max 3 attempts)
+          const maxRetries = 3;
+          const retryCount = window.translateRetryCount || 0;
+          
+          if (retryCount < maxRetries) {
+            window.translateRetryCount = retryCount + 1;
+            setTimeout(() => {
+              triggerGoogleTranslate(targetLang);
+            }, 1000);
+          } else {
+            console.warn("Google Translate failed to load after", maxRetries, "attempts");
+          }
         }
       }
 
@@ -956,8 +971,12 @@
         document.querySelectorAll(".language-option").forEach((option) => {
           option.addEventListener("click", function () {
             const lang = this.dataset.lang;
+            window.userRequestedLanguageChange = true;
             applyLanguage(lang);
             updateSettingsUI();
+
+            // Trigger UI translation update
+            document.dispatchEvent(new CustomEvent('languageChanged'));
 
             // Close settings menu after language selection
             toggleSettingsMenu();
@@ -997,7 +1016,7 @@
             resultsContainer: document.getElementById("search-results"),
             json: '{{ "/search.json" | relative_url }}',
             searchResultTemplate:
-              '<div class="search-result"><a href="{url}" class="result-link"><div class="result-title">{title}</div><div class="result-excerpt">{content}</div></a></div>',
+              '<div class="search-result" data-translate="yes"><a href="{url}" class="result-link"><div class="result-title" data-translate="yes">{title}</div><div class="result-excerpt" data-translate="yes">{content}</div></a></div>',
             noResultsText:
               '<div class="search-no-results">No results found</div>',
             limit: 10,
@@ -1020,6 +1039,12 @@
           searchInput.addEventListener("input", function () {
             if (this.value.trim()) {
               searchResults.style.display = "block";
+              // Trigger Google Translate refresh for search results
+              setTimeout(() => {
+                if (window.i18n && window.i18n.refreshGoogleTranslate) {
+                  window.i18n.refreshGoogleTranslate();
+                }
+              }, 300);
             } else {
               searchResults.style.display = "none";
             }
@@ -1037,5 +1062,8 @@
         }
       });
     </script>
+
+    <!-- i18n Helper for UI translations -->
+    <script src="{{ '/assets/js/i18n-helper.js' | relative_url }}"></script>
   </body>
 </html>
