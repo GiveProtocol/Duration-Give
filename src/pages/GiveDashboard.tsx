@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWeb3 } from '@/contexts/Web3Context';
-import { DollarSign, Clock, Award, Download, Filter, Calendar, CheckCircle, ExternalLink, Settings } from 'lucide-react';
+import { DollarSign, Clock, Award, Download, Filter, Calendar, CheckCircle, ExternalLink, Settings, ChevronUp, ChevronDown } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Transaction } from '@/types/contribution';
@@ -26,6 +26,10 @@ export const GiveDashboard: React.FC = () => {
   const [showExportModal, setShowExportModal] = useState(false);
   const [showWalletSettings, setShowWalletSettings] = useState(false);
   const [showScheduledDonations, setShowScheduledDonations] = useState(false);
+  const [sortConfig, setSortConfig] = useState<{
+    key: 'date' | 'type' | 'status' | 'organization' | null;
+    direction: 'asc' | 'desc';
+  }>({ key: null, direction: 'asc' });
   const { t } = useTranslation();
   
   // Check if we should show wallet settings from location state
@@ -143,6 +147,22 @@ export const GiveDashboard: React.FC = () => {
     });
   };
 
+  const handleSort = useCallback((key: 'date' | 'type' | 'status' | 'organization') => {
+    setSortConfig(prevConfig => ({
+      key,
+      direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
+    }));
+  }, []);
+
+  const getSortIcon = useCallback((key: 'date' | 'type' | 'status' | 'organization') => {
+    if (sortConfig.key !== key) {
+      return <ChevronUp className="h-4 w-4 text-gray-400" />;
+    }
+    return sortConfig.direction === 'asc' 
+      ? <ChevronUp className="h-4 w-4 text-gray-600" />
+      : <ChevronDown className="h-4 w-4 text-gray-600" />;
+  }, [sortConfig]);
+
   const filteredContributions = contributions.filter(contribution => {
     const contributionDate = new Date(contribution.timestamp);
     const matchesYear = selectedYear === 'all' || 
@@ -150,6 +170,36 @@ export const GiveDashboard: React.FC = () => {
     const matchesType = selectedType === 'all' || 
       contribution.purpose === selectedType;
     return matchesYear && matchesType;
+  }).sort((a, b) => {
+    if (!sortConfig.key) return 0;
+
+    let aValue: string | number;
+    let bValue: string | number;
+
+    switch (sortConfig.key) {
+      case 'date':
+        aValue = new Date(a.timestamp).getTime();
+        bValue = new Date(b.timestamp).getTime();
+        break;
+      case 'type':
+        aValue = a.purpose.toLowerCase();
+        bValue = b.purpose.toLowerCase();
+        break;
+      case 'status':
+        aValue = a.status.toLowerCase();
+        bValue = b.status.toLowerCase();
+        break;
+      case 'organization':
+        aValue = (a.metadata?.organization || '').toLowerCase();
+        bValue = (b.metadata?.organization || '').toLowerCase();
+        break;
+      default:
+        return 0;
+    }
+
+    if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+    if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+    return 0;
   });
 
   const years = ['all', ...new Set(contributions.map(c => 
@@ -328,11 +378,43 @@ export const GiveDashboard: React.FC = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.date')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.type')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.organization')}</th>
+                <th 
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                  onClick={() => handleSort('date')}
+                >
+                  <div className="flex items-center space-x-1">
+                    <span>{t('contributions.date')}</span>
+                    {getSortIcon('date')}
+                  </div>
+                </th>
+                <th 
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                  onClick={() => handleSort('type')}
+                >
+                  <div className="flex items-center space-x-1">
+                    <span>{t('contributions.type')}</span>
+                    {getSortIcon('type')}
+                  </div>
+                </th>
+                <th 
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                  onClick={() => handleSort('organization')}
+                >
+                  <div className="flex items-center space-x-1">
+                    <span>{t('contributions.organization')}</span>
+                    {getSortIcon('organization')}
+                  </div>
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.details')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.status')}</th>
+                <th 
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                  onClick={() => handleSort('status')}
+                >
+                  <div className="flex items-center space-x-1">
+                    <span>{t('contributions.status')}</span>
+                    {getSortIcon('status')}
+                  </div>
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.verification')}</th>
               </tr>
             </thead>
