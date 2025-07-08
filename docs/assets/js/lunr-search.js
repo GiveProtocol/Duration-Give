@@ -2,9 +2,10 @@
 (function() {
   'use strict';
 
+  /* global lunr */
+
   let searchIndex;
   let searchData;
-  let searchResults = [];
 
   // Initialize search when DOM is ready
   document.addEventListener('DOMContentLoaded', function() {
@@ -142,7 +143,6 @@
 
   function displaySearchResults(results, originalQuery) {
     const searchResultsContainer = document.getElementById('search-results');
-    const searchOverlay = document.getElementById('search-overlay');
     
     if (!searchResultsContainer) return;
 
@@ -273,7 +273,7 @@
     displayFallbackResults(results, query);
   }
 
-  function displayFallbackResults(results, query) {
+  function displayFallbackResults(results, _query) {
     const searchResultsContainer = document.getElementById('search-results');
     if (!searchResultsContainer) return;
 

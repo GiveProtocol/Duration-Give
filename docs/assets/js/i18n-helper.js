@@ -2,6 +2,8 @@
 (function() {
   'use strict';
 
+  /* global google */
+
   // Translation data embedded from Jekyll
   window.translations = {
     {% for translation in site.data.translations %}
