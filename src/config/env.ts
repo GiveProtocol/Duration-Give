@@ -85,9 +85,9 @@ if (!ENV.VERIFICATION_CONTRACT_ADDRESS) {
     "0x2345678901234567890123456789012345678901";
 }
 
-if (!ENV.DISTRIBUTION_CONTRACT_ADDRESS) {
+if (!ENV.DISTRIBUTION_CONTRACT_ADDRESS || ENV.DISTRIBUTION_CONTRACT_ADDRESS === '0x0000000000000000000000000000000000000000') {
   console.warn(
-    "Distribution contract address not found in environment variables. Using development address.",
+    "Distribution contract address not found or invalid in environment variables. Using development address.",
   );
   // skipcq: SCT-A000 - This is a placeholder development Ethereum address, not a real secret
   ENV.DISTRIBUTION_CONTRACT_ADDRESS =

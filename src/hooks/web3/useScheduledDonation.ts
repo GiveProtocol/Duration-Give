@@ -188,9 +188,16 @@ export function useScheduledDonation() {
         return [];
       }
       
-      // Check if we're using the dummy development address
-      if (distributionAddress === '0x1234567890123456789012345678901234567890') {
-        Logger.warn('Using dummy contract address in development mode, returning empty schedules');
+      // Check if we're using a dummy or zero address
+      const zeroAddress = '0x0000000000000000000000000000000000000000';
+      const dummyAddresses = [
+        '0x1234567890123456789012345678901234567890',
+        '0x3456789012345678901234567890123456789012',
+        zeroAddress
+      ];
+      
+      if (dummyAddresses.includes(distributionAddress) || distributionAddress === zeroAddress) {
+        Logger.warn('Using invalid contract address, returning empty schedules');
         return [];
       }
       
@@ -202,7 +209,17 @@ export function useScheduledDonation() {
       );
 
       // Get schedule IDs for the donor
-      const scheduleIds = await distributionContract.getDonorSchedules(address);
+      let scheduleIds: bigint[];
+      try {
+        scheduleIds = await distributionContract.getDonorSchedules(address);
+      } catch (contractError) {
+        // Handle specific decode error
+        if (contractError instanceof Error && contractError.message.includes('could not decode result data')) {
+          Logger.warn('Contract returned empty data, likely not deployed or invalid address');
+          return [];
+        }
+        throw contractError;
+      }
 
       // Get details for each schedule
       const schedules: DonorSchedule[] = await Promise.all(

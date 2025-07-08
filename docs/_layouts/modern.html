@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/favicon/apple-touch-icon.png' | relative_url }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/favicon/favicon-32x32.png' | relative_url }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/favicon/favicon-16x16.png' | relative_url }}" />
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.294.0/font/lucide.min.css" />
+    
+    <!-- Search JavaScript -->
+    <script src="{{ '/assets/js/simple-jekyll-search.min.js' | relative_url }}"></script>
+    
+    <!-- Google Translate -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false
+        }, 'google_translate_element');
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </head>
+  
+  <body class="modern-docs">
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element" style="display: none"></div>
+    
+    <!-- Modern Header -->
+    <header class="modern-header">
+      <div class="header-container">
+        <a href="{{ '/' | relative_url }}" class="brand">
+          <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Give Protocol" />
+          <span>Documentation</span>
+        </a>
+        
+        <div class="header-search">
+          <div class="search-wrapper">
+            <i class="lucide-search search-icon"></i>
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="Search documentation..."
+              data-translate="yes"
+            />
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <a href="https://giveprotocol.io" class="btn-link" target="_blank">
+            Main Site <i class="lucide-external-link"></i>
+          </a>
+          
+          <!-- Settings Button -->
+          <button class="settings-toggle" aria-label="Settings">
+            <i class="lucide-settings"></i>
+          </button>
+          
+          <!-- Settings Menu -->
+          <div class="settings-dropdown" style="display: none;">
+            <div class="settings-section">
+              <h4 class="settings-heading theme-heading">Theme</h4>
+              <div class="theme-options">
+                <button class="theme-option active" data-theme="light">
+                  <i class="lucide-sun"></i> Light
+                </button>
+                <button class="theme-option" data-theme="dark">
+                  <i class="lucide-moon"></i> Dark
+                </button>
+              </div>
+            </div>
+            
+            <div class="settings-section">
+              <h4 class="settings-heading language-heading">Language</h4>
+              <div class="language-options">
+                <button class="language-option" data-lang="en">English</button>
+                <button class="language-option" data-lang="es">Español</button>
+                <button class="language-option" data-lang="de">Deutsch</button>
+                <button class="language-option" data-lang="fr">Français</button>
+                <button class="language-option" data-lang="ja">日本語</button>
+                <button class="language-option" data-lang="zh">中文</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+      <!-- Modern Sidebar -->
+      <aside class="modern-sidebar">
+        <button class="mobile-nav-toggle">
+          <span>Navigation</span>
+          <i class="lucide-menu"></i>
+        </button>
+        
+        <nav class="sidebar-nav">
+          <!-- Getting Started -->
+          <div class="nav-section">
+            <h3 class="section-title">Getting Started</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="{{ '/introduction/what-is-give-protocol/' | relative_url }}" 
+                   class="{% if page.url contains 'what-is-give-protocol' %}active{% endif %}">
+                  What is Give Protocol?
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ '/getting-started/creating-account/' | relative_url }}"
+                   class="{% if page.url contains 'creating-account' %}active{% endif %}">
+                  Creating Account
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ '/getting-started/wallet-connection/' | relative_url }}"
+                   class="{% if page.url contains 'wallet-connection' %}active{% endif %}">
+                  Wallet Connection
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ '/getting-started/first-steps/' | relative_url }}"
+                   class="{% if page.url contains 'first-steps' %}active{% endif %}">
+                  First Steps
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- User Guides -->
+          <div class="nav-section">
+            <h3 class="section-title">User Guides</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="{{ '/user-guides/donors/' | relative_url }}"
+                   class="{% if page.url contains 'donors' %}active{% endif %}">
+                  For Donors
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ '/user-guides/organizations/' | relative_url }}"
+                   class="{% if page.url contains 'organizations' %}active{% endif %}">
+                  For Organizations
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ '/user-guides/volunteers/' | relative_url }}"
+                   class="{% if page.url contains 'volunteers' %}active{% endif %}">
+                  For Volunteers
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- Platform Features -->
+          <div class="nav-section">
+            <h3 class="section-title">Platform Features</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="{{ '/platform-features/search-discovery/' | relative_url }}"
+                   class="{% if page.url contains 'search-discovery' %}active{% endif %}">
+                  Search & Discovery
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ '/platform-features/verification/' | relative_url }}"
+                   class="{% if page.url contains 'verification' %}active{% endif %}">
+                  Verification System
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- Technical -->
+          <div class="nav-section">
+            <h3 class="section-title">Technical Details</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="{{ '/technical/cryptocurrencies/' | relative_url }}"
+                   class="{% if page.url contains 'cryptocurrencies' %}active{% endif %}">
+                  Supported Cryptocurrencies
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ '/technical/fees/' | relative_url }}"
+                   class="{% if page.url contains 'fees' %}active{% endif %}">
+                  Fee Structure
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- Help & Support -->
+          <div class="nav-section">
+            <h3 class="section-title">Help & Support</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="{{ '/help-center/faq/' | relative_url }}"
+                   class="{% if page.url contains 'faq' %}active{% endif %}">
+                  Frequently Asked Questions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ '/help-center/need-help/' | relative_url }}"
+                   class="{% if page.url contains 'need-help' %}active{% endif %}">
+                  Need Help?
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+      
+      <!-- Main Content -->
+      <main class="modern-content">
+        <div class="content-card">
+          <!-- Breadcrumbs -->
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="{{ '/' | relative_url }}">Home</a>
+            {% assign crumbs = page.url | split: '/' %}
+            {% for crumb in crumbs %}
+              {% unless crumb == '' or crumb == 'index.html' %}
+                <span class="separator">/</span>
+                {% if forloop.last %}
+                  <span>{{ crumb | replace: '-', ' ' | capitalize }}</span>
+                {% else %}
+                  <a href="{{ page.url | split: crumb | first | append: crumb | relative_url }}/">
+                    {{ crumb | replace: '-', ' ' | capitalize }}
+                  </a>
+                {% endif %}
+              {% endunless %}
+            {% endfor %}
+          </nav>
+          
+          <article>
+            {{ content }}
+          </article>
+          
+          <!-- Page Actions -->
+          <div class="page-actions">
+            {% if page.edit_url %}
+              <a href="{{ page.edit_url }}" class="edit-link" target="_blank">
+                <i class="lucide-edit-3"></i>
+                Edit this page
+              </a>
+            {% endif %}
+            
+            <div class="last-updated">
+              Last updated: {{ page.last_modified_at | date: "%B %d, %Y" }}
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    
+    <!-- Search Results Overlay -->
+    <div class="search-results-overlay" id="search-overlay">
+      <div class="search-results-container">
+        <div class="search-header">
+          <h3>Search Results</h3>
+          <button class="close-search" id="close-search">
+            <i class="lucide-x"></i>
+          </button>
+        </div>
+        <div id="search-results"></div>
+      </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+      // Initialize search
+      if (window.SimpleJekyllSearch) {
+        window.simpleJekyllSearch = SimpleJekyllSearch({
+          searchInput: document.getElementById('search-input'),
+          resultsContainer: document.getElementById('search-results'),
+          json: '{{ "/search.json" | relative_url }}',
+          searchResultTemplate: '<div class="search-result" data-translate="yes"><a href="{url}"><div class="result-title">{title}</div><div class="result-excerpt">{content}</div></a></div>',
+          noResultsText: '<div class="search-no-results">No results found</div>',
+          limit: 10,
+          fuzzy: false
+        });
+      }
+      
+      // Search overlay handling
+      const searchInput = document.getElementById('search-input');
+      const searchOverlay = document.getElementById('search-overlay');
+      const closeSearch = document.getElementById('close-search');
+      
+      searchInput.addEventListener('focus', () => {
+        if (searchInput.value.trim()) {
+          searchOverlay.classList.add('active');
+        }
+      });
+      
+      searchInput.addEventListener('input', () => {
+        if (searchInput.value.trim()) {
+          searchOverlay.classList.add('active');
+        } else {
+          searchOverlay.classList.remove('active');
+        }
+      });
+      
+      closeSearch.addEventListener('click', () => {
+        searchOverlay.classList.remove('active');
+        searchInput.value = '';
+      });
+      
+      searchOverlay.addEventListener('click', (e) => {
+        if (e.target === searchOverlay) {
+          searchOverlay.classList.remove('active');
+        }
+      });
+      
+      // Settings dropdown
+      const settingsToggle = document.querySelector('.settings-toggle');
+      const settingsDropdown = document.querySelector('.settings-dropdown');
+      
+      settingsToggle.addEventListener('click', () => {
+        settingsDropdown.style.display = settingsDropdown.style.display === 'none' ? 'block' : 'none';
+      });
+      
+      // Theme switching
+      const themeOptions = document.querySelectorAll('.theme-option');
+      const savedTheme = localStorage.getItem('docs-theme') || 'light';
+      
+      document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+      
+      themeOptions.forEach(option => {
+        if (option.dataset.theme === savedTheme) {
+          option.classList.add('active');
+        }
+        
+        option.addEventListener('click', () => {
+          const theme = option.dataset.theme;
+          localStorage.setItem('docs-theme', theme);
+          document.body.classList.toggle('dark-mode', theme === 'dark');
+          
+          themeOptions.forEach(opt => opt.classList.remove('active'));
+          option.classList.add('active');
+        });
+      });
+      
+      // Language switching
+      const languageOptions = document.querySelectorAll('.language-option');
+      
+      languageOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          const lang = option.dataset.lang;
+          window.userRequestedLanguageChange = true;
+          
+          if (lang === 'en') {
+            if (window.location.hash.includes('googtrans')) {
+              window.location.href = window.location.pathname;
+            }
+          } else {
+            // Trigger Google Translate
+            if (typeof google !== 'undefined' && google.translate) {
+              const selectElement = document.querySelector('#google_translate_element select');
+              if (selectElement) {
+                selectElement.value = lang;
+                selectElement.dispatchEvent(new Event('change'));
+              }
+            }
+          }
+        });
+      });
+      
+      // Mobile nav toggle
+      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+      const sidebarNav = document.querySelector('.sidebar-nav');
+      
+      mobileNavToggle.addEventListener('click', () => {
+        sidebarNav.style.display = sidebarNav.style.display === 'none' ? 'block' : 'none';
+      });
+    </script>
+    
+    <!-- i18n Helper -->
+    <script src="{{ '/assets/js/i18n-helper.js' | relative_url }}"></script>
+  </body>
+</html>

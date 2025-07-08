@@ -1,0 +1,204 @@
+// Modern utilities and components inspired by Braver
+
+// Button styles
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: transparent;
+  color: #4b5563;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s;
+  
+  &:hover {
+    background: #f3f4f6;
+    color: #111827;
+  }
+  
+  i {
+    font-size: 14px;
+  }
+}
+
+.settings-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &:hover {
+    background: #f3f4f6;
+    color: #111827;
+  }
+  
+  i {
+    font-size: 20px;
+  }
+}
+
+// Settings dropdown
+.settings-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  min-width: 240px;
+  z-index: 100;
+  
+  .settings-section {
+    padding: 16px;
+    border-bottom: 1px solid #f3f4f6;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    .settings-heading {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin: 0 0 12px 0;
+      letter-spacing: 0.05em;
+    }
+  }
+  
+  .theme-options {
+    display: flex;
+    gap: 8px;
+    
+    .theme-option {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.15s;
+      
+      &:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      
+      &.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+      
+      i {
+        font-size: 16px;
+      }
+    }
+  }
+  
+  .language-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    
+    .language-option {
+      padding: 8px 12px;
+      background: transparent;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: left;
+      
+      &:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+      
+      &.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+    }
+  }
+}
+
+// Responsive utilities
+@media (max-width: 768px) {
+  .modern-docs {
+    .modern-header {
+      .header-search {
+        display: none;
+      }
+      
+      .brand span {
+        display: none;
+      }
+    }
+    
+    .modern-sidebar {
+      .sidebar-nav {
+        display: none;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #F0EEE7;
+        padding: 16px;
+        overflow-y: auto;
+        z-index: 40;
+      }
+    }
+  }
+}
+
+// Skip link for accessibility
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #4f46e5;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+  
+  &:focus {
+    top: 0;
+  }
+}
+
+// Ensure proper body styling
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F0EEE7;
+}
+
+// Reset button styles
+button {
+  font-family: inherit;
+  font-size: inherit;
+}

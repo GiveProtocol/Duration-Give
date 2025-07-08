@@ -32,13 +32,13 @@ defaults:
       path: ""
       type: "pages"
     values:
-      layout: "default"
+      layout: "modern"
       nav_exclude: false
   - scope:
       path: ""
       type: "guides"
     values:
-      layout: "guide"
+      layout: "modern"
 
 # Navigation
 nav_title: "Give Protocol"
