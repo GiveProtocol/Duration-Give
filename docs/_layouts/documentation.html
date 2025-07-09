@@ -24,10 +24,13 @@
     
     <style>
         /* Immediate styles to prevent layout shift */
-        body { font-family: 'Inter', sans-serif; background: #f0eee7; margin: 0; }
-        .docs-header { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 1rem 0; position: sticky; top: 0; z-index: 50; }
+        body { font-family: 'Inter', sans-serif; background: #f0eee7; margin: 0; transition: background-color 0.3s ease, color 0.3s ease; }
+        body.dark-mode { background: #0f172a; color: #f1f5f9; }
+        .docs-header { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 1rem 0; position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        body.dark-mode .docs-header { background: #1e293b; border-bottom-color: #334155; }
         .docs-container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; }
-        .docs-brand { display: flex; align-items: center; gap: 0.75rem; font-size: 1.125rem; font-weight: 600; color: #111827; text-decoration: none; }
+        .docs-brand { display: flex; align-items: center; gap: 0.75rem; font-size: 1.125rem; font-weight: 600; color: #111827; text-decoration: none; transition: color 0.3s ease; }
+        body.dark-mode .docs-brand { color: #f1f5f9; }
         .docs-search { flex: 1; max-width: 400px; margin: 0 2rem; position: relative; }
         .docs-search input { width: 100%; padding: 0.5rem 1rem 0.5rem 2.5rem; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.875rem; }
         .docs-search input:focus { outline: none; background: #fff; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
@@ -84,9 +87,7 @@
     <header class="docs-header">
         <div class="docs-container">
             <a href="{{ '/' | relative_url }}" class="docs-brand">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 6L9 17l-5-5"/>
-                </svg>
+                <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Give Protocol" width="32" height="32">
                 <span>Give Protocol Docs</span>
             </a>
             

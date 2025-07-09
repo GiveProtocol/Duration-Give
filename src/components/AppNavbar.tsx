@@ -125,8 +125,6 @@ export const AppNavbar: React.FC = () => {
                   </Link>
                   <a
                     href={DOCS_CONFIG.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-700 hover:bg-primary-50`}
                   >
                     <span>{t('nav.docs')}</span>
@@ -245,8 +243,6 @@ export const AppNavbar: React.FC = () => {
                 </Link>
                 <a
                   href={DOCS_CONFIG.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-primary-50"
                   onClick={() => setIsMenuOpen(false)}
                 >

@@ -27,8 +27,6 @@ export const Footer: React.FC = () => {
                 <li>
                   <a 
                     href={DOCS_CONFIG.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="text-gray-600 hover:text-gray-900"
                   >
                     Documentation & FAQ
