@@ -1,395 +1,799 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
-    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}
+    </title>
+    <meta
+      name="description"
+      content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"
+    />
+
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/favicon/apple-touch-icon.png' | relative_url }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/favicon/favicon-32x32.png' | relative_url }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/favicon/favicon-16x16.png' | relative_url }}">
-    
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ '/assets/favicon/apple-touch-icon.png' | relative_url }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ '/assets/favicon/favicon-32x32.png' | relative_url }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ '/assets/favicon/favicon-16x16.png' | relative_url }}"
+    />
+
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-    
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+    />
+
     <style>
-        /* Immediate styles to prevent layout shift */
-        body { font-family: 'Inter', sans-serif; background: #f0eee7; margin: 0; }
-        .docs-header { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 1rem 0; position: sticky; top: 0; z-index: 50; }
-        .docs-container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; }
-        .docs-brand { display: flex; align-items: center; gap: 0.75rem; font-size: 1.125rem; font-weight: 600; color: #111827; text-decoration: none; }
-        .docs-search { flex: 1; max-width: 400px; margin: 0 2rem; position: relative; }
-        .docs-search input { width: 100%; padding: 0.5rem 1rem 0.5rem 2.5rem; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.875rem; }
-        .docs-search input:focus { outline: none; background: #fff; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
-        .docs-search-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #6b7280; }
-        .docs-actions { display: flex; align-items: center; gap: 1rem; }
-        .docs-btn { padding: 0.5rem 1rem; background: transparent; color: #4b5563; text-decoration: none; font-size: 0.875rem; font-weight: 500; border-radius: 0.5rem; transition: all 0.2s; }
-        .docs-btn:hover { background: #f3f4f6; color: #111827; }
-        .docs-settings { position: relative; }
-        .docs-settings-btn { width: 2.5rem; height: 2.5rem; background: transparent; border: none; border-radius: 0.5rem; color: #6b7280; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-        .docs-settings-btn:hover { background: #f3f4f6; color: #111827; }
-        .docs-settings-menu { position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: #fff; border-radius: 0.75rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border: 1px solid #e5e7eb; min-width: 240px; z-index: 100; display: none; }
-        .docs-settings-section { padding: 1rem; border-bottom: 1px solid #f3f4f6; }
-        .docs-settings-section:last-child { border-bottom: none; }
-        .docs-settings-heading { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #6b7280; margin: 0 0 0.75rem 0; letter-spacing: 0.05em; }
-        .docs-theme-options { display: flex; gap: 0.5rem; }
-        .docs-theme-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.375rem; padding: 0.5rem; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.375rem; font-size: 0.875rem; color: #374151; cursor: pointer; transition: all 0.15s; }
-        .docs-theme-btn:hover { background: #f3f4f6; border-color: #d1d5db; }
-        .docs-theme-btn.active { background: #eef2ff; border-color: #6366f1; color: #4f46e5; }
-        .docs-lang-options { display: flex; flex-direction: column; gap: 0.25rem; }
-        .docs-lang-btn { padding: 0.5rem 0.75rem; background: transparent; border: 1px solid #e5e7eb; border-radius: 0.375rem; font-size: 0.875rem; color: #374151; cursor: pointer; transition: all 0.15s; text-align: left; }
-        .docs-lang-btn:hover { background: #f9fafb; border-color: #d1d5db; }
-        .docs-lang-btn.active { background: #eef2ff; border-color: #6366f1; color: #4f46e5; font-weight: 500; }
-        .docs-main { display: flex; max-width: 1280px; margin: 0 auto; padding: 1.5rem; gap: 2rem; }
-        .docs-sidebar { width: 280px; flex-shrink: 0; position: sticky; top: 5.5rem; height: fit-content; }
-        .docs-nav-section { background: #fff; border-radius: 0.75rem; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
-        .docs-nav-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #6b7280; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
-        .docs-nav-list { list-style: none; padding: 0; margin: 0; }
-        .docs-nav-item { margin-bottom: 0.25rem; }
-        .docs-nav-link { display: block; padding: 0.5rem 0.75rem; color: #374151; text-decoration: none; border-radius: 0.375rem; font-size: 0.875rem; transition: all 0.15s; }
-        .docs-nav-link:hover { background: #f3f4f6; color: #111827; }
-        .docs-nav-link.active { background: #eef2ff; color: #4f46e5; font-weight: 500; }
-        .docs-content { flex: 1; min-width: 0; }
-        .docs-article { background: #fff; border-radius: 0.75rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
-        .docs-search-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 1000; display: none; }
-        .docs-search-overlay.active { display: block; }
-        .docs-search-results { max-width: 600px; margin: 6rem auto 2rem; background: #fff; border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); max-height: calc(100vh - 8rem); overflow-y: auto; }
-        .docs-search-header { padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
-        .docs-search-close { padding: 0.25rem; color: #6b7280; cursor: pointer; }
-        .docs-search-list { padding: 0; margin: 0; }
-        .docs-search-item { padding: 1rem 1.5rem; border-bottom: 1px solid #f3f4f6; cursor: pointer; }
-        .docs-search-item:hover { background: #f9fafb; }
-        .docs-search-item:last-child { border-bottom: none; }
-        .docs-result-title { font-size: 1rem; font-weight: 500; color: #111827; margin-bottom: 0.25rem; }
-        .docs-result-excerpt { font-size: 0.875rem; color: #6b7280; line-height: 1.4; }
-        @media (max-width: 768px) {
-            .docs-search { display: none; }
-            .docs-main { flex-direction: column; padding: 1rem; }
-            .docs-sidebar { position: static; width: 100%; }
+      /* Immediate styles to prevent layout shift */
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0eee7;
+        margin: 0;
+      }
+      .docs-header {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+      .docs-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .docs-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+        text-decoration: none;
+      }
+      .docs-search {
+        flex: 1;
+        max-width: 400px;
+        margin: 0 2rem;
+        position: relative;
+      }
+      .docs-search input {
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+      }
+      .docs-search input:focus {
+        outline: none;
+        background: #fff;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+      .docs-search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+      }
+      .docs-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .docs-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: #4b5563;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      .docs-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      .docs-settings {
+        position: relative;
+      }
+      .docs-settings-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .docs-settings-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      .docs-settings-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        min-width: 240px;
+        z-index: 100;
+        display: none;
+      }
+      .docs-settings-section {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      .docs-settings-section:last-child {
+        border-bottom: none;
+      }
+      .docs-settings-heading {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: 0.05em;
+      }
+      .docs-theme-options {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .docs-theme-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        padding: 0.5rem;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .docs-theme-btn:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      .docs-theme-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+      .docs-lang-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .docs-lang-btn {
+        padding: 0.5rem 0.75rem;
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: left;
+      }
+      .docs-lang-btn:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+      .docs-lang-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      .docs-main {
+        display: flex;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        gap: 2rem;
+      }
+      .docs-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 5.5rem;
+        height: fit-content;
+      }
+      .docs-nav-section {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+      .docs-nav-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.05em;
+      }
+      .docs-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .docs-nav-item {
+        margin-bottom: 0.25rem;
+      }
+      .docs-nav-link {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        color: #374151;
+        text-decoration: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+      }
+      .docs-nav-link:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      .docs-nav-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      .docs-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .docs-article {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+      .docs-search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: none;
+      }
+      .docs-search-overlay.active {
+        display: block;
+      }
+      .docs-search-results {
+        max-width: 600px;
+        margin: 6rem auto 2rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+      }
+      .docs-search-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .docs-search-close {
+        padding: 0.25rem;
+        color: #6b7280;
+        cursor: pointer;
+      }
+      .docs-search-list {
+        padding: 0;
+        margin: 0;
+      }
+      .docs-search-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        cursor: pointer;
+      }
+      .docs-search-item:hover {
+        background: #f9fafb;
+      }
+      .docs-search-item:last-child {
+        border-bottom: none;
+      }
+      .docs-result-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #111827;
+        margin-bottom: 0.25rem;
+      }
+      .docs-result-excerpt {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.4;
+      }
+      @media (max-width: 768px) {
+        .docs-search {
+          display: none;
         }
+        .docs-main {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .docs-sidebar {
+          position: static;
+          width: 100%;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Header -->
     <header class="docs-header">
-        <div class="docs-container">
-            <a href="{{ '/' | relative_url }}" class="docs-brand">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 6L9 17l-5-5"/>
-                </svg>
-                <span>Give Protocol Docs</span>
-            </a>
-            
-            <div class="docs-search">
-                <svg class="docs-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.35-4.35"/>
-                </svg>
-                <input type="text" id="search-input" placeholder="Search documentation...">
-            </div>
-            
-            <div class="docs-actions">
-                <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
-                
-                <div class="docs-settings">
-                    <button class="docs-settings-btn" id="settings-toggle">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 1v6m0 6v6"/>
-                            <path d="m21 12-6-6-6 6"/>
-                        </svg>
-                    </button>
-                    
-                    <div class="docs-settings-menu" id="settings-menu">
-                        <div class="docs-settings-section">
-                            <h4 class="docs-settings-heading">Theme</h4>
-                            <div class="docs-theme-options">
-                                <button class="docs-theme-btn active" data-theme="light">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="5"/>
-                                        <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                                    </svg>
-                                    Light
-                                </button>
-                                <button class="docs-theme-btn" data-theme="dark">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-                                    </svg>
-                                    Dark
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="docs-settings-section">
-                            <h4 class="docs-settings-heading">Language</h4>
-                            <div class="docs-lang-options">
-                                <button class="docs-lang-btn active" data-lang="en">🇺🇸 English</button>
-                                <button class="docs-lang-btn" data-lang="es">🇪🇸 Español</button>
-                                <button class="docs-lang-btn" data-lang="de">🇩🇪 Deutsch</button>
-                                <button class="docs-lang-btn" data-lang="fr">🇫🇷 Français</button>
-                                <button class="docs-lang-btn" data-lang="ja">🇯🇵 日本語</button>
-                                <button class="docs-lang-btn" data-lang="zh-CN">🇨🇳 简体中文</button>
-                                <button class="docs-lang-btn" data-lang="ko">🇰🇷 한국어</button>
-                                <button class="docs-lang-btn" data-lang="ar">🇸🇦 العربية</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="docs-container">
+        <a href="{{ '/' | relative_url }}" class="docs-brand">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 6L9 17l-5-5" />
+          </svg>
+          <span>Give Protocol Docs</span>
+        </a>
+
+        <div class="docs-search">
+          <svg
+            class="docs-search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search documentation..."
+          />
         </div>
+
+        <div class="docs-actions">
+          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
+
+          <div class="docs-settings">
+            <button class="docs-settings-btn" id="settings-toggle">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 1v6m0 6v6" />
+                <path d="m21 12-6-6-6 6" />
+              </svg>
+            </button>
+
+            <div class="docs-settings-menu" id="settings-menu">
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Theme</h4>
+                <div class="docs-theme-options">
+                  <button class="docs-theme-btn active" data-theme="light">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <path
+                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                      />
+                    </svg>
+                    Light
+                  </button>
+                  <button class="docs-theme-btn" data-theme="dark">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Language</h4>
+                <div class="docs-lang-options">
+                  <button class="docs-lang-btn active" data-lang="en">
+                    🇺🇸 English
+                  </button>
+                  <button class="docs-lang-btn" data-lang="es">
+                    🇪🇸 Español
+                  </button>
+                  <button class="docs-lang-btn" data-lang="de">
+                    🇩🇪 Deutsch
+                  </button>
+                  <button class="docs-lang-btn" data-lang="fr">
+                    🇫🇷 Français
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ja">
+                    🇯🇵 日本語
+                  </button>
+                  <button class="docs-lang-btn" data-lang="zh-CN">
+                    🇨🇳 简体中文
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ko">
+                    🇰🇷 한국어
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ar">
+                    🇸🇦 العربية
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
-    
+
     <!-- Main Content -->
     <main class="docs-main">
-        <!-- Sidebar -->
-        <aside class="docs-sidebar">
-            <div class="docs-nav-section">
-                <h3 class="docs-nav-title">Getting Started</h3>
-                <ul class="docs-nav-list">
-                    <li class="docs-nav-item">
-                        <a href="{{ '/introduction/what-is-give-protocol/' | relative_url }}" class="docs-nav-link {% if page.url contains 'what-is-give-protocol' %}active{% endif %}">
-                            What is Give Protocol?
-                        </a>
-                    </li>
-                    <li class="docs-nav-item">
-                        <a href="{{ '/getting-started/creating-account/' | relative_url }}" class="docs-nav-link {% if page.url contains 'creating-account' %}active{% endif %}">
-                            Creating Account
-                        </a>
-                    </li>
-                    <li class="docs-nav-item">
-                        <a href="{{ '/getting-started/wallet-connection/' | relative_url }}" class="docs-nav-link {% if page.url contains 'wallet-connection' %}active{% endif %}">
-                            Wallet Connection
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="docs-nav-section">
-                <h3 class="docs-nav-title">User Guides</h3>
-                <ul class="docs-nav-list">
-                    <li class="docs-nav-item">
-                        <a href="{{ '/user-guides/donors/' | relative_url }}" class="docs-nav-link {% if page.url contains 'donors' %}active{% endif %}">
-                            For Donors
-                        </a>
-                    </li>
-                    <li class="docs-nav-item">
-                        <a href="{{ '/user-guides/organizations/' | relative_url }}" class="docs-nav-link {% if page.url contains 'organizations' %}active{% endif %}">
-                            For Organizations
-                        </a>
-                    </li>
-                    <li class="docs-nav-item">
-                        <a href="{{ '/user-guides/volunteers/' | relative_url }}" class="docs-nav-link {% if page.url contains 'volunteers' %}active{% endif %}">
-                            For Volunteers
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="docs-nav-section">
-                <h3 class="docs-nav-title">Help & Support</h3>
-                <ul class="docs-nav-list">
-                    <li class="docs-nav-item">
-                        <a href="{{ '/help-center/faq/' | relative_url }}" class="docs-nav-link {% if page.url contains 'faq' %}active{% endif %}">
-                            FAQ
-                        </a>
-                    </li>
-                    <li class="docs-nav-item">
-                        <a href="{{ '/help-center/need-help/' | relative_url }}" class="docs-nav-link {% if page.url contains 'need-help' %}active{% endif %}">
-                            Need Help?
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </aside>
-        
-        <!-- Content -->
-        <div class="docs-content">
-            <article class="docs-article">
-                {{ content }}
-            </article>
+      <!-- Sidebar -->
+      <aside class="docs-sidebar">
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Getting Started</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="{{ '/introduction/what-is-give-protocol/' | relative_url }}"
+                class="docs-nav-link {% if page.url contains 'what-is-give-protocol' %}active{% endif %}"
+              >
+                What is Give Protocol?
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="{{ '/getting-started/creating-account/' | relative_url }}"
+                class="docs-nav-link {% if page.url contains 'creating-account' %}active{% endif %}"
+              >
+                Creating Account
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="{{ '/getting-started/wallet-connection/' | relative_url }}"
+                class="docs-nav-link {% if page.url contains 'wallet-connection' %}active{% endif %}"
+              >
+                Wallet Connection
+              </a>
+            </li>
+          </ul>
         </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">User Guides</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="{{ '/user-guides/donors/' | relative_url }}"
+                class="docs-nav-link {% if page.url contains 'donors' %}active{% endif %}"
+              >
+                For Donors
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="{{ '/user-guides/organizations/' | relative_url }}"
+                class="docs-nav-link {% if page.url contains 'organizations' %}active{% endif %}"
+              >
+                For Organizations
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="{{ '/user-guides/volunteers/' | relative_url }}"
+                class="docs-nav-link {% if page.url contains 'volunteers' %}active{% endif %}"
+              >
+                For Volunteers
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Help & Support</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="{{ '/help-center/faq/' | relative_url }}"
+                class="docs-nav-link {% if page.url contains 'faq' %}active{% endif %}"
+              >
+                FAQ
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="{{ '/help-center/need-help/' | relative_url }}"
+                class="docs-nav-link {% if page.url contains 'need-help' %}active{% endif %}"
+              >
+                Need Help?
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <article class="docs-article">{{ content }}</article>
+      </div>
     </main>
-    
+
     <!-- Search Overlay -->
     <div class="docs-search-overlay" id="search-overlay">
-        <div class="docs-search-results">
-            <div class="docs-search-header">
-                <h3>Search Results</h3>
-                <button class="docs-search-close" id="search-close">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 6L6 18M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="docs-search-list" id="search-results"></div>
+      <div class="docs-search-results">
+        <div class="docs-search-header">
+          <h3>Search Results</h3>
+          <button class="docs-search-close" id="search-close">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
         </div>
+        <div class="docs-search-list" id="search-results"></div>
+      </div>
     </div>
-    
+
     <!-- Google Translate -->
-    <div id="google_translate_element" style="display: none;"></div>
-    
+    <div id="google_translate_element" style="display: none"></div>
+
     <!-- JavaScript -->
     <script>
-        // Settings dropdown
-        const settingsToggle = document.getElementById('settings-toggle');
-        const settingsMenu = document.getElementById('settings-menu');
-        
-        settingsToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+      // Settings dropdown
+      const settingsToggle = document.getElementById("settings-toggle");
+      const settingsMenu = document.getElementById("settings-menu");
+
+      settingsToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        settingsMenu.style.display =
+          settingsMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (
+          !settingsToggle.contains(e.target) &&
+          !settingsMenu.contains(e.target)
+        ) {
+          settingsMenu.style.display = "none";
+        }
+      });
+
+      // Theme switching
+      const themeButtons = document.querySelectorAll(".docs-theme-btn");
+      const savedTheme = localStorage.getItem("docs-theme") || "light";
+
+      document.body.classList.toggle("dark-mode", savedTheme === "dark");
+
+      themeButtons.forEach((button) => {
+        if (button.dataset.theme === savedTheme) {
+          button.classList.add("active");
+        }
+
+        button.addEventListener("click", function () {
+          const theme = this.dataset.theme;
+          localStorage.setItem("docs-theme", theme);
+          document.body.classList.toggle("dark-mode", theme === "dark");
+
+          themeButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
         });
-        
-        document.addEventListener('click', function(e) {
-            if (!settingsToggle.contains(e.target) && !settingsMenu.contains(e.target)) {
-                settingsMenu.style.display = 'none';
+      });
+
+      // Language switching
+      const langButtons = document.querySelectorAll(".docs-lang-btn");
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const lang = this.dataset.lang;
+
+          if (lang === "en") {
+            if (window.location.hash.includes("googtrans")) {
+              window.location.href = window.location.pathname;
             }
-        });
-        
-        // Theme switching
-        const themeButtons = document.querySelectorAll('.docs-theme-btn');
-        const savedTheme = localStorage.getItem('docs-theme') || 'light';
-        
-        document.body.classList.toggle('dark-mode', savedTheme === 'dark');
-        
-        themeButtons.forEach(button => {
-            if (button.dataset.theme === savedTheme) {
-                button.classList.add('active');
+          } else {
+            // Trigger Google Translate
+            if (typeof google !== "undefined" && google.translate) {
+              const selectElement = document.querySelector(
+                "#google_translate_element select",
+              );
+              if (selectElement) {
+                selectElement.value = lang;
+                selectElement.dispatchEvent(new Event("change"));
+              }
             }
-            
-            button.addEventListener('click', function() {
-                const theme = this.dataset.theme;
-                localStorage.setItem('docs-theme', theme);
-                document.body.classList.toggle('dark-mode', theme === 'dark');
-                
-                themeButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                settingsMenu.style.display = 'none';
-            });
+          }
+
+          langButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
         });
-        
-        // Language switching
-        const langButtons = document.querySelectorAll('.docs-lang-btn');
-        
-        langButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const lang = this.dataset.lang;
-                
-                if (lang === 'en') {
-                    if (window.location.hash.includes('googtrans')) {
-                        window.location.href = window.location.pathname;
-                    }
-                } else {
-                    // Trigger Google Translate
-                    if (typeof google !== 'undefined' && google.translate) {
-                        const selectElement = document.querySelector('#google_translate_element select');
-                        if (selectElement) {
-                            selectElement.value = lang;
-                            selectElement.dispatchEvent(new Event('change'));
-                        }
-                    }
-                }
-                
-                langButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                settingsMenu.style.display = 'none';
-            });
-        });
-        
-        // Simple search functionality
-        const searchInput = document.getElementById('search-input');
-        const searchOverlay = document.getElementById('search-overlay');
-        const searchResults = document.getElementById('search-results');
-        const searchClose = document.getElementById('search-close');
-        
-        let searchData = [];
-        
-        // Load search data
-        fetch('{{ "/search.json" | relative_url }}')
-            .then(response => response.json())
-            .then(data => {
-                searchData = data;
-            })
-            .catch(error => console.warn('Search data not available:', error));
-        
-        function performSearch(query) {
-            if (!query.trim()) {
-                searchOverlay.classList.remove('active');
-                return;
-            }
-            
-            const results = searchData.filter(item => {
-                const text = (item.title + ' ' + item.content).toLowerCase();
-                return text.includes(query.toLowerCase());
-            }).slice(0, 8);
-            
-            if (results.length === 0) {
-                searchResults.innerHTML = '<div class="docs-search-item">No results found</div>';
-            } else {
-                searchResults.innerHTML = results.map(result => `
+      });
+
+      // Simple search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("search-close");
+
+      let searchData = [];
+
+      // Load search data
+      fetch('{{ "/search.json" | relative_url }}')
+        .then((response) => response.json())
+        .then((data) => {
+          searchData = data;
+        })
+        .catch((error) => console.warn("Search data not available:", error));
+
+      function performSearch(query) {
+        if (!query.trim()) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        const results = searchData
+          .filter((item) => {
+            const text = (item.title + " " + item.content).toLowerCase();
+            return text.includes(query.toLowerCase());
+          })
+          .slice(0, 8);
+
+        if (results.length === 0) {
+          searchResults.innerHTML =
+            '<div class="docs-search-item">No results found</div>';
+        } else {
+          searchResults.innerHTML = results
+            .map(
+              (result) => `
                     <div class="docs-search-item" onclick="window.location.href='${result.url}'">
                         <div class="docs-result-title">${result.title}</div>
                         <div class="docs-result-excerpt">${result.content.substring(0, 150)}...</div>
                     </div>
-                `).join('');
-            }
-            
-            searchOverlay.classList.add('active');
+                `,
+            )
+            .join("");
         }
-        
-        searchInput.addEventListener('input', function() {
-            const query = this.value;
-            clearTimeout(this.searchTimeout);
-            this.searchTimeout = setTimeout(() => performSearch(query), 300);
-        });
-        
-        searchInput.addEventListener('focus', function() {
-            if (this.value.trim()) {
-                performSearch(this.value);
-            }
-        });
-        
-        searchClose.addEventListener('click', function() {
-            searchOverlay.classList.remove('active');
-            searchInput.value = '';
-        });
-        
-        searchOverlay.addEventListener('click', function(e) {
-            if (e.target === searchOverlay) {
-                searchOverlay.classList.remove('active');
-            }
-        });
-        
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                searchOverlay.classList.remove('active');
-            }
-        });
+
+        searchOverlay.classList.add("active");
+      }
+
+      searchInput.addEventListener("input", function () {
+        const query = this.value;
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => performSearch(query), 300);
+      });
+
+      searchInput.addEventListener("focus", function () {
+        if (this.value.trim()) {
+          performSearch(this.value);
+        }
+      });
+
+      searchClose.addEventListener("click", function () {
+        searchOverlay.classList.remove("active");
+        searchInput.value = "";
+      });
+
+      searchOverlay.addEventListener("click", function (e) {
+        if (e.target === searchOverlay) {
+          searchOverlay.classList.remove("active");
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
     </script>
-    
+
     <!-- Google Translate -->
     <script>
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</body>
+  </body>
 </html>
