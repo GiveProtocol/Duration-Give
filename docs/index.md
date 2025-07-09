@@ -1,6 +1,7 @@
 ---
 title: Documentation
 description: Complete documentation for Give Protocol
+layout: modern
 permalink: /
 ---
 
