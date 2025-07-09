@@ -544,9 +544,8 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
                 <circle cx="12" cy="12" r="3" />
-                <path d="M12 1v6m0 6v6" />
-                <path d="m21 12-6-6-6 6" />
               </svg>
             </button>
 
@@ -797,20 +796,28 @@
           const lang = this.dataset.lang;
 
           if (lang === "en") {
-            if (window.location.hash.includes("googtrans")) {
-              window.location.href = window.location.pathname;
-            }
+            // Clear translation
+            const url = window.location.pathname + window.location.search;
+            window.location.href = url;
           } else {
-            // Trigger Google Translate
-            if (typeof google !== "undefined" && google.translate) {
-              const selectElement = document.querySelector(
-                "#google_translate_element select",
-              );
-              if (selectElement) {
-                selectElement.value = lang;
-                selectElement.dispatchEvent(new Event("change"));
-              }
-            }
+            // Use hash-based translation trigger
+            let langCode = lang;
+            // Map language codes to Google Translate codes
+            const langMap = {
+              'zh-CN': 'zh-CN',
+              'ar': 'ar',
+              'ko': 'ko',
+              'ja': 'ja',
+              'es': 'es',
+              'de': 'de',
+              'fr': 'fr'
+            };
+            
+            langCode = langMap[lang] || lang;
+            
+            // Set hash to trigger translation
+            window.location.hash = `googtrans(en|${langCode})`;
+            window.location.reload();
           }
 
           langButtons.forEach((btn) => btn.classList.remove("active"));
@@ -830,11 +837,27 @@
 
       // Load search data
       fetch('{{ "/search.json" | relative_url }}')
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((data) => {
           searchData = data;
+          console.log(`Search data loaded: ${data.length} items`);
         })
-        .catch((error) => console.warn("Search data not available:", error));
+        .catch((error) => {
+          console.error("Search data loading error:", error);
+          // Fallback: Try to search through visible navigation links
+          const navLinks = document.querySelectorAll('.docs-nav-link');
+          searchData = Array.from(navLinks).map(link => ({
+            title: link.textContent.trim(),
+            url: link.getAttribute('href'),
+            content: link.textContent.trim()
+          }));
+          console.log(`Using fallback search data: ${searchData.length} items`);
+        });
 
       function performSearch(query) {
         if (!query.trim()) {
@@ -895,6 +918,23 @@
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") {
           searchOverlay.classList.remove("active");
+        }
+      });
+      // Check for active language on page load
+      window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash.includes('googtrans')) {
+          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
+          if (match && match[1]) {
+            const activeLang = match[1];
+            langButtons.forEach((btn) => {
+              if (btn.dataset.lang === activeLang) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+          }
         }
       });
     </script>
