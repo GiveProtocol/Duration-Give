@@ -53,12 +53,6 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.294.0/font/lucide.min.css" />
     
-    <!-- Lunr.js for enhanced search -->
-    <script src="https://unpkg.com/lunr/lunr.min.js"></script>
-    
-    <!-- Enhanced Search JavaScript -->
-    <script src="{{ '/assets/js/lunr-search.js' | relative_url }}"></script>
-    
     <!-- Google Translate -->
     <script type="text/javascript">
       function googleTranslateElementInit() {
@@ -396,6 +390,11 @@
       const settingsToggle = document.querySelector('.settings-toggle');
       const settingsDropdown = document.querySelector('.settings-dropdown');
       
+      console.log('Settings elements found:', {
+        toggle: !!settingsToggle,
+        dropdown: !!settingsDropdown
+      });
+      
       function toggleSettingsDropdown() {
         const isVisible = settingsDropdown.style.display === 'block';
         settingsDropdown.style.display = isVisible ? 'none' : 'block';
@@ -514,6 +513,10 @@
       });
     </script>
 
+    <!-- Search Scripts -->
+    <script src="https://unpkg.com/lunr/lunr.min.js"></script>
+    <script src="{{ '/assets/js/lunr-search.js' | relative_url }}"></script>
+    
     <!-- i18n Helper -->
     <script src="{{ '/assets/js/i18n-helper.js' | relative_url }}"></script>
   </body>

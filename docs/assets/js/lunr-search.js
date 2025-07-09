@@ -9,6 +9,7 @@
 
   // Initialize search when DOM is ready
   document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing search...');
     initializeSearch();
   });
 
