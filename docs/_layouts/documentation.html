@@ -53,7 +53,9 @@
         font-family: "Inter", sans-serif;
         background: #f0eee7;
         margin: 0;
-        transition: background-color 0.3s ease, color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
       }
       body.dark-mode {
         background: #0f172a;
@@ -66,7 +68,9 @@
         position: sticky;
         top: 0;
         z-index: 50;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
       }
       body.dark-mode .docs-header {
         background: #1e293b;
@@ -106,7 +110,9 @@
         border: 1px solid #d1d5db;
         border-radius: 0.5rem;
         font-size: 0.875rem;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
       }
       body.dark-mode .docs-search input {
         background: #374151;
@@ -199,7 +205,9 @@
         min-width: 240px;
         z-index: 100;
         display: none;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
       }
       body.dark-mode .docs-settings-menu {
         background: #1e293b;
@@ -503,7 +511,12 @@
     <header class="docs-header">
       <div class="docs-container">
         <a href="{{ '/' | relative_url }}" class="docs-brand">
-          <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Give Protocol" width="32" height="32">
+          <img
+            src="{{ '/assets/images/logo.svg' | relative_url }}"
+            alt="Give Protocol"
+            width="32"
+            height="32"
+          />
           <span>Give Protocol Docs</span>
         </a>
 
