@@ -829,12 +829,13 @@
         // Don't auto-translate on page load to prevent refresh loops
         if (window.userRequestedLanguageChange) {
           console.log("User requested language change to:", lang); // Debug log
-          
+
           if (lang === "en") {
             // Reset to original English without refresh
             if (window.location.hash.includes("googtrans")) {
               console.log("Resetting to English"); // Debug log
-              window.location.href = window.location.pathname + window.location.search;
+              window.location.href =
+                window.location.pathname + window.location.search;
             }
           } else {
             // Use Google Translate API to change language
@@ -857,13 +858,16 @@
             if (targetLang === "en") {
               // Reset to original English
               if (window.location.hash.includes("googtrans")) {
-                window.location.href = window.location.pathname + window.location.search;
+                window.location.href =
+                  window.location.pathname + window.location.search;
                 return;
               }
             } else {
               // Use Google Translate hash to trigger translation
-              const currentUrl = window.location.pathname + window.location.search;
-              window.location.href = currentUrl + "#googtrans(en|" + targetLang + ")";
+              const currentUrl =
+                window.location.pathname + window.location.search;
+              window.location.href =
+                currentUrl + "#googtrans(en|" + targetLang + ")";
               return;
             }
           } catch (e) {
@@ -872,7 +876,9 @@
 
           // Method 2: Try to find and trigger the select element
           try {
-            const selectElement = document.querySelector("#google_translate_element select");
+            const selectElement = document.querySelector(
+              "#google_translate_element select",
+            );
             if (selectElement) {
               selectElement.value = targetLang;
               selectElement.dispatchEvent(new Event("change"));
@@ -887,8 +893,11 @@
             try {
               const iframe = document.querySelector(".goog-te-menu-frame");
               if (iframe) {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                const langLink = iframeDoc.querySelector(`[data-value="${targetLang}"]`);
+                const iframeDoc =
+                  iframe.contentDocument || iframe.contentWindow.document;
+                const langLink = iframeDoc.querySelector(
+                  `[data-value="${targetLang}"]`,
+                );
                 if (langLink) {
                   langLink.click();
                   return;
@@ -899,8 +908,10 @@
             }
 
             // Final fallback: Force reload with hash
-            const currentUrl = window.location.pathname + window.location.search;
-            window.location.href = currentUrl + "#googtrans(en|" + targetLang + ")";
+            const currentUrl =
+              window.location.pathname + window.location.search;
+            window.location.href =
+              currentUrl + "#googtrans(en|" + targetLang + ")";
           }, 500);
         } else {
           // Google Translate not loaded yet, wait and retry (max 3 attempts)
@@ -916,11 +927,13 @@
             console.warn(
               "Google Translate failed to load after",
               maxRetries,
-              "attempts"
+              "attempts",
             );
             // Final fallback even if Google Translate isn't loaded
-            const currentUrl = window.location.pathname + window.location.search;
-            window.location.href = currentUrl + "#googtrans(en|" + targetLang + ")";
+            const currentUrl =
+              window.location.pathname + window.location.search;
+            window.location.href =
+              currentUrl + "#googtrans(en|" + targetLang + ")";
           }
         }
       }
@@ -1051,13 +1064,15 @@
               limit: 10,
               fuzzy: false,
               exclude: ["Welcome"],
-              success: function(data) {
+              success: function (data) {
                 console.log("Search data loaded successfully:", data);
               },
-              error: function(xhr, status, error) {
+              error: function (xhr, status, error) {
                 console.error("Search data loading failed:", error);
-                console.log("Make sure the site is built and search.json is generated");
-              }
+                console.log(
+                  "Make sure the site is built and search.json is generated",
+                );
+              },
             });
           } else {
             console.error("SimpleJekyllSearch not available");
