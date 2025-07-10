@@ -823,17 +823,22 @@
       function applyLanguage(lang) {
         // Save preference
         localStorage.setItem("docs-language", lang);
+        console.log("Applying language:", lang); // Debug log
 
         // Only trigger translation if user explicitly changed language
         // Don't auto-translate on page load to prevent refresh loops
         if (window.userRequestedLanguageChange) {
+          console.log("User requested language change to:", lang); // Debug log
+          
           if (lang === "en") {
             // Reset to original English without refresh
             if (window.location.hash.includes("googtrans")) {
-              window.location.href = window.location.pathname;
+              console.log("Resetting to English"); // Debug log
+              window.location.href = window.location.pathname + window.location.search;
             }
           } else {
             // Use Google Translate API to change language
+            console.log("Triggering Google Translate for:", lang); // Debug log
             triggerGoogleTranslate(lang);
           }
           window.userRequestedLanguageChange = false;
@@ -848,53 +853,54 @@
           google.translate.TranslateElement
         ) {
           try {
-            // Get the translate element - check if getInstance method exists
-            const translateElement = google.translate.TranslateElement
-              .getInstance
-              ? google.translate.TranslateElement.getInstance()
-              : null;
-
-            if (translateElement) {
-              // Find the language selector in the Google Translate widget
-              const selectElement = document.querySelector(
-                "#google_translate_element select",
-              );
-              if (selectElement) {
-                // Set the value to trigger translation
-                selectElement.value = targetLang;
-                selectElement.dispatchEvent(new Event("change"));
+            // Method 1: Try to use the URL hash method first as it's most reliable
+            if (targetLang === "en") {
+              // Reset to original English
+              if (window.location.hash.includes("googtrans")) {
+                window.location.href = window.location.pathname + window.location.search;
                 return;
               }
+            } else {
+              // Use Google Translate hash to trigger translation
+              const currentUrl = window.location.pathname + window.location.search;
+              window.location.href = currentUrl + "#googtrans(en|" + targetLang + ")";
+              return;
             }
           } catch (e) {
-            console.warn(
-              "Google Translate not ready, trying alternative method",
-            );
+            console.warn("Google Translate hash method failed", e);
           }
 
-          // If translate element isn't ready, try a different approach
+          // Method 2: Try to find and trigger the select element
+          try {
+            const selectElement = document.querySelector("#google_translate_element select");
+            if (selectElement) {
+              selectElement.value = targetLang;
+              selectElement.dispatchEvent(new Event("change"));
+              return;
+            }
+          } catch (e) {
+            console.warn("Select element method failed", e);
+          }
+
+          // Method 3: Try the iframe method with better error handling
           setTimeout(() => {
             try {
               const iframe = document.querySelector(".goog-te-menu-frame");
               if (iframe) {
-                const iframeDoc =
-                  iframe.contentDocument || iframe.contentWindow.document;
-                const langLink = iframeDoc.querySelector(
-                  `[data-value="${targetLang}"]`,
-                );
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                const langLink = iframeDoc.querySelector(`[data-value="${targetLang}"]`);
                 if (langLink) {
                   langLink.click();
                   return;
                 }
               }
             } catch (e) {
-              console.warn("Alternative translation method failed", e);
+              console.warn("Iframe method failed (likely cross-origin)", e);
             }
 
-            // Final fallback: reload page with Google Translate hash
-            window.location.href =
-              window.location.pathname + "#googtrans(en|" + targetLang + ")";
-            window.location.reload();
+            // Final fallback: Force reload with hash
+            const currentUrl = window.location.pathname + window.location.search;
+            window.location.href = currentUrl + "#googtrans(en|" + targetLang + ")";
           }, 500);
         } else {
           // Google Translate not loaded yet, wait and retry (max 3 attempts)
@@ -910,8 +916,11 @@
             console.warn(
               "Google Translate failed to load after",
               maxRetries,
-              "attempts",
+              "attempts"
             );
+            // Final fallback even if Google Translate isn't loaded
+            const currentUrl = window.location.pathname + window.location.search;
+            window.location.href = currentUrl + "#googtrans(en|" + targetLang + ")";
           }
         }
       }
@@ -987,6 +996,7 @@
         document.querySelectorAll(".language-option").forEach((option) => {
           option.addEventListener("click", function () {
             const lang = this.dataset.lang;
+            console.log("Language selected:", lang); // Debug log
             window.userRequestedLanguageChange = true;
             applyLanguage(lang);
             updateSettingsUI();
@@ -1026,20 +1036,36 @@
         });
 
         // Initialize search functionality
-        if (window.SimpleJekyllSearch) {
-          window.simpleJekyllSearch = SimpleJekyllSearch({
-            searchInput: document.getElementById("search-input"),
-            resultsContainer: document.getElementById("search-results"),
-            json: '{{ "/search.json" | relative_url }}',
-            searchResultTemplate:
-              '<div class="search-result" data-translate="yes"><a href="{url}" class="result-link"><div class="result-title" data-translate="yes">{title}</div><div class="result-excerpt" data-translate="yes">{content}</div></a></div>',
-            noResultsText:
-              '<div class="search-no-results">No results found</div>',
-            limit: 10,
-            fuzzy: false,
-            exclude: ["Welcome"],
-          });
+        function initializeSearch(jsonUrl) {
+          if (window.SimpleJekyllSearch) {
+            console.log("Initializing SimpleJekyllSearch with JSON:", jsonUrl);
+            window.simpleJekyllSearch = SimpleJekyllSearch({
+              searchInput: document.getElementById("search-input"),
+              resultsContainer: document.getElementById("search-results"),
+              json: jsonUrl,
+              searchResultTemplate:
+                '<div class="search-result" data-translate="yes"><a href="{url}" class="result-link"><div class="result-title" data-translate="yes">{title}</div><div class="result-excerpt" data-translate="yes">{content}</div></a></div>',
+              middleOfWord: true,
+              noResultsText:
+                '<div class="search-no-results">No results found</div>',
+              limit: 10,
+              fuzzy: false,
+              exclude: ["Welcome"],
+              success: function(data) {
+                console.log("Search data loaded successfully:", data);
+              },
+              error: function(xhr, status, error) {
+                console.error("Search data loading failed:", error);
+                console.log("Make sure the site is built and search.json is generated");
+              }
+            });
+          } else {
+            console.error("SimpleJekyllSearch not available");
+          }
         }
+
+        // Try to initialize search with main JSON file
+        initializeSearch('{{ "/search.json" | relative_url }}');
 
         // Handle search input focus/blur for results container
         const searchInput = document.getElementById("search-input");

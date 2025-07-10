@@ -483,6 +483,27 @@
       body.dark-mode .docs-result-excerpt {
         color: #d1d5db;
       }
+      .docs-result-category {
+        font-size: 0.75rem;
+        color: #6366f1;
+        font-weight: 500;
+        margin-top: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-category {
+        color: #c7d2fe;
+      }
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 500;
+      }
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
       @media (max-width: 768px) {
         .docs-search {
           display: none;
@@ -827,7 +848,7 @@
         });
       });
 
-      // Simple search functionality
+      // Enhanced search functionality
       const searchInput = document.getElementById("search-input");
       const searchOverlay = document.getElementById("search-overlay");
       const searchResults = document.getElementById("search-results");
@@ -835,8 +856,12 @@
 
       let searchData = [];
 
-      // Load search data
-      fetch('{{ "/search.json" | relative_url }}')
+      // Load search data - with fallback for non-Jekyll environments
+      const searchUrl = '{{ "/search.json" | relative_url }}' === '{{ "/search.json" | relative_url }}' 
+        ? './search.json'  // Fallback if Jekyll isn't processing
+        : '{{ "/search.json" | relative_url }}';
+      
+      fetch(searchUrl)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -845,19 +870,53 @@
         })
         .then((data) => {
           searchData = data;
-          console.log(`Search data loaded: ${data.length} items`);
+          // Search data loaded successfully
         })
         .catch((error) => {
-          console.error("Search data loading error:", error);
+          console.error("❌ Search data loading error:", error);
           // Fallback: Try to search through visible navigation links
           const navLinks = document.querySelectorAll('.docs-nav-link');
           searchData = Array.from(navLinks).map(link => ({
             title: link.textContent.trim(),
             url: link.getAttribute('href'),
-            content: link.textContent.trim()
+            content: link.textContent.trim(),
+            category: 'Navigation'
           }));
-          console.log(`Using fallback search data: ${searchData.length} items`);
+          // Using fallback search data from navigation
         });
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+        
+        let score = 0;
+        
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+        
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+        
+        // Multiple word matches
+        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
+        queryWords.forEach(word => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+        
+        return score;
+      }
 
       function performSearch(query) {
         if (!query.trim()) {
@@ -867,24 +926,37 @@
 
         const results = searchData
           .filter((item) => {
-            const text = (item.title + " " + item.content).toLowerCase();
+            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
             return text.includes(query.toLowerCase());
           })
+          .map(item => ({
+            ...item,
+            relevance: calculateRelevance(item, query)
+          }))
+          .sort((a, b) => b.relevance - a.relevance)
           .slice(0, 8);
 
         if (results.length === 0) {
-          searchResults.innerHTML =
-            '<div class="docs-search-item">No results found</div>';
+          searchResults.innerHTML = `
+            <div class="docs-search-item">
+              <div class="docs-result-title">No results found</div>
+              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
         } else {
           searchResults.innerHTML = results
-            .map(
-              (result) => `
-                    <div class="docs-search-item" onclick="window.location.href='${result.url}'">
-                        <div class="docs-result-title">${result.title}</div>
-                        <div class="docs-result-excerpt">${result.content.substring(0, 150)}...</div>
-                    </div>
-                `,
-            )
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+              
+              return `
+                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
+                  <div class="docs-result-title">${highlightedTitle}</div>
+                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                </div>
+              `;
+            })
             .join("");
         }
 
