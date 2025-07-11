@@ -36,7 +36,7 @@ export const Navbar: React.FC = () => {
               </Link>
               <a
                 href={DOCS_CONFIG.url}
-                className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-700 hover:bg-primary-50`}
+                className={"flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-700 hover:bg-primary-50"}
               >
                 {t('nav.docs')}
               </a>
