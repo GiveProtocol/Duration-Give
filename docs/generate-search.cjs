@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
@@ -64,7 +62,7 @@ function generateSearchData() {
         title: parsed.data.title || path.basename(filePath, '.md'),
         category: parsed.data.category || 'Documentation',
         tags: parsed.data.tags || '',
-        url: url,
+        url,
         date: parsed.data.date || new Date().toISOString(),
         content: parsed.content.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim()
       };
@@ -97,5 +95,5 @@ try {
   }
 } catch (error) {
   console.error('❌ Error generating search.json:', error.message);
-  process.exit(1);
+  throw error;
 }
