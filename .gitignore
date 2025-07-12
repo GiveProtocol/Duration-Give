@@ -24,9 +24,19 @@ dist-ssr
 *.sln
 *.sw?
 
-# Environment variables
+# Environment variables and secrets
 .env
 .env.*
+.env.local
+.env.production
+.env.staging
+!.env.example
+*.pem
+*.key
+*.p12
+*.p8
+secrets/
+config/secrets.json
 
 # Build artifacts
 coverage

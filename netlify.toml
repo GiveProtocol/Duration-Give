@@ -32,7 +32,7 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://etqbojasfmpieigeefdj.supabase.co https://*.sentry.io https://translate.google.com https://translate.googleapis.com; style-src 'self' 'unsafe-inline' https://translate.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://etqbojasfmpieigeefdj.supabase.co https://*.sentry.io wss://*.supabase.co https://api.giveprotocol.io https://*.ingest.sentry.io https://translate.googleapis.com; frame-src 'self' https://translate.google.com;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co https://*.sentry.io https://translate.google.com https://translate.googleapis.com; style-src 'self' 'unsafe-inline' https://translate.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co https://*.sentry.io wss://*.supabase.co https://api.giveprotocol.io https://*.ingest.sentry.io https://translate.googleapis.com; frame-src 'self' https://translate.google.com;"
 
 # Cache control for static assets
 [[headers]]
