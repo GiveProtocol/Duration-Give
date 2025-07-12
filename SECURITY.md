@@ -3,17 +3,20 @@
 ## Environment Variables
 
 ### Setup
+
 1. Copy `.env.example` to `.env`
 2. Fill in your actual values
 3. **NEVER commit `.env` files to git**
 
 ### Production Security
+
 - Use strong, unique credentials
 - Rotate keys regularly (every 90 days)
 - Use environment-specific configurations
 - Monitor access logs regularly
 
 ### Development Security
+
 - Use test accounts with minimal funds
 - Never use production keys in development
 - Use separate Supabase projects for dev/staging/prod
