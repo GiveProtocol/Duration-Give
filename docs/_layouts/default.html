@@ -118,7 +118,7 @@
     <div id="google_translate_element" style="display: none"></div>
 
     <div class="site">
-      <!-- Header -->
+      <!-- Header with same background color as page -->
       <header class="site-header" role="banner">
         <div class="header-content">
           <a
@@ -724,15 +724,18 @@
         </div>
       </main>
 
-      <!-- Footer -->
+      <!-- Footer with enhanced copyright and privacy links -->
       <footer class="site-footer" role="contentinfo">
         <div class="footer-content">
           <div class="footer-text">
-            {{ site.footer_content | default: "© 2025 Give Protocol. All rights
-            reserved." }}
+            © 2025 Give Protocol. All rights reserved. 
+            <span class="footer-divider">|</span>
+            Building transparent charitable giving on blockchain technology.
           </div>
           <nav class="footer-links" aria-label="Footer navigation">
             <a href="https://giveprotocol.io">Main Site</a>
+            <a href="https://giveprotocol.io/privacy">Privacy Policy</a>
+            <a href="https://giveprotocol.io/terms">Terms of Service</a>
             <a href="https://github.com/GiveProtocol/Duration-Give">GitHub</a>
           </nav>
         </div>
@@ -1107,5 +1110,280 @@
 
     <!-- i18n Helper for UI translations -->
     <script src="{{ '/assets/js/i18n-helper.js' | relative_url }}"></script>
+
+    <!-- Cookie-based Page Activity Analytics -->
+    <script>
+      // Cookie utility functions
+      function setCookie(name, value, days = 365) {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Strict`;
+      }
+
+      function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+      }
+
+      function generateSessionId() {
+        return 'sess_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+      }
+
+      function generateUserId() {
+        return 'user_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+      }
+
+      // Page activity tracking
+      function trackPageActivity() {
+        const currentPage = window.location.pathname;
+        const timestamp = new Date().toISOString();
+        
+        // Get or create user and session IDs
+        let userId = getCookie('give_docs_user_id');
+        if (!userId) {
+          userId = generateUserId();
+          setCookie('give_docs_user_id', userId, 365); // 1 year
+        }
+
+        let sessionId = getCookie('give_docs_session_id');
+        if (!sessionId) {
+          sessionId = generateSessionId();
+          setCookie('give_docs_session_id', sessionId, 0.5); // 12 hours
+        }
+
+        // Track page view
+        const pageData = {
+          userId: userId,
+          sessionId: sessionId,
+          page: currentPage,
+          title: document.title,
+          timestamp: timestamp,
+          referrer: document.referrer || 'direct',
+          userAgent: navigator.userAgent,
+          language: navigator.language,
+          screenSize: `${screen.width}x${screen.height}`,
+          viewportSize: `${window.innerWidth}x${window.innerHeight}`
+        };
+
+        // Store in localStorage for potential analytics export
+        try {
+          const analyticsData = JSON.parse(localStorage.getItem('give_docs_analytics') || '[]');
+          analyticsData.push(pageData);
+          
+          // Keep only last 100 page views to prevent storage bloat
+          if (analyticsData.length > 100) {
+            analyticsData.splice(0, analyticsData.length - 100);
+          }
+          
+          localStorage.setItem('give_docs_analytics', JSON.stringify(analyticsData));
+        } catch (e) {
+          console.warn('Could not store analytics data:', e);
+        }
+
+        // Track time on page
+        let timeOnPage = 0;
+        const startTime = Date.now();
+
+        const trackTimeOnPage = () => {
+          timeOnPage = Date.now() - startTime;
+          setCookie('give_docs_time_on_page_' + currentPage.replace(/[^a-zA-Z0-9]/g, '_'), timeOnPage, 1);
+        };
+
+        // Track time on page before leaving
+        window.addEventListener('beforeunload', trackTimeOnPage);
+        
+        // Also track every 30 seconds for single-page sessions
+        setInterval(trackTimeOnPage, 30000);
+
+        // Track scroll depth
+        let maxScrollDepth = 0;
+        const trackScrollDepth = () => {
+          const scrollTop = window.pageYOffset;
+          const docHeight = document.body.scrollHeight - window.innerHeight;
+          const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+          
+          if (scrollPercent > maxScrollDepth) {
+            maxScrollDepth = scrollPercent;
+            setCookie('give_docs_scroll_depth_' + currentPage.replace(/[^a-zA-Z0-9]/g, '_'), maxScrollDepth, 1);
+          }
+        };
+
+        window.addEventListener('scroll', throttle(trackScrollDepth, 1000));
+
+        // Update visit count
+        const visitCount = parseInt(getCookie('give_docs_visit_count') || '0') + 1;
+        setCookie('give_docs_visit_count', visitCount, 365);
+
+        // Track last visit
+        setCookie('give_docs_last_visit', timestamp, 365);
+
+        // Console log for debugging (remove in production)
+        console.log('Page activity tracked:', {
+          page: currentPage,
+          userId: userId.substring(0, 10) + '...',
+          sessionId: sessionId.substring(0, 10) + '...',
+          visitCount: visitCount
+        });
+      }
+
+      // Throttle function to limit scroll tracking frequency
+      function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+          const args = arguments;
+          const context = this;
+          if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+          }
+        };
+      }
+
+      // Search activity tracking
+      function trackSearchActivity(query, resultCount) {
+        if (!query || query.trim() === '') return;
+
+        const searchData = {
+          userId: getCookie('give_docs_user_id'),
+          sessionId: getCookie('give_docs_session_id'),
+          query: query.trim(),
+          resultCount: resultCount || 0,
+          timestamp: new Date().toISOString(),
+          page: window.location.pathname
+        };
+
+        try {
+          const searchAnalytics = JSON.parse(localStorage.getItem('give_docs_search_analytics') || '[]');
+          searchAnalytics.push(searchData);
+          
+          // Keep only last 50 searches
+          if (searchAnalytics.length > 50) {
+            searchAnalytics.splice(0, searchAnalytics.length - 50);
+          }
+          
+          localStorage.setItem('give_docs_search_analytics', JSON.stringify(searchAnalytics));
+        } catch (e) {
+          console.warn('Could not store search analytics:', e);
+        }
+      }
+
+      // Hook into existing search functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        // Track page activity
+        trackPageActivity();
+
+        // Hook into search input
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+          let searchTimeout;
+          searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+              const query = this.value.trim();
+              if (query.length >= 2) {
+                // Count search results
+                const resultsContainer = document.getElementById('search-results');
+                const resultCount = resultsContainer ? resultsContainer.querySelectorAll('.search-result').length : 0;
+                trackSearchActivity(query, resultCount);
+              }
+            }, 1000); // Wait 1 second after user stops typing
+          });
+        }
+
+        // Track navigation clicks
+        document.addEventListener('click', function(e) {
+          const link = e.target.closest('a');
+          if (link && link.href) {
+            const linkData = {
+              userId: getCookie('give_docs_user_id'),
+              sessionId: getCookie('give_docs_session_id'),
+              from: window.location.pathname,
+              to: link.getAttribute('href'),
+              linkText: link.textContent.trim(),
+              timestamp: new Date().toISOString(),
+              isExternal: link.hostname !== window.location.hostname
+            };
+
+            try {
+              const navAnalytics = JSON.parse(localStorage.getItem('give_docs_navigation_analytics') || '[]');
+              navAnalytics.push(linkData);
+              
+              // Keep only last 50 navigation events
+              if (navAnalytics.length > 50) {
+                navAnalytics.splice(0, navAnalytics.length - 50);
+              }
+              
+              localStorage.setItem('give_docs_navigation_analytics', JSON.stringify(navAnalytics));
+            } catch (e) {
+              console.warn('Could not store navigation analytics:', e);
+            }
+          }
+        });
+
+        // Track settings changes
+        document.querySelectorAll('.theme-option, .language-option').forEach(option => {
+          option.addEventListener('click', function() {
+            const settingType = this.classList.contains('theme-option') ? 'theme' : 'language';
+            const settingValue = this.dataset.theme || this.dataset.lang;
+            
+            const settingData = {
+              userId: getCookie('give_docs_user_id'),
+              sessionId: getCookie('give_docs_session_id'),
+              settingType: settingType,
+              settingValue: settingValue,
+              timestamp: new Date().toISOString(),
+              page: window.location.pathname
+            };
+
+            try {
+              const settingsAnalytics = JSON.parse(localStorage.getItem('give_docs_settings_analytics') || '[]');
+              settingsAnalytics.push(settingData);
+              
+              // Keep only last 25 settings changes
+              if (settingsAnalytics.length > 25) {
+                settingsAnalytics.splice(0, settingsAnalytics.length - 25);
+              }
+              
+              localStorage.setItem('give_docs_settings_analytics', JSON.stringify(settingsAnalytics));
+            } catch (e) {
+              console.warn('Could not store settings analytics:', e);
+            }
+          });
+        });
+      });
+
+      // Export analytics data function (for debugging/analysis)
+      window.exportAnalytics = function() {
+        const data = {
+          pageViews: JSON.parse(localStorage.getItem('give_docs_analytics') || '[]'),
+          searches: JSON.parse(localStorage.getItem('give_docs_search_analytics') || '[]'),
+          navigation: JSON.parse(localStorage.getItem('give_docs_navigation_analytics') || '[]'),
+          settings: JSON.parse(localStorage.getItem('give_docs_settings_analytics') || '[]'),
+          exportedAt: new Date().toISOString()
+        };
+        
+        console.log('Documentation Analytics Data:', data);
+        
+        // Create downloadable JSON file
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `give-docs-analytics-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        return data;
+      };
+    </script>
   </body>
 </html>
