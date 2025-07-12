@@ -3,6 +3,7 @@
 ## URGENT: Create these private repositories IMMEDIATELY
 
 ### 1. Duration-Infrastructure-Private
+
 ```bash
 # Create private repo on GitHub first, then:
 git clone https://github.com/GiveProtocol/Duration-Infrastructure-Private.git
@@ -27,6 +28,7 @@ git push
 ```
 
 ### 2. Duration-Backend-Private
+
 ```bash
 # Create private repo on GitHub first, then:
 git clone https://github.com/GiveProtocol/Duration-Backend-Private.git
@@ -46,6 +48,7 @@ git push
 ```
 
 ### 3. Duration-Business-Logic-Private
+
 ```bash
 # Create private repo on GitHub first, then:
 git clone https://github.com/GiveProtocol/Duration-Business-Logic-Private.git
@@ -71,6 +74,7 @@ git push
 ```
 
 ### 4. Duration-Config-Private
+
 ```bash
 # Create private repo on GitHub first, then:
 git clone https://github.com/GiveProtocol/Duration-Config-Private.git
@@ -98,11 +102,13 @@ git push
 After copying to private repos, remove these from Duration-Give:
 
 ### Critical Security Files (REMOVE IMMEDIATELY):
+
 - `supabase/functions/subscribe/index.ts` (contains exposed API keys)
 - `supabase/migrations/*.sql` (all migration files)
 - `src/pages/admin/` (entire admin directory)
 
 ### Infrastructure Files:
+
 - `.github/workflows/`
 - `scripts/`
 - `docker-compose.yml`
@@ -113,6 +119,7 @@ After copying to private repos, remove these from Duration-Give:
 - `cypress.config.ts`
 
 ### Backend Files:
+
 - `src/lib/supabase.ts`
 - `src/lib/auth.ts`
 - `src/lib/sentry.ts`
@@ -120,6 +127,7 @@ After copying to private repos, remove these from Duration-Give:
 - `src/middleware/security.ts`
 
 ### Business Logic Files:
+
 - `src/hooks/useAdminPanel.ts`
 - `src/hooks/useDonationAnalytics.ts`
 - `src/hooks/useTransactionTracking.ts`
@@ -130,6 +138,7 @@ After copying to private repos, remove these from Duration-Give:
 - `test/`
 
 ### Configuration Files:
+
 - `src/config/env.ts`
 - `src/config/contracts.ts`
 - `src/utils/validation.ts`
@@ -137,7 +146,7 @@ After copying to private repos, remove these from Duration-Give:
 ## IMMEDIATE SECURITY ACTIONS:
 
 1. **Change MailChimp API keys** in your MailChimp dashboard
-2. **Remove subscribe function** from public repo immediately  
+2. **Remove subscribe function** from public repo immediately
 3. **Check access logs** for any unauthorized API usage
 4. **Create private repos** and move sensitive files
 5. **Update deployment** to use new private configurations
@@ -145,6 +154,7 @@ After copying to private repos, remove these from Duration-Give:
 ## GitHub Repository Settings:
 
 For each private repository:
+
 1. Set visibility to "Private"
 2. Add team members with appropriate permissions
 3. Enable security features (dependency alerts, secret scanning)
