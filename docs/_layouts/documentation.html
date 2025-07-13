@@ -41,7 +41,9 @@
         font-family: "Inter", sans-serif;
         background: #f0eee7;
         margin: 0;
-        transition: background-color 0.3s ease, color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
       }
       body.dark-mode {
         background: #0f172a;
@@ -54,7 +56,9 @@
         position: sticky;
         top: 0;
         z-index: 50;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
       }
       body.dark-mode .docs-header {
         background: #1e293b;
@@ -94,7 +98,9 @@
         border: 1px solid #d1d5db;
         border-radius: 0.5rem;
         font-size: 0.875rem;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
       }
       body.dark-mode .docs-search input {
         background: #374151;
@@ -187,7 +193,9 @@
         min-width: 240px;
         z-index: 100;
         display: none;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
       }
       body.dark-mode .docs-settings-menu {
         background: #1e293b;
@@ -512,7 +520,12 @@
     <header class="docs-header">
       <div class="docs-container">
         <a href="{{ '/' | relative_url }}" class="docs-brand">
-          <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Give Protocol" width="32" height="32">
+          <img
+            src="{{ '/assets/images/logo.svg' | relative_url }}"
+            alt="Give Protocol"
+            width="32"
+            height="32"
+          />
           <span>Give Protocol Docs</span>
         </a>
 
@@ -553,7 +566,9 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
-                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <path
+                  d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+                />
                 <circle cx="12" cy="12" r="3" />
               </svg>
             </button>
@@ -813,17 +828,17 @@
             let langCode = lang;
             // Map language codes to Google Translate codes
             const langMap = {
-              'zh-CN': 'zh-CN',
-              'ar': 'ar',
-              'ko': 'ko',
-              'ja': 'ja',
-              'es': 'es',
-              'de': 'de',
-              'fr': 'fr'
+              "zh-CN": "zh-CN",
+              ar: "ar",
+              ko: "ko",
+              ja: "ja",
+              es: "es",
+              de: "de",
+              fr: "fr",
             };
-            
+
             langCode = langMap[lang] || lang;
-            
+
             // Set hash to trigger translation
             window.location.hash = `googtrans(en|${langCode})`;
             window.location.reload();
@@ -845,10 +860,12 @@
       let searchData = [];
 
       // Load search data - with fallback for non-Jekyll environments
-      const searchUrl = '{{ "/search.json" | relative_url }}' === '{{ "/search.json" | relative_url }}' 
-        ? './search.json'  // Fallback if Jekyll isn't processing
-        : '{{ "/search.json" | relative_url }}';
-      
+      const searchUrl =
+        '{{ "/search.json" | relative_url }}' ===
+        '{{ "/search.json" | relative_url }}'
+          ? "./search.json" // Fallback if Jekyll isn't processing
+          : '{{ "/search.json" | relative_url }}';
+
       fetch(searchUrl)
         .then((response) => {
           if (!response.ok) {
@@ -863,46 +880,51 @@
         .catch((error) => {
           console.error("❌ Search data loading error:", error);
           // Fallback: Try to search through visible navigation links
-          const navLinks = document.querySelectorAll('.docs-nav-link');
-          searchData = Array.from(navLinks).map(link => ({
+          const navLinks = document.querySelectorAll(".docs-nav-link");
+          searchData = Array.from(navLinks).map((link) => ({
             title: link.textContent.trim(),
-            url: link.getAttribute('href'),
+            url: link.getAttribute("href"),
             content: link.textContent.trim(),
-            category: 'Navigation'
+            category: "Navigation",
           }));
           // Using fallback search data from navigation
         });
 
       function highlightText(text, query) {
         if (!query) return text;
-        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-        return text.replace(regex, '<mark>$1</mark>');
+        const regex = new RegExp(
+          `(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+          "gi",
+        );
+        return text.replace(regex, "<mark>$1</mark>");
       }
 
       function calculateRelevance(item, query) {
         const lowerQuery = query.toLowerCase();
         const lowerTitle = item.title.toLowerCase();
         const lowerContent = item.content.toLowerCase();
-        
+
         let score = 0;
-        
+
         // Title exact match gets highest score
         if (lowerTitle === lowerQuery) score += 100;
         // Title starts with query
         else if (lowerTitle.startsWith(lowerQuery)) score += 50;
         // Title contains query
         else if (lowerTitle.includes(lowerQuery)) score += 25;
-        
+
         // Content matches
         if (lowerContent.includes(lowerQuery)) score += 10;
-        
+
         // Multiple word matches
-        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
-        queryWords.forEach(word => {
+        const queryWords = lowerQuery
+          .split(" ")
+          .filter((word) => word.length > 2);
+        queryWords.forEach((word) => {
           if (lowerTitle.includes(word)) score += 5;
           if (lowerContent.includes(word)) score += 2;
         });
-        
+
         return score;
       }
 
@@ -914,12 +936,18 @@
 
         const results = searchData
           .filter((item) => {
-            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
+            const text = (
+              item.title +
+              " " +
+              item.content +
+              " " +
+              (item.category || "")
+            ).toLowerCase();
             return text.includes(query.toLowerCase());
           })
-          .map(item => ({
+          .map((item) => ({
             ...item,
-            relevance: calculateRelevance(item, query)
+            relevance: calculateRelevance(item, query),
           }))
           .sort((a, b) => b.relevance - a.relevance)
           .slice(0, 8);
@@ -936,12 +964,12 @@
               const highlightedTitle = highlightText(result.title, query);
               const excerpt = result.content.substring(0, 150);
               const highlightedExcerpt = highlightText(excerpt, query);
-              
+
               return `
                 <div class="docs-search-item" onclick="window.location.href='${result.url}'">
                   <div class="docs-result-title">${highlightedTitle}</div>
                   <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
-                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ""}
                 </div>
               `;
             })
@@ -981,17 +1009,17 @@
         }
       });
       // Check for active language on page load
-      window.addEventListener('load', function() {
+      window.addEventListener("load", function () {
         const hash = window.location.hash;
-        if (hash.includes('googtrans')) {
+        if (hash.includes("googtrans")) {
           const match = hash.match(/googtrans\(en\|([^)]+)\)/);
           if (match && match[1]) {
             const activeLang = match[1];
             langButtons.forEach((btn) => {
               if (btn.dataset.lang === activeLang) {
-                btn.classList.add('active');
+                btn.classList.add("active");
               } else {
-                btn.classList.remove('active');
+                btn.classList.remove("active");
               }
             });
           }
