@@ -53,3 +53,11 @@ artifacts/
 
 # Deployment files
 deployments.json
+
+# Jekyll
+docs/_site/
+docs/.sass-cache/
+docs/.jekyll-cache/
+docs/.jekyll-metadata
+docs/vendor/
+docs/Gemfile.lock
