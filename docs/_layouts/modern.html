@@ -172,24 +172,78 @@
         </button>
 
         <nav class="sidebar-nav">
-          <!-- Getting Started -->
+          <!-- Help Center -->
           <div class="nav-section">
-            <h3 class="section-title">Getting Started</h3>
+            <h3 class="section-title">Give Protocol Help Center</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="{{ '/help-center/faq/' | relative_url }}"
+                  class="{% if page.url contains 'faq' %}active{% endif %}"
+                >
+                  <i class="fas fa-question-circle"></i> Frequently Asked Questions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/help-center/need-help/' | relative_url }}"
+                  class="{% if page.url contains 'need-help' %}active{% endif %}"
+                >
+                  <i class="fas fa-life-ring"></i> Need Help?
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/help-center/report-issue/' | relative_url }}"
+                  class="{% if page.url contains 'report-issue' %}active{% endif %}"
+                >
+                  <i class="fas fa-exclamation-triangle"></i> Report An Issue
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Introduction -->
+          <div class="nav-section">
+            <h3 class="section-title">Introduction</h3>
             <ul class="nav-list">
               <li class="nav-item">
                 <a
                   href="{{ '/introduction/what-is-give-protocol/' | relative_url }}"
                   class="{% if page.url contains 'what-is-give-protocol' %}active{% endif %}"
                 >
-                  <i class="fas fa-info-circle"></i> What is Give Protocol?
+                  <i class="fas fa-info-circle"></i> What is Give Protocol
                 </a>
               </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/introduction/how-to-join/' | relative_url }}"
+                  class="{% if page.url contains 'how-to-join' %}active{% endif %}"
+                >
+                  <i class="fas fa-door-open"></i> How To Join Give Protocol?
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Getting Started -->
+          <div class="nav-section">
+            <h3 class="section-title">Getting Started</h3>
+            <ul class="nav-list">
               <li class="nav-item">
                 <a
                   href="{{ '/getting-started/creating-account/' | relative_url }}"
                   class="{% if page.url contains 'creating-account' %}active{% endif %}"
                 >
-                  <i class="fas fa-user-plus"></i> Creating Account
+                  <i class="fas fa-user-plus"></i> Creating Your Account
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/getting-started/setting-up-profile/' | relative_url }}"
+                  class="{% if page.url contains 'setting-up-profile' %}active{% endif %}"
+                >
+                  <i class="fas fa-user-edit"></i> Setting Up Your Profile
                 </a>
               </li>
               <li class="nav-item">
@@ -197,7 +251,7 @@
                   href="{{ '/getting-started/wallet-connection/' | relative_url }}"
                   class="{% if page.url contains 'wallet-connection' %}active{% endif %}"
                 >
-                  <i class="fas fa-wallet"></i> Wallet Connection
+                  <i class="fas fa-wallet"></i> Wallet Connection Guide
                 </a>
               </li>
               <li class="nav-item">
@@ -205,7 +259,15 @@
                   href="{{ '/getting-started/first-steps/' | relative_url }}"
                   class="{% if page.url contains 'first-steps' %}active{% endif %}"
                 >
-                  <i class="fas fa-play"></i> First Steps
+                  <i class="fas fa-play"></i> First Steps Walkthrough
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/getting-started/dashboard/' | relative_url }}"
+                  class="{% if page.url contains 'dashboard' %}active{% endif %}"
+                >
+                  <i class="fas fa-tachometer-alt"></i> Dashboard Overview
                 </a>
               </li>
             </ul>
@@ -228,7 +290,7 @@
                   href="{{ '/user-guides/organizations/' | relative_url }}"
                   class="{% if page.url contains 'organizations' %}active{% endif %}"
                 >
-                  <i class="fas fa-building"></i> For Organizations
+                  <i class="fas fa-building"></i> For Recipients/Organizations
                 </a>
               </li>
               <li class="nav-item">
@@ -251,7 +313,7 @@
                   href="{{ '/platform-features/search-discovery/' | relative_url }}"
                   class="{% if page.url contains 'search-discovery' %}active{% endif %}"
                 >
-                  <i class="fas fa-search"></i> Search & Discovery
+                  <i class="fas fa-search"></i> Search & Discovery Tools
                 </a>
               </li>
               <li class="nav-item">
@@ -259,16 +321,48 @@
                   href="{{ '/platform-features/verification/' | relative_url }}"
                   class="{% if page.url contains 'verification' %}active{% endif %}"
                 >
-                  <i class="fas fa-shield-alt"></i> Verification System
+                  <i class="fas fa-shield-alt"></i> Verification & Trust Badges
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/platform-features/impact-tracking/' | relative_url }}"
+                  class="{% if page.url contains 'impact-tracking' %}active{% endif %}"
+                >
+                  <i class="fas fa-chart-line"></i> Impact Tracking & Metrics
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/platform-features/community/' | relative_url }}"
+                  class="{% if page.url contains 'community' %}active{% endif %}"
+                >
+                  <i class="fas fa-users"></i> Community Features
                 </a>
               </li>
             </ul>
           </div>
 
-          <!-- Technical -->
+          <!-- Technical Documentation -->
           <div class="nav-section">
-            <h3 class="section-title">Technical Details</h3>
+            <h3 class="section-title">Technical Documentation</h3>
             <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="{{ '/technical/blockchain-integration/' | relative_url }}"
+                  class="{% if page.url contains 'blockchain-integration' %}active{% endif %}"
+                >
+                  <i class="fas fa-link"></i> Blockchain Integration
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/technical/smart-contracts/' | relative_url }}"
+                  class="{% if page.url contains 'smart-contracts' %}active{% endif %}"
+                >
+                  <i class="fas fa-file-contract"></i> Smart Contract Interactions
+                </a>
+              </li>
               <li class="nav-item">
                 <a
                   href="{{ '/technical/cryptocurrencies/' | relative_url }}"
@@ -282,30 +376,116 @@
                   href="{{ '/technical/fees/' | relative_url }}"
                   class="{% if page.url contains 'fees' %}active{% endif %}"
                 >
-                  <i class="fas fa-percentage"></i> Fee Structure
+                  <i class="fas fa-percentage"></i> Transaction Fees & Gas
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/technical/api-docs/' | relative_url }}"
+                  class="{% if page.url contains 'api-docs' %}active{% endif %}"
+                >
+                  <i class="fas fa-code"></i> API Documentation
                 </a>
               </li>
             </ul>
           </div>
 
-          <!-- Help & Support -->
+          <!-- Safety & Security -->
           <div class="nav-section">
-            <h3 class="section-title">Help & Support</h3>
+            <h3 class="section-title">Safety & Security</h3>
             <ul class="nav-list">
               <li class="nav-item">
                 <a
-                  href="{{ '/help-center/faq/' | relative_url }}"
-                  class="{% if page.url contains 'faq' %}active{% endif %}"
+                  href="{{ '/safety-security/smart-giving/' | relative_url }}"
+                  class="{% if page.url contains 'smart-giving' %}active{% endif %}"
                 >
-                  <i class="fas fa-question-circle"></i> Frequently Asked Questions
+                  <i class="fas fa-brain"></i> Smart Giving Practices
                 </a>
               </li>
               <li class="nav-item">
                 <a
-                  href="{{ '/help-center/need-help/' | relative_url }}"
-                  class="{% if page.url contains 'need-help' %}active{% endif %}"
+                  href="{{ '/safety-security/volunteer-safety/' | relative_url }}"
+                  class="{% if page.url contains 'volunteer-safety' %}active{% endif %}"
                 >
-                  <i class="fas fa-life-ring"></i> Need Help?
+                  <i class="fas fa-hard-hat"></i> Volunteer Safety
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/safety-security/platform-security/' | relative_url }}"
+                  class="{% if page.url contains 'platform-security' %}active{% endif %}"
+                >
+                  <i class="fas fa-shield-alt"></i> Platform Security
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Resources & Tools -->
+          <div class="nav-section">
+            <h3 class="section-title">Resources & Tools</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="{{ '/resources/educational-content/' | relative_url }}"
+                  class="{% if page.url contains 'educational-content' %}active{% endif %}"
+                >
+                  <i class="fas fa-graduation-cap"></i> Educational Content
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/resources/calculator/' | relative_url }}"
+                  class="{% if page.url contains 'calculator' %}active{% endif %}"
+                >
+                  <i class="fas fa-calculator"></i> Donation Planning Tools
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/resources/time-tracking/' | relative_url }}"
+                  class="{% if page.url contains 'time-tracking' %}active{% endif %}"
+                >
+                  <i class="fas fa-clock"></i> Volunteer Time Tracking
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/resources/templates/' | relative_url }}"
+                  class="{% if page.url contains 'templates' %}active{% endif %}"
+                >
+                  <i class="fas fa-file-alt"></i> Templates & Guides
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Community & Support -->
+          <div class="nav-section">
+            <h3 class="section-title">Community & Support</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="{{ '/community/forums/' | relative_url }}"
+                  class="{% if page.url contains 'forums' %}active{% endif %}"
+                >
+                  <i class="fas fa-comments"></i> Community Forums
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/community/contact/' | relative_url }}"
+                  class="{% if page.url contains 'contact' %}active{% endif %}"
+                >
+                  <i class="fas fa-envelope"></i> Contact Information
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="{{ '/community/social/' | relative_url }}"
+                  class="{% if page.url contains 'social' %}active{% endif %}"
+                >
+                  <i class="fas fa-share-alt"></i> Social Media Links
                 </a>
               </li>
             </ul>
