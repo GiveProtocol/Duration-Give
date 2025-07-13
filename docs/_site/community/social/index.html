@@ -1,0 +1,1732 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Social Impact & Sharing - Give Protocol Documentation
+    </title>
+    <meta
+      name="description"
+      content="Share your charitable journey, connect on social media, and inspire others to give back"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon/favicon-16x16.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+    />
+
+    <style>
+      /* Immediate styles to prevent layout shift */
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0eee7;
+        margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark-mode {
+        background: #0f172a;
+        color: #f1f5f9;
+      }
+      .docs-header {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-header {
+        background: #1e293b;
+        border-bottom-color: #334155;
+      }
+      .docs-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .docs-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-brand {
+        color: #f1f5f9;
+      }
+      .docs-search {
+        flex: 1;
+        max-width: 400px;
+        margin: 0 2rem;
+        position: relative;
+      }
+      .docs-search input {
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-search input {
+        background: #374151;
+        border-color: #4b5563;
+        color: #f1f5f9;
+      }
+      .docs-search input:focus {
+        outline: none;
+        background: #fff;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+      body.dark-mode .docs-search input:focus {
+        background: #4b5563;
+        border-color: #6366f1;
+      }
+      .docs-search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-icon {
+        color: #d1d5db;
+      }
+      .docs-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .docs-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: #4b5563;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-btn {
+        color: #d1d5db;
+      }
+      .docs-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings {
+        position: relative;
+      }
+      .docs-settings-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-settings-btn {
+        color: #d1d5db;
+      }
+      .docs-settings-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-settings-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        min-width: 240px;
+        z-index: 100;
+        display: none;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-menu {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      .docs-settings-section {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      body.dark-mode .docs-settings-section {
+        border-bottom-color: #334155;
+      }
+      .docs-settings-section:last-child {
+        border-bottom: none;
+      }
+      .docs-settings-heading {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-heading {
+        color: #d1d5db;
+      }
+      .docs-theme-options {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .docs-theme-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        padding: 0.5rem;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-theme-btn {
+        background: #374151;
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-theme-btn:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-theme-btn:hover {
+        background: #4b5563;
+        border-color: #6b7280;
+      }
+      .docs-theme-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+      body.dark-mode .docs-theme-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-lang-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .docs-lang-btn {
+        padding: 0.5rem 0.75rem;
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: left;
+      }
+      body.dark-mode .docs-lang-btn {
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-lang-btn:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-lang-btn:hover {
+        background: #374151;
+        border-color: #6b7280;
+      }
+      .docs-lang-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-lang-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-main {
+        display: flex;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        gap: 2rem;
+      }
+      .docs-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 5.5rem;
+        height: fit-content;
+      }
+      .docs-nav-section {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-section {
+        background: #1e293b;
+      }
+      .docs-nav-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-title {
+        color: #d1d5db;
+      }
+      .docs-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .docs-nav-item {
+        margin-bottom: 0.25rem;
+      }
+      .docs-nav-link {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        color: #374151;
+        text-decoration: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-nav-link {
+        color: #d1d5db;
+      }
+      .docs-nav-link:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-nav-link:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-nav-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-nav-link.active {
+        background: #312e81;
+        color: #c7d2fe;
+      }
+      .docs-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .docs-article {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-article {
+        background: #1e293b;
+      }
+      .docs-search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: none;
+      }
+      .docs-search-overlay.active {
+        display: block;
+      }
+      .docs-search-results {
+        max-width: 600px;
+        margin: 6rem auto 2rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-results {
+        background: #1e293b;
+      }
+      .docs-search-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      body.dark-mode .docs-search-header {
+        border-bottom-color: #334155;
+      }
+      .docs-search-close {
+        padding: 0.25rem;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-close {
+        color: #d1d5db;
+      }
+      .docs-search-list {
+        padding: 0;
+        margin: 0;
+      }
+      .docs-search-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-item {
+        border-bottom-color: #334155;
+      }
+      .docs-search-item:hover {
+        background: #f9fafb;
+      }
+      body.dark-mode .docs-search-item:hover {
+        background: #374151;
+      }
+      .docs-search-item:last-child {
+        border-bottom: none;
+      }
+      .docs-result-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #111827;
+        margin-bottom: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-title {
+        color: #f1f5f9;
+      }
+      .docs-result-excerpt {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.4;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-excerpt {
+        color: #d1d5db;
+      }
+      .docs-result-category {
+        font-size: 0.75rem;
+        color: #6366f1;
+        font-weight: 500;
+        margin-top: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-category {
+        color: #c7d2fe;
+      }
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 500;
+      }
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+      @media (max-width: 768px) {
+        .docs-search {
+          display: none;
+        }
+        .docs-main {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .docs-sidebar {
+          position: static;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="docs-header">
+      <div class="docs-container">
+        <a href="/" class="docs-brand">
+          <img src="/assets/images/logo.svg" alt="Give Protocol" width="32" height="32">
+          <span>Give Protocol Docs</span>
+        </a>
+
+        <div class="docs-search">
+          <svg
+            class="docs-search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
+
+        <div class="docs-actions">
+          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
+
+          <div class="docs-settings">
+            <button class="docs-settings-btn" id="settings-toggle">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+
+            <div class="docs-settings-menu" id="settings-menu">
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Theme</h4>
+                <div class="docs-theme-options">
+                  <button class="docs-theme-btn active" data-theme="light">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <path
+                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                      />
+                    </svg>
+                    Light
+                  </button>
+                  <button class="docs-theme-btn" data-theme="dark">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Language</h4>
+                <div class="docs-lang-options">
+                  <button class="docs-lang-btn active" data-lang="en">
+                    🇺🇸 English
+                  </button>
+                  <button class="docs-lang-btn" data-lang="es">
+                    🇪🇸 Español
+                  </button>
+                  <button class="docs-lang-btn" data-lang="de">
+                    🇩🇪 Deutsch
+                  </button>
+                  <button class="docs-lang-btn" data-lang="fr">
+                    🇫🇷 Français
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ja">
+                    🇯🇵 日本語
+                  </button>
+                  <button class="docs-lang-btn" data-lang="zh-CN">
+                    🇨🇳 简体中文
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ko">
+                    🇰🇷 한국어
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ar">
+                    🇸🇦 العربية
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <!-- Sidebar -->
+      <aside class="docs-sidebar">
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Getting Started</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/introduction/what-is-give-protocol/"
+                class="docs-nav-link "
+              >
+                What is Give Protocol?
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/creating-account/"
+                class="docs-nav-link "
+              >
+                Creating Account
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/wallet-connection/"
+                class="docs-nav-link "
+              >
+                Wallet Connection
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">User Guides</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/donors/"
+                class="docs-nav-link "
+              >
+                For Donors
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/organizations/"
+                class="docs-nav-link "
+              >
+                For Organizations
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/volunteers/"
+                class="docs-nav-link "
+              >
+                For Volunteers
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Help & Support</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/faq/"
+                class="docs-nav-link "
+              >
+                FAQ
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/need-help/"
+                class="docs-nav-link "
+              >
+                Need Help?
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <article class="docs-article"><p>Amplify your charitable impact by sharing your giving journey on social media. Connect with fellow changemakers, inspire others to get involved, and build a community around the causes you care about.</p>
+
+<h2 id="social-media-integration">Social Media Integration</h2>
+
+<h3 id="connected-platforms">Connected Platforms</h3>
+
+<h4 id="supported-networks">Supported Networks</h4>
+
+<ul>
+  <li><strong>Facebook</strong>: Share achievements and volunteer stories</li>
+  <li><strong>Twitter</strong>: Quick updates and cause awareness</li>
+  <li><strong>Instagram</strong>: Photo stories from volunteer activities</li>
+  <li><strong>LinkedIn</strong>: Professional volunteering and skills sharing</li>
+  <li><strong>TikTok</strong>: Creative content about giving back</li>
+  <li><strong>YouTube</strong>: Volunteer vlogs and impact videos</li>
+</ul>
+
+<h4 id="integration-benefits">Integration Benefits</h4>
+
+<ul>
+  <li>Seamless sharing from Give Protocol</li>
+  <li>Auto-generated impact graphics</li>
+  <li>Cross-platform achievement announcements</li>
+  <li>Unified volunteer story documentation</li>
+  <li>Enhanced privacy controls</li>
+</ul>
+
+<h3 id="setting-up-social-sharing">Setting Up Social Sharing</h3>
+
+<ol>
+  <li><strong>Go to Account Settings</strong></li>
+  <li><strong>Select “Social Media”</strong></li>
+  <li><strong>Connect desired platforms</strong></li>
+  <li><strong>Choose sharing preferences</strong></li>
+  <li><strong>Customize privacy settings</strong></li>
+</ol>
+
+<h2 id="what-to-share">What to Share</h2>
+
+<h3 id="achievement-milestones">Achievement Milestones</h3>
+
+<h4 id="volunteer-hours">Volunteer Hours</h4>
+
+<ul>
+  <li><strong>25 Hours</strong>: First milestone badge</li>
+  <li><strong>100 Hours</strong>: Committed volunteer status</li>
+  <li><strong>250 Hours</strong>: Community champion recognition</li>
+  <li><strong>500 Hours</strong>: Impact leader achievement</li>
+  <li><strong>1000+ Hours</strong>: Lifetime service award</li>
+</ul>
+
+<h4 id="donation-milestones">Donation Milestones</h4>
+
+<ul>
+  <li>First donation celebration</li>
+  <li>Monthly giving commitments</li>
+  <li>Annual giving goals reached</li>
+  <li>Major gift announcements</li>
+  <li>Lifetime giving totals</li>
+</ul>
+
+<h4 id="skills-development">Skills Development</h4>
+
+<ul>
+  <li>New volunteer skills learned</li>
+  <li>Certifications earned</li>
+  <li>Leadership roles taken</li>
+  <li>Training completed</li>
+  <li>Mentorship activities</li>
+</ul>
+
+<h3 id="impact-stories">Impact Stories</h3>
+
+<h4 id="personal-experiences">Personal Experiences</h4>
+
+<ul>
+  <li>Volunteer day highlights</li>
+  <li>Meaningful encounters</li>
+  <li>Lessons learned</li>
+  <li>Challenges overcome</li>
+  <li>Personal growth moments</li>
+</ul>
+
+<h4 id="organization-spotlights">Organization Spotlights</h4>
+
+<ul>
+  <li>Nonprofits you support</li>
+  <li>Their mission and impact</li>
+  <li>Why you chose them</li>
+  <li>Success stories witnessed</li>
+  <li>Ways others can help</li>
+</ul>
+
+<h4 id="community-events">Community Events</h4>
+
+<ul>
+  <li>Group volunteering activities</li>
+  <li>Fundraising events</li>
+  <li>Awareness campaigns</li>
+  <li>Educational workshops</li>
+  <li>Networking meetups</li>
+</ul>
+
+<h2 id="content-creation-tools">Content Creation Tools</h2>
+
+<h3 id="built-in-graphics-generator">Built-in Graphics Generator</h3>
+
+<h4 id="impact-infographics">Impact Infographics</h4>
+
+<ul>
+  <li>Hours volunteered visualizations</li>
+  <li>Donation impact breakdowns</li>
+  <li>Before/after comparisons</li>
+  <li>Goal progress tracking</li>
+  <li>Year-in-review summaries</li>
+</ul>
+
+<h4 id="achievement-badges">Achievement Badges</h4>
+
+<ul>
+  <li>Digital badges for milestones</li>
+  <li>Customizable colors and text</li>
+  <li>Platform-specific sizing</li>
+  <li>Shareable formats</li>
+  <li>Download options</li>
+</ul>
+
+<h4 id="quote-cards">Quote Cards</h4>
+
+<ul>
+  <li>Inspirational giving quotes</li>
+  <li>Personal reflection prompts</li>
+  <li>Impact statistics</li>
+  <li>Call-to-action messages</li>
+  <li>Cause awareness facts</li>
+</ul>
+
+<h3 id="photo-and-video-tools">Photo and Video Tools</h3>
+
+<h4 id="photo-enhancement">Photo Enhancement</h4>
+
+<ul>
+  <li>Volunteer activity photo editing</li>
+  <li>Impact story photo collages</li>
+  <li>Before/after transformation shots</li>
+  <li>Group photo organization</li>
+  <li>Privacy-friendly face blurring</li>
+</ul>
+
+<h4 id="video-creation">Video Creation</h4>
+
+<ul>
+  <li>Short impact story videos</li>
+  <li>Volunteer day montages</li>
+  <li>Organization introduction clips</li>
+  <li>Personal testimony recordings</li>
+  <li>Educational content creation</li>
+</ul>
+
+<h2 id="privacy-and-safety">Privacy and Safety</h2>
+
+<h3 id="sharing-controls">Sharing Controls</h3>
+
+<h4 id="granular-privacy-settings">Granular Privacy Settings</h4>
+
+<ul>
+  <li><strong>Public</strong>: Visible to everyone</li>
+  <li><strong>Friends/Followers</strong>: Limited to connections</li>
+  <li><strong>Give Protocol Community</strong>: Platform users only</li>
+  <li><strong>Private</strong>: Personal records only</li>
+  <li><strong>Custom</strong>: Specific audience selection</li>
+</ul>
+
+<h4 id="content-controls">Content Controls</h4>
+
+<ul>
+  <li>Choose what activities to share</li>
+  <li>Control timing of posts</li>
+  <li>Edit shared content</li>
+  <li>Delete previous shares</li>
+  <li>Pause sharing temporarily</li>
+</ul>
+
+<h3 id="safety-guidelines">Safety Guidelines</h3>
+
+<h4 id="personal-information">Personal Information</h4>
+
+<ul>
+  <li>Avoid sharing home address</li>
+  <li>Limit phone number visibility</li>
+  <li>Be cautious with location details</li>
+  <li>Protect financial information</li>
+  <li>Maintain professional boundaries</li>
+</ul>
+
+<h4 id="organization-privacy">Organization Privacy</h4>
+
+<ul>
+  <li>Respect beneficiary privacy</li>
+  <li>Follow organization social media policies</li>
+  <li>Get permission for photos</li>
+  <li>Protect sensitive information</li>
+  <li>Maintain confidentiality agreements</li>
+</ul>
+
+<h2 id="social-media-best-practices">Social Media Best Practices</h2>
+
+<h3 id="effective-storytelling">Effective Storytelling</h3>
+
+<h4 id="compelling-narratives">Compelling Narratives</h4>
+
+<ol>
+  <li><strong>Start with Why</strong>: Share your motivation</li>
+  <li><strong>Show Impact</strong>: Demonstrate concrete results</li>
+  <li><strong>Include Emotion</strong>: Connect with feelings</li>
+  <li><strong>Call to Action</strong>: Inspire others to act</li>
+  <li><strong>Express Gratitude</strong>: Acknowledge supporters</li>
+</ol>
+
+<h4 id="visual-storytelling">Visual Storytelling</h4>
+
+<ul>
+  <li>Use high-quality images</li>
+  <li>Create consistent visual branding</li>
+  <li>Include people in photos (with permission)</li>
+  <li>Show process and results</li>
+  <li>Use colors that reflect your cause</li>
+</ul>
+
+<h3 id="platform-specific-tips">Platform-Specific Tips</h3>
+
+<h4 id="facebook">Facebook</h4>
+
+<ul>
+  <li><strong>Long-form Posts</strong>: Detailed stories perform well</li>
+  <li><strong>Event Creation</strong>: Promote volunteer opportunities</li>
+  <li><strong>Live Videos</strong>: Real-time volunteer activities</li>
+  <li><strong>Photo Albums</strong>: Document ongoing projects</li>
+  <li><strong>Group Sharing</strong>: Join cause-related communities</li>
+</ul>
+
+<h4 id="instagram">Instagram</h4>
+
+<ul>
+  <li><strong>Story Highlights</strong>: Categorize volunteer activities</li>
+  <li><strong>IGTV</strong>: Longer-form impact videos</li>
+  <li><strong>Reels</strong>: Quick, engaging volunteer moments</li>
+  <li><strong>Hashtag Strategy</strong>: Use relevant cause hashtags</li>
+  <li><strong>User-Generated Content</strong>: Encourage others to share</li>
+</ul>
+
+<h4 id="twitter">Twitter</h4>
+
+<ul>
+  <li><strong>Thread Stories</strong>: Break long stories into tweets</li>
+  <li><strong>Real-time Updates</strong>: Live-tweet from events</li>
+  <li><strong>Hashtag Campaigns</strong>: Join or create movements</li>
+  <li><strong>Retweet Amplification</strong>: Share others’ impact</li>
+  <li><strong>Micro-volunteering</strong>: Quick action promotions</li>
+</ul>
+
+<h4 id="linkedin">LinkedIn</h4>
+
+<ul>
+  <li><strong>Professional Volunteering</strong>: Skills-based service</li>
+  <li><strong>Company Involvement</strong>: Corporate social responsibility</li>
+  <li><strong>Industry Impact</strong>: Professional network engagement</li>
+  <li><strong>Article Writing</strong>: Thought leadership content</li>
+  <li><strong>Connection Building</strong>: Network with like-minded professionals</li>
+</ul>
+
+<h2 id="community-challenges">Community Challenges</h2>
+
+<h3 id="monthly-themes">Monthly Themes</h3>
+
+<h4 id="january-new-year-new-impact">January: New Year, New Impact</h4>
+
+<ul>
+  <li>Set annual volunteer goals</li>
+  <li>Share resolutions for giving</li>
+  <li>Join new causes</li>
+  <li>Start monthly giving</li>
+  <li>Plan year-long commitments</li>
+</ul>
+
+<h4 id="february-heart-for-service">February: Heart for Service</h4>
+
+<ul>
+  <li>Valentine’s Day volunteering</li>
+  <li>Share love for your cause</li>
+  <li>Random acts of kindness</li>
+  <li>Community love campaigns</li>
+  <li>Appreciation posts</li>
+</ul>
+
+<h4 id="march-spring-into-action">March: Spring into Action</h4>
+
+<ul>
+  <li>Spring cleaning donations</li>
+  <li>Environmental volunteering</li>
+  <li>Fresh start initiatives</li>
+  <li>Outdoor service projects</li>
+  <li>Community garden activities</li>
+</ul>
+
+<h4 id="april-earth-month-impact">April: Earth Month Impact</h4>
+
+<ul>
+  <li>Environmental volunteer projects</li>
+  <li>Climate action participation</li>
+  <li>Earth Day activities</li>
+  <li>Sustainability initiatives</li>
+  <li>Green living advocacy</li>
+</ul>
+
+<h3 id="seasonal-campaigns">Seasonal Campaigns</h3>
+
+<h4 id="back-to-school-august-september">Back-to-School (August-September)</h4>
+
+<ul>
+  <li>Education-focused volunteering</li>
+  <li>School supply drives</li>
+  <li>Tutoring and mentoring</li>
+  <li>Scholarship fundraising</li>
+  <li>Teacher appreciation</li>
+</ul>
+
+<h4 id="holiday-giving-november-december">Holiday Giving (November-December)</h4>
+
+<ul>
+  <li>Thanksgiving volunteering</li>
+  <li>Holiday gift drives</li>
+  <li>Food bank assistance</li>
+  <li>Homeless shelter support</li>
+  <li>Year-end giving campaigns</li>
+</ul>
+
+<h2 id="hashtag-strategy">Hashtag Strategy</h2>
+
+<h3 id="give-protocol-hashtags">Give Protocol Hashtags</h3>
+
+<h4 id="official-tags">Official Tags</h4>
+
+<ul>
+  <li><strong>#GiveProtocol</strong>: Main platform hashtag</li>
+  <li><strong>#GiveProtocolImpact</strong>: Impact stories</li>
+  <li><strong>#GiveProtocolVolunteer</strong>: Volunteer activities</li>
+  <li><strong>#GiveProtocolChallenge</strong>: Community challenges</li>
+  <li><strong>#GPCommunity</strong>: Community interactions</li>
+</ul>
+
+<h4 id="milestone-tags">Milestone Tags</h4>
+
+<ul>
+  <li><strong>#FirstVolunteer</strong>: First-time volunteers</li>
+  <li><strong>#100Hours</strong>: Hour milestones</li>
+  <li><strong>#VolunteerGoals</strong>: Goal achievements</li>
+  <li><strong>#ImpactMade</strong>: Success stories</li>
+  <li><strong>#GivingBack</strong>: General giving content</li>
+</ul>
+
+<h3 id="cause-specific-hashtags">Cause-Specific Hashtags</h3>
+
+<h4 id="popular-cause-tags">Popular Cause Tags</h4>
+
+<ul>
+  <li><strong>#EducationMatters</strong>: Education volunteering</li>
+  <li><strong>#FeedTheHungry</strong>: Hunger relief</li>
+  <li><strong>#EnvironmentalAction</strong>: Environmental causes</li>
+  <li><strong>#AnimalRescue</strong>: Animal welfare</li>
+  <li><strong>#CommunitySupport</strong>: Local community work</li>
+  <li><strong>#HealthcareHeroes</strong>: Healthcare volunteering</li>
+  <li><strong>#YouthDevelopment</strong>: Youth programs</li>
+  <li><strong>#SeniorCare</strong>: Elderly support</li>
+</ul>
+
+<h2 id="social-impact-measurement">Social Impact Measurement</h2>
+
+<h3 id="engagement-metrics">Engagement Metrics</h3>
+
+<h4 id="platform-analytics">Platform Analytics</h4>
+
+<ul>
+  <li>Post reach and impressions</li>
+  <li>Engagement rates (likes, shares, comments)</li>
+  <li>Click-through rates to volunteer opportunities</li>
+  <li>Profile visits and follows</li>
+  <li>Story completion rates</li>
+</ul>
+
+<h4 id="impact-tracking">Impact Tracking</h4>
+
+<ul>
+  <li>Volunteer recruitment through posts</li>
+  <li>Donation increases from social sharing</li>
+  <li>Organization awareness improvements</li>
+  <li>Community engagement growth</li>
+  <li>Cause advocacy reach</li>
+</ul>
+
+<h3 id="roi-of-social-sharing">ROI of Social Sharing</h3>
+
+<h4 id="quantifiable-benefits">Quantifiable Benefits</h4>
+
+<ul>
+  <li>Increased volunteer applications</li>
+  <li>Higher donation conversion rates</li>
+  <li>Enhanced organization visibility</li>
+  <li>Expanded network of supporters</li>
+  <li>Greater cause awareness</li>
+</ul>
+
+<h4 id="personal-benefits">Personal Benefits</h4>
+
+<ul>
+  <li>Enhanced personal brand</li>
+  <li>Professional networking opportunities</li>
+  <li>Leadership recognition</li>
+  <li>Community connections</li>
+  <li>Personal accountability</li>
+</ul>
+
+<h2 id="content-calendar-planning">Content Calendar Planning</h2>
+
+<h3 id="monthly-planning">Monthly Planning</h3>
+
+<h4 id="week-1-reflection-and-goals">Week 1: Reflection and Goals</h4>
+
+<ul>
+  <li>Share previous month’s impact</li>
+  <li>Set new volunteer goals</li>
+  <li>Highlight upcoming opportunities</li>
+  <li>Feature cause awareness content</li>
+  <li>Plan upcoming activities</li>
+</ul>
+
+<h4 id="week-2-active-participation">Week 2: Active Participation</h4>
+
+<ul>
+  <li>Live updates from volunteer activities</li>
+  <li>Behind-the-scenes content</li>
+  <li>Real-time impact sharing</li>
+  <li>Community interaction</li>
+  <li>Collaboration announcements</li>
+</ul>
+
+<h4 id="week-3-education-and-advocacy">Week 3: Education and Advocacy</h4>
+
+<ul>
+  <li>Share cause information</li>
+  <li>Educate followers about issues</li>
+  <li>Highlight organization needs</li>
+  <li>Promote awareness campaigns</li>
+  <li>Encourage learning and action</li>
+</ul>
+
+<h4 id="week-4-community-and-recognition">Week 4: Community and Recognition</h4>
+
+<ul>
+  <li>Celebrate fellow volunteers</li>
+  <li>Share community achievements</li>
+  <li>Recognize organization impact</li>
+  <li>Thank supporters and partners</li>
+  <li>Plan next month’s activities</li>
+</ul>
+
+<h2 id="advanced-social-features">Advanced Social Features</h2>
+
+<h3 id="social-listening">Social Listening</h3>
+
+<h4 id="monitor-mentions">Monitor Mentions</h4>
+
+<ul>
+  <li>Track Give Protocol mentions</li>
+  <li>Monitor cause-related conversations</li>
+  <li>Identify collaboration opportunities</li>
+  <li>Respond to community questions</li>
+  <li>Engage with potential volunteers</li>
+</ul>
+
+<h4 id="trend-analysis">Trend Analysis</h4>
+
+<ul>
+  <li>Identify emerging causes</li>
+  <li>Track seasonal volunteer trends</li>
+  <li>Monitor hashtag performance</li>
+  <li>Analyze competitor activities</li>
+  <li>Spot viral giving campaigns</li>
+</ul>
+
+<h3 id="influencer-collaboration">Influencer Collaboration</h3>
+
+<h4 id="partnership-opportunities">Partnership Opportunities</h4>
+
+<ul>
+  <li>Cause-related influencer partnerships</li>
+  <li>Volunteer experience collaborations</li>
+  <li>Educational content creation</li>
+  <li>Awareness campaign participation</li>
+  <li>Fundraising event promotion</li>
+</ul>
+
+<h4 id="micro-influencer-program">Micro-Influencer Program</h4>
+
+<ul>
+  <li>Volunteer ambassador opportunities</li>
+  <li>Organization advocacy roles</li>
+  <li>Content creation partnerships</li>
+  <li>Community leadership positions</li>
+  <li>Cause expertise sharing</li>
+</ul>
+
+<h2 id="mobile-social-sharing">Mobile Social Sharing</h2>
+
+<h3 id="app-features">App Features</h3>
+
+<h4 id="quick-sharing">Quick Sharing</h4>
+
+<ul>
+  <li>One-tap social posting</li>
+  <li>Pre-designed templates</li>
+  <li>Photo editing tools</li>
+  <li>Video creation features</li>
+  <li>Cross-platform posting</li>
+</ul>
+
+<h4 id="real-time-updates">Real-time Updates</h4>
+
+<ul>
+  <li>Live volunteer check-ins</li>
+  <li>Instant impact sharing</li>
+  <li>Story creation tools</li>
+  <li>Event live streaming</li>
+  <li>Community notifications</li>
+</ul>
+
+<h2 id="crisis-and-emergency-response">Crisis and Emergency Response</h2>
+
+<h3 id="disaster-relief-coordination">Disaster Relief Coordination</h3>
+
+<h4 id="emergency-campaigns">Emergency Campaigns</h4>
+
+<ul>
+  <li>Rapid response volunteer recruitment</li>
+  <li>Donation drive organization</li>
+  <li>Resource coordination</li>
+  <li>Information dissemination</li>
+  <li>Community support mobilization</li>
+</ul>
+
+<h4 id="social-media-protocols">Social Media Protocols</h4>
+
+<ul>
+  <li>Verified information sharing</li>
+  <li>Official source amplification</li>
+  <li>Misinformation prevention</li>
+  <li>Safety-first messaging</li>
+  <li>Coordinated response efforts</li>
+</ul>
+
+<h2 id="legal-and-ethical-considerations">Legal and Ethical Considerations</h2>
+
+<h3 id="copyright-and-permissions">Copyright and Permissions</h3>
+
+<h4 id="content-rights">Content Rights</h4>
+
+<ul>
+  <li>Organization photo permissions</li>
+  <li>Beneficiary consent requirements</li>
+  <li>Music licensing for videos</li>
+  <li>Image attribution needs</li>
+  <li>Fair use guidelines</li>
+</ul>
+
+<h4 id="privacy-compliance">Privacy Compliance</h4>
+
+<ul>
+  <li>GDPR considerations for international sharing</li>
+  <li>Children’s privacy protection</li>
+  <li>Sensitive information handling</li>
+  <li>Consent management</li>
+  <li>Data protection measures</li>
+</ul>
+
+<h2 id="success-stories">Success Stories</h2>
+
+<h3 id="community-impact-examples">Community Impact Examples</h3>
+
+<h4 id="viral-campaigns">Viral Campaigns</h4>
+
+<ul>
+  <li>#GiveProtocolChallenge results</li>
+  <li>Successful fundraising drives</li>
+  <li>Volunteer recruitment successes</li>
+  <li>Awareness campaign victories</li>
+  <li>Community mobilization achievements</li>
+</ul>
+
+<h4 id="individual-achievements">Individual Achievements</h4>
+
+<ul>
+  <li>Career advancement through volunteer visibility</li>
+  <li>Network building success stories</li>
+  <li>Personal growth documentation</li>
+  <li>Leadership opportunity development</li>
+  <li>Cause advocacy recognition</li>
+</ul>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="first-steps">First Steps</h3>
+
+<ol>
+  <li>
+    <p><strong>Complete Your Profile</strong></p>
+
+    <ul>
+      <li>Add profile photo</li>
+      <li>Write compelling bio</li>
+      <li>List volunteer interests</li>
+      <li>Connect social accounts</li>
+      <li>Set sharing preferences</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Plan Your Content</strong></p>
+
+    <ul>
+      <li>Identify key messages</li>
+      <li>Choose causes to highlight</li>
+      <li>Set posting schedule</li>
+      <li>Create content calendar</li>
+      <li>Plan visual branding</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Start Sharing</strong></p>
+    <ul>
+      <li>Begin with simple posts</li>
+      <li>Share volunteer experiences</li>
+      <li>Celebrate small wins</li>
+      <li>Engage with others’ content</li>
+      <li>Build consistent presence</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="growth-strategies">Growth Strategies</h3>
+
+<h4 id="building-your-audience">Building Your Audience</h4>
+
+<ul>
+  <li>Share authentic, personal stories</li>
+  <li>Engage consistently with community</li>
+  <li>Use relevant hashtags strategically</li>
+  <li>Collaborate with other volunteers</li>
+  <li>Cross-promote across platforms</li>
+</ul>
+
+<h4 id="maximizing-impact">Maximizing Impact</h4>
+
+<ul>
+  <li>Focus on quality over quantity</li>
+  <li>Include clear calls to action</li>
+  <li>Share diverse content types</li>
+  <li>Maintain regular posting schedule</li>
+  <li>Measure and adjust strategy</li>
+</ul>
+
+<h2 id="support-and-resources">Support and Resources</h2>
+
+<h3 id="training-and-education">Training and Education</h3>
+
+<h4 id="available-resources">Available Resources</h4>
+
+<ul>
+  <li>Social media best practices guides</li>
+  <li>Content creation tutorials</li>
+  <li>Photography and video workshops</li>
+  <li>Storytelling technique training</li>
+  <li>Platform-specific optimization tips</li>
+</ul>
+
+<h4 id="community-support">Community Support</h4>
+
+<ul>
+  <li>Social media mentorship program</li>
+  <li>Peer review and feedback</li>
+  <li>Content collaboration opportunities</li>
+  <li>Campaign planning assistance</li>
+  <li>Technical support and troubleshooting</li>
+</ul>
+
+<p>Your social media presence can be a powerful force for good. By sharing your charitable journey authentically and strategically, you inspire others to get involved and amplify the impact of the causes you care about.</p>
+
+<p>Start sharing your story today and help build a more connected, compassionate world!</p>
+
+<hr />
+
+<p><em>Social sharing features available across all platforms</em><br />
+<em>Privacy controls customizable for each post</em><br />
+<em>Community guidelines apply to all shared content</em></p>
+</article>
+      </div>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="docs-search-overlay" id="search-overlay">
+      <div class="docs-search-results">
+        <div class="docs-search-header">
+          <h3>Search Results</h3>
+          <button class="docs-search-close" id="search-close">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="docs-search-list" id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- Google Translate -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- JavaScript -->
+    <script>
+      // Settings dropdown
+      const settingsToggle = document.getElementById("settings-toggle");
+      const settingsMenu = document.getElementById("settings-menu");
+
+      settingsToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        settingsMenu.style.display =
+          settingsMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (
+          !settingsToggle.contains(e.target) &&
+          !settingsMenu.contains(e.target)
+        ) {
+          settingsMenu.style.display = "none";
+        }
+      });
+
+      // Theme switching
+      const themeButtons = document.querySelectorAll(".docs-theme-btn");
+      const savedTheme = localStorage.getItem("docs-theme") || "light";
+
+      document.body.classList.toggle("dark-mode", savedTheme === "dark");
+
+      themeButtons.forEach((button) => {
+        if (button.dataset.theme === savedTheme) {
+          button.classList.add("active");
+        }
+
+        button.addEventListener("click", function () {
+          const theme = this.dataset.theme;
+          localStorage.setItem("docs-theme", theme);
+          document.body.classList.toggle("dark-mode", theme === "dark");
+
+          themeButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Language switching
+      const langButtons = document.querySelectorAll(".docs-lang-btn");
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const lang = this.dataset.lang;
+
+          if (lang === "en") {
+            // Clear translation
+            const url = window.location.pathname + window.location.search;
+            window.location.href = url;
+          } else {
+            // Use hash-based translation trigger
+            let langCode = lang;
+            // Map language codes to Google Translate codes
+            const langMap = {
+              'zh-CN': 'zh-CN',
+              'ar': 'ar',
+              'ko': 'ko',
+              'ja': 'ja',
+              'es': 'es',
+              'de': 'de',
+              'fr': 'fr'
+            };
+            
+            langCode = langMap[lang] || lang;
+            
+            // Set hash to trigger translation
+            window.location.hash = `googtrans(en|${langCode})`;
+            window.location.reload();
+          }
+
+          langButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Enhanced search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("search-close");
+
+      let searchData = [];
+
+      // Load search data - with fallback for non-Jekyll environments
+      const searchUrl = '/search.json' === '/search.json' 
+        ? './search.json'  // Fallback if Jekyll isn't processing
+        : '/search.json';
+      
+      fetch(searchUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          searchData = data;
+          // Search data loaded successfully
+        })
+        .catch((error) => {
+          console.error("❌ Search data loading error:", error);
+          // Fallback: Try to search through visible navigation links
+          const navLinks = document.querySelectorAll('.docs-nav-link');
+          searchData = Array.from(navLinks).map(link => ({
+            title: link.textContent.trim(),
+            url: link.getAttribute('href'),
+            content: link.textContent.trim(),
+            category: 'Navigation'
+          }));
+          // Using fallback search data from navigation
+        });
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+        
+        let score = 0;
+        
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+        
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+        
+        // Multiple word matches
+        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
+        queryWords.forEach(word => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+        
+        return score;
+      }
+
+      function performSearch(query) {
+        if (!query.trim()) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        const results = searchData
+          .filter((item) => {
+            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
+            return text.includes(query.toLowerCase());
+          })
+          .map(item => ({
+            ...item,
+            relevance: calculateRelevance(item, query)
+          }))
+          .sort((a, b) => b.relevance - a.relevance)
+          .slice(0, 8);
+
+        if (results.length === 0) {
+          searchResults.innerHTML = `
+            <div class="docs-search-item">
+              <div class="docs-result-title">No results found</div>
+              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
+        } else {
+          searchResults.innerHTML = results
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+              
+              return `
+                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
+                  <div class="docs-result-title">${highlightedTitle}</div>
+                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        searchOverlay.classList.add("active");
+      }
+
+      searchInput.addEventListener("input", function () {
+        const query = this.value;
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => performSearch(query), 300);
+      });
+
+      searchInput.addEventListener("focus", function () {
+        if (this.value.trim()) {
+          performSearch(this.value);
+        }
+      });
+
+      searchClose.addEventListener("click", function () {
+        searchOverlay.classList.remove("active");
+        searchInput.value = "";
+      });
+
+      searchOverlay.addEventListener("click", function (e) {
+        if (e.target === searchOverlay) {
+          searchOverlay.classList.remove("active");
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
+      // Check for active language on page load
+      window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash.includes('googtrans')) {
+          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
+          if (match && match[1]) {
+            const activeLang = match[1];
+            langButtons.forEach((btn) => {
+              if (btn.dataset.lang === activeLang) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+          }
+        }
+      });
+    </script>
+
+    <!-- Google Translate -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>

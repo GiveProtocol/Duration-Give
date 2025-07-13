@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentación de Give Protocol - Give Protocol Documentation</title>
+    <meta name="description" content="Documentación oficial de la plataforma de donaciones benéficas Give Protocol" />
+    
+    <!-- Language detection -->
+    
+    
+    
+    <!-- Alternate language links for SEO -->
+    
+      
+        
+        
+          <link rel="alternate" hreflang="en" href="/esen/" />
+        
+      
+        
+        
+      
+        
+        
+          <link rel="alternate" hreflang="zh" href="/eszh/" />
+        
+      
+    
+    
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon/favicon-16x16.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.294.0/font/lucide.min.css" />
+    
+    <!-- Google Translate -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+  </head>
+  
+  <body class="modern-docs preload">
+    <script>
+      // Remove preload class after page loads to enable transitions
+      window.addEventListener('load', function() {
+        document.body.classList.remove('preload');
+      });
+    </script>
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- Modern Header -->
+    <header class="modern-header">
+      <div class="header-container">
+        <a href="/" class="brand">
+          <img
+            src="/assets/images/logo.svg"
+            alt="Give Protocol"
+          />
+          <span>Documentation</span>
+        </a>
+
+        <div class="header-search">
+          <div class="search-wrapper">
+            <i class="lucide-search search-icon"></i>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search documentation..."
+              data-translate="yes"
+            />
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <a href="https://giveprotocol.io" class="btn-link">
+            Main Site
+          </a>
+          
+          <!-- Settings Container -->
+          <div class="settings-container">
+            <button class="settings-toggle" aria-label="Settings">
+              <i class="lucide-settings"></i>
+            </button>
+            
+            <!-- Settings Menu -->
+            <div class="settings-dropdown" style="display: none;">
+            <div class="settings-section">
+              <h4 class="settings-heading theme-heading">Theme</h4>
+              <div class="theme-options">
+                <button class="theme-option active" data-theme="light">
+                  <i class="lucide-sun"></i> Light
+                </button>
+                <button class="theme-option" data-theme="dark">
+                  <i class="lucide-moon"></i> Dark
+                </button>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h4 class="settings-heading language-heading">Language</h4>
+              <div class="language-options">
+                <!-- Primary languages (full translation) -->
+                
+                  
+                  
+                  
+                    <button class="language-option primary-lang " 
+                            data-lang="en" 
+                            data-type="primary"
+                            title="English">
+                      English
+                    </button>
+                  
+                
+                  
+                  
+                  
+                    <button class="language-option primary-lang active" 
+                            data-lang="es" 
+                            data-type="primary"
+                            title="Spanish">
+                      Español
+                    </button>
+                  
+                
+                  
+                  
+                  
+                    <button class="language-option primary-lang " 
+                            data-lang="zh" 
+                            data-type="primary"
+                            title="Chinese (Simplified)">
+                      中文
+                    </button>
+                  
+                
+                
+                <!-- Secondary languages (Google Translate) -->
+                
+                  
+                  
+                  
+                    <button class="language-option secondary-lang" 
+                            data-lang="de" 
+                            data-type="secondary"
+                            title="German (Google Translate)">
+                      Deutsch
+                    </button>
+                  
+                
+                  
+                  
+                  
+                    <button class="language-option secondary-lang" 
+                            data-lang="fr" 
+                            data-type="secondary"
+                            title="French (Google Translate)">
+                      Français
+                    </button>
+                  
+                
+                  
+                  
+                  
+                    <button class="language-option secondary-lang" 
+                            data-lang="ja" 
+                            data-type="secondary"
+                            title="Japanese (Google Translate)">
+                      日本語
+                    </button>
+                  
+                
+                  
+                  
+                  
+                    <button class="language-option secondary-lang" 
+                            data-lang="pt" 
+                            data-type="secondary"
+                            title="Portuguese (Google Translate)">
+                      Português
+                    </button>
+                  
+                
+                  
+                  
+                  
+                    <button class="language-option secondary-lang" 
+                            data-lang="ko" 
+                            data-type="secondary"
+                            title="Korean (Google Translate)">
+                      한국어
+                    </button>
+                  
+                
+                  
+                  
+                  
+                    <button class="language-option secondary-lang" 
+                            data-lang="ar" 
+                            data-type="secondary"
+                            title="Arabic (Google Translate)">
+                      العربية
+                    </button>
+                  
+                
+                  
+                  
+                  
+                    <button class="language-option secondary-lang" 
+                            data-lang="hi" 
+                            data-type="secondary"
+                            title="Hindi (Google Translate)">
+                      हिन्दी
+                    </button>
+                  
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+      <!-- Modern Sidebar -->
+      <aside class="modern-sidebar">
+        <button class="mobile-nav-toggle">
+          <span>Navigation</span>
+          <i class="lucide-menu"></i>
+        </button>
+
+        <nav class="sidebar-nav">
+          <!-- Getting Started -->
+          <div class="nav-section">
+            <h3 class="section-title">Getting Started</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/introduction/what-is-give-protocol/"
+                  class=""
+                >
+                  What is Give Protocol?
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/creating-account/"
+                  class=""
+                >
+                  Creating Account
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/wallet-connection/"
+                  class=""
+                >
+                  Wallet Connection
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/first-steps/"
+                  class=""
+                >
+                  First Steps
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- User Guides -->
+          <div class="nav-section">
+            <h3 class="section-title">User Guides</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/user-guides/donors/"
+                  class=""
+                >
+                  For Donors
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/user-guides/organizations/"
+                  class=""
+                >
+                  For Organizations
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/user-guides/volunteers/"
+                  class=""
+                >
+                  For Volunteers
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Platform Features -->
+          <div class="nav-section">
+            <h3 class="section-title">Platform Features</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/platform-features/search-discovery/"
+                  class=""
+                >
+                  Search & Discovery
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/platform-features/verification/"
+                  class=""
+                >
+                  Verification System
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Technical -->
+          <div class="nav-section">
+            <h3 class="section-title">Technical Details</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/technical/cryptocurrencies/"
+                  class=""
+                >
+                  Supported Cryptocurrencies
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/fees/"
+                  class=""
+                >
+                  Fee Structure
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Help & Support -->
+          <div class="nav-section">
+            <h3 class="section-title">Help & Support</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/help-center/faq/"
+                  class=""
+                >
+                  Frequently Asked Questions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/help-center/need-help/"
+                  class=""
+                >
+                  Need Help?
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="modern-content">
+        <div class="content-card">
+          <!-- Breadcrumbs -->
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+                
+            <span class="separator">/</span>
+            
+            <span>Es</span>
+              
+          </nav>
+
+          <article><h1 id="bienvenido-a-give-protocol">Bienvenido a Give Protocol</h1>
+
+<p>Give Protocol es una plataforma de donaciones benéficas basada en blockchain que conecta donantes, organizaciones benéficas y voluntarios en un ecosistema transparente y eficiente.</p>
+
+<h2 id="comenzar">Comenzar</h2>
+
+<div class="nav-section">
+  <h3 class="section-title">Primeros Pasos</h3>
+  <ul class="nav-list">
+    <li class="nav-item">
+      <a href="/es/introduction/what-is-give-protocol/">¿Qué es Give Protocol?</a>
+    </li>
+    <li class="nav-item">
+      <a href="/es/getting-started/creating-account/">Crear Cuenta</a>
+    </li>
+    <li class="nav-item">
+      <a href="/es/getting-started/wallet-connection/">Conexión de Billetera</a>
+    </li>
+    <li class="nav-item">
+      <a href="/es/getting-started/first-steps/">Primeros Pasos</a>
+    </li>
+  </ul>
+</div>
+
+<h2 id="guías-de-usuario">Guías de Usuario</h2>
+
+<div class="nav-section">
+  <h3 class="section-title">Guías por Tipo de Usuario</h3>
+  <ul class="nav-list">
+    <li class="nav-item">
+      <a href="/es/user-guides/donors/">Para Donantes</a>
+    </li>
+    <li class="nav-item">
+      <a href="/es/user-guides/organizations/">Para Organizaciones</a>
+    </li>
+    <li class="nav-item">
+      <a href="/es/user-guides/volunteers/">Para Voluntarios</a>
+    </li>
+  </ul>
+</div>
+
+<h2 id="características-de-la-plataforma">Características de la Plataforma</h2>
+
+<p>Give Protocol ofrece varias características únicas:</p>
+
+<ul>
+  <li><strong>Donaciones Transparentes</strong>: Todas las transacciones son registradas en blockchain</li>
+  <li><strong>Verificación de Voluntarios</strong>: Sistema de verificación para horas de voluntariado</li>
+  <li><strong>Donaciones Programadas</strong>: Configure donaciones automáticas mensuales</li>
+  <li><strong>Múltiples Criptomonedas</strong>: Soporte para varios tokens y monedas estables</li>
+</ul>
+
+<h2 id="necesita-ayuda">Necesita Ayuda?</h2>
+
+<p>Si tiene preguntas o necesita asistencia:</p>
+
+<ul>
+  <li>Consulte nuestras <a href="/es/help-center/faq/">Preguntas Frecuentes</a></li>
+  <li><a href="/es/help-center/need-help/">Contáctenos</a> para soporte directo</li>
+  <li><a href="/es/help-center/report-issue/">Reporte un problema</a> si encuentra errores</li>
+</ul>
+</article>
+
+          <!-- Page Actions -->
+          <div class="page-actions">
+            
+
+            <div class="last-updated">
+              Last updated: 
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Search Results Overlay -->
+    <div class="search-results-overlay" id="search-overlay">
+      <div class="search-results-container">
+        <div class="search-header">
+          <h3>Search Results</h3>
+          <button class="close-search" id="close-search">
+            <i class="lucide-x"></i>
+          </button>
+        </div>
+        <div id="search-results"></div>
+        <div class="search-shortcuts">
+          <div class="shortcut">
+            <kbd>↑</kbd><kbd>↓</kbd> Navigate
+          </div>
+          <div class="shortcut">
+            <kbd>Enter</kbd> Select
+          </div>
+          <div class="shortcut">
+            <kbd>Esc</kbd> Close
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      /* global google */
+      
+      // Settings dropdown
+      const settingsToggle = document.querySelector('.settings-toggle');
+      const settingsDropdown = document.querySelector('.settings-dropdown');
+      
+      console.log('Settings elements found:', {
+        toggle: !!settingsToggle,
+        dropdown: !!settingsDropdown
+      });
+      
+      function toggleSettingsDropdown() {
+        const isVisible = settingsDropdown.style.display === 'block';
+        settingsDropdown.style.display = isVisible ? 'none' : 'block';
+      }
+      
+      function closeSettingsDropdown() {
+        settingsDropdown.style.display = 'none';
+      }
+      
+      settingsToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSettingsDropdown();
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!settingsToggle.contains(e.target) && !settingsDropdown.contains(e.target)) {
+          closeSettingsDropdown();
+        }
+      });
+
+      // Theme switching
+      const themeOptions = document.querySelectorAll(".theme-option");
+      const savedTheme = localStorage.getItem("docs-theme") || "light";
+
+      document.body.classList.toggle("dark-mode", savedTheme === "dark");
+
+      themeOptions.forEach((option) => {
+        if (option.dataset.theme === savedTheme) {
+          option.classList.add("active");
+        }
+
+        option.addEventListener("click", () => {
+          const theme = option.dataset.theme;
+          localStorage.setItem('docs-theme', theme);
+          document.body.classList.toggle('dark-mode', theme === 'dark');
+          
+          themeOptions.forEach(opt => opt.classList.remove('active'));
+          option.classList.add('active');
+          
+          // Close dropdown after selection
+          setTimeout(closeSettingsDropdown, 150);
+        });
+      });
+
+      // Language switching
+      const languageOptions = document.querySelectorAll(".language-option");
+
+      languageOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          const lang = option.dataset.lang;
+          const type = option.dataset.type;
+          window.userRequestedLanguageChange = true;
+          
+          if (type === 'primary') {
+            // Navigate to translated page
+            let newUrl = window.location.pathname;
+            
+            // Remove current language prefix if exists
+            newUrl = newUrl.replace(/^\/(en|es|zh)\//, '/');
+            
+            if (lang !== 'en') {
+              newUrl = '/' + lang + newUrl;
+            }
+            
+            // Ensure proper URL structure
+            if (newUrl === '/' + lang) {
+              newUrl = '/' + lang + '/';
+            }
+            
+            window.location.href = newUrl;
+          } else {
+            // Use Google Translate for secondary languages
+            // Update UI state for secondary languages only
+            const secondaryOptions = document.querySelectorAll('.language-option.secondary-lang');
+            secondaryOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+            
+            if (typeof google !== 'undefined' && google.translate) {
+              const selectElement = document.querySelector('#google_translate_element select');
+              if (selectElement) {
+                selectElement.value = lang;
+                selectElement.dispatchEvent(new Event("change"));
+              }
+            }
+          }
+          
+          // Close dropdown after selection
+          setTimeout(closeSettingsDropdown, 150);
+        });
+      });
+
+      // Mobile nav toggle
+      const mobileNavToggle = document.querySelector(".mobile-nav-toggle");
+      const sidebarNav = document.querySelector(".sidebar-nav");
+
+      mobileNavToggle.addEventListener("click", () => {
+        sidebarNav.style.display =
+          sidebarNav.style.display === "none" ? "block" : "none";
+      });
+      
+      // Header scroll effect
+      const header = document.querySelector('.modern-header');
+      let lastScrollY = window.scrollY;
+      
+      window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY > 10) {
+          header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+        } else {
+          header.style.boxShadow = 'none';
+        }
+        
+        lastScrollY = currentScrollY;
+      });
+    </script>
+
+    <!-- Search Scripts -->
+    <script src="https://unpkg.com/lunr/lunr.min.js"></script>
+    <script src="/assets/js/lunr-search.js"></script>
+    
+    <!-- i18n Helper -->
+    <script src="/assets/js/i18n-helper.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1650 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Report Issue - Give Protocol Documentation
+    </title>
+    <meta
+      name="description"
+      content="Report problems, safety concerns, and technical issues on the Give Protocol platform"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon/favicon-16x16.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+    />
+
+    <style>
+      /* Immediate styles to prevent layout shift */
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0eee7;
+        margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark-mode {
+        background: #0f172a;
+        color: #f1f5f9;
+      }
+      .docs-header {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-header {
+        background: #1e293b;
+        border-bottom-color: #334155;
+      }
+      .docs-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .docs-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-brand {
+        color: #f1f5f9;
+      }
+      .docs-search {
+        flex: 1;
+        max-width: 400px;
+        margin: 0 2rem;
+        position: relative;
+      }
+      .docs-search input {
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-search input {
+        background: #374151;
+        border-color: #4b5563;
+        color: #f1f5f9;
+      }
+      .docs-search input:focus {
+        outline: none;
+        background: #fff;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+      body.dark-mode .docs-search input:focus {
+        background: #4b5563;
+        border-color: #6366f1;
+      }
+      .docs-search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-icon {
+        color: #d1d5db;
+      }
+      .docs-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .docs-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: #4b5563;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-btn {
+        color: #d1d5db;
+      }
+      .docs-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings {
+        position: relative;
+      }
+      .docs-settings-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-settings-btn {
+        color: #d1d5db;
+      }
+      .docs-settings-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-settings-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        min-width: 240px;
+        z-index: 100;
+        display: none;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-menu {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      .docs-settings-section {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      body.dark-mode .docs-settings-section {
+        border-bottom-color: #334155;
+      }
+      .docs-settings-section:last-child {
+        border-bottom: none;
+      }
+      .docs-settings-heading {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-heading {
+        color: #d1d5db;
+      }
+      .docs-theme-options {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .docs-theme-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        padding: 0.5rem;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-theme-btn {
+        background: #374151;
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-theme-btn:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-theme-btn:hover {
+        background: #4b5563;
+        border-color: #6b7280;
+      }
+      .docs-theme-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+      body.dark-mode .docs-theme-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-lang-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .docs-lang-btn {
+        padding: 0.5rem 0.75rem;
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: left;
+      }
+      body.dark-mode .docs-lang-btn {
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-lang-btn:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-lang-btn:hover {
+        background: #374151;
+        border-color: #6b7280;
+      }
+      .docs-lang-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-lang-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-main {
+        display: flex;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        gap: 2rem;
+      }
+      .docs-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 5.5rem;
+        height: fit-content;
+      }
+      .docs-nav-section {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-section {
+        background: #1e293b;
+      }
+      .docs-nav-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-title {
+        color: #d1d5db;
+      }
+      .docs-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .docs-nav-item {
+        margin-bottom: 0.25rem;
+      }
+      .docs-nav-link {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        color: #374151;
+        text-decoration: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-nav-link {
+        color: #d1d5db;
+      }
+      .docs-nav-link:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-nav-link:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-nav-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-nav-link.active {
+        background: #312e81;
+        color: #c7d2fe;
+      }
+      .docs-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .docs-article {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-article {
+        background: #1e293b;
+      }
+      .docs-search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: none;
+      }
+      .docs-search-overlay.active {
+        display: block;
+      }
+      .docs-search-results {
+        max-width: 600px;
+        margin: 6rem auto 2rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-results {
+        background: #1e293b;
+      }
+      .docs-search-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      body.dark-mode .docs-search-header {
+        border-bottom-color: #334155;
+      }
+      .docs-search-close {
+        padding: 0.25rem;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-close {
+        color: #d1d5db;
+      }
+      .docs-search-list {
+        padding: 0;
+        margin: 0;
+      }
+      .docs-search-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-item {
+        border-bottom-color: #334155;
+      }
+      .docs-search-item:hover {
+        background: #f9fafb;
+      }
+      body.dark-mode .docs-search-item:hover {
+        background: #374151;
+      }
+      .docs-search-item:last-child {
+        border-bottom: none;
+      }
+      .docs-result-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #111827;
+        margin-bottom: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-title {
+        color: #f1f5f9;
+      }
+      .docs-result-excerpt {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.4;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-excerpt {
+        color: #d1d5db;
+      }
+      .docs-result-category {
+        font-size: 0.75rem;
+        color: #6366f1;
+        font-weight: 500;
+        margin-top: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-category {
+        color: #c7d2fe;
+      }
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 500;
+      }
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+      @media (max-width: 768px) {
+        .docs-search {
+          display: none;
+        }
+        .docs-main {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .docs-sidebar {
+          position: static;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="docs-header">
+      <div class="docs-container">
+        <a href="/" class="docs-brand">
+          <img src="/assets/images/logo.svg" alt="Give Protocol" width="32" height="32">
+          <span>Give Protocol Docs</span>
+        </a>
+
+        <div class="docs-search">
+          <svg
+            class="docs-search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
+
+        <div class="docs-actions">
+          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
+
+          <div class="docs-settings">
+            <button class="docs-settings-btn" id="settings-toggle">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+
+            <div class="docs-settings-menu" id="settings-menu">
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Theme</h4>
+                <div class="docs-theme-options">
+                  <button class="docs-theme-btn active" data-theme="light">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <path
+                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                      />
+                    </svg>
+                    Light
+                  </button>
+                  <button class="docs-theme-btn" data-theme="dark">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Language</h4>
+                <div class="docs-lang-options">
+                  <button class="docs-lang-btn active" data-lang="en">
+                    🇺🇸 English
+                  </button>
+                  <button class="docs-lang-btn" data-lang="es">
+                    🇪🇸 Español
+                  </button>
+                  <button class="docs-lang-btn" data-lang="de">
+                    🇩🇪 Deutsch
+                  </button>
+                  <button class="docs-lang-btn" data-lang="fr">
+                    🇫🇷 Français
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ja">
+                    🇯🇵 日本語
+                  </button>
+                  <button class="docs-lang-btn" data-lang="zh-CN">
+                    🇨🇳 简体中文
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ko">
+                    🇰🇷 한국어
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ar">
+                    🇸🇦 العربية
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <!-- Sidebar -->
+      <aside class="docs-sidebar">
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Getting Started</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/introduction/what-is-give-protocol/"
+                class="docs-nav-link "
+              >
+                What is Give Protocol?
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/creating-account/"
+                class="docs-nav-link "
+              >
+                Creating Account
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/wallet-connection/"
+                class="docs-nav-link "
+              >
+                Wallet Connection
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">User Guides</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/donors/"
+                class="docs-nav-link "
+              >
+                For Donors
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/organizations/"
+                class="docs-nav-link "
+              >
+                For Organizations
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/volunteers/"
+                class="docs-nav-link "
+              >
+                For Volunteers
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Help & Support</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/faq/"
+                class="docs-nav-link "
+              >
+                FAQ
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/need-help/"
+                class="docs-nav-link "
+              >
+                Need Help?
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <article class="docs-article"><p>Your reports help us maintain a safe, secure, and reliable platform for everyone. Use this guide to report issues effectively and get the fastest resolution possible.</p>
+
+<h2 id="quick-reporting-options">Quick Reporting Options</h2>
+
+<h3 id="emergency-issues">Emergency Issues</h3>
+
+<ul>
+  <li><strong>Safety Concerns</strong>: 1-800-GIVE-SAFE (24/7)</li>
+  <li><strong>Security Issues</strong>: security@giveprotocol.org</li>
+  <li><strong>Fraud Reports</strong>: fraud@giveprotocol.org</li>
+  <li><strong>Harassment</strong>: harassment@giveprotocol.org</li>
+</ul>
+
+<h3 id="general-issues">General Issues</h3>
+
+<ul>
+  <li><strong>Technical Problems</strong>: tech-support@giveprotocol.org</li>
+  <li><strong>Account Issues</strong>: support@giveprotocol.org</li>
+  <li><strong>Billing Problems</strong>: billing@giveprotocol.org</li>
+  <li><strong>In-App Reporting</strong>: Use the “Report” button in the app</li>
+</ul>
+
+<h2 id="types-of-issues-to-report">Types of Issues to Report</h2>
+
+<h3 id="safety-and-security">Safety and Security</h3>
+
+<h4 id="volunteer-safety-concerns">Volunteer Safety Concerns</h4>
+
+<p><strong>Report Immediately</strong>:</p>
+
+<ul>
+  <li>Unsafe volunteer conditions</li>
+  <li>Inappropriate behavior by organization staff</li>
+  <li>Requests for personal information</li>
+  <li>Unsafe transportation arrangements</li>
+  <li>Inadequate safety equipment or training</li>
+</ul>
+
+<p><strong>How to Report</strong>:</p>
+
+<ol>
+  <li>Remove yourself from unsafe situation</li>
+  <li>Call 1-800-GIVE-SAFE immediately</li>
+  <li>Document the incident with photos/notes</li>
+  <li>Submit detailed report through platform</li>
+  <li>Follow up with local authorities if necessary</li>
+</ol>
+
+<h4 id="platform-security-issues">Platform Security Issues</h4>
+
+<p><strong>Critical Security Reports</strong>:</p>
+
+<ul>
+  <li>Unauthorized access to your account</li>
+  <li>Suspicious login attempts</li>
+  <li>Potential data breaches</li>
+  <li>Phishing attempts</li>
+  <li>Malware or virus warnings</li>
+</ul>
+
+<p><strong>Reporting Process</strong>:</p>
+
+<ol>
+  <li><strong>Immediate Action</strong>: Change passwords and secure account</li>
+  <li><strong>Contact Security</strong>: security@giveprotocol.org</li>
+  <li><strong>Provide Details</strong>: Include all relevant information</li>
+  <li><strong>Follow Instructions</strong>: Implement recommended security measures</li>
+  <li><strong>Monitor Account</strong>: Watch for further suspicious activity</li>
+</ol>
+
+<h3 id="fraudulent-activity">Fraudulent Activity</h3>
+
+<h4 id="fake-organizations">Fake Organizations</h4>
+
+<p><strong>Warning Signs</strong>:</p>
+
+<ul>
+  <li>Requests for cash-only donations</li>
+  <li>Vague mission statements</li>
+  <li>No physical address</li>
+  <li>Pressure tactics</li>
+  <li>Unverified contact information</li>
+</ul>
+
+<h4 id="suspicious-volunteer-opportunities">Suspicious Volunteer Opportunities</h4>
+
+<p><strong>Red Flags</strong>:</p>
+
+<ul>
+  <li>Requests for money upfront</li>
+  <li>Vague job descriptions</li>
+  <li>Meeting in private locations</li>
+  <li>Requests for personal documents</li>
+  <li>Too-good-to-be-true opportunities</li>
+</ul>
+
+<h4 id="reporting-fraud">Reporting Fraud</h4>
+
+<ol>
+  <li><strong>Gather Evidence</strong>: Screenshots, emails, communications</li>
+  <li><strong>Report to Platform</strong>: fraud@giveprotocol.org</li>
+  <li><strong>Contact Authorities</strong>: Local police, FTC, state attorney general</li>
+  <li><strong>Document Everything</strong>: Keep records of all interactions</li>
+  <li><strong>Warn Others</strong>: Share (safely) with community</li>
+</ol>
+
+<h3 id="technical-issues">Technical Issues</h3>
+
+<h4 id="platform-bugs">Platform Bugs</h4>
+
+<p><strong>Common Technical Problems</strong>:</p>
+
+<ul>
+  <li>Features not working properly</li>
+  <li>Pages not loading correctly</li>
+  <li>Mobile app crashes</li>
+  <li>Data synchronization issues</li>
+  <li>Payment processing errors</li>
+</ul>
+
+<h4 id="reporting-technical-issues">Reporting Technical Issues</h4>
+
+<ol>
+  <li>
+    <p><strong>Try Basic Troubleshooting</strong>:</p>
+
+    <ul>
+      <li>Clear browser cache</li>
+      <li>Restart app/browser</li>
+      <li>Check internet connection</li>
+      <li>Update app/browser</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Gather Information</strong>:</p>
+
+    <ul>
+      <li>Device type and operating system</li>
+      <li>Browser version</li>
+      <li>Steps to reproduce the issue</li>
+      <li>Error messages received</li>
+      <li>Screenshots of the problem</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Submit Report</strong>:</p>
+    <ul>
+      <li>Use in-app reporting feature</li>
+      <li>Email tech-support@giveprotocol.org</li>
+      <li>Include all gathered information</li>
+      <li>Specify urgency level</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="mobile-app-issues">Mobile App Issues</h4>
+
+<p><strong>Specific Mobile Problems</strong>:</p>
+
+<ul>
+  <li>App won’t open or crashes</li>
+  <li>Features missing or broken</li>
+  <li>Sync problems between devices</li>
+  <li>Push notifications not working</li>
+  <li>Location services issues</li>
+</ul>
+
+<h3 id="content-and-behavior-issues">Content and Behavior Issues</h3>
+
+<h4 id="inappropriate-content">Inappropriate Content</h4>
+
+<p><strong>Report These Issues</strong>:</p>
+
+<ul>
+  <li>Offensive language or images</li>
+  <li>Spam or promotional content</li>
+  <li>Misleading information</li>
+  <li>Copyright violations</li>
+  <li>Inappropriate volunteer opportunity descriptions</li>
+</ul>
+
+<h4 id="user-behavior-problems">User Behavior Problems</h4>
+
+<p><strong>Problematic Behaviors</strong>:</p>
+
+<ul>
+  <li>Harassment or bullying</li>
+  <li>Discrimination</li>
+  <li>Inappropriate messaging</li>
+  <li>Fake profiles</li>
+  <li>Violation of community guidelines</li>
+</ul>
+
+<h4 id="reporting-process">Reporting Process</h4>
+
+<ol>
+  <li><strong>Use In-App Reporting</strong>: Click “Report” button on content</li>
+  <li><strong>Select Issue Type</strong>: Choose appropriate category</li>
+  <li><strong>Provide Details</strong>: Explain the problem clearly</li>
+  <li><strong>Submit Evidence</strong>: Include screenshots if helpful</li>
+  <li><strong>Follow Up</strong>: Check status of report if needed</li>
+</ol>
+
+<h2 id="how-to-write-effective-reports">How to Write Effective Reports</h2>
+
+<h3 id="essential-information">Essential Information</h3>
+
+<h4 id="for-all-reports">For All Reports</h4>
+
+<ul>
+  <li><strong>Your Contact Information</strong>: Email, phone (if urgent)</li>
+  <li><strong>Date and Time</strong>: When the issue occurred</li>
+  <li><strong>Location</strong>: Where the issue happened (physical or digital)</li>
+  <li><strong>Description</strong>: Clear explanation of what happened</li>
+  <li><strong>Impact</strong>: How it affected you or others</li>
+</ul>
+
+<h4 id="for-technical-issues">For Technical Issues</h4>
+
+<ul>
+  <li><strong>Device Information</strong>: Type, model, operating system</li>
+  <li><strong>Browser Details</strong>: Name, version, settings</li>
+  <li><strong>Network Information</strong>: Connection type, speed</li>
+  <li><strong>Error Messages</strong>: Exact text of any errors</li>
+  <li><strong>Steps to Reproduce</strong>: How to trigger the issue</li>
+</ul>
+
+<h4 id="for-safety-issues">For Safety Issues</h4>
+
+<ul>
+  <li><strong>People Involved</strong>: Names, roles, contact information</li>
+  <li><strong>Witness Information</strong>: Anyone who saw the incident</li>
+  <li><strong>Documentation</strong>: Photos, videos, written records</li>
+  <li><strong>Actions Taken</strong>: What you did to address the situation</li>
+  <li><strong>Immediate Needs</strong>: Any urgent assistance required</li>
+</ul>
+
+<h3 id="writing-clear-reports">Writing Clear Reports</h3>
+
+<h4 id="structure-your-report">Structure Your Report</h4>
+
+<ol>
+  <li><strong>Summary</strong>: Brief overview of the issue</li>
+  <li><strong>Details</strong>: Comprehensive description</li>
+  <li><strong>Impact</strong>: How it affects users/platform</li>
+  <li><strong>Evidence</strong>: Supporting documentation</li>
+  <li><strong>Resolution</strong>: What you’d like to happen</li>
+</ol>
+
+<h4 id="be-specific-and-objective">Be Specific and Objective</h4>
+
+<ul>
+  <li>Use facts, not opinions</li>
+  <li>Include exact quotes when relevant</li>
+  <li>Provide specific dates and times</li>
+  <li>Avoid emotional language</li>
+  <li>Focus on behaviors, not personalities</li>
+</ul>
+
+<h4 id="example-report-structure">Example Report Structure</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Subject: Volunteer Safety Concern - [Organization Name] - [Date]
+
+Summary: Unsafe working conditions at volunteer site
+
+Details:
+- Location: [Specific address]
+- Date/Time: [Exact time]
+- People present: [Names and roles]
+- What happened: [Step-by-step description]
+- Safety concerns: [Specific hazards]
+- Actions taken: [What you did]
+
+Evidence:
+- Photos of unsafe conditions
+- Names of witnesses
+- Organization contact information
+
+Requested Resolution:
+- Immediate safety review
+- Corrective action plan
+- Follow-up safety training
+</code></pre></div></div>
+
+<h2 id="report-status-and-follow-up">Report Status and Follow-Up</h2>
+
+<h3 id="report-tracking">Report Tracking</h3>
+
+<h4 id="status-updates">Status Updates</h4>
+
+<ul>
+  <li><strong>Received</strong>: Report submitted and acknowledged</li>
+  <li><strong>Under Review</strong>: Investigation in progress</li>
+  <li><strong>In Progress</strong>: Action being taken</li>
+  <li><strong>Resolved</strong>: Issue addressed and closed</li>
+  <li><strong>Closed</strong>: No further action needed</li>
+</ul>
+
+<h4 id="communication">Communication</h4>
+
+<ul>
+  <li><strong>Confirmation Email</strong>: Sent when report received</li>
+  <li><strong>Status Updates</strong>: Periodic progress reports</li>
+  <li><strong>Resolution Notice</strong>: Final outcome notification</li>
+  <li><strong>Feedback Request</strong>: Opportunity to rate experience</li>
+</ul>
+
+<h3 id="following-up">Following Up</h3>
+
+<h4 id="when-to-follow-up">When to Follow Up</h4>
+
+<ul>
+  <li>No acknowledgment within 24 hours</li>
+  <li>No update after promised timeframe</li>
+  <li>Issue not resolved as expected</li>
+  <li>New information becomes available</li>
+  <li>Situation becomes more urgent</li>
+</ul>
+
+<h4 id="how-to-follow-up">How to Follow Up</h4>
+
+<ol>
+  <li><strong>Reference Original Report</strong>: Include report number</li>
+  <li><strong>Provide Updates</strong>: Share new information</li>
+  <li><strong>Clarify Expectations</strong>: Confirm understanding</li>
+  <li><strong>Escalate if Needed</strong>: Request supervisor review</li>
+  <li><strong>Document Everything</strong>: Keep records of all communication</li>
+</ol>
+
+<h2 id="special-reporting-procedures">Special Reporting Procedures</h2>
+
+<h3 id="harassment-and-discrimination">Harassment and Discrimination</h3>
+
+<h4 id="confidential-reporting">Confidential Reporting</h4>
+
+<ul>
+  <li><strong>Email</strong>: harassment@giveprotocol.org</li>
+  <li><strong>Phone</strong>: 1-800-GIVE-SAFE</li>
+  <li><strong>Anonymous</strong>: Anonymous reporting option available</li>
+  <li><strong>Third-Party</strong>: Report on behalf of others</li>
+</ul>
+
+<h4 id="what-to-include">What to Include</h4>
+
+<ul>
+  <li>Detailed description of behavior</li>
+  <li>Dates, times, and locations</li>
+  <li>Names of people involved</li>
+  <li>Witnesses to the behavior</li>
+  <li>Any documentation or evidence</li>
+  <li>Previous incidents or patterns</li>
+</ul>
+
+<h3 id="child-safety">Child Safety</h3>
+
+<h4 id="mandatory-reporting">Mandatory Reporting</h4>
+
+<p><strong>Report Immediately</strong>:</p>
+
+<ul>
+  <li>Child abuse or neglect</li>
+  <li>Inappropriate adult behavior with children</li>
+  <li>Unsafe conditions for child volunteers</li>
+  <li>Requests for personal information from children</li>
+</ul>
+
+<p><strong>Reporting Process</strong>:</p>
+
+<ol>
+  <li><strong>Call Local Authorities</strong>: 911 or child protective services</li>
+  <li><strong>Contact Give Protocol</strong>: 1-800-GIVE-SAFE</li>
+  <li><strong>Document Everything</strong>: Write down all details</li>
+  <li><strong>Cooperate with Investigation</strong>: Provide all requested information</li>
+  <li><strong>Follow Up</strong>: Ensure proper action is taken</li>
+</ol>
+
+<h3 id="data-privacy-issues">Data Privacy Issues</h3>
+
+<h4 id="privacy-violations">Privacy Violations</h4>
+
+<p><strong>Report These Concerns</strong>:</p>
+
+<ul>
+  <li>Unauthorized access to personal data</li>
+  <li>Sharing of private information</li>
+  <li>Failure to honor privacy settings</li>
+  <li>Requests for excessive personal information</li>
+  <li>Data breach notifications</li>
+</ul>
+
+<h4 id="reporting-process-1">Reporting Process</h4>
+
+<ol>
+  <li><strong>Email</strong>: privacy@giveprotocol.org</li>
+  <li><strong>Include</strong>: Specific privacy concern details</li>
+  <li><strong>Provide</strong>: Screenshots or documentation</li>
+  <li><strong>Specify</strong>: Desired outcome or resolution</li>
+  <li><strong>Follow</strong>: Data protection authority guidelines</li>
+</ol>
+
+<h2 id="emergency-procedures">Emergency Procedures</h2>
+
+<h3 id="immediate-safety-threats">Immediate Safety Threats</h3>
+
+<h4 id="life-threatening-situations">Life-Threatening Situations</h4>
+
+<ol>
+  <li><strong>Call 911</strong>: Local emergency services first</li>
+  <li><strong>Remove Yourself</strong>: From dangerous situation</li>
+  <li><strong>Contact Give Protocol</strong>: 1-800-GIVE-SAFE</li>
+  <li><strong>Document</strong>: When safe to do so</li>
+  <li><strong>Seek Medical Attention</strong>: If injured</li>
+</ol>
+
+<h4 id="platform-wide-emergencies">Platform-Wide Emergencies</h4>
+
+<ul>
+  <li><strong>Security Breaches</strong>: Immediate password change</li>
+  <li><strong>System Outages</strong>: Check status page</li>
+  <li><strong>Data Loss</strong>: Report immediately</li>
+  <li><strong>Widespread Issues</strong>: Follow emergency procedures</li>
+</ul>
+
+<h3 id="crisis-communication">Crisis Communication</h3>
+
+<h4 id="during-emergencies">During Emergencies</h4>
+
+<ul>
+  <li><strong>Official Channels</strong>: Check Give Protocol communications</li>
+  <li><strong>Social Media</strong>: Follow official accounts</li>
+  <li><strong>Email Updates</strong>: Subscribe to emergency notifications</li>
+  <li><strong>Status Page</strong>: Monitor real-time updates</li>
+  <li><strong>Community Forums</strong>: Share information responsibly</li>
+</ul>
+
+<h2 id="report-response-times">Report Response Times</h2>
+
+<h3 id="priority-levels">Priority Levels</h3>
+
+<h4 id="critical-immediate-response">Critical (Immediate Response)</h4>
+
+<ul>
+  <li>Safety threats</li>
+  <li>Security breaches</li>
+  <li>Child safety issues</li>
+  <li>System-wide outages</li>
+  <li><strong>Response Time</strong>: Within 1 hour</li>
+</ul>
+
+<h4 id="high-priority-same-day">High Priority (Same Day)</h4>
+
+<ul>
+  <li>Fraud reports</li>
+  <li>Harassment complaints</li>
+  <li>Significant technical issues</li>
+  <li>Payment problems</li>
+  <li><strong>Response Time</strong>: Within 4 hours</li>
+</ul>
+
+<h4 id="medium-priority-next-business-day">Medium Priority (Next Business Day)</h4>
+
+<ul>
+  <li>Platform bugs</li>
+  <li>Content issues</li>
+  <li>Account problems</li>
+  <li>Feature requests</li>
+  <li><strong>Response Time</strong>: Within 24 hours</li>
+</ul>
+
+<h4 id="low-priority-within-week">Low Priority (Within Week)</h4>
+
+<ul>
+  <li>Minor technical issues</li>
+  <li>Cosmetic problems</li>
+  <li>Enhancement suggestions</li>
+  <li>General feedback</li>
+  <li><strong>Response Time</strong>: Within 5 business days</li>
+</ul>
+
+<h3 id="response-process">Response Process</h3>
+
+<h4 id="investigation-steps">Investigation Steps</h4>
+
+<ol>
+  <li><strong>Initial Review</strong>: Assess report validity and priority</li>
+  <li><strong>Evidence Gathering</strong>: Collect relevant information</li>
+  <li><strong>Investigation</strong>: Thorough examination of issues</li>
+  <li><strong>Action Planning</strong>: Determine appropriate response</li>
+  <li><strong>Implementation</strong>: Execute resolution plan</li>
+  <li><strong>Follow-Up</strong>: Ensure issue is fully resolved</li>
+</ol>
+
+<h2 id="anonymous-reporting">Anonymous Reporting</h2>
+
+<h3 id="when-to-report-anonymously">When to Report Anonymously</h3>
+
+<ul>
+  <li>Fear of retaliation</li>
+  <li>Sensitive personal matters</li>
+  <li>Organizational politics</li>
+  <li>Witness protection concerns</li>
+  <li>Privacy preferences</li>
+</ul>
+
+<h3 id="anonymous-reporting-options">Anonymous Reporting Options</h3>
+
+<ul>
+  <li><strong>Anonymous Email</strong>: anonymous@giveprotocol.org</li>
+  <li><strong>Third-Party Reporting</strong>: Trusted intermediary</li>
+  <li><strong>Anonymous Forms</strong>: Web-based submission</li>
+  <li><strong>Whistleblower Hotline</strong>: 1-800-GIVE-TRUTH</li>
+</ul>
+
+<h3 id="limitations">Limitations</h3>
+
+<ul>
+  <li>Harder to gather additional information</li>
+  <li>Cannot provide direct updates</li>
+  <li>May limit investigation scope</li>
+  <li>Less opportunity for clarification</li>
+</ul>
+
+<h2 id="after-reporting">After Reporting</h2>
+
+<h3 id="what-happens-next">What Happens Next</h3>
+
+<h4 id="immediate-actions">Immediate Actions</h4>
+
+<ol>
+  <li><strong>Acknowledgment</strong>: Confirmation of report received</li>
+  <li><strong>Initial Assessment</strong>: Determine priority and scope</li>
+  <li><strong>Assignment</strong>: Route to appropriate team</li>
+  <li><strong>Investigation</strong>: Begin fact-finding process</li>
+  <li><strong>Updates</strong>: Regular communication about progress</li>
+</ol>
+
+<h4 id="resolution-process">Resolution Process</h4>
+
+<ul>
+  <li><strong>Analysis</strong>: Thorough review of all evidence</li>
+  <li><strong>Action</strong>: Appropriate response implemented</li>
+  <li><strong>Verification</strong>: Ensure resolution is effective</li>
+  <li><strong>Documentation</strong>: Record of actions taken</li>
+  <li><strong>Prevention</strong>: Steps to prevent recurrence</li>
+</ul>
+
+<h3 id="your-role">Your Role</h3>
+
+<h4 id="cooperation">Cooperation</h4>
+
+<ul>
+  <li><strong>Respond Promptly</strong>: To requests for information</li>
+  <li><strong>Provide Access</strong>: To relevant data or systems</li>
+  <li><strong>Be Available</strong>: For follow-up questions</li>
+  <li><strong>Stay Engaged</strong>: Throughout the process</li>
+  <li><strong>Provide Feedback</strong>: On resolution effectiveness</li>
+</ul>
+
+<h4 id="confidentiality">Confidentiality</h4>
+
+<ul>
+  <li><strong>Protect Others</strong>: Don’t share sensitive information</li>
+  <li><strong>Respect Process</strong>: Allow investigation to proceed</li>
+  <li><strong>Avoid Speculation</strong>: Stick to facts</li>
+  <li><strong>Maintain Privacy</strong>: Respect all parties involved</li>
+</ul>
+
+<h2 id="prevention-and-best-practices">Prevention and Best Practices</h2>
+
+<h3 id="preventing-issues">Preventing Issues</h3>
+
+<h4 id="personal-safety">Personal Safety</h4>
+
+<ul>
+  <li>Trust your instincts</li>
+  <li>Verify organization legitimacy</li>
+  <li>Meet in public places initially</li>
+  <li>Keep personal information private</li>
+  <li>Report concerns early</li>
+</ul>
+
+<h4 id="platform-security">Platform Security</h4>
+
+<ul>
+  <li>Use strong, unique passwords</li>
+  <li>Enable two-factor authentication</li>
+  <li>Keep software updated</li>
+  <li>Avoid suspicious links</li>
+  <li>Monitor account activity</li>
+</ul>
+
+<h4 id="community-health">Community Health</h4>
+
+<ul>
+  <li>Follow community guidelines</li>
+  <li>Treat others respectfully</li>
+  <li>Report inappropriate behavior</li>
+  <li>Contribute positively</li>
+  <li>Support platform values</li>
+</ul>
+
+<h3 id="building-a-safer-community">Building a Safer Community</h3>
+
+<h4 id="everyones-responsibility">Everyone’s Responsibility</h4>
+
+<ul>
+  <li><strong>Look Out for Others</strong>: Report on behalf of community</li>
+  <li><strong>Share Knowledge</strong>: Educate others about safety</li>
+  <li><strong>Support Victims</strong>: Provide assistance when appropriate</li>
+  <li><strong>Promote Positivity</strong>: Contribute to welcoming environment</li>
+  <li><strong>Stay Informed</strong>: Keep up with safety best practices</li>
+</ul>
+
+<p>Remember: Your reports help protect everyone in our community. Don’t hesitate to report issues - it’s better to report something that turns out to be minor than to miss something important.</p>
+
+<hr />
+
+<p><em>All reports are taken seriously and investigated thoroughly</em><br />
+<em>Emergency support available 24/7</em><br />
+<em>Anonymous reporting options available for sensitive issues</em></p>
+</article>
+      </div>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="docs-search-overlay" id="search-overlay">
+      <div class="docs-search-results">
+        <div class="docs-search-header">
+          <h3>Search Results</h3>
+          <button class="docs-search-close" id="search-close">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="docs-search-list" id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- Google Translate -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- JavaScript -->
+    <script>
+      // Settings dropdown
+      const settingsToggle = document.getElementById("settings-toggle");
+      const settingsMenu = document.getElementById("settings-menu");
+
+      settingsToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        settingsMenu.style.display =
+          settingsMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (
+          !settingsToggle.contains(e.target) &&
+          !settingsMenu.contains(e.target)
+        ) {
+          settingsMenu.style.display = "none";
+        }
+      });
+
+      // Theme switching
+      const themeButtons = document.querySelectorAll(".docs-theme-btn");
+      const savedTheme = localStorage.getItem("docs-theme") || "light";
+
+      document.body.classList.toggle("dark-mode", savedTheme === "dark");
+
+      themeButtons.forEach((button) => {
+        if (button.dataset.theme === savedTheme) {
+          button.classList.add("active");
+        }
+
+        button.addEventListener("click", function () {
+          const theme = this.dataset.theme;
+          localStorage.setItem("docs-theme", theme);
+          document.body.classList.toggle("dark-mode", theme === "dark");
+
+          themeButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Language switching
+      const langButtons = document.querySelectorAll(".docs-lang-btn");
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const lang = this.dataset.lang;
+
+          if (lang === "en") {
+            // Clear translation
+            const url = window.location.pathname + window.location.search;
+            window.location.href = url;
+          } else {
+            // Use hash-based translation trigger
+            let langCode = lang;
+            // Map language codes to Google Translate codes
+            const langMap = {
+              'zh-CN': 'zh-CN',
+              'ar': 'ar',
+              'ko': 'ko',
+              'ja': 'ja',
+              'es': 'es',
+              'de': 'de',
+              'fr': 'fr'
+            };
+            
+            langCode = langMap[lang] || lang;
+            
+            // Set hash to trigger translation
+            window.location.hash = `googtrans(en|${langCode})`;
+            window.location.reload();
+          }
+
+          langButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Enhanced search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("search-close");
+
+      let searchData = [];
+
+      // Load search data - with fallback for non-Jekyll environments
+      const searchUrl = '/search.json' === '/search.json' 
+        ? './search.json'  // Fallback if Jekyll isn't processing
+        : '/search.json';
+      
+      fetch(searchUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          searchData = data;
+          // Search data loaded successfully
+        })
+        .catch((error) => {
+          console.error("❌ Search data loading error:", error);
+          // Fallback: Try to search through visible navigation links
+          const navLinks = document.querySelectorAll('.docs-nav-link');
+          searchData = Array.from(navLinks).map(link => ({
+            title: link.textContent.trim(),
+            url: link.getAttribute('href'),
+            content: link.textContent.trim(),
+            category: 'Navigation'
+          }));
+          // Using fallback search data from navigation
+        });
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+        
+        let score = 0;
+        
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+        
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+        
+        // Multiple word matches
+        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
+        queryWords.forEach(word => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+        
+        return score;
+      }
+
+      function performSearch(query) {
+        if (!query.trim()) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        const results = searchData
+          .filter((item) => {
+            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
+            return text.includes(query.toLowerCase());
+          })
+          .map(item => ({
+            ...item,
+            relevance: calculateRelevance(item, query)
+          }))
+          .sort((a, b) => b.relevance - a.relevance)
+          .slice(0, 8);
+
+        if (results.length === 0) {
+          searchResults.innerHTML = `
+            <div class="docs-search-item">
+              <div class="docs-result-title">No results found</div>
+              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
+        } else {
+          searchResults.innerHTML = results
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+              
+              return `
+                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
+                  <div class="docs-result-title">${highlightedTitle}</div>
+                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        searchOverlay.classList.add("active");
+      }
+
+      searchInput.addEventListener("input", function () {
+        const query = this.value;
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => performSearch(query), 300);
+      });
+
+      searchInput.addEventListener("focus", function () {
+        if (this.value.trim()) {
+          performSearch(this.value);
+        }
+      });
+
+      searchClose.addEventListener("click", function () {
+        searchOverlay.classList.remove("active");
+        searchInput.value = "";
+      });
+
+      searchOverlay.addEventListener("click", function (e) {
+        if (e.target === searchOverlay) {
+          searchOverlay.classList.remove("active");
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
+      // Check for active language on page load
+      window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash.includes('googtrans')) {
+          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
+          if (match && match[1]) {
+            const activeLang = match[1];
+            langButtons.forEach((btn) => {
+              if (btn.dataset.lang === activeLang) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+          }
+        }
+      });
+    </script>
+
+    <!-- Google Translate -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>

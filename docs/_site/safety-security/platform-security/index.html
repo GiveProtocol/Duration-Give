@@ -1,0 +1,1623 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Platform Security - Give Protocol Documentation
+    </title>
+    <meta
+      name="description"
+      content="Comprehensive guide to Give Protocol's security features and best practices for protecting your account"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon/favicon-16x16.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+    />
+
+    <style>
+      /* Immediate styles to prevent layout shift */
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0eee7;
+        margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark-mode {
+        background: #0f172a;
+        color: #f1f5f9;
+      }
+      .docs-header {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-header {
+        background: #1e293b;
+        border-bottom-color: #334155;
+      }
+      .docs-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .docs-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-brand {
+        color: #f1f5f9;
+      }
+      .docs-search {
+        flex: 1;
+        max-width: 400px;
+        margin: 0 2rem;
+        position: relative;
+      }
+      .docs-search input {
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-search input {
+        background: #374151;
+        border-color: #4b5563;
+        color: #f1f5f9;
+      }
+      .docs-search input:focus {
+        outline: none;
+        background: #fff;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+      body.dark-mode .docs-search input:focus {
+        background: #4b5563;
+        border-color: #6366f1;
+      }
+      .docs-search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-icon {
+        color: #d1d5db;
+      }
+      .docs-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .docs-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: #4b5563;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-btn {
+        color: #d1d5db;
+      }
+      .docs-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings {
+        position: relative;
+      }
+      .docs-settings-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-settings-btn {
+        color: #d1d5db;
+      }
+      .docs-settings-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-settings-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        min-width: 240px;
+        z-index: 100;
+        display: none;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-menu {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      .docs-settings-section {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      body.dark-mode .docs-settings-section {
+        border-bottom-color: #334155;
+      }
+      .docs-settings-section:last-child {
+        border-bottom: none;
+      }
+      .docs-settings-heading {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-heading {
+        color: #d1d5db;
+      }
+      .docs-theme-options {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .docs-theme-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        padding: 0.5rem;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-theme-btn {
+        background: #374151;
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-theme-btn:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-theme-btn:hover {
+        background: #4b5563;
+        border-color: #6b7280;
+      }
+      .docs-theme-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+      body.dark-mode .docs-theme-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-lang-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .docs-lang-btn {
+        padding: 0.5rem 0.75rem;
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: left;
+      }
+      body.dark-mode .docs-lang-btn {
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-lang-btn:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-lang-btn:hover {
+        background: #374151;
+        border-color: #6b7280;
+      }
+      .docs-lang-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-lang-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-main {
+        display: flex;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        gap: 2rem;
+      }
+      .docs-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 5.5rem;
+        height: fit-content;
+      }
+      .docs-nav-section {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-section {
+        background: #1e293b;
+      }
+      .docs-nav-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-title {
+        color: #d1d5db;
+      }
+      .docs-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .docs-nav-item {
+        margin-bottom: 0.25rem;
+      }
+      .docs-nav-link {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        color: #374151;
+        text-decoration: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-nav-link {
+        color: #d1d5db;
+      }
+      .docs-nav-link:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-nav-link:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-nav-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-nav-link.active {
+        background: #312e81;
+        color: #c7d2fe;
+      }
+      .docs-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .docs-article {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-article {
+        background: #1e293b;
+      }
+      .docs-search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: none;
+      }
+      .docs-search-overlay.active {
+        display: block;
+      }
+      .docs-search-results {
+        max-width: 600px;
+        margin: 6rem auto 2rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-results {
+        background: #1e293b;
+      }
+      .docs-search-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      body.dark-mode .docs-search-header {
+        border-bottom-color: #334155;
+      }
+      .docs-search-close {
+        padding: 0.25rem;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-close {
+        color: #d1d5db;
+      }
+      .docs-search-list {
+        padding: 0;
+        margin: 0;
+      }
+      .docs-search-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-item {
+        border-bottom-color: #334155;
+      }
+      .docs-search-item:hover {
+        background: #f9fafb;
+      }
+      body.dark-mode .docs-search-item:hover {
+        background: #374151;
+      }
+      .docs-search-item:last-child {
+        border-bottom: none;
+      }
+      .docs-result-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #111827;
+        margin-bottom: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-title {
+        color: #f1f5f9;
+      }
+      .docs-result-excerpt {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.4;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-excerpt {
+        color: #d1d5db;
+      }
+      .docs-result-category {
+        font-size: 0.75rem;
+        color: #6366f1;
+        font-weight: 500;
+        margin-top: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-category {
+        color: #c7d2fe;
+      }
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 500;
+      }
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+      @media (max-width: 768px) {
+        .docs-search {
+          display: none;
+        }
+        .docs-main {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .docs-sidebar {
+          position: static;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="docs-header">
+      <div class="docs-container">
+        <a href="/" class="docs-brand">
+          <img src="/assets/images/logo.svg" alt="Give Protocol" width="32" height="32">
+          <span>Give Protocol Docs</span>
+        </a>
+
+        <div class="docs-search">
+          <svg
+            class="docs-search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
+
+        <div class="docs-actions">
+          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
+
+          <div class="docs-settings">
+            <button class="docs-settings-btn" id="settings-toggle">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+
+            <div class="docs-settings-menu" id="settings-menu">
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Theme</h4>
+                <div class="docs-theme-options">
+                  <button class="docs-theme-btn active" data-theme="light">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <path
+                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                      />
+                    </svg>
+                    Light
+                  </button>
+                  <button class="docs-theme-btn" data-theme="dark">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Language</h4>
+                <div class="docs-lang-options">
+                  <button class="docs-lang-btn active" data-lang="en">
+                    🇺🇸 English
+                  </button>
+                  <button class="docs-lang-btn" data-lang="es">
+                    🇪🇸 Español
+                  </button>
+                  <button class="docs-lang-btn" data-lang="de">
+                    🇩🇪 Deutsch
+                  </button>
+                  <button class="docs-lang-btn" data-lang="fr">
+                    🇫🇷 Français
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ja">
+                    🇯🇵 日本語
+                  </button>
+                  <button class="docs-lang-btn" data-lang="zh-CN">
+                    🇨🇳 简体中文
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ko">
+                    🇰🇷 한국어
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ar">
+                    🇸🇦 العربية
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <!-- Sidebar -->
+      <aside class="docs-sidebar">
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Getting Started</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/introduction/what-is-give-protocol/"
+                class="docs-nav-link "
+              >
+                What is Give Protocol?
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/creating-account/"
+                class="docs-nav-link "
+              >
+                Creating Account
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/wallet-connection/"
+                class="docs-nav-link "
+              >
+                Wallet Connection
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">User Guides</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/donors/"
+                class="docs-nav-link "
+              >
+                For Donors
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/organizations/"
+                class="docs-nav-link "
+              >
+                For Organizations
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/volunteers/"
+                class="docs-nav-link "
+              >
+                For Volunteers
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Help & Support</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/faq/"
+                class="docs-nav-link "
+              >
+                FAQ
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/need-help/"
+                class="docs-nav-link "
+              >
+                Need Help?
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <article class="docs-article"><p>Your security is our priority. This guide explains Give Protocol’s security features and provides best practices for protecting your account, data, and transactions on our platform.</p>
+
+<h2 id="security-overview">Security Overview</h2>
+
+<p>Give Protocol implements multiple layers of security to protect our users:</p>
+
+<ul>
+  <li><strong>Encryption</strong>: All data transmitted using industry-standard SSL/TLS</li>
+  <li><strong>Authentication</strong>: Multi-factor authentication options</li>
+  <li><strong>Authorization</strong>: Role-based access controls</li>
+  <li><strong>Monitoring</strong>: 24/7 security monitoring and threat detection</li>
+  <li><strong>Compliance</strong>: GDPR, PCI-DSS, and SOC 2 compliant</li>
+</ul>
+
+<h2 id="account-security">Account Security</h2>
+
+<h3 id="creating-a-secure-account">Creating a Secure Account</h3>
+
+<h4 id="strong-password-requirements">Strong Password Requirements</h4>
+
+<p>Your password must include:</p>
+
+<ul>
+  <li>Minimum 12 characters</li>
+  <li>Uppercase and lowercase letters</li>
+  <li>Numbers and special characters</li>
+  <li>No common dictionary words</li>
+  <li>Not used on other sites</li>
+</ul>
+
+<h4 id="password-best-practices">Password Best Practices</h4>
+
+<ul>
+  <li>Use a unique password for Give Protocol</li>
+  <li>Consider using a password manager</li>
+  <li>Never share your password</li>
+  <li>Change passwords regularly</li>
+  <li>Avoid predictable patterns</li>
+</ul>
+
+<h3 id="multi-factor-authentication-mfa">Multi-Factor Authentication (MFA)</h3>
+
+<h4 id="why-enable-mfa">Why Enable MFA?</h4>
+
+<p>MFA adds an extra layer of security by requiring:</p>
+
+<ol>
+  <li>Something you know (password)</li>
+  <li>Something you have (phone/device)</li>
+  <li>Optional: Something you are (biometrics)</li>
+</ol>
+
+<h4 id="setting-up-mfa">Setting Up MFA</h4>
+
+<ol>
+  <li>
+    <p><strong>Navigate to Security Settings</strong></p>
+
+    <ul>
+      <li>Go to Account Settings</li>
+      <li>Select Security tab</li>
+      <li>Click “Enable Two-Factor Authentication”</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Choose Your Method</strong></p>
+
+    <ul>
+      <li><strong>SMS Text</strong>: Receive codes via text</li>
+      <li><strong>Authenticator App</strong>: Use Google Authenticator, Authy, etc.</li>
+      <li><strong>Security Key</strong>: Physical USB device</li>
+      <li><strong>Biometric</strong>: Fingerprint or face recognition</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Backup Methods</strong></p>
+    <ul>
+      <li>Save backup codes securely</li>
+      <li>Add alternate phone number</li>
+      <li>Set up multiple authentication methods</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="account-recovery">Account Recovery</h3>
+
+<h4 id="recovery-options">Recovery Options</h4>
+
+<ul>
+  <li>Email verification</li>
+  <li>SMS verification</li>
+  <li>Security questions</li>
+  <li>Backup codes</li>
+  <li>Identity verification</li>
+</ul>
+
+<h4 id="if-you-lose-access">If You Lose Access</h4>
+
+<ol>
+  <li>Click “Can’t access account?”</li>
+  <li>Choose recovery method</li>
+  <li>Follow verification steps</li>
+  <li>Reset credentials</li>
+  <li>Update security settings</li>
+</ol>
+
+<h2 id="data-protection">Data Protection</h2>
+
+<h3 id="personal-information-security">Personal Information Security</h3>
+
+<h4 id="what-we-protect">What We Protect</h4>
+
+<ul>
+  <li>Personal identification information</li>
+  <li>Financial data and transaction history</li>
+  <li>Communication records</li>
+  <li>Location data (when permitted)</li>
+  <li>Volunteer activity history</li>
+</ul>
+
+<h4 id="how-we-protect-it">How We Protect It</h4>
+
+<ul>
+  <li><strong>Encryption at rest</strong>: All stored data encrypted</li>
+  <li><strong>Encryption in transit</strong>: Secure connections only</li>
+  <li><strong>Access controls</strong>: Limited to necessary personnel</li>
+  <li><strong>Regular audits</strong>: Security assessments</li>
+  <li><strong>Data minimization</strong>: Only collect what’s needed</li>
+</ul>
+
+<h3 id="privacy-controls">Privacy Controls</h3>
+
+<h4 id="managing-your-privacy">Managing Your Privacy</h4>
+
+<ol>
+  <li>
+    <p><strong>Profile Visibility</strong></p>
+
+    <ul>
+      <li>Public: Name and general location</li>
+      <li>Private: All personal details</li>
+      <li>Custom: Choose what to share</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Communication Preferences</strong></p>
+
+    <ul>
+      <li>Platform notifications</li>
+      <li>Email communications</li>
+      <li>SMS alerts</li>
+      <li>Marketing messages</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Data Sharing</strong></p>
+    <ul>
+      <li>Control what organizations see</li>
+      <li>Manage volunteer history visibility</li>
+      <li>Set donation privacy preferences</li>
+      <li>Configure social sharing</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="transaction-security">Transaction Security</h2>
+
+<h3 id="secure-donations">Secure Donations</h3>
+
+<h4 id="payment-protection">Payment Protection</h4>
+
+<ul>
+  <li>PCI-DSS compliant processing</li>
+  <li>Tokenized payment information</li>
+  <li>Fraud detection systems</li>
+  <li>Secure payment gateways</li>
+  <li>Transaction monitoring</li>
+</ul>
+
+<h4 id="safe-payment-methods">Safe Payment Methods</h4>
+
+<p>✅ <strong>Accepted</strong>:</p>
+
+<ul>
+  <li>Credit/debit cards</li>
+  <li>Bank transfers (ACH)</li>
+  <li>Digital wallets (PayPal, Apple Pay)</li>
+  <li>Donor-advised funds</li>
+</ul>
+
+<p>❌ <strong>Never Required</strong>:</p>
+
+<ul>
+  <li>Wire transfers to individuals</li>
+  <li>Gift cards</li>
+  <li>Cryptocurrency (unless verified)</li>
+  <li>Cash payments</li>
+</ul>
+
+<h3 id="transaction-verification">Transaction Verification</h3>
+
+<h4 id="before-donating">Before Donating</h4>
+
+<ul>
+  <li>Verify organization badge ✓</li>
+  <li>Check SSL certificate 🔒</li>
+  <li>Review transaction details</li>
+  <li>Confirm amounts</li>
+  <li>Save confirmations</li>
+</ul>
+
+<h4 id="after-donating">After Donating</h4>
+
+<ul>
+  <li>Receive instant confirmation</li>
+  <li>Get email receipt</li>
+  <li>Download tax documentation</li>
+  <li>Track in transaction history</li>
+  <li>Report any issues immediately</li>
+</ul>
+
+<h2 id="communication-security">Communication Security</h2>
+
+<h3 id="secure-messaging">Secure Messaging</h3>
+
+<h4 id="platform-messaging-features">Platform Messaging Features</h4>
+
+<ul>
+  <li>End-to-end encryption available</li>
+  <li>No external email exposure</li>
+  <li>Message history retention</li>
+  <li>Spam and abuse filtering</li>
+  <li>Block and report functions</li>
+</ul>
+
+<h4 id="safe-communication-practices">Safe Communication Practices</h4>
+
+<ul>
+  <li>Keep conversations on platform</li>
+  <li>Never share passwords</li>
+  <li>Avoid sharing personal contact info</li>
+  <li>Report suspicious messages</li>
+  <li>Use official channels only</li>
+</ul>
+
+<h3 id="phishing-protection">Phishing Protection</h3>
+
+<h4 id="recognizing-phishing-attempts">Recognizing Phishing Attempts</h4>
+
+<p>🚩 <strong>Warning Signs</strong>:</p>
+
+<ul>
+  <li>Urgent action required</li>
+  <li>Requests for passwords</li>
+  <li>Suspicious links</li>
+  <li>Grammar/spelling errors</li>
+  <li>Unofficial sender addresses</li>
+</ul>
+
+<h4 id="official-communications">Official Communications</h4>
+
+<p>✅ <strong>Give Protocol will</strong>:</p>
+
+<ul>
+  <li>Send from @giveprotocol.org</li>
+  <li>Include your name</li>
+  <li>Provide clear context</li>
+  <li>Never ask for passwords</li>
+  <li>Include security footer</li>
+</ul>
+
+<p>❌ <strong>Give Protocol won’t</strong>:</p>
+
+<ul>
+  <li>Request passwords via email</li>
+  <li>Send suspicious attachments</li>
+  <li>Use threatening language</li>
+  <li>Ask for payment information via email</li>
+  <li>Redirect to non-secure sites</li>
+</ul>
+
+<h2 id="platform-features">Platform Features</h2>
+
+<h3 id="security-dashboard">Security Dashboard</h3>
+
+<p>Access your security dashboard to:</p>
+
+<ul>
+  <li>View recent account activity</li>
+  <li>Check active sessions</li>
+  <li>Review security settings</li>
+  <li>See login history</li>
+  <li>Manage connected devices</li>
+</ul>
+
+<h3 id="activity-monitoring">Activity Monitoring</h3>
+
+<h4 id="what-we-track">What We Track</h4>
+
+<ul>
+  <li>Login attempts and locations</li>
+  <li>Password changes</li>
+  <li>Transaction activity</li>
+  <li>Profile modifications</li>
+  <li>Security setting updates</li>
+</ul>
+
+<h4 id="alerts-youll-receive">Alerts You’ll Receive</h4>
+
+<ul>
+  <li>New device login</li>
+  <li>Password reset requests</li>
+  <li>Large transactions</li>
+  <li>Unusual activity patterns</li>
+  <li>Security setting changes</li>
+</ul>
+
+<h3 id="session-management">Session Management</h3>
+
+<h4 id="active-session-controls">Active Session Controls</h4>
+
+<ul>
+  <li>View all active sessions</li>
+  <li>See device and location info</li>
+  <li>Terminate suspicious sessions</li>
+  <li>Set automatic timeouts</li>
+  <li>Enable “Remember Me” selectively</li>
+</ul>
+
+<h2 id="mobile-security">Mobile Security</h2>
+
+<h3 id="app-security-features">App Security Features</h3>
+
+<h4 id="built-in-protections">Built-in Protections</h4>
+
+<ul>
+  <li>Biometric authentication</li>
+  <li>Secure data storage</li>
+  <li>Automatic logouts</li>
+  <li>Screenshot protection</li>
+  <li>Jailbreak/root detection</li>
+</ul>
+
+<h4 id="mobile-best-practices">Mobile Best Practices</h4>
+
+<ol>
+  <li>
+    <p><strong>Keep App Updated</strong></p>
+
+    <ul>
+      <li>Enable automatic updates</li>
+      <li>Check for updates regularly</li>
+      <li>Read update notes</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Device Security</strong></p>
+    <ul>
+      <li>Use device lock screen</li>
+      <li>Enable remote wipe</li>
+      <li>Avoid public WiFi</li>
+      <li>Use VPN when needed</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="reporting-security-issues">Reporting Security Issues</h2>
+
+<h3 id="how-to-report">How to Report</h3>
+
+<h4 id="security-vulnerabilities">Security Vulnerabilities</h4>
+
+<p>Email: security@giveprotocol.org</p>
+
+<ul>
+  <li>Describe the issue clearly</li>
+  <li>Include steps to reproduce</li>
+  <li>Attach relevant screenshots</li>
+  <li>Avoid public disclosure</li>
+</ul>
+
+<h4 id="account-compromises">Account Compromises</h4>
+
+<ol>
+  <li>Change password immediately</li>
+  <li>Review recent activity</li>
+  <li>Terminate all sessions</li>
+  <li>Contact support</li>
+  <li>Enable MFA</li>
+</ol>
+
+<h3 id="bug-bounty-program">Bug Bounty Program</h3>
+
+<p>We reward responsible disclosure:</p>
+
+<ul>
+  <li><strong>Scope</strong>: Platform vulnerabilities</li>
+  <li><strong>Rewards</strong>: $100-$10,000</li>
+  <li><strong>Process</strong>: Coordinated disclosure</li>
+  <li><strong>Recognition</strong>: Security hall of fame</li>
+</ul>
+
+<h2 id="best-practices-checklist">Best Practices Checklist</h2>
+
+<h3 id="daily-security-habits">Daily Security Habits</h3>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check for suspicious emails</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Verify before clicking links</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Log out when finished</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Use secure networks</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Keep software updated</li>
+</ul>
+
+<h3 id="weekly-security-review">Weekly Security Review</h3>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Review account activity</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check active sessions</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Update passwords if needed</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Clear browser cache</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Review privacy settings</li>
+</ul>
+
+<h3 id="monthly-security-audit">Monthly Security Audit</h3>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Update recovery information</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Review connected accounts</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Check transaction history</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Update security questions</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Test backup methods</li>
+</ul>
+
+<h2 id="security-tools">Security Tools</h2>
+
+<h3 id="recommended-tools">Recommended Tools</h3>
+
+<h4 id="password-managers">Password Managers</h4>
+
+<ul>
+  <li>1Password</li>
+  <li>Bitwarden</li>
+  <li>LastPass</li>
+  <li>Dashlane</li>
+</ul>
+
+<h4 id="authenticator-apps">Authenticator Apps</h4>
+
+<ul>
+  <li>Google Authenticator</li>
+  <li>Microsoft Authenticator</li>
+  <li>Authy</li>
+  <li>Duo Mobile</li>
+</ul>
+
+<h4 id="security-keys">Security Keys</h4>
+
+<ul>
+  <li>YubiKey</li>
+  <li>Google Titan</li>
+  <li>Thetis</li>
+  <li>Feitian</li>
+</ul>
+
+<h2 id="compliance-and-certifications">Compliance and Certifications</h2>
+
+<h3 id="our-security-standards">Our Security Standards</h3>
+
+<h4 id="industry-compliance">Industry Compliance</h4>
+
+<ul>
+  <li><strong>PCI-DSS Level 1</strong>: Payment security</li>
+  <li><strong>SOC 2 Type II</strong>: Security controls</li>
+  <li><strong>GDPR</strong>: Data protection</li>
+  <li><strong>CCPA</strong>: Privacy rights</li>
+  <li><strong>ISO 27001</strong>: Information security</li>
+</ul>
+
+<h4 id="regular-audits">Regular Audits</h4>
+
+<ul>
+  <li>Annual security assessments</li>
+  <li>Quarterly penetration testing</li>
+  <li>Monthly vulnerability scans</li>
+  <li>Continuous monitoring</li>
+  <li>Third-party audits</li>
+</ul>
+
+<h2 id="data-rights">Data Rights</h2>
+
+<h3 id="your-rights-include">Your Rights Include</h3>
+
+<ul>
+  <li><strong>Access</strong>: Request your data</li>
+  <li><strong>Correction</strong>: Fix inaccuracies</li>
+  <li><strong>Deletion</strong>: Remove your data</li>
+  <li><strong>Portability</strong>: Export your data</li>
+  <li><strong>Objection</strong>: Opt-out of processing</li>
+</ul>
+
+<h3 id="exercising-your-rights">Exercising Your Rights</h3>
+
+<ol>
+  <li>Go to Privacy Settings</li>
+  <li>Select “Data Rights”</li>
+  <li>Choose your request type</li>
+  <li>Verify identity</li>
+  <li>Receive confirmation</li>
+</ol>
+
+<h2 id="emergency-procedures">Emergency Procedures</h2>
+
+<h3 id="if-your-account-is-compromised">If Your Account Is Compromised</h3>
+
+<h4 id="immediate-actions">Immediate Actions</h4>
+
+<ol>
+  <li><strong>Change Password</strong> - Use a strong, unique password</li>
+  <li><strong>Enable MFA</strong> - Add extra security layer</li>
+  <li><strong>Review Activity</strong> - Check for unauthorized actions</li>
+  <li><strong>Revoke Access</strong> - Terminate all sessions</li>
+  <li><strong>Contact Support</strong> - Report the incident</li>
+</ol>
+
+<h4 id="follow-up-steps">Follow-up Steps</h4>
+
+<ul>
+  <li>Update other accounts if password was reused</li>
+  <li>Scan devices for malware</li>
+  <li>Review financial statements</li>
+  <li>Monitor credit reports</li>
+  <li>Document everything</li>
+</ul>
+
+<h2 id="support-resources">Support Resources</h2>
+
+<h3 id="getting-help">Getting Help</h3>
+
+<h4 id="security-support">Security Support</h4>
+
+<ul>
+  <li>Email: security@giveprotocol.org</li>
+  <li>Chat: Available 24/7</li>
+  <li>Phone: 1-800-GIVE-SAFE</li>
+  <li>Help Center: Security section</li>
+</ul>
+
+<h4 id="educational-resources">Educational Resources</h4>
+
+<ul>
+  <li>Security webinars</li>
+  <li>Best practices guides</li>
+  <li>Video tutorials</li>
+  <li>FAQ section</li>
+  <li>Community forums</li>
+</ul>
+
+<h2 id="stay-informed">Stay Informed</h2>
+
+<h3 id="security-updates">Security Updates</h3>
+
+<ul>
+  <li>Platform announcements</li>
+  <li>Email notifications</li>
+  <li>Mobile push alerts</li>
+  <li>Blog posts</li>
+  <li>Social media updates</li>
+</ul>
+
+<h3 id="subscribe-to-alerts">Subscribe to Alerts</h3>
+
+<p>Get notified about:</p>
+
+<ul>
+  <li>Security patches</li>
+  <li>New features</li>
+  <li>Threat warnings</li>
+  <li>Best practice updates</li>
+  <li>Policy changes</li>
+</ul>
+
+<h2 id="remember">Remember</h2>
+
+<p>Security is a shared responsibility. While we implement robust security measures, your actions play a crucial role in keeping your account safe. Stay vigilant, follow best practices, and don’t hesitate to contact us with any security concerns.</p>
+
+<p>Together, we can ensure Give Protocol remains a safe, secure platform for making a positive impact in the world.</p>
+
+<hr />
+
+<p><em>Security Contact: security@giveprotocol.org</em><br />
+<em>Emergency Hotline: 1-800-GIVE-SAFE</em><br />
+<em>Last Updated: December 2024</em></p>
+</article>
+      </div>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="docs-search-overlay" id="search-overlay">
+      <div class="docs-search-results">
+        <div class="docs-search-header">
+          <h3>Search Results</h3>
+          <button class="docs-search-close" id="search-close">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="docs-search-list" id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- Google Translate -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- JavaScript -->
+    <script>
+      // Settings dropdown
+      const settingsToggle = document.getElementById("settings-toggle");
+      const settingsMenu = document.getElementById("settings-menu");
+
+      settingsToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        settingsMenu.style.display =
+          settingsMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (
+          !settingsToggle.contains(e.target) &&
+          !settingsMenu.contains(e.target)
+        ) {
+          settingsMenu.style.display = "none";
+        }
+      });
+
+      // Theme switching
+      const themeButtons = document.querySelectorAll(".docs-theme-btn");
+      const savedTheme = localStorage.getItem("docs-theme") || "light";
+
+      document.body.classList.toggle("dark-mode", savedTheme === "dark");
+
+      themeButtons.forEach((button) => {
+        if (button.dataset.theme === savedTheme) {
+          button.classList.add("active");
+        }
+
+        button.addEventListener("click", function () {
+          const theme = this.dataset.theme;
+          localStorage.setItem("docs-theme", theme);
+          document.body.classList.toggle("dark-mode", theme === "dark");
+
+          themeButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Language switching
+      const langButtons = document.querySelectorAll(".docs-lang-btn");
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const lang = this.dataset.lang;
+
+          if (lang === "en") {
+            // Clear translation
+            const url = window.location.pathname + window.location.search;
+            window.location.href = url;
+          } else {
+            // Use hash-based translation trigger
+            let langCode = lang;
+            // Map language codes to Google Translate codes
+            const langMap = {
+              'zh-CN': 'zh-CN',
+              'ar': 'ar',
+              'ko': 'ko',
+              'ja': 'ja',
+              'es': 'es',
+              'de': 'de',
+              'fr': 'fr'
+            };
+            
+            langCode = langMap[lang] || lang;
+            
+            // Set hash to trigger translation
+            window.location.hash = `googtrans(en|${langCode})`;
+            window.location.reload();
+          }
+
+          langButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Enhanced search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("search-close");
+
+      let searchData = [];
+
+      // Load search data - with fallback for non-Jekyll environments
+      const searchUrl = '/search.json' === '/search.json' 
+        ? './search.json'  // Fallback if Jekyll isn't processing
+        : '/search.json';
+      
+      fetch(searchUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          searchData = data;
+          // Search data loaded successfully
+        })
+        .catch((error) => {
+          console.error("❌ Search data loading error:", error);
+          // Fallback: Try to search through visible navigation links
+          const navLinks = document.querySelectorAll('.docs-nav-link');
+          searchData = Array.from(navLinks).map(link => ({
+            title: link.textContent.trim(),
+            url: link.getAttribute('href'),
+            content: link.textContent.trim(),
+            category: 'Navigation'
+          }));
+          // Using fallback search data from navigation
+        });
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+        
+        let score = 0;
+        
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+        
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+        
+        // Multiple word matches
+        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
+        queryWords.forEach(word => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+        
+        return score;
+      }
+
+      function performSearch(query) {
+        if (!query.trim()) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        const results = searchData
+          .filter((item) => {
+            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
+            return text.includes(query.toLowerCase());
+          })
+          .map(item => ({
+            ...item,
+            relevance: calculateRelevance(item, query)
+          }))
+          .sort((a, b) => b.relevance - a.relevance)
+          .slice(0, 8);
+
+        if (results.length === 0) {
+          searchResults.innerHTML = `
+            <div class="docs-search-item">
+              <div class="docs-result-title">No results found</div>
+              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
+        } else {
+          searchResults.innerHTML = results
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+              
+              return `
+                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
+                  <div class="docs-result-title">${highlightedTitle}</div>
+                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        searchOverlay.classList.add("active");
+      }
+
+      searchInput.addEventListener("input", function () {
+        const query = this.value;
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => performSearch(query), 300);
+      });
+
+      searchInput.addEventListener("focus", function () {
+        if (this.value.trim()) {
+          performSearch(this.value);
+        }
+      });
+
+      searchClose.addEventListener("click", function () {
+        searchOverlay.classList.remove("active");
+        searchInput.value = "";
+      });
+
+      searchOverlay.addEventListener("click", function (e) {
+        if (e.target === searchOverlay) {
+          searchOverlay.classList.remove("active");
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
+      // Check for active language on page load
+      window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash.includes('googtrans')) {
+          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
+          if (match && match[1]) {
+            const activeLang = match[1];
+            langButtons.forEach((btn) => {
+              if (btn.dataset.lang === activeLang) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+          }
+        }
+      });
+    </script>
+
+    <!-- Google Translate -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>

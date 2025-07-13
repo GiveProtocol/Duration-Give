@@ -1,0 +1,1780 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Time Tracking - Give Protocol Documentation
+    </title>
+    <meta
+      name="description"
+      content="Track, manage, and maximize your volunteer time with Give Protocol's comprehensive time tracking tools"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon/favicon-16x16.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+    />
+
+    <style>
+      /* Immediate styles to prevent layout shift */
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0eee7;
+        margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark-mode {
+        background: #0f172a;
+        color: #f1f5f9;
+      }
+      .docs-header {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-header {
+        background: #1e293b;
+        border-bottom-color: #334155;
+      }
+      .docs-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .docs-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-brand {
+        color: #f1f5f9;
+      }
+      .docs-search {
+        flex: 1;
+        max-width: 400px;
+        margin: 0 2rem;
+        position: relative;
+      }
+      .docs-search input {
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-search input {
+        background: #374151;
+        border-color: #4b5563;
+        color: #f1f5f9;
+      }
+      .docs-search input:focus {
+        outline: none;
+        background: #fff;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+      body.dark-mode .docs-search input:focus {
+        background: #4b5563;
+        border-color: #6366f1;
+      }
+      .docs-search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-icon {
+        color: #d1d5db;
+      }
+      .docs-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .docs-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: #4b5563;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-btn {
+        color: #d1d5db;
+      }
+      .docs-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings {
+        position: relative;
+      }
+      .docs-settings-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-settings-btn {
+        color: #d1d5db;
+      }
+      .docs-settings-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-settings-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        min-width: 240px;
+        z-index: 100;
+        display: none;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-menu {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      .docs-settings-section {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      body.dark-mode .docs-settings-section {
+        border-bottom-color: #334155;
+      }
+      .docs-settings-section:last-child {
+        border-bottom: none;
+      }
+      .docs-settings-heading {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-heading {
+        color: #d1d5db;
+      }
+      .docs-theme-options {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .docs-theme-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        padding: 0.5rem;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-theme-btn {
+        background: #374151;
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-theme-btn:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-theme-btn:hover {
+        background: #4b5563;
+        border-color: #6b7280;
+      }
+      .docs-theme-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+      body.dark-mode .docs-theme-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-lang-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .docs-lang-btn {
+        padding: 0.5rem 0.75rem;
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: left;
+      }
+      body.dark-mode .docs-lang-btn {
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-lang-btn:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-lang-btn:hover {
+        background: #374151;
+        border-color: #6b7280;
+      }
+      .docs-lang-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-lang-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-main {
+        display: flex;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        gap: 2rem;
+      }
+      .docs-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 5.5rem;
+        height: fit-content;
+      }
+      .docs-nav-section {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-section {
+        background: #1e293b;
+      }
+      .docs-nav-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-title {
+        color: #d1d5db;
+      }
+      .docs-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .docs-nav-item {
+        margin-bottom: 0.25rem;
+      }
+      .docs-nav-link {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        color: #374151;
+        text-decoration: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-nav-link {
+        color: #d1d5db;
+      }
+      .docs-nav-link:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-nav-link:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-nav-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-nav-link.active {
+        background: #312e81;
+        color: #c7d2fe;
+      }
+      .docs-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .docs-article {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-article {
+        background: #1e293b;
+      }
+      .docs-search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: none;
+      }
+      .docs-search-overlay.active {
+        display: block;
+      }
+      .docs-search-results {
+        max-width: 600px;
+        margin: 6rem auto 2rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-results {
+        background: #1e293b;
+      }
+      .docs-search-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      body.dark-mode .docs-search-header {
+        border-bottom-color: #334155;
+      }
+      .docs-search-close {
+        padding: 0.25rem;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-close {
+        color: #d1d5db;
+      }
+      .docs-search-list {
+        padding: 0;
+        margin: 0;
+      }
+      .docs-search-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-item {
+        border-bottom-color: #334155;
+      }
+      .docs-search-item:hover {
+        background: #f9fafb;
+      }
+      body.dark-mode .docs-search-item:hover {
+        background: #374151;
+      }
+      .docs-search-item:last-child {
+        border-bottom: none;
+      }
+      .docs-result-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #111827;
+        margin-bottom: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-title {
+        color: #f1f5f9;
+      }
+      .docs-result-excerpt {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.4;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-excerpt {
+        color: #d1d5db;
+      }
+      .docs-result-category {
+        font-size: 0.75rem;
+        color: #6366f1;
+        font-weight: 500;
+        margin-top: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-category {
+        color: #c7d2fe;
+      }
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 500;
+      }
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+      @media (max-width: 768px) {
+        .docs-search {
+          display: none;
+        }
+        .docs-main {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .docs-sidebar {
+          position: static;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="docs-header">
+      <div class="docs-container">
+        <a href="/" class="docs-brand">
+          <img src="/assets/images/logo.svg" alt="Give Protocol" width="32" height="32">
+          <span>Give Protocol Docs</span>
+        </a>
+
+        <div class="docs-search">
+          <svg
+            class="docs-search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
+
+        <div class="docs-actions">
+          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
+
+          <div class="docs-settings">
+            <button class="docs-settings-btn" id="settings-toggle">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+
+            <div class="docs-settings-menu" id="settings-menu">
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Theme</h4>
+                <div class="docs-theme-options">
+                  <button class="docs-theme-btn active" data-theme="light">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <path
+                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                      />
+                    </svg>
+                    Light
+                  </button>
+                  <button class="docs-theme-btn" data-theme="dark">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Language</h4>
+                <div class="docs-lang-options">
+                  <button class="docs-lang-btn active" data-lang="en">
+                    🇺🇸 English
+                  </button>
+                  <button class="docs-lang-btn" data-lang="es">
+                    🇪🇸 Español
+                  </button>
+                  <button class="docs-lang-btn" data-lang="de">
+                    🇩🇪 Deutsch
+                  </button>
+                  <button class="docs-lang-btn" data-lang="fr">
+                    🇫🇷 Français
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ja">
+                    🇯🇵 日本語
+                  </button>
+                  <button class="docs-lang-btn" data-lang="zh-CN">
+                    🇨🇳 简体中文
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ko">
+                    🇰🇷 한국어
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ar">
+                    🇸🇦 العربية
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <!-- Sidebar -->
+      <aside class="docs-sidebar">
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Getting Started</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/introduction/what-is-give-protocol/"
+                class="docs-nav-link "
+              >
+                What is Give Protocol?
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/creating-account/"
+                class="docs-nav-link "
+              >
+                Creating Account
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/wallet-connection/"
+                class="docs-nav-link "
+              >
+                Wallet Connection
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">User Guides</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/donors/"
+                class="docs-nav-link "
+              >
+                For Donors
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/organizations/"
+                class="docs-nav-link "
+              >
+                For Organizations
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/volunteers/"
+                class="docs-nav-link "
+              >
+                For Volunteers
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Help & Support</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/faq/"
+                class="docs-nav-link "
+              >
+                FAQ
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/need-help/"
+                class="docs-nav-link "
+              >
+                Need Help?
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <article class="docs-article"><p>Maximize your volunteer impact with Give Protocol’s comprehensive time tracking system. Monitor your contributions, meet requirements, and demonstrate your commitment to making a difference.</p>
+
+<h2 id="why-track-your-time">Why Track Your Time?</h2>
+
+<h3 id="benefits-for-volunteers">Benefits for Volunteers</h3>
+
+<ul>
+  <li><strong>Tax Deductions</strong>: Document deductible expenses</li>
+  <li><strong>Impact Measurement</strong>: See your total contribution value</li>
+  <li><strong>Goal Setting</strong>: Track progress toward volunteer goals</li>
+  <li><strong>Recognition</strong>: Earn badges and achievements</li>
+  <li><strong>Career Building</strong>: Document professional development</li>
+  <li><strong>Grant Applications</strong>: Provide volunteer service proof</li>
+</ul>
+
+<h3 id="benefits-for-organizations">Benefits for Organizations</h3>
+
+<ul>
+  <li><strong>Volunteer Management</strong>: Monitor engagement levels</li>
+  <li><strong>Reporting</strong>: Document volunteer contributions to funders</li>
+  <li><strong>Planning</strong>: Better resource allocation</li>
+  <li><strong>Recognition</strong>: Acknowledge top contributors</li>
+  <li><strong>Impact Measurement</strong>: Calculate program value</li>
+</ul>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="setting-up-time-tracking">Setting Up Time Tracking</h3>
+
+<ol>
+  <li>
+    <p><strong>Enable Time Tracking</strong></p>
+
+    <ul>
+      <li>Go to Account Settings</li>
+      <li>Select “Volunteer Preferences”</li>
+      <li>Turn on “Track My Time”</li>
+      <li>Choose tracking preferences</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Set Goals</strong></p>
+
+    <ul>
+      <li>Weekly time commitment</li>
+      <li>Monthly volunteer targets</li>
+      <li>Annual service goals</li>
+      <li>Skill development objectives</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Configure Notifications</strong></p>
+    <ul>
+      <li>Reminder to log time</li>
+      <li>Weekly summary emails</li>
+      <li>Goal progress alerts</li>
+      <li>Achievement notifications</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="tracking-methods">Tracking Methods</h2>
+
+<h3 id="automatic-tracking">Automatic Tracking</h3>
+
+<h4 id="smart-check-incheck-out">Smart Check-In/Check-Out</h4>
+
+<ul>
+  <li><strong>QR Code Scanning</strong>: Scan at volunteer location</li>
+  <li><strong>GPS Verification</strong>: Automatic location detection</li>
+  <li><strong>Bluetooth Beacons</strong>: Proximity-based tracking</li>
+  <li><strong>Mobile App</strong>: One-tap start/stop</li>
+</ul>
+
+<h4 id="integration-features">Integration Features</h4>
+
+<ul>
+  <li>Calendar sync for scheduled activities</li>
+  <li>Automatic break detection</li>
+  <li>Travel time calculation</li>
+  <li>Multi-location support</li>
+</ul>
+
+<h3 id="manual-entry">Manual Entry</h3>
+
+<h4 id="quick-log-entry">Quick Log Entry</h4>
+
+<ol>
+  <li>Select volunteer opportunity</li>
+  <li>Enter start and end times</li>
+  <li>Add notes or description</li>
+  <li>Submit for approval (if required)</li>
+</ol>
+
+<h4 id="detailed-time-entry">Detailed Time Entry</h4>
+
+<ul>
+  <li><strong>Date and Duration</strong></li>
+  <li>
+    <p><strong>Activity Type</strong></p>
+
+    <ul>
+      <li>Direct service</li>
+      <li>Administrative work</li>
+      <li>Training/orientation</li>
+      <li>Fundraising</li>
+      <li>Event support</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Skills Used</strong></p>
+
+    <ul>
+      <li>Professional skills</li>
+      <li>Leadership</li>
+      <li>Teaching/mentoring</li>
+      <li>Physical labor</li>
+      <li>Creative work</li>
+    </ul>
+  </li>
+  <li><strong>Impact Notes</strong>
+    <ul>
+      <li>People helped</li>
+      <li>Tasks completed</li>
+      <li>Challenges faced</li>
+      <li>Learning outcomes</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="bulk-entry">Bulk Entry</h3>
+
+<p>For volunteers with regular schedules:</p>
+
+<ul>
+  <li>Weekly recurring entries</li>
+  <li>Monthly batch uploads</li>
+  <li>CSV import functionality</li>
+  <li>Copy from previous periods</li>
+</ul>
+
+<h2 id="time-categories">Time Categories</h2>
+
+<h3 id="direct-service">Direct Service</h3>
+
+<p><strong>Definition</strong>: Hands-on work directly benefiting recipients
+<strong>Examples</strong>:</p>
+
+<ul>
+  <li>Serving meals at shelter</li>
+  <li>Tutoring students</li>
+  <li>Walking dogs at animal shelter</li>
+  <li>Reading to elderly residents</li>
+  <li>Building homes</li>
+</ul>
+
+<p><strong>Tracking Tips</strong>:</p>
+
+<ul>
+  <li>Include setup and cleanup time</li>
+  <li>Note number of people served</li>
+  <li>Record specific activities</li>
+</ul>
+
+<h3 id="indirect-service">Indirect Service</h3>
+
+<p><strong>Definition</strong>: Support work enabling direct service
+<strong>Examples</strong>:</p>
+
+<ul>
+  <li>Administrative tasks</li>
+  <li>Data entry</li>
+  <li>Grant writing</li>
+  <li>Event planning</li>
+  <li>Fundraising calls</li>
+</ul>
+
+<p><strong>Tracking Tips</strong>:</p>
+
+<ul>
+  <li>Specify type of support provided</li>
+  <li>Note project or program supported</li>
+  <li>Include research time</li>
+</ul>
+
+<h3 id="training-and-development">Training and Development</h3>
+
+<p><strong>Definition</strong>: Learning activities to improve volunteer effectiveness
+<strong>Examples</strong>:</p>
+
+<ul>
+  <li>Orientation sessions</li>
+  <li>Skills workshops</li>
+  <li>Safety training</li>
+  <li>Certification courses</li>
+  <li>Conference attendance</li>
+</ul>
+
+<p><strong>Tracking Tips</strong>:</p>
+
+<ul>
+  <li>Include travel time to training</li>
+  <li>Note certifications earned</li>
+  <li>Record applicable skills gained</li>
+</ul>
+
+<h3 id="leadership-activities">Leadership Activities</h3>
+
+<p><strong>Definition</strong>: Volunteer coordination and management
+<strong>Examples</strong>:</p>
+
+<ul>
+  <li>Team leading</li>
+  <li>Project management</li>
+  <li>Volunteer recruitment</li>
+  <li>Training other volunteers</li>
+  <li>Board service</li>
+</ul>
+
+<p><strong>Tracking Tips</strong>:</p>
+
+<ul>
+  <li>Number of volunteers managed</li>
+  <li>Projects overseen</li>
+  <li>Meetings attended</li>
+  <li>Decisions made</li>
+</ul>
+
+<h2 id="advanced-features">Advanced Features</h2>
+
+<h3 id="skills-based-tracking">Skills-Based Tracking</h3>
+
+<h4 id="professional-skills">Professional Skills</h4>
+
+<ul>
+  <li><strong>Legal</strong>: Pro bono legal services</li>
+  <li><strong>Medical</strong>: Healthcare volunteering</li>
+  <li><strong>Technology</strong>: IT support, web development</li>
+  <li><strong>Finance</strong>: Bookkeeping, tax preparation</li>
+  <li><strong>Marketing</strong>: Communications, social media</li>
+</ul>
+
+<h4 id="specialized-certifications">Specialized Certifications</h4>
+
+<ul>
+  <li>First Aid/CPR</li>
+  <li>Food handling</li>
+  <li>Background checks</li>
+  <li>Safety training</li>
+  <li>Language skills</li>
+</ul>
+
+<h3 id="impact-measurement">Impact Measurement</h3>
+
+<h4 id="quantitative-metrics">Quantitative Metrics</h4>
+
+<ul>
+  <li>Hours contributed</li>
+  <li>People served</li>
+  <li>Projects completed</li>
+  <li>Funds raised</li>
+  <li>Miles traveled</li>
+</ul>
+
+<h4 id="qualitative-outcomes">Qualitative Outcomes</h4>
+
+<ul>
+  <li>Skills developed</li>
+  <li>Relationships built</li>
+  <li>Problems solved</li>
+  <li>Communities impacted</li>
+  <li>Personal growth</li>
+</ul>
+
+<h3 id="multi-organization-tracking">Multi-Organization Tracking</h3>
+
+<h4 id="consolidated-dashboard">Consolidated Dashboard</h4>
+
+<p>View all volunteer activities across organizations:</p>
+
+<ul>
+  <li>Total hours by organization</li>
+  <li>Cumulative impact</li>
+  <li>Skills development progress</li>
+  <li>Recognition earned</li>
+</ul>
+
+<h4 id="organization-switching">Organization Switching</h4>
+
+<ul>
+  <li>Quick organization selection</li>
+  <li>Separate time logs</li>
+  <li>Combined reporting</li>
+  <li>Cross-organization skills transfer</li>
+</ul>
+
+<h2 id="mobile-time-tracking">Mobile Time Tracking</h2>
+
+<h3 id="mobile-app-features">Mobile App Features</h3>
+
+<h4 id="quick-actions">Quick Actions</h4>
+
+<ul>
+  <li>Start/stop timer</li>
+  <li>Add quick notes</li>
+  <li>Photo documentation</li>
+  <li>Voice memos</li>
+  <li>Offline capability</li>
+</ul>
+
+<h4 id="smart-notifications">Smart Notifications</h4>
+
+<ul>
+  <li>Arrival reminders</li>
+  <li>Time to log reminder</li>
+  <li>Goal progress updates</li>
+  <li>Achievement alerts</li>
+</ul>
+
+<h4 id="location-services">Location Services</h4>
+
+<ul>
+  <li>Automatic venue detection</li>
+  <li>Travel time calculation</li>
+  <li>Mileage tracking</li>
+  <li>Safety check-ins</li>
+</ul>
+
+<h3 id="wearable-integration">Wearable Integration</h3>
+
+<h4 id="apple-watch">Apple Watch</h4>
+
+<ul>
+  <li>Start tracking from wrist</li>
+  <li>Quick activity selection</li>
+  <li>Time alerts</li>
+  <li>Heart rate monitoring</li>
+</ul>
+
+<h4 id="fitness-trackers">Fitness Trackers</h4>
+
+<ul>
+  <li>Activity recognition</li>
+  <li>Calorie burn tracking</li>
+  <li>Step counting</li>
+  <li>Active time measurement</li>
+</ul>
+
+<h2 id="reporting-and-analytics">Reporting and Analytics</h2>
+
+<h3 id="personal-dashboard">Personal Dashboard</h3>
+
+<h4 id="time-summary">Time Summary</h4>
+
+<ul>
+  <li>Daily, weekly, monthly views</li>
+  <li>Year-over-year comparisons</li>
+  <li>Goal progress tracking</li>
+  <li>Streak counters</li>
+</ul>
+
+<h4 id="impact-visualization">Impact Visualization</h4>
+
+<ul>
+  <li>Hours contributed chart</li>
+  <li>Skills development radar</li>
+  <li>Organization distribution</li>
+  <li>Activity type breakdown</li>
+</ul>
+
+<h4 id="achievement-tracking">Achievement Tracking</h4>
+
+<ul>
+  <li>Volunteer milestones</li>
+  <li>Skill badges earned</li>
+  <li>Recognition received</li>
+  <li>Impact certificates</li>
+</ul>
+
+<h3 id="export-options">Export Options</h3>
+
+<h4 id="data-export-formats">Data Export Formats</h4>
+
+<ul>
+  <li>PDF reports</li>
+  <li>Excel spreadsheets</li>
+  <li>CSV files</li>
+  <li>JSON data</li>
+  <li>Calendar files</li>
+</ul>
+
+<h4 id="custom-reports">Custom Reports</h4>
+
+<ul>
+  <li>Date range selection</li>
+  <li>Organization filtering</li>
+  <li>Activity type sorting</li>
+  <li>Skills-based reporting</li>
+</ul>
+
+<h3 id="tax-documentation">Tax Documentation</h3>
+
+<h4 id="volunteer-expense-tracking">Volunteer Expense Tracking</h4>
+
+<ul>
+  <li>
+    <p><strong>Mileage Logs</strong></p>
+
+    <ul>
+      <li>Start/end locations</li>
+      <li>Total miles</li>
+      <li>Current IRS rate calculation</li>
+      <li>Purpose notation</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Supply Expenses</strong></p>
+    <ul>
+      <li>Receipt photo capture</li>
+      <li>Expense categorization</li>
+      <li>Organization assignment</li>
+      <li>Tax deduction calculation</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="year-end-reports">Year-End Reports</h4>
+
+<ul>
+  <li>Total volunteer hours</li>
+  <li>Deductible expenses</li>
+  <li>Organization summaries</li>
+  <li>Tax form assistance</li>
+</ul>
+
+<h2 id="integration-features-1">Integration Features</h2>
+
+<h3 id="calendar-integration">Calendar Integration</h3>
+
+<h4 id="two-way-sync">Two-Way Sync</h4>
+
+<ul>
+  <li>Volunteer commitments appear in calendar</li>
+  <li>Time blocks reserved automatically</li>
+  <li>Reminder notifications</li>
+  <li>Schedule conflict detection</li>
+</ul>
+
+<h4 id="popular-calendar-apps">Popular Calendar Apps</h4>
+
+<ul>
+  <li>Google Calendar</li>
+  <li>Outlook</li>
+  <li>Apple Calendar</li>
+  <li>Yahoo Calendar</li>
+</ul>
+
+<h3 id="social-sharing">Social Sharing</h3>
+
+<h4 id="achievement-sharing">Achievement Sharing</h4>
+
+<ul>
+  <li>Milestone celebrations</li>
+  <li>Progress updates</li>
+  <li>Impact stories</li>
+  <li>Volunteer recruitment</li>
+</ul>
+
+<h4 id="privacy-controls">Privacy Controls</h4>
+
+<ul>
+  <li>Choose what to share</li>
+  <li>Select audiences</li>
+  <li>Control visibility</li>
+  <li>Anonymous options</li>
+</ul>
+
+<h3 id="organization-systems">Organization Systems</h3>
+
+<h4 id="volunteer-management-platforms">Volunteer Management Platforms</h4>
+
+<ul>
+  <li>Integration with popular VMS</li>
+  <li>Data synchronization</li>
+  <li>Duplicate prevention</li>
+  <li>Role-based permissions</li>
+</ul>
+
+<h4 id="nonprofit-software">Nonprofit Software</h4>
+
+<ul>
+  <li>CRM integration</li>
+  <li>Donor database links</li>
+  <li>Grant reporting tools</li>
+  <li>Impact measurement systems</li>
+</ul>
+
+<h2 id="gamification-and-recognition">Gamification and Recognition</h2>
+
+<h3 id="badges-and-achievements">Badges and Achievements</h3>
+
+<h4 id="time-based-badges">Time-Based Badges</h4>
+
+<ul>
+  <li>🕐 <strong>Early Bird</strong>: 25 hours</li>
+  <li>⏰ <strong>Committed</strong>: 100 hours</li>
+  <li>🏆 <strong>Dedicated</strong>: 250 hours</li>
+  <li>🌟 <strong>Champion</strong>: 500 hours</li>
+  <li>👑 <strong>Legend</strong>: 1,000+ hours</li>
+</ul>
+
+<h4 id="skill-based-recognition">Skill-Based Recognition</h4>
+
+<ul>
+  <li>📚 <strong>Mentor</strong>: Teaching/training others</li>
+  <li>🔧 <strong>Problem Solver</strong>: Technical contributions</li>
+  <li>💼 <strong>Leader</strong>: Management activities</li>
+  <li>🎨 <strong>Creative</strong>: Arts and design work</li>
+  <li>🌍 <strong>Global</strong>: International volunteering</li>
+</ul>
+
+<h4 id="streak-rewards">Streak Rewards</h4>
+
+<ul>
+  <li>Daily volunteer streaks</li>
+  <li>Weekly consistency</li>
+  <li>Monthly participation</li>
+  <li>Seasonal challenges</li>
+</ul>
+
+<h3 id="leaderboards">Leaderboards</h3>
+
+<h4 id="friendly-competition">Friendly Competition</h4>
+
+<ul>
+  <li>Organization rankings</li>
+  <li>Peer comparisons</li>
+  <li>Team challenges</li>
+  <li>Community goals</li>
+</ul>
+
+<h4 id="privacy-options">Privacy Options</h4>
+
+<ul>
+  <li>Public participation</li>
+  <li>Anonymous rankings</li>
+  <li>Opt-out available</li>
+  <li>Custom visibility</li>
+</ul>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="common-issues">Common Issues</h3>
+
+<h4 id="time-not-recording">Time Not Recording</h4>
+
+<p><strong>Possible Causes</strong>:</p>
+
+<ul>
+  <li>Poor GPS signal</li>
+  <li>Background app refresh disabled</li>
+  <li>Low battery mode</li>
+  <li>Network connectivity</li>
+</ul>
+
+<p><strong>Solutions</strong>:</p>
+
+<ul>
+  <li>Manual entry backup</li>
+  <li>Check app permissions</li>
+  <li>Update app version</li>
+  <li>Contact support</li>
+</ul>
+
+<h4 id="duplicate-entries">Duplicate Entries</h4>
+
+<p><strong>Prevention</strong>:</p>
+
+<ul>
+  <li>Single tap to start/stop</li>
+  <li>Wait for confirmation</li>
+  <li>Check for existing entries</li>
+  <li>Use organization codes</li>
+</ul>
+
+<p><strong>Resolution</strong>:</p>
+
+<ul>
+  <li>Edit/delete duplicates</li>
+  <li>Contact organization</li>
+  <li>Admin override</li>
+  <li>Support ticket</li>
+</ul>
+
+<h4 id="missing-time">Missing Time</h4>
+
+<p><strong>Recovery Options</strong>:</p>
+
+<ul>
+  <li>Check draft entries</li>
+  <li>Review auto-save data</li>
+  <li>Organization verification</li>
+  <li>Manual reconstruction</li>
+</ul>
+
+<h3 id="best-practices">Best Practices</h3>
+
+<h4 id="accurate-tracking">Accurate Tracking</h4>
+
+<ul>
+  <li>Start timer before beginning</li>
+  <li>Include setup/cleanup time</li>
+  <li>Note breaks appropriately</li>
+  <li>End timer immediately after</li>
+  <li>Review entries before submitting</li>
+</ul>
+
+<h4 id="detailed-documentation">Detailed Documentation</h4>
+
+<ul>
+  <li>Specific activity descriptions</li>
+  <li>People or projects impacted</li>
+  <li>Skills utilized</li>
+  <li>Challenges encountered</li>
+  <li>Learning outcomes</li>
+</ul>
+
+<h4 id="regular-review">Regular Review</h4>
+
+<ul>
+  <li>Weekly time review</li>
+  <li>Monthly goal assessment</li>
+  <li>Quarterly impact analysis</li>
+  <li>Annual summary creation</li>
+</ul>
+
+<h2 id="privacy-and-security">Privacy and Security</h2>
+
+<h3 id="data-protection">Data Protection</h3>
+
+<h4 id="what-we-track">What We Track</h4>
+
+<ul>
+  <li>Volunteer hours and activities</li>
+  <li>Location data (when enabled)</li>
+  <li>Skills and certifications</li>
+  <li>Achievement progress</li>
+  <li>Impact measurements</li>
+</ul>
+
+<h4 id="how-we-protect-it">How We Protect It</h4>
+
+<ul>
+  <li>Encrypted data transmission</li>
+  <li>Secure server storage</li>
+  <li>Access controls</li>
+  <li>Regular security audits</li>
+  <li>GDPR compliance</li>
+</ul>
+
+<h3 id="privacy-controls-1">Privacy Controls</h3>
+
+<h4 id="data-sharing-options">Data Sharing Options</h4>
+
+<ul>
+  <li><strong>Public</strong>: Visible to all users</li>
+  <li><strong>Organization</strong>: Visible to volunteer coordinators</li>
+  <li><strong>Private</strong>: Personal use only</li>
+  <li><strong>Custom</strong>: Choose specific visibility</li>
+</ul>
+
+<h4 id="retention-policies">Retention Policies</h4>
+
+<ul>
+  <li>Active user data: Retained indefinitely</li>
+  <li>Inactive accounts: 3-year retention</li>
+  <li>Deleted accounts: 30-day recovery period</li>
+  <li>Export available before deletion</li>
+</ul>
+
+<h2 id="support-and-resources">Support and Resources</h2>
+
+<h3 id="getting-help">Getting Help</h3>
+
+<h4 id="documentation">Documentation</h4>
+
+<ul>
+  <li>Video tutorials</li>
+  <li>Step-by-step guides</li>
+  <li>FAQ section</li>
+  <li>Best practices</li>
+</ul>
+
+<h4 id="community-support">Community Support</h4>
+
+<ul>
+  <li>User forums</li>
+  <li>Volunteer mentors</li>
+  <li>Organization coordinators</li>
+  <li>Peer assistance</li>
+</ul>
+
+<h4 id="technical-support">Technical Support</h4>
+
+<ul>
+  <li>In-app chat</li>
+  <li>Email support</li>
+  <li>Video calls (premium)</li>
+  <li>Screen sharing assistance</li>
+</ul>
+
+<h3 id="training-resources">Training Resources</h3>
+
+<h4 id="webinars">Webinars</h4>
+
+<ul>
+  <li>Monthly training sessions</li>
+  <li>New feature introductions</li>
+  <li>Advanced tips and tricks</li>
+  <li>Q&amp;A sessions</li>
+</ul>
+
+<h4 id="certification-programs">Certification Programs</h4>
+
+<ul>
+  <li>Time tracking best practices</li>
+  <li>Volunteer management</li>
+  <li>Impact measurement</li>
+  <li>Leadership development</li>
+</ul>
+
+<h2 id="start-tracking-today">Start Tracking Today</h2>
+
+<p>Ready to track your volunteer impact?</p>
+
+<ol>
+  <li><strong>Download the Give Protocol app</strong></li>
+  <li><strong>Enable time tracking in settings</strong></li>
+  <li><strong>Set your volunteer goals</strong></li>
+  <li><strong>Start your first volunteer session</strong></li>
+  <li><strong>Begin building your impact story</strong></li>
+</ol>
+
+<p>Every hour you contribute makes a difference. Start tracking today and see the full scope of your positive impact on the world.</p>
+
+<hr />
+
+<p><em>Time tracking features available on all platforms</em><br />
+<em>Premium features available with Give Protocol Pro</em><br />
+<em>Data export available in multiple formats</em></p>
+</article>
+      </div>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="docs-search-overlay" id="search-overlay">
+      <div class="docs-search-results">
+        <div class="docs-search-header">
+          <h3>Search Results</h3>
+          <button class="docs-search-close" id="search-close">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="docs-search-list" id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- Google Translate -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- JavaScript -->
+    <script>
+      // Settings dropdown
+      const settingsToggle = document.getElementById("settings-toggle");
+      const settingsMenu = document.getElementById("settings-menu");
+
+      settingsToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        settingsMenu.style.display =
+          settingsMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (
+          !settingsToggle.contains(e.target) &&
+          !settingsMenu.contains(e.target)
+        ) {
+          settingsMenu.style.display = "none";
+        }
+      });
+
+      // Theme switching
+      const themeButtons = document.querySelectorAll(".docs-theme-btn");
+      const savedTheme = localStorage.getItem("docs-theme") || "light";
+
+      document.body.classList.toggle("dark-mode", savedTheme === "dark");
+
+      themeButtons.forEach((button) => {
+        if (button.dataset.theme === savedTheme) {
+          button.classList.add("active");
+        }
+
+        button.addEventListener("click", function () {
+          const theme = this.dataset.theme;
+          localStorage.setItem("docs-theme", theme);
+          document.body.classList.toggle("dark-mode", theme === "dark");
+
+          themeButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Language switching
+      const langButtons = document.querySelectorAll(".docs-lang-btn");
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const lang = this.dataset.lang;
+
+          if (lang === "en") {
+            // Clear translation
+            const url = window.location.pathname + window.location.search;
+            window.location.href = url;
+          } else {
+            // Use hash-based translation trigger
+            let langCode = lang;
+            // Map language codes to Google Translate codes
+            const langMap = {
+              'zh-CN': 'zh-CN',
+              'ar': 'ar',
+              'ko': 'ko',
+              'ja': 'ja',
+              'es': 'es',
+              'de': 'de',
+              'fr': 'fr'
+            };
+            
+            langCode = langMap[lang] || lang;
+            
+            // Set hash to trigger translation
+            window.location.hash = `googtrans(en|${langCode})`;
+            window.location.reload();
+          }
+
+          langButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Enhanced search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("search-close");
+
+      let searchData = [];
+
+      // Load search data - with fallback for non-Jekyll environments
+      const searchUrl = '/search.json' === '/search.json' 
+        ? './search.json'  // Fallback if Jekyll isn't processing
+        : '/search.json';
+      
+      fetch(searchUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          searchData = data;
+          // Search data loaded successfully
+        })
+        .catch((error) => {
+          console.error("❌ Search data loading error:", error);
+          // Fallback: Try to search through visible navigation links
+          const navLinks = document.querySelectorAll('.docs-nav-link');
+          searchData = Array.from(navLinks).map(link => ({
+            title: link.textContent.trim(),
+            url: link.getAttribute('href'),
+            content: link.textContent.trim(),
+            category: 'Navigation'
+          }));
+          // Using fallback search data from navigation
+        });
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+        
+        let score = 0;
+        
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+        
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+        
+        // Multiple word matches
+        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
+        queryWords.forEach(word => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+        
+        return score;
+      }
+
+      function performSearch(query) {
+        if (!query.trim()) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        const results = searchData
+          .filter((item) => {
+            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
+            return text.includes(query.toLowerCase());
+          })
+          .map(item => ({
+            ...item,
+            relevance: calculateRelevance(item, query)
+          }))
+          .sort((a, b) => b.relevance - a.relevance)
+          .slice(0, 8);
+
+        if (results.length === 0) {
+          searchResults.innerHTML = `
+            <div class="docs-search-item">
+              <div class="docs-result-title">No results found</div>
+              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
+        } else {
+          searchResults.innerHTML = results
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+              
+              return `
+                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
+                  <div class="docs-result-title">${highlightedTitle}</div>
+                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        searchOverlay.classList.add("active");
+      }
+
+      searchInput.addEventListener("input", function () {
+        const query = this.value;
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => performSearch(query), 300);
+      });
+
+      searchInput.addEventListener("focus", function () {
+        if (this.value.trim()) {
+          performSearch(this.value);
+        }
+      });
+
+      searchClose.addEventListener("click", function () {
+        searchOverlay.classList.remove("active");
+        searchInput.value = "";
+      });
+
+      searchOverlay.addEventListener("click", function (e) {
+        if (e.target === searchOverlay) {
+          searchOverlay.classList.remove("active");
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
+      // Check for active language on page load
+      window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash.includes('googtrans')) {
+          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
+          if (match && match[1]) {
+            const activeLang = match[1];
+            langButtons.forEach((btn) => {
+              if (btn.dataset.lang === activeLang) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+          }
+        }
+      });
+    </script>
+
+    <!-- Google Translate -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>

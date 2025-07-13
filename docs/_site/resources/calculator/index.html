@@ -1,0 +1,1645 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Impact Calculator - Give Protocol Documentation
+    </title>
+    <meta
+      name="description"
+      content="Calculate the value and impact of your time donations and charitable contributions"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon/favicon-16x16.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+    />
+
+    <style>
+      /* Immediate styles to prevent layout shift */
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0eee7;
+        margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark-mode {
+        background: #0f172a;
+        color: #f1f5f9;
+      }
+      .docs-header {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-header {
+        background: #1e293b;
+        border-bottom-color: #334155;
+      }
+      .docs-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .docs-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-brand {
+        color: #f1f5f9;
+      }
+      .docs-search {
+        flex: 1;
+        max-width: 400px;
+        margin: 0 2rem;
+        position: relative;
+      }
+      .docs-search input {
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-search input {
+        background: #374151;
+        border-color: #4b5563;
+        color: #f1f5f9;
+      }
+      .docs-search input:focus {
+        outline: none;
+        background: #fff;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+      body.dark-mode .docs-search input:focus {
+        background: #4b5563;
+        border-color: #6366f1;
+      }
+      .docs-search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-icon {
+        color: #d1d5db;
+      }
+      .docs-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .docs-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: #4b5563;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-btn {
+        color: #d1d5db;
+      }
+      .docs-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings {
+        position: relative;
+      }
+      .docs-settings-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-settings-btn {
+        color: #d1d5db;
+      }
+      .docs-settings-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-settings-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        min-width: 240px;
+        z-index: 100;
+        display: none;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-menu {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      .docs-settings-section {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      body.dark-mode .docs-settings-section {
+        border-bottom-color: #334155;
+      }
+      .docs-settings-section:last-child {
+        border-bottom: none;
+      }
+      .docs-settings-heading {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-heading {
+        color: #d1d5db;
+      }
+      .docs-theme-options {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .docs-theme-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        padding: 0.5rem;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-theme-btn {
+        background: #374151;
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-theme-btn:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-theme-btn:hover {
+        background: #4b5563;
+        border-color: #6b7280;
+      }
+      .docs-theme-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+      body.dark-mode .docs-theme-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-lang-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .docs-lang-btn {
+        padding: 0.5rem 0.75rem;
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: left;
+      }
+      body.dark-mode .docs-lang-btn {
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-lang-btn:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-lang-btn:hover {
+        background: #374151;
+        border-color: #6b7280;
+      }
+      .docs-lang-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-lang-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-main {
+        display: flex;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        gap: 2rem;
+      }
+      .docs-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 5.5rem;
+        height: fit-content;
+      }
+      .docs-nav-section {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-section {
+        background: #1e293b;
+      }
+      .docs-nav-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-title {
+        color: #d1d5db;
+      }
+      .docs-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .docs-nav-item {
+        margin-bottom: 0.25rem;
+      }
+      .docs-nav-link {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        color: #374151;
+        text-decoration: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-nav-link {
+        color: #d1d5db;
+      }
+      .docs-nav-link:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-nav-link:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-nav-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-nav-link.active {
+        background: #312e81;
+        color: #c7d2fe;
+      }
+      .docs-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .docs-article {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-article {
+        background: #1e293b;
+      }
+      .docs-search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: none;
+      }
+      .docs-search-overlay.active {
+        display: block;
+      }
+      .docs-search-results {
+        max-width: 600px;
+        margin: 6rem auto 2rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-results {
+        background: #1e293b;
+      }
+      .docs-search-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      body.dark-mode .docs-search-header {
+        border-bottom-color: #334155;
+      }
+      .docs-search-close {
+        padding: 0.25rem;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-close {
+        color: #d1d5db;
+      }
+      .docs-search-list {
+        padding: 0;
+        margin: 0;
+      }
+      .docs-search-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-item {
+        border-bottom-color: #334155;
+      }
+      .docs-search-item:hover {
+        background: #f9fafb;
+      }
+      body.dark-mode .docs-search-item:hover {
+        background: #374151;
+      }
+      .docs-search-item:last-child {
+        border-bottom: none;
+      }
+      .docs-result-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #111827;
+        margin-bottom: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-title {
+        color: #f1f5f9;
+      }
+      .docs-result-excerpt {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.4;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-excerpt {
+        color: #d1d5db;
+      }
+      .docs-result-category {
+        font-size: 0.75rem;
+        color: #6366f1;
+        font-weight: 500;
+        margin-top: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-category {
+        color: #c7d2fe;
+      }
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 500;
+      }
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+      @media (max-width: 768px) {
+        .docs-search {
+          display: none;
+        }
+        .docs-main {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .docs-sidebar {
+          position: static;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="docs-header">
+      <div class="docs-container">
+        <a href="/" class="docs-brand">
+          <img src="/assets/images/logo.svg" alt="Give Protocol" width="32" height="32">
+          <span>Give Protocol Docs</span>
+        </a>
+
+        <div class="docs-search">
+          <svg
+            class="docs-search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
+
+        <div class="docs-actions">
+          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
+
+          <div class="docs-settings">
+            <button class="docs-settings-btn" id="settings-toggle">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+
+            <div class="docs-settings-menu" id="settings-menu">
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Theme</h4>
+                <div class="docs-theme-options">
+                  <button class="docs-theme-btn active" data-theme="light">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <path
+                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                      />
+                    </svg>
+                    Light
+                  </button>
+                  <button class="docs-theme-btn" data-theme="dark">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Language</h4>
+                <div class="docs-lang-options">
+                  <button class="docs-lang-btn active" data-lang="en">
+                    🇺🇸 English
+                  </button>
+                  <button class="docs-lang-btn" data-lang="es">
+                    🇪🇸 Español
+                  </button>
+                  <button class="docs-lang-btn" data-lang="de">
+                    🇩🇪 Deutsch
+                  </button>
+                  <button class="docs-lang-btn" data-lang="fr">
+                    🇫🇷 Français
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ja">
+                    🇯🇵 日本語
+                  </button>
+                  <button class="docs-lang-btn" data-lang="zh-CN">
+                    🇨🇳 简体中文
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ko">
+                    🇰🇷 한국어
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ar">
+                    🇸🇦 العربية
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <!-- Sidebar -->
+      <aside class="docs-sidebar">
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Getting Started</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/introduction/what-is-give-protocol/"
+                class="docs-nav-link "
+              >
+                What is Give Protocol?
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/creating-account/"
+                class="docs-nav-link "
+              >
+                Creating Account
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/wallet-connection/"
+                class="docs-nav-link "
+              >
+                Wallet Connection
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">User Guides</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/donors/"
+                class="docs-nav-link "
+              >
+                For Donors
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/organizations/"
+                class="docs-nav-link "
+              >
+                For Organizations
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/volunteers/"
+                class="docs-nav-link "
+              >
+                For Volunteers
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Help & Support</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/faq/"
+                class="docs-nav-link "
+              >
+                FAQ
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/need-help/"
+                class="docs-nav-link "
+              >
+                Need Help?
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <article class="docs-article"><p>Measure the true value of your charitable contributions. Our comprehensive calculators help you understand the financial impact of your time donations, tax benefits, and overall charitable giving.</p>
+
+<h2 id="time-value-calculator">Time Value Calculator</h2>
+
+<h3 id="understanding-your-times-worth">Understanding Your Time’s Worth</h3>
+
+<p>Our Time Value Calculator helps you quantify the monetary value of your volunteer hours based on your professional skills and the type of work performed.</p>
+
+<h3 id="how-to-use-the-time-value-calculator">How to Use the Time Value Calculator</h3>
+
+<ol>
+  <li>
+    <p><strong>Select Your Skill Level</strong></p>
+
+    <ul>
+      <li>Entry Level: Basic tasks, no special skills required</li>
+      <li>Skilled: Specific training or experience needed</li>
+      <li>Professional: Specialized expertise (teaching, healthcare, legal)</li>
+      <li>Executive: Strategic planning, board service</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Enter Your Details</strong></p>
+
+    <ul>
+      <li>Hours volunteered per week/month</li>
+      <li>Type of volunteer work</li>
+      <li>Your professional hourly rate (optional)</li>
+      <li>Location (for regional adjustments)</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>View Your Impact</strong></p>
+    <ul>
+      <li>Monetary value of time donated</li>
+      <li>Equivalent donation amount</li>
+      <li>Annual projection</li>
+      <li>Tax deduction potential</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="value-rates-by-category">Value Rates by Category</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Skill Level</th>
+      <th>National Average</th>
+      <th>Examples</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>General</td>
+      <td>$29.95/hour</td>
+      <td>Event support, sorting donations</td>
+    </tr>
+    <tr>
+      <td>Skilled</td>
+      <td>$45.50/hour</td>
+      <td>Tutoring, basic IT support</td>
+    </tr>
+    <tr>
+      <td>Professional</td>
+      <td>$85.00/hour</td>
+      <td>Legal advice, medical services</td>
+    </tr>
+    <tr>
+      <td>Executive</td>
+      <td>$150.00/hour</td>
+      <td>Board service, strategic consulting</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Rates based on Independent Sector’s value of volunteer time</em></p>
+
+<h2 id="tax-deduction-calculator">Tax Deduction Calculator</h2>
+
+<h3 id="maximize-your-tax-benefits">Maximize Your Tax Benefits</h3>
+
+<p>Calculate potential tax deductions from your charitable activities, including both monetary donations and deductible volunteer expenses.</p>
+
+<h3 id="deductible-volunteer-expenses">Deductible Volunteer Expenses</h3>
+
+<h4 id="what-you-can-deduct">What You CAN Deduct</h4>
+
+<ul>
+  <li>
+    <p><strong>Transportation</strong></p>
+
+    <ul>
+      <li>Mileage at $0.14 per mile (2024 rate)</li>
+      <li>Parking fees and tolls</li>
+      <li>Public transportation costs</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Supplies</strong></p>
+
+    <ul>
+      <li>Materials purchased for volunteer work</li>
+      <li>Uniforms required by organization</li>
+      <li>Safety equipment</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Travel</strong></p>
+    <ul>
+      <li>Lodging for overnight volunteer trips</li>
+      <li>Meals during volunteer travel</li>
+      <li>Conference registration fees</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="what-you-cannot-deduct">What You CANNOT Deduct</h4>
+
+<ul>
+  <li>Value of your time or services</li>
+  <li>Personal expenses</li>
+  <li>Childcare costs</li>
+  <li>Lost wages</li>
+</ul>
+
+<h3 id="using-the-tax-calculator">Using the Tax Calculator</h3>
+
+<ol>
+  <li>
+    <p><strong>Input Donations</strong></p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cash Donations: $______
+Property Donations: $______
+Stock/Securities: $______
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Add Volunteer Expenses</strong></p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Miles Driven: _____ × $0.14 = $______
+Supplies Purchased: $______
+Travel Expenses: $______
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Select Tax Information</strong></p>
+
+    <ul>
+      <li>Filing status</li>
+      <li>Tax bracket</li>
+      <li>Standard vs. itemized deductions</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Calculate Benefits</strong></p>
+    <ul>
+      <li>Total deductible amount</li>
+      <li>Estimated tax savings</li>
+      <li>After-tax cost of giving</li>
+      <li>State tax benefits (if applicable)</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="donation-impact-calculator">Donation Impact Calculator</h2>
+
+<h3 id="see-your-dollars-at-work">See Your Dollars at Work</h3>
+
+<p>Understand how your donations translate into real-world impact across different charitable sectors.</p>
+
+<h3 id="impact-examples-by-sector">Impact Examples by Sector</h3>
+
+<h4 id="education">Education</h4>
+
+<ul>
+  <li><strong>$25</strong>: Provides school supplies for one student</li>
+  <li><strong>$100</strong>: Sponsors a child’s monthly tutoring</li>
+  <li><strong>$500</strong>: Funds a classroom technology upgrade</li>
+  <li><strong>$1,000</strong>: Provides a semester scholarship</li>
+</ul>
+
+<h4 id="hunger-relief">Hunger Relief</h4>
+
+<ul>
+  <li><strong>$1</strong>: Provides 3 meals through food bank</li>
+  <li><strong>$50</strong>: Feeds a family of 4 for a week</li>
+  <li><strong>$250</strong>: Stocks a food pantry for a month</li>
+  <li><strong>$1,000</strong>: Provides 3,000 meals</li>
+</ul>
+
+<h4 id="healthcare">Healthcare</h4>
+
+<ul>
+  <li><strong>$10</strong>: Provides basic medical supplies</li>
+  <li><strong>$75</strong>: Funds a medical screening</li>
+  <li><strong>$350</strong>: Covers emergency medical treatment</li>
+  <li><strong>$2,500</strong>: Funds minor surgery in developing country</li>
+</ul>
+
+<h4 id="environmental">Environmental</h4>
+
+<ul>
+  <li><strong>$5</strong>: Plants one tree</li>
+  <li><strong>$25</strong>: Protects 100 sq ft of rainforest</li>
+  <li><strong>$100</strong>: Removes 1,000 lbs of ocean plastic</li>
+  <li><strong>$500</strong>: Offsets 10 tons of carbon</li>
+</ul>
+
+<h3 id="custom-impact-calculation">Custom Impact Calculation</h3>
+
+<ol>
+  <li><strong>Select Cause Area</strong></li>
+  <li><strong>Enter Donation Amount</strong></li>
+  <li><strong>Choose Time Period</strong> (one-time or recurring)</li>
+  <li><strong>View Projected Impact</strong>
+    <ul>
+      <li>Immediate outcomes</li>
+      <li>1-year projection</li>
+      <li>5-year projection</li>
+      <li>Equivalency comparisons</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="corporate-matching-calculator">Corporate Matching Calculator</h2>
+
+<h3 id="double-your-impact">Double Your Impact</h3>
+
+<p>Many employers offer matching gift programs. Calculate how corporate matching can amplify your charitable contributions.</p>
+
+<h3 id="how-matching-works">How Matching Works</h3>
+
+<ol>
+  <li>
+    <p><strong>Common Match Ratios</strong></p>
+
+    <ul>
+      <li>1:1 (100% match) - Most common</li>
+      <li>2:1 (200% match) - Doubles your impact</li>
+      <li>0.5:1 (50% match) - Adds half your donation</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Typical Limits</strong></p>
+    <ul>
+      <li>Annual maximum: $1,000-$15,000</li>
+      <li>Per-gift maximum: $25-$5,000</li>
+      <li>Minimum gift: $25-$100</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="using-the-matching-calculator">Using the Matching Calculator</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Your Donation: $500
+Company Match: 1:1
+Total Impact: $1,000
+
+Annual Giving: $2,000
+Company Match: 1:1 up to $1,500
+Your Impact: $2,000
+Company Impact: $1,500
+Total Impact: $3,500
+</code></pre></div></div>
+
+<h3 id="finding-your-companys-program">Finding Your Company’s Program</h3>
+
+<ol>
+  <li>Check our corporate partner database</li>
+  <li>Ask your HR department</li>
+  <li>Search “[Company Name] matching gifts”</li>
+  <li>Review employee handbook</li>
+</ol>
+
+<h2 id="volunteer-roi-calculator">Volunteer ROI Calculator</h2>
+
+<h3 id="return-on-investment-for-organizations">Return on Investment for Organizations</h3>
+
+<p>Help organizations understand the value volunteers bring to their mission.</p>
+
+<h3 id="calculation-factors">Calculation Factors</h3>
+
+<ol>
+  <li>
+    <p><strong>Direct Value</strong></p>
+
+    <ul>
+      <li>Hours worked × hourly value</li>
+      <li>Skills-based multiplier</li>
+      <li>Project completion value</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Indirect Benefits</strong></p>
+
+    <ul>
+      <li>Community engagement</li>
+      <li>Donor conversion rate</li>
+      <li>Social media reach</li>
+      <li>Brand awareness</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Cost Savings</strong></p>
+    <ul>
+      <li>Reduced staffing needs</li>
+      <li>Expanded service capacity</li>
+      <li>Professional services value</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="sample-roi-calculation">Sample ROI Calculation</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Volunteer Program Investment
+- Volunteer Coordinator Salary: $45,000
+- Training &amp; Materials: $5,000
+- Recognition &amp; Events: $3,000
+- Insurance &amp; Background Checks: $2,000
+Total Investment: $55,000
+
+Volunteer Value Generated
+- 50 volunteers × 100 hours × $29.95: $149,750
+- 10 skilled volunteers × 50 hours × $85: $42,500
+- Special projects value: $25,000
+Total Value: $217,250
+
+ROI: 295% return on investment
+</code></pre></div></div>
+
+<h2 id="legacy-giving-calculator">Legacy Giving Calculator</h2>
+
+<h3 id="plan-your-lasting-impact">Plan Your Lasting Impact</h3>
+
+<p>Calculate the future value of planned gifts and understand various legacy giving options.</p>
+
+<h3 id="types-of-legacy-gifts">Types of Legacy Gifts</h3>
+
+<ol>
+  <li>
+    <p><strong>Bequest in Will</strong></p>
+
+    <ul>
+      <li>Specific amount or percentage</li>
+      <li>Residual estate</li>
+      <li>Contingent bequest</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Charitable Remainder Trust</strong></p>
+
+    <ul>
+      <li>Income during lifetime</li>
+      <li>Remainder to charity</li>
+      <li>Tax benefits today</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Charitable Lead Trust</strong></p>
+    <ul>
+      <li>Charity receives income</li>
+      <li>Assets to heirs later</li>
+      <li>Estate tax reduction</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="future-value-projections">Future Value Projections</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Current Age: 45
+Bequest Amount: $50,000
+Years to Distribution: 35
+Assumed Growth: 5%
+
+Future Value: $275,000
+Lives Impacted: 8,250 meals
+              OR 110 scholarships
+              OR 55,000 trees planted
+</code></pre></div></div>
+
+<h2 id="budget-planning-tools">Budget Planning Tools</h2>
+
+<h3 id="charitable-giving-budget-worksheet">Charitable Giving Budget Worksheet</h3>
+
+<p>Plan your annual giving to maximize impact while maintaining financial health.</p>
+
+<h3 id="recommended-giving-guidelines">Recommended Giving Guidelines</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Income Level</th>
+      <th>Suggested Giving %</th>
+      <th>Monthly Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$30,000</td>
+      <td>2-3%</td>
+      <td>$50-75</td>
+    </tr>
+    <tr>
+      <td>$50,000</td>
+      <td>3-5%</td>
+      <td>$125-208</td>
+    </tr>
+    <tr>
+      <td>$75,000</td>
+      <td>5-7%</td>
+      <td>$312-437</td>
+    </tr>
+    <tr>
+      <td>$100,000</td>
+      <td>7-10%</td>
+      <td>$583-833</td>
+    </tr>
+    <tr>
+      <td>$150,000+</td>
+      <td>10%+</td>
+      <td>$1,250+</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="creating-your-giving-plan">Creating Your Giving Plan</h3>
+
+<ol>
+  <li>
+    <p><strong>Calculate Capacity</strong></p>
+
+    <ul>
+      <li>Annual income</li>
+      <li>Essential expenses</li>
+      <li>Savings goals</li>
+      <li>Discretionary income</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Allocate by Priority</strong></p>
+
+    <ul>
+      <li>40% - Primary cause</li>
+      <li>30% - Secondary cause</li>
+      <li>20% - Community/local</li>
+      <li>10% - Emergency/disaster</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Schedule Donations</strong></p>
+    <ul>
+      <li>Monthly recurring</li>
+      <li>Quarterly reviews</li>
+      <li>Annual major gifts</li>
+      <li>Spontaneous buffer</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="using-calculator-results">Using Calculator Results</h2>
+
+<h3 id="sharing-your-impact">Sharing Your Impact</h3>
+
+<ol>
+  <li>
+    <p><strong>Social Media</strong></p>
+
+    <ul>
+      <li>Share calculator results</li>
+      <li>Inspire others to give</li>
+      <li>Tag organizations</li>
+      <li>Use #GiveProtocolImpact</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Tax Documentation</strong></p>
+
+    <ul>
+      <li>Print calculator summaries</li>
+      <li>Save with tax records</li>
+      <li>Share with tax preparer</li>
+      <li>Track year-over-year</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Personal Tracking</strong></p>
+    <ul>
+      <li>Set impact goals</li>
+      <li>Monitor progress</li>
+      <li>Celebrate milestones</li>
+      <li>Adjust strategy</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="integration-with-give-protocol">Integration with Give Protocol</h3>
+
+<ul>
+  <li><strong>Automatic Tracking</strong>: Donations logged automatically</li>
+  <li><strong>Real-time Updates</strong>: See impact as you give</li>
+  <li><strong>Annual Summaries</strong>: Year-end tax reports</li>
+  <li><strong>Goal Setting</strong>: Track progress toward impact goals</li>
+</ul>
+
+<h2 id="advanced-features">Advanced Features</h2>
+
+<h3 id="multi-year-projections">Multi-Year Projections</h3>
+
+<p>Calculate long-term impact of sustained giving:</p>
+
+<ul>
+  <li>Compound impact over time</li>
+  <li>Inflation adjustments</li>
+  <li>Growth projections</li>
+  <li>Legacy planning</li>
+</ul>
+
+<h3 id="comparative-analysis">Comparative Analysis</h3>
+
+<p>Compare different giving strategies:</p>
+
+<ul>
+  <li>Lump sum vs. recurring</li>
+  <li>Direct vs. DAF giving</li>
+  <li>Time vs. money trade-offs</li>
+  <li>Multiple organization splits</li>
+</ul>
+
+<h3 id="currency-conversion">Currency Conversion</h3>
+
+<p>For international giving:</p>
+
+<ul>
+  <li>Real-time exchange rates</li>
+  <li>Purchasing power parity</li>
+  <li>Local impact values</li>
+  <li>Tax treaty benefits</li>
+</ul>
+
+<h2 id="tips-for-maximizing-impact">Tips for Maximizing Impact</h2>
+
+<h3 id="strategic-giving">Strategic Giving</h3>
+
+<ol>
+  <li>
+    <p><strong>Bundle Donations</strong></p>
+
+    <ul>
+      <li>Reduce transaction fees</li>
+      <li>Simplify record keeping</li>
+      <li>Qualify for recognition tiers</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Time Your Gifts</strong></p>
+
+    <ul>
+      <li>Year-end tax planning</li>
+      <li>Matching campaigns</li>
+      <li>Giving days</li>
+      <li>Emergency responses</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Diversify Methods</strong></p>
+    <ul>
+      <li>Cash for immediate needs</li>
+      <li>Stock for tax efficiency</li>
+      <li>Time for personal connection</li>
+      <li>Planned gifts for legacy</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="regular-review">Regular Review</h3>
+
+<ul>
+  <li>Quarterly impact assessment</li>
+  <li>Annual tax planning</li>
+  <li>Strategy adjustments</li>
+  <li>Celebration of achievements</li>
+</ul>
+
+<h2 id="mobile-calculator-access">Mobile Calculator Access</h2>
+
+<p>Access all calculators on-the-go:</p>
+
+<ul>
+  <li>Mobile-optimized interface</li>
+  <li>Offline capability</li>
+  <li>Sync across devices</li>
+  <li>Quick calculations</li>
+  <li>Share results instantly</li>
+</ul>
+
+<h2 id="get-started">Get Started</h2>
+
+<p>Ready to calculate your impact? Access our calculators:</p>
+
+<ol>
+  <li><strong>Log into Give Protocol</strong></li>
+  <li><strong>Navigate to Resources → Calculators</strong></li>
+  <li><strong>Choose your calculator type</strong></li>
+  <li><strong>Enter your information</strong></li>
+  <li><strong>Explore your impact potential</strong></li>
+</ol>
+
+<p>Every contribution matters. Use our calculators to make informed decisions and maximize your charitable impact.</p>
+
+<hr />
+
+<p><em>Calculator values updated quarterly based on current data</em><br />
+<em>Tax information for general guidance only - consult your tax advisor</em><br />
+<em>Impact examples based on partner organization reports</em></p>
+</article>
+      </div>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="docs-search-overlay" id="search-overlay">
+      <div class="docs-search-results">
+        <div class="docs-search-header">
+          <h3>Search Results</h3>
+          <button class="docs-search-close" id="search-close">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="docs-search-list" id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- Google Translate -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- JavaScript -->
+    <script>
+      // Settings dropdown
+      const settingsToggle = document.getElementById("settings-toggle");
+      const settingsMenu = document.getElementById("settings-menu");
+
+      settingsToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        settingsMenu.style.display =
+          settingsMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (
+          !settingsToggle.contains(e.target) &&
+          !settingsMenu.contains(e.target)
+        ) {
+          settingsMenu.style.display = "none";
+        }
+      });
+
+      // Theme switching
+      const themeButtons = document.querySelectorAll(".docs-theme-btn");
+      const savedTheme = localStorage.getItem("docs-theme") || "light";
+
+      document.body.classList.toggle("dark-mode", savedTheme === "dark");
+
+      themeButtons.forEach((button) => {
+        if (button.dataset.theme === savedTheme) {
+          button.classList.add("active");
+        }
+
+        button.addEventListener("click", function () {
+          const theme = this.dataset.theme;
+          localStorage.setItem("docs-theme", theme);
+          document.body.classList.toggle("dark-mode", theme === "dark");
+
+          themeButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Language switching
+      const langButtons = document.querySelectorAll(".docs-lang-btn");
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const lang = this.dataset.lang;
+
+          if (lang === "en") {
+            // Clear translation
+            const url = window.location.pathname + window.location.search;
+            window.location.href = url;
+          } else {
+            // Use hash-based translation trigger
+            let langCode = lang;
+            // Map language codes to Google Translate codes
+            const langMap = {
+              'zh-CN': 'zh-CN',
+              'ar': 'ar',
+              'ko': 'ko',
+              'ja': 'ja',
+              'es': 'es',
+              'de': 'de',
+              'fr': 'fr'
+            };
+            
+            langCode = langMap[lang] || lang;
+            
+            // Set hash to trigger translation
+            window.location.hash = `googtrans(en|${langCode})`;
+            window.location.reload();
+          }
+
+          langButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Enhanced search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("search-close");
+
+      let searchData = [];
+
+      // Load search data - with fallback for non-Jekyll environments
+      const searchUrl = '/search.json' === '/search.json' 
+        ? './search.json'  // Fallback if Jekyll isn't processing
+        : '/search.json';
+      
+      fetch(searchUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          searchData = data;
+          // Search data loaded successfully
+        })
+        .catch((error) => {
+          console.error("❌ Search data loading error:", error);
+          // Fallback: Try to search through visible navigation links
+          const navLinks = document.querySelectorAll('.docs-nav-link');
+          searchData = Array.from(navLinks).map(link => ({
+            title: link.textContent.trim(),
+            url: link.getAttribute('href'),
+            content: link.textContent.trim(),
+            category: 'Navigation'
+          }));
+          // Using fallback search data from navigation
+        });
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+        
+        let score = 0;
+        
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+        
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+        
+        // Multiple word matches
+        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
+        queryWords.forEach(word => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+        
+        return score;
+      }
+
+      function performSearch(query) {
+        if (!query.trim()) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        const results = searchData
+          .filter((item) => {
+            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
+            return text.includes(query.toLowerCase());
+          })
+          .map(item => ({
+            ...item,
+            relevance: calculateRelevance(item, query)
+          }))
+          .sort((a, b) => b.relevance - a.relevance)
+          .slice(0, 8);
+
+        if (results.length === 0) {
+          searchResults.innerHTML = `
+            <div class="docs-search-item">
+              <div class="docs-result-title">No results found</div>
+              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
+        } else {
+          searchResults.innerHTML = results
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+              
+              return `
+                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
+                  <div class="docs-result-title">${highlightedTitle}</div>
+                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        searchOverlay.classList.add("active");
+      }
+
+      searchInput.addEventListener("input", function () {
+        const query = this.value;
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => performSearch(query), 300);
+      });
+
+      searchInput.addEventListener("focus", function () {
+        if (this.value.trim()) {
+          performSearch(this.value);
+        }
+      });
+
+      searchClose.addEventListener("click", function () {
+        searchOverlay.classList.remove("active");
+        searchInput.value = "";
+      });
+
+      searchOverlay.addEventListener("click", function (e) {
+        if (e.target === searchOverlay) {
+          searchOverlay.classList.remove("active");
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
+      // Check for active language on page load
+      window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash.includes('googtrans')) {
+          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
+          if (match && match[1]) {
+            const activeLang = match[1];
+            langButtons.forEach((btn) => {
+              if (btn.dataset.lang === activeLang) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+          }
+        }
+      });
+    </script>
+
+    <!-- Google Translate -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>

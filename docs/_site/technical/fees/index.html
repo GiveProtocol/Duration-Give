@@ -1,0 +1,1495 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Fee Structure and Technical Implementation - Give Protocol Documentation
+    </title>
+    <meta
+      name="description"
+      content="Comprehensive documentation of Give Protocol's fee structure, calculation methods, and technical implementation details"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon/favicon-16x16.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+    />
+
+    <style>
+      /* Immediate styles to prevent layout shift */
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0eee7;
+        margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark-mode {
+        background: #0f172a;
+        color: #f1f5f9;
+      }
+      .docs-header {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-header {
+        background: #1e293b;
+        border-bottom-color: #334155;
+      }
+      .docs-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .docs-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-brand {
+        color: #f1f5f9;
+      }
+      .docs-search {
+        flex: 1;
+        max-width: 400px;
+        margin: 0 2rem;
+        position: relative;
+      }
+      .docs-search input {
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-search input {
+        background: #374151;
+        border-color: #4b5563;
+        color: #f1f5f9;
+      }
+      .docs-search input:focus {
+        outline: none;
+        background: #fff;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+      body.dark-mode .docs-search input:focus {
+        background: #4b5563;
+        border-color: #6366f1;
+      }
+      .docs-search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-icon {
+        color: #d1d5db;
+      }
+      .docs-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .docs-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: #4b5563;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-btn {
+        color: #d1d5db;
+      }
+      .docs-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings {
+        position: relative;
+      }
+      .docs-settings-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-settings-btn {
+        color: #d1d5db;
+      }
+      .docs-settings-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-settings-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        min-width: 240px;
+        z-index: 100;
+        display: none;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-menu {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      .docs-settings-section {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      body.dark-mode .docs-settings-section {
+        border-bottom-color: #334155;
+      }
+      .docs-settings-section:last-child {
+        border-bottom: none;
+      }
+      .docs-settings-heading {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-heading {
+        color: #d1d5db;
+      }
+      .docs-theme-options {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .docs-theme-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        padding: 0.5rem;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-theme-btn {
+        background: #374151;
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-theme-btn:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-theme-btn:hover {
+        background: #4b5563;
+        border-color: #6b7280;
+      }
+      .docs-theme-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+      body.dark-mode .docs-theme-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-lang-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .docs-lang-btn {
+        padding: 0.5rem 0.75rem;
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: left;
+      }
+      body.dark-mode .docs-lang-btn {
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-lang-btn:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-lang-btn:hover {
+        background: #374151;
+        border-color: #6b7280;
+      }
+      .docs-lang-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-lang-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-main {
+        display: flex;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        gap: 2rem;
+      }
+      .docs-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 5.5rem;
+        height: fit-content;
+      }
+      .docs-nav-section {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-section {
+        background: #1e293b;
+      }
+      .docs-nav-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-title {
+        color: #d1d5db;
+      }
+      .docs-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .docs-nav-item {
+        margin-bottom: 0.25rem;
+      }
+      .docs-nav-link {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        color: #374151;
+        text-decoration: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-nav-link {
+        color: #d1d5db;
+      }
+      .docs-nav-link:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-nav-link:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-nav-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-nav-link.active {
+        background: #312e81;
+        color: #c7d2fe;
+      }
+      .docs-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .docs-article {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-article {
+        background: #1e293b;
+      }
+      .docs-search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: none;
+      }
+      .docs-search-overlay.active {
+        display: block;
+      }
+      .docs-search-results {
+        max-width: 600px;
+        margin: 6rem auto 2rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-results {
+        background: #1e293b;
+      }
+      .docs-search-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      body.dark-mode .docs-search-header {
+        border-bottom-color: #334155;
+      }
+      .docs-search-close {
+        padding: 0.25rem;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-close {
+        color: #d1d5db;
+      }
+      .docs-search-list {
+        padding: 0;
+        margin: 0;
+      }
+      .docs-search-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-item {
+        border-bottom-color: #334155;
+      }
+      .docs-search-item:hover {
+        background: #f9fafb;
+      }
+      body.dark-mode .docs-search-item:hover {
+        background: #374151;
+      }
+      .docs-search-item:last-child {
+        border-bottom: none;
+      }
+      .docs-result-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #111827;
+        margin-bottom: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-title {
+        color: #f1f5f9;
+      }
+      .docs-result-excerpt {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.4;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-excerpt {
+        color: #d1d5db;
+      }
+      .docs-result-category {
+        font-size: 0.75rem;
+        color: #6366f1;
+        font-weight: 500;
+        margin-top: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-category {
+        color: #c7d2fe;
+      }
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 500;
+      }
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+      @media (max-width: 768px) {
+        .docs-search {
+          display: none;
+        }
+        .docs-main {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .docs-sidebar {
+          position: static;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="docs-header">
+      <div class="docs-container">
+        <a href="/" class="docs-brand">
+          <img src="/assets/images/logo.svg" alt="Give Protocol" width="32" height="32">
+          <span>Give Protocol Docs</span>
+        </a>
+
+        <div class="docs-search">
+          <svg
+            class="docs-search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
+
+        <div class="docs-actions">
+          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
+
+          <div class="docs-settings">
+            <button class="docs-settings-btn" id="settings-toggle">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+
+            <div class="docs-settings-menu" id="settings-menu">
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Theme</h4>
+                <div class="docs-theme-options">
+                  <button class="docs-theme-btn active" data-theme="light">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <path
+                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                      />
+                    </svg>
+                    Light
+                  </button>
+                  <button class="docs-theme-btn" data-theme="dark">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Language</h4>
+                <div class="docs-lang-options">
+                  <button class="docs-lang-btn active" data-lang="en">
+                    🇺🇸 English
+                  </button>
+                  <button class="docs-lang-btn" data-lang="es">
+                    🇪🇸 Español
+                  </button>
+                  <button class="docs-lang-btn" data-lang="de">
+                    🇩🇪 Deutsch
+                  </button>
+                  <button class="docs-lang-btn" data-lang="fr">
+                    🇫🇷 Français
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ja">
+                    🇯🇵 日本語
+                  </button>
+                  <button class="docs-lang-btn" data-lang="zh-CN">
+                    🇨🇳 简体中文
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ko">
+                    🇰🇷 한국어
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ar">
+                    🇸🇦 العربية
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <!-- Sidebar -->
+      <aside class="docs-sidebar">
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Getting Started</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/introduction/what-is-give-protocol/"
+                class="docs-nav-link "
+              >
+                What is Give Protocol?
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/creating-account/"
+                class="docs-nav-link "
+              >
+                Creating Account
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/wallet-connection/"
+                class="docs-nav-link "
+              >
+                Wallet Connection
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">User Guides</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/donors/"
+                class="docs-nav-link "
+              >
+                For Donors
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/organizations/"
+                class="docs-nav-link "
+              >
+                For Organizations
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/volunteers/"
+                class="docs-nav-link "
+              >
+                For Volunteers
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Help & Support</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/faq/"
+                class="docs-nav-link "
+              >
+                FAQ
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/need-help/"
+                class="docs-nav-link "
+              >
+                Need Help?
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <article class="docs-article"><p>This document provides detailed information about Give Protocol’s fee structure, including calculation methods, technical implementation, and integration guidelines for developers.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>Give Protocol implements a transparent and competitive fee structure designed to maximize the funds reaching charitable organizations while ensuring platform sustainability.</p>
+
+<h3 id="fee-philosophy">Fee Philosophy</h3>
+
+<ul>
+  <li><strong>Transparency First</strong>: All fees clearly disclosed</li>
+  <li><strong>Competitive Rates</strong>: Lower than traditional payment processors</li>
+  <li><strong>No Hidden Costs</strong>: What you see is what you pay</li>
+  <li><strong>Value-Based</strong>: Fees reflect the value provided</li>
+</ul>
+
+<h2 id="fee-categories">Fee Categories</h2>
+
+<h3 id="1-platform-fees">1. Platform Fees</h3>
+
+<p><strong>Standard Platform Fee: 2.5%</strong></p>
+
+<ul>
+  <li>Applied to all donations</li>
+  <li>Covers platform operations</li>
+  <li>Includes basic features</li>
+  <li>No monthly minimums</li>
+</ul>
+
+<p><strong>Reduced Fee Tiers:</strong></p>
+
+<ul>
+  <li><strong>Bronze</strong> (&gt;$10K/month): 2.25%</li>
+  <li><strong>Silver</strong> (&gt;$50K/month): 2.0%</li>
+  <li><strong>Gold</strong> (&gt;$100K/month): 1.75%</li>
+  <li><strong>Platinum</strong> (&gt;$500K/month): 1.5%</li>
+</ul>
+
+<h3 id="2-payment-processing-fees">2. Payment Processing Fees</h3>
+
+<p><strong>Credit/Debit Cards:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Base Rate: 2.9% + $0.30 per transaction
+International Cards: +1.5%
+Currency Conversion: +1%
+</code></pre></div></div>
+
+<p><strong>Bank Transfers (ACH):</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Flat Fee: $0.50 per transaction
+No percentage fee
+3-5 business day processing
+</code></pre></div></div>
+
+<p><strong>Cryptocurrency:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Network Fees: Variable (paid by sender)
+Conversion Fee: 1% (if converting to fiat)
+No platform markup on network fees
+</code></pre></div></div>
+
+<h3 id="3-additional-service-fees">3. Additional Service Fees</h3>
+
+<p><strong>Optional Services:</strong></p>
+
+<ul>
+  <li><strong>Instant Payouts</strong>: $2.00 per transfer</li>
+  <li><strong>International Wire</strong>: $25.00 per transfer</li>
+  <li><strong>Chargeback Handling</strong>: $15.00 per incident</li>
+  <li><strong>Custom Reporting</strong>: $50.00/month</li>
+  <li><strong>API Premium Access</strong>: $100.00/month</li>
+</ul>
+
+<h2 id="fee-calculation">Fee Calculation</h2>
+
+<h3 id="standard-donation-example">Standard Donation Example</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Donation amount: $100.00</span>
+<span class="c1">// Payment method: Credit Card</span>
+<span class="c1">// Organization tier: Standard</span>
+
+<span class="kd">const</span> <span class="nx">donation</span> <span class="o">=</span> <span class="mf">100.0</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">platformFee</span> <span class="o">=</span> <span class="nx">donation</span> <span class="o">*</span> <span class="mf">0.025</span><span class="p">;</span> <span class="c1">// 2.5% = $2.50</span>
+<span class="kd">const</span> <span class="nx">processingFee</span> <span class="o">=</span> <span class="nx">donation</span> <span class="o">*</span> <span class="mf">0.029</span> <span class="o">+</span> <span class="mf">0.3</span><span class="p">;</span> <span class="c1">// 2.9% + $0.30 = $3.20</span>
+<span class="kd">const</span> <span class="nx">totalFees</span> <span class="o">=</span> <span class="nx">platformFee</span> <span class="o">+</span> <span class="nx">processingFee</span><span class="p">;</span> <span class="c1">// $5.70</span>
+<span class="kd">const</span> <span class="nx">netToCharity</span> <span class="o">=</span> <span class="nx">donation</span> <span class="o">-</span> <span class="nx">totalFees</span><span class="p">;</span> <span class="c1">// $94.30</span>
+</code></pre></div></div>
+
+<h3 id="cryptocurrency-donation-example">Cryptocurrency Donation Example</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Donation amount: 0.01 BTC (~$450)</span>
+<span class="c1">// Conversion to USD requested</span>
+<span class="c1">// Network fee: Paid by sender</span>
+
+<span class="kd">const</span> <span class="nx">btcAmount</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">usdValue</span> <span class="o">=</span> <span class="nx">btcAmount</span> <span class="o">*</span> <span class="mi">45000</span><span class="p">;</span> <span class="c1">// $450</span>
+<span class="kd">const</span> <span class="nx">conversionFee</span> <span class="o">=</span> <span class="nx">usdValue</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">;</span> <span class="c1">// 1% = $4.50</span>
+<span class="kd">const</span> <span class="nx">platformFee</span> <span class="o">=</span> <span class="nx">usdValue</span> <span class="o">*</span> <span class="mf">0.025</span><span class="p">;</span> <span class="c1">// 2.5% = $11.25</span>
+<span class="kd">const</span> <span class="nx">totalFees</span> <span class="o">=</span> <span class="nx">conversionFee</span> <span class="o">+</span> <span class="nx">platformFee</span><span class="p">;</span> <span class="c1">// $15.75</span>
+<span class="kd">const</span> <span class="nx">netToCharity</span> <span class="o">=</span> <span class="nx">usdValue</span> <span class="o">-</span> <span class="nx">totalFees</span><span class="p">;</span> <span class="c1">// $434.25</span>
+</code></pre></div></div>
+
+<h2 id="technical-implementation">Technical Implementation</h2>
+
+<h3 id="fee-calculation-api">Fee Calculation API</h3>
+
+<p><strong>Endpoint:</strong> <code class="language-plaintext highlighter-rouge">POST /api/v1/fees/calculate</code></p>
+
+<p><strong>Request:</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">100.0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"payment_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"card"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"organization_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org_123abc"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"instant_payout"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"convert_crypto"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Response:</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"breakdown"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"donation_amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">100.0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"platform_fee"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.5</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"processing_fee"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.2</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"additional_fees"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"total_fees"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.7</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"net_amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">94.3</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"platform_rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.025</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"processing_rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.029</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"processing_fixed"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.3</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"organization_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="fee-models">Fee Models</h3>
+
+<p><strong>Database Schema:</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">fee_structures</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="n">UUID</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">platform_rate</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">min_monthly_volume</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+  <span class="n">max_monthly_volume</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+  <span class="n">created_at</span> <span class="nb">TIMESTAMP</span> <span class="k">DEFAULT</span> <span class="n">NOW</span><span class="p">(),</span>
+  <span class="n">updated_at</span> <span class="nb">TIMESTAMP</span> <span class="k">DEFAULT</span> <span class="n">NOW</span><span class="p">()</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">transaction_fees</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="n">UUID</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">transaction_id</span> <span class="n">UUID</span> <span class="k">REFERENCES</span> <span class="n">transactions</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+  <span class="n">fee_type</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">amount</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">rate</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span>
+  <span class="n">fixed_amount</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+  <span class="n">created_at</span> <span class="nb">TIMESTAMP</span> <span class="k">DEFAULT</span> <span class="n">NOW</span><span class="p">()</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="fee-collection-flow">Fee Collection Flow</h3>
+
+<pre><code class="language-mermaid">sequenceDiagram
+  participant Donor
+  participant Platform
+  participant Payment
+  participant Organization
+
+  Donor-&gt;&gt;Platform: Initiate donation
+  Platform-&gt;&gt;Platform: Calculate fees
+  Platform-&gt;&gt;Donor: Show fee breakdown
+  Donor-&gt;&gt;Payment: Authorize payment
+  Payment-&gt;&gt;Platform: Process full amount
+  Platform-&gt;&gt;Platform: Deduct fees
+  Platform-&gt;&gt;Organization: Transfer net amount
+</code></pre>
+
+<h2 id="integration-guide">Integration Guide</h2>
+
+<h3 id="sdk-implementation">SDK Implementation</h3>
+
+<p><strong>JavaScript SDK:</strong></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">GiveProtocol</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@give-protocol/sdk</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">give</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GiveProtocol</span><span class="p">({</span>
+  <span class="na">apiKey</span><span class="p">:</span> <span class="dl">"</span><span class="s2">your_api_key</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">// Calculate fees before donation</span>
+<span class="kd">const</span> <span class="nx">feeBreakdown</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">give</span><span class="p">.</span><span class="nx">fees</span><span class="p">.</span><span class="nf">calculate</span><span class="p">({</span>
+  <span class="na">amount</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+  <span class="na">paymentMethod</span><span class="p">:</span> <span class="dl">"</span><span class="s2">card</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">organizationId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">org_123</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">// Create donation with fee coverage option</span>
+<span class="kd">const</span> <span class="nx">donation</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">give</span><span class="p">.</span><span class="nx">donations</span><span class="p">.</span><span class="nf">create</span><span class="p">({</span>
+  <span class="na">amount</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+  <span class="na">coverFees</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// Donor covers fees</span>
+  <span class="na">organizationId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">org_123</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">paymentMethod</span><span class="p">:</span> <span class="dl">"</span><span class="s2">card</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>Python SDK:</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">give_protocol</span> <span class="kn">import</span> <span class="n">GiveProtocol</span>
+
+<span class="n">give</span> <span class="o">=</span> <span class="nc">GiveProtocol</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="sh">'</span><span class="s">your_api_key</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Calculate fees
+</span><span class="n">fee_breakdown</span> <span class="o">=</span> <span class="n">give</span><span class="p">.</span><span class="n">fees</span><span class="p">.</span><span class="nf">calculate</span><span class="p">(</span>
+    <span class="n">amount</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">payment_method</span><span class="o">=</span><span class="sh">'</span><span class="s">card</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">organization_id</span><span class="o">=</span><span class="sh">'</span><span class="s">org_123</span><span class="sh">'</span>
+<span class="p">)</span>
+
+<span class="c1"># Create donation
+</span><span class="n">donation</span> <span class="o">=</span> <span class="n">give</span><span class="p">.</span><span class="n">donations</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span>
+    <span class="n">amount</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">cover_fees</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">organization_id</span><span class="o">=</span><span class="sh">'</span><span class="s">org_123</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">payment_method</span><span class="o">=</span><span class="sh">'</span><span class="s">card</span><span class="sh">'</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="webhook-events">Webhook Events</h3>
+
+<p><strong>Fee-Related Events:</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fee.calculated"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"donation_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"don_abc123"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">100.0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"platform"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.5</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processing"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.7</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="fee-coverage-options">Fee Coverage Options</h2>
+
+<h3 id="donor-fee-coverage">Donor Fee Coverage</h3>
+
+<p>Organizations can enable donors to cover fees:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Implementation example</span>
+<span class="kd">const</span> <span class="nx">donationWithCoveredFees</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">baseAmount</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">,</span>
+  <span class="na">fees</span><span class="p">:</span> <span class="mf">5.7</span><span class="p">,</span>
+  <span class="na">totalCharge</span><span class="p">:</span> <span class="mf">105.7</span><span class="p">,</span>
+  <span class="na">netToCharity</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="organization-absorption">Organization Absorption</h3>
+
+<p>Organizations can choose to absorb fees:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Configuration</span>
+<span class="p">{</span>
+  <span class="dl">"</span><span class="s2">organization_settings</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">absorb_platform_fees</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">absorb_processing_fees</span><span class="dl">"</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="special-considerations">Special Considerations</h2>
+
+<h3 id="nonprofit-discounts">Nonprofit Discounts</h3>
+
+<p><strong>Eligibility Requirements:</strong></p>
+
+<ul>
+  <li>Valid 501(c)(3) status</li>
+  <li>Annual revenue under $1M</li>
+  <li>Application approval</li>
+</ul>
+
+<p><strong>Discount Structure:</strong></p>
+
+<ul>
+  <li>50% off platform fees</li>
+  <li>Reduced to 1.25% base rate</li>
+  <li>Same processing fees apply</li>
+</ul>
+
+<h3 id="high-volume-processing">High-Volume Processing</h3>
+
+<p><strong>Benefits:</strong></p>
+
+<ul>
+  <li>Negotiated rates</li>
+  <li>Dedicated support</li>
+  <li>Custom integration</li>
+  <li>Priority processing</li>
+</ul>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+  <li>Minimum $100K monthly volume</li>
+  <li>6-month commitment</li>
+  <li>Annual review</li>
+</ul>
+
+<h3 id="international-transactions">International Transactions</h3>
+
+<p><strong>Additional Considerations:</strong></p>
+
+<ul>
+  <li>Currency conversion fees</li>
+  <li>Cross-border fees</li>
+  <li>Local tax implications</li>
+  <li>Regulatory compliance</li>
+</ul>
+
+<h2 id="fee-reporting">Fee Reporting</h2>
+
+<h3 id="monthly-statements">Monthly Statements</h3>
+
+<p><strong>Included Information:</strong></p>
+
+<ul>
+  <li>Transaction-level fee details</li>
+  <li>Summary by fee type</li>
+  <li>Tier progression tracking</li>
+  <li>Year-to-date totals</li>
+</ul>
+
+<h3 id="api-access">API Access</h3>
+
+<p><strong>Reporting Endpoints:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /api/v1/fees/report?start_date=2024-01-01&amp;end_date=2024-01-31
+GET /api/v1/fees/summary?period=monthly
+GET /api/v1/fees/export?format=csv
+</code></pre></div></div>
+
+<h3 id="tax-documentation">Tax Documentation</h3>
+
+<p><strong>Available Documents:</strong></p>
+
+<ul>
+  <li>Fee receipts</li>
+  <li>Annual summaries</li>
+  <li>1099-K forms (if applicable)</li>
+  <li>Detailed transaction logs</li>
+</ul>
+
+<h2 id="optimization-strategies">Optimization Strategies</h2>
+
+<h3 id="reducing-fees">Reducing Fees</h3>
+
+<ol>
+  <li>
+    <p><strong>Increase Monthly Volume</strong></p>
+
+    <ul>
+      <li>Reach higher tiers</li>
+      <li>Batch processing</li>
+      <li>Consolidated campaigns</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Payment Method Selection</strong></p>
+
+    <ul>
+      <li>Encourage ACH transfers</li>
+      <li>Promote recurring donations</li>
+      <li>Offer crypto options</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Timing Strategies</strong></p>
+    <ul>
+      <li>Monthly vs. daily payouts</li>
+      <li>Bulk processing</li>
+      <li>Strategic timing</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="implementation-best-practices">Implementation Best Practices</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Optimize for lower fees</span>
+<span class="kd">const</span> <span class="nx">optimizeDonation</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">amount</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Check if ACH is available for lower fees</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">amount</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="o">&amp;&amp;</span> <span class="nx">options</span><span class="p">.</span><span class="nx">achAvailable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ach</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">fee</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+      <span class="na">savingsMessage</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Save $5.20 by using bank transfer</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Suggest fee coverage for full donation impact</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">options</span><span class="p">.</span><span class="nx">coveringFees</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">fees</span> <span class="o">=</span> <span class="nf">calculateFees</span><span class="p">(</span><span class="nx">amount</span><span class="p">,</span> <span class="dl">"</span><span class="s2">card</span><span class="dl">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">suggestion</span><span class="p">:</span> <span class="s2">`Add </span><span class="p">${</span><span class="nx">fees</span><span class="p">}</span><span class="s2"> to cover fees?`</span><span class="p">,</span>
+      <span class="na">impact</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Ensure 100% goes to charity</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="compliance-and-regulations">Compliance and Regulations</h2>
+
+<h3 id="pci-compliance">PCI Compliance</h3>
+
+<ul>
+  <li>Level 1 PCI DSS certified</li>
+  <li>Secure fee calculation</li>
+  <li>Encrypted transmission</li>
+  <li>Regular audits</li>
+</ul>
+
+<h3 id="financial-regulations">Financial Regulations</h3>
+
+<ul>
+  <li>FinCEN registered</li>
+  <li>State money transmitter licenses</li>
+  <li>GDPR compliant</li>
+  <li>SOC 2 Type II certified</li>
+</ul>
+
+<h2 id="support-and-resources">Support and Resources</h2>
+
+<h3 id="developer-resources">Developer Resources</h3>
+
+<ul>
+  <li>API documentation: <code class="language-plaintext highlighter-rouge">developers.give.io/fees</code></li>
+  <li>SDK examples: <code class="language-plaintext highlighter-rouge">github.com/give-protocol/examples</code></li>
+  <li>Integration support: <code class="language-plaintext highlighter-rouge">dev-support@give.io</code></li>
+</ul>
+
+<h3 id="fee-questions">Fee Questions</h3>
+
+<ul>
+  <li>General inquiries: <code class="language-plaintext highlighter-rouge">fees@give.io</code></li>
+  <li>Tier upgrades: <code class="language-plaintext highlighter-rouge">accounts@give.io</code></li>
+  <li>Technical issues: <code class="language-plaintext highlighter-rouge">support@give.io</code></li>
+</ul>
+
+<h3 id="additional-resources">Additional Resources</h3>
+
+<ul>
+  <li>Fee calculator tool</li>
+  <li>Integration testing</li>
+  <li>Sandbox environment</li>
+  <li>Webhook testing</li>
+</ul>
+</article>
+      </div>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="docs-search-overlay" id="search-overlay">
+      <div class="docs-search-results">
+        <div class="docs-search-header">
+          <h3>Search Results</h3>
+          <button class="docs-search-close" id="search-close">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="docs-search-list" id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- Google Translate -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- JavaScript -->
+    <script>
+      // Settings dropdown
+      const settingsToggle = document.getElementById("settings-toggle");
+      const settingsMenu = document.getElementById("settings-menu");
+
+      settingsToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        settingsMenu.style.display =
+          settingsMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (
+          !settingsToggle.contains(e.target) &&
+          !settingsMenu.contains(e.target)
+        ) {
+          settingsMenu.style.display = "none";
+        }
+      });
+
+      // Theme switching
+      const themeButtons = document.querySelectorAll(".docs-theme-btn");
+      const savedTheme = localStorage.getItem("docs-theme") || "light";
+
+      document.body.classList.toggle("dark-mode", savedTheme === "dark");
+
+      themeButtons.forEach((button) => {
+        if (button.dataset.theme === savedTheme) {
+          button.classList.add("active");
+        }
+
+        button.addEventListener("click", function () {
+          const theme = this.dataset.theme;
+          localStorage.setItem("docs-theme", theme);
+          document.body.classList.toggle("dark-mode", theme === "dark");
+
+          themeButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Language switching
+      const langButtons = document.querySelectorAll(".docs-lang-btn");
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const lang = this.dataset.lang;
+
+          if (lang === "en") {
+            // Clear translation
+            const url = window.location.pathname + window.location.search;
+            window.location.href = url;
+          } else {
+            // Use hash-based translation trigger
+            let langCode = lang;
+            // Map language codes to Google Translate codes
+            const langMap = {
+              'zh-CN': 'zh-CN',
+              'ar': 'ar',
+              'ko': 'ko',
+              'ja': 'ja',
+              'es': 'es',
+              'de': 'de',
+              'fr': 'fr'
+            };
+            
+            langCode = langMap[lang] || lang;
+            
+            // Set hash to trigger translation
+            window.location.hash = `googtrans(en|${langCode})`;
+            window.location.reload();
+          }
+
+          langButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Enhanced search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("search-close");
+
+      let searchData = [];
+
+      // Load search data - with fallback for non-Jekyll environments
+      const searchUrl = '/search.json' === '/search.json' 
+        ? './search.json'  // Fallback if Jekyll isn't processing
+        : '/search.json';
+      
+      fetch(searchUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          searchData = data;
+          // Search data loaded successfully
+        })
+        .catch((error) => {
+          console.error("❌ Search data loading error:", error);
+          // Fallback: Try to search through visible navigation links
+          const navLinks = document.querySelectorAll('.docs-nav-link');
+          searchData = Array.from(navLinks).map(link => ({
+            title: link.textContent.trim(),
+            url: link.getAttribute('href'),
+            content: link.textContent.trim(),
+            category: 'Navigation'
+          }));
+          // Using fallback search data from navigation
+        });
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+        
+        let score = 0;
+        
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+        
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+        
+        // Multiple word matches
+        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
+        queryWords.forEach(word => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+        
+        return score;
+      }
+
+      function performSearch(query) {
+        if (!query.trim()) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        const results = searchData
+          .filter((item) => {
+            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
+            return text.includes(query.toLowerCase());
+          })
+          .map(item => ({
+            ...item,
+            relevance: calculateRelevance(item, query)
+          }))
+          .sort((a, b) => b.relevance - a.relevance)
+          .slice(0, 8);
+
+        if (results.length === 0) {
+          searchResults.innerHTML = `
+            <div class="docs-search-item">
+              <div class="docs-result-title">No results found</div>
+              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
+        } else {
+          searchResults.innerHTML = results
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+              
+              return `
+                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
+                  <div class="docs-result-title">${highlightedTitle}</div>
+                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        searchOverlay.classList.add("active");
+      }
+
+      searchInput.addEventListener("input", function () {
+        const query = this.value;
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => performSearch(query), 300);
+      });
+
+      searchInput.addEventListener("focus", function () {
+        if (this.value.trim()) {
+          performSearch(this.value);
+        }
+      });
+
+      searchClose.addEventListener("click", function () {
+        searchOverlay.classList.remove("active");
+        searchInput.value = "";
+      });
+
+      searchOverlay.addEventListener("click", function (e) {
+        if (e.target === searchOverlay) {
+          searchOverlay.classList.remove("active");
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
+      // Check for active language on page load
+      window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash.includes('googtrans')) {
+          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
+          if (match && match[1]) {
+            const activeLang = match[1];
+            langButtons.forEach((btn) => {
+              if (btn.dataset.lang === activeLang) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+          }
+        }
+      });
+    </script>
+
+    <!-- Google Translate -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>

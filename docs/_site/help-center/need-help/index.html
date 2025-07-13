@@ -1,0 +1,1781 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Need Help - Give Protocol Documentation
+    </title>
+    <meta
+      name="description"
+      content="Comprehensive help and support resources for Give Protocol users"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon/favicon-16x16.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+    />
+
+    <style>
+      /* Immediate styles to prevent layout shift */
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0eee7;
+        margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark-mode {
+        background: #0f172a;
+        color: #f1f5f9;
+      }
+      .docs-header {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-header {
+        background: #1e293b;
+        border-bottom-color: #334155;
+      }
+      .docs-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .docs-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-brand {
+        color: #f1f5f9;
+      }
+      .docs-search {
+        flex: 1;
+        max-width: 400px;
+        margin: 0 2rem;
+        position: relative;
+      }
+      .docs-search input {
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-search input {
+        background: #374151;
+        border-color: #4b5563;
+        color: #f1f5f9;
+      }
+      .docs-search input:focus {
+        outline: none;
+        background: #fff;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+      body.dark-mode .docs-search input:focus {
+        background: #4b5563;
+        border-color: #6366f1;
+      }
+      .docs-search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-icon {
+        color: #d1d5db;
+      }
+      .docs-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .docs-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: #4b5563;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-btn {
+        color: #d1d5db;
+      }
+      .docs-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings {
+        position: relative;
+      }
+      .docs-settings-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      body.dark-mode .docs-settings-btn {
+        color: #d1d5db;
+      }
+      .docs-settings-btn:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-settings-btn:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-settings-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        min-width: 240px;
+        z-index: 100;
+        display: none;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-menu {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      .docs-settings-section {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      body.dark-mode .docs-settings-section {
+        border-bottom-color: #334155;
+      }
+      .docs-settings-section:last-child {
+        border-bottom: none;
+      }
+      .docs-settings-heading {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin: 0 0 0.75rem 0;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-settings-heading {
+        color: #d1d5db;
+      }
+      .docs-theme-options {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .docs-theme-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        padding: 0.5rem;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-theme-btn {
+        background: #374151;
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-theme-btn:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-theme-btn:hover {
+        background: #4b5563;
+        border-color: #6b7280;
+      }
+      .docs-theme-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+      }
+      body.dark-mode .docs-theme-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-lang-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .docs-lang-btn {
+        padding: 0.5rem 0.75rem;
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: left;
+      }
+      body.dark-mode .docs-lang-btn {
+        border-color: #4b5563;
+        color: #d1d5db;
+      }
+      .docs-lang-btn:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+      body.dark-mode .docs-lang-btn:hover {
+        background: #374151;
+        border-color: #6b7280;
+      }
+      .docs-lang-btn.active {
+        background: #eef2ff;
+        border-color: #6366f1;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-lang-btn.active {
+        background: #312e81;
+        border-color: #6366f1;
+        color: #c7d2fe;
+      }
+      .docs-main {
+        display: flex;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        gap: 2rem;
+      }
+      .docs-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 5.5rem;
+        height: fit-content;
+      }
+      .docs-nav-section {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-section {
+        background: #1e293b;
+      }
+      .docs-nav-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-nav-title {
+        color: #d1d5db;
+      }
+      .docs-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .docs-nav-item {
+        margin-bottom: 0.25rem;
+      }
+      .docs-nav-link {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        color: #374151;
+        text-decoration: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+      }
+      body.dark-mode .docs-nav-link {
+        color: #d1d5db;
+      }
+      .docs-nav-link:hover {
+        background: #f3f4f6;
+        color: #111827;
+      }
+      body.dark-mode .docs-nav-link:hover {
+        background: #374151;
+        color: #f1f5f9;
+      }
+      .docs-nav-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+        font-weight: 500;
+      }
+      body.dark-mode .docs-nav-link.active {
+        background: #312e81;
+        color: #c7d2fe;
+      }
+      .docs-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .docs-article {
+        background: #fff;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-article {
+        background: #1e293b;
+      }
+      .docs-search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: none;
+      }
+      .docs-search-overlay.active {
+        display: block;
+      }
+      .docs-search-results {
+        max-width: 600px;
+        margin: 6rem auto 2rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-results {
+        background: #1e293b;
+      }
+      .docs-search-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      body.dark-mode .docs-search-header {
+        border-bottom-color: #334155;
+      }
+      .docs-search-close {
+        padding: 0.25rem;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-search-close {
+        color: #d1d5db;
+      }
+      .docs-search-list {
+        padding: 0;
+        margin: 0;
+      }
+      .docs-search-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode .docs-search-item {
+        border-bottom-color: #334155;
+      }
+      .docs-search-item:hover {
+        background: #f9fafb;
+      }
+      body.dark-mode .docs-search-item:hover {
+        background: #374151;
+      }
+      .docs-search-item:last-child {
+        border-bottom: none;
+      }
+      .docs-result-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #111827;
+        margin-bottom: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-title {
+        color: #f1f5f9;
+      }
+      .docs-result-excerpt {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.4;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-excerpt {
+        color: #d1d5db;
+      }
+      .docs-result-category {
+        font-size: 0.75rem;
+        color: #6366f1;
+        font-weight: 500;
+        margin-top: 0.25rem;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode .docs-result-category {
+        color: #c7d2fe;
+      }
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 500;
+      }
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+      @media (max-width: 768px) {
+        .docs-search {
+          display: none;
+        }
+        .docs-main {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .docs-sidebar {
+          position: static;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="docs-header">
+      <div class="docs-container">
+        <a href="/" class="docs-brand">
+          <img src="/assets/images/logo.svg" alt="Give Protocol" width="32" height="32">
+          <span>Give Protocol Docs</span>
+        </a>
+
+        <div class="docs-search">
+          <svg
+            class="docs-search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search documentation..."
+          />
+        </div>
+
+        <div class="docs-actions">
+          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
+
+          <div class="docs-settings">
+            <button class="docs-settings-btn" id="settings-toggle">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+
+            <div class="docs-settings-menu" id="settings-menu">
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Theme</h4>
+                <div class="docs-theme-options">
+                  <button class="docs-theme-btn active" data-theme="light">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <path
+                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                      />
+                    </svg>
+                    Light
+                  </button>
+                  <button class="docs-theme-btn" data-theme="dark">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+
+              <div class="docs-settings-section">
+                <h4 class="docs-settings-heading">Language</h4>
+                <div class="docs-lang-options">
+                  <button class="docs-lang-btn active" data-lang="en">
+                    🇺🇸 English
+                  </button>
+                  <button class="docs-lang-btn" data-lang="es">
+                    🇪🇸 Español
+                  </button>
+                  <button class="docs-lang-btn" data-lang="de">
+                    🇩🇪 Deutsch
+                  </button>
+                  <button class="docs-lang-btn" data-lang="fr">
+                    🇫🇷 Français
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ja">
+                    🇯🇵 日本語
+                  </button>
+                  <button class="docs-lang-btn" data-lang="zh-CN">
+                    🇨🇳 简体中文
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ko">
+                    🇰🇷 한국어
+                  </button>
+                  <button class="docs-lang-btn" data-lang="ar">
+                    🇸🇦 العربية
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <!-- Sidebar -->
+      <aside class="docs-sidebar">
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Getting Started</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/introduction/what-is-give-protocol/"
+                class="docs-nav-link "
+              >
+                What is Give Protocol?
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/creating-account/"
+                class="docs-nav-link "
+              >
+                Creating Account
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/getting-started/wallet-connection/"
+                class="docs-nav-link "
+              >
+                Wallet Connection
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">User Guides</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/donors/"
+                class="docs-nav-link "
+              >
+                For Donors
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/organizations/"
+                class="docs-nav-link "
+              >
+                For Organizations
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/user-guides/volunteers/"
+                class="docs-nav-link "
+              >
+                For Volunteers
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-title">Help & Support</h3>
+          <ul class="docs-nav-list">
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/faq/"
+                class="docs-nav-link "
+              >
+                FAQ
+              </a>
+            </li>
+            <li class="docs-nav-item">
+              <a
+                href="/help-center/need-help/"
+                class="docs-nav-link active"
+              >
+                Need Help?
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <article class="docs-article"><p>Get the support you need to make the most of your Give Protocol experience. Our comprehensive help resources are designed to resolve issues quickly and help you maximize your charitable impact.</p>
+
+<h2 id="quick-help-options">Quick Help Options</h2>
+
+<h3 id="immediate-assistance">Immediate Assistance</h3>
+
+<ul>
+  <li><strong>Live Chat</strong>: Available 24/7 for instant support</li>
+  <li><strong>Phone Support</strong>: 1-800-GIVE-HELP (1-800-448-3435)</li>
+  <li><strong>Emergency Line</strong>: 1-800-GIVE-SAFE (security and safety issues)</li>
+  <li><strong>Email Support</strong>: support@giveprotocol.org</li>
+</ul>
+
+<h3 id="self-service-resources">Self-Service Resources</h3>
+
+<ul>
+  <li><strong>Knowledge Base</strong>: Searchable help articles</li>
+  <li><strong>Video Tutorials</strong>: Step-by-step visual guides</li>
+  <li><strong>Community Forums</strong>: Peer-to-peer assistance</li>
+  <li><strong>FAQ Section</strong>: Common questions answered</li>
+</ul>
+
+<h2 id="common-issues-and-solutions">Common Issues and Solutions</h2>
+
+<h3 id="account-problems">Account Problems</h3>
+
+<h4 id="cant-log-in">Can’t Log In</h4>
+
+<p><strong>Symptoms</strong>: Unable to access your account, forgotten password, locked account</p>
+
+<p><strong>Solutions</strong>:</p>
+
+<ol>
+  <li>
+    <p><strong>Password Reset</strong></p>
+
+    <ul>
+      <li>Click “Forgot Password” on login page</li>
+      <li>Enter your registered email address</li>
+      <li>Check email for reset link</li>
+      <li>Create new strong password</li>
+      <li>Log in with new credentials</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Account Locked</strong></p>
+
+    <ul>
+      <li>Wait 15 minutes for automatic unlock</li>
+      <li>Contact support if still locked</li>
+      <li>Verify identity for manual unlock</li>
+      <li>Review security settings</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Email Not Found</strong></p>
+    <ul>
+      <li>Check for typos in email address</li>
+      <li>Try alternative email addresses</li>
+      <li>Contact support with account details</li>
+      <li>Provide identification for verification</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="profile-issues">Profile Issues</h4>
+
+<p><strong>Problems</strong>: Unable to update profile, missing information, verification problems</p>
+
+<p><strong>Solutions</strong>:</p>
+
+<ol>
+  <li>
+    <p><strong>Clear Browser Cache</strong></p>
+
+    <ul>
+      <li>Clear cookies and cache</li>
+      <li>Try different browser</li>
+      <li>Disable ad blockers temporarily</li>
+      <li>Check internet connection</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Verification Problems</strong></p>
+    <ul>
+      <li>Ensure all required fields completed</li>
+      <li>Upload clear, valid documents</li>
+      <li>Check file size and format requirements</li>
+      <li>Contact support for manual review</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="payment-and-donation-issues">Payment and Donation Issues</h3>
+
+<h4 id="transaction-problems">Transaction Problems</h4>
+
+<p><strong>Issues</strong>: Failed payments, incorrect amounts, missing receipts</p>
+
+<p><strong>Immediate Steps</strong>:</p>
+
+<ol>
+  <li>
+    <p><strong>Check Payment Method</strong></p>
+
+    <ul>
+      <li>Verify card details are correct</li>
+      <li>Ensure sufficient funds available</li>
+      <li>Check for expired cards</li>
+      <li>Try alternative payment method</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Contact Your Bank</strong></p>
+
+    <ul>
+      <li>Check if transaction was blocked</li>
+      <li>Verify international transaction settings</li>
+      <li>Confirm account is in good standing</li>
+      <li>Request transaction authorization</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Give Protocol Support</strong></p>
+    <ul>
+      <li>Report transaction ID if available</li>
+      <li>Provide exact error message</li>
+      <li>Include screenshots if helpful</li>
+      <li>Request manual processing if needed</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="recurring-donation-issues">Recurring Donation Issues</h4>
+
+<p><strong>Problems</strong>: Unexpected charges, cancelled subscriptions, frequency changes</p>
+
+<p><strong>Solutions</strong>:</p>
+
+<ol>
+  <li>
+    <p><strong>Check Subscription Settings</strong></p>
+
+    <ul>
+      <li>Review active recurring donations</li>
+      <li>Verify amounts and frequencies</li>
+      <li>Update payment methods</li>
+      <li>Cancel or modify as needed</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Get Support</strong></p>
+    <ul>
+      <li>Contact billing support</li>
+      <li>Request transaction history</li>
+      <li>Resolve billing disputes</li>
+      <li>Update subscription preferences</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="volunteer-matching-problems">Volunteer Matching Problems</h3>
+
+<h4 id="no-opportunities-found">No Opportunities Found</h4>
+
+<p><strong>Issue</strong>: Search returns no results or limited options</p>
+
+<p><strong>Troubleshooting</strong>:</p>
+
+<ol>
+  <li>
+    <p><strong>Broaden Search Criteria</strong></p>
+
+    <ul>
+      <li>Expand geographic radius</li>
+      <li>Consider flexible time commitments</li>
+      <li>Explore different cause areas</li>
+      <li>Remove restrictive filters</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Check Profile Completeness</strong></p>
+
+    <ul>
+      <li>Complete all profile sections</li>
+      <li>Add skills and interests</li>
+      <li>Verify location settings</li>
+      <li>Update availability preferences</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Alternative Options</strong></p>
+    <ul>
+      <li>Browse popular opportunities</li>
+      <li>Contact organizations directly</li>
+      <li>Join volunteer groups</li>
+      <li>Consider remote opportunities</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="application-issues">Application Issues</h4>
+
+<p><strong>Problems</strong>: Can’t apply for opportunities, application not received</p>
+
+<p><strong>Solutions</strong>:</p>
+
+<ol>
+  <li>
+    <p><strong>Technical Checks</strong></p>
+
+    <ul>
+      <li>Verify internet connection</li>
+      <li>Try different browser</li>
+      <li>Clear cache and cookies</li>
+      <li>Disable browser extensions</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Profile Requirements</strong></p>
+
+    <ul>
+      <li>Ensure profile is complete</li>
+      <li>Meet minimum age requirements</li>
+      <li>Complete required training</li>
+      <li>Pass background checks if needed</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Direct Contact</strong></p>
+    <ul>
+      <li>Contact organization directly</li>
+      <li>Follow up on application status</li>
+      <li>Request manual application review</li>
+      <li>Seek alternative opportunities</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="mobile-app-issues">Mobile App Issues</h3>
+
+<h4 id="app-not-working">App Not Working</h4>
+
+<p><strong>Problems</strong>: Crashes, won’t open, features not functioning</p>
+
+<p><strong>Basic Troubleshooting</strong>:</p>
+
+<ol>
+  <li>
+    <p><strong>Restart App</strong></p>
+
+    <ul>
+      <li>Close app completely</li>
+      <li>Restart device</li>
+      <li>Reopen app</li>
+      <li>Check for improvements</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Update App</strong></p>
+
+    <ul>
+      <li>Check app store for updates</li>
+      <li>Install latest version</li>
+      <li>Review new features</li>
+      <li>Report persistent issues</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Device Issues</strong></p>
+    <ul>
+      <li>Ensure adequate storage space</li>
+      <li>Check internet connection</li>
+      <li>Update device operating system</li>
+      <li>Restart device if necessary</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="sync-problems">Sync Problems</h4>
+
+<p><strong>Issues</strong>: Data not syncing between devices, missing information</p>
+
+<p><strong>Resolution Steps</strong>:</p>
+
+<ol>
+  <li>
+    <p><strong>Force Sync</strong></p>
+
+    <ul>
+      <li>Pull down to refresh</li>
+      <li>Log out and back in</li>
+      <li>Check internet connection</li>
+      <li>Wait for sync completion</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Account Verification</strong></p>
+    <ul>
+      <li>Ensure same account on all devices</li>
+      <li>Check login credentials</li>
+      <li>Verify account permissions</li>
+      <li>Contact support if needed</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="getting-better-support">Getting Better Support</h2>
+
+<h3 id="prepare-before-contacting-support">Prepare Before Contacting Support</h3>
+
+<h4 id="information-to-gather">Information to Gather</h4>
+
+<ul>
+  <li>
+    <p><strong>Account Details</strong></p>
+
+    <ul>
+      <li>Username or email address</li>
+      <li>Account creation date</li>
+      <li>Last successful login</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Problem Description</strong></p>
+
+    <ul>
+      <li>What were you trying to do?</li>
+      <li>What happened instead?</li>
+      <li>Any error messages received?</li>
+      <li>When did the problem start?</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Device Information</strong></p>
+
+    <ul>
+      <li>Device type (computer, phone, tablet)</li>
+      <li>Operating system and version</li>
+      <li>Browser type and version</li>
+      <li>Internet connection type</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Screenshots</strong></p>
+    <ul>
+      <li>Error messages</li>
+      <li>Problem areas of interface</li>
+      <li>Steps leading to issue</li>
+      <li>Expected vs. actual results</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="best-practices-for-support-requests">Best Practices for Support Requests</h3>
+
+<h4 id="writing-effective-support-tickets">Writing Effective Support Tickets</h4>
+
+<ol>
+  <li>
+    <p><strong>Clear Subject Line</strong></p>
+
+    <ul>
+      <li>Be specific about the problem</li>
+      <li>Include relevant keywords</li>
+      <li>Mention urgency level</li>
+      <li>Reference error codes if available</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Detailed Description</strong></p>
+
+    <ul>
+      <li>Explain the problem clearly</li>
+      <li>List steps you’ve already tried</li>
+      <li>Include relevant screenshots</li>
+      <li>Specify desired outcome</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Provide Context</strong></p>
+    <ul>
+      <li>When did the problem start?</li>
+      <li>Does it happen consistently?</li>
+      <li>Are others experiencing it?</li>
+      <li>Has anything changed recently?</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="priority-levels">Priority Levels</h4>
+
+<ul>
+  <li><strong>High</strong>: Account security, payment issues, safety concerns</li>
+  <li><strong>Medium</strong>: Feature problems, donation questions, volunteer issues</li>
+  <li><strong>Low</strong>: General questions, feature requests, minor bugs</li>
+</ul>
+
+<h2 id="support-response-times">Support Response Times</h2>
+
+<h3 id="standard-support">Standard Support</h3>
+
+<ul>
+  <li><strong>Email</strong>: Within 24 hours</li>
+  <li><strong>Chat</strong>: Within 15 minutes (business hours)</li>
+  <li><strong>Phone</strong>: Immediate (business hours)</li>
+  <li><strong>Community Forums</strong>: Within 4 hours</li>
+</ul>
+
+<h3 id="priority-support">Priority Support</h3>
+
+<ul>
+  <li><strong>Security Issues</strong>: Within 1 hour</li>
+  <li><strong>Payment Problems</strong>: Within 2 hours</li>
+  <li><strong>Account Access</strong>: Within 4 hours</li>
+  <li><strong>Safety Concerns</strong>: Immediate</li>
+</ul>
+
+<h3 id="premium-support-give-protocol-pro">Premium Support (Give Protocol Pro)</h3>
+
+<ul>
+  <li><strong>All Issues</strong>: Within 2 hours</li>
+  <li><strong>Dedicated Line</strong>: 1-800-GIVE-PRO</li>
+  <li><strong>Video Support</strong>: Available upon request</li>
+  <li><strong>Account Manager</strong>: For high-volume users</li>
+</ul>
+
+<h2 id="self-help-resources">Self-Help Resources</h2>
+
+<h3 id="knowledge-base">Knowledge Base</h3>
+
+<p>Access our comprehensive help articles:</p>
+
+<ul>
+  <li>Getting started guides</li>
+  <li>Feature explanations</li>
+  <li>Troubleshooting steps</li>
+  <li>Best practices</li>
+  <li>Video tutorials</li>
+</ul>
+
+<h3 id="video-tutorials">Video Tutorials</h3>
+
+<p>Visual guides for common tasks:</p>
+
+<ul>
+  <li>Account setup and profile completion</li>
+  <li>Making donations and setting up recurring gifts</li>
+  <li>Finding and applying for volunteer opportunities</li>
+  <li>Using mobile app features</li>
+  <li>Privacy and security settings</li>
+</ul>
+
+<h3 id="community-support">Community Support</h3>
+
+<p>Get help from fellow users:</p>
+
+<ul>
+  <li><strong>Community Forums</strong>: Ask questions and share experiences</li>
+  <li><strong>User Groups</strong>: Connect with local volunteers</li>
+  <li><strong>Mentorship Program</strong>: Get guidance from experienced users</li>
+  <li><strong>Beta Testing</strong>: Help improve the platform</li>
+</ul>
+
+<h2 id="specialized-support">Specialized Support</h2>
+
+<h3 id="volunteer-support">Volunteer Support</h3>
+
+<p><strong>Contact</strong>: volunteers@giveprotocol.org
+<strong>Phone</strong>: 1-800-VOLUNTEER</p>
+
+<p><strong>Services</strong>:</p>
+
+<ul>
+  <li>Opportunity matching assistance</li>
+  <li>Safety guidance and support</li>
+  <li>Skills-based volunteer connections</li>
+  <li>Group volunteering coordination</li>
+  <li>Recognition and badge issues</li>
+</ul>
+
+<h3 id="organization-support">Organization Support</h3>
+
+<p><strong>Contact</strong>: nonprofits@giveprotocol.org
+<strong>Phone</strong>: 1-800-NONPROFIT</p>
+
+<p><strong>Services</strong>:</p>
+
+<ul>
+  <li>Platform onboarding assistance</li>
+  <li>Volunteer management best practices</li>
+  <li>Fundraising campaign optimization</li>
+  <li>Impact reporting and analytics</li>
+  <li>Partnership opportunities</li>
+</ul>
+
+<h3 id="technical-support">Technical Support</h3>
+
+<p><strong>Contact</strong>: tech-support@giveprotocol.org</p>
+
+<p><strong>Services</strong>:</p>
+
+<ul>
+  <li>Platform bug reports</li>
+  <li>Integration assistance</li>
+  <li>API support</li>
+  <li>Data export help</li>
+  <li>Advanced feature configuration</li>
+</ul>
+
+<h3 id="accessibility-support">Accessibility Support</h3>
+
+<p><strong>Contact</strong>: accessibility@giveprotocol.org</p>
+
+<p><strong>Services</strong>:</p>
+
+<ul>
+  <li>Screen reader compatibility</li>
+  <li>Alternative navigation options</li>
+  <li>Visual impairment assistance</li>
+  <li>Hearing impairment support</li>
+  <li>Motor disability accommodations</li>
+</ul>
+
+<h2 id="emergency-support">Emergency Support</h2>
+
+<h3 id="safety-and-security">Safety and Security</h3>
+
+<p><strong>Emergency Hotline</strong>: 1-800-GIVE-SAFE
+<strong>Email</strong>: security@giveprotocol.org</p>
+
+<p><strong>When to Use</strong>:</p>
+
+<ul>
+  <li>Account compromise or unauthorized access</li>
+  <li>Suspicious volunteer opportunities</li>
+  <li>Safety concerns during volunteering</li>
+  <li>Fraudulent organizations or requests</li>
+  <li>Personal safety threats</li>
+</ul>
+
+<h3 id="crisis-response">Crisis Response</h3>
+
+<p><strong>Crisis Hotline</strong>: 1-800-GIVE-CRISIS</p>
+
+<p><strong>Services</strong>:</p>
+
+<ul>
+  <li>Disaster relief coordination</li>
+  <li>Emergency volunteer deployment</li>
+  <li>Crisis donation processing</li>
+  <li>Urgent resource allocation</li>
+  <li>Community emergency response</li>
+</ul>
+
+<h2 id="international-support">International Support</h2>
+
+<h3 id="global-help-desk">Global Help Desk</h3>
+
+<p><strong>Email</strong>: international@giveprotocol.org
+<strong>Phone</strong>: Available 24/7 via local numbers</p>
+
+<h3 id="regional-support">Regional Support</h3>
+
+<ul>
+  <li><strong>Americas</strong>: support-americas@giveprotocol.org</li>
+  <li><strong>Europe</strong>: support-europe@giveprotocol.org</li>
+  <li><strong>Asia-Pacific</strong>: support-apac@giveprotocol.org</li>
+  <li><strong>Africa</strong>: support-africa@giveprotocol.org</li>
+</ul>
+
+<h3 id="language-support">Language Support</h3>
+
+<p>Available in 20+ languages:</p>
+
+<ul>
+  <li>English (24/7)</li>
+  <li>Spanish (Business hours)</li>
+  <li>French (Business hours)</li>
+  <li>German (Business hours)</li>
+  <li>Mandarin (Asia-Pacific hours)</li>
+  <li>Japanese (Asia-Pacific hours)</li>
+  <li>Portuguese (Latin America hours)</li>
+  <li>Arabic (Middle East hours)</li>
+</ul>
+
+<h2 id="training-and-education">Training and Education</h2>
+
+<h3 id="webinars">Webinars</h3>
+
+<p><strong>Schedule</strong>: Weekly training sessions
+<strong>Registration</strong>: training@giveprotocol.org</p>
+
+<p><strong>Topics Include</strong>:</p>
+
+<ul>
+  <li>Platform basics for new users</li>
+  <li>Advanced features and tips</li>
+  <li>Volunteer safety and best practices</li>
+  <li>Nonprofit management tools</li>
+  <li>Impact measurement and reporting</li>
+</ul>
+
+<h3 id="certification-programs">Certification Programs</h3>
+
+<p><strong>Information</strong>: education@giveprotocol.org</p>
+
+<p><strong>Available Certifications</strong>:</p>
+
+<ul>
+  <li>Give Protocol User Certification</li>
+  <li>Volunteer Leadership Certification</li>
+  <li>Nonprofit Management Certification</li>
+  <li>Impact Measurement Certification</li>
+</ul>
+
+<h3 id="resource-library">Resource Library</h3>
+
+<p>Access educational materials:</p>
+
+<ul>
+  <li>User guides and manuals</li>
+  <li>Best practice documents</li>
+  <li>Case studies and success stories</li>
+  <li>Research and impact reports</li>
+  <li>Template and tools</li>
+</ul>
+
+<h2 id="feedback-and-suggestions">Feedback and Suggestions</h2>
+
+<h3 id="product-feedback">Product Feedback</h3>
+
+<p><strong>Contact</strong>: feedback@giveprotocol.org</p>
+
+<p><strong>What We Want to Hear</strong>:</p>
+
+<ul>
+  <li>Feature requests and improvements</li>
+  <li>User experience suggestions</li>
+  <li>Bug reports and issues</li>
+  <li>Success stories and testimonials</li>
+  <li>Ideas for new services</li>
+</ul>
+
+<h3 id="community-feedback">Community Feedback</h3>
+
+<p><strong>Contact</strong>: community@giveprotocol.org</p>
+
+<p><strong>Topics Include</strong>:</p>
+
+<ul>
+  <li>Forum improvements</li>
+  <li>Event suggestions</li>
+  <li>Content recommendations</li>
+  <li>Partnership ideas</li>
+  <li>Community guidelines feedback</li>
+</ul>
+
+<h2 id="status-and-updates">Status and Updates</h2>
+
+<h3 id="platform-status">Platform Status</h3>
+
+<p>Check real-time platform status:</p>
+
+<ul>
+  <li>Service availability</li>
+  <li>Known issues and outages</li>
+  <li>Maintenance schedules</li>
+  <li>Performance metrics</li>
+  <li>Resolution updates</li>
+</ul>
+
+<p><strong>Status Page</strong>: status.giveprotocol.org</p>
+
+<h3 id="update-notifications">Update Notifications</h3>
+
+<p>Stay informed about:</p>
+
+<ul>
+  <li>New feature releases</li>
+  <li>Security updates</li>
+  <li>Policy changes</li>
+  <li>Maintenance windows</li>
+  <li>Community events</li>
+</ul>
+
+<p><strong>Subscribe</strong>: updates@giveprotocol.org</p>
+
+<h2 id="success-tips">Success Tips</h2>
+
+<h3 id="maximizing-your-experience">Maximizing Your Experience</h3>
+
+<ol>
+  <li>
+    <p><strong>Complete Your Profile</strong></p>
+
+    <ul>
+      <li>Add detailed information</li>
+      <li>Upload a professional photo</li>
+      <li>List relevant skills and interests</li>
+      <li>Set clear availability preferences</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Engage with Community</strong></p>
+
+    <ul>
+      <li>Participate in forums</li>
+      <li>Attend virtual events</li>
+      <li>Connect with other volunteers</li>
+      <li>Share your experiences</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Stay Informed</strong></p>
+
+    <ul>
+      <li>Read platform updates</li>
+      <li>Follow organization news</li>
+      <li>Attend training sessions</li>
+      <li>Subscribe to newsletters</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Provide Feedback</strong></p>
+    <ul>
+      <li>Rate volunteer experiences</li>
+      <li>Review organizations</li>
+      <li>Suggest improvements</li>
+      <li>Share success stories</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="getting-the-most-help">Getting the Most Help</h3>
+
+<ol>
+  <li><strong>Be Specific</strong>: Clearly describe your issue</li>
+  <li><strong>Be Patient</strong>: Allow time for thorough assistance</li>
+  <li><strong>Be Prepared</strong>: Have account information ready</li>
+  <li><strong>Be Open</strong>: Try suggested solutions</li>
+  <li><strong>Follow Up</strong>: Confirm when issues are resolved</li>
+</ol>
+
+<p>Remember, we’re here to help you succeed in your charitable giving journey. Don’t hesitate to reach out whenever you need assistance – your success is our priority!</p>
+
+<hr />
+
+<p><em>Support available 24/7 through multiple channels</em><br />
+<em>Response times vary by issue priority and support level</em><br />
+<em>All support interactions are confidential and secure</em></p>
+</article>
+      </div>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="docs-search-overlay" id="search-overlay">
+      <div class="docs-search-results">
+        <div class="docs-search-header">
+          <h3>Search Results</h3>
+          <button class="docs-search-close" id="search-close">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="docs-search-list" id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- Google Translate -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- JavaScript -->
+    <script>
+      // Settings dropdown
+      const settingsToggle = document.getElementById("settings-toggle");
+      const settingsMenu = document.getElementById("settings-menu");
+
+      settingsToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        settingsMenu.style.display =
+          settingsMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (
+          !settingsToggle.contains(e.target) &&
+          !settingsMenu.contains(e.target)
+        ) {
+          settingsMenu.style.display = "none";
+        }
+      });
+
+      // Theme switching
+      const themeButtons = document.querySelectorAll(".docs-theme-btn");
+      const savedTheme = localStorage.getItem("docs-theme") || "light";
+
+      document.body.classList.toggle("dark-mode", savedTheme === "dark");
+
+      themeButtons.forEach((button) => {
+        if (button.dataset.theme === savedTheme) {
+          button.classList.add("active");
+        }
+
+        button.addEventListener("click", function () {
+          const theme = this.dataset.theme;
+          localStorage.setItem("docs-theme", theme);
+          document.body.classList.toggle("dark-mode", theme === "dark");
+
+          themeButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Language switching
+      const langButtons = document.querySelectorAll(".docs-lang-btn");
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const lang = this.dataset.lang;
+
+          if (lang === "en") {
+            // Clear translation
+            const url = window.location.pathname + window.location.search;
+            window.location.href = url;
+          } else {
+            // Use hash-based translation trigger
+            let langCode = lang;
+            // Map language codes to Google Translate codes
+            const langMap = {
+              'zh-CN': 'zh-CN',
+              'ar': 'ar',
+              'ko': 'ko',
+              'ja': 'ja',
+              'es': 'es',
+              'de': 'de',
+              'fr': 'fr'
+            };
+            
+            langCode = langMap[lang] || lang;
+            
+            // Set hash to trigger translation
+            window.location.hash = `googtrans(en|${langCode})`;
+            window.location.reload();
+          }
+
+          langButtons.forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+
+          settingsMenu.style.display = "none";
+        });
+      });
+
+      // Enhanced search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("search-close");
+
+      let searchData = [];
+
+      // Load search data - with fallback for non-Jekyll environments
+      const searchUrl = '/search.json' === '/search.json' 
+        ? './search.json'  // Fallback if Jekyll isn't processing
+        : '/search.json';
+      
+      fetch(searchUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          searchData = data;
+          // Search data loaded successfully
+        })
+        .catch((error) => {
+          console.error("❌ Search data loading error:", error);
+          // Fallback: Try to search through visible navigation links
+          const navLinks = document.querySelectorAll('.docs-nav-link');
+          searchData = Array.from(navLinks).map(link => ({
+            title: link.textContent.trim(),
+            url: link.getAttribute('href'),
+            content: link.textContent.trim(),
+            category: 'Navigation'
+          }));
+          // Using fallback search data from navigation
+        });
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+        
+        let score = 0;
+        
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+        
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+        
+        // Multiple word matches
+        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
+        queryWords.forEach(word => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+        
+        return score;
+      }
+
+      function performSearch(query) {
+        if (!query.trim()) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        const results = searchData
+          .filter((item) => {
+            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
+            return text.includes(query.toLowerCase());
+          })
+          .map(item => ({
+            ...item,
+            relevance: calculateRelevance(item, query)
+          }))
+          .sort((a, b) => b.relevance - a.relevance)
+          .slice(0, 8);
+
+        if (results.length === 0) {
+          searchResults.innerHTML = `
+            <div class="docs-search-item">
+              <div class="docs-result-title">No results found</div>
+              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
+        } else {
+          searchResults.innerHTML = results
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+              
+              return `
+                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
+                  <div class="docs-result-title">${highlightedTitle}</div>
+                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        searchOverlay.classList.add("active");
+      }
+
+      searchInput.addEventListener("input", function () {
+        const query = this.value;
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => performSearch(query), 300);
+      });
+
+      searchInput.addEventListener("focus", function () {
+        if (this.value.trim()) {
+          performSearch(this.value);
+        }
+      });
+
+      searchClose.addEventListener("click", function () {
+        searchOverlay.classList.remove("active");
+        searchInput.value = "";
+      });
+
+      searchOverlay.addEventListener("click", function (e) {
+        if (e.target === searchOverlay) {
+          searchOverlay.classList.remove("active");
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
+      // Check for active language on page load
+      window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash.includes('googtrans')) {
+          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
+          if (match && match[1]) {
+            const activeLang = match[1];
+            langButtons.forEach((btn) => {
+              if (btn.dataset.lang === activeLang) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+          }
+        }
+      });
+    </script>
+
+    <!-- Google Translate -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>
