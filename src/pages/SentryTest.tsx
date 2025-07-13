@@ -87,7 +87,7 @@ export default function SentryTest() {
 
   const testReferenceError = () => {
     addResult("Triggering reference error...");
-    // @ts-ignore - Intentionally causing error
+    // @ts-expect-error - Intentionally causing error
     nonExistentFunction(); // This will cause a ReferenceError
   };
 
