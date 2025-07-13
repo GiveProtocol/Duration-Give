@@ -22,6 +22,13 @@ interface DonorSchedule {
   active: boolean;
 }
 
+interface ContractError extends Error {
+  code?: number;
+  message: string;
+  reason?: string;
+  data?: unknown;
+}
+
 export function useScheduledDonation() {
   const { provider, address } = useWeb3();
   const [loading, setLoading] = useState(false);
@@ -82,17 +89,18 @@ export function useScheduledDonation() {
           parsedAmount,
         );
         await approveTx.wait();
-      } catch (approveError: any) {
+      } catch (approveError: unknown) {
+        const contractError = approveError as ContractError;
         // Check if user rejected the transaction
         if (
-          approveError.code === 4001 ||
-          approveError.message?.includes("user rejected")
+          contractError.code === 4001 ||
+          contractError.message?.includes("user rejected")
         ) {
           throw new Error(
             "Transaction was rejected. Please approve the transaction in your wallet to continue.",
           );
         }
-        throw approveError;
+        throw contractError;
       }
 
       // Create the scheduled donation
@@ -113,17 +121,18 @@ export function useScheduledDonation() {
         });
 
         return receipt.hash;
-      } catch (txError: any) {
+      } catch (txError: unknown) {
+        const contractError = txError as ContractError;
         // Check if user rejected the transaction
         if (
-          txError.code === 4001 ||
-          txError.message?.includes("user rejected")
+          contractError.code === 4001 ||
+          contractError.message?.includes("user rejected")
         ) {
           throw new Error(
             "Transaction was rejected. Please confirm the transaction in your wallet to schedule your donation.",
           );
         }
-        throw txError;
+        throw contractError;
       }
     } catch (err) {
       const message =
@@ -183,17 +192,18 @@ export function useScheduledDonation() {
         });
 
         return receipt.hash;
-      } catch (txError: any) {
+      } catch (txError: unknown) {
+        const contractError = txError as ContractError;
         // Check if user rejected the transaction
         if (
-          txError.code === 4001 ||
-          txError.message?.includes("user rejected")
+          contractError.code === 4001 ||
+          contractError.message?.includes("user rejected")
         ) {
           throw new Error(
             "Transaction was rejected. Please confirm the transaction in your wallet to cancel your donation schedule.",
           );
         }
-        throw txError;
+        throw contractError;
       }
     } catch (err) {
       const message =

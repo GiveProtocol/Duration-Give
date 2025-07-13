@@ -19,7 +19,11 @@ export class PerformanceMonitor {
       this.metrics.set(operation, []);
     }
 
-    const samples = this.metrics.get(operation)!;
+    const samples = this.metrics.get(operation);
+    if (!samples) {
+      Logger.error('No samples array found for operation', { operation });
+      return;
+    }
     samples.push(duration);
 
     // Keep only last N samples

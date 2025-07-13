@@ -14,6 +14,24 @@ import { supabase } from '@/lib/supabase';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { Logger } from '@/utils/logger';
 
+interface VolunteerApplication {
+  id: string;
+  full_name: string;
+  opportunity?: {
+    id: string;
+    title: string;
+  };
+}
+
+interface VolunteerHours {
+  id: string;
+  volunteer_id: string;
+  volunteerName: string;
+  hours: number;
+  date_performed: string;
+  description: string;
+}
+
 export const CharityPortal: React.FC = () => {
   const { user, userType } = useAuth();
   const { profile, loading: profileLoading } = useProfile();
@@ -35,8 +53,8 @@ export const CharityPortal: React.FC = () => {
   
   // State for transactions, applications, and hours
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [pendingApplications, setPendingApplications] = useState<any[]>([]);
-  const [pendingHours, setPendingHours] = useState<any[]>([]);
+  const [pendingApplications, setPendingApplications] = useState<VolunteerApplication[]>([]);
+  const [pendingHours, setPendingHours] = useState<VolunteerHours[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -283,10 +301,10 @@ export const CharityPortal: React.FC = () => {
       // Format volunteer hours with type checking
       const formattedHours = pendingHoursList.map(hour => ({
         id: hour?.id || '',
-        volunteerId: hour?.volunteer_id || '',
+        volunteer_id: hour?.volunteer_id || '',
         volunteerName: hour?.volunteer?.id ? 'Volunteer' : 'Unknown Volunteer',
         hours: hour?.hours ? Number(hour.hours) : 0,
-        datePerformed: hour?.date_performed || new Date().toISOString(),
+        date_performed: hour?.date_performed || new Date().toISOString(),
         description: hour?.description || ''
       }));
       
@@ -689,7 +707,7 @@ export const CharityPortal: React.FC = () => {
                     <div>
                       <h3 className="text-lg font-medium text-gray-900">{hours.volunteerName}</h3>
                       <p className="text-sm text-gray-500">
-                        {hours.hours} {t('volunteer.hours')} {formatDate(hours.datePerformed)}
+                        {hours.hours} {t('volunteer.hours')} {formatDate(hours.date_performed)}
                       </p>
                     </div>
                     <div className="flex space-x-2">

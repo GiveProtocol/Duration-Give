@@ -103,15 +103,16 @@ export function useContract(
       });
 
       // Attempt retry with fallback RPC
-      if (retryCount < (config.maxRetries || DEFAULT_CONFIG.maxRetries!)) {
-        const delay =
-          (config.retryDelay || DEFAULT_CONFIG.retryDelay!) *
-          Math.pow(2, retryCount);
+      const maxRetries = config.maxRetries ?? DEFAULT_CONFIG.maxRetries ?? 3;
+      const retryDelay = config.retryDelay ?? DEFAULT_CONFIG.retryDelay ?? 1000;
+      if (retryCount < maxRetries) {
+        const delay = retryDelay * Math.pow(2, retryCount);
         setRetryCount((prev) => prev + 1);
         setTimeout(() => {
+          const fallbackRPCs = DEFAULT_CONFIG.fallbackRPCs ?? [];
           const fallbackRPC =
             config.fallbackRPCs?.[retryCount] ||
-            DEFAULT_CONFIG.fallbackRPCs![retryCount];
+            fallbackRPCs[retryCount];
           if (fallbackRPC && provider) {
             // Note: This approach needs to be updated as provider.url is not directly accessible in ethers v6
             // This is a placeholder for the actual implementation

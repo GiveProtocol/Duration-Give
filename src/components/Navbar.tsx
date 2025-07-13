@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "./Logo";
 import { SettingsMenu } from "./SettingsMenu";
@@ -15,6 +15,14 @@ export const Navbar: React.FC = () => {
     location.pathname === path
       ? "bg-primary-100 text-primary-900"
       : "text-gray-700 hover:bg-primary-50";
+
+  const handleMenuToggle = useCallback(() => {
+    setIsMenuOpen(!isMenuOpen);
+  }, [isMenuOpen]);
+
+  const handleMenuClose = useCallback(() => {
+    setIsMenuOpen(false);
+  }, []);
 
   // Check if current page should only show limited navigation
   const isLimitedNavPage = [
@@ -77,7 +85,7 @@ export const Navbar: React.FC = () => {
               className="sm:hidden inline-flex items-center justify-center ml-2 p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
               aria-controls="mobile-menu"
               aria-expanded={isMenuOpen}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={handleMenuToggle}
             >
               {isMenuOpen ? (
                 <X className="block h-6 w-6" aria-hidden="true" />
@@ -96,21 +104,21 @@ export const Navbar: React.FC = () => {
             <Link
               to="/about"
               className={`block px-3 py-3 rounded-md text-base font-medium ${isActive("/about")}`}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={handleMenuClose}
             >
               {t("nav.about")}
             </Link>
             <a
               href={DOCS_CONFIG.url}
               className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-primary-50"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={handleMenuClose}
             >
               {t("nav.docs")}
             </a>
             <Link
               to="/legal"
               className={`block px-3 py-3 rounded-md text-base font-medium ${isActive("/legal")}`}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={handleMenuClose}
             >
               {t("nav.legal")}
             </Link>
@@ -118,7 +126,7 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/give-dashboard"
                 className="block px-3 py-3 rounded-md text-base font-medium bg-indigo-600 text-white hover:bg-indigo-700"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={handleMenuClose}
               >
                 {t("nav.launchApp")}
               </Link>

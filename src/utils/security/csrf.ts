@@ -61,7 +61,10 @@ export class CSRFProtection {
     if (!this.token) {
       this.initializeToken();
     }
-    return this.token!;
+    if (!this.token) {
+      throw new Error('Failed to initialize CSRF token');
+    }
+    return this.token;
   }
 
   async validate(token: string): Promise<boolean> {
