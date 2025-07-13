@@ -116,3 +116,7 @@ export function clearUserContext() {
     Sentry.setUser(null);
   }
 }
+
+// Aliases for AuthContext compatibility
+export const setSentryUser = setUserContext;
+export const clearSentryUser = clearUserContext;
