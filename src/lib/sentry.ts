@@ -117,6 +117,32 @@ export function clearUserContext() {
   }
 }
 
+// Transaction tracking for Web3 operations
+export function trackTransaction(operation: string, data?: { 
+  transactionHash?: string;
+  amount?: string;
+  token?: string;
+  charity?: string;
+  status?: 'pending' | 'success' | 'failed';
+  error?: string;
+}) {
+  if (import.meta.env.PROD) {
+    Sentry.addBreadcrumb({
+      message: `Transaction: ${operation}`,
+      data,
+      level: data?.status === 'failed' ? 'error' : 'info',
+      category: 'transaction',
+    });
+
+    // If transaction failed, also capture as an exception
+    if (data?.status === 'failed' && data?.error) {
+      Sentry.captureException(new Error(`Transaction failed: ${operation} - ${data.error}`));
+    }
+  } else {
+    console.log(`Transaction tracked: ${operation}`, data);
+  }
+}
+
 // Aliases for AuthContext compatibility
 export const setSentryUser = setUserContext;
 export const clearSentryUser = clearUserContext;
