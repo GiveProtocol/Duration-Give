@@ -13,18 +13,21 @@ Learn how to create and customize your Give Protocol profile to maximize your im
 Give Protocol supports three types of profiles:
 
 ### Donor Profiles
+
 - Personal information and giving preferences
 - Donation history and impact tracking
 - Cause and organization preferences
 - Tax documentation settings
 
 ### Organization Profiles
+
 - Mission statement and impact metrics
 - Verification documentation
 - Fundraising goals and campaigns
 - Transparency and reporting tools
 
 ### Volunteer Profiles
+
 - Skills and availability
 - Experience and certifications
 - Volunteer history and achievements
@@ -33,16 +36,19 @@ Give Protocol supports three types of profiles:
 ## Getting Started
 
 1. **Complete Basic Information**
+
    - Add your name and profile photo
    - Write a brief bio or mission statement
    - Set your location and contact preferences
 
 2. **Verify Your Identity**
+
    - Upload required verification documents
    - Complete phone or email verification
    - Submit any additional certifications
 
 3. **Customize Your Preferences**
+
    - Choose causes you care about
    - Set donation or volunteer preferences
    - Configure privacy and notification settings
