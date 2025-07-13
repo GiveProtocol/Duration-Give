@@ -76,7 +76,7 @@ export function initSentry() {
 }
 
 // Helper functions for custom tracking
-export function trackError(error: Error, context?: Record<string, any>) {
+export function trackError(error: Error, context?: Record<string, unknown>) {
   if (import.meta.env.PROD) {
     Sentry.withScope((scope) => {
       if (context) {
@@ -89,7 +89,7 @@ export function trackError(error: Error, context?: Record<string, any>) {
   }
 }
 
-export function trackEvent(name: string, data?: Record<string, any>) {
+export function trackEvent(name: string, data?: Record<string, unknown>) {
   if (import.meta.env.PROD) {
     Sentry.addBreadcrumb({
       message: name,

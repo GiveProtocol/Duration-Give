@@ -78,17 +78,20 @@ export const supabaseHelpers = {
   },
 
   // Database helpers
-  async handleError(error: any, context: string) {
+  async handleError(error: Error | unknown, context: string) {
     console.error(`Supabase error in ${context}:`, error);
     
     // Log to monitoring if available
-    if (typeof window !== 'undefined' && (window as any).MonitoringService) {
-      (window as any).MonitoringService.trackMetric('supabase_error', {
-        context,
-        error: error.message || error.toString(),
-        code: error.code,
-        details: error.details,
-      });
+    if (typeof window !== 'undefined' && 'MonitoringService' in window) {
+      const monitoringService = (window as { MonitoringService?: { trackMetric: (event: string, data: Record<string, unknown>) => void } }).MonitoringService;
+      if (monitoringService?.trackMetric) {
+        monitoringService.trackMetric('supabase_error', {
+          context,
+          error: error instanceof Error ? error.message : String(error),
+          code: error instanceof Error && 'code' in error ? error.code : undefined,
+          details: error instanceof Error && 'details' in error ? error.details : undefined,
+        });
+      }
     }
     
     throw error;
@@ -97,7 +100,7 @@ export const supabaseHelpers = {
   // Connection helpers
   async testConnection() {
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('_supabase_test')
         .select('*')
         .limit(1);

@@ -9,7 +9,7 @@ export interface MonitoringConfig {
 export interface MonitoringMetrics {
   timestamp: number;
   event: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   userId?: string;
   sessionId?: string;
 }
@@ -116,7 +116,7 @@ export class MonitoringService {
     });
   }
 
-  public trackMetric(event: string, data: Record<string, any>): void {
+  public trackMetric(event: string, data: Record<string, unknown>): void {
     if (!this.initialized || !this.config) return;
 
     const metric: MonitoringMetrics = {
