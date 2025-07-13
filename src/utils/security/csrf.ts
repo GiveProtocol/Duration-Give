@@ -1,6 +1,15 @@
 import { Logger } from '../logger';
 import { ENV } from '@/config/env';
 
+interface CookieOptions {
+  httpOnly?: boolean;
+  secure?: boolean;
+  sameSite?: 'strict' | 'lax' | 'none';
+  maxAge?: number;
+  domain?: string;
+  path?: string;
+}
+
 export class CSRFProtection {
   private static instance: CSRFProtection;
   private token: string | null = null;
@@ -44,7 +53,7 @@ export class CSRFProtection {
     }
   }
 
-  private setCookie(name: string, value: string, options: Record<string, any>): void {
+  private setCookie(name: string, value: string, options: CookieOptions): void {
     let cookie = `${name}=${value}`;
     
     if (options.maxAge) cookie += `; Max-Age=${options.maxAge}`;
