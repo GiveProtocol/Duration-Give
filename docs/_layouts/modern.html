@@ -38,8 +38,14 @@
       rel="stylesheet"
     />
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.294.0/font/lucide.min.css" />
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     
     <!-- Google Translate -->
     <script type="text/javascript">
@@ -84,7 +90,7 @@
 
         <div class="header-search">
           <div class="search-wrapper">
-            <i class="lucide-search search-icon"></i>
+            <i class="fas fa-search search-icon"></i>
             <input
               type="text"
               id="search-input"
@@ -102,7 +108,7 @@
           <!-- Settings Container -->
           <div class="settings-container">
             <button class="settings-toggle" aria-label="Settings">
-              <i class="lucide-settings"></i>
+              <i class="fas fa-cog"></i>
             </button>
             
             <!-- Settings Menu -->
@@ -111,10 +117,10 @@
               <h4 class="settings-heading theme-heading">Theme</h4>
               <div class="theme-options">
                 <button class="theme-option active" data-theme="light">
-                  <i class="lucide-sun"></i> Light
+                  <i class="fas fa-sun"></i> Light
                 </button>
                 <button class="theme-option" data-theme="dark">
-                  <i class="lucide-moon"></i> Dark
+                  <i class="fas fa-moon"></i> Dark
                 </button>
               </div>
             </div>
@@ -162,7 +168,7 @@
       <aside class="modern-sidebar">
         <button class="mobile-nav-toggle">
           <span>Navigation</span>
-          <i class="lucide-menu"></i>
+          <i class="fas fa-bars"></i>
         </button>
 
         <nav class="sidebar-nav">
@@ -175,7 +181,7 @@
                   href="{{ '/introduction/what-is-give-protocol/' | relative_url }}"
                   class="{% if page.url contains 'what-is-give-protocol' %}active{% endif %}"
                 >
-                  What is Give Protocol?
+                  <i class="fas fa-info-circle"></i> What is Give Protocol?
                 </a>
               </li>
               <li class="nav-item">
@@ -183,7 +189,7 @@
                   href="{{ '/getting-started/creating-account/' | relative_url }}"
                   class="{% if page.url contains 'creating-account' %}active{% endif %}"
                 >
-                  Creating Account
+                  <i class="fas fa-user-plus"></i> Creating Account
                 </a>
               </li>
               <li class="nav-item">
@@ -191,7 +197,7 @@
                   href="{{ '/getting-started/wallet-connection/' | relative_url }}"
                   class="{% if page.url contains 'wallet-connection' %}active{% endif %}"
                 >
-                  Wallet Connection
+                  <i class="fas fa-wallet"></i> Wallet Connection
                 </a>
               </li>
               <li class="nav-item">
@@ -199,7 +205,7 @@
                   href="{{ '/getting-started/first-steps/' | relative_url }}"
                   class="{% if page.url contains 'first-steps' %}active{% endif %}"
                 >
-                  First Steps
+                  <i class="fas fa-play"></i> First Steps
                 </a>
               </li>
             </ul>
@@ -214,7 +220,7 @@
                   href="{{ '/user-guides/donors/' | relative_url }}"
                   class="{% if page.url contains 'donors' %}active{% endif %}"
                 >
-                  For Donors
+                  <i class="fas fa-heart"></i> For Donors
                 </a>
               </li>
               <li class="nav-item">
@@ -222,7 +228,7 @@
                   href="{{ '/user-guides/organizations/' | relative_url }}"
                   class="{% if page.url contains 'organizations' %}active{% endif %}"
                 >
-                  For Organizations
+                  <i class="fas fa-building"></i> For Organizations
                 </a>
               </li>
               <li class="nav-item">
@@ -230,7 +236,7 @@
                   href="{{ '/user-guides/volunteers/' | relative_url }}"
                   class="{% if page.url contains 'volunteers' %}active{% endif %}"
                 >
-                  For Volunteers
+                  <i class="fas fa-hands-helping"></i> For Volunteers
                 </a>
               </li>
             </ul>
@@ -245,7 +251,7 @@
                   href="{{ '/platform-features/search-discovery/' | relative_url }}"
                   class="{% if page.url contains 'search-discovery' %}active{% endif %}"
                 >
-                  Search & Discovery
+                  <i class="fas fa-search"></i> Search & Discovery
                 </a>
               </li>
               <li class="nav-item">
@@ -253,7 +259,7 @@
                   href="{{ '/platform-features/verification/' | relative_url }}"
                   class="{% if page.url contains 'verification' %}active{% endif %}"
                 >
-                  Verification System
+                  <i class="fas fa-shield-alt"></i> Verification System
                 </a>
               </li>
             </ul>
@@ -268,7 +274,7 @@
                   href="{{ '/technical/cryptocurrencies/' | relative_url }}"
                   class="{% if page.url contains 'cryptocurrencies' %}active{% endif %}"
                 >
-                  Supported Cryptocurrencies
+                  <i class="fab fa-bitcoin"></i> Supported Cryptocurrencies
                 </a>
               </li>
               <li class="nav-item">
@@ -276,7 +282,7 @@
                   href="{{ '/technical/fees/' | relative_url }}"
                   class="{% if page.url contains 'fees' %}active{% endif %}"
                 >
-                  Fee Structure
+                  <i class="fas fa-percentage"></i> Fee Structure
                 </a>
               </li>
             </ul>
@@ -291,7 +297,7 @@
                   href="{{ '/help-center/faq/' | relative_url }}"
                   class="{% if page.url contains 'faq' %}active{% endif %}"
                 >
-                  Frequently Asked Questions
+                  <i class="fas fa-question-circle"></i> Frequently Asked Questions
                 </a>
               </li>
               <li class="nav-item">
@@ -299,7 +305,7 @@
                   href="{{ '/help-center/need-help/' | relative_url }}"
                   class="{% if page.url contains 'need-help' %}active{% endif %}"
                 >
-                  Need Help?
+                  <i class="fas fa-life-ring"></i> Need Help?
                 </a>
               </li>
             </ul>
@@ -333,7 +339,7 @@
           <div class="page-actions">
             {% if page.edit_url %}
             <a href="{{ page.edit_url }}" class="edit-link" target="_blank">
-              <i class="lucide-edit-3"></i>
+              <i class="fas fa-edit"></i>
               Edit this page
             </a>
             {% endif %}
@@ -352,7 +358,7 @@
         <div class="search-header">
           <h3>Search Results</h3>
           <button class="close-search" id="close-search">
-            <i class="lucide-x"></i>
+            <i class="fas fa-times"></i>
           </button>
         </div>
         <div id="search-results"></div>
@@ -500,6 +506,102 @@
         lastScrollY = currentScrollY;
       });
     </script>
+
+    <!-- Font Awesome Icon Styles -->
+    <style>
+      /* Navigation icon styles */
+      .nav-item a i {
+        margin-right: 0.5rem;
+        width: 1rem;
+        text-align: center;
+        color: #6b7280;
+        transition: color 0.2s ease;
+      }
+      
+      .nav-item a:hover i,
+      .nav-item a.active i {
+        color: #2563eb;
+      }
+      
+      /* Header icon styles */
+      .search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        font-size: 0.875rem;
+      }
+      
+      .settings-toggle i {
+        color: #6b7280;
+        font-size: 1rem;
+        transition: color 0.2s ease;
+      }
+      
+      .settings-toggle:hover i {
+        color: #2563eb;
+      }
+      
+      .theme-option i {
+        margin-right: 0.375rem;
+        font-size: 0.875rem;
+      }
+      
+      .mobile-nav-toggle i {
+        color: #6b7280;
+        font-size: 1rem;
+      }
+      
+      .edit-link i {
+        margin-right: 0.375rem;
+        font-size: 0.875rem;
+      }
+      
+      .close-search i {
+        color: #6b7280;
+        font-size: 1rem;
+        transition: color 0.2s ease;
+      }
+      
+      .close-search:hover i {
+        color: #dc2626;
+      }
+      
+      /* Dark mode icon colors */
+      body.dark-mode .nav-item a i {
+        color: #9ca3af;
+      }
+      
+      body.dark-mode .nav-item a:hover i,
+      body.dark-mode .nav-item a.active i {
+        color: #60a5fa;
+      }
+      
+      body.dark-mode .search-icon {
+        color: #9ca3af;
+      }
+      
+      body.dark-mode .settings-toggle i {
+        color: #9ca3af;
+      }
+      
+      body.dark-mode .settings-toggle:hover i {
+        color: #60a5fa;
+      }
+      
+      body.dark-mode .mobile-nav-toggle i {
+        color: #9ca3af;
+      }
+      
+      body.dark-mode .close-search i {
+        color: #9ca3af;
+      }
+      
+      body.dark-mode .close-search:hover i {
+        color: #f87171;
+      }
+    </style>
 
     <!-- Search Scripts -->
     <script src="https://unpkg.com/lunr/lunr.min.js"></script>
