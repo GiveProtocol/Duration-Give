@@ -143,6 +143,24 @@ export function trackTransaction(operation: string, data?: {
   }
 }
 
+// Custom event capture for testing and debugging
+export function captureCustomEvent(message: string, data?: Record<string, unknown>, level: 'info' | 'warning' | 'error' = 'info') {
+  if (import.meta.env.PROD) {
+    Sentry.captureMessage(message, level);
+    
+    if (data) {
+      Sentry.addBreadcrumb({
+        message,
+        data,
+        level,
+        category: 'custom',
+      });
+    }
+  } else {
+    console.log(`Custom event: ${message}`, { level, data });
+  }
+}
+
 // Aliases for AuthContext compatibility
 export const setSentryUser = setUserContext;
 export const clearSentryUser = clearUserContext;
