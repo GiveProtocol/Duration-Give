@@ -1,4 +1,3 @@
-#!/usr/bin/env tsx
 /**
  * Admin Setup Script
  *
