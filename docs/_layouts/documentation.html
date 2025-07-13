@@ -48,7 +48,7 @@
         color: #f1f5f9;
       }
       .docs-header {
-        background: #fff;
+        background: #f0eee7;
         border-bottom: 1px solid #e5e7eb;
         padding: 1rem 0;
         position: sticky;
@@ -491,6 +491,126 @@
       body.dark-mode mark {
         background-color: #451a03;
         color: #fbbf24;
+      }
+      
+      /* EU Cookie Notice */
+      .cookie-notice {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        max-width: 380px;
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        z-index: 1000;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid #e5e7eb;
+      }
+      .cookie-notice.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      body.dark-mode .cookie-notice {
+        background: #1e293b;
+        border-color: #334155;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+      .cookie-notice-content {
+        margin-bottom: 16px;
+      }
+      .cookie-notice-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      body.dark-mode .cookie-notice-title {
+        color: #f1f5f9;
+      }
+      .cookie-notice-text {
+        font-size: 14px;
+        color: #6b7280;
+        line-height: 1.5;
+        margin-bottom: 16px;
+      }
+      body.dark-mode .cookie-notice-text {
+        color: #d1d5db;
+      }
+      .cookie-notice-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .cookie-btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .cookie-btn-accept {
+        background: #4f46e5;
+        color: #fff;
+      }
+      .cookie-btn-accept:hover {
+        background: #4338ca;
+      }
+      .cookie-btn-reject {
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid #d1d5db;
+      }
+      .cookie-btn-reject:hover {
+        background: #e5e7eb;
+      }
+      body.dark-mode .cookie-btn-reject {
+        background: #374151;
+        color: #d1d5db;
+        border-color: #4b5563;
+      }
+      body.dark-mode .cookie-btn-reject:hover {
+        background: #4b5563;
+      }
+      .cookie-btn-policy {
+        background: transparent;
+        color: #4f46e5;
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+      .cookie-btn-policy:hover {
+        background: #f0f0ff;
+      }
+      body.dark-mode .cookie-btn-policy {
+        color: #c7d2fe;
+      }
+      body.dark-mode .cookie-btn-policy:hover {
+        background: #312e81;
+      }
+      @media (max-width: 480px) {
+        .cookie-notice {
+          bottom: 10px;
+          right: 10px;
+          left: 10px;
+          max-width: none;
+        }
+        .cookie-notice-buttons {
+          flex-direction: column;
+        }
+        .cookie-btn {
+          width: 100%;
+        }
       }
       @media (max-width: 768px) {
         .docs-search {
@@ -1014,5 +1134,76 @@
       }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- EU Cookie Notice -->
+    <div class="cookie-notice" id="cookie-notice">
+      <div class="cookie-notice-content">
+        <div class="cookie-notice-title">
+          🍪 We use cookies
+        </div>
+        <div class="cookie-notice-text">
+          This site uses cookies to deliver its service and to analyze traffic. By continuing to use this site, you consent to our use of cookies.
+        </div>
+      </div>
+      <div class="cookie-notice-buttons">
+        <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept</button>
+        <button class="cookie-btn cookie-btn-reject" onclick="rejectCookies()">Reject</button>
+        <a href="https://giveprotocol.io/privacy" class="cookie-btn cookie-btn-policy" target="_blank">Privacy Policy</a>
+      </div>
+    </div>
+
+    <!-- Cookie Notice JavaScript -->
+    <script>
+      function showCookieNotice() {
+        const notice = document.getElementById('cookie-notice');
+        setTimeout(() => {
+          notice.classList.add('show');
+        }, 1000); // Show after 1 second
+      }
+
+      function hideCookieNotice() {
+        const notice = document.getElementById('cookie-notice');
+        notice.classList.remove('show');
+        setTimeout(() => {
+          notice.style.display = 'none';
+        }, 400);
+      }
+
+      function acceptCookies() {
+        localStorage.setItem('give-docs-cookies-accepted', 'true');
+        hideCookieNotice();
+        
+        // Track cookie acceptance
+        if (window.i18n && window.i18n.trackEvent) {
+          window.i18n.trackEvent('cookie_consent', { status: 'accepted' });
+        }
+      }
+
+      function rejectCookies() {
+        localStorage.setItem('give-docs-cookies-accepted', 'false');
+        hideCookieNotice();
+        
+        // Clear any existing analytics data
+        localStorage.removeItem('give_docs_analytics');
+        localStorage.removeItem('give_docs_search_analytics');
+        localStorage.removeItem('give_docs_navigation_analytics');
+        localStorage.removeItem('give_docs_settings_analytics');
+        
+        // Track cookie rejection
+        if (window.i18n && window.i18n.trackEvent) {
+          window.i18n.trackEvent('cookie_consent', { status: 'rejected' });
+        }
+      }
+
+      // Check if user has already made a choice
+      window.addEventListener('load', function() {
+        const cookieChoice = localStorage.getItem('give-docs-cookies-accepted');
+        
+        if (cookieChoice === null) {
+          // User hasn't made a choice yet, show notice
+          showCookieNotice();
+        }
+      });
+    </script>
   </body>
 </html>
