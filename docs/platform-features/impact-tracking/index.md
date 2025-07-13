@@ -11,12 +11,14 @@ Give Protocol provides comprehensive tools to track and measure the real-world i
 ## For Donors
 
 ### Donation Impact
+
 - Real-time tracking of how your donations are used
 - Progress updates on funded projects
 - Before and after photos and reports
 - Measurable outcomes and beneficiary stories
 
 ### Impact Dashboard
+
 - Visual representation of your total impact
 - Breakdown by cause and organization
 - Timeline of your giving history
@@ -25,12 +27,14 @@ Give Protocol provides comprehensive tools to track and measure the real-world i
 ## For Organizations
 
 ### Reporting Tools
+
 - Impact measurement frameworks
 - Automated progress tracking
 - Photo and story collection tools
 - Transparency reporting features
 
 ### Metrics Collection
+
 - Beneficiary tracking and outcomes
 - Program effectiveness measurement
 - Cost-per-impact calculations
@@ -39,12 +43,14 @@ Give Protocol provides comprehensive tools to track and measure the real-world i
 ## For Volunteers
 
 ### Hour Tracking
+
 - Automatic time logging
 - Skill-based impact measurement
 - Project outcome contributions
 - Recognition and achievement badges
 
 ### Volunteer Impact
+
 - Hours contributed and verified
 - Skills developed and shared
 - Projects completed
@@ -53,12 +59,14 @@ Give Protocol provides comprehensive tools to track and measure the real-world i
 ## Platform-Wide Metrics
 
 ### Global Impact
+
 - Total donations processed
 - Number of beneficiaries reached
 - Volunteer hours contributed
 - Success stories and outcomes
 
 ### Transparency Features
+
 - Blockchain-verified transactions
 - Public impact ledger
 - Third-party verification
@@ -67,11 +75,13 @@ Give Protocol provides comprehensive tools to track and measure the real-world i
 ## Getting Started
 
 1. **Set Up Tracking**
+
    - Enable impact notifications
    - Connect with organizations you support
    - Set personal impact goals
 
 2. **View Your Impact**
+
    - Access your personal impact dashboard
    - Review detailed reports and metrics
    - Share your impact with others

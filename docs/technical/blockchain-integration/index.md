@@ -11,18 +11,21 @@ Give Protocol is built on blockchain technology to ensure transparency, security
 ## Why Blockchain?
 
 ### Transparency
+
 - All transactions are publicly verifiable
 - Donation tracking from sender to recipient
 - Immutable record of fund usage
 - Real-time impact verification
 
 ### Security
+
 - Cryptographic protection of funds
 - Multi-signature wallet security
 - Decentralized architecture
 - Smart contract automation
 
 ### Efficiency
+
 - Reduced intermediary fees
 - Faster international transfers
 - Automated compliance and reporting
@@ -33,18 +36,21 @@ Give Protocol is built on blockchain technology to ensure transparency, security
 Give Protocol is built on the Moonbeam network, providing:
 
 ### Ethereum Compatibility
+
 - Full Ethereum Virtual Machine (EVM) support
 - Solidity smart contract compatibility
 - Familiar development tools and libraries
 - Easy migration from Ethereum
 
 ### Polkadot Integration
+
 - Cross-chain interoperability
 - Shared security from Polkadot
 - Access to the broader Polkadot ecosystem
 - Scalable and sustainable architecture
 
 ### Developer-Friendly Features
+
 - Ethereum-style accounts and signatures
 - Web3 RPC compatibility
 - MetaMask and other wallet support
@@ -53,12 +59,14 @@ Give Protocol is built on the Moonbeam network, providing:
 ## Smart Contract Architecture
 
 ### Core Contracts
+
 - **DurationDonation**: Main donation processing
 - **CharityScheduledDistribution**: Recurring donation management
 - **VolunteerVerification**: Volunteer hour verification and NFT rewards
 - **DistributionExecutor**: Automated fund distribution
 
 ### Security Features
+
 - Multi-signature requirements for large transactions
 - Time-locked withdrawals for security
 - Emergency pause functionality
@@ -67,6 +75,7 @@ Give Protocol is built on the Moonbeam network, providing:
 ## Transaction Flow
 
 ### Donation Process
+
 1. Donor initiates transaction through dApp
 2. Smart contract validates recipient and amount
 3. Funds are locked in escrow contract
@@ -75,6 +84,7 @@ Give Protocol is built on the Moonbeam network, providing:
 6. Transaction is recorded on blockchain
 
 ### Verification Process
+
 1. Organizations submit impact reports
 2. Community validators review submissions
 3. Consensus mechanism confirms validity
@@ -84,12 +94,14 @@ Give Protocol is built on the Moonbeam network, providing:
 ## Privacy and Compliance
 
 ### Privacy Features
+
 - Optional anonymous donations
 - zk-SNARK privacy proofs for sensitive data
 - Encrypted metadata storage
 - User-controlled data sharing
 
 ### Regulatory Compliance
+
 - Built-in KYC/AML compliance tools
 - Automated tax reporting features
 - Regulatory jurisdiction detection
@@ -98,7 +110,9 @@ Give Protocol is built on the Moonbeam network, providing:
 ## Getting Started
 
 ### For Users
+
 1. **Set Up a Wallet**
+
    - Install MetaMask or compatible wallet
    - Connect to Moonbeam network
    - Add GLMR tokens for gas fees
@@ -109,7 +123,9 @@ Give Protocol is built on the Moonbeam network, providing:
    - Complete profile setup
 
 ### For Developers
+
 1. **Development Environment**
+
    - Set up Hardhat development environment
    - Configure Moonbeam network connection
    - Install Give Protocol SDK
@@ -123,6 +139,7 @@ Give Protocol is built on the Moonbeam network, providing:
 ## Technical Specifications
 
 ### Network Details
+
 - **Network Name**: Moonbeam
 - **Chain ID**: 1284 (Mainnet), 1287 (Testnet)
 - **Currency**: GLMR
@@ -130,6 +147,7 @@ Give Protocol is built on the Moonbeam network, providing:
 - **Finality**: ~12-18 seconds
 
 ### Contract Addresses
+
 - Main contracts deployed on Moonbeam
 - Testnet contracts available for development
 - Verified source code on Moonscan
