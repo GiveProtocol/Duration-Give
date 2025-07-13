@@ -33,28 +33,28 @@ defaults:
       path: ""
       type: "pages"
     values:
-      layout: "documentation"
+      layout: "modern"
       nav_exclude: false
       lang: "en"
   - scope:
       path: "es"
       type: "pages"
     values:
-      layout: "documentation"
+      layout: "modern"
       nav_exclude: false
       lang: "es"
   - scope:
       path: "zh"
       type: "pages"
     values:
-      layout: "documentation"
+      layout: "modern"
       nav_exclude: false
       lang: "zh"
   - scope:
       path: ""
       type: "guides"
     values:
-      layout: "documentation"
+      layout: "modern"
 
 # Navigation
 nav_title: "Give Protocol"
