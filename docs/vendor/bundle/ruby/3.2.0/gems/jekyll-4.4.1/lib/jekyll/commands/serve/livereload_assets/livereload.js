@@ -227,7 +227,7 @@
     }
 
     LessPlugin.prototype.reload = function(path, options) {
-      if (this.window.less && this.window.less.refresh) {
+      if (this.window.less?.refresh) {
         if (path.match(/\.less$/i)) {
           return this.reloadLess(path);
         }
@@ -266,7 +266,7 @@
 
     LessPlugin.prototype.analyze = function() {
       return {
-        disable: !!(this.window.less && this.window.less.refresh)
+        disable: !!(this.window.less?.refresh)
       };
     };
 
@@ -296,7 +296,7 @@
       this.listeners = {};
       this.plugins = [];
       this.pluginIdentifiers = {};
-      this.console = this.window.console && this.window.console.log && this.window.console.error ? this.window.location.href.match(/LR-verbose/) ? this.window.console : {
+      this.console = this.window.console?.log && this.window.console.error ? this.window.location.href.match(/LR-verbose/) ? this.window.console : {
         log: function() {},
         error: this.window.console.error.bind(this.window.console)
       } : {
@@ -926,7 +926,7 @@
       } catch (_error) {
         e = _error;
       }
-      if (rules && rules.length) {
+      if (rules?.length) {
         for (index = _i = 0, _len = rules.length; _i < _len; index = ++_i) {
           rule = rules[index];
           switch (rule.type) {
