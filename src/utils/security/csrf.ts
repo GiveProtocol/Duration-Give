@@ -1,17 +1,17 @@
-import { Logger } from '../logger';
-import { ENV } from '@/config/env';
+import { Logger } from "../logger";
+import { ENV } from "@/config/env";
 
 export class CSRFProtection {
   private static instance: CSRFProtection;
   private token: string | null = null;
-  private readonly headerName = 'X-CSRF-Token';
-  private readonly cookieName = 'XSRF-TOKEN';
+  private readonly headerName = "X-CSRF-Token";
+  private readonly cookieName = "XSRF-TOKEN";
   private readonly cookieOptions = {
     httpOnly: true,
     secure: true,
-    sameSite: 'strict' as const,
+    sameSite: "strict" as const,
     maxAge: 7200, // 2 hours
-    domain: ENV.APP_DOMAIN
+    domain: ENV.APP_DOMAIN,
   };
 
   private constructor() {
@@ -31,27 +31,31 @@ export class CSRFProtection {
       const buffer = new Uint8Array(32);
       crypto.getRandomValues(buffer);
       this.token = Array.from(buffer)
-        .map(b => b.toString(16).padStart(2, '0'))
-        .join('');
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
 
       // Set the cookie with secure options
       this.setCookie(this.cookieName, this.token, this.cookieOptions);
-      
-      Logger.info('CSRF token initialized');
+
+      Logger.info("CSRF token initialized");
     } catch (error) {
-      Logger.error('Failed to initialize CSRF token', { error });
+      Logger.error("Failed to initialize CSRF token", { error });
       throw error;
     }
   }
 
-  private setCookie(name: string, value: string, options: Record<string, any>): void {
+  private setCookie(
+    name: string,
+    value: string,
+    options: Record<string, any>,
+  ): void {
     let cookie = `${name}=${value}`;
-    
+
     if (options.maxAge) cookie += `; Max-Age=${options.maxAge}`;
     if (options.domain) cookie += `; Domain=${options.domain}`;
-    if (options.path) cookie += `; Path=${options.path || '/'}`;
-    if (options.secure) cookie += '; Secure';
-    if (options.httpOnly) cookie += '; HttpOnly';
+    if (options.path) cookie += `; Path=${options.path || "/"}`;
+    if (options.secure) cookie += "; Secure";
+    if (options.httpOnly) cookie += "; HttpOnly";
     if (options.sameSite) cookie += `; SameSite=${options.sameSite}`;
 
     document.cookie = cookie;
@@ -62,7 +66,7 @@ export class CSRFProtection {
       this.initializeToken();
     }
     if (!this.token) {
-      throw new Error('Failed to initialize CSRF token');
+      throw new Error("Failed to initialize CSRF token");
     }
     return this.token;
   }
@@ -83,13 +87,13 @@ export class CSRFProtection {
 
     const aBuffer = new TextEncoder().encode(a);
     const bBuffer = new TextEncoder().encode(b);
-    
+
     return crypto.subtle.timingSafeEqual(aBuffer, bBuffer);
   }
 
   getHeaders(): Record<string, string> {
     return {
-      [this.headerName]: this.getToken()
+      [this.headerName]: this.getToken(),
     };
   }
 
