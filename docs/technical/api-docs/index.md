@@ -9,6 +9,7 @@ description: "Complete REST API documentation for integrating with Give Protocol
 Give Protocol provides a comprehensive REST API for integrating charitable giving functionality into your applications.
 
 ## Base URL
+
 ```
 https://api.giveprotocol.io/v1
 ```
@@ -16,12 +17,15 @@ https://api.giveprotocol.io/v1
 ## Authentication
 
 ### API Keys
+
 ```http
 Authorization: Bearer your_api_key_here
 ```
 
 ### OAuth 2.0
+
 For user-specific operations:
+
 ```http
 Authorization: Bearer user_access_token
 ```
@@ -31,17 +35,20 @@ Authorization: Bearer user_access_token
 ### Charities
 
 #### List Charities
+
 ```http
 GET /charities
 ```
 
 **Parameters:**
+
 - `limit` (optional): Number of results (default: 20, max: 100)
 - `offset` (optional): Pagination offset
 - `category` (optional): Filter by category
 - `verified` (optional): Filter by verification status
 
 **Response:**
+
 ```json
 {
   "charities": [
@@ -66,6 +73,7 @@ GET /charities
 ```
 
 #### Get Charity Details
+
 ```http
 GET /charities/{charity_id}
 ```
@@ -73,11 +81,13 @@ GET /charities/{charity_id}
 ### Donations
 
 #### Create Donation
+
 ```http
 POST /donations
 ```
 
 **Request Body:**
+
 ```json
 {
   "charity_id": "charity_123",
@@ -93,6 +103,7 @@ POST /donations
 ```
 
 **Response:**
+
 ```json
 {
   "donation_id": "donation_456",
@@ -104,11 +115,13 @@ POST /donations
 ```
 
 #### Get Donation Status
+
 ```http
 GET /donations/{donation_id}
 ```
 
 #### List User Donations
+
 ```http
 GET /users/me/donations
 ```
@@ -116,11 +129,13 @@ GET /users/me/donations
 ### Volunteer Hours
 
 #### Submit Volunteer Hours
+
 ```http
 POST /volunteer/hours
 ```
 
 **Request Body:**
+
 ```json
 {
   "charity_id": "charity_123",
@@ -132,6 +147,7 @@ POST /volunteer/hours
 ```
 
 #### Get Verification Status
+
 ```http
 GET /volunteer/hours/{submission_id}
 ```
@@ -139,11 +155,13 @@ GET /volunteer/hours/{submission_id}
 ### Impact Tracking
 
 #### Get User Impact
+
 ```http
 GET /users/me/impact
 ```
 
 **Response:**
+
 ```json
 {
   "total_donated": "2500.00",
@@ -164,6 +182,7 @@ GET /users/me/impact
 ```
 
 #### Get Charity Impact
+
 ```http
 GET /charities/{charity_id}/impact
 ```
@@ -173,12 +192,14 @@ GET /charities/{charity_id}/impact
 Subscribe to real-time events:
 
 ### Webhook Events
+
 - `donation.completed`
 - `donation.failed`
 - `volunteer.hours.verified`
 - `charity.verification.updated`
 
 ### Webhook Payload Example
+
 ```json
 {
   "event": "donation.completed",
@@ -197,27 +218,29 @@ Subscribe to real-time events:
 ## SDKs and Libraries
 
 ### JavaScript/TypeScript
+
 ```bash
 npm install @giveprotocol/sdk
 ```
 
 ```javascript
-import { GiveProtocol } from '@giveprotocol/sdk';
+import { GiveProtocol } from "@giveprotocol/sdk";
 
 const gp = new GiveProtocol({
-  apiKey: 'your_api_key',
-  environment: 'production' // or 'sandbox'
+  apiKey: "your_api_key",
+  environment: "production", // or 'sandbox'
 });
 
 // Make a donation
 const donation = await gp.donations.create({
-  charityId: 'charity_123',
-  amount: '100.00',
-  currency: 'GLMR'
+  charityId: "charity_123",
+  amount: "100.00",
+  currency: "GLMR",
 });
 ```
 
 ### Python
+
 ```bash
 pip install giveprotocol-python
 ```
@@ -245,6 +268,7 @@ donation = gp.donations.create(
 - **Enterprise**: Custom limits
 
 Rate limit headers:
+
 ```http
 X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 999
@@ -254,6 +278,7 @@ X-RateLimit-Reset: 1642252800
 ## Error Handling
 
 ### Error Response Format
+
 ```json
 {
   "error": {
@@ -267,6 +292,7 @@ X-RateLimit-Reset: 1642252800
 ```
 
 ### Common Error Codes
+
 - `INVALID_API_KEY`: Invalid or missing API key
 - `INSUFFICIENT_FUNDS`: Not enough balance for donation
 - `CHARITY_NOT_FOUND`: Charity ID does not exist
@@ -276,11 +302,13 @@ X-RateLimit-Reset: 1642252800
 ## Testing
 
 ### Sandbox Environment
+
 ```
 https://api-sandbox.giveprotocol.io/v1
 ```
 
 ### Test Data
+
 - Test charity ID: `charity_test_123`
 - Test wallet addresses provided in sandbox
 - No real transactions processed
@@ -288,6 +316,7 @@ https://api-sandbox.giveprotocol.io/v1
 ## Security
 
 ### Best Practices
+
 - Store API keys securely
 - Use HTTPS for all requests
 - Validate webhook signatures
@@ -295,12 +324,13 @@ https://api-sandbox.giveprotocol.io/v1
 - Monitor API usage and errors
 
 ### Webhook Signature Verification
+
 ```javascript
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 function verifyWebhook(payload, signature, secret) {
-  const hmac = crypto.createHmac('sha256', secret);
-  const digest = hmac.update(payload).digest('hex');
+  const hmac = crypto.createHmac("sha256", secret);
+  const digest = hmac.update(payload).digest("hex");
   return signature === digest;
 }
 ```
