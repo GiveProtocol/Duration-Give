@@ -1,10 +1,14 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.3"
+# Use Jekyll 4.3 for modern features since we're using GitHub Actions
+gem "jekyll", "~> 4.3.0"
+
+# Essential gems for GitHub Actions deployment
+gem "webrick", "~> 1.8"
 
 # Plugins
 group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
+  gem "jekyll-feed", "~> 0.17"
   gem "jekyll-seo-tag", "~> 2.8"
   gem "jekyll-sitemap", "~> 1.4"
 end
