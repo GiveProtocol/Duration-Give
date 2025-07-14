@@ -54,7 +54,10 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
     workSamples: "",
   });
 
-  const validateField = (name: string, value: string | number | boolean): string => {
+  const validateField = (
+    name: string,
+    value: string | number | boolean,
+  ): string => {
     switch (name) {
       case "fullName":
         return validateName(value)
