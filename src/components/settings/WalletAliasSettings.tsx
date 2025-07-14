@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { useWalletAlias } from '@/hooks/useWalletAlias';
-import { useWeb3 } from '@/contexts/Web3Context';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Card } from '@/components/ui/Card';
-import { Wallet, Edit, Trash2, AlertCircle, Check } from 'lucide-react';
-import { shortenAddress } from '@/utils/web3';
+import React, { useState } from "react";
+import { useWalletAlias } from "@/hooks/useWalletAlias";
+import { useWeb3 } from "@/contexts/Web3Context";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Card } from "@/components/ui/Card";
+import { Wallet, Edit, Trash2, AlertCircle, Check } from "lucide-react";
+import { shortenAddress } from "@/utils/web3";
 
 export const WalletAliasSettings: React.FC = () => {
   const { address, isConnected } = useWeb3();
-  const { alias, aliases, loading, error, setWalletAlias, deleteWalletAlias } = useWalletAlias();
-  const [newAlias, setNewAlias] = useState('');
+  const { alias, aliases, loading, error, setWalletAlias, deleteWalletAlias } =
+    useWalletAlias();
+  const [newAlias, setNewAlias] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -20,41 +21,43 @@ export const WalletAliasSettings: React.FC = () => {
 
     // Validate alias
     if (!newAlias.trim()) {
-      setValidationError('Alias cannot be empty');
+      setValidationError("Alias cannot be empty");
       return;
     }
 
     if (newAlias.length < 3 || newAlias.length > 20) {
-      setValidationError('Alias must be between 3 and 20 characters');
+      setValidationError("Alias must be between 3 and 20 characters");
       return;
     }
 
     if (!/^[a-zA-Z0-9_-]+$/.test(newAlias)) {
-      setValidationError('Alias can only contain letters, numbers, underscores, and hyphens');
+      setValidationError(
+        "Alias can only contain letters, numbers, underscores, and hyphens",
+      );
       return;
     }
 
     const success = await setWalletAlias(newAlias);
     if (success) {
-      setNewAlias('');
+      setNewAlias("");
       setEditMode(false);
     }
   };
 
   const handleEdit = () => {
-    setNewAlias(alias || '');
+    setNewAlias(alias || "");
     setEditMode(true);
     setValidationError(null);
   };
 
   const handleCancel = () => {
-    setNewAlias('');
+    setNewAlias("");
     setEditMode(false);
     setValidationError(null);
   };
 
   const handleDelete = async (aliasId: string) => {
-    if (confirm('Are you sure you want to delete this wallet alias?')) {
+    if (confirm("Are you sure you want to delete this wallet alias?")) {
       await deleteWalletAlias(aliasId);
     }
   };
@@ -67,7 +70,8 @@ export const WalletAliasSettings: React.FC = () => {
           <h2 className="text-lg font-medium text-gray-900">Wallet Alias</h2>
         </div>
         <p className="text-gray-600 mb-4">
-          Connect your wallet to set a public alias that will be displayed on the contribution tracker.
+          Connect your wallet to set a public alias that will be displayed on
+          the contribution tracker.
         </p>
       </Card>
     );
@@ -102,11 +106,14 @@ export const WalletAliasSettings: React.FC = () => {
 
       <div className="mb-4">
         <p className="text-gray-600 mb-2">
-          Set a public alias for your wallet address. This alias will be displayed on the contribution tracker instead of your wallet address.
+          Set a public alias for your wallet address. This alias will be
+          displayed on the contribution tracker instead of your wallet address.
         </p>
         <div className="bg-gray-50 p-3 rounded-md">
           <p className="text-sm text-gray-500">Current Wallet</p>
-          <p className="font-mono text-gray-900">{shortenAddress(address || '')}</p>
+          <p className="font-mono text-gray-900">
+            {shortenAddress(address || "")}
+          </p>
         </div>
       </div>
 
@@ -126,7 +133,7 @@ export const WalletAliasSettings: React.FC = () => {
               className="flex items-center"
             >
               <Check className="h-4 w-4 mr-1" />
-              {loading ? 'Saving...' : 'Save Alias'}
+              {loading ? "Saving..." : "Save Alias"}
             </Button>
             <Button
               type="button"
@@ -148,12 +155,10 @@ export const WalletAliasSettings: React.FC = () => {
           ) : (
             <div className="mb-4">
               <p className="text-gray-600">
-                You haven&apos;t set an alias for this wallet yet. Set an alias to make your contributions more recognizable.
+                You haven&apos;t set an alias for this wallet yet. Set an alias
+                to make your contributions more recognizable.
               </p>
-              <Button
-                onClick={() => setEditMode(true)}
-                className="mt-3"
-              >
+              <Button onClick={() => setEditMode(true)} className="mt-3">
                 Set Wallet Alias
               </Button>
             </div>
@@ -163,13 +168,20 @@ export const WalletAliasSettings: React.FC = () => {
 
       {aliases.length > 0 && (
         <div className="mt-6">
-          <h3 className="text-md font-medium text-gray-900 mb-3">Your Wallet Aliases</h3>
+          <h3 className="text-md font-medium text-gray-900 mb-3">
+            Your Wallet Aliases
+          </h3>
           <div className="space-y-3">
             {aliases.map((item) => (
-              <div key={item.id} className="flex justify-between items-center p-3 bg-gray-50 rounded-md">
+              <div
+                key={item.id}
+                className="flex justify-between items-center p-3 bg-gray-50 rounded-md"
+              >
                 <div>
                   <p className="font-medium text-gray-900">{item.alias}</p>
-                  <p className="text-xs text-gray-500 font-mono">{shortenAddress(item.walletAddress)}</p>
+                  <p className="text-xs text-gray-500 font-mono">
+                    {shortenAddress(item.walletAddress)}
+                  </p>
                 </div>
                 <Button
                   variant="ghost"

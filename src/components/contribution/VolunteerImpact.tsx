@@ -1,6 +1,6 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Clock, Award, Users } from 'lucide-react';
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Clock, Award, Users } from "lucide-react";
 
 interface VolunteerStats {
   totalHours: number;
@@ -24,25 +24,25 @@ const fetchVolunteerStats = async (): Promise<VolunteerStats> => {
     organizationsHelped: 5,
     recentAchievements: [
       {
-        id: '1',
-        title: 'Web Development Project',
-        organization: 'Tech for Good',
-        date: '2024-03-15'
+        id: "1",
+        title: "Web Development Project",
+        organization: "Tech for Good",
+        date: "2024-03-15",
       },
       {
-        id: '2',
-        title: 'Environmental Campaign',
-        organization: 'Green Earth',
-        date: '2024-03-10'
-      }
-    ]
+        id: "2",
+        title: "Environmental Campaign",
+        organization: "Green Earth",
+        date: "2024-03-10",
+      },
+    ],
   };
 };
 
 export const VolunteerImpact: React.FC = () => {
   const { data: stats, isLoading } = useQuery({
-    queryKey: ['volunteerStats'],
-    queryFn: fetchVolunteerStats
+    queryKey: ["volunteerStats"],
+    queryFn: fetchVolunteerStats,
   });
 
   if (isLoading) return <div>Loading volunteer stats&hellip;</div>;
@@ -82,7 +82,9 @@ export const VolunteerImpact: React.FC = () => {
       </div>
 
       <div>
-        <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Achievements</h3>
+        <h3 className="text-lg font-medium text-gray-900 mb-4">
+          Recent Achievements
+        </h3>
         <div className="space-y-3">
           {stats?.recentAchievements.map((achievement) => (
             <div
@@ -91,7 +93,9 @@ export const VolunteerImpact: React.FC = () => {
             >
               <div>
                 <p className="font-medium text-gray-900">{achievement.title}</p>
-                <p className="text-sm text-gray-500">{achievement.organization}</p>
+                <p className="text-sm text-gray-500">
+                  {achievement.organization}
+                </p>
               </div>
               <span className="text-sm text-gray-500">{achievement.date}</span>
             </div>

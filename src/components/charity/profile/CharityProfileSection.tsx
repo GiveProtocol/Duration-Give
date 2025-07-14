@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useCharityProfile } from '@/hooks/useCharityProfile';
-import ProfileForm from './ProfileForm';
-import CharityProfileCard from './CharityProfileCard';
-import { Button } from '@/components/ui/Button';
+import React, { useState } from "react";
+import { useCharityProfile } from "@/hooks/useCharityProfile";
+import ProfileForm from "./ProfileForm";
+import CharityProfileCard from "./CharityProfileCard";
+import { Button } from "@/components/ui/Button";
 
 const CharityProfileSection: React.FC = () => {
   const { profile, updateProfile, loading, error } = useCharityProfile();
@@ -11,7 +11,9 @@ const CharityProfileSection: React.FC = () => {
   if (!profile) {
     return (
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Charity Profile</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Charity Profile
+        </h2>
         <p className="text-gray-600">Loading profile&hellip;</p>
       </div>
     );
@@ -21,11 +23,8 @@ const CharityProfileSection: React.FC = () => {
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-900">Charity Profile</h2>
-        <Button
-          onClick={() => setIsEditing(!isEditing)}
-          variant="secondary"
-        >
-          {isEditing ? 'Cancel' : 'Edit Profile'}
+        <Button onClick={() => setIsEditing(!isEditing)} variant="secondary">
+          {isEditing ? "Cancel" : "Edit Profile"}
         </Button>
       </div>
 
