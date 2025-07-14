@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useCharityProfile } from '@/hooks/useCharityProfile';
 import ProfileForm from './ProfileForm';
 import CharityProfileCard from './CharityProfileCard';
@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/Button';
 const CharityProfileSection: React.FC = () => {
   const { profile, updateProfile, loading, error } = useCharityProfile();
   const [isEditing, setIsEditing] = useState(false);
+
+  const handleToggleEdit = useCallback(() => setIsEditing(!isEditing), [isEditing]);
 
   if (!profile) {
     return (
@@ -22,7 +24,7 @@ const CharityProfileSection: React.FC = () => {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-900">Charity Profile</h2>
         <Button
-          onClick={() => setIsEditing(!isEditing)}
+          onClick={handleToggleEdit}
           variant="secondary"
         >
           {isEditing ? 'Cancel' : 'Edit Profile'}

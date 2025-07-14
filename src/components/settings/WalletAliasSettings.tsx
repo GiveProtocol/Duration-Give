@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useWalletAlias } from '@/hooks/useWalletAlias';
 import { useWeb3 } from '@/contexts/Web3Context';
 import { Button } from '@/components/ui/Button';
@@ -58,6 +58,12 @@ export const WalletAliasSettings: React.FC = () => {
       await deleteWalletAlias(aliasId);
     }
   };
+
+  // Callback handlers for better performance
+  const handleStartEdit = useCallback(() => setEditMode(true), []);
+  const createDeleteHandler = useCallback((aliasId: string) => {
+    return () => handleDelete(aliasId);
+  }, [handleDelete]);
 
   if (!isConnected) {
     return (
@@ -151,7 +157,7 @@ export const WalletAliasSettings: React.FC = () => {
                 You haven&apos;t set an alias for this wallet yet. Set an alias to make your contributions more recognizable.
               </p>
               <Button
-                onClick={() => setEditMode(true)}
+                onClick={handleStartEdit}
                 className="mt-3"
               >
                 Set Wallet Alias
@@ -174,7 +180,7 @@ export const WalletAliasSettings: React.FC = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleDelete(item.id)}
+                  onClick={createDeleteHandler(item.id)}
                   className="text-red-500 hover:text-red-700 hover:bg-red-50"
                 >
                   <Trash2 className="h-4 w-4" />

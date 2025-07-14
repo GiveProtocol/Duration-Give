@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Plus, Edit, Trash2, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { OpportunityForm } from '@/components/volunteer/OpportunityForm';
@@ -27,6 +27,8 @@ export const OpportunityManagement: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const { t } = useTranslation();
+
+  const handleShowForm = useCallback(() => setShowForm(true), []);
 
   useEffect(() => {
     if (profile?.id) {
@@ -75,7 +77,7 @@ export const OpportunityManagement: React.FC = () => {
           {t('volunteer.opportunities', 'Volunteer Opportunities')}
         </h2>
         <Button
-          onClick={() => setShowForm(true)}
+          onClick={handleShowForm}
           className="flex items-center"
         >
           <Plus className="h-4 w-4 mr-2" />
