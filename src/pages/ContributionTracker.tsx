@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Globe, Search, Download, Filter } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
@@ -39,10 +39,19 @@ export const ContributionTracker: React.FC = () => {
     }
   }, [location.state]);
 
-  const handleExport = (format: 'csv' | 'pdf') => {
+  const handleExport = useCallback((format: 'csv' | 'pdf') => {
     // Implement export functionality
     Logger.info(`Exporting contributions as ${format}`, { format });
-  };
+  }, []);
+
+  const handleExportCsv = useCallback(() => handleExport('csv'), [handleExport]);
+  const handleExportPdf = useCallback(() => handleExport('pdf'), [handleExport]);
+  const handleShowAliasModal = useCallback(() => setShowAliasModal(true), []);
+  const handleHideAliasModal = useCallback(() => setShowAliasModal(false), []);
+  const handleChangeAlias = useCallback(() => {
+    setNewAlias(alias);
+    setShowAliasModal(true);
+  }, [alias]);
 
   const handleSetAlias = async () => {
     if (!isConnected || !address) {
@@ -96,7 +105,7 @@ export const ContributionTracker: React.FC = () => {
           <div className="flex items-center space-x-2">
             <Button
               variant="secondary"
-              onClick={() => handleExport('csv')}
+              onClick={handleExportCsv}
               className="flex items-center"
             >
               <Download className="h-4 w-4 mr-2" />
@@ -104,7 +113,7 @@ export const ContributionTracker: React.FC = () => {
             </Button>
             <Button
               variant="secondary"
-              onClick={() => handleExport('pdf')}
+              onClick={handleExportPdf}
               className="flex items-center"
             >
               <Download className="h-4 w-4 mr-2" />
@@ -136,10 +145,7 @@ export const ContributionTracker: React.FC = () => {
                   <Button
                     variant="secondary"
                     size="sm"
-                    onClick={() => {
-                      setNewAlias(alias);
-                      setShowAliasModal(true);
-                    }}
+                    onClick={handleChangeAlias}
                   >
                     Change
                   </Button>
@@ -148,7 +154,7 @@ export const ContributionTracker: React.FC = () => {
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() => setShowAliasModal(true)}
+                  onClick={handleShowAliasModal}
                 >
                   Set Wallet Alias
                 </Button>
@@ -177,7 +183,7 @@ export const ContributionTracker: React.FC = () => {
               <div className="flex justify-end space-x-3">
                 <Button
                   variant="secondary"
-                  onClick={() => setShowAliasModal(false)}
+                  onClick={handleHideAliasModal}
                 >
                   Cancel
                 </Button>

@@ -367,6 +367,15 @@ export const CharityPortal: React.FC = () => {
     }));
   }, []);
 
+  // Individual sort handlers for better performance
+  const handleSortByDate = useCallback(() => handleSort('date'), [handleSort]);
+  const handleSortByType = useCallback(() => handleSort('type'), [handleSort]);
+  const handleSortByOrganization = useCallback(() => handleSort('organization'), [handleSort]);
+  const handleSortByStatus = useCallback(() => handleSort('status'), [handleSort]);
+
+  // Modal close handler
+  const handleCloseExportModal = useCallback(() => setShowExportModal(false), []);
+
   const sortedTransactions = useCallback(() => {
     if (!sortConfig.key) return transactions;
 
@@ -587,7 +596,7 @@ export const CharityPortal: React.FC = () => {
                   <tr>
                     <th 
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
-                      onClick={() => handleSort('date')}
+                      onClick={handleSortByDate}
                     >
                       <div className="flex items-center space-x-1">
                         <span>{t('contributions.date')}</span>
@@ -596,7 +605,7 @@ export const CharityPortal: React.FC = () => {
                     </th>
                     <th 
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
-                      onClick={() => handleSort('type')}
+                      onClick={handleSortByType}
                     >
                       <div className="flex items-center space-x-1">
                         <span>{t('contributions.type')}</span>
@@ -605,7 +614,7 @@ export const CharityPortal: React.FC = () => {
                     </th>
                     <th 
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
-                      onClick={() => handleSort('organization')}
+                      onClick={handleSortByOrganization}
                     >
                       <div className="flex items-center space-x-1">
                         <span>{t('donor.volunteer', 'Donor/Volunteer')}</span>
@@ -615,7 +624,7 @@ export const CharityPortal: React.FC = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.details')}</th>
                     <th 
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
-                      onClick={() => handleSort('status')}
+                      onClick={handleSortByStatus}
                     >
                       <div className="flex items-center space-x-1">
                         <span>{t('contributions.status')}</span>
@@ -817,7 +826,7 @@ export const CharityPortal: React.FC = () => {
       {showExportModal && (
         <DonationExportModal
           donations={transactions}
-          onClose={() => setShowExportModal(false)}
+          onClose={handleCloseExportModal}
         />
       )}
     </div>

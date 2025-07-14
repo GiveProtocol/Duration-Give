@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Search, Filter, Award, Clock, Users, Globe } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { ApplicationForm } from '../components/volunteer/ApplicationForm';
@@ -121,10 +121,14 @@ const VolunteerOpportunities: React.FC = () => {
     return matchesSearch && matchesSkill && matchesType && matchesLanguage;
   });
 
-  const handleApply = (opportunity: Opportunity) => {
+  const handleApply = useCallback((opportunity: Opportunity) => {
     setSelectedOpportunity(opportunity);
     setShowConsentForm(true);
-  };
+  }, []);
+
+  const createApplyHandler = useCallback((opportunity: Opportunity) => {
+    return () => handleApply(opportunity);
+  }, [handleApply]);
 
   const handleConsentAccept = () => {
     setShowConsentForm(false);
@@ -248,7 +252,7 @@ const VolunteerOpportunities: React.FC = () => {
                 </div>
 
                 <button
-                  onClick={() => handleApply(opportunity)}
+                  onClick={createApplyHandler(opportunity)}
                   className="mt-4 w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
                 >
                   {t('volunteer.applyNow', 'Apply Now')}
