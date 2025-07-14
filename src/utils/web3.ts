@@ -31,15 +31,6 @@ export const shortenAddress = (address: string): string => {
 };
 
 export const isValidAddress = (address: string): boolean => {
-  // Check for Ethereum address format
-  if (/^0x[a-fA-F0-9]{40}$/.test(address)) {
-    return true;
-  }
-  
-  // Check for Polkadot address format
-  if (/^[1-9A-HJ-NP-Za-km-z]{47,48}$/.test(address)) {
-    return true;
-  }
-
-  return false;
+  // Check for Ethereum address format or Polkadot address format
+  return /^0x[a-fA-F0-9]{40}$/.test(address) || /^[1-9A-HJ-NP-Za-km-z]{47,48}$/.test(address);
 };
