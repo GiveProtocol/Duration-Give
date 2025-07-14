@@ -131,7 +131,7 @@ export const ScheduledDonations: React.FC = () => {
                 <div>
                   <div className="flex items-center mb-2">
                     <Calendar className="h-5 w-5 text-indigo-500 mr-2" />
-                    <h3 className="text-lg font-medium text-gray-900">Monthly Donation to {schedule.charity.substring(0, 6)}...{schedule.charity.substring(38)}</h3>
+                    <h3 className="text-lg font-medium text-gray-900">Monthly Donation to {schedule.charity.substring(0, 6)}&hellip;{schedule.charity.substring(38)}</h3>
                   </div>
                   <div className="space-y-1 text-sm text-gray-500">
                     <p>Total Amount: {schedule.totalAmount} tokens</p>

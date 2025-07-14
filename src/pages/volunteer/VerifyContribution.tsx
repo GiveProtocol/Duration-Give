@@ -37,7 +37,7 @@ const VerifyContribution: React.FC = () => {
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="flex flex-col items-center justify-center py-12">
           <LoadingSpinner size="lg" />
-          <p className="mt-4 text-gray-600">Verifying contribution...</p>
+          <p className="mt-4 text-gray-600">Verifying contribution&hellip;</p>
         </div>
       </div>
     );

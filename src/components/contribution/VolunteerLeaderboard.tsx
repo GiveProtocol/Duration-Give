@@ -152,7 +152,7 @@ export const VolunteerLeaderboard: React.FC<VolunteerLeaderboardProps> = ({
     );
   });
 
-  if (isLoading) return <div>Loading leaderboard...</div>;
+  if (isLoading) return <div>Loading leaderboard&hellip;</div>;
 
   return (
     <div className="space-y-4">

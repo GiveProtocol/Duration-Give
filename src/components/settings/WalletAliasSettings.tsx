@@ -148,7 +148,7 @@ export const WalletAliasSettings: React.FC = () => {
           ) : (
             <div className="mb-4">
               <p className="text-gray-600">
-                You haven't set an alias for this wallet yet. Set an alias to make your contributions more recognizable.
+                You haven&apos;t set an alias for this wallet yet. Set an alias to make your contributions more recognizable.
               </p>
               <Button
                 onClick={() => setEditMode(true)}

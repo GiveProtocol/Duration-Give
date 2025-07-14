@@ -8,7 +8,7 @@ export const WithdrawalHistory: React.FC = () => {
   const { withdrawals, loading, error } = useWithdrawals();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading&hellip;</div>;
   }
 
   if (error) {

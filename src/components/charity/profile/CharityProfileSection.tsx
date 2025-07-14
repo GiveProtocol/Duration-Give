@@ -12,7 +12,7 @@ const CharityProfileSection: React.FC = () => {
     return (
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Charity Profile</h2>
-        <p className="text-gray-600">Loading profile...</p>
+        <p className="text-gray-600">Loading profile&hellip;</p>
       </div>
     );
   }

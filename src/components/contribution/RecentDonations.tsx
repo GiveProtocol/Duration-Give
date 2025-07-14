@@ -58,7 +58,7 @@ export const RecentDonations: React.FC = () => {
     queryFn: fetchRecentDonations
   });
 
-  if (isLoading) return <div>Loading recent donations...</div>;
+  if (isLoading) return <div>Loading recent donations&hellip;</div>;
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">

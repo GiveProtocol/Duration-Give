@@ -45,7 +45,7 @@ export const VolunteerImpact: React.FC = () => {
     queryFn: fetchVolunteerStats
   });
 
-  if (isLoading) return <div>Loading volunteer stats...</div>;
+  if (isLoading) return <div>Loading volunteer stats&hellip;</div>;
 
   return (
     <div className="space-y-6">

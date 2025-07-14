@@ -65,7 +65,7 @@ export const OpportunityManagement: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>;
+    return <div className="text-center py-8">Loading&hellip;</div>;
   }
 
   return (
