@@ -5,12 +5,13 @@ import { Input } from '@/components/ui/Input';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
 import { VolunteerVerificationCard } from './VolunteerVerificationCard';
 import { Logger } from '@/utils/logger';
+import { VolunteerVerification } from '@/types/volunteer';
 
 export const VerificationLookup: React.FC = () => {
   const [hash, setHash] = useState('');
   const [searchPerformed, setSearchPerformed] = useState(false);
   const { getVerificationByHash, loading, error } = useVolunteerVerification();
-  const [verification, setVerification] = useState<any | null>(null);
+  const [verification, setVerification] = useState<VolunteerVerification | null>(null);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();

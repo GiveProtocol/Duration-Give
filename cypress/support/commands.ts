@@ -1,11 +1,27 @@
 import "@testing-library/cypress/add-commands";
 
+interface EthereumRequestArgs {
+  method: string;
+  params?: unknown[];
+}
+
+interface MockEthereum {
+  isMetaMask: boolean;
+  request: (args: EthereumRequestArgs) => Promise<unknown>;
+  on: () => void;
+  removeListener: () => void;
+}
+
 declare global {
   namespace Cypress {
     interface Chainable {
       login(email?: string, password?: string): Chainable<void>;
       connectWallet(): Chainable<void>;
     }
+  }
+
+  interface Window {
+    ethereum?: MockEthereum;
   }
 }
 
@@ -31,7 +47,7 @@ Cypress.Commands.add("connectWallet", () => {
   cy.window().then((win) => {
     win.ethereum = {
       isMetaMask: true,
-      request: (args: { method: string; params?: any[] }) => {
+      request: (args: EthereumRequestArgs) => {
         if (args.method === "eth_requestAccounts") {
           // skipcq: SCT-A000 - This is a placeholder test Ethereum address for Cypress testing, not a real secret
           return Promise.resolve([

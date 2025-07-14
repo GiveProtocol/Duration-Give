@@ -13,6 +13,13 @@ interface EditorProps {
   placeholder?: string;
 }
 
+interface MenuButtonProps {
+  onClick: () => void;
+  active?: boolean;
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+}
+
 export const Editor: React.FC<EditorProps> = ({
   content,
   onChange,
@@ -84,7 +91,7 @@ export const Editor: React.FC<EditorProps> = ({
     return null;
   }
 
-  const MenuButton = ({ onClick, active, icon: Icon, title }: any) => (
+  const MenuButton = ({ onClick, active, icon: Icon, title }: MenuButtonProps) => (
     <Button
       type="button"
       variant="secondary"

@@ -6,12 +6,13 @@ import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
 import { VolunteerVerificationCard } from '@/components/volunteer/VolunteerVerificationCard';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { Logger } from '@/utils/logger';
+import { VolunteerVerification } from '@/types/volunteer';
 
 const VerifyContribution: React.FC = () => {
   const { hash } = useParams<{ hash: string }>();
   const navigate = useNavigate();
   const { getVerificationByHash, loading, error } = useVolunteerVerification();
-  const [verification, setVerification] = React.useState<any | null>(null);
+  const [verification, setVerification] = React.useState<VolunteerVerification | null>(null);
   const [verificationChecked, setVerificationChecked] = React.useState(false);
 
   React.useEffect(() => {
