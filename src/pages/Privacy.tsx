@@ -11,8 +11,8 @@ export const Privacy: React.FC = () => {
       <div className="space-y-8">
         <section>
           <h2>1. Introduction</h2>
-          <p>GiveProtocol ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our blockchain-based philanthropic platform and related services (collectively, the "Service").</p>
-          <p>We value your privacy and recognize the sensitivity of personal data. While blockchain technology enables transparency in donations and volunteer contributions, we've designed our platform to balance transparency with appropriate privacy protections.</p>
+          <p>GiveProtocol (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our blockchain-based philanthropic platform and related services (collectively, the &quot;Service&quot;).</p>
+          <p>We value your privacy and recognize the sensitivity of personal data. While blockchain technology enables transparency in donations and volunteer contributions, we&apos;ve designed our platform to balance transparency with appropriate privacy protections.</p>
           
           <ImportantNotice variant="warning">
             <p><strong>IF YOU DO NOT AGREE WITH ANY PART OF THIS PRIVACY POLICY OR OUR TERMS OF USE, THEN PLEASE DO NOT USE ANY OF THE SERVICES.</strong></p>
@@ -177,7 +177,7 @@ export const Privacy: React.FC = () => {
         </section>
 
         <section>
-          <h2>12. Children's Privacy</h2>
+          <h2>12. Children&apos;s Privacy</h2>
           <p>Our Service is not directed to children under the age of 18, and we do not knowingly collect personal information from children. If we learn we have collected personal information from a child under 18, we will delete that information as quickly as possible. If you believe a child has provided us with personal information, please contact us.</p>
         </section>
 

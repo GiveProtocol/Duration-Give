@@ -96,7 +96,7 @@ export const Legal: React.FC = () => {
           
           <h3><strong>5.2 Role of Give Protocol</strong></h3>
           
-          <p>Give Protocol Foundation, as a not-for-profit charitable organization, connects charitable organizations with those looking to donate cryptocurrency and other assets. When we use the word "you" in these Terms, it refers to any user, regardless of whether you are a donor or using the Services on behalf of a charitable organization, while if we use one of those specific terms, it only applies to that category of user.</p>
+          <p>Give Protocol Foundation, as a not-for-profit charitable organization, connects charitable organizations with those looking to donate cryptocurrency and other assets. When we use the word &quot;you&quot; in these Terms, it refers to any user, regardless of whether you are a donor or using the Services on behalf of a charitable organization, while if we use one of those specific terms, it only applies to that category of user.</p>
           
           <p>Where applicable take steps to confirm each potential charitable organization is a registered nonprofit organization. However, each donor must make its own determinations that an organization available through our Service is suitable for such donor. Give Protocol is only responsible for connecting organizations and donors, and is not responsible for the use of any donations.</p>
           
