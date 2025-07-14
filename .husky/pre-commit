@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run ESLint on staged files
+npx lint-staged
+
+# Check for unescaped entities specifically
+echo "🔍 Checking for unescaped entities in JSX..."
+if git diff --cached --name-only | grep -E '\.(tsx?|jsx?)$' | xargs grep -l "[\"'}>]" | grep -v node_modules; then
+  echo "⚠️  Warning: Found potential unescaped entities in JSX files"
+  echo "Please use HTML entities: &quot; &apos; &gt; &#125;"
+  exit 1
+fi

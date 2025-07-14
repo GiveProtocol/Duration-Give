@@ -82,7 +82,7 @@ export const Legal: React.FC = () => {
           
           <p>If you're agreeing to these Terms on behalf of an organization or entity, you represent and warrant that you are authorized to agree to these Terms on that organization's or entity's behalf and bind them to these Terms.</p>
           
-          <h3><strong>4.4 Children's Privacy</strong></h3>
+          <h3><strong>4.4 Children&apos;s Privacy</strong></h3>
           
           <p>We do not knowingly collect or solicit personally identifiable information from children under 18 years of age. If you are a child under 18 years of age, please do not attempt to register for or otherwise use the Services or send us any personal information. If we learn we have collected personal information from a child under 18 years of age, we will delete that information as quickly as possible. If you believe that a child under 18 years of age may have provided us personal information, please contact us at privacy@giveprotocol.io.</p>
         </section>
