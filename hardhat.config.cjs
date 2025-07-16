@@ -1,10 +1,10 @@
+const { HardhatUserConfig } = require("hardhat/config");
 require("@nomicfoundation/hardhat-toolbox");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
 require("dotenv").config();
 
-/** @type import('hardhat/config').HardhatUserConfig */
-module.exports = {
+const config = {
   solidity: {
     version: "0.8.20",
     settings: {
@@ -76,3 +76,5 @@ module.exports = {
     artifacts: "./artifacts"
   }
 };
+
+module.exports = config;
