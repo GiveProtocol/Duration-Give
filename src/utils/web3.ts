@@ -1,6 +1,10 @@
 import { Logger } from './logger';
 
-// Update formatBalance to handle BigInt without literals
+/**
+ * Formats a blockchain balance for display, converting from wei/smallest unit to readable format
+ * @param balance - The balance as string, number, or BigInt (in smallest denomination)
+ * @returns Formatted balance string with proper decimal places
+ */
 export const formatBalance = (balance: string | number | bigint): string => {
   try {
     // Handle empty or invalid input
@@ -25,11 +29,21 @@ export const formatBalance = (balance: string | number | bigint): string => {
   }
 };
 
+/**
+ * Shortens a blockchain address for display purposes
+ * @param address - The full blockchain address to shorten
+ * @returns Shortened address in format '0x1234...abcd' or empty string if invalid
+ */
 export const shortenAddress = (address: string): string => {
   if (!address || address.length < 10) return address || '';
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 };
 
+/**
+ * Validates if an address follows Ethereum or Polkadot address format
+ * @param address - The address string to validate
+ * @returns true if address matches Ethereum (0x...) or Polkadot (base58) format
+ */
 export const isValidAddress = (address: string): boolean => {
   // Check for Ethereum address format or Polkadot address format
   return /^0x[a-fA-F0-9]{40}$/.test(address) || /^[1-9A-HJ-NP-Za-km-z]{47,48}$/.test(address);
