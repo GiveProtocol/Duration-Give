@@ -11,7 +11,7 @@ interface GlobalStats {
   skillsEndorsed: number;
 }
 
-const fetchGlobalStats = async (filters: Record<string, unknown>): Promise<GlobalStats> => {
+const fetchGlobalStats = async (_filters: Record<string, unknown>): Promise<GlobalStats> => {
   // Simulated API call with filter-based data
   return {
     totalDonated: 1245000,

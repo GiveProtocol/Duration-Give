@@ -11,7 +11,7 @@ interface PersonalStats {
   skillsEndorsed: number;
 }
 
-const fetchPersonalStats = async (filters: Record<string, unknown>): Promise<PersonalStats> => {
+const fetchPersonalStats = async (_filters: Record<string, unknown>): Promise<PersonalStats> => {
   // Simulated API call with filter-based data
   return {
     totalDonated: 5200,

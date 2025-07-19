@@ -14,6 +14,11 @@ const CONNECTION_TIMEOUT = 30000; // 30 seconds
 const RETRY_DELAY = 2000; // 2 seconds
 const MAX_RETRIES = 3;
 
+// Helper function to check if chain ID is supported
+function isSupportedChainId(chainId: number | string): boolean {
+  return Object.values(CHAIN_IDS).includes(Number(chainId));
+}
+
 export function ConnectButton() {
   const { isConnected, isConnecting, connect, disconnect, address, error, chainId, switchChain } = useWeb3();
   const { getInstalledWallets } = useWallet();
@@ -286,8 +291,4 @@ export function ConnectButton() {
       )}
     </div>
   );
-}
-
-function isSupportedChainId(chainId: number | string): boolean {
-  return Object.values(CHAIN_IDS).includes(Number(chainId));
 }

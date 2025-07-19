@@ -8,6 +8,21 @@ import { Logger } from '@/utils/logger';
 import { ethers } from 'ethers';
 import { getContractAddress } from '@/config/contracts';
 import CharityScheduledDistributionABI from '@/contracts/CharityScheduledDistribution.sol/CharityScheduledDistribution.json';
+
+// Error type guards for transaction errors
+interface TransactionError {
+  code?: number;
+  message?: string;
+}
+
+function isTransactionError(error: unknown): error is TransactionError {
+  return typeof error === 'object' && error !== null;
+}
+
+function isUserRejection(error: unknown): boolean {
+  return isTransactionError(error) && 
+    (error.code === 4001 || (typeof error.message === 'string' && error.message.includes('user rejected')));
+}
 import { formatDate } from '@/utils/date';
 
 interface ScheduledDonationFormProps {
@@ -86,7 +101,7 @@ export function ScheduledDonationForm({
         await approveTx.wait();
       } catch (approveError: unknown) {
         // Check if user rejected the transaction
-        if ((approveError as any).code === 4001 || (approveError as any).message?.includes('user rejected')) {
+        if (isUserRejection(approveError)) {
           throw new Error('Transaction was rejected. Please approve the transaction in your wallet to continue.');
         }
         throw approveError;

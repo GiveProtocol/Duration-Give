@@ -3,6 +3,24 @@ import { ethers } from 'ethers';
 import { Logger } from '@/utils/logger';
 import { CHAIN_IDS } from '@/config/contracts';
 
+// Error type guards for Web3 errors
+interface WalletError {
+  code?: number;
+  message?: string;
+}
+
+function isWalletError(error: unknown): error is WalletError {
+  return typeof error === 'object' && error !== null;
+}
+
+function hasErrorCode(error: unknown, code: number): boolean {
+  return isWalletError(error) && error.code === code;
+}
+
+function hasErrorMessage(error: unknown, message: string): boolean {
+  return isWalletError(error) && typeof error.message === 'string' && error.message.includes(message);
+}
+
 interface Web3ContextType {
   provider: ethers.Provider | null;
   address: string | null;
@@ -86,7 +104,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
           setChainId(null);
 
           // Handle unauthorized error specifically
-          if ((err as any)?.message?.includes('has not been authorized')) {
+          if (hasErrorMessage(err, 'has not been authorized')) {
             const error = new Error('Wallet connection needs authorization. Please click "Connect" to continue.');
             setError(error);
             Logger.info('Wallet needs reauthorization');
@@ -180,7 +198,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
 
     } catch (err: unknown) {
       // Handle user rejected request
-      if ((err as any)?.code === 4001) {
+      if (hasErrorCode(err, 4001)) {
         const error = new Error('User rejected wallet connection');
         setError(error);
         throw error;
