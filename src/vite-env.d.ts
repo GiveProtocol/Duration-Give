@@ -8,7 +8,10 @@ interface Window {
     isBraveWallet?: boolean;
     request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
     on: (event: string, callback: (...args: unknown[]) => void) => void;
-    removeListener: (event: string, callback: (...args: unknown[]) => void) => void;
+    removeListener: (
+      event: string,
+      callback: (...args: unknown[]) => void,
+    ) => void;
     removeAllListeners: (event: string) => void;
     disconnect?: () => Promise<void>;
   };

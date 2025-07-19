@@ -1,9 +1,9 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { DonationStats } from './DonationStats';
-import { RecentDonations } from './RecentDonations';
-import { VolunteerImpact } from './VolunteerImpact';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { DonationStats } from "./DonationStats";
+import { RecentDonations } from "./RecentDonations";
+import { VolunteerImpact } from "./VolunteerImpact";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 interface PersonalStats {
   totalDonated: number;
@@ -11,12 +11,14 @@ interface PersonalStats {
   skillsEndorsed: number;
 }
 
-const fetchPersonalStats = async (filters: Record<string, unknown>): Promise<PersonalStats> => {
+const fetchPersonalStats = async (
+  filters: Record<string, unknown>,
+): Promise<PersonalStats> => {
   // Simulated API call with filter-based data
   return {
     totalDonated: 5200,
     volunteerHours: 48,
-    skillsEndorsed: 8
+    skillsEndorsed: 8,
   };
 };
 
@@ -24,10 +26,12 @@ interface PersonalContributionsProps {
   filters: Record<string, unknown>;
 }
 
-export const PersonalContributions: React.FC<PersonalContributionsProps> = ({ filters }) => {
+export const PersonalContributions: React.FC<PersonalContributionsProps> = ({
+  filters,
+}) => {
   const { data: stats, isLoading } = useQuery({
-    queryKey: ['personalStats', filters],
-    queryFn: () => fetchPersonalStats(filters)
+    queryKey: ["personalStats", filters],
+    queryFn: () => fetchPersonalStats(filters),
   });
 
   if (isLoading) {

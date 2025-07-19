@@ -1,5 +1,5 @@
-import { Logger } from '@/utils/logger';
-import { CHAIN_IDS } from '@/config/contracts';
+import { Logger } from "@/utils/logger";
+import { CHAIN_IDS } from "@/config/contracts";
 
 interface WalletProvider {
   name: string;
@@ -28,7 +28,7 @@ class EVMWalletBase implements WalletProvider {
 
   async isConnected(address: string): Promise<boolean> {
     try {
-      const accounts = await this.provider.request({ method: 'eth_accounts' });
+      const accounts = await this.provider.request({ method: "eth_accounts" });
       return accounts?.includes(address) || false;
     } catch {
       return false;
@@ -38,11 +38,11 @@ class EVMWalletBase implements WalletProvider {
   async connect(): Promise<string> {
     try {
       const accounts = await this.provider.request({
-        method: 'eth_requestAccounts'
+        method: "eth_requestAccounts",
       });
 
       if (!accounts?.length) {
-        throw new Error('No accounts found');
+        throw new Error("No accounts found");
       }
 
       return accounts[0];
@@ -60,8 +60,8 @@ class EVMWalletBase implements WalletProvider {
   async switchChain(chainId: number): Promise<void> {
     try {
       await this.provider.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: `0x${chainId.toString(16)}` }]
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: `0x${chainId.toString(16)}` }],
       });
     } catch (error: unknown) {
       if (error.code === 4902) {
@@ -75,11 +75,11 @@ class EVMWalletBase implements WalletProvider {
 
   protected async addChain(chainId: number): Promise<void> {
     const chainParams = this.getChainParams(chainId);
-    if (!chainParams) throw new Error('Unsupported chain');
+    if (!chainParams) throw new Error("Unsupported chain");
 
     await this.provider.request({
-      method: 'wallet_addEthereumChain',
-      params: [chainParams]
+      method: "wallet_addEthereumChain",
+      params: [chainParams],
     });
   }
 
@@ -87,48 +87,48 @@ class EVMWalletBase implements WalletProvider {
     const chains = {
       [CHAIN_IDS.MOONBASE]: {
         chainId: `0x${CHAIN_IDS.MOONBASE.toString(16)}`,
-        chainName: 'Moonbase Alpha',
+        chainName: "Moonbase Alpha",
         nativeCurrency: {
-          name: 'DEV',
-          symbol: 'DEV',
-          decimals: 18
+          name: "DEV",
+          symbol: "DEV",
+          decimals: 18,
         },
-        rpcUrls: ['https://rpc.api.moonbase.moonbeam.network'],
-        blockExplorerUrls: ['https://moonbase.moonscan.io/']
+        rpcUrls: ["https://rpc.api.moonbase.moonbeam.network"],
+        blockExplorerUrls: ["https://moonbase.moonscan.io/"],
       },
       [CHAIN_IDS.MOONBEAM]: {
         chainId: `0x${CHAIN_IDS.MOONBEAM.toString(16)}`,
-        chainName: 'Moonbeam',
+        chainName: "Moonbeam",
         nativeCurrency: {
-          name: 'GLMR',
-          symbol: 'GLMR',
-          decimals: 18
+          name: "GLMR",
+          symbol: "GLMR",
+          decimals: 18,
         },
-        rpcUrls: ['https://rpc.api.moonbeam.network'],
-        blockExplorerUrls: ['https://moonbeam.moonscan.io/']
+        rpcUrls: ["https://rpc.api.moonbeam.network"],
+        blockExplorerUrls: ["https://moonbeam.moonscan.io/"],
       },
       [CHAIN_IDS.ASTAR]: {
         chainId: `0x${CHAIN_IDS.ASTAR.toString(16)}`,
-        chainName: 'Astar',
+        chainName: "Astar",
         nativeCurrency: {
-          name: 'ASTR',
-          symbol: 'ASTR',
-          decimals: 18
+          name: "ASTR",
+          symbol: "ASTR",
+          decimals: 18,
         },
-        rpcUrls: ['https://astar.api.onfinality.io/public'],
-        blockExplorerUrls: ['https://blockscout.com/astar']
+        rpcUrls: ["https://astar.api.onfinality.io/public"],
+        blockExplorerUrls: ["https://blockscout.com/astar"],
       },
       [CHAIN_IDS.POLYGON]: {
         chainId: `0x${CHAIN_IDS.POLYGON.toString(16)}`,
-        chainName: 'Polygon',
+        chainName: "Polygon",
         nativeCurrency: {
-          name: 'MATIC',
-          symbol: 'MATIC',
-          decimals: 18
+          name: "MATIC",
+          symbol: "MATIC",
+          decimals: 18,
         },
-        rpcUrls: ['https://polygon-rpc.com'],
-        blockExplorerUrls: ['https://polygonscan.com/']
-      }
+        rpcUrls: ["https://polygon-rpc.com"],
+        blockExplorerUrls: ["https://polygonscan.com/"],
+      },
     };
     return chains[chainId as keyof typeof chains];
   }
@@ -136,47 +136,59 @@ class EVMWalletBase implements WalletProvider {
 
 class MetaMaskWallet extends EVMWalletBase {
   constructor() {
-    super('MetaMask', 'metamask', window.ethereum?.isMetaMask ? window.ethereum : null);
+    super(
+      "MetaMask",
+      "metamask",
+      window.ethereum?.isMetaMask ? window.ethereum : null,
+    );
   }
 
   isInstalled(): boolean {
-    return typeof window.ethereum?.isMetaMask !== 'undefined';
+    return typeof window.ethereum?.isMetaMask !== "undefined";
   }
 }
 
 class CoinbaseWallet extends EVMWalletBase {
   constructor() {
-    super('Coinbase Wallet', 'coinbase', window.ethereum?.isCoinbaseWallet ? window.ethereum : null);
+    super(
+      "Coinbase Wallet",
+      "coinbase",
+      window.ethereum?.isCoinbaseWallet ? window.ethereum : null,
+    );
   }
 
   isInstalled(): boolean {
-    return typeof window.ethereum?.isCoinbaseWallet !== 'undefined';
+    return typeof window.ethereum?.isCoinbaseWallet !== "undefined";
   }
 }
 
 class TallyWallet extends EVMWalletBase {
   constructor() {
-    super('Tally', 'tally', window.ethereum?.isTally ? window.ethereum : null);
+    super("Tally", "tally", window.ethereum?.isTally ? window.ethereum : null);
   }
 
   isInstalled(): boolean {
-    return typeof window.ethereum?.isTally !== 'undefined';
+    return typeof window.ethereum?.isTally !== "undefined";
   }
 }
 
 class BraveWallet extends EVMWalletBase {
   constructor() {
-    super('Brave', 'brave', window.ethereum?.isBraveWallet ? window.ethereum : null);
+    super(
+      "Brave",
+      "brave",
+      window.ethereum?.isBraveWallet ? window.ethereum : null,
+    );
   }
 
   isInstalled(): boolean {
-    return typeof window.ethereum?.isBraveWallet !== 'undefined';
+    return typeof window.ethereum?.isBraveWallet !== "undefined";
   }
 }
 
 class PolkadotWallet implements WalletProvider {
-  name = 'Polkadot';
-  icon = 'polkadot';
+  name = "Polkadot";
+  icon = "polkadot";
   private injector: unknown = null;
   private extensions: unknown[] = [];
 
@@ -193,7 +205,7 @@ class PolkadotWallet implements WalletProvider {
   }
 
   async connect(): Promise<string> {
-    throw new Error('Polkadot wallet connection not implemented');
+    throw new Error("Polkadot wallet connection not implemented");
   }
 
   async disconnect(): Promise<void> {
@@ -201,7 +213,7 @@ class PolkadotWallet implements WalletProvider {
   }
 
   async switchChain(chainId: string): Promise<void> {
-    Logger.info('Chain switch requested', { chain: chainId });
+    Logger.info("Chain switch requested", { chain: chainId });
   }
 }
 
@@ -211,15 +223,15 @@ export function useWallet() {
     new CoinbaseWallet(),
     new TallyWallet(),
     new BraveWallet(),
-    new PolkadotWallet()
+    new PolkadotWallet(),
   ];
 
   const getInstalledWallets = () => {
-    return wallets.filter(wallet => wallet.isInstalled());
+    return wallets.filter((wallet) => wallet.isInstalled());
   };
 
   return {
     getInstalledWallets,
-    wallets
+    wallets,
   };
 }

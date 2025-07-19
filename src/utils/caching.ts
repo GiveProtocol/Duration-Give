@@ -30,7 +30,7 @@ export class CacheManager {
 
     this.cache.set(key, {
       value,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 

@@ -43,7 +43,7 @@ export interface Donation {
   amount: number;
   organization: string;
   date: string;
-  status: 'completed' | 'pending';
+  status: "completed" | "pending";
 }
 
 export interface VolunteerLeader {
@@ -67,7 +67,7 @@ export interface Transaction {
   fiatValue?: number;
   fee?: number;
   timestamp: string;
-  status: 'pending' | 'completed' | 'failed';
+  status: "pending" | "completed" | "failed";
   purpose?: string;
   metadata?: Record<string, unknown>;
 }
