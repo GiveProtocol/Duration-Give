@@ -73,7 +73,12 @@ export const Navbar: React.FC = () => {
             {!isLimitedNavPage && (
               <Link
                 to="/give-dashboard"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 active:shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent 
+                           text-sm font-medium rounded-md text-white bg-indigo-600 
+                           hover:bg-indigo-700 shadow-sm hover:shadow-md transition-all 
+                           duration-200 transform hover:-translate-y-0.5 active:translate-y-0 
+                           active:shadow-sm focus:outline-none focus:ring-2 
+                           focus:ring-offset-2 focus:ring-indigo-500"
               >
                 {t("nav.launchApp")}
               </Link>
