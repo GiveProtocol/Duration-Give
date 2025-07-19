@@ -6,14 +6,14 @@ interface LogEntry {
   timestamp: string;
   level: LogLevel;
   message: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export class Logger {
   private static readonly MAX_LOG_SIZE = 1000;
   private static logs: LogEntry[] = [];
 
-  private static serializeValue(value: any): any {
+  private static serializeValue(value: unknown): unknown {
     if (value === undefined) {
       return 'undefined';
     }
@@ -54,7 +54,7 @@ export class Logger {
     return value;
   }
 
-  private static log(level: LogLevel, message: string, metadata?: Record<string, any>) {
+  private static log(level: LogLevel, message: string, metadata?: Record<string, unknown>) {
     try {
       const serializedMetadata = metadata ? this.serializeValue(metadata) : metadata;
 
@@ -87,15 +87,15 @@ export class Logger {
     }
   }
 
-  static info(message: string, metadata?: Record<string, any>) {
+  static info(message: string, metadata?: Record<string, unknown>) {
     this.log('info', message, metadata);
   }
 
-  static warn(message: string, metadata?: Record<string, any>) {
+  static warn(message: string, metadata?: Record<string, unknown>) {
     this.log('warn', message, metadata);
   }
 
-  static error(message: string, metadata?: Record<string, any>) {
+  static error(message: string, metadata?: Record<string, unknown>) {
     this.log('error', message, metadata);
   }
 

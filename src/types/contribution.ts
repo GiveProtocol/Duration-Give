@@ -69,7 +69,7 @@ export interface Transaction {
   timestamp: string;
   status: 'pending' | 'completed' | 'failed';
   purpose?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface TransactionExportOptions {

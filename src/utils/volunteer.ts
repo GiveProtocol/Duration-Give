@@ -18,7 +18,7 @@ const VOLUNTEER_VERIFICATION_ABI = [
  * @param data Object containing data to hash
  * @returns Keccak256 hash of the data
  */
-export const generateVerificationHash = (data: Record<string, any>): string => {
+export const generateVerificationHash = (data: Record<string, unknown>): string => {
   try {
     // Add timestamp to ensure uniqueness
     const dataWithTimestamp = {

@@ -79,14 +79,14 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
               chainId: network.chainId 
             });
           }
-        } catch (err: any) {
+        } catch (err: unknown) {
           // Clear any existing connection state
           setProvider(null);
           setAddress(null);
           setChainId(null);
 
           // Handle unauthorized error specifically
-          if (err?.message?.includes('has not been authorized')) {
+          if ((err as any)?.message?.includes('has not been authorized')) {
             const error = new Error('Wallet connection needs authorization. Please click "Connect" to continue.');
             setError(error);
             Logger.info('Wallet needs reauthorization');
@@ -156,7 +156,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
       if (currentChainId !== CHAIN_IDS.MOONBASE) {
         try {
           await switchChain(CHAIN_IDS.MOONBASE);
-        } catch (switchError: any) {
+        } catch (switchError: unknown) {
           // If user rejected the switch, throw error
           if (switchError?.code === 4001) {
             throw new Error('Please switch to Moonbase Alpha (TestNet)');
@@ -178,9 +178,9 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
         chainId: Number(finalNetwork.chainId)
       });
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       // Handle user rejected request
-      if (err?.code === 4001) {
+      if ((err as any)?.code === 4001) {
         const error = new Error('User rejected wallet connection');
         setError(error);
         throw error;
@@ -248,7 +248,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
         params: [{ chainId: `0x${targetChainId.toString(16)}` }]
       });
       Logger.info('Switched network', { chainId: targetChainId });
-    } catch (error: any) {
+    } catch (error: unknown) {
       // If the chain hasn't been added to MetaMask
       if (error.code === 4902) {
         try {

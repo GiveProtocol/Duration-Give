@@ -11,7 +11,7 @@ interface GlobalStats {
   skillsEndorsed: number;
 }
 
-const fetchGlobalStats = async (filters: any): Promise<GlobalStats> => {
+const fetchGlobalStats = async (filters: Record<string, unknown>): Promise<GlobalStats> => {
   // Simulated API call with filter-based data
   return {
     totalDonated: 1245000,
@@ -21,7 +21,7 @@ const fetchGlobalStats = async (filters: any): Promise<GlobalStats> => {
 };
 
 interface GlobalContributionsProps {
-  filters: any;
+  filters: Record<string, unknown>;
 }
 
 export const GlobalContributions: React.FC<GlobalContributionsProps> = ({ filters }) => {

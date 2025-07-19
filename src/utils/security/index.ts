@@ -200,7 +200,7 @@ export class SecurityManager {
     }
   }
 
-  private handleSuspiciousActivity(type: string, details: Record<string, any>): void {
+  private handleSuspiciousActivity(type: string, details: Record<string, unknown>): void {
     Logger.warn('Suspicious activity detected', {
       type,
       ...details,
@@ -212,7 +212,7 @@ export class SecurityManager {
     }
   }
 
-  private shouldBlockRequest(type: string, details: Record<string, any>): boolean {
+  private shouldBlockRequest(type: string, details: Record<string, unknown>): boolean {
     const highRiskPatterns = [
       'sql injection',
       'xss attempt',

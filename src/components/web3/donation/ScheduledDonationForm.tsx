@@ -84,9 +84,9 @@ export function ScheduledDonationForm({
       try {
         const approveTx = await tokenContract.approve(distributionAddress, parsedAmount);
         await approveTx.wait();
-      } catch (approveError: any) {
+      } catch (approveError: unknown) {
         // Check if user rejected the transaction
-        if (approveError.code === 4001 || approveError.message?.includes('user rejected')) {
+        if ((approveError as any).code === 4001 || (approveError as any).message?.includes('user rejected')) {
           throw new Error('Transaction was rejected. Please approve the transaction in your wallet to continue.');
         }
         throw approveError;
@@ -110,7 +110,7 @@ export function ScheduledDonationForm({
           token: tokenAddress,
           txHash: receipt.hash
         });
-      } catch (txError: any) {
+      } catch (txError: unknown) {
         // Check if user rejected the transaction
         if (txError.code === 4001 || txError.message?.includes('user rejected')) {
           throw new Error('Transaction was rejected. Please confirm the transaction in your wallet to schedule your donation.');

@@ -11,7 +11,7 @@ interface PersonalStats {
   skillsEndorsed: number;
 }
 
-const fetchPersonalStats = async (filters: any): Promise<PersonalStats> => {
+const fetchPersonalStats = async (filters: Record<string, unknown>): Promise<PersonalStats> => {
   // Simulated API call with filter-based data
   return {
     totalDonated: 5200,
@@ -21,7 +21,7 @@ const fetchPersonalStats = async (filters: any): Promise<PersonalStats> => {
 };
 
 interface PersonalContributionsProps {
-  filters: any;
+  filters: Record<string, unknown>;
 }
 
 export const PersonalContributions: React.FC<PersonalContributionsProps> = ({ filters }) => {

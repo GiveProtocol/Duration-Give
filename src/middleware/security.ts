@@ -11,7 +11,7 @@ export function initializeSecurity(): void {
   }
 }
 
-export function withSecurity<T extends (...args: any[]) => Promise<any>>(
+export function withSecurity<T extends (...args: unknown[]) => Promise<unknown>>(
   handler: T
 ): T {
   return (async (...args: Parameters<T>) => {

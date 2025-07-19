@@ -50,7 +50,7 @@ export function ConnectButton() {
     setShowWalletSelect(true);
   }, []);
 
-  const handleWalletSelect = useCallback(async (wallet: any) => {
+  const handleWalletSelect = useCallback(async (wallet: { name: string; provider: unknown }) => {
     try {
       setConnectionError(null);
       setIsRetrying(false);

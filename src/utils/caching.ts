@@ -5,7 +5,7 @@ interface CacheConfig {
 
 export class CacheManager {
   private static instance: CacheManager;
-  private cache: Map<string, { value: any; timestamp: number }> = new Map();
+  private cache: Map<string, { value: unknown; timestamp: number }> = new Map();
   private readonly maxSize: number;
   private readonly ttl: number;
 
@@ -21,7 +21,7 @@ export class CacheManager {
     return this.instance;
   }
 
-  set(key: string, value: any): void {
+  set(key: string, value: unknown): void {
     // Evict oldest if at capacity
     if (this.cache.size >= this.maxSize) {
       const oldestKey = this.cache.keys().next().value;
@@ -34,7 +34,7 @@ export class CacheManager {
     });
   }
 
-  get(key: string): any | null {
+  get(key: string): unknown | null {
     const entry = this.cache.get(key);
     if (!entry) return null;
 

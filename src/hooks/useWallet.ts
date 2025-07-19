@@ -14,9 +14,9 @@ interface WalletProvider {
 class EVMWalletBase implements WalletProvider {
   name: string;
   icon: string;
-  protected provider: any;
+  protected provider: unknown;
 
-  constructor(name: string, icon: string, provider: any) {
+  constructor(name: string, icon: string, provider: unknown) {
     this.name = name;
     this.icon = icon;
     this.provider = provider;
@@ -63,7 +63,7 @@ class EVMWalletBase implements WalletProvider {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: `0x${chainId.toString(16)}` }]
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       if (error.code === 4902) {
         // Chain not added, add it
         await this.addChain(chainId);
@@ -177,8 +177,8 @@ class BraveWallet extends EVMWalletBase {
 class PolkadotWallet implements WalletProvider {
   name = 'Polkadot';
   icon = 'polkadot';
-  private injector: any = null;
-  private extensions: any[] = [];
+  private injector: unknown = null;
+  private extensions: unknown[] = [];
 
   async initialize() {
     // Polkadot.js extension functionality removed

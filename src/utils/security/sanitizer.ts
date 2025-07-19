@@ -89,7 +89,7 @@ export class InputSanitizer {
     return this.patterns[pattern].test(input);
   }
 
-  sanitizeObject<T extends Record<string, any>>(
+  sanitizeObject<T extends Record<string, unknown>>(
     obj: T,
     schema: Record<keyof T, string>
   ): T {
@@ -99,7 +99,7 @@ export class InputSanitizer {
       if (schema[key] === 'html') {
         sanitized[key] = this.sanitizeHTML(value);
       } else if (schema[key] === 'text') {
-        sanitized[key] = this.sanitizeText(value, key as any);
+        sanitized[key] = this.sanitizeText(value, key as string);
       } else if (this.patterns[schema[key]]) {
         sanitized[key] = this.validatePattern(value, schema[key]) ? value : '';
       }

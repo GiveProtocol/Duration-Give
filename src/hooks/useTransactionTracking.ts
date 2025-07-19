@@ -10,7 +10,7 @@ export interface Transaction {
   status: 'pending' | 'completed' | 'failed';
   txHash?: string;
   created_at: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export function useTransactionTracking() {
@@ -23,7 +23,7 @@ export function useTransactionTracking() {
     type: Transaction['type'],
     amount: number,
     txHash?: string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ) => {
     if (!profile?.id) throw new Error('Profile not found');
 

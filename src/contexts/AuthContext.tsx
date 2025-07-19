@@ -19,7 +19,7 @@ interface AuthContextType extends AuthState {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   refreshSession: () => Promise<void>;
-  register: (email: string, password: string, type: 'donor' | 'charity', metadata?: any) => Promise<void>;
+  register: (email: string, password: string, type: 'donor' | 'charity', metadata?: Record<string, unknown>) => Promise<void>;
   sendUsernameReminder: (email: string) => Promise<void>;
 }
 

@@ -45,7 +45,7 @@ export function formatDonationsForExport(donations: Transaction[]): DonationExpo
  * @param data Array of objects to convert
  * @returns CSV string
  */
-export function convertToCSV<T extends Record<string, any>>(data: T[]): string {
+export function convertToCSV<T extends Record<string, unknown>>(data: T[]): string {
   if (data.length === 0) return '';
   
   const headers = Object.keys(data[0]);

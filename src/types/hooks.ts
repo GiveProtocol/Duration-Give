@@ -60,7 +60,7 @@ export interface UseFormResult<T> {
   values: T;
   errors: Record<keyof T, string>;
   touched: Record<keyof T, boolean>;
-  handleChange: (field: keyof T, value: any) => void;
+  handleChange: (field: keyof T, value: T[keyof T]) => void;
   handleBlur: (field: keyof T) => void;
   handleSubmit: (e: React.FormEvent) => void;
   isValid: boolean;
