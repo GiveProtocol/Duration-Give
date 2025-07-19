@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useWeb3 } from '@/contexts/Web3Context';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -15,10 +15,20 @@ interface TransactionError {
   message?: string;
 }
 
+/**
+ * Type guard to check if an error is a transaction error with code and message properties
+ * @param error - The error object to check
+ * @returns True if the error is a transaction error, false otherwise
+ */
 function isTransactionError(error: unknown): error is TransactionError {
   return typeof error === 'object' && error !== null;
 }
 
+/**
+ * Checks if an error represents a user rejection of a transaction
+ * @param error - The error object to check
+ * @returns True if the error indicates user rejection (code 4001 or "user rejected" message), false otherwise
+ */
 function isUserRejection(error: unknown): boolean {
   return isTransactionError(error) && 
     (error.code === 4001 || (typeof error.message === 'string' && error.message.includes('user rejected')));
@@ -141,12 +151,12 @@ export function ScheduledDonationForm({
     }
   };
 
-  const handleConfirmationClose = () => {
+  const handleConfirmationClose = useCallback(() => {
     setAmount('');
     setShowConfirmation(false);
     setTransactionHash(null);
     onSuccess?.();
-  };
+  }, [onSuccess]);
 
   if (showConfirmation) {
     return (

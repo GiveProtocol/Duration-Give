@@ -9,14 +9,31 @@ interface WalletError {
   message?: string;
 }
 
+/**
+ * Type guard to check if an error is a wallet error with code and message properties
+ * @param error - The error object to check
+ * @returns True if the error is a wallet error, false otherwise
+ */
 function isWalletError(error: unknown): error is WalletError {
   return typeof error === 'object' && error !== null;
 }
 
+/**
+ * Checks if an error has a specific error code
+ * @param error - The error object to check
+ * @param code - The error code to match
+ * @returns True if the error has the specified code, false otherwise
+ */
 function hasErrorCode(error: unknown, code: number): boolean {
   return isWalletError(error) && error.code === code;
 }
 
+/**
+ * Checks if an error message contains a specific substring
+ * @param error - The error object to check
+ * @param message - The message substring to search for
+ * @returns True if the error message contains the substring, false otherwise
+ */
 function hasErrorMessage(error: unknown, message: string): boolean {
   return isWalletError(error) && typeof error.message === 'string' && error.message.includes(message);
 }
