@@ -76,6 +76,81 @@
     }
   }
 
+  // Update navigation translations
+  function updateNavigationTranslations(currentLang) {
+    // Update navigation section titles
+    const navigationMap = {
+      'Give Protocol Help Center': 'help_center',
+      'Introduction': 'introduction', 
+      'Getting Started': 'getting_started',
+      'User Guides': 'user_guides',
+      'Platform Features': 'platform_features',
+      'Technical Documentation': 'technical_docs',
+      'Safety & Security': 'safety_security',
+      'Resources & Tools': 'resources_tools',
+      'Community & Support': 'community_support'
+    };
+
+    // Update section titles
+    document.querySelectorAll('.section-title').forEach(title => {
+      const englishText = title.textContent.trim();
+      const translationKey = navigationMap[englishText];
+      if (translationKey) {
+        title.textContent = t('ui.navigation.' + translationKey, currentLang);
+      }
+    });
+
+    // Update navigation links
+    const linkMap = {
+      'Frequently Asked Questions': 'faq',
+      'Need Help?': 'need_help',
+      'Report An Issue': 'report_issue',
+      'What is Give Protocol': 'what_is_give_protocol',
+      'How To Join Give Protocol?': 'how_to_join',
+      'Creating Your Account': 'creating_account',
+      'Setting Up Your Profile': 'setting_up_profile',
+      'Wallet Connection Guide': 'wallet_connection',
+      'First Steps Walkthrough': 'first_steps',
+      'Dashboard Overview': 'dashboard',
+      'For Donors': 'for_donors',
+      'For Recipients/Organizations': 'for_organizations',
+      'For Volunteers': 'for_volunteers',
+      'Search & Discovery Tools': 'search_discovery',
+      'Verification & Trust Badges': 'verification',
+      'Impact Tracking & Metrics': 'impact_tracking',
+      'Community Features': 'community_features',
+      'Blockchain Integration': 'blockchain_integration',
+      'Smart Contract Interactions': 'smart_contracts',
+      'Supported Cryptocurrencies': 'cryptocurrencies',
+      'Transaction Fees & Gas': 'fees',
+      'API Documentation': 'api_docs',
+      'Smart Giving Practices': 'smart_giving',
+      'Volunteer Safety': 'volunteer_safety',
+      'Platform Security': 'platform_security',
+      'Educational Content': 'educational_content',
+      'Donation Planning Tools': 'calculator',
+      'Volunteer Time Tracking': 'time_tracking',
+      'Templates & Guides': 'templates',
+      'Community Forums': 'forums',
+      'Contact Information': 'contact',
+      'Social Media Links': 'social'
+    };
+
+    // Update navigation links (only text content, not the icon)
+    document.querySelectorAll('.nav-item a').forEach(link => {
+      const textNode = Array.from(link.childNodes).find(node => 
+        node.nodeType === Node.TEXT_NODE && node.textContent.trim()
+      );
+      if (textNode) {
+        const englishText = textNode.textContent.trim();
+        const translationKey = linkMap[englishText];
+        if (translationKey) {
+          textNode.textContent = ' ' + t('ui.navigation.' + translationKey, currentLang);
+        }
+      }
+    });
+  }
+
   // Update UI elements with translations
   function updateUITranslations() {
     const currentLang = getCurrentLanguage();
@@ -136,6 +211,9 @@
     if (editPageLink) {
       editPageLink.textContent = t('ui.navigation.edit_page', currentLang);
     }
+
+    // Update navigation section titles and links
+    updateNavigationTranslations(currentLang);
 
     // Refresh Google Translate for dynamic content after UI updates
     setTimeout(refreshGoogleTranslate, 200);

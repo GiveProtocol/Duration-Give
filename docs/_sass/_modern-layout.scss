@@ -8,13 +8,13 @@
 
   // Modern header with clean lines
   .modern-header {
-    background: #fff;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-border-primary);
     position: sticky;
     top: 0;
     z-index: 50;
     backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--color-bg-primary);
     transition: box-shadow 0.3s ease;
     
     .header-container {
@@ -33,7 +33,7 @@
       gap: 12px;
       font-size: 18px;
       font-weight: 600;
-      color: #212529;
+      color: var(--color-text-primary);
       text-decoration: none;
 
       img {
@@ -53,17 +53,18 @@
         input {
           width: 100%;
           padding: 8px 16px 8px 40px;
-          background: #f8f9fa;
-          border: 1px solid transparent;
+          background: var(--color-bg-secondary);
+          border: 1px solid var(--color-border-primary);
+          color: var(--color-text-primary);
           border-radius: 8px;
           font-size: 14px;
           transition: all 0.2s;
 
           &:focus {
             outline: none;
-            background: #fff;
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            background: var(--color-bg-primary);
+            border-color: var(--color-text-accent);
+            box-shadow: 0 0 0 3px var(--color-bg-accent);
           }
         }
 
@@ -72,7 +73,7 @@
           left: 12px;
           top: 50%;
           transform: translateY(-50%);
-          color: #6b7280;
+          color: var(--color-text-secondary);
         }
       }
     }
