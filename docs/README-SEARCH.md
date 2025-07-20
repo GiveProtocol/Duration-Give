@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Give Protocol documentation site now includes a fully functional search feature that allows users to quickly find relevant pages across the entire documentation.
+The Give Protocol documentation site now includes a fully functional search feature that allows users to quickly find relevant pages across the entire documentation. The search also supports dark mode and multi-language navigation.
 
 ## Features
 
