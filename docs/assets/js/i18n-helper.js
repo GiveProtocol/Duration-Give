@@ -152,8 +152,8 @@
   }
 
   // Update UI elements with translations
-  function updateUITranslations() {
-    const currentLang = getCurrentLanguage();
+  function updateUITranslations(event) {
+    const currentLang = event && event.detail && event.detail.lang ? event.detail.lang : getCurrentLanguage();
     
     // Update search placeholder
     const searchInput = document.getElementById('search-input');

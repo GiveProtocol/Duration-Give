@@ -652,6 +652,11 @@
               if (selectElement) {
                 selectElement.value = lang;
                 selectElement.dispatchEvent(new Event("change"));
+                
+                // Trigger our custom language change event for navigation updates
+                setTimeout(() => {
+                  document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: lang } }));
+                }, 500); // Wait for Google Translate to process
               }
             }
           }
