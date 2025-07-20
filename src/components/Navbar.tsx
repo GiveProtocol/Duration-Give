@@ -6,6 +6,78 @@ import { Menu, X } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { DOCS_CONFIG } from "@/config/docs";
 
+interface NavLinksProps {
+  isActive: (path: string) => string;
+  t: (key: string) => string;
+}
+
+const DesktopNavLinks: React.FC<NavLinksProps> = ({ isActive, t }) => (
+  <div className="hidden sm:ml-6 sm:flex sm:space-x-2">
+    <Link
+      to="/about"
+      className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/about")}`}
+    >
+      {t("nav.about")}
+    </Link>
+    <a
+      href={DOCS_CONFIG.url}
+      className={"flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-700 hover:bg-primary-50"}
+    >
+      {t("nav.docs")}
+    </a>
+    <Link
+      to="/legal"
+      className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/legal")}`}
+    >
+      {t("nav.legal")}
+    </Link>
+  </div>
+);
+
+interface MobileMenuProps {
+  isActive: (path: string) => string;
+  t: (key: string) => string;
+  onMenuClose: () => void;
+  isLimitedNavPage: boolean;
+}
+
+const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, t, onMenuClose, isLimitedNavPage }) => (
+  <div className="sm:hidden" id="mobile-menu">
+    <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg rounded-b-lg">
+      <Link
+        to="/about"
+        className={`block px-3 py-3 rounded-md text-base font-medium ${isActive("/about")}`}
+        onClick={onMenuClose}
+      >
+        {t("nav.about")}
+      </Link>
+      <a
+        href={DOCS_CONFIG.url}
+        className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-primary-50"
+        onClick={onMenuClose}
+      >
+        {t("nav.docs")}
+      </a>
+      <Link
+        to="/legal"
+        className={`block px-3 py-3 rounded-md text-base font-medium ${isActive("/legal")}`}
+        onClick={onMenuClose}
+      >
+        {t("nav.legal")}
+      </Link>
+      {!isLimitedNavPage && (
+        <Link
+          to="/give-dashboard"
+          className="block px-3 py-3 rounded-md text-base font-medium bg-indigo-600 text-white hover:bg-indigo-700"
+          onClick={onMenuClose}
+        >
+          {t("nav.launchApp")}
+        </Link>
+      )}
+    </div>
+  </div>
+);
+
 export const Navbar: React.FC = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,28 +116,7 @@ export const Navbar: React.FC = () => {
               </span>
             </Link>
 
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-2">
-              <Link
-                to="/about"
-                className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/about")}`}
-              >
-                {t("nav.about")}
-              </Link>
-              <a
-                href={DOCS_CONFIG.url}
-                className={
-                  "flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-700 hover:bg-primary-50"
-                }
-              >
-                {t("nav.docs")}
-              </a>
-              <Link
-                to="/legal"
-                className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/legal")}`}
-              >
-                {t("nav.legal")}
-              </Link>
-            </div>
+            <DesktopNavLinks isActive={isActive} t={t} />
           </div>
 
           <div className="flex items-center">
@@ -102,42 +153,13 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="sm:hidden" id="mobile-menu">
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg rounded-b-lg">
-            <Link
-              to="/about"
-              className={`block px-3 py-3 rounded-md text-base font-medium ${isActive("/about")}`}
-              onClick={handleMenuClose}
-            >
-              {t("nav.about")}
-            </Link>
-            <a
-              href={DOCS_CONFIG.url}
-              className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-primary-50"
-              onClick={handleMenuClose}
-            >
-              {t("nav.docs")}
-            </a>
-            <Link
-              to="/legal"
-              className={`block px-3 py-3 rounded-md text-base font-medium ${isActive("/legal")}`}
-              onClick={handleMenuClose}
-            >
-              {t("nav.legal")}
-            </Link>
-            {!isLimitedNavPage && (
-              <Link
-                to="/give-dashboard"
-                className="block px-3 py-3 rounded-md text-base font-medium bg-indigo-600 text-white hover:bg-indigo-700"
-                onClick={handleMenuClose}
-              >
-                {t("nav.launchApp")}
-              </Link>
-            )}
-          </div>
-        </div>
+        <MobileMenu 
+          isActive={isActive} 
+          t={t} 
+          onMenuClose={handleMenuClose} 
+          isLimitedNavPage={isLimitedNavPage} 
+        />
       )}
     </nav>
   );

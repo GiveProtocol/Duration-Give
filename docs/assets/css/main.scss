@@ -251,6 +251,34 @@ body {
   z-index: 50;
   height: var(--header-height);
   transition: all var(--transition-base);
+  
+  // Ensure proper dark mode background and visibility
+  .dark-mode & {
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-border-primary);
+    
+    // Force all text elements in header to be visible
+    * {
+      color: var(--color-text-primary) !important;
+    }
+    
+    // Maintain accent colors for hover states
+    .site-title:hover {
+      color: var(--color-text-accent) !important;
+    }
+    
+    .btn:hover {
+      color: var(--color-text-accent) !important;
+    }
+    
+    .settings-toggle:hover {
+      color: var(--color-text-accent) !important;
+    }
+    
+    .mobile-menu-toggle:hover {
+      color: var(--color-text-accent) !important;
+    }
+  }
 
   .header-content {
     max-width: var(--max-width-container);
@@ -281,12 +309,30 @@ body {
     &:hover {
       color: var(--color-text-accent);
     }
+    
+    // Ensure visibility in dark mode
+    .dark-mode & {
+      color: var(--color-text-primary);
+    }
   }
 
   .header-nav {
     display: flex;
     align-items: center;
     gap: var(--space-4);
+    
+    // Ensure buttons and links are visible in dark mode
+    .dark-mode & {
+      .btn {
+        color: var(--color-text-primary);
+        border-color: var(--color-border-primary);
+        
+        &:hover {
+          background-color: var(--color-bg-secondary);
+          border-color: var(--color-border-secondary);
+        }
+      }
+    }
   }
 }
 
@@ -433,8 +479,8 @@ body {
 
     .nav-heading {
       font-size: var(--text-sm);
-      font-weight: 600;
-      color: var(--color-text-secondary);
+      font-weight: 700;
+      color: var(--color-text-primary);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin: 0 0 var(--space-4) 0;
@@ -531,8 +577,8 @@ body {
       }
 
       &:last-child {
-        color: var(--color-text-tertiary);
-        font-weight: 500;
+        color: var(--color-text-primary);
+        font-weight: 700;
       }
     }
   }
@@ -545,7 +591,7 @@ body {
 
   .page-title {
     font-size: var(--text-3xl);
-    font-weight: 700;
+    font-weight: 800;
     color: var(--color-text-primary);
     margin: 0 0 var(--space-4) 0;
     line-height: var(--leading-tight);
@@ -585,7 +631,7 @@ body {
 
   h1, h2, h3, h4, h5, h6 {
     color: var(--color-text-primary);
-    font-weight: 600;
+    font-weight: 700;
     line-height: var(--leading-tight);
     margin-top: var(--space-8);
     margin-bottom: var(--space-4);
@@ -595,7 +641,7 @@ body {
     }
   }
 
-  h1 { font-size: var(--text-3xl); }
+  h1 { font-size: var(--text-3xl); font-weight: 800; }
   h2 { font-size: var(--text-2xl); }
   h3 { font-size: var(--text-xl); }
   h4 { font-size: var(--text-lg); }
@@ -801,6 +847,15 @@ body {
         display: block;
       }
     }
+    
+    // Ensure visibility in dark mode
+    .dark-mode & {
+      color: var(--color-text-primary);
+      
+      &:hover {
+        background-color: var(--color-bg-secondary);
+      }
+    }
   }
 
   .settings-menu {
@@ -887,9 +942,19 @@ body {
   color: var(--color-text-primary);
   cursor: pointer;
   padding: var(--space-2);
+  transition: color var(--transition-fast);
 
   @media (max-width: 768px) {
     display: block;
+  }
+  
+  // Ensure visibility in dark mode
+  .dark-mode & {
+    color: var(--color-text-primary);
+    
+    &:hover {
+      color: var(--color-text-accent);
+    }
   }
 }
 

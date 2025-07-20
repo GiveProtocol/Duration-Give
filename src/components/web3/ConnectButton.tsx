@@ -10,6 +10,112 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWalletAlias } from '@/hooks/useWalletAlias';
 
+interface AccountMenuProps {
+  address: string;
+  alias: string | null;
+  getInstalledWallets: () => any[];
+  getExplorerUrl: () => string;
+  onDisconnect: () => void;
+  onManageAlias: () => void;
+}
+
+const AccountMenu: React.FC<AccountMenuProps> = ({ 
+  address, 
+  alias, 
+  getInstalledWallets, 
+  getExplorerUrl, 
+  onDisconnect, 
+  onManageAlias 
+}) => (
+  <div className="absolute right-0 mt-2 w-72 rounded-lg shadow-lg bg-white ring-1 ring-gray-200 divide-y divide-gray-100 z-50">
+    <div className="p-4">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-sm text-gray-500">Connected with {getInstalledWallets()[0]?.name || 'Wallet'}</span>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="font-medium">{shortenAddress(address)}</span>
+        <div className="flex items-center space-x-2">
+          <button 
+            onClick={() => navigator.clipboard.writeText(address)}
+            className="text-sm text-indigo-600 hover:text-indigo-500 font-medium transition-colors"
+          >
+            Copy
+          </button>
+          <a 
+            href={getExplorerUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-indigo-600 hover:text-indigo-500 transition-colors"
+          >
+            <ExternalLink className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div className="p-2">
+      <button
+        onClick={onManageAlias}
+        className="flex w-full items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors rounded-md"
+        role="menuitem"
+      >
+        <User className="h-4 w-4 mr-2" />
+        {alias ? 'Change Wallet Alias' : 'Set Wallet Alias'}
+      </button>
+      <button
+        onClick={onDisconnect}
+        className="flex w-full items-center px-4 py-3 text-sm text-red-600 hover:bg-gray-50 transition-colors rounded-md"
+        role="menuitem"
+      >
+        <LogOut className="h-4 w-4 mr-2" />
+        Disconnect
+      </button>
+    </div>
+  </div>
+);
+
+interface WalletSelectMenuProps {
+  getInstalledWallets: () => any[];
+  onWalletSelect: (wallet: any) => void;
+}
+
+const WalletSelectMenu: React.FC<WalletSelectMenuProps> = ({ getInstalledWallets, onWalletSelect }) => (
+  <div className="absolute right-0 mt-2 w-72 rounded-lg shadow-lg bg-white ring-1 ring-gray-200 z-50">
+    <div className="p-4 border-b border-gray-100">
+      <h3 className="text-lg font-semibold text-gray-900">Connect Wallet</h3>
+      <p className="text-sm text-gray-500 mt-1">
+        Choose your preferred wallet provider
+      </p>
+    </div>
+    <div className="p-2">
+      {getInstalledWallets().map((wallet) => (
+        <button
+          key={wallet.name}
+          onClick={() => onWalletSelect(wallet)}
+          className="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors rounded-md"
+          role="menuitem"
+        >
+          <img 
+            src={`/icons/${wallet.icon}.svg`}
+            alt=""
+            className="w-8 h-8 mr-3"
+            aria-hidden="true"
+          />
+          <div className="flex flex-col items-start">
+            <span className="font-medium text-gray-900">{wallet.name}</span>
+            <span className="text-xs text-gray-500">Connect to your {wallet.name} wallet</span>
+          </div>
+        </button>
+      ))}
+      {getInstalledWallets().length === 0 && (
+        <div className="px-4 py-4 text-sm">
+          <p className="font-medium text-gray-900 mb-1">No wallets found</p>
+          <p className="text-gray-500">Install MetaMask to continue</p>
+        </div>
+      )}
+    </div>
+  </div>
+);
+
 const CONNECTION_TIMEOUT = 30000; // 30 seconds
 const RETRY_DELAY = 2000; // 2 seconds
 const MAX_RETRIES = 3;
@@ -185,51 +291,14 @@ export function ConnectButton() {
         </Button>
 
         {showAccountMenu && (
-          <div className="absolute right-0 mt-2 w-72 rounded-lg shadow-lg bg-white ring-1 ring-gray-200 divide-y divide-gray-100 z-50">
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray-500">Connected with {getInstalledWallets()[0]?.name || 'Wallet'}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="font-medium">{shortenAddress(address)}</span>
-                <div className="flex items-center space-x-2">
-                  <button 
-                    onClick={() => navigator.clipboard.writeText(address)}
-                    className="text-sm text-indigo-600 hover:text-indigo-500 font-medium transition-colors"
-                  >
-                    Copy
-                  </button>
-                  <a 
-                    href={getExplorerUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:text-indigo-500 transition-colors"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-2">
-              <button
-                onClick={handleManageAlias}
-                className="flex w-full items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors rounded-md"
-                role="menuitem"
-              >
-                <User className="h-4 w-4 mr-2" />
-                {alias ? 'Change Wallet Alias' : 'Set Wallet Alias'}
-              </button>
-              <button
-                onClick={handleDisconnect}
-                className="flex w-full items-center px-4 py-3 text-sm text-red-600 hover:bg-gray-50 transition-colors rounded-md"
-                role="menuitem"
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Disconnect
-              </button>
-            </div>
-          </div>
+          <AccountMenu 
+            address={address}
+            alias={alias}
+            getInstalledWallets={getInstalledWallets}
+            getExplorerUrl={getExplorerUrl}
+            onDisconnect={handleDisconnect}
+            onManageAlias={handleManageAlias}
+          />
         )}
       </div>
     );
@@ -252,42 +321,10 @@ export function ConnectButton() {
       </Button>
 
       {showWalletSelect && (
-        <div className="absolute right-0 mt-2 w-72 rounded-lg shadow-lg bg-white ring-1 ring-gray-200 z-50">
-          <div className="p-4 border-b border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-900">Connect Wallet</h3>
-            <p className="text-sm text-gray-500 mt-1">
-              Choose your preferred wallet provider
-            </p>
-          </div>
-          
-          <div className="p-2">
-            {getInstalledWallets().map((wallet) => (
-              <button
-                key={wallet.name}
-                onClick={() => handleWalletSelect(wallet)}
-                className="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors rounded-md"
-                role="menuitem"
-              >
-                <img 
-                  src={`/icons/${wallet.icon}.svg`}
-                  alt=""
-                  className="w-8 h-8 mr-3"
-                  aria-hidden="true"
-                />
-                <div className="flex flex-col items-start">
-                  <span className="font-medium text-gray-900">{wallet.name}</span>
-                  <span className="text-xs text-gray-500">Connect to your {wallet.name} wallet</span>
-                </div>
-              </button>
-            ))}
-            {getInstalledWallets().length === 0 && (
-              <div className="px-4 py-4 text-sm">
-                <p className="font-medium text-gray-900 mb-1">No wallets found</p>
-                <p className="text-gray-500">Install MetaMask to continue</p>
-              </div>
-            )}
-          </div>
-        </div>
+        <WalletSelectMenu 
+          getInstalledWallets={getInstalledWallets}
+          onWalletSelect={handleWalletSelect}
+        />
       )}
     </div>
   );
