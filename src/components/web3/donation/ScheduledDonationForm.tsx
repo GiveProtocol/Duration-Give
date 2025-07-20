@@ -46,6 +46,13 @@ interface SuccessMessageProps {
   onClose: () => void;
 }
 
+/**
+ * Component that displays a success message after a scheduled donation is created
+ * @param amount - The donation amount
+ * @param charityName - Name of the charity receiving the donation
+ * @param transactionHash - The blockchain transaction hash
+ * @param onClose - Callback function to close the success message
+ */
 const SuccessMessage: React.FC<SuccessMessageProps> = ({ amount, charityName, transactionHash, onClose }) => {
   const startDate = new Date();
   const endDate = new Date();

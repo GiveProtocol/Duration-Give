@@ -4,15 +4,21 @@ import { WithdrawalStatus } from './withdrawals/WithdrawalStatus';
 import { formatCurrency } from '@/utils/money';
 import { formatDate } from '@/utils/date';
 
-interface WithdrawalRowProps {
-  withdrawal: {
-    id: string;
-    created_at: string;
-    amount: number;
-    status: string;
-  };
+interface Withdrawal {
+  id: string;
+  created_at: string;
+  amount: number;
+  status: string;
 }
 
+interface WithdrawalRowProps {
+  withdrawal: Withdrawal;
+}
+
+/**
+ * Table row component displaying a single withdrawal record
+ * @param withdrawal - The withdrawal data to display
+ */
 const WithdrawalRow: React.FC<WithdrawalRowProps> = ({ withdrawal }) => (
   <tr>
     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -27,7 +33,15 @@ const WithdrawalRow: React.FC<WithdrawalRowProps> = ({ withdrawal }) => (
   </tr>
 );
 
-const WithdrawalTable: React.FC<{ withdrawals: any[] }> = ({ withdrawals }) => (
+interface WithdrawalTableProps {
+  withdrawals: Withdrawal[];
+}
+
+/**
+ * Table component displaying a list of withdrawal records
+ * @param withdrawals - Array of withdrawal data to display in the table
+ */
+const WithdrawalTable: React.FC<WithdrawalTableProps> = ({ withdrawals }) => (
   <div className="overflow-x-auto">
     <table className="min-w-full divide-y divide-gray-200">
       <thead>

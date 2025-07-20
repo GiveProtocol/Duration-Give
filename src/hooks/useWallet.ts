@@ -1,7 +1,7 @@
 import { Logger } from '@/utils/logger';
 import { CHAIN_IDS } from '@/config/contracts';
 
-interface WalletProvider {
+export interface WalletProvider {
   name: string;
   icon: string;
   isInstalled: () => boolean;

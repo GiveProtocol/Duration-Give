@@ -11,6 +11,11 @@ interface NavLinksProps {
   t: (key: string) => string;
 }
 
+/**
+ * Desktop navigation links component
+ * @param isActive - Function to determine if a path is active
+ * @param t - Translation function
+ */
 const DesktopNavLinks: React.FC<NavLinksProps> = ({ isActive, t }) => (
   <div className="hidden sm:ml-6 sm:flex sm:space-x-2">
     <Link
@@ -41,6 +46,13 @@ interface MobileMenuProps {
   isLimitedNavPage: boolean;
 }
 
+/**
+ * Mobile navigation menu component
+ * @param isActive - Function to determine if a path is active
+ * @param t - Translation function
+ * @param onMenuClose - Callback to close the mobile menu
+ * @param isLimitedNavPage - Whether the current page has limited navigation
+ */
 const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, t, onMenuClose, isLimitedNavPage }) => (
   <div className="sm:hidden" id="mobile-menu">
     <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg rounded-b-lg">

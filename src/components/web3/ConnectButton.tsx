@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Wallet, ChevronDown, LogOut, AlertTriangle, ExternalLink, RefreshCw, User } from 'lucide-react';
 import { useWeb3 } from '@/contexts/Web3Context';
-import { useWallet } from '@/hooks/useWallet';
+import { useWallet, type WalletProvider } from '@/hooks/useWallet';
 import { Button } from '../ui/Button';
 import { shortenAddress } from '@/utils/web3';
 import { Logger } from '@/utils/logger';
@@ -13,12 +13,21 @@ import { useWalletAlias } from '@/hooks/useWalletAlias';
 interface AccountMenuProps {
   address: string;
   alias: string | null;
-  getInstalledWallets: () => any[];
+  getInstalledWallets: () => WalletProvider[];
   getExplorerUrl: () => string;
   onDisconnect: () => void;
   onManageAlias: () => void;
 }
 
+/**
+ * Dropdown menu component displayed when a wallet is connected
+ * @param address - The connected wallet address
+ * @param alias - Optional user-defined alias for the wallet
+ * @param getInstalledWallets - Function to get list of installed wallets
+ * @param getExplorerUrl - Function to get blockchain explorer URL for the address
+ * @param onDisconnect - Callback to disconnect the wallet
+ * @param onManageAlias - Callback to manage wallet alias
+ */
 const AccountMenu: React.FC<AccountMenuProps> = ({ 
   address, 
   alias, 
@@ -26,7 +35,12 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
   getExplorerUrl, 
   onDisconnect, 
   onManageAlias 
-}) => (
+}) => {
+  const handleCopyAddress = useCallback(() => {
+    navigator.clipboard.writeText(address);
+  }, [address]);
+
+  return (
   <div className="absolute right-0 mt-2 w-72 rounded-lg shadow-lg bg-white ring-1 ring-gray-200 divide-y divide-gray-100 z-50">
     <div className="p-4">
       <div className="flex items-center justify-between mb-2">
@@ -36,7 +50,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
         <span className="font-medium">{shortenAddress(address)}</span>
         <div className="flex items-center space-x-2">
           <button 
-            onClick={() => navigator.clipboard.writeText(address)}
+            onClick={handleCopyAddress}
             className="text-sm text-indigo-600 hover:text-indigo-500 font-medium transition-colors"
           >
             Copy
@@ -71,14 +85,25 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
       </button>
     </div>
   </div>
-);
+  );
+};
 
 interface WalletSelectMenuProps {
-  getInstalledWallets: () => any[];
-  onWalletSelect: (wallet: any) => void;
+  getInstalledWallets: () => WalletProvider[];
+  onWalletSelect: (wallet: WalletProvider) => void;
 }
 
-const WalletSelectMenu: React.FC<WalletSelectMenuProps> = ({ getInstalledWallets, onWalletSelect }) => (
+/**
+ * Dropdown menu component for selecting a wallet to connect
+ * @param getInstalledWallets - Function to get list of installed wallets
+ * @param onWalletSelect - Callback when a wallet is selected for connection
+ */
+const WalletSelectMenu: React.FC<WalletSelectMenuProps> = ({ getInstalledWallets, onWalletSelect }) => {
+  const handleWalletSelect = useCallback((wallet: WalletProvider) => () => {
+    onWalletSelect(wallet);
+  }, [onWalletSelect]);
+
+  return (
   <div className="absolute right-0 mt-2 w-72 rounded-lg shadow-lg bg-white ring-1 ring-gray-200 z-50">
     <div className="p-4 border-b border-gray-100">
       <h3 className="text-lg font-semibold text-gray-900">Connect Wallet</h3>
@@ -90,7 +115,7 @@ const WalletSelectMenu: React.FC<WalletSelectMenuProps> = ({ getInstalledWallets
       {getInstalledWallets().map((wallet) => (
         <button
           key={wallet.name}
-          onClick={() => onWalletSelect(wallet)}
+          onClick={handleWalletSelect(wallet)}
           className="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors rounded-md"
           role="menuitem"
         >
@@ -114,7 +139,8 @@ const WalletSelectMenu: React.FC<WalletSelectMenuProps> = ({ getInstalledWallets
       )}
     </div>
   </div>
-);
+  );
+};
 
 const CONNECTION_TIMEOUT = 30000; // 30 seconds
 const RETRY_DELAY = 2000; // 2 seconds

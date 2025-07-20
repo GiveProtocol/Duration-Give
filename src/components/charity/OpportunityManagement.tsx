@@ -13,6 +13,12 @@ interface OpportunityCardProps {
   formatLanguageName: (language: string) => string;
 }
 
+/**
+ * Card component displaying volunteer opportunity details
+ * @param opportunity - The volunteer opportunity data
+ * @param t - Translation function
+ * @param formatLanguageName - Function to format language names
+ */
 const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, formatLanguageName }) => (
   <div className="border border-gray-200 rounded-lg p-4">
     <div className="flex justify-between items-start">
