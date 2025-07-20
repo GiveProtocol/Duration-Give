@@ -251,34 +251,7 @@ body {
   z-index: 50;
   height: var(--header-height);
   transition: all var(--transition-base);
-  
-  // Ensure proper dark mode background and visibility
-  .dark-mode & {
-    background-color: var(--color-bg-primary);
-    border-bottom: 1px solid var(--color-border-primary);
-    
-    // Force all text elements in header to be visible
-    * {
-      color: var(--color-text-primary) !important;
-    }
-    
-    // Maintain accent colors for hover states
-    .site-title:hover {
-      color: var(--color-text-accent) !important;
-    }
-    
-    .btn:hover {
-      color: var(--color-text-accent) !important;
-    }
-    
-    .settings-toggle:hover {
-      color: var(--color-text-accent) !important;
-    }
-    
-    .mobile-menu-toggle:hover {
-      color: var(--color-text-accent) !important;
-    }
-  }
+}
 
   .header-content {
     max-width: var(--max-width-container);
@@ -1062,6 +1035,72 @@ body.translated-rtl {
 body.translated-rtl .site-nav,
 body.translated-rtl .header-nav {
   direction: rtl;
+}
+
+// Dark mode specific fixes with high specificity
+body.dark-mode {
+  // Ensure header has proper dark background
+  .site-header {
+    background-color: var(--color-bg-primary) !important;
+    border-bottom: 1px solid var(--color-border-primary) !important;
+    
+    // Force all text elements in header to be visible
+    * {
+      color: var(--color-text-primary) !important;
+    }
+    
+    // Maintain accent colors for hover states while ensuring visibility
+    .site-title {
+      color: var(--color-text-primary) !important;
+      
+      &:hover {
+        color: var(--color-text-accent) !important;
+      }
+    }
+    
+    .btn {
+      color: var(--color-text-primary) !important;
+      
+      &:hover {
+        color: var(--color-text-accent) !important;
+        background-color: var(--color-bg-secondary) !important;
+      }
+    }
+    
+    .settings-toggle {
+      color: var(--color-text-primary) !important;
+      
+      &:hover {
+        color: var(--color-text-accent) !important;
+      }
+    }
+    
+    .mobile-menu-toggle {
+      color: var(--color-text-primary) !important;
+      
+      &:hover {
+        color: var(--color-text-accent) !important;
+      }
+    }
+  }
+  
+  // Ensure page titles are properly bold
+  .page-title {
+    font-weight: 800 !important;
+    color: var(--color-text-primary) !important;
+  }
+  
+  // Ensure navigation headings are bold
+  .nav-heading {
+    font-weight: 700 !important;
+    color: var(--color-text-primary) !important;
+  }
+  
+  // Ensure breadcrumb last item is bold
+  .breadcrumb-item:last-child {
+    font-weight: 700 !important;
+    color: var(--color-text-primary) !important;
+  }
 }
 
 // Print styles
