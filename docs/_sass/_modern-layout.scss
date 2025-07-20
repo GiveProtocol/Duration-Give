@@ -486,20 +486,47 @@
     background-color: #1a1a1a;
 
     .modern-header {
-      background: rgba(26, 26, 26, 0.95);
-      border-bottom-color: rgba(255, 255, 255, 0.08);
+      background: var(--color-bg-primary) !important;
+      border-bottom: 1px solid var(--color-border-primary) !important;
+
+      // Ensure all header elements are visible in dark mode
+      * {
+        color: var(--color-text-primary) !important;
+      }
 
       .brand {
-        color: #f3f4f6;
+        color: var(--color-text-primary) !important;
+
+        &:hover {
+          color: var(--color-text-accent) !important;
+        }
+      }
+
+      .btn {
+        color: var(--color-text-primary) !important;
+
+        &:hover {
+          color: var(--color-text-accent) !important;
+          background-color: var(--color-bg-secondary) !important;
+        }
+      }
+
+      .settings-toggle {
+        color: var(--color-text-primary) !important;
+
+        &:hover {
+          color: var(--color-text-accent) !important;
+        }
       }
 
       .header-search input {
-        background: #374151;
-        color: #f3f4f6;
+        background: var(--color-bg-secondary) !important;
+        color: var(--color-text-primary) !important;
+        border-color: var(--color-border-primary) !important;
 
         &:focus {
-          background: #4b5563;
-          border-color: #6366f1;
+          background: var(--color-bg-primary) !important;
+          border-color: var(--color-border-focus) !important;
         }
       }
     }
