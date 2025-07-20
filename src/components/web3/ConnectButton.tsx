@@ -10,6 +10,89 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWalletAlias } from '@/hooks/useWalletAlias';
 
+interface AccountMenuHeaderProps {
+  address: string;
+  getInstalledWallets: () => WalletProvider[];
+  getExplorerUrl: () => string;
+  onCopyAddress: () => void;
+}
+
+/**
+ * Header section of the account menu showing wallet connection info
+ * @param address - The connected wallet address
+ * @param getInstalledWallets - Function to get list of installed wallets
+ * @param getExplorerUrl - Function to get blockchain explorer URL
+ * @param onCopyAddress - Callback to copy wallet address
+ */
+const AccountMenuHeader: React.FC<AccountMenuHeaderProps> = ({ 
+  address, 
+  getInstalledWallets, 
+  getExplorerUrl, 
+  onCopyAddress 
+}) => (
+  <div className="p-4">
+    <div className="flex items-center justify-between mb-2">
+      <span className="text-sm text-gray-500">Connected with {getInstalledWallets()[0]?.name || 'Wallet'}</span>
+    </div>
+    <div className="flex items-center justify-between">
+      <span className="font-medium">{shortenAddress(address)}</span>
+      <div className="flex items-center space-x-2">
+        <button 
+          onClick={onCopyAddress}
+          className="text-sm text-indigo-600 hover:text-indigo-500 font-medium transition-colors"
+        >
+          Copy
+        </button>
+        <a 
+          href={getExplorerUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-indigo-600 hover:text-indigo-500 transition-colors"
+        >
+          <ExternalLink className="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+);
+
+interface AccountMenuActionsProps {
+  alias: string | null;
+  onManageAlias: () => void;
+  onDisconnect: () => void;
+}
+
+/**
+ * Actions section of the account menu with manage alias and disconnect buttons
+ * @param alias - Optional user-defined alias for the wallet
+ * @param onManageAlias - Callback to manage wallet alias
+ * @param onDisconnect - Callback to disconnect the wallet
+ */
+const AccountMenuActions: React.FC<AccountMenuActionsProps> = ({ 
+  alias, 
+  onManageAlias, 
+  onDisconnect 
+}) => (
+  <div className="p-2">
+    <button
+      onClick={onManageAlias}
+      className="flex w-full items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors rounded-md"
+      role="menuitem"
+    >
+      <User className="h-4 w-4 mr-2" />
+      {alias ? 'Change Wallet Alias' : 'Set Wallet Alias'}
+    </button>
+    <button
+      onClick={onDisconnect}
+      className="flex w-full items-center px-4 py-3 text-sm text-red-600 hover:bg-gray-50 transition-colors rounded-md"
+      role="menuitem"
+    >
+      <LogOut className="h-4 w-4 mr-2" />
+      Disconnect
+    </button>
+  </div>
+);
+
 interface AccountMenuProps {
   address: string;
   alias: string | null;
@@ -41,50 +124,19 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
   }, [address]);
 
   return (
-  <div className="absolute right-0 mt-2 w-72 rounded-lg shadow-lg bg-white ring-1 ring-gray-200 divide-y divide-gray-100 z-50">
-    <div className="p-4">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-sm text-gray-500">Connected with {getInstalledWallets()[0]?.name || 'Wallet'}</span>
-      </div>
-      <div className="flex items-center justify-between">
-        <span className="font-medium">{shortenAddress(address)}</span>
-        <div className="flex items-center space-x-2">
-          <button 
-            onClick={handleCopyAddress}
-            className="text-sm text-indigo-600 hover:text-indigo-500 font-medium transition-colors"
-          >
-            Copy
-          </button>
-          <a 
-            href={getExplorerUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-indigo-600 hover:text-indigo-500 transition-colors"
-          >
-            <ExternalLink className="h-4 w-4" />
-          </a>
-        </div>
-      </div>
+    <div className="absolute right-0 mt-2 w-72 rounded-lg shadow-lg bg-white ring-1 ring-gray-200 divide-y divide-gray-100 z-50">
+      <AccountMenuHeader 
+        address={address}
+        getInstalledWallets={getInstalledWallets}
+        getExplorerUrl={getExplorerUrl}
+        onCopyAddress={handleCopyAddress}
+      />
+      <AccountMenuActions 
+        alias={alias}
+        onManageAlias={onManageAlias}
+        onDisconnect={onDisconnect}
+      />
     </div>
-    <div className="p-2">
-      <button
-        onClick={onManageAlias}
-        className="flex w-full items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors rounded-md"
-        role="menuitem"
-      >
-        <User className="h-4 w-4 mr-2" />
-        {alias ? 'Change Wallet Alias' : 'Set Wallet Alias'}
-      </button>
-      <button
-        onClick={onDisconnect}
-        className="flex w-full items-center px-4 py-3 text-sm text-red-600 hover:bg-gray-50 transition-colors rounded-md"
-        role="menuitem"
-      >
-        <LogOut className="h-4 w-4 mr-2" />
-        Disconnect
-      </button>
-    </div>
-  </div>
   );
 };
 
