@@ -1,25 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ current_lang }}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
-    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
-    
+    <title>
+      {% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}
+    </title>
+    <meta
+      name="description"
+      content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"
+    />
+
     <!-- Language detection -->
-    {% assign current_lang = page.lang | default: "en" %}
-    {% assign is_primary_lang = site.data.languages.primary[current_lang] %}
-    
+    {% assign current_lang = page.lang | default: "en" %} {% assign
+    is_primary_lang = site.data.languages.primary[current_lang] %}
+
     <!-- Alternate language links for SEO -->
-    {% if is_primary_lang %}
-      {% for lang_data in site.data.languages.primary %}
-        {% assign lang_code = lang_data[0] %}
-        {% if lang_code != current_lang %}
-          <link rel="alternate" hreflang="{{ lang_code }}" href="{{ page.url | replace: '/' | append: lang_code | append: '/' | relative_url }}" />
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-    
+    {% if is_primary_lang %} {% for lang_data in site.data.languages.primary %}
+    {% assign lang_code = lang_data[0] %} {% if lang_code != current_lang %}
+    <link
+      rel="alternate"
+      hreflang="{{ lang_code }}"
+      href="{{ page.url | replace: '/' | append: lang_code | append: '/' | relative_url }}"
+    />
+    {% endif %} {% endfor %} {% endif %}
+
     <!-- Favicon -->
     <link
       rel="icon"
@@ -46,7 +51,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    
+
     <!-- Google Translate -->
     <script type="text/javascript">
       function googleTranslateElementInit() {
@@ -66,12 +71,12 @@
       src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     ></script>
   </head>
-  
+
   <body class="modern-docs preload">
     <script>
       // Remove preload class after page loads to enable transitions
-      window.addEventListener('load', function() {
-        document.body.classList.remove('preload');
+      window.addEventListener("load", function () {
+        document.body.classList.remove("preload");
       });
     </script>
     <!-- Hidden Google Translate Element -->
@@ -101,9 +106,7 @@
         </div>
 
         <div class="header-actions">
-          <a href="https://giveprotocol.io" class="btn-link">
-            Main Site
-          </a>
+          <a href="https://giveprotocol.io" class="btn-link"> Main Site </a>
         </div>
       </div>
     </header>
@@ -127,7 +130,8 @@
                   href="{{ '/help-center/faq/' | relative_url }}"
                   class="{% if page.url contains 'faq' %}active{% endif %}"
                 >
-                  <i class="fas fa-question-circle"></i> Frequently Asked Questions
+                  <i class="fas fa-question-circle"></i> Frequently Asked
+                  Questions
                 </a>
               </li>
               <li class="nav-item">
@@ -306,7 +310,8 @@
                   href="{{ '/technical/smart-contracts/' | relative_url }}"
                   class="{% if page.url contains 'smart-contracts' %}active{% endif %}"
                 >
-                  <i class="fas fa-file-contract"></i> Smart Contract Interactions
+                  <i class="fas fa-file-contract"></i> Smart Contract
+                  Interactions
                 </a>
               </li>
               <li class="nav-item">
@@ -489,15 +494,9 @@
         </div>
         <div id="search-results"></div>
         <div class="search-shortcuts">
-          <div class="shortcut">
-            <kbd>↑</kbd><kbd>↓</kbd> Navigate
-          </div>
-          <div class="shortcut">
-            <kbd>Enter</kbd> Select
-          </div>
-          <div class="shortcut">
-            <kbd>Esc</kbd> Close
-          </div>
+          <div class="shortcut"><kbd>↑</kbd><kbd>↓</kbd> Navigate</div>
+          <div class="shortcut"><kbd>Enter</kbd> Select</div>
+          <div class="shortcut"><kbd>Esc</kbd> Close</div>
         </div>
       </div>
     </div>
@@ -505,7 +504,6 @@
     <!-- JavaScript -->
     <script>
       /* global google */
-      
 
       // Mobile nav toggle
       const mobileNavToggle = document.querySelector(".mobile-nav-toggle");
@@ -515,20 +513,20 @@
         sidebarNav.style.display =
           sidebarNav.style.display === "none" ? "block" : "none";
       });
-      
+
       // Header scroll effect
-      const header = document.querySelector('.modern-header');
+      const header = document.querySelector(".modern-header");
       let lastScrollY = window.scrollY;
-      
-      window.addEventListener('scroll', () => {
+
+      window.addEventListener("scroll", () => {
         const currentScrollY = window.scrollY;
-        
+
         if (currentScrollY > 10) {
-          header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+          header.style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
         } else {
-          header.style.boxShadow = 'none';
+          header.style.boxShadow = "none";
         }
-        
+
         lastScrollY = currentScrollY;
       });
     </script>
@@ -543,12 +541,12 @@
         color: #6b7280;
         transition: color 0.2s ease;
       }
-      
+
       .nav-item a:hover i,
       .nav-item a.active i {
         color: #2563eb;
       }
-      
+
       /* Header icon styles */
       .search-icon {
         position: absolute;
@@ -558,51 +556,49 @@
         color: #6b7280;
         font-size: 0.875rem;
       }
-      
-      
+
       .mobile-nav-toggle i {
         color: #6b7280;
         font-size: 1rem;
       }
-      
+
       .edit-link i {
         margin-right: 0.375rem;
         font-size: 0.875rem;
       }
-      
+
       .close-search i {
         color: #6b7280;
         font-size: 1rem;
         transition: color 0.2s ease;
       }
-      
+
       .close-search:hover i {
         color: #dc2626;
       }
-      
+
       /* Dark mode icon colors */
       body.dark-mode .nav-item a i {
         color: #9ca3af;
       }
-      
+
       body.dark-mode .nav-item a:hover i,
       body.dark-mode .nav-item a.active i {
         color: #60a5fa;
       }
-      
+
       body.dark-mode .search-icon {
         color: #9ca3af;
       }
-      
-      
+
       body.dark-mode .mobile-nav-toggle i {
         color: #9ca3af;
       }
-      
+
       body.dark-mode .close-search i {
         color: #9ca3af;
       }
-      
+
       body.dark-mode .close-search:hover i {
         color: #f87171;
       }
@@ -611,7 +607,7 @@
     <!-- Search Scripts -->
     <script src="https://unpkg.com/lunr/lunr.min.js"></script>
     <script src="{{ '/assets/js/lunr-search.js' | relative_url }}"></script>
-    
+
     <!-- i18n Helper -->
     <script src="{{ '/assets/js/i18n-helper.js' | relative_url }}"></script>
   </body>
