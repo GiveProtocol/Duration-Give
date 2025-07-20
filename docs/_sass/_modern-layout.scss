@@ -16,7 +16,7 @@
     backdrop-filter: blur(10px);
     background: var(--color-bg-primary);
     transition: box-shadow 0.3s ease;
-    
+
     .header-container {
       max-width: 1280px;
       margin: 0 auto;
@@ -108,44 +108,44 @@
     height: calc(100vh - 112px); // Full height minus header and padding
     overflow-y: auto;
     overflow-x: hidden;
-    
+
     // Smooth scrollbar
     &::-webkit-scrollbar {
       width: 6px;
     }
-    
+
     &::-webkit-scrollbar-track {
       background: transparent;
     }
-    
+
     &::-webkit-scrollbar-thumb {
       background: rgba(0, 0, 0, 0.1);
       border-radius: 3px;
-      
+
       &:hover {
         background: rgba(0, 0, 0, 0.2);
       }
     }
-    
+
     // Gradient fade at bottom for overflow indication
     &::after {
-      content: '';
+      content: "";
       position: sticky;
       bottom: 0;
       left: 0;
       right: 0;
       height: 40px;
-      background: linear-gradient(to top, #F0EEE7, transparent);
+      background: linear-gradient(to top, #f0eee7, transparent);
       pointer-events: none;
     }
-    
+
     @media (max-width: 768px) {
       position: static;
       width: 100%;
       height: auto;
       margin-bottom: 24px;
       overflow: visible;
-      
+
       &::after {
         display: none;
       }
