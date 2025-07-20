@@ -277,6 +277,12 @@
       .separator {
         color: #d1d5db;
       }
+
+      // Make the current page (last breadcrumb item) bold
+      span:last-child {
+        font-weight: 700;
+        color: #111827;
+      }
     }
 
     // Article styling
