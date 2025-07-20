@@ -13,7 +13,11 @@ interface OpportunityCardProps {
   formatLanguageName: (language: string) => string;
 }
 
-const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, formatLanguageName }) => (
+const OpportunityCard: React.FC<OpportunityCardProps> = ({
+  opportunity,
+  t,
+  formatLanguageName,
+}) => (
   <div className="border border-gray-200 rounded-lg p-4">
     <div className="flex justify-between items-start">
       <div>
@@ -29,9 +33,7 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, forma
             )}
           </span>
         </div>
-        <p className="mt-2 text-gray-600">
-          {opportunity.description}
-        </p>
+        <p className="mt-2 text-gray-600">{opportunity.description}</p>
         <div className="mt-2 flex flex-wrap gap-2">
           {opportunity.skills.map((skill) => (
             <span
@@ -44,11 +46,7 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, forma
         </div>
       </div>
       <div className="flex space-x-2">
-        <Button
-          variant="secondary"
-          size="sm"
-          className="flex items-center"
-        >
+        <Button variant="secondary" size="sm" className="flex items-center">
           <Edit className="h-4 w-4 mr-1" />
           {t("common.edit", "Edit")}
         </Button>
@@ -76,15 +74,11 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, forma
         {opportunity.location}
       </div>
       <div>
-        <span className="font-medium">
-          {t("volunteer.type", "Type")}:
-        </span>{" "}
+        <span className="font-medium">{t("volunteer.type", "Type")}:</span>{" "}
         {opportunity.type}
       </div>
       <div>
-        <span className="font-medium">
-          {t("volunteer.status", "Status")}:
-        </span>{" "}
+        <span className="font-medium">{t("volunteer.status", "Status")}:</span>{" "}
         {opportunity.status}
       </div>
     </div>
@@ -191,7 +185,7 @@ export const OpportunityManagement: React.FC = () => {
           ) : (
             <div className="space-y-4">
               {opportunities.map((opportunity) => (
-                <OpportunityCard 
+                <OpportunityCard
                   key={opportunity.id}
                   opportunity={opportunity}
                   t={t}

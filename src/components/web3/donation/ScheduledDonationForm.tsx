@@ -46,7 +46,12 @@ interface SuccessMessageProps {
   onClose: () => void;
 }
 
-const SuccessMessage: React.FC<SuccessMessageProps> = ({ amount, charityName, transactionHash, onClose }) => {
+const SuccessMessage: React.FC<SuccessMessageProps> = ({
+  amount,
+  charityName,
+  transactionHash,
+  onClose,
+}) => {
   const startDate = new Date();
   const endDate = new Date();
   endDate.setMonth(endDate.getMonth() + 12);
@@ -56,12 +61,23 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ amount, charityName, tr
       <div className="bg-green-50 p-4 rounded-md border border-green-200">
         <div className="flex items-start">
           <div className="flex-shrink-0">
-            <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            <svg
+              className="h-5 w-5 text-green-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clipRule="evenodd"
+              />
             </svg>
           </div>
           <div className="ml-3">
-            <h3 className="text-sm font-medium text-green-800">Monthly donation scheduled successfully!</h3>
+            <h3 className="text-sm font-medium text-green-800">
+              Monthly donation scheduled successfully!
+            </h3>
             <div className="mt-2 text-sm text-green-700">
               <p>Your donation of {amount} tokens has been scheduled.</p>
             </div>
@@ -70,20 +86,35 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ amount, charityName, tr
       </div>
 
       <div className="bg-white p-4 rounded-md border border-gray-200">
-        <h4 className="text-sm font-medium text-gray-900 mb-2">Schedule Details:</h4>
+        <h4 className="text-sm font-medium text-gray-900 mb-2">
+          Schedule Details:
+        </h4>
         <ul className="space-y-2 text-sm text-gray-600">
-          <li><span className="font-medium">Total Amount:</span> {amount} tokens</li>
-          <li><span className="font-medium">Monthly Payment:</span> {(parseFloat(amount) / 12).toFixed(2)} tokens</li>
-          <li><span className="font-medium">Start Date:</span> {formatDate(startDate.toISOString())}</li>
-          <li><span className="font-medium">End Date:</span> {formatDate(endDate.toISOString())}</li>
-          <li><span className="font-medium">Recipient:</span> {charityName}</li>
+          <li>
+            <span className="font-medium">Total Amount:</span> {amount} tokens
+          </li>
+          <li>
+            <span className="font-medium">Monthly Payment:</span>{" "}
+            {(parseFloat(amount) / 12).toFixed(2)} tokens
+          </li>
+          <li>
+            <span className="font-medium">Start Date:</span>{" "}
+            {formatDate(startDate.toISOString())}
+          </li>
+          <li>
+            <span className="font-medium">End Date:</span>{" "}
+            {formatDate(endDate.toISOString())}
+          </li>
+          <li>
+            <span className="font-medium">Recipient:</span> {charityName}
+          </li>
         </ul>
       </div>
 
       {transactionHash && (
         <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
           <p className="text-xs text-gray-500 mb-1">Transaction Hash:</p>
-          <a 
+          <a
             href={`https://moonbase.moonscan.io/tx/${transactionHash}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -237,7 +268,7 @@ export function ScheduledDonationForm({
 
   if (showConfirmation) {
     return (
-      <SuccessMessage 
+      <SuccessMessage
         amount={amount}
         charityName={charityName}
         transactionHash={transactionHash}
