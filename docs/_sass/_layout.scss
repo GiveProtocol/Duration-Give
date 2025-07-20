@@ -7,64 +7,7 @@
   min-height: 100vh;
 }
 
-// Header
-.site-header {
-  background-color: white;
-  border-bottom: 1px solid var(--primary-200);
-  box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 0;
-  z-index: $z-index-sticky;
-  height: var(--header-height);
-  
-  .header-content {
-    @include container;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-  }
-  
-  .site-title {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--brand-text);
-    font-weight: 700;
-    font-size: 1.25rem;
-    
-    &:hover {
-      text-decoration: none;
-      color: var(--indigo-600);
-    }
-    
-    .logo {
-      height: 32px;
-      width: auto;
-      margin-right: var(--spacing-sm);
-    }
-  }
-  
-  .header-nav {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-lg);
-    
-    @include mobile {
-      display: none;
-    }
-  }
-  
-  .mobile-menu-toggle {
-    display: none;
-    @include button-ghost;
-    padding: var(--spacing-sm);
-    
-    @include mobile {
-      display: flex;
-    }
-  }
-}
+// Header - modern styling handled in main.scss
 
 // Main content area
 .site-main {
