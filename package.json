@@ -37,7 +37,10 @@
     "compile": "hardhat compile",
     "node": "hardhat node",
     "accounts": "hardhat accounts",
-    "docs:search": "cd docs && node generate-search.cjs"
+    "docs:search": "cd docs && node generate-search.cjs",
+    "fuzz:arm": "~/.local/bin/fuzz arm",
+    "fuzz:run": "~/.local/bin/fuzz run",
+    "fuzz:disarm": "~/.local/bin/fuzz disarm"
   },
   "dependencies": {
     "@chainlink/contracts": "^1.4.0",
@@ -89,6 +92,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "eth-scribble": "^0.7.10",
     "globals": "^15.0.0",
     "hardhat": "^2.20.1",
     "hardhat-gas-reporter": "^1.0.10",
