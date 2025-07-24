@@ -57,6 +57,7 @@ All tokens must meet these objective, verifiable criteria to be eligible for com
 ### 4. Risk Parameters
 
 **Volatility limits**:
+
 - Stablecoins: <2% deviation from peg (95% of time)
 - Native tokens: <50% 30-day volatility
 
