@@ -134,8 +134,9 @@ body.preload * {
         color: var(--color-text-secondary);
         text-decoration: none;
         font-size: 14px;
-        font-weight: 500;
+        font-weight: 700;
         padding: 8px 12px;
+        border: 1px solid var(--color-border-primary);
         border-radius: var(--radius-base);
         transition: all var(--transition-fast);
 
@@ -146,6 +147,7 @@ body.preload * {
         &:hover {
           color: var(--color-text-accent);
           background-color: var(--color-bg-accent);
+          border-color: var(--color-border-secondary);
         }
       }
     }

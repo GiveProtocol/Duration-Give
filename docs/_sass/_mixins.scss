@@ -85,10 +85,13 @@
   @include button-base;
   background-color: transparent;
   color: var(--primary-600);
+  font-weight: 700;
+  border-color: var(--primary-300);
   
   &:hover:not(:disabled) {
     background-color: var(--primary-100);
     color: var(--primary-800);
+    border-color: var(--primary-400);
   }
 }
 
