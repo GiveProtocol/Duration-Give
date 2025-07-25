@@ -33,18 +33,21 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
     const now = new Date();
     
     switch (timeFilter) {
-      case 'week':
+      case 'week': {
         const weekAgo = new Date();
         weekAgo.setDate(now.getDate() - 7);
         return donationDate >= weekAgo;
-      case 'month':
+      }
+      case 'month': {
         const monthAgo = new Date();
         monthAgo.setMonth(now.getMonth() - 1);
         return donationDate >= monthAgo;
-      case 'year':
+      }
+      case 'year': {
         const yearAgo = new Date();
         yearAgo.setFullYear(now.getFullYear() - 1);
         return donationDate >= yearAgo;
+      }
       default:
         return true;
     }

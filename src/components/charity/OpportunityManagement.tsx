@@ -124,9 +124,9 @@ export const OpportunityManagement: React.FC = () => {
     if (profile?.id) {
       fetchOpportunities();
     }
-  }, [profile?.id]);
+  }, [profile?.id, fetchOpportunities]);
 
-  const fetchOpportunities = async () => {
+  const fetchOpportunities = useCallback(async () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
@@ -144,7 +144,7 @@ export const OpportunityManagement: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [profile?.id]);
 
   const handleCreateSuccess = () => {
     setShowForm(false);

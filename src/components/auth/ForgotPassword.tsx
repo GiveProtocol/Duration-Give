@@ -37,7 +37,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Check Your Email</h2>
         <p className="text-gray-600 mb-6">
-          We've sent password reset instructions to {email}
+          We&apos;ve sent password reset instructions to {email}
         </p>
         <Button onClick={onBack} variant="secondary" className="w-full">
           Return to Sign In
@@ -58,7 +58,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
 
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Reset Password</h2>
       <p className="text-gray-600 mb-6">
-        Enter your email address and we'll send you instructions to reset your password.
+        Enter your email address and we&apos;ll send you instructions to reset your password.
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">

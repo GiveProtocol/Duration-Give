@@ -4,6 +4,10 @@ import { RateLimiter } from './rateLimiter';
 import { Logger } from '../logger';
 import { ENV } from '@/config/env';
 
+// Ensure DOM types are available
+type RequestInfo = globalThis.RequestInfo;
+type RequestInit = globalThis.RequestInit;
+
 interface SecurityHeaders {
   'Content-Security-Policy': string;
   'X-Content-Type-Options': string;
@@ -167,7 +171,7 @@ export class SecurityManager {
 
   private monitorNetworkRequests(): void {
     const originalFetch = window.fetch;
-    window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+    window.fetch = async (input: RequestInfo | URL, init?: RequestInit | undefined) => {
       const url = input instanceof Request ? input.url : input.toString();
       
       if (!this.isUrlTrusted(url)) {

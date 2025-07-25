@@ -6,7 +6,7 @@ interface TranslatedTextProps {
   i18nKey: string;
   values?: Record<string, string | number>;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
 }
 
 export const TranslatedText: React.FC<TranslatedTextProps> = ({

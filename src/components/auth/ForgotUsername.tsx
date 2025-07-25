@@ -37,7 +37,7 @@ export const ForgotUsername: React.FC<ForgotUsernameProps> = ({ onBack }) => {
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Check Your Email</h2>
         <p className="text-gray-600 mb-6">
-          If an account exists for {email}, we'll send the username to that address.
+          If an account exists for {email}, we&apos;ll send the username to that address.
         </p>
         <Button onClick={onBack} variant="secondary" className="w-full">
           Return to Sign In
@@ -58,7 +58,7 @@ export const ForgotUsername: React.FC<ForgotUsernameProps> = ({ onBack }) => {
 
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Find Your Username</h2>
       <p className="text-gray-600 mb-6">
-        Enter your email address and we'll send you your username.
+        Enter your email address and we&apos;ll send you your username.
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
