@@ -24,7 +24,7 @@ export class CSRFProtection {
   };
 
   private constructor() {
-    this.initializeToken();
+    // Constructor kept simple and synchronous
   }
 
   static getInstance(): CSRFProtection {
@@ -34,19 +34,20 @@ export class CSRFProtection {
     return this.instance;
   }
 
-  private async initializeToken(): Promise<void> {
+  private initializeTokenSync(): string {
     try {
-      // Generate a cryptographically secure token
+      // Generate a cryptographically secure token synchronously
       const buffer = new Uint8Array(32);
       crypto.getRandomValues(buffer);
-      this.token = Array.from(buffer)
+      const token = Array.from(buffer)
         .map((b) => b.toString(16).padStart(2, "0"))
         .join("");
 
       // Set the cookie with secure options
-      this.setCookie(this.cookieName, this.token, this.cookieOptions);
+      this.setCookie(this.cookieName, token, this.cookieOptions);
 
       Logger.info("CSRF token initialized");
+      return token;
     } catch (error) {
       Logger.error("Failed to initialize CSRF token", { error });
       throw error;
@@ -68,10 +69,7 @@ export class CSRFProtection {
 
   getToken(): string {
     if (!this.token) {
-      this.initializeToken();
-    }
-    if (!this.token) {
-      throw new Error("Failed to initialize CSRF token");
+      this.token = this.initializeTokenSync();
     }
     return this.token;
   }
@@ -103,6 +101,6 @@ export class CSRFProtection {
   }
 
   refreshToken(): void {
-    this.initializeToken();
+    this.token = this.initializeTokenSync();
   }
 }
