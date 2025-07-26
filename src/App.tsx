@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as Sentry from '@sentry/react';
@@ -34,24 +35,26 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const sentryFallback = useCallback(({ error, resetError }: { error: Error; resetError: () => void }) => (
+    <ErrorBoundary fallback={null}>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong</h2>
+          <p className="text-gray-600 mb-6">{error?.message || 'An unexpected error occurred'}</p>
+          <button
+            onClick={resetError}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    </ErrorBoundary>
+  ), []);
+
   return (
     <Sentry.ErrorBoundary
-      fallback={({ error, resetError }) => (
-        <ErrorBoundary fallback={null}>
-          <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-            <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong</h2>
-              <p className="text-gray-600 mb-6">{error?.message || 'An unexpected error occurred'}</p>
-              <button
-                onClick={resetError}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-              >
-                Try Again
-              </button>
-            </div>
-          </div>
-        </ErrorBoundary>
-      )}
+      fallback={sentryFallback}
       showDialog={false}
     >
       <ErrorBoundary>
