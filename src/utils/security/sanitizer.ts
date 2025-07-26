@@ -19,10 +19,12 @@ export class InputSanitizer {
   };
 
   private readonly patterns = {
-    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    // Safe email regex that avoids catastrophic backtracking
+    email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     wallet: /^0x[a-fA-F0-9]{40}$/,
-    url: /^https:\/\/[^\s/$.?#].[^\s]*$/,
-    amount: /^\d+(\.\d{1,18})?$/
+    // Safe URL regex with proper escaping and bounded quantifiers
+    url: /^https:\/\/[a-zA-Z0-9.-]+(?:\.[a-zA-Z]{2,})?(?:\/[^\s]*)?$/,
+    amount: /^\d+(?:\.\d{1,18})?$/
   };
 
   private constructor() {}

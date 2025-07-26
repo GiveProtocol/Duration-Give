@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { Toast, ToastType } from '../components/ui/Toast';
+import { SecureRandom } from '@/utils/security';
 
 interface ToastContextType {
   showToast: (type: ToastType, title: string, message?: string) => void;
@@ -17,7 +18,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   }>>([]);
 
   const showToast = useCallback((type: ToastType, title: string, message?: string) => {
-    const id = Math.random().toString(36).substring(2);
+    const id = SecureRandom.generateSecureId();
     setToasts(prev => [...prev, { id, type, title, message }]);
 
     if (type !== 'loading') {

@@ -1,7 +1,9 @@
 export class InputValidator {
-  static readonly EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Safe email regex that avoids catastrophic backtracking
+  static readonly EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   static readonly PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  static readonly URL_REGEX = /^https:\/\/[^\s/$.?#].[^\s]*$/;
+  // Safe URL regex with proper escaping and bounded quantifiers
+  static readonly URL_REGEX = /^https:\/\/[a-zA-Z0-9.-]+(?:\.[a-zA-Z]{2,})?(?:\/[^\s]*)?$/;
 
   static validateEmail(email: string): boolean {
     return this.EMAIL_REGEX.test(email);

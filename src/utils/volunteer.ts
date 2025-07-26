@@ -4,6 +4,7 @@ import { VolunteerApplication, VolunteerHours, VolunteerVerification } from '@/t
 import { Logger } from './logger';
 import { useWeb3 } from '@/contexts/Web3Context';
 import { getContractAddress } from '@/config/contracts';
+import { SecureRandom } from '@/utils/security';
 
 // ABI for the VolunteerVerification contract
 const VOLUNTEER_VERIFICATION_ABI = [
@@ -205,16 +206,16 @@ export const recordApplicationOnChain = async (
     
     // For development/testing, return simulated blockchain data
     return {
-      transactionId: `0x${Math.random().toString(16).substring(2, 42)}`,
-      blockNumber: Math.floor(Math.random() * 1000000)
+      transactionId: SecureRandom.generateTransactionId(),
+      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
     };
   } catch (error) {
     Logger.error('Error recording application on chain', { error, applicantId, hash });
     
     // For development/testing, return simulated blockchain data
     return {
-      transactionId: `0x${Math.random().toString(16).substring(2, 42)}`,
-      blockNumber: Math.floor(Math.random() * 1000000)
+      transactionId: SecureRandom.generateTransactionId(),
+      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
     };
   }
 };
@@ -253,16 +254,16 @@ export const recordHoursOnChain = async (
     
     // For development/testing, return simulated blockchain data
     return {
-      transactionId: `0x${Math.random().toString(16).substring(2, 42)}`,
-      blockNumber: Math.floor(Math.random() * 1000000)
+      transactionId: SecureRandom.generateTransactionId(),
+      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
     };
   } catch (error) {
     Logger.error('Error recording hours on chain', { error, volunteerId, hash });
     
     // For development/testing, return simulated blockchain data
     return {
-      transactionId: `0x${Math.random().toString(16).substring(2, 42)}`,
-      blockNumber: Math.floor(Math.random() * 1000000)
+      transactionId: SecureRandom.generateTransactionId(),
+      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
     };
   }
 };
@@ -297,8 +298,8 @@ export const recordVerificationOnChain = async (
     
     // For development/testing, return simulated blockchain data
     return {
-      transactionId: `0x${Math.random().toString(16).substring(2, 42)}`,
-      blockNumber: Math.floor(Math.random() * 1000000)
+      transactionId: SecureRandom.generateTransactionId(),
+      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
     };
   }
 };
