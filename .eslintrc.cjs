@@ -34,10 +34,10 @@ module.exports = {
     "no-unused-vars": [
       "warn",
       {
-        "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_",
-        "ignoreRestSiblings": true
-      }
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        ignoreRestSiblings: true,
+      },
     ],
   },
   settings: {
