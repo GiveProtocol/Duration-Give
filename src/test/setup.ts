@@ -3,6 +3,14 @@ import { TextEncoder, TextDecoder } from 'util';
 import { setupServer } from 'msw/node';
 import { handlers } from './mocks/handlers';
 
+// Global jest types
+declare global {
+  const jest: typeof import('jest');
+  const beforeAll: typeof import('jest')['beforeAll'];
+  const afterEach: typeof import('jest')['afterEach'];  
+  const afterAll: typeof import('jest')['afterAll'];
+}
+
 // Mock TextEncoder/TextDecoder
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;

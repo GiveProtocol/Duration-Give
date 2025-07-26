@@ -21,7 +21,7 @@ export function useProfile() {
 
   useEffect(() => {
     let mounted = true;
-    let retryTimeout: NodeJS.Timeout | null = null;
+    let retryTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const fetchProfile = async () => {
       if (!user) {
