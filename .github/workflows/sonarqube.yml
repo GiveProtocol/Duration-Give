@@ -52,7 +52,7 @@ jobs:
           echo "JAVA_HOME: $JAVA_HOME"
           npx sonar-scanner \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.organization=giveprotocol \
+            -Dsonar.organization=giveprotocol3475084257 \
             -Dsonar.projectKey=GiveProtocol_Duration-Give \
             -Dsonar.token=$SONAR_TOKEN
         env:
