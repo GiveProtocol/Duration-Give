@@ -1,12 +1,15 @@
-import React from 'react';
-import { Clock } from 'lucide-react';
+import React from "react";
+import { Clock } from "lucide-react";
 
 interface TimeRangeFilterProps {
   value: string;
   onChange: (_value: string) => void;
 }
 
-export const TimeRangeFilter: React.FC<TimeRangeFilterProps> = ({ value, onChange }) => {
+export const TimeRangeFilter: React.FC<TimeRangeFilterProps> = ({
+  value,
+  onChange,
+}) => {
   return (
     <div className="flex items-center space-x-2">
       <Clock className="h-5 w-5 text-gray-400" />

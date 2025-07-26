@@ -1,12 +1,15 @@
-import React from 'react';
-import { Globe } from 'lucide-react';
+import React from "react";
+import { Globe } from "lucide-react";
 
 interface RegionFilterProps {
   value: string;
   onChange: (_value: string) => void;
 }
 
-export const RegionFilter: React.FC<RegionFilterProps> = ({ value, onChange }) => {
+export const RegionFilter: React.FC<RegionFilterProps> = ({
+  value,
+  onChange,
+}) => {
   return (
     <div className="flex items-center space-x-2">
       <Globe className="h-5 w-5 text-gray-400" />

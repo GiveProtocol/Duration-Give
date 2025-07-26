@@ -1,7 +1,7 @@
-import React from 'react';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
-import { CharityDetails } from '@/types/charity';
+import React from "react";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
+import { CharityDetails } from "@/types/charity";
 
 interface ProfileFormProps {
   profile: Partial<CharityDetails>;
@@ -14,13 +14,13 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   profile,
   onSubmit,
   loading,
-  error
+  error,
 }) => {
   const [formData, setFormData] = React.useState<CharityDetails>({
-    name: profile.name || '',
-    description: profile.description || '',
-    category: profile.category || '',
-    image_url: profile.image_url || ''
+    name: profile.name || "",
+    description: profile.description || "",
+    category: profile.category || "",
+    image_url: profile.image_url || "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,7 +36,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       <Input
         label="Charity Name"
         value={formData.name}
-        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+        onChange={(e) =>
+          setFormData((prev) => ({ ...prev, name: e.target.value }))
+        }
         required
       />
       <div>
@@ -45,7 +47,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
         </label>
         <textarea
           value={formData.description}
-          onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, description: e.target.value }))
+          }
           rows={4}
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
           required
@@ -54,22 +58,22 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       <Input
         label="Category"
         value={formData.category}
-        onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+        onChange={(e) =>
+          setFormData((prev) => ({ ...prev, category: e.target.value }))
+        }
         required
       />
       <Input
         label="Image URL"
         type="url"
         value={formData.image_url}
-        onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
+        onChange={(e) =>
+          setFormData((prev) => ({ ...prev, image_url: e.target.value }))
+        }
         required
       />
-      <Button
-        type="submit"
-        disabled={loading}
-        className="w-full"
-      >
-        {loading ? 'Saving...' : 'Save Changes'}
+      <Button type="submit" disabled={loading} className="w-full">
+        {loading ? "Saving..." : "Save Changes"}
       </Button>
     </form>
   );
