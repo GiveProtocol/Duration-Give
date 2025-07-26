@@ -1,14 +1,14 @@
-import '@testing-library/jest-dom';
-import { TextEncoder, TextDecoder } from 'util';
-import { setupServer } from 'msw/node';
-import { handlers } from './mocks/handlers';
+import "@testing-library/jest-dom";
+import { TextEncoder, TextDecoder } from "util";
+import { setupServer } from "msw/node";
+import { handlers } from "./mocks/handlers";
 
 // Global jest types
 declare global {
-  const jest: typeof import('jest');
-  const beforeAll: typeof import('jest')['beforeAll'];
-  const afterEach: typeof import('jest')['afterEach'];  
-  const afterAll: typeof import('jest')['afterAll'];
+  const jest: typeof import("jest");
+  const beforeAll: (typeof import("jest"))["beforeAll"];
+  const afterEach: (typeof import("jest"))["afterEach"];
+  const afterAll: (typeof import("jest"))["afterAll"];
 }
 
 // Mock TextEncoder/TextDecoder
@@ -16,19 +16,19 @@ global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
 // Mock window.crypto
-Object.defineProperty(window, 'crypto', {
+Object.defineProperty(window, "crypto", {
   value: {
     subtle: {
-      digest: jest.fn()
+      digest: jest.fn(),
     },
-    getRandomValues: jest.fn()
-  }
+    getRandomValues: jest.fn(),
+  },
 });
 
 // Setup MSW
 export const server = setupServer(...handlers);
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
@@ -37,7 +37,7 @@ const mockIntersectionObserver = jest.fn();
 mockIntersectionObserver.mockReturnValue({
   observe: () => null,
   unobserve: () => null,
-  disconnect: () => null
+  disconnect: () => null,
 });
 window.IntersectionObserver = mockIntersectionObserver;
 
@@ -45,5 +45,5 @@ window.IntersectionObserver = mockIntersectionObserver;
 window.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
-  disconnect: jest.fn()
+  disconnect: jest.fn(),
 }));

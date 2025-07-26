@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
-import { useAuth } from '@/contexts/AuthContext';
-import { Logger } from '@/utils/logger';
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/contexts/AuthContext";
+import { Logger } from "@/utils/logger";
 
 interface Profile {
   id: string;
   user_id: string;
-  type: 'donor' | 'charity';
+  type: "donor" | "charity";
   created_at: string;
 }
 
@@ -35,27 +35,27 @@ export function useProfile() {
       try {
         // First try to get existing profile
         const { data: existingProfile, error: fetchError } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('user_id', user.id)
+          .from("profiles")
+          .select("*")
+          .eq("user_id", user.id)
           .maybeSingle();
 
         if (fetchError) throw fetchError;
 
         // If no profile exists, create one
         if (!existingProfile) {
-          const userType = user.user_metadata?.type || 'donor';
+          const userType = user.user_metadata?.type || "donor";
           const { data: newProfile, error: insertError } = await supabase
-            .from('profiles')
+            .from("profiles")
             .insert({
               user_id: user.id,
-              type: userType
+              type: userType,
             })
             .select()
             .single();
 
           if (insertError) throw insertError;
-          
+
           if (mounted) {
             setProfile(newProfile);
             setError(null);
@@ -66,26 +66,30 @@ export function useProfile() {
             setError(null);
           }
         }
-        
+
         // Reset retry count on success
         setRetryCount(0);
       } catch (err) {
-        Logger.error('Profile fetch failed', { 
+        Logger.error("Profile fetch failed", {
           error: err instanceof Error ? err.message : String(err),
           stack: err instanceof Error ? err.stack : undefined,
-          retryCount
+          retryCount,
         });
-        
+
         if (mounted) {
-          setError(err instanceof Error ? err : new Error('Failed to fetch profile'));
-          
+          setError(
+            err instanceof Error ? err : new Error("Failed to fetch profile"),
+          );
+
           // Implement retry with exponential backoff
           if (retryCount < MAX_RETRIES) {
             const delay = RETRY_DELAY * Math.pow(2, retryCount);
-            Logger.info(`Retrying profile fetch in ${delay}ms (attempt ${retryCount + 1}/${MAX_RETRIES})`);
-            
+            Logger.info(
+              `Retrying profile fetch in ${delay}ms (attempt ${retryCount + 1}/${MAX_RETRIES})`,
+            );
+
             retryTimeout = setTimeout(() => {
-              setRetryCount(prev => prev + 1);
+              setRetryCount((prev) => prev + 1);
               fetchProfile();
             }, delay);
           }

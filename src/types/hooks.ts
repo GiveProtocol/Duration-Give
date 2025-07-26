@@ -1,7 +1,7 @@
-import React from 'react';
-import { Charity, Campaign, CharityCategory } from './charity';
-import { TokenAmount, TransactionHash } from './blockchain';
-import { ApiError, QueryOptions } from './common';
+import React from "react";
+import { Charity, Campaign, CharityCategory } from "./charity";
+import { TokenAmount, TransactionHash } from "./blockchain";
+import { ApiError, QueryOptions } from "./common";
 
 // Data Fetching Hooks
 export interface UseCharityResult {
@@ -51,7 +51,7 @@ export interface UseDonationResult {
 
 export interface UseTransactionResult {
   hash?: TransactionHash;
-  status: 'pending' | 'confirmed' | 'failed';
+  status: "pending" | "confirmed" | "failed";
   loading: boolean;
   error?: Error;
 }

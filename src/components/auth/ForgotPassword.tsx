@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { validateEmail } from '@/utils/validation';
+import React, { useState } from "react";
+import { ArrowLeft } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { validateEmail } from "@/utils/validation";
 
 interface ForgotPasswordProps {
   onBack: () => void;
 }
 
 export const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const { resetPassword, loading } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!validateEmail(email)) {
-      setError('Please enter a valid email address');
+      setError("Please enter a valid email address");
       return;
     }
 
@@ -28,14 +28,18 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
       await resetPassword(email);
       setSubmitted(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to send reset email');
+      setError(
+        err instanceof Error ? err.message : "Failed to send reset email",
+      );
     }
   };
 
   if (submitted) {
     return (
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Check Your Email</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          Check Your Email
+        </h2>
         <p className="text-gray-600 mb-6">
           We&apos;ve sent password reset instructions to {email}
         </p>
@@ -58,14 +62,13 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
 
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Reset Password</h2>
       <p className="text-gray-600 mb-6">
-        Enter your email address and we&apos;ll send you instructions to reset your password.
+        Enter your email address and we&apos;ll send you instructions to reset
+        your password.
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="p-3 bg-red-50 text-red-600 rounded-md">
-            {error}
-          </div>
+          <div className="p-3 bg-red-50 text-red-600 rounded-md">{error}</div>
         )}
 
         <Input
@@ -77,12 +80,8 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBack }) => {
           disabled={loading}
         />
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={loading}
-        >
-          {loading ? 'Sending...' : 'Send Reset Instructions'}
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? "Sending..." : "Send Reset Instructions"}
         </Button>
       </form>
     </div>
