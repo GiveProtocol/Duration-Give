@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { Toast, ToastType } from '../components/ui/Toast';
-import { SecureRandom } from '@/utils/security';
+import { SecureRandom } from '@/utils/security/index';
 
 interface ToastContextType {
   showToast: (type: ToastType, title: string, message?: string) => void;

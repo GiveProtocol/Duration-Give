@@ -4,7 +4,7 @@ import { VolunteerApplication, VolunteerHours, VolunteerVerification } from '@/t
 import { Logger } from './logger';
 import { useWeb3 } from '@/contexts/Web3Context';
 import { getContractAddress } from '@/config/contracts';
-import { SecureRandom } from '@/utils/security';
+import { SecureRandom } from '@/utils/security/index';
 
 // ABI for the VolunteerVerification contract
 const VOLUNTEER_VERIFICATION_ABI = [
