@@ -9,6 +9,11 @@ interface ToastContextType {
 // Create context with undefined initial value but proper type
 export const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
+/**
+ * Provides toast notification functionality to child components
+ * @param children - React child elements
+ * @returns JSX element with toast context provider and toast display
+ */
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Array<{
     id: string;
@@ -54,6 +59,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * Hook to access toast notification functionality
+ * @returns Object containing showToast function for displaying toast notifications
+ * @throws {Error} When used outside of ToastProvider
+ */
 export function useToast() {
   const context = useContext(ToastContext);
   if (!context) {
