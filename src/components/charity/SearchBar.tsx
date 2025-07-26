@@ -30,8 +30,8 @@ interface SearchBarProps {
   isLoading?: boolean;
   error?: Error | null;
   onSearch: (_query: string, _filters: SearchFilters) => void;
-  onCountrySelect?: (country: Country) => void;
-  onCategorySelect?: (category: Category) => void;
+  onCountrySelect?: (_country: Country) => void;
+  onCategorySelect?: (_category: Category) => void;
   defaultCountry?: Country;
   placeholder?: string;
   className?: string;
@@ -57,7 +57,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   });
   const [showFilters, setShowFilters] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
-  const debouncedSearch = useDebounce(query, 300);
+  const _debouncedSearch = useDebounce(query, 300);
 
   const handleSearch = useCallback((searchQuery: string) => {
     setQuery(searchQuery);

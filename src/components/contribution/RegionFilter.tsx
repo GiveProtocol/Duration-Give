@@ -3,7 +3,7 @@ import { Globe } from 'lucide-react';
 
 interface RegionFilterProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (_value: string) => void;
 }
 
 export const RegionFilter: React.FC<RegionFilterProps> = ({ value, onChange }) => {

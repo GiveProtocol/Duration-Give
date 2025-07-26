@@ -99,8 +99,8 @@ const fetchVolunteerLeaders = async (
 };
 
 export const VolunteerLeaderboard: React.FC<VolunteerLeaderboardProps> = ({
-  timeRange,
-  region,
+  timeRange: _timeRange,
+  region: _region,
   searchTerm,
   highlightSkill,
   section = "hours",

@@ -4,7 +4,7 @@ import { ContributionFilters as FilterType } from '@/types/contribution';
 
 interface ContributionFiltersProps {
   filters: FilterType;
-  onChange: (filters: FilterType) => void;
+  onChange: (_filters: FilterType) => void;
   className?: string;
 }
 

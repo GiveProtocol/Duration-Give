@@ -3,7 +3,7 @@ import { Clock } from 'lucide-react';
 
 interface TimeRangeFilterProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (_value: string) => void;
 }
 
 export const TimeRangeFilter: React.FC<TimeRangeFilterProps> = ({ value, onChange }) => {

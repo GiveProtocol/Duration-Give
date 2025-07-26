@@ -5,7 +5,7 @@ import { isValidAmount } from '../../../utils/validation';
 import { formatCurrency } from '../../../utils/money';
 
 interface WithdrawalRequestFormProps {
-  onSubmit: (amount: number) => Promise<void>;
+  onSubmit: (_amount: number) => Promise<void>;
   availableBalance: number;
   loading?: boolean;
   error?: string;

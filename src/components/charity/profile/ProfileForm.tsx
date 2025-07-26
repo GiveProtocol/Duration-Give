@@ -5,7 +5,7 @@ import { CharityDetails } from '@/types/charity';
 
 interface ProfileFormProps {
   profile: Partial<CharityDetails>;
-  onSubmit: (data: CharityDetails) => Promise<void>;
+  onSubmit: (_data: CharityDetails) => Promise<void>;
   loading: boolean;
   error?: string;
 }
