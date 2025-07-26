@@ -98,7 +98,7 @@ const ComingSoon: React.FC = () => {
 
               {status === 'success' && (
                 <p className="mt-2 text-green-600">
-                  Thanks for joining! We'll keep you updated.
+                  Thanks for joining! We&apos;ll keep you updated.
                 </p>
               )}
               {status === 'error' && (

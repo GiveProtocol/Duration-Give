@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { validateAmount } from '@/utils/validation';
 import { Logger } from '@/utils/logger';
 

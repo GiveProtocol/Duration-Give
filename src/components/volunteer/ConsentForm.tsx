@@ -76,7 +76,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({ onAccept, onDecline })
               <li>
                 I can withdraw my consent at any time by contacting legal@giveprotocol.io, though 
                 this will not affect the lawfulness of processing based on my consent before withdrawal. 
-                Withdrawing consent may impact the organization's ability to consider my volunteer 
+                Withdrawing consent may impact the organization&apos;s ability to consider my volunteer 
                 application.
               </li>
             </ol>

@@ -14,7 +14,7 @@ export const Legal: React.FC = () => {
           
           <p>Welcome to the Give Protocol decentralized application ("dApp"). These Terms and Conditions ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and Give Protocol Foundation ("Give Protocol," "Company," "we," "us," or "our") governing your access to and use of the Give Protocol dApp, including all related services, features, content, and functionality (collectively, the "Platform" or "Services").</p>
           
-          <p>By accessing or using the Services in any way, you acknowledge that you have read, understood, and agree to be bound by all of these Terms. If you don't agree to these Terms, you must not access or use the Services. Your use of the Services in any way means that you agree to all of these Terms, and these Terms will remain in effect while you use the Services.</p>
+          <p>By accessing or using the Services in any way, you acknowledge that you have read, understood, and agree to be bound by all of these Terms. If you don&apos;t agree to these Terms, you must not access or use the Services. Your use of the Services in any way means that you agree to all of these Terms, and these Terms will remain in effect while you use the Services.</p>
           
           <ImportantNotice variant="warning">
             <p><strong>PLEASE READ THESE TERMS CAREFULLY.</strong> They cover important information about Services provided to you and any charges we bill you. These Terms include information about future changes to these Terms, limitations of liability, a class action waiver, and resolution of disputes by arbitration instead of in court.</p>
@@ -30,7 +30,7 @@ export const Legal: React.FC = () => {
           
           <p>We reserve the right to modify these Terms at any time by posting the revised Terms on the Platform. We will place a notice on our site, send you an email, and/or notify you by some other means when we make changes.</p>
           
-          <p>If you don't agree with the new Terms, you are free to reject them; unfortunately, that means you will no longer be able to use the Services. If you use the Services in any way after a change to the Terms is effective, that means you agree to all of the changes. The changes will not be retroactive, and the most current version of the Terms will govern our relationship with you.</p>
+          <p>If you don&apos;t agree with the new Terms, you are free to reject them; unfortunately, that means you will no longer be able to use the Services. If you use the Services in any way after a change to the Terms is effective, that means you agree to all of the changes. The changes will not be retroactive, and the most current version of the Terms will govern our relationship with you.</p>
           
           <p>Except for changes by us as described here, no other amendment or modification of these Terms will be effective unless in writing and signed by both you and us.</p>
         </section>
@@ -78,9 +78,9 @@ export const Legal: React.FC = () => {
           
           <h3><strong>4.3 Account Information</strong></h3>
           
-          <p>You promise to provide us with accurate, complete, and updated information about yourself. You may not select as your User ID a name that you don't have the right to use, or another person's name with the intent to impersonate that person. You may not transfer your account to anyone else without our prior written permission.</p>
+          <p>You promise to provide us with accurate, complete, and updated information about yourself. You may not select as your User ID a name that you don&apos;t have the right to use, or another person&apos;s name with the intent to impersonate that person. You may not transfer your account to anyone else without our prior written permission.</p>
           
-          <p>If you're agreeing to these Terms on behalf of an organization or entity, you represent and warrant that you are authorized to agree to these Terms on that organization's or entity's behalf and bind them to these Terms.</p>
+          <p>If you&apos;re agreeing to these Terms on behalf of an organization or entity, you represent and warrant that you are authorized to agree to these Terms on that organization&apos;s or entity&apos;s behalf and bind them to these Terms.</p>
           
           <h3><strong>4.4 Children&apos;s Privacy</strong></h3>
           

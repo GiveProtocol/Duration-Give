@@ -145,7 +145,7 @@ export const About: React.FC = () => {
         <section className="text-center bg-indigo-50 rounded-lg p-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Join the Future of Giving</h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Whether you're a donor looking to make an impact, a volunteer ready to contribute your time, 
+            Whether you&apos;re a donor looking to make an impact, a volunteer ready to contribute your time, 
             or an organization seeking support, Give Protocol provides the tools you need to create 
             meaningful change.
           </p>

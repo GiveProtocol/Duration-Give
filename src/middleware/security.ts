@@ -1,4 +1,7 @@
 import { SecurityManager } from '../utils/security';
+import { CSRFProtection } from '../utils/security/csrf';
+import { InputSanitizer } from '../utils/security/sanitizer';
+import { RateLimiter } from '../utils/security/rateLimiter';
 import { Logger } from '../utils/logger';
 
 export function initializeSecurity(): void {
