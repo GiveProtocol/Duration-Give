@@ -1,5 +1,9 @@
 import { AuthErrorCode } from '../types/auth';
 
+export interface AuthError extends Error {
+  code: AuthErrorCode;
+}
+
 export function getAuthErrorMessage(code: AuthErrorCode): string {
   const messages: Record<AuthErrorCode, string> = {
     invalid_credentials: 'Invalid email or password',
@@ -12,8 +16,8 @@ export function getAuthErrorMessage(code: AuthErrorCode): string {
   return messages[code] || 'An unexpected error occurred';
 }
 
-export function createAuthError(code: AuthErrorCode): Error {
-  const error = new Error(getAuthErrorMessage(code));
-  (error as any).code = code;
+export function createAuthError(code: AuthErrorCode): AuthError {
+  const error = new Error(getAuthErrorMessage(code)) as AuthError;
+  error.code = code;
   return error;
 }
