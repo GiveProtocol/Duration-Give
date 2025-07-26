@@ -34,19 +34,33 @@ const queryClient = new QueryClient({
   }
 });
 
-// Context providers component to reduce nesting
-const AppProviders = ({ children }: { children: React.ReactNode }) => (
+// Core context providers
+const CoreProviders = ({ children }: { children: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>
     <ToastProvider>
-      <AuthProvider>
-        <SettingsProvider>
-          <Web3Provider>
-            {children}
-          </Web3Provider>
-        </SettingsProvider>
-      </AuthProvider>
+      {children}
     </ToastProvider>
   </QueryClientProvider>
+);
+
+// Auth and Web3 providers
+const AuthWeb3Providers = ({ children }: { children: React.ReactNode }) => (
+  <AuthProvider>
+    <SettingsProvider>
+      <Web3Provider>
+        {children}
+      </Web3Provider>
+    </SettingsProvider>
+  </AuthProvider>
+);
+
+// Combined providers component
+const AppProviders = ({ children }: { children: React.ReactNode }) => (
+  <CoreProviders>
+    <AuthWeb3Providers>
+      {children}
+    </AuthWeb3Providers>
+  </CoreProviders>
 );
 
 // Router wrapper component
