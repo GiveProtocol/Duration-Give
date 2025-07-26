@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as Sentry from '@sentry/react';
@@ -34,6 +34,30 @@ const queryClient = new QueryClient({
   }
 });
 
+// Context providers component to reduce nesting
+const AppProviders = ({ children }: { children: React.ReactNode }) => (
+  <QueryClientProvider client={queryClient}>
+    <ToastProvider>
+      <AuthProvider>
+        <SettingsProvider>
+          <Web3Provider>
+            {children}
+          </Web3Provider>
+        </SettingsProvider>
+      </AuthProvider>
+    </ToastProvider>
+  </QueryClientProvider>
+);
+
+// Router wrapper component
+const AppRouter = () => (
+  <BrowserRouter future={{ v7_relativeSplatPath: true }}>
+    <Layout>
+      <AppRoutes />
+    </Layout>
+  </BrowserRouter>
+);
+
 function App() {
   const sentryFallback = useCallback(({ error, resetError }: { error: Error; resetError: () => void }) => (
     <ErrorBoundary fallback={null}>
@@ -53,26 +77,11 @@ function App() {
   ), []);
 
   return (
-    <Sentry.ErrorBoundary
-      fallback={sentryFallback}
-      showDialog={false}
-    >
+    <Sentry.ErrorBoundary fallback={sentryFallback} showDialog={false}>
       <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <ToastProvider>
-            <AuthProvider>
-              <SettingsProvider>
-                <Web3Provider>
-                  <BrowserRouter future={{ v7_relativeSplatPath: true }}>
-                    <Layout>
-                      <AppRoutes />
-                    </Layout>
-                  </BrowserRouter>
-                </Web3Provider>
-              </SettingsProvider>
-            </AuthProvider>
-          </ToastProvider>
-        </QueryClientProvider>
+        <AppProviders>
+          <AppRouter />
+        </AppProviders>
       </ErrorBoundary>
     </Sentry.ErrorBoundary>
   );
