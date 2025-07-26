@@ -12,7 +12,7 @@ export const Legal: React.FC = () => {
         <section>
           <h2><strong>1. INTRODUCTION AND BINDING AGREEMENT</strong></h2>
           
-          <p>Welcome to the Give Protocol decentralized application ("dApp"). These Terms and Conditions ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and Give Protocol Foundation ("Give Protocol," "Company," "we," "us," or "our") governing your access to and use of the Give Protocol dApp, including all related services, features, content, and functionality (collectively, the "Platform" or "Services").</p>
+          <p>Welcome to the Give Protocol decentralized application (&quot;dApp&quot;). These Terms and Conditions (&quot;Terms&quot;) constitute a legally binding agreement between you (&quot;User,&quot; &quot;you,&quot; or &quot;your&quot;) and Give Protocol Foundation (&quot;Give Protocol,&quot; &quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) governing your access to and use of the Give Protocol dApp, including all related services, features, content, and functionality (collectively, the &quot;Platform&quot; or &quot;Services&quot;).</p>
           
           <p>By accessing or using the Services in any way, you acknowledge that you have read, understood, and agree to be bound by all of these Terms. If you don&apos;t agree to these Terms, you must not access or use the Services. Your use of the Services in any way means that you agree to all of these Terms, and these Terms will remain in effect while you use the Services.</p>
           

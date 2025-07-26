@@ -86,7 +86,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let mounted = true;
-    let refreshInterval: NodeJS.Timeout;
+    let refreshInterval: ReturnType<typeof setTimeout>;
 
     const initializeAuth = async () => {
       try {

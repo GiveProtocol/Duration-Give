@@ -64,7 +64,7 @@ const Login: React.FC = () => {
             </div>
             
             <div className="text-center space-y-2 mt-6">
-              <p className="text-sm text-gray-600">Don't have an account?</p>
+              <p className="text-sm text-gray-600">Don&apos;t have an account?</p>
               <Link
                 to="/register"
                 className="text-sm text-indigo-600 hover:text-indigo-500 font-medium"
@@ -160,7 +160,7 @@ const LoginHelpers: React.FC<{ setView: (view: View) => void }> = ({ setView }) 
     </div>
 
     <div className="text-center pt-4 border-t border-gray-200">
-      <p className="text-sm text-gray-600">Don't have an account?</p>
+      <p className="text-sm text-gray-600">Don&apos;t have an account?</p>
       <Link
         to="/register"
         className="text-sm text-indigo-600 hover:text-indigo-500 font-medium"
