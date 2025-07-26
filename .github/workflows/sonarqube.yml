@@ -50,7 +50,11 @@ jobs:
           echo "Using Java version:"
           java -version
           echo "JAVA_HOME: $JAVA_HOME"
-          npx sonar-scanner
+          npx sonar-scanner \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.organization=giveprotocol \
+            -Dsonar.projectKey=GiveProtocol_Duration-Give \
+            -Dsonar.token=$SONAR_TOKEN
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
