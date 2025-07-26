@@ -9,8 +9,8 @@ import { WorkLanguage } from "@/types/volunteer";
 
 interface OpportunityCardProps {
   opportunity: Opportunity;
-  t: (key: string, fallback?: string) => string;
-  formatLanguageName: (language: string) => string;
+  t: (_key: string, _fallback?: string) => string;
+  formatLanguageName: (_language: string) => string;
 }
 
 /**

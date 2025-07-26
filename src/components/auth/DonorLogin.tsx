@@ -15,7 +15,7 @@ export const DonorLogin: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const from = location.state?.from?.pathname || '/give-dashboard';
+  const _from = location.state?.from?.pathname || '/give-dashboard';
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();

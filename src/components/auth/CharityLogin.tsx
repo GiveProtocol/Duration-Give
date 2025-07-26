@@ -15,7 +15,7 @@ export const CharityLogin: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const from = location.state?.from?.pathname || '/charity-portal';
+  const _from = location.state?.from?.pathname || '/charity-portal';
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();

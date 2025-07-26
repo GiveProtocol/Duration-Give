@@ -7,8 +7,8 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { DOCS_CONFIG } from "@/config/docs";
 
 interface NavLinksProps {
-  isActive: (path: string) => string;
-  t: (key: string) => string;
+  isActive: (_path: string) => string;
+  t: (_key: string) => string;
 }
 
 /**
@@ -40,8 +40,8 @@ const DesktopNavLinks: React.FC<NavLinksProps> = ({ isActive, t }) => (
 );
 
 interface MobileMenuProps {
-  isActive: (path: string) => string;
-  t: (key: string) => string;
+  isActive: (_path: string) => string;
+  t: (_key: string) => string;
   onMenuClose: () => void;
   isLimitedNavPage: boolean;
 }

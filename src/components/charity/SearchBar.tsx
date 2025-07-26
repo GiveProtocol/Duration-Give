@@ -29,7 +29,7 @@ interface SearchBarProps {
   categories: Category[];
   isLoading?: boolean;
   error?: Error | null;
-  onSearch: (query: string, filters: SearchFilters) => void;
+  onSearch: (_query: string, _filters: SearchFilters) => void;
   onCountrySelect?: (country: Country) => void;
   onCategorySelect?: (category: Category) => void;
   defaultCountry?: Country;
