@@ -1,7 +1,7 @@
-import React, { Component, ErrorInfo } from 'react';
-import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
-import { Button } from './ui/Button';
-import { Logger } from '@/utils/logger';
+import React, { Component, ErrorInfo } from "react";
+import { AlertTriangle, RefreshCw, Home } from "lucide-react";
+import { Button } from "./ui/Button";
+import { Logger } from "@/utils/logger";
 
 interface Props {
   children: React.ReactNode;
@@ -28,29 +28,29 @@ export class ErrorBoundary extends Component<Props, State> {
       hasError: false,
       error: null,
       errorInfo: null,
-      recoveryAttempts: 0
+      recoveryAttempts: 0,
     };
   }
 
   public static getDerivedStateFromError(error: Error): Partial<State> {
     return {
       hasError: true,
-      error
+      error,
     };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Log detailed error information
-    Logger.error('React error boundary caught error', {
+    Logger.error("React error boundary caught error", {
       error: {
         name: error.name,
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
       },
       componentStack: errorInfo.componentStack,
       location: window.location.href,
       timestamp: new Date().toISOString(),
-      recoveryAttempts: this.state.recoveryAttempts
+      recoveryAttempts: this.state.recoveryAttempts,
     });
 
     // Call onError prop if provided
@@ -62,7 +62,7 @@ export class ErrorBoundary extends Component<Props, State> {
     this.setState({
       error,
       errorInfo,
-      hasError: true
+      hasError: true,
     });
 
     // Attempt automatic recovery for certain errors
@@ -74,17 +74,17 @@ export class ErrorBoundary extends Component<Props, State> {
   private canAttemptRecovery(error: Error): boolean {
     // List of errors that we can attempt to recover from
     const recoverableErrors = [
-      'ChunkLoadError', // Webpack chunk loading error
-      'NetworkError',
-      'TimeoutError',
-      'SyntaxError' // Sometimes caused by malformed JSON
+      "ChunkLoadError", // Webpack chunk loading error
+      "NetworkError",
+      "TimeoutError",
+      "SyntaxError", // Sometimes caused by malformed JSON
     ];
 
     return (
       this.state.recoveryAttempts < MAX_RECOVERY_ATTEMPTS &&
       (recoverableErrors.includes(error.name) ||
-        error.message.includes('loading chunk') ||
-        error.message.includes('network'))
+        error.message.includes("loading chunk") ||
+        error.message.includes("network"))
     );
   }
 
@@ -95,41 +95,39 @@ export class ErrorBoundary extends Component<Props, State> {
     }
 
     this.lastRecoveryAttempt = now;
-    this.setState(prev => ({ recoveryAttempts: prev.recoveryAttempts + 1 }));
+    this.setState((prev) => ({ recoveryAttempts: prev.recoveryAttempts + 1 }));
 
     try {
       // Clear cache and reload resources
       await this.clearCache();
-      
+
       // Reset error state
       this.setState({
         hasError: false,
         error: null,
-        errorInfo: null
+        errorInfo: null,
       });
 
       // Log recovery attempt
-      Logger.info('Attempted error recovery', {
+      Logger.info("Attempted error recovery", {
         attempt: this.state.recoveryAttempts,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (recoveryError) {
-      Logger.error('Recovery attempt failed', {
+      Logger.error("Recovery attempt failed", {
         error: recoveryError,
-        attempt: this.state.recoveryAttempts
+        attempt: this.state.recoveryAttempts,
       });
     }
   };
 
   private async clearCache() {
-    if ('caches' in window) {
+    if ("caches" in window) {
       try {
         const cacheKeys = await caches.keys();
-        await Promise.all(
-          cacheKeys.map(key => caches.delete(key))
-        );
+        await Promise.all(cacheKeys.map((key) => caches.delete(key)));
       } catch (error) {
-        Logger.error('Failed to clear cache', { error });
+        Logger.error("Failed to clear cache", { error });
       }
     }
   }
@@ -140,13 +138,13 @@ export class ErrorBoundary extends Component<Props, State> {
       hasError: false,
       error: null,
       errorInfo: null,
-      recoveryAttempts: 0
+      recoveryAttempts: 0,
     });
   };
 
   private handleNavigateHome = () => {
     // Navigate to home page
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   public render() {
@@ -165,7 +163,7 @@ export class ErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h2>
             <p className="text-gray-600 mb-6 text-center">
-              {this.state.error?.message || 'An unexpected error occurred'}
+              {this.state.error?.message || "An unexpected error occurred"}
             </p>
             <div className="space-y-3">
               <Button
@@ -176,8 +174,8 @@ export class ErrorBoundary extends Component<Props, State> {
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 {this.state.recoveryAttempts >= MAX_RECOVERY_ATTEMPTS
-                  ? 'Too many attempts'
-                  : 'Try Again'}
+                  ? "Too many attempts"
+                  : "Try Again"}
               </Button>
               <Button
                 onClick={this.handleNavigateHome}
@@ -187,7 +185,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 Go to Homepage
               </Button>
             </div>
-            {process.env.NODE_ENV === 'development' && this.state.errorInfo && (
+            {process.env.NODE_ENV === "development" && this.state.errorInfo && (
               <details className="mt-4 p-4 bg-gray-50 rounded-md">
                 <summary className="text-sm text-gray-700 cursor-pointer">
                   Error Details
