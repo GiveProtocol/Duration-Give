@@ -1,10 +1,5 @@
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
-import { setupServer } from 'msw/node';
-import { handlers } from './mocks/handlers';
-
-// Import jest globals  
-import { jest, beforeAll, afterEach, afterAll } from '@jest/globals';
 
 // Mock TextEncoder/TextDecoder
 global.TextEncoder = TextEncoder;
@@ -14,31 +9,45 @@ global.TextDecoder = TextDecoder;
 Object.defineProperty(window, 'crypto', {
   value: {
     subtle: {
-      digest: jest.fn()
+      digest: jest.fn(),
+      timingSafeEqual: jest.fn()
     },
     getRandomValues: jest.fn()
   }
 });
 
-// Setup MSW
-export const server = setupServer(...handlers);
-
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
 // Mock IntersectionObserver
-const mockIntersectionObserver = jest.fn();
-mockIntersectionObserver.mockReturnValue({
-  observe: () => null,
-  unobserve: () => null,
-  disconnect: () => null
+const mockIntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+  root: null,
+  rootMargin: '',
+  thresholds: []
+}));
+Object.defineProperty(window, 'IntersectionObserver', {
+  writable: true,
+  value: mockIntersectionObserver
 });
-window.IntersectionObserver = mockIntersectionObserver;
 
 // Mock ResizeObserver
-window.ResizeObserver = jest.fn().mockImplementation(() => ({
+const mockResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn()
 }));
+Object.defineProperty(window, 'ResizeObserver', {
+  writable: true,
+  value: mockResizeObserver
+});
+
+// Mock MutationObserver
+const mockMutationObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  disconnect: jest.fn(),
+  takeRecords: jest.fn()
+}));
+Object.defineProperty(window, 'MutationObserver', {
+  writable: true,
+  value: mockMutationObserver
+});
