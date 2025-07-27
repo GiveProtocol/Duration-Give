@@ -1238,13 +1238,22 @@
     <footer class="docs-footer">
       <div class="footer-content">
         <div class="footer-links">
-          <a href="{{ '/safety-security/cookie-policy/' | relative_url }}">Cookie Policy</a>
-          <a href="{{ '/safety-security/platform-security/' | relative_url }}">Privacy Policy</a>
-          <a href="{{ '/help-center/need-help/' | relative_url }}">Contact Us</a>
+          <a href="{{ '/safety-security/cookie-policy/' | relative_url }}"
+            >Cookie Policy</a
+          >
+          <a href="{{ '/safety-security/platform-security/' | relative_url }}"
+            >Privacy Policy</a
+          >
+          <a href="{{ '/help-center/need-help/' | relative_url }}"
+            >Contact Us</a
+          >
           <a href="https://giveprotocol.io" target="_blank">Main Website</a>
         </div>
         <div class="footer-text">
-          <p>{{ site.footer_content | default: "Copyright &copy; 2025 Give Protocol. All rights reserved." }}</p>
+          <p>
+            {{ site.footer_content | default: "Copyright &copy; 2025 Give
+            Protocol. All rights reserved." }}
+          </p>
         </div>
       </div>
     </footer>
