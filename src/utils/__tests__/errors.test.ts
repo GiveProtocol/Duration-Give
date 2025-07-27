@@ -28,7 +28,9 @@ describe('errors utilities', () => {
     });
 
     it('should return default message for unknown error', () => {
-      const message = getAuthErrorMessage('unknown_error' as any);
+      // Test with an unknown error code by using type assertion with unknown first
+      const unknownCode = 'unknown_error' as unknown;
+      const message = getAuthErrorMessage(unknownCode as Parameters<typeof getAuthErrorMessage>[0]);
       expect(typeof message).toBe('string');
       expect(message).toBe('An unexpected error occurred');
     });

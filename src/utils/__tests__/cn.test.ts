@@ -13,10 +13,12 @@ describe('cn utility', () => {
   });
 
   it('should handle conditional class names', () => {
-    const result = cn('base', false && 'conditional', 'always');
+    const shouldIncludeConditional = false;
+    const result = cn('base', shouldIncludeConditional && 'conditional', 'always');
     expect(typeof result).toBe('string');
     expect(result).toContain('base');
     expect(result).toContain('always');
+    expect(result).not.toContain('conditional');
   });
 
   it('should handle undefined and null values', () => {
