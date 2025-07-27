@@ -11,6 +11,16 @@
       content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"
     />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-CBQHKLHD8T');
+    </script>
+
     <!-- Favicon -->
     <link
       rel="icon"
@@ -1242,36 +1252,45 @@
 
       let searchData = [];
 
-      // Load search data - with fallback for non-Jekyll environments
-      const searchUrl =
-        '{{ "/search.json" | relative_url }}' ===
-        '{{ "/search.json" | relative_url }}'
-          ? "./search.json" // Fallback if Jekyll isn't processing
-          : '{{ "/search.json" | relative_url }}';
+      // Load search data with multiple fallback strategies
+      async function loadSearchData() {
+        const possibleUrls = [
+          '{{ "/search.json" | relative_url }}',
+          '/search.json',
+          './search.json',
+          '../search.json',
+          '../../search.json'
+        ];
 
-      fetch(searchUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        for (const url of possibleUrls) {
+          try {
+            console.log(`Trying to load search data from: ${url}`);
+            const response = await fetch(url);
+            if (response.ok) {
+              const data = await response.json();
+              searchData = data;
+              console.log(`Search data loaded successfully from: ${url} (${data.length} items)`);
+              return;
+            }
+          } catch (error) {
+            console.log(`Failed to load from ${url}:`, error.message);
           }
-          return response.json();
-        })
-        .then((data) => {
-          searchData = data;
-          // Search data loaded successfully
-        })
-        .catch((error) => {
-          console.error("❌ Search data loading error:", error);
-          // Fallback: Try to search through visible navigation links
-          const navLinks = document.querySelectorAll(".docs-nav-link");
-          searchData = Array.from(navLinks).map((link) => ({
-            title: link.textContent.trim(),
-            url: link.getAttribute("href"),
-            content: link.textContent.trim(),
-            category: "Navigation",
-          }));
-          // Using fallback search data from navigation
-        });
+        }
+
+        // Final fallback: Create basic search data from navigation
+        console.log("Using navigation fallback for search data");
+        const navLinks = document.querySelectorAll(".docs-nav-link");
+        searchData = Array.from(navLinks).map((link) => ({
+          title: link.textContent.trim(),
+          url: link.getAttribute("href"),
+          content: link.textContent.trim(),
+          category: "Navigation",
+        }));
+        console.log(`Fallback search data created (${searchData.length} items)`);
+      }
+
+      // Initialize search data
+      loadSearchData();
 
       function highlightText(text, query) {
         if (!query) return text;
@@ -1314,6 +1333,25 @@
       function performSearch(query) {
         if (!query.trim()) {
           searchOverlay.classList.remove("active");
+          return;
+        }
+
+        // Check if search data is loaded
+        if (!searchData || searchData.length === 0) {
+          searchResults.innerHTML = `
+            <div class="docs-search-item">
+              <div class="docs-search-title">Loading search data...</div>
+              <div class="docs-search-excerpt">Please wait while we load the search index.</div>
+            </div>
+          `;
+          showSearchOverlay();
+          
+          // Retry loading search data
+          loadSearchData().then(() => {
+            if (searchData.length > 0) {
+              performSearch(query); // Retry search after data loads
+            }
+          });
           return;
         }
 

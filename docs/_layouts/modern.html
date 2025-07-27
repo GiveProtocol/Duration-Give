@@ -11,6 +11,16 @@
       content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"
     />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-CBQHKLHD8T');
+    </script>
+
     <!-- Language detection -->
     {% assign current_lang = page.lang | default: "en" %} {% assign
     is_primary_lang = site.data.languages.primary[current_lang] %}
