@@ -1341,9 +1341,7 @@ Phone: +44-20-555-GIVE</p>
       let searchData = [];
 
       // Load search data - with fallback for non-Jekyll environments
-      const searchUrl = '/search.json' === '/search.json' 
-        ? './search.json'  // Fallback if Jekyll isn't processing
-        : '/search.json';
+      const searchUrl = '/search.json';
       
       fetch(searchUrl)
         .then((response) => {

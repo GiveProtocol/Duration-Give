@@ -32,10 +32,13 @@
     </script>
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"
+    ></script>
     <script>
-      gtag('js', new Date());
-      gtag('config', 'G-CBQHKLHD8T');
+      gtag("js", new Date());
+      gtag("config", "G-CBQHKLHD8T");
     </script>
 
     <!-- Favicon -->
@@ -1273,10 +1276,10 @@
       async function loadSearchData() {
         const possibleUrls = [
           '{{ "/search.json" | relative_url }}',
-          '/search.json',
-          './search.json',
-          '../search.json',
-          '../../search.json'
+          "/search.json",
+          "./search.json",
+          "../search.json",
+          "../../search.json",
         ];
 
         for (const url of possibleUrls) {
@@ -1286,7 +1289,9 @@
             if (response.ok) {
               const data = await response.json();
               searchData = data;
-              console.log(`Search data loaded successfully from: ${url} (${data.length} items)`);
+              console.log(
+                `Search data loaded successfully from: ${url} (${data.length} items)`,
+              );
               return;
             }
           } catch (error) {
@@ -1303,7 +1308,9 @@
           content: link.textContent.trim(),
           category: "Navigation",
         }));
-        console.log(`Fallback search data created (${searchData.length} items)`);
+        console.log(
+          `Fallback search data created (${searchData.length} items)`,
+        );
       }
 
       // Initialize search data
@@ -1362,7 +1369,7 @@
             </div>
           `;
           showSearchOverlay();
-          
+
           // Retry loading search data
           loadSearchData().then(() => {
             if (searchData.length > 0) {
