@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/Button';
@@ -12,6 +12,11 @@ interface ForgotCredentialsProps {
   onBack: () => void;
 }
 
+/**
+ * Shared component for handling forgot password and username flows
+ * @param type - Whether this is for password reset or username reminder
+ * @param onBack - Callback function to navigate back to sign in
+ */
 export const ForgotCredentials: React.FC<ForgotCredentialsProps> = ({ type, onBack }) => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -27,7 +32,11 @@ export const ForgotCredentials: React.FC<ForgotCredentialsProps> = ({ type, onBa
     ? 'Password reset instructions sent to your email'
     : 'Username reminder sent to your email';
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  /**
+   * Handles form submission for password reset or username reminder
+   * @param e - Form submission event
+   */
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -46,7 +55,15 @@ export const ForgotCredentials: React.FC<ForgotCredentialsProps> = ({ type, onBa
     } catch (err) {
       setError('An error occurred. Please try again.');
     }
-  };
+  }, [email, isPassword, resetPassword, sendUsernameReminder]);
+
+  /**
+   * Handles email input change
+   * @param e - Input change event
+   */
+  const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }, []);
 
   if (submitted) {
     return (
@@ -85,7 +102,7 @@ export const ForgotCredentials: React.FC<ForgotCredentialsProps> = ({ type, onBa
             type="email"
             placeholder="Enter your email address"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
             className="w-full"
             required
           />
