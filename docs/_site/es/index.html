@@ -1,50 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Documentación de Give Protocol - Give Protocol Documentation</title>
-    <meta name="description" content="Documentación oficial de la plataforma de donaciones benéficas Give Protocol" />
-    
+    <title>
+      Documentación de Give Protocol - Give Protocol Documentation
+    </title>
+    <meta
+      name="description"
+      content="Documentación oficial de la plataforma de donaciones benéficas Give Protocol"
+    />
+
+    <!-- Cookiebot Consent Management -->
+    <script data-cookieconsent="ignore">
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("consent", "default", {
+            ad_personalization: "denied",
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            analytics_storage: "denied",
+            functionality_storage: "denied",
+            personalization_storage: "denied",
+            security_storage: "granted",
+            wait_for_update: 500,
+        });
+        gtag("set", "ads_data_redaction", true);
+        gtag("set", "url_passthrough", false);
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"
+    ></script>
+    <script>
+      gtag("js", new Date());
+      gtag("config", "G-CBQHKLHD8T");
+    </script>
+
     <!-- Language detection -->
-    
-    
-    
+     
+
     <!-- Alternate language links for SEO -->
-    
-      
-        
-        
-          <link rel="alternate" hreflang="en" href="/esen/" />
-        
-      
-        
-        
-      
-        
-        
-          <link rel="alternate" hreflang="zh" href="/eszh/" />
-        
-      
-    
-    
-    <!-- Favicons -->
+     
+     
     <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/assets/favicon/apple-touch-icon.png"
+      rel="alternate"
+      hreflang="en"
+      href="/esen/"
     />
+     
+      
+     
+    <link
+      rel="alternate"
+      hreflang="zh"
+      href="/eszh/"
+    />
+      
+
+    <!-- Favicon -->
     <link
       rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/assets/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/assets/favicon/favicon-16x16.png"
+      type="image/svg+xml"
+      href="/assets/images/logo.svg"
     />
 
     <!-- CSS -->
@@ -58,9 +80,15 @@
       rel="stylesheet"
     />
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.294.0/font/lucide.min.css" />
-    
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <!-- Google Translate -->
     <script type="text/javascript">
       function googleTranslateElementInit() {
@@ -80,12 +108,12 @@
       src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     ></script>
   </head>
-  
+
   <body class="modern-docs preload">
     <script>
       // Remove preload class after page loads to enable transitions
-      window.addEventListener('load', function() {
-        document.body.classList.remove('preload');
+      window.addEventListener("load", function () {
+        document.body.classList.remove("preload");
       });
     </script>
     <!-- Hidden Google Translate Element -->
@@ -104,7 +132,7 @@
 
         <div class="header-search">
           <div class="search-wrapper">
-            <i class="lucide-search search-icon"></i>
+            <i class="fas fa-search search-icon"></i>
             <input
               type="text"
               id="search-input"
@@ -115,151 +143,7 @@
         </div>
 
         <div class="header-actions">
-          <a href="https://giveprotocol.io" class="btn-link">
-            Main Site
-          </a>
-          
-          <!-- Settings Container -->
-          <div class="settings-container">
-            <button class="settings-toggle" aria-label="Settings">
-              <i class="lucide-settings"></i>
-            </button>
-            
-            <!-- Settings Menu -->
-            <div class="settings-dropdown" style="display: none;">
-            <div class="settings-section">
-              <h4 class="settings-heading theme-heading">Theme</h4>
-              <div class="theme-options">
-                <button class="theme-option active" data-theme="light">
-                  <i class="lucide-sun"></i> Light
-                </button>
-                <button class="theme-option" data-theme="dark">
-                  <i class="lucide-moon"></i> Dark
-                </button>
-              </div>
-            </div>
-
-            <div class="settings-section">
-              <h4 class="settings-heading language-heading">Language</h4>
-              <div class="language-options">
-                <!-- Primary languages (full translation) -->
-                
-                  
-                  
-                  
-                    <button class="language-option primary-lang " 
-                            data-lang="en" 
-                            data-type="primary"
-                            title="English">
-                      English
-                    </button>
-                  
-                
-                  
-                  
-                  
-                    <button class="language-option primary-lang active" 
-                            data-lang="es" 
-                            data-type="primary"
-                            title="Spanish">
-                      Español
-                    </button>
-                  
-                
-                  
-                  
-                  
-                    <button class="language-option primary-lang " 
-                            data-lang="zh" 
-                            data-type="primary"
-                            title="Chinese (Simplified)">
-                      中文
-                    </button>
-                  
-                
-                
-                <!-- Secondary languages (Google Translate) -->
-                
-                  
-                  
-                  
-                    <button class="language-option secondary-lang" 
-                            data-lang="de" 
-                            data-type="secondary"
-                            title="German (Google Translate)">
-                      Deutsch
-                    </button>
-                  
-                
-                  
-                  
-                  
-                    <button class="language-option secondary-lang" 
-                            data-lang="fr" 
-                            data-type="secondary"
-                            title="French (Google Translate)">
-                      Français
-                    </button>
-                  
-                
-                  
-                  
-                  
-                    <button class="language-option secondary-lang" 
-                            data-lang="ja" 
-                            data-type="secondary"
-                            title="Japanese (Google Translate)">
-                      日本語
-                    </button>
-                  
-                
-                  
-                  
-                  
-                    <button class="language-option secondary-lang" 
-                            data-lang="pt" 
-                            data-type="secondary"
-                            title="Portuguese (Google Translate)">
-                      Português
-                    </button>
-                  
-                
-                  
-                  
-                  
-                    <button class="language-option secondary-lang" 
-                            data-lang="ko" 
-                            data-type="secondary"
-                            title="Korean (Google Translate)">
-                      한국어
-                    </button>
-                  
-                
-                  
-                  
-                  
-                    <button class="language-option secondary-lang" 
-                            data-lang="ar" 
-                            data-type="secondary"
-                            title="Arabic (Google Translate)">
-                      العربية
-                    </button>
-                  
-                
-                  
-                  
-                  
-                    <button class="language-option secondary-lang" 
-                            data-lang="hi" 
-                            data-type="secondary"
-                            title="Hindi (Google Translate)">
-                      हिन्दी
-                    </button>
-                  
-                
-              </div>
-            </div>
-          </div>
+          <a href="https://giveprotocol.io" class="btn-link"> Main Site </a>
         </div>
       </div>
     </header>
@@ -270,28 +154,83 @@
       <aside class="modern-sidebar">
         <button class="mobile-nav-toggle">
           <span>Navigation</span>
-          <i class="lucide-menu"></i>
+          <i class="fas fa-bars"></i>
         </button>
 
         <nav class="sidebar-nav">
-          <!-- Getting Started -->
+          <!-- Help Center -->
           <div class="nav-section">
-            <h3 class="section-title">Getting Started</h3>
+            <h3 class="section-title">Give Protocol Help Center</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/help-center/faq/"
+                  class=""
+                >
+                  <i class="fas fa-question-circle"></i> Frequently Asked
+                  Questions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/help-center/need-help/"
+                  class=""
+                >
+                  <i class="fas fa-life-ring"></i> Need Help?
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/help-center/report-issue/"
+                  class=""
+                >
+                  <i class="fas fa-exclamation-triangle"></i> Report An Issue
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Introduction -->
+          <div class="nav-section">
+            <h3 class="section-title">Introduction</h3>
             <ul class="nav-list">
               <li class="nav-item">
                 <a
                   href="/introduction/what-is-give-protocol/"
                   class=""
                 >
-                  What is Give Protocol?
+                  <i class="fas fa-info-circle"></i> What is Give Protocol
                 </a>
               </li>
+              <li class="nav-item">
+                <a
+                  href="/introduction/how-to-join/"
+                  class=""
+                >
+                  <i class="fas fa-door-open"></i> How To Join Give Protocol?
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Getting Started -->
+          <div class="nav-section">
+            <h3 class="section-title">Getting Started</h3>
+            <ul class="nav-list">
               <li class="nav-item">
                 <a
                   href="/getting-started/creating-account/"
                   class=""
                 >
-                  Creating Account
+                  <i class="fas fa-user-plus"></i> Creating Your Account
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/setting-up-profile/"
+                  class=""
+                >
+                  <i class="fas fa-user-edit"></i> Setting Up Your Profile
                 </a>
               </li>
               <li class="nav-item">
@@ -299,7 +238,7 @@
                   href="/getting-started/wallet-connection/"
                   class=""
                 >
-                  Wallet Connection
+                  <i class="fas fa-wallet"></i> Wallet Connection Guide
                 </a>
               </li>
               <li class="nav-item">
@@ -307,7 +246,15 @@
                   href="/getting-started/first-steps/"
                   class=""
                 >
-                  First Steps
+                  <i class="fas fa-play"></i> First Steps Walkthrough
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/dashboard/"
+                  class=""
+                >
+                  <i class="fas fa-tachometer-alt"></i> Dashboard Overview
                 </a>
               </li>
             </ul>
@@ -322,7 +269,7 @@
                   href="/user-guides/donors/"
                   class=""
                 >
-                  For Donors
+                  <i class="fas fa-heart"></i> For Donors
                 </a>
               </li>
               <li class="nav-item">
@@ -330,7 +277,7 @@
                   href="/user-guides/organizations/"
                   class=""
                 >
-                  For Organizations
+                  <i class="fas fa-building"></i> For Recipients/Organizations
                 </a>
               </li>
               <li class="nav-item">
@@ -338,7 +285,7 @@
                   href="/user-guides/volunteers/"
                   class=""
                 >
-                  For Volunteers
+                  <i class="fas fa-hands-helping"></i> For Volunteers
                 </a>
               </li>
             </ul>
@@ -353,7 +300,7 @@
                   href="/platform-features/search-discovery/"
                   class=""
                 >
-                  Search & Discovery
+                  <i class="fas fa-search"></i> Search & Discovery Tools
                 </a>
               </li>
               <li class="nav-item">
@@ -361,22 +308,55 @@
                   href="/platform-features/verification/"
                   class=""
                 >
-                  Verification System
+                  <i class="fas fa-shield-alt"></i> Verification & Trust Badges
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/platform-features/impact-tracking/"
+                  class=""
+                >
+                  <i class="fas fa-chart-line"></i> Impact Tracking & Metrics
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/platform-features/community/"
+                  class=""
+                >
+                  <i class="fas fa-users"></i> Community Features
                 </a>
               </li>
             </ul>
           </div>
 
-          <!-- Technical -->
+          <!-- Technical Documentation -->
           <div class="nav-section">
-            <h3 class="section-title">Technical Details</h3>
+            <h3 class="section-title">Technical Documentation</h3>
             <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/technical/blockchain-integration/"
+                  class=""
+                >
+                  <i class="fas fa-link"></i> Blockchain Integration
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/smart-contracts/"
+                  class=""
+                >
+                  <i class="fas fa-file-contract"></i> Smart Contract
+                  Interactions
+                </a>
+              </li>
               <li class="nav-item">
                 <a
                   href="/technical/cryptocurrencies/"
                   class=""
                 >
-                  Supported Cryptocurrencies
+                  <i class="fab fa-bitcoin"></i> Supported Cryptocurrencies
                 </a>
               </li>
               <li class="nav-item">
@@ -384,30 +364,116 @@
                   href="/technical/fees/"
                   class=""
                 >
-                  Fee Structure
+                  <i class="fas fa-percentage"></i> Transaction Fees & Gas
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/api-docs/"
+                  class=""
+                >
+                  <i class="fas fa-code"></i> API Documentation
                 </a>
               </li>
             </ul>
           </div>
 
-          <!-- Help & Support -->
+          <!-- Safety & Security -->
           <div class="nav-section">
-            <h3 class="section-title">Help & Support</h3>
+            <h3 class="section-title">Safety & Security</h3>
             <ul class="nav-list">
               <li class="nav-item">
                 <a
-                  href="/help-center/faq/"
+                  href="/safety-security/smart-giving/"
                   class=""
                 >
-                  Frequently Asked Questions
+                  <i class="fas fa-brain"></i> Smart Giving Practices
                 </a>
               </li>
               <li class="nav-item">
                 <a
-                  href="/help-center/need-help/"
+                  href="/safety-security/volunteer-safety/"
                   class=""
                 >
-                  Need Help?
+                  <i class="fas fa-hard-hat"></i> Volunteer Safety
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/safety-security/platform-security/"
+                  class=""
+                >
+                  <i class="fas fa-shield-alt"></i> Platform Security
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Resources & Tools -->
+          <div class="nav-section">
+            <h3 class="section-title">Resources & Tools</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/resources/educational-content/"
+                  class=""
+                >
+                  <i class="fas fa-graduation-cap"></i> Educational Content
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/resources/calculator/"
+                  class=""
+                >
+                  <i class="fas fa-calculator"></i> Donation Planning Tools
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/resources/time-tracking/"
+                  class=""
+                >
+                  <i class="fas fa-clock"></i> Volunteer Time Tracking
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/resources/templates/"
+                  class=""
+                >
+                  <i class="fas fa-file-alt"></i> Templates & Guides
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Community & Support -->
+          <div class="nav-section">
+            <h3 class="section-title">Community & Support</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/community/forums/"
+                  class=""
+                >
+                  <i class="fas fa-comments"></i> Community Forums
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/community/contact/"
+                  class=""
+                >
+                  <i class="fas fa-envelope"></i> Contact Information
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/community/social/"
+                  class=""
+                >
+                  <i class="fas fa-share-alt"></i> Social Media Links
                 </a>
               </li>
             </ul>
@@ -509,20 +575,14 @@
         <div class="search-header">
           <h3>Search Results</h3>
           <button class="close-search" id="close-search">
-            <i class="lucide-x"></i>
+            <i class="fas fa-times"></i>
           </button>
         </div>
         <div id="search-results"></div>
         <div class="search-shortcuts">
-          <div class="shortcut">
-            <kbd>↑</kbd><kbd>↓</kbd> Navigate
-          </div>
-          <div class="shortcut">
-            <kbd>Enter</kbd> Select
-          </div>
-          <div class="shortcut">
-            <kbd>Esc</kbd> Close
-          </div>
+          <div class="shortcut"><kbd>↑</kbd><kbd>↓</kbd> Navigate</div>
+          <div class="shortcut"><kbd>Enter</kbd> Select</div>
+          <div class="shortcut"><kbd>Esc</kbd> Close</div>
         </div>
       </div>
     </div>
@@ -530,107 +590,6 @@
     <!-- JavaScript -->
     <script>
       /* global google */
-      
-      // Settings dropdown
-      const settingsToggle = document.querySelector('.settings-toggle');
-      const settingsDropdown = document.querySelector('.settings-dropdown');
-      
-      console.log('Settings elements found:', {
-        toggle: !!settingsToggle,
-        dropdown: !!settingsDropdown
-      });
-      
-      function toggleSettingsDropdown() {
-        const isVisible = settingsDropdown.style.display === 'block';
-        settingsDropdown.style.display = isVisible ? 'none' : 'block';
-      }
-      
-      function closeSettingsDropdown() {
-        settingsDropdown.style.display = 'none';
-      }
-      
-      settingsToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleSettingsDropdown();
-      });
-      
-      // Close dropdown when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!settingsToggle.contains(e.target) && !settingsDropdown.contains(e.target)) {
-          closeSettingsDropdown();
-        }
-      });
-
-      // Theme switching
-      const themeOptions = document.querySelectorAll(".theme-option");
-      const savedTheme = localStorage.getItem("docs-theme") || "light";
-
-      document.body.classList.toggle("dark-mode", savedTheme === "dark");
-
-      themeOptions.forEach((option) => {
-        if (option.dataset.theme === savedTheme) {
-          option.classList.add("active");
-        }
-
-        option.addEventListener("click", () => {
-          const theme = option.dataset.theme;
-          localStorage.setItem('docs-theme', theme);
-          document.body.classList.toggle('dark-mode', theme === 'dark');
-          
-          themeOptions.forEach(opt => opt.classList.remove('active'));
-          option.classList.add('active');
-          
-          // Close dropdown after selection
-          setTimeout(closeSettingsDropdown, 150);
-        });
-      });
-
-      // Language switching
-      const languageOptions = document.querySelectorAll(".language-option");
-
-      languageOptions.forEach((option) => {
-        option.addEventListener("click", () => {
-          const lang = option.dataset.lang;
-          const type = option.dataset.type;
-          window.userRequestedLanguageChange = true;
-          
-          if (type === 'primary') {
-            // Navigate to translated page
-            let newUrl = window.location.pathname;
-            
-            // Remove current language prefix if exists
-            newUrl = newUrl.replace(/^\/(en|es|zh)\//, '/');
-            
-            if (lang !== 'en') {
-              newUrl = '/' + lang + newUrl;
-            }
-            
-            // Ensure proper URL structure
-            if (newUrl === '/' + lang) {
-              newUrl = '/' + lang + '/';
-            }
-            
-            window.location.href = newUrl;
-          } else {
-            // Use Google Translate for secondary languages
-            // Update UI state for secondary languages only
-            const secondaryOptions = document.querySelectorAll('.language-option.secondary-lang');
-            secondaryOptions.forEach(opt => opt.classList.remove('active'));
-            option.classList.add('active');
-            
-            if (typeof google !== 'undefined' && google.translate) {
-              const selectElement = document.querySelector('#google_translate_element select');
-              if (selectElement) {
-                selectElement.value = lang;
-                selectElement.dispatchEvent(new Event("change"));
-              }
-            }
-          }
-          
-          // Close dropdown after selection
-          setTimeout(closeSettingsDropdown, 150);
-        });
-      });
 
       // Mobile nav toggle
       const mobileNavToggle = document.querySelector(".mobile-nav-toggle");
@@ -640,28 +599,352 @@
         sidebarNav.style.display =
           sidebarNav.style.display === "none" ? "block" : "none";
       });
-      
+
       // Header scroll effect
-      const header = document.querySelector('.modern-header');
+      const header = document.querySelector(".modern-header");
       let lastScrollY = window.scrollY;
-      
-      window.addEventListener('scroll', () => {
+
+      window.addEventListener("scroll", () => {
         const currentScrollY = window.scrollY;
-        
+
         if (currentScrollY > 10) {
-          header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+          header.style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
         } else {
-          header.style.boxShadow = 'none';
+          header.style.boxShadow = "none";
         }
-        
+
         lastScrollY = currentScrollY;
       });
     </script>
 
-    <!-- Search Scripts -->
-    <script src="https://unpkg.com/lunr/lunr.min.js"></script>
-    <script src="/assets/js/lunr-search.js"></script>
-    
+    <!-- Font Awesome Icon Styles -->
+    <style>
+      /* Navigation icon styles */
+      .nav-item a i {
+        margin-right: 0.5rem;
+        width: 1rem;
+        text-align: center;
+        color: #6b7280;
+        transition: color 0.2s ease;
+      }
+
+      .nav-item a:hover i,
+      .nav-item a.active i {
+        color: #2563eb;
+      }
+
+      /* Header icon styles */
+      .search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        font-size: 0.875rem;
+      }
+
+      .mobile-nav-toggle i {
+        color: #6b7280;
+        font-size: 1rem;
+      }
+
+      .edit-link i {
+        margin-right: 0.375rem;
+        font-size: 0.875rem;
+      }
+
+      .close-search i {
+        color: #6b7280;
+        font-size: 1rem;
+        transition: color 0.2s ease;
+      }
+
+      .close-search:hover i {
+        color: #dc2626;
+      }
+
+      /* Dark mode icon colors */
+      body.dark-mode .nav-item a i {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .nav-item a:hover i,
+      body.dark-mode .nav-item a.active i {
+        color: #60a5fa;
+      }
+
+      body.dark-mode .search-icon {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .mobile-nav-toggle i {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .close-search i {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .close-search:hover i {
+        color: #f87171;
+      }
+
+      /* Enhanced Search Results Styling */
+      .search-item {
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .search-item:hover {
+        background-color: #f9fafb;
+      }
+
+      .search-item:last-child {
+        border-bottom: none;
+      }
+
+      .result-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+      }
+
+      .result-excerpt {
+        color: #6b7280;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin-bottom: 0.25rem;
+      }
+
+      .result-category {
+        color: #059669;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 600;
+      }
+
+      /* Dark mode search results */
+      body.dark-mode .search-item {
+        border-bottom-color: #374151;
+      }
+
+      body.dark-mode .search-item:hover {
+        background-color: #374151;
+      }
+
+      body.dark-mode .result-title {
+        color: #f3f4f6;
+      }
+
+      body.dark-mode .result-excerpt {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .result-category {
+        color: #34d399;
+      }
+
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+    </style>
+
+    <!-- Enhanced Search Scripts -->
+    <script>
+      // Enhanced search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("close-search");
+
+      let searchData = [];
+
+      // Load search data with multiple fallback strategies
+      async function loadSearchData() {
+        const possibleUrls = [
+          '/search.json',
+          "/search.json",
+          "./search.json",
+          "../search.json",
+          "../../search.json",
+        ];
+
+        for (const url of possibleUrls) {
+          try {
+            console.log(`Trying to load search data from: ${url}`);
+            const response = await fetch(url);
+            if (response.ok) {
+              const data = await response.json();
+              searchData = data;
+              console.log(
+                `Search data loaded successfully from: ${url} (${data.length} items)`,
+              );
+              return;
+            }
+          } catch (error) {
+            console.log(`Failed to load from ${url}:`, error.message);
+          }
+        }
+
+        // Final fallback: Create basic search data from navigation
+        console.log("Using navigation fallback for search data");
+        const navLinks = document.querySelectorAll(".nav-item a");
+        searchData = Array.from(navLinks).map((link) => ({
+          title: link.textContent.trim(),
+          url: link.getAttribute("href"),
+          content: link.textContent.trim(),
+          category: "Navigation",
+        }));
+        console.log(
+          `Fallback search data created (${searchData.length} items)`,
+        );
+      }
+
+      // Initialize search data
+      loadSearchData();
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(
+          `(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+          "gi",
+        );
+        return text.replace(regex, "<mark>$1</mark>");
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+
+        let score = 0;
+
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+
+        // Multiple word matches
+        const queryWords = lowerQuery
+          .split(" ")
+          .filter((word) => word.length > 2);
+        queryWords.forEach((word) => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+
+        return score;
+      }
+
+      function performSearch(query) {
+        if (!query || query.length < 2) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        if (searchData.length === 0) {
+          console.log("Search data not loaded, retrying...");
+          loadSearchData().then(() => {
+            if (searchData.length > 0) {
+              performSearch(query); // Retry search after data loads
+            }
+          });
+          return;
+        }
+
+        const results = searchData
+          .map((item) => ({
+            ...item,
+            relevance: calculateRelevance(item, query),
+          }))
+          .filter((item) => item.relevance > 0)
+          .sort((a, b) => b.relevance - a.relevance)
+          .slice(0, 10);
+
+        if (results.length === 0) {
+          searchResults.innerHTML = `
+            <div class="search-item">
+              <div class="result-title">No results found</div>
+              <div class="result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
+        } else {
+          searchResults.innerHTML = results
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+
+              return `
+                <div class="search-item" onclick="window.location.href='${result.url}'">
+                  <div class="result-title">${highlightedTitle}</div>
+                  <div class="result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="result-category">${result.category}</div>` : ""}
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        searchOverlay.classList.add("active");
+      }
+
+      // Event listeners
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          const query = this.value;
+          clearTimeout(this.searchTimeout);
+          this.searchTimeout = setTimeout(() => performSearch(query), 300);
+        });
+
+        searchInput.addEventListener("focus", function () {
+          if (this.value.trim()) {
+            performSearch(this.value);
+          }
+        });
+      }
+
+      if (searchClose) {
+        searchClose.addEventListener("click", function () {
+          searchOverlay.classList.remove("active");
+          if (searchInput) searchInput.value = "";
+        });
+      }
+
+      if (searchOverlay) {
+        searchOverlay.addEventListener("click", function (e) {
+          if (e.target === searchOverlay) {
+            searchOverlay.classList.remove("active");
+          }
+        });
+      }
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
+    </script>
+
     <!-- i18n Helper -->
     <script src="/assets/js/i18n-helper.js"></script>
   </body>

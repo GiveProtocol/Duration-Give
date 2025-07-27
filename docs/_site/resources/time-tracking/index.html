@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,23 +11,62 @@
       content="Track, manage, and maximize your volunteer time with Give Protocol's comprehensive time tracking tools"
     />
 
-    <!-- Favicons -->
+    <!-- Cookiebot Consent Management -->
+    <script data-cookieconsent="ignore">
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("consent", "default", {
+            ad_personalization: "denied",
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            analytics_storage: "denied",
+            functionality_storage: "denied",
+            personalization_storage: "denied",
+            security_storage: "granted",
+            wait_for_update: 500,
+        });
+        gtag("set", "ads_data_redaction", true);
+        gtag("set", "url_passthrough", false);
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"
+    ></script>
+    <script>
+      gtag("js", new Date());
+      gtag("config", "G-CBQHKLHD8T");
+    </script>
+
+    <!-- Language detection -->
+     
+
+    <!-- Alternate language links for SEO -->
+     
+      
+     
     <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/assets/favicon/apple-touch-icon.png"
+      rel="alternate"
+      hreflang="es"
+      href="/resourcestime-trackinges/"
     />
+     
+     
+    <link
+      rel="alternate"
+      hreflang="zh"
+      href="/resourcestime-trackingzh/"
+    />
+      
+
+    <!-- Favicon -->
     <link
       rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/assets/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/assets/favicon/favicon-16x16.png"
+      type="image/svg+xml"
+      href="/assets/images/logo.svg"
     />
 
     <!-- CSS -->
@@ -41,700 +80,429 @@
       rel="stylesheet"
     />
 
-    <!-- Icons -->
+    <!-- Font Awesome Icons -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
 
-    <style>
-      /* Immediate styles to prevent layout shift */
-      body {
-        font-family: "Inter", sans-serif;
-        background: #f0eee7;
-        margin: 0;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
-      body.dark-mode {
-        background: #0f172a;
-        color: #f1f5f9;
-      }
-      .docs-header {
-        background: #fff;
-        border-bottom: 1px solid #e5e7eb;
-        padding: 1rem 0;
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-      }
-      body.dark-mode .docs-header {
-        background: #1e293b;
-        border-bottom-color: #334155;
-      }
-      .docs-container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .docs-brand {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: #111827;
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-brand {
-        color: #f1f5f9;
-      }
-      .docs-search {
-        flex: 1;
-        max-width: 400px;
-        margin: 0 2rem;
-        position: relative;
-      }
-      .docs-search input {
-        width: 100%;
-        padding: 0.5rem 1rem 0.5rem 2.5rem;
-        background: #f9fafb;
-        border: 1px solid #d1d5db;
-        border-radius: 0.5rem;
-        font-size: 0.875rem;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-      }
-      body.dark-mode .docs-search input {
-        background: #374151;
-        border-color: #4b5563;
-        color: #f1f5f9;
-      }
-      .docs-search input:focus {
-        outline: none;
-        background: #fff;
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-      }
-      body.dark-mode .docs-search input:focus {
-        background: #4b5563;
-        border-color: #6366f1;
-      }
-      .docs-search-icon {
-        position: absolute;
-        left: 0.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #6b7280;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-search-icon {
-        color: #d1d5db;
-      }
-      .docs-actions {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-      .docs-btn {
-        padding: 0.5rem 1rem;
-        background: transparent;
-        color: #4b5563;
-        text-decoration: none;
-        font-size: 0.875rem;
-        font-weight: 500;
-        border-radius: 0.5rem;
-        transition: all 0.2s;
-      }
-      body.dark-mode .docs-btn {
-        color: #d1d5db;
-      }
-      .docs-btn:hover {
-        background: #f3f4f6;
-        color: #111827;
-      }
-      body.dark-mode .docs-btn:hover {
-        background: #374151;
-        color: #f1f5f9;
-      }
-      .docs-settings {
-        position: relative;
-      }
-      .docs-settings-btn {
-        width: 2.5rem;
-        height: 2.5rem;
-        background: transparent;
-        border: none;
-        border-radius: 0.5rem;
-        color: #6b7280;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s;
-      }
-      body.dark-mode .docs-settings-btn {
-        color: #d1d5db;
-      }
-      .docs-settings-btn:hover {
-        background: #f3f4f6;
-        color: #111827;
-      }
-      body.dark-mode .docs-settings-btn:hover {
-        background: #374151;
-        color: #f1f5f9;
-      }
-      .docs-settings-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        margin-top: 0.5rem;
-        background: #fff;
-        border-radius: 0.75rem;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        border: 1px solid #e5e7eb;
-        min-width: 240px;
-        z-index: 100;
-        display: none;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-      }
-      body.dark-mode .docs-settings-menu {
-        background: #1e293b;
-        border-color: #334155;
-      }
-      .docs-settings-section {
-        padding: 1rem;
-        border-bottom: 1px solid #f3f4f6;
-      }
-      body.dark-mode .docs-settings-section {
-        border-bottom-color: #334155;
-      }
-      .docs-settings-section:last-child {
-        border-bottom: none;
-      }
-      .docs-settings-heading {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        color: #6b7280;
-        margin: 0 0 0.75rem 0;
-        letter-spacing: 0.05em;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-settings-heading {
-        color: #d1d5db;
-      }
-      .docs-theme-options {
-        display: flex;
-        gap: 0.5rem;
-      }
-      .docs-theme-btn {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.375rem;
-        padding: 0.5rem;
-        background: #f9fafb;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        color: #374151;
-        cursor: pointer;
-        transition: all 0.15s;
-      }
-      body.dark-mode .docs-theme-btn {
-        background: #374151;
-        border-color: #4b5563;
-        color: #d1d5db;
-      }
-      .docs-theme-btn:hover {
-        background: #f3f4f6;
-        border-color: #d1d5db;
-      }
-      body.dark-mode .docs-theme-btn:hover {
-        background: #4b5563;
-        border-color: #6b7280;
-      }
-      .docs-theme-btn.active {
-        background: #eef2ff;
-        border-color: #6366f1;
-        color: #4f46e5;
-      }
-      body.dark-mode .docs-theme-btn.active {
-        background: #312e81;
-        border-color: #6366f1;
-        color: #c7d2fe;
-      }
-      .docs-lang-options {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-      }
-      .docs-lang-btn {
-        padding: 0.5rem 0.75rem;
-        background: transparent;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        color: #374151;
-        cursor: pointer;
-        transition: all 0.15s;
-        text-align: left;
-      }
-      body.dark-mode .docs-lang-btn {
-        border-color: #4b5563;
-        color: #d1d5db;
-      }
-      .docs-lang-btn:hover {
-        background: #f9fafb;
-        border-color: #d1d5db;
-      }
-      body.dark-mode .docs-lang-btn:hover {
-        background: #374151;
-        border-color: #6b7280;
-      }
-      .docs-lang-btn.active {
-        background: #eef2ff;
-        border-color: #6366f1;
-        color: #4f46e5;
-        font-weight: 500;
-      }
-      body.dark-mode .docs-lang-btn.active {
-        background: #312e81;
-        border-color: #6366f1;
-        color: #c7d2fe;
-      }
-      .docs-main {
-        display: flex;
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 1.5rem;
-        gap: 2rem;
-      }
-      .docs-sidebar {
-        width: 280px;
-        flex-shrink: 0;
-        position: sticky;
-        top: 5.5rem;
-        height: fit-content;
-      }
-      .docs-nav-section {
-        background: #fff;
-        border-radius: 0.75rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        transition: background-color 0.3s ease;
-      }
-      body.dark-mode .docs-nav-section {
-        background: #1e293b;
-      }
-      .docs-nav-title {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        color: #6b7280;
-        margin-bottom: 0.75rem;
-        letter-spacing: 0.05em;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-nav-title {
-        color: #d1d5db;
-      }
-      .docs-nav-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .docs-nav-item {
-        margin-bottom: 0.25rem;
-      }
-      .docs-nav-link {
-        display: block;
-        padding: 0.5rem 0.75rem;
-        color: #374151;
-        text-decoration: none;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        transition: all 0.15s;
-      }
-      body.dark-mode .docs-nav-link {
-        color: #d1d5db;
-      }
-      .docs-nav-link:hover {
-        background: #f3f4f6;
-        color: #111827;
-      }
-      body.dark-mode .docs-nav-link:hover {
-        background: #374151;
-        color: #f1f5f9;
-      }
-      .docs-nav-link.active {
-        background: #eef2ff;
-        color: #4f46e5;
-        font-weight: 500;
-      }
-      body.dark-mode .docs-nav-link.active {
-        background: #312e81;
-        color: #c7d2fe;
-      }
-      .docs-content {
-        flex: 1;
-        min-width: 0;
-      }
-      .docs-article {
-        background: #fff;
-        border-radius: 0.75rem;
-        padding: 2rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        transition: background-color 0.3s ease;
-      }
-      body.dark-mode .docs-article {
-        background: #1e293b;
-      }
-      .docs-search-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
-        z-index: 1000;
-        display: none;
-      }
-      .docs-search-overlay.active {
-        display: block;
-      }
-      .docs-search-results {
-        max-width: 600px;
-        margin: 6rem auto 2rem;
-        background: #fff;
-        border-radius: 0.75rem;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        max-height: calc(100vh - 8rem);
-        overflow-y: auto;
-        transition: background-color 0.3s ease;
-      }
-      body.dark-mode .docs-search-results {
-        background: #1e293b;
-      }
-      .docs-search-header {
-        padding: 1rem 1.5rem;
-        border-bottom: 1px solid #e5e7eb;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      body.dark-mode .docs-search-header {
-        border-bottom-color: #334155;
-      }
-      .docs-search-close {
-        padding: 0.25rem;
-        color: #6b7280;
-        cursor: pointer;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-search-close {
-        color: #d1d5db;
-      }
-      .docs-search-list {
-        padding: 0;
-        margin: 0;
-      }
-      .docs-search-item {
-        padding: 1rem 1.5rem;
-        border-bottom: 1px solid #f3f4f6;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      body.dark-mode .docs-search-item {
-        border-bottom-color: #334155;
-      }
-      .docs-search-item:hover {
-        background: #f9fafb;
-      }
-      body.dark-mode .docs-search-item:hover {
-        background: #374151;
-      }
-      .docs-search-item:last-child {
-        border-bottom: none;
-      }
-      .docs-result-title {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #111827;
-        margin-bottom: 0.25rem;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-result-title {
-        color: #f1f5f9;
-      }
-      .docs-result-excerpt {
-        font-size: 0.875rem;
-        color: #6b7280;
-        line-height: 1.4;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-result-excerpt {
-        color: #d1d5db;
-      }
-      .docs-result-category {
-        font-size: 0.75rem;
-        color: #6366f1;
-        font-weight: 500;
-        margin-top: 0.25rem;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-result-category {
-        color: #c7d2fe;
-      }
-      mark {
-        background-color: #fef3c7;
-        color: #92400e;
-        padding: 0.125rem 0.25rem;
-        border-radius: 0.25rem;
-        font-weight: 500;
-      }
-      body.dark-mode mark {
-        background-color: #451a03;
-        color: #fbbf24;
-      }
-      @media (max-width: 768px) {
-        .docs-search {
-          display: none;
-        }
-        .docs-main {
-          flex-direction: column;
-          padding: 1rem;
-        }
-        .docs-sidebar {
-          position: static;
-          width: 100%;
-        }
-      }
-    </style>
+    <!-- Google Translate -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
   </head>
-  <body>
-    <!-- Header -->
-    <header class="docs-header">
-      <div class="docs-container">
-        <a href="/" class="docs-brand">
-          <img src="/assets/images/logo.svg" alt="Give Protocol" width="32" height="32">
-          <span>Give Protocol Docs</span>
+
+  <body class="modern-docs preload">
+    <script>
+      // Remove preload class after page loads to enable transitions
+      window.addEventListener("load", function () {
+        document.body.classList.remove("preload");
+      });
+    </script>
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- Modern Header -->
+    <header class="modern-header">
+      <div class="header-container">
+        <a href="/" class="brand">
+          <img
+            src="/assets/images/logo.svg"
+            alt="Give Protocol"
+          />
+          <span>Documentation</span>
         </a>
 
-        <div class="docs-search">
-          <svg
-            class="docs-search-icon"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Search documentation..."
-          />
+        <div class="header-search">
+          <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search documentation..."
+              data-translate="yes"
+            />
+          </div>
         </div>
 
-        <div class="docs-actions">
-          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
-
-          <div class="docs-settings">
-            <button class="docs-settings-btn" id="settings-toggle">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-            </button>
-
-            <div class="docs-settings-menu" id="settings-menu">
-              <div class="docs-settings-section">
-                <h4 class="docs-settings-heading">Theme</h4>
-                <div class="docs-theme-options">
-                  <button class="docs-theme-btn active" data-theme="light">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <circle cx="12" cy="12" r="5" />
-                      <path
-                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
-                      />
-                    </svg>
-                    Light
-                  </button>
-                  <button class="docs-theme-btn" data-theme="dark">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                    </svg>
-                    Dark
-                  </button>
-                </div>
-              </div>
-
-              <div class="docs-settings-section">
-                <h4 class="docs-settings-heading">Language</h4>
-                <div class="docs-lang-options">
-                  <button class="docs-lang-btn active" data-lang="en">
-                    🇺🇸 English
-                  </button>
-                  <button class="docs-lang-btn" data-lang="es">
-                    🇪🇸 Español
-                  </button>
-                  <button class="docs-lang-btn" data-lang="de">
-                    🇩🇪 Deutsch
-                  </button>
-                  <button class="docs-lang-btn" data-lang="fr">
-                    🇫🇷 Français
-                  </button>
-                  <button class="docs-lang-btn" data-lang="ja">
-                    🇯🇵 日本語
-                  </button>
-                  <button class="docs-lang-btn" data-lang="zh-CN">
-                    🇨🇳 简体中文
-                  </button>
-                  <button class="docs-lang-btn" data-lang="ko">
-                    🇰🇷 한국어
-                  </button>
-                  <button class="docs-lang-btn" data-lang="ar">
-                    🇸🇦 العربية
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="header-actions">
+          <a href="https://giveprotocol.io" class="btn-link"> Main Site </a>
         </div>
       </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="docs-main">
-      <!-- Sidebar -->
-      <aside class="docs-sidebar">
-        <div class="docs-nav-section">
-          <h3 class="docs-nav-title">Getting Started</h3>
-          <ul class="docs-nav-list">
-            <li class="docs-nav-item">
-              <a
-                href="/introduction/what-is-give-protocol/"
-                class="docs-nav-link "
-              >
-                What is Give Protocol?
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/getting-started/creating-account/"
-                class="docs-nav-link "
-              >
-                Creating Account
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/getting-started/wallet-connection/"
-                class="docs-nav-link "
-              >
-                Wallet Connection
-              </a>
-            </li>
-          </ul>
-        </div>
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+      <!-- Modern Sidebar -->
+      <aside class="modern-sidebar">
+        <button class="mobile-nav-toggle">
+          <span>Navigation</span>
+          <i class="fas fa-bars"></i>
+        </button>
 
-        <div class="docs-nav-section">
-          <h3 class="docs-nav-title">User Guides</h3>
-          <ul class="docs-nav-list">
-            <li class="docs-nav-item">
-              <a
-                href="/user-guides/donors/"
-                class="docs-nav-link "
-              >
-                For Donors
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/user-guides/organizations/"
-                class="docs-nav-link "
-              >
-                For Organizations
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/user-guides/volunteers/"
-                class="docs-nav-link "
-              >
-                For Volunteers
-              </a>
-            </li>
-          </ul>
-        </div>
+        <nav class="sidebar-nav">
+          <!-- Help Center -->
+          <div class="nav-section">
+            <h3 class="section-title">Give Protocol Help Center</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/help-center/faq/"
+                  class=""
+                >
+                  <i class="fas fa-question-circle"></i> Frequently Asked
+                  Questions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/help-center/need-help/"
+                  class=""
+                >
+                  <i class="fas fa-life-ring"></i> Need Help?
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/help-center/report-issue/"
+                  class=""
+                >
+                  <i class="fas fa-exclamation-triangle"></i> Report An Issue
+                </a>
+              </li>
+            </ul>
+          </div>
 
-        <div class="docs-nav-section">
-          <h3 class="docs-nav-title">Help & Support</h3>
-          <ul class="docs-nav-list">
-            <li class="docs-nav-item">
-              <a
-                href="/help-center/faq/"
-                class="docs-nav-link "
-              >
-                FAQ
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/help-center/need-help/"
-                class="docs-nav-link "
-              >
-                Need Help?
-              </a>
-            </li>
-          </ul>
-        </div>
+          <!-- Introduction -->
+          <div class="nav-section">
+            <h3 class="section-title">Introduction</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/introduction/what-is-give-protocol/"
+                  class=""
+                >
+                  <i class="fas fa-info-circle"></i> What is Give Protocol
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/introduction/how-to-join/"
+                  class=""
+                >
+                  <i class="fas fa-door-open"></i> How To Join Give Protocol?
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Getting Started -->
+          <div class="nav-section">
+            <h3 class="section-title">Getting Started</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/getting-started/creating-account/"
+                  class=""
+                >
+                  <i class="fas fa-user-plus"></i> Creating Your Account
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/setting-up-profile/"
+                  class=""
+                >
+                  <i class="fas fa-user-edit"></i> Setting Up Your Profile
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/wallet-connection/"
+                  class=""
+                >
+                  <i class="fas fa-wallet"></i> Wallet Connection Guide
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/first-steps/"
+                  class=""
+                >
+                  <i class="fas fa-play"></i> First Steps Walkthrough
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/dashboard/"
+                  class=""
+                >
+                  <i class="fas fa-tachometer-alt"></i> Dashboard Overview
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- User Guides -->
+          <div class="nav-section">
+            <h3 class="section-title">User Guides</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/user-guides/donors/"
+                  class=""
+                >
+                  <i class="fas fa-heart"></i> For Donors
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/user-guides/organizations/"
+                  class=""
+                >
+                  <i class="fas fa-building"></i> For Recipients/Organizations
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/user-guides/volunteers/"
+                  class=""
+                >
+                  <i class="fas fa-hands-helping"></i> For Volunteers
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Platform Features -->
+          <div class="nav-section">
+            <h3 class="section-title">Platform Features</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/platform-features/search-discovery/"
+                  class=""
+                >
+                  <i class="fas fa-search"></i> Search & Discovery Tools
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/platform-features/verification/"
+                  class=""
+                >
+                  <i class="fas fa-shield-alt"></i> Verification & Trust Badges
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/platform-features/impact-tracking/"
+                  class=""
+                >
+                  <i class="fas fa-chart-line"></i> Impact Tracking & Metrics
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/platform-features/community/"
+                  class=""
+                >
+                  <i class="fas fa-users"></i> Community Features
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Technical Documentation -->
+          <div class="nav-section">
+            <h3 class="section-title">Technical Documentation</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/technical/blockchain-integration/"
+                  class=""
+                >
+                  <i class="fas fa-link"></i> Blockchain Integration
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/smart-contracts/"
+                  class=""
+                >
+                  <i class="fas fa-file-contract"></i> Smart Contract
+                  Interactions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/cryptocurrencies/"
+                  class=""
+                >
+                  <i class="fab fa-bitcoin"></i> Supported Cryptocurrencies
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/fees/"
+                  class=""
+                >
+                  <i class="fas fa-percentage"></i> Transaction Fees & Gas
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/api-docs/"
+                  class=""
+                >
+                  <i class="fas fa-code"></i> API Documentation
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Safety & Security -->
+          <div class="nav-section">
+            <h3 class="section-title">Safety & Security</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/safety-security/smart-giving/"
+                  class=""
+                >
+                  <i class="fas fa-brain"></i> Smart Giving Practices
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/safety-security/volunteer-safety/"
+                  class=""
+                >
+                  <i class="fas fa-hard-hat"></i> Volunteer Safety
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/safety-security/platform-security/"
+                  class=""
+                >
+                  <i class="fas fa-shield-alt"></i> Platform Security
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Resources & Tools -->
+          <div class="nav-section">
+            <h3 class="section-title">Resources & Tools</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/resources/educational-content/"
+                  class=""
+                >
+                  <i class="fas fa-graduation-cap"></i> Educational Content
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/resources/calculator/"
+                  class=""
+                >
+                  <i class="fas fa-calculator"></i> Donation Planning Tools
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/resources/time-tracking/"
+                  class="active"
+                >
+                  <i class="fas fa-clock"></i> Volunteer Time Tracking
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/resources/templates/"
+                  class=""
+                >
+                  <i class="fas fa-file-alt"></i> Templates & Guides
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Community & Support -->
+          <div class="nav-section">
+            <h3 class="section-title">Community & Support</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/community/forums/"
+                  class=""
+                >
+                  <i class="fas fa-comments"></i> Community Forums
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/community/contact/"
+                  class=""
+                >
+                  <i class="fas fa-envelope"></i> Contact Information
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/community/social/"
+                  class=""
+                >
+                  <i class="fas fa-share-alt"></i> Social Media Links
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
       </aside>
 
-      <!-- Content -->
-      <div class="docs-content">
-        <article class="docs-article"><p>Maximize your volunteer impact with Give Protocol’s comprehensive time tracking system. Monitor your contributions, meet requirements, and demonstrate your commitment to making a difference.</p>
+      <!-- Main Content -->
+      <main class="modern-content">
+        <div class="content-card">
+          <!-- Breadcrumbs -->
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+                
+            <span class="separator">/</span>
+            
+            <a
+              href="/resources/"
+            >
+              Resources
+            </a>
+               
+            <span class="separator">/</span>
+            
+            <span>Time tracking</span>
+              
+          </nav>
+
+          <article><p>Maximize your volunteer impact with Give Protocol’s comprehensive time tracking system. Monitor your contributions, meet requirements, and demonstrate your commitment to making a difference.</p>
 
 <h2 id="why-track-your-time">Why Track Your Time?</h2>
 
@@ -1485,212 +1253,335 @@
 <em>Premium features available with Give Protocol Pro</em><br />
 <em>Data export available in multiple formats</em></p>
 </article>
-      </div>
-    </main>
 
-    <!-- Search Overlay -->
-    <div class="docs-search-overlay" id="search-overlay">
-      <div class="docs-search-results">
-        <div class="docs-search-header">
+          <!-- Page Actions -->
+          <div class="page-actions">
+            
+
+            <div class="last-updated">
+              Last updated: 
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Search Results Overlay -->
+    <div class="search-results-overlay" id="search-overlay">
+      <div class="search-results-container">
+        <div class="search-header">
           <h3>Search Results</h3>
-          <button class="docs-search-close" id="search-close">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
+          <button class="close-search" id="close-search">
+            <i class="fas fa-times"></i>
           </button>
         </div>
-        <div class="docs-search-list" id="search-results"></div>
+        <div id="search-results"></div>
+        <div class="search-shortcuts">
+          <div class="shortcut"><kbd>↑</kbd><kbd>↓</kbd> Navigate</div>
+          <div class="shortcut"><kbd>Enter</kbd> Select</div>
+          <div class="shortcut"><kbd>Esc</kbd> Close</div>
+        </div>
       </div>
     </div>
 
-    <!-- Google Translate -->
-    <div id="google_translate_element" style="display: none"></div>
-
     <!-- JavaScript -->
     <script>
-      // Settings dropdown
-      const settingsToggle = document.getElementById("settings-toggle");
-      const settingsMenu = document.getElementById("settings-menu");
+      /* global google */
 
-      settingsToggle.addEventListener("click", function (e) {
-        e.stopPropagation();
-        settingsMenu.style.display =
-          settingsMenu.style.display === "block" ? "none" : "block";
+      // Mobile nav toggle
+      const mobileNavToggle = document.querySelector(".mobile-nav-toggle");
+      const sidebarNav = document.querySelector(".sidebar-nav");
+
+      mobileNavToggle.addEventListener("click", () => {
+        sidebarNav.style.display =
+          sidebarNav.style.display === "none" ? "block" : "none";
       });
 
-      document.addEventListener("click", function (e) {
-        if (
-          !settingsToggle.contains(e.target) &&
-          !settingsMenu.contains(e.target)
-        ) {
-          settingsMenu.style.display = "none";
-        }
-      });
+      // Header scroll effect
+      const header = document.querySelector(".modern-header");
+      let lastScrollY = window.scrollY;
 
-      // Theme switching
-      const themeButtons = document.querySelectorAll(".docs-theme-btn");
-      const savedTheme = localStorage.getItem("docs-theme") || "light";
+      window.addEventListener("scroll", () => {
+        const currentScrollY = window.scrollY;
 
-      document.body.classList.toggle("dark-mode", savedTheme === "dark");
-
-      themeButtons.forEach((button) => {
-        if (button.dataset.theme === savedTheme) {
-          button.classList.add("active");
+        if (currentScrollY > 10) {
+          header.style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
+        } else {
+          header.style.boxShadow = "none";
         }
 
-        button.addEventListener("click", function () {
-          const theme = this.dataset.theme;
-          localStorage.setItem("docs-theme", theme);
-          document.body.classList.toggle("dark-mode", theme === "dark");
-
-          themeButtons.forEach((btn) => btn.classList.remove("active"));
-          this.classList.add("active");
-
-          settingsMenu.style.display = "none";
-        });
+        lastScrollY = currentScrollY;
       });
+    </script>
 
-      // Language switching
-      const langButtons = document.querySelectorAll(".docs-lang-btn");
+    <!-- Font Awesome Icon Styles -->
+    <style>
+      /* Navigation icon styles */
+      .nav-item a i {
+        margin-right: 0.5rem;
+        width: 1rem;
+        text-align: center;
+        color: #6b7280;
+        transition: color 0.2s ease;
+      }
 
-      langButtons.forEach((button) => {
-        button.addEventListener("click", function () {
-          const lang = this.dataset.lang;
+      .nav-item a:hover i,
+      .nav-item a.active i {
+        color: #2563eb;
+      }
 
-          if (lang === "en") {
-            // Clear translation
-            const url = window.location.pathname + window.location.search;
-            window.location.href = url;
-          } else {
-            // Use hash-based translation trigger
-            let langCode = lang;
-            // Map language codes to Google Translate codes
-            const langMap = {
-              'zh-CN': 'zh-CN',
-              'ar': 'ar',
-              'ko': 'ko',
-              'ja': 'ja',
-              'es': 'es',
-              'de': 'de',
-              'fr': 'fr'
-            };
-            
-            langCode = langMap[lang] || lang;
-            
-            // Set hash to trigger translation
-            window.location.hash = `googtrans(en|${langCode})`;
-            window.location.reload();
-          }
+      /* Header icon styles */
+      .search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        font-size: 0.875rem;
+      }
 
-          langButtons.forEach((btn) => btn.classList.remove("active"));
-          this.classList.add("active");
+      .mobile-nav-toggle i {
+        color: #6b7280;
+        font-size: 1rem;
+      }
 
-          settingsMenu.style.display = "none";
-        });
-      });
+      .edit-link i {
+        margin-right: 0.375rem;
+        font-size: 0.875rem;
+      }
 
+      .close-search i {
+        color: #6b7280;
+        font-size: 1rem;
+        transition: color 0.2s ease;
+      }
+
+      .close-search:hover i {
+        color: #dc2626;
+      }
+
+      /* Dark mode icon colors */
+      body.dark-mode .nav-item a i {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .nav-item a:hover i,
+      body.dark-mode .nav-item a.active i {
+        color: #60a5fa;
+      }
+
+      body.dark-mode .search-icon {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .mobile-nav-toggle i {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .close-search i {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .close-search:hover i {
+        color: #f87171;
+      }
+
+      /* Enhanced Search Results Styling */
+      .search-item {
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .search-item:hover {
+        background-color: #f9fafb;
+      }
+
+      .search-item:last-child {
+        border-bottom: none;
+      }
+
+      .result-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+      }
+
+      .result-excerpt {
+        color: #6b7280;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin-bottom: 0.25rem;
+      }
+
+      .result-category {
+        color: #059669;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 600;
+      }
+
+      /* Dark mode search results */
+      body.dark-mode .search-item {
+        border-bottom-color: #374151;
+      }
+
+      body.dark-mode .search-item:hover {
+        background-color: #374151;
+      }
+
+      body.dark-mode .result-title {
+        color: #f3f4f6;
+      }
+
+      body.dark-mode .result-excerpt {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .result-category {
+        color: #34d399;
+      }
+
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+    </style>
+
+    <!-- Enhanced Search Scripts -->
+    <script>
       // Enhanced search functionality
       const searchInput = document.getElementById("search-input");
       const searchOverlay = document.getElementById("search-overlay");
       const searchResults = document.getElementById("search-results");
-      const searchClose = document.getElementById("search-close");
+      const searchClose = document.getElementById("close-search");
 
       let searchData = [];
 
-      // Load search data - with fallback for non-Jekyll environments
-      const searchUrl = '/search.json' === '/search.json' 
-        ? './search.json'  // Fallback if Jekyll isn't processing
-        : '/search.json';
-      
-      fetch(searchUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+      // Load search data with multiple fallback strategies
+      async function loadSearchData() {
+        const possibleUrls = [
+          '/search.json',
+          "/search.json",
+          "./search.json",
+          "../search.json",
+          "../../search.json",
+        ];
+
+        for (const url of possibleUrls) {
+          try {
+            console.log(`Trying to load search data from: ${url}`);
+            const response = await fetch(url);
+            if (response.ok) {
+              const data = await response.json();
+              searchData = data;
+              console.log(
+                `Search data loaded successfully from: ${url} (${data.length} items)`,
+              );
+              return;
+            }
+          } catch (error) {
+            console.log(`Failed to load from ${url}:`, error.message);
           }
-          return response.json();
-        })
-        .then((data) => {
-          searchData = data;
-          // Search data loaded successfully
-        })
-        .catch((error) => {
-          console.error("❌ Search data loading error:", error);
-          // Fallback: Try to search through visible navigation links
-          const navLinks = document.querySelectorAll('.docs-nav-link');
-          searchData = Array.from(navLinks).map(link => ({
-            title: link.textContent.trim(),
-            url: link.getAttribute('href'),
-            content: link.textContent.trim(),
-            category: 'Navigation'
-          }));
-          // Using fallback search data from navigation
-        });
+        }
+
+        // Final fallback: Create basic search data from navigation
+        console.log("Using navigation fallback for search data");
+        const navLinks = document.querySelectorAll(".nav-item a");
+        searchData = Array.from(navLinks).map((link) => ({
+          title: link.textContent.trim(),
+          url: link.getAttribute("href"),
+          content: link.textContent.trim(),
+          category: "Navigation",
+        }));
+        console.log(
+          `Fallback search data created (${searchData.length} items)`,
+        );
+      }
+
+      // Initialize search data
+      loadSearchData();
 
       function highlightText(text, query) {
         if (!query) return text;
-        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-        return text.replace(regex, '<mark>$1</mark>');
+        const regex = new RegExp(
+          `(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+          "gi",
+        );
+        return text.replace(regex, "<mark>$1</mark>");
       }
 
       function calculateRelevance(item, query) {
         const lowerQuery = query.toLowerCase();
         const lowerTitle = item.title.toLowerCase();
         const lowerContent = item.content.toLowerCase();
-        
+
         let score = 0;
-        
+
         // Title exact match gets highest score
         if (lowerTitle === lowerQuery) score += 100;
         // Title starts with query
         else if (lowerTitle.startsWith(lowerQuery)) score += 50;
         // Title contains query
         else if (lowerTitle.includes(lowerQuery)) score += 25;
-        
+
         // Content matches
         if (lowerContent.includes(lowerQuery)) score += 10;
-        
+
         // Multiple word matches
-        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
-        queryWords.forEach(word => {
+        const queryWords = lowerQuery
+          .split(" ")
+          .filter((word) => word.length > 2);
+        queryWords.forEach((word) => {
           if (lowerTitle.includes(word)) score += 5;
           if (lowerContent.includes(word)) score += 2;
         });
-        
+
         return score;
       }
 
       function performSearch(query) {
-        if (!query.trim()) {
+        if (!query || query.length < 2) {
           searchOverlay.classList.remove("active");
           return;
         }
 
+        if (searchData.length === 0) {
+          console.log("Search data not loaded, retrying...");
+          loadSearchData().then(() => {
+            if (searchData.length > 0) {
+              performSearch(query); // Retry search after data loads
+            }
+          });
+          return;
+        }
+
         const results = searchData
-          .filter((item) => {
-            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
-            return text.includes(query.toLowerCase());
-          })
-          .map(item => ({
+          .map((item) => ({
             ...item,
-            relevance: calculateRelevance(item, query)
+            relevance: calculateRelevance(item, query),
           }))
+          .filter((item) => item.relevance > 0)
           .sort((a, b) => b.relevance - a.relevance)
-          .slice(0, 8);
+          .slice(0, 10);
 
         if (results.length === 0) {
           searchResults.innerHTML = `
-            <div class="docs-search-item">
-              <div class="docs-result-title">No results found</div>
-              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
+            <div class="search-item">
+              <div class="result-title">No results found</div>
+              <div class="result-excerpt">Try different keywords or check spelling</div>
             </div>`;
         } else {
           searchResults.innerHTML = results
@@ -1698,12 +1589,12 @@
               const highlightedTitle = highlightText(result.title, query);
               const excerpt = result.content.substring(0, 150);
               const highlightedExcerpt = highlightText(excerpt, query);
-              
+
               return `
-                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
-                  <div class="docs-result-title">${highlightedTitle}</div>
-                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
-                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
+                <div class="search-item" onclick="window.location.href='${result.url}'">
+                  <div class="result-title">${highlightedTitle}</div>
+                  <div class="result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="result-category">${result.category}</div>` : ""}
                 </div>
               `;
             })
@@ -1713,28 +1604,35 @@
         searchOverlay.classList.add("active");
       }
 
-      searchInput.addEventListener("input", function () {
-        const query = this.value;
-        clearTimeout(this.searchTimeout);
-        this.searchTimeout = setTimeout(() => performSearch(query), 300);
-      });
+      // Event listeners
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          const query = this.value;
+          clearTimeout(this.searchTimeout);
+          this.searchTimeout = setTimeout(() => performSearch(query), 300);
+        });
 
-      searchInput.addEventListener("focus", function () {
-        if (this.value.trim()) {
-          performSearch(this.value);
-        }
-      });
+        searchInput.addEventListener("focus", function () {
+          if (this.value.trim()) {
+            performSearch(this.value);
+          }
+        });
+      }
 
-      searchClose.addEventListener("click", function () {
-        searchOverlay.classList.remove("active");
-        searchInput.value = "";
-      });
-
-      searchOverlay.addEventListener("click", function (e) {
-        if (e.target === searchOverlay) {
+      if (searchClose) {
+        searchClose.addEventListener("click", function () {
           searchOverlay.classList.remove("active");
-        }
-      });
+          if (searchInput) searchInput.value = "";
+        });
+      }
+
+      if (searchOverlay) {
+        searchOverlay.addEventListener("click", function (e) {
+          if (e.target === searchOverlay) {
+            searchOverlay.classList.remove("active");
+          }
+        });
+      }
 
       // Keyboard navigation
       document.addEventListener("keydown", function (e) {
@@ -1742,39 +1640,9 @@
           searchOverlay.classList.remove("active");
         }
       });
-      // Check for active language on page load
-      window.addEventListener('load', function() {
-        const hash = window.location.hash;
-        if (hash.includes('googtrans')) {
-          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
-          if (match && match[1]) {
-            const activeLang = match[1];
-            langButtons.forEach((btn) => {
-              if (btn.dataset.lang === activeLang) {
-                btn.classList.add('active');
-              } else {
-                btn.classList.remove('active');
-              }
-            });
-          }
-        }
-      });
     </script>
 
-    <!-- Google Translate -->
-    <script>
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages: "en,es,de,fr,ja,zh-CN,zh-TW,th,vi,ko,ar,hi",
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false,
-          },
-          "google_translate_element",
-        );
-      }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- i18n Helper -->
+    <script src="/assets/js/i18n-helper.js"></script>
   </body>
 </html>

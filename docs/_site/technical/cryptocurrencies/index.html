@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,23 +11,62 @@
       content="Complete technical guide for cryptocurrency donations, wallet integration, and blockchain implementation on Give Protocol"
     />
 
-    <!-- Favicons -->
+    <!-- Cookiebot Consent Management -->
+    <script data-cookieconsent="ignore">
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("consent", "default", {
+            ad_personalization: "denied",
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            analytics_storage: "denied",
+            functionality_storage: "denied",
+            personalization_storage: "denied",
+            security_storage: "granted",
+            wait_for_update: 500,
+        });
+        gtag("set", "ads_data_redaction", true);
+        gtag("set", "url_passthrough", false);
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"
+    ></script>
+    <script>
+      gtag("js", new Date());
+      gtag("config", "G-CBQHKLHD8T");
+    </script>
+
+    <!-- Language detection -->
+     
+
+    <!-- Alternate language links for SEO -->
+     
+      
+     
     <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/assets/favicon/apple-touch-icon.png"
+      rel="alternate"
+      hreflang="es"
+      href="/technicalcryptocurrencieses/"
     />
+     
+     
+    <link
+      rel="alternate"
+      hreflang="zh"
+      href="/technicalcryptocurrencieszh/"
+    />
+      
+
+    <!-- Favicon -->
     <link
       rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/assets/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/assets/favicon/favicon-16x16.png"
+      type="image/svg+xml"
+      href="/assets/images/logo.svg"
     />
 
     <!-- CSS -->
@@ -41,1585 +80,17 @@
       rel="stylesheet"
     />
 
-    <!-- Icons -->
+    <!-- Font Awesome Icons -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.js"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
 
-    <style>
-      /* Immediate styles to prevent layout shift */
-      body {
-        font-family: "Inter", sans-serif;
-        background: #f0eee7;
-        margin: 0;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
-      body.dark-mode {
-        background: #0f172a;
-        color: #f1f5f9;
-      }
-      .docs-header {
-        background: #fff;
-        border-bottom: 1px solid #e5e7eb;
-        padding: 1rem 0;
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-      }
-      body.dark-mode .docs-header {
-        background: #1e293b;
-        border-bottom-color: #334155;
-      }
-      .docs-container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .docs-brand {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: #111827;
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-brand {
-        color: #f1f5f9;
-      }
-      .docs-search {
-        flex: 1;
-        max-width: 400px;
-        margin: 0 2rem;
-        position: relative;
-      }
-      .docs-search input {
-        width: 100%;
-        padding: 0.5rem 1rem 0.5rem 2.5rem;
-        background: #f9fafb;
-        border: 1px solid #d1d5db;
-        border-radius: 0.5rem;
-        font-size: 0.875rem;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-      }
-      body.dark-mode .docs-search input {
-        background: #374151;
-        border-color: #4b5563;
-        color: #f1f5f9;
-      }
-      .docs-search input:focus {
-        outline: none;
-        background: #fff;
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-      }
-      body.dark-mode .docs-search input:focus {
-        background: #4b5563;
-        border-color: #6366f1;
-      }
-      .docs-search-icon {
-        position: absolute;
-        left: 0.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #6b7280;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-search-icon {
-        color: #d1d5db;
-      }
-      .docs-actions {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-      .docs-btn {
-        padding: 0.5rem 1rem;
-        background: transparent;
-        color: #4b5563;
-        text-decoration: none;
-        font-size: 0.875rem;
-        font-weight: 500;
-        border-radius: 0.5rem;
-        transition: all 0.2s;
-      }
-      body.dark-mode .docs-btn {
-        color: #d1d5db;
-      }
-      .docs-btn:hover {
-        background: #f3f4f6;
-        color: #111827;
-      }
-      body.dark-mode .docs-btn:hover {
-        background: #374151;
-        color: #f1f5f9;
-      }
-      .docs-settings {
-        position: relative;
-      }
-      .docs-settings-btn {
-        width: 2.5rem;
-        height: 2.5rem;
-        background: transparent;
-        border: none;
-        border-radius: 0.5rem;
-        color: #6b7280;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s;
-      }
-      body.dark-mode .docs-settings-btn {
-        color: #d1d5db;
-      }
-      .docs-settings-btn:hover {
-        background: #f3f4f6;
-        color: #111827;
-      }
-      body.dark-mode .docs-settings-btn:hover {
-        background: #374151;
-        color: #f1f5f9;
-      }
-      .docs-settings-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        margin-top: 0.5rem;
-        background: #fff;
-        border-radius: 0.75rem;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        border: 1px solid #e5e7eb;
-        min-width: 240px;
-        z-index: 100;
-        display: none;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-      }
-      body.dark-mode .docs-settings-menu {
-        background: #1e293b;
-        border-color: #334155;
-      }
-      .docs-settings-section {
-        padding: 1rem;
-        border-bottom: 1px solid #f3f4f6;
-      }
-      body.dark-mode .docs-settings-section {
-        border-bottom-color: #334155;
-      }
-      .docs-settings-section:last-child {
-        border-bottom: none;
-      }
-      .docs-settings-heading {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        color: #6b7280;
-        margin: 0 0 0.75rem 0;
-        letter-spacing: 0.05em;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-settings-heading {
-        color: #d1d5db;
-      }
-      .docs-theme-options {
-        display: flex;
-        gap: 0.5rem;
-      }
-      .docs-theme-btn {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.375rem;
-        padding: 0.5rem;
-        background: #f9fafb;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        color: #374151;
-        cursor: pointer;
-        transition: all 0.15s;
-      }
-      body.dark-mode .docs-theme-btn {
-        background: #374151;
-        border-color: #4b5563;
-        color: #d1d5db;
-      }
-      .docs-theme-btn:hover {
-        background: #f3f4f6;
-        border-color: #d1d5db;
-      }
-      body.dark-mode .docs-theme-btn:hover {
-        background: #4b5563;
-        border-color: #6b7280;
-      }
-      .docs-theme-btn.active {
-        background: #eef2ff;
-        border-color: #6366f1;
-        color: #4f46e5;
-      }
-      body.dark-mode .docs-theme-btn.active {
-        background: #312e81;
-        border-color: #6366f1;
-        color: #c7d2fe;
-      }
-      .docs-lang-options {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-      }
-      .docs-lang-btn {
-        padding: 0.5rem 0.75rem;
-        background: transparent;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        color: #374151;
-        cursor: pointer;
-        transition: all 0.15s;
-        text-align: left;
-      }
-      body.dark-mode .docs-lang-btn {
-        border-color: #4b5563;
-        color: #d1d5db;
-      }
-      .docs-lang-btn:hover {
-        background: #f9fafb;
-        border-color: #d1d5db;
-      }
-      body.dark-mode .docs-lang-btn:hover {
-        background: #374151;
-        border-color: #6b7280;
-      }
-      .docs-lang-btn.active {
-        background: #eef2ff;
-        border-color: #6366f1;
-        color: #4f46e5;
-        font-weight: 500;
-      }
-      body.dark-mode .docs-lang-btn.active {
-        background: #312e81;
-        border-color: #6366f1;
-        color: #c7d2fe;
-      }
-      .docs-main {
-        display: flex;
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 1.5rem;
-        gap: 2rem;
-      }
-      .docs-sidebar {
-        width: 280px;
-        flex-shrink: 0;
-        position: sticky;
-        top: 5.5rem;
-        height: fit-content;
-      }
-      .docs-nav-section {
-        background: #fff;
-        border-radius: 0.75rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        transition: background-color 0.3s ease;
-      }
-      body.dark-mode .docs-nav-section {
-        background: #1e293b;
-      }
-      .docs-nav-title {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        color: #6b7280;
-        margin-bottom: 0.75rem;
-        letter-spacing: 0.05em;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-nav-title {
-        color: #d1d5db;
-      }
-      .docs-nav-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .docs-nav-item {
-        margin-bottom: 0.25rem;
-      }
-      .docs-nav-link {
-        display: block;
-        padding: 0.5rem 0.75rem;
-        color: #374151;
-        text-decoration: none;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        transition: all 0.15s;
-      }
-      body.dark-mode .docs-nav-link {
-        color: #d1d5db;
-      }
-      .docs-nav-link:hover {
-        background: #f3f4f6;
-        color: #111827;
-      }
-      body.dark-mode .docs-nav-link:hover {
-        background: #374151;
-        color: #f1f5f9;
-      }
-      .docs-nav-link.active {
-        background: #eef2ff;
-        color: #4f46e5;
-        font-weight: 500;
-      }
-      body.dark-mode .docs-nav-link.active {
-        background: #312e81;
-        color: #c7d2fe;
-      }
-      .docs-content {
-        flex: 1;
-        min-width: 0;
-      }
-      .docs-article {
-        background: #fff;
-        border-radius: 0.75rem;
-        padding: 2rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        transition: background-color 0.3s ease;
-      }
-      body.dark-mode .docs-article {
-        background: #1e293b;
-      }
-      .docs-search-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
-        z-index: 1000;
-        display: none;
-      }
-      .docs-search-overlay.active {
-        display: block;
-      }
-      .docs-search-results {
-        max-width: 600px;
-        margin: 6rem auto 2rem;
-        background: #fff;
-        border-radius: 0.75rem;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        max-height: calc(100vh - 8rem);
-        overflow-y: auto;
-        transition: background-color 0.3s ease;
-      }
-      body.dark-mode .docs-search-results {
-        background: #1e293b;
-      }
-      .docs-search-header {
-        padding: 1rem 1.5rem;
-        border-bottom: 1px solid #e5e7eb;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      body.dark-mode .docs-search-header {
-        border-bottom-color: #334155;
-      }
-      .docs-search-close {
-        padding: 0.25rem;
-        color: #6b7280;
-        cursor: pointer;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-search-close {
-        color: #d1d5db;
-      }
-      .docs-search-list {
-        padding: 0;
-        margin: 0;
-      }
-      .docs-search-item {
-        padding: 1rem 1.5rem;
-        border-bottom: 1px solid #f3f4f6;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      body.dark-mode .docs-search-item {
-        border-bottom-color: #334155;
-      }
-      .docs-search-item:hover {
-        background: #f9fafb;
-      }
-      body.dark-mode .docs-search-item:hover {
-        background: #374151;
-      }
-      .docs-search-item:last-child {
-        border-bottom: none;
-      }
-      .docs-result-title {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #111827;
-        margin-bottom: 0.25rem;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-result-title {
-        color: #f1f5f9;
-      }
-      .docs-result-excerpt {
-        font-size: 0.875rem;
-        color: #6b7280;
-        line-height: 1.4;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-result-excerpt {
-        color: #d1d5db;
-      }
-      .docs-result-category {
-        font-size: 0.75rem;
-        color: #6366f1;
-        font-weight: 500;
-        margin-top: 0.25rem;
-        transition: color 0.3s ease;
-      }
-      body.dark-mode .docs-result-category {
-        color: #c7d2fe;
-      }
-      mark {
-        background-color: #fef3c7;
-        color: #92400e;
-        padding: 0.125rem 0.25rem;
-        border-radius: 0.25rem;
-        font-weight: 500;
-      }
-      body.dark-mode mark {
-        background-color: #451a03;
-        color: #fbbf24;
-      }
-      @media (max-width: 768px) {
-        .docs-search {
-          display: none;
-        }
-        .docs-main {
-          flex-direction: column;
-          padding: 1rem;
-        }
-        .docs-sidebar {
-          position: static;
-          width: 100%;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Header -->
-    <header class="docs-header">
-      <div class="docs-container">
-        <a href="/" class="docs-brand">
-          <img src="/assets/images/logo.svg" alt="Give Protocol" width="32" height="32">
-          <span>Give Protocol Docs</span>
-        </a>
-
-        <div class="docs-search">
-          <svg
-            class="docs-search-icon"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Search documentation..."
-          />
-        </div>
-
-        <div class="docs-actions">
-          <a href="https://giveprotocol.io" class="docs-btn">Main Site</a>
-
-          <div class="docs-settings">
-            <button class="docs-settings-btn" id="settings-toggle">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-            </button>
-
-            <div class="docs-settings-menu" id="settings-menu">
-              <div class="docs-settings-section">
-                <h4 class="docs-settings-heading">Theme</h4>
-                <div class="docs-theme-options">
-                  <button class="docs-theme-btn active" data-theme="light">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <circle cx="12" cy="12" r="5" />
-                      <path
-                        d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
-                      />
-                    </svg>
-                    Light
-                  </button>
-                  <button class="docs-theme-btn" data-theme="dark">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                    </svg>
-                    Dark
-                  </button>
-                </div>
-              </div>
-
-              <div class="docs-settings-section">
-                <h4 class="docs-settings-heading">Language</h4>
-                <div class="docs-lang-options">
-                  <button class="docs-lang-btn active" data-lang="en">
-                    🇺🇸 English
-                  </button>
-                  <button class="docs-lang-btn" data-lang="es">
-                    🇪🇸 Español
-                  </button>
-                  <button class="docs-lang-btn" data-lang="de">
-                    🇩🇪 Deutsch
-                  </button>
-                  <button class="docs-lang-btn" data-lang="fr">
-                    🇫🇷 Français
-                  </button>
-                  <button class="docs-lang-btn" data-lang="ja">
-                    🇯🇵 日本語
-                  </button>
-                  <button class="docs-lang-btn" data-lang="zh-CN">
-                    🇨🇳 简体中文
-                  </button>
-                  <button class="docs-lang-btn" data-lang="ko">
-                    🇰🇷 한국어
-                  </button>
-                  <button class="docs-lang-btn" data-lang="ar">
-                    🇸🇦 العربية
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="docs-main">
-      <!-- Sidebar -->
-      <aside class="docs-sidebar">
-        <div class="docs-nav-section">
-          <h3 class="docs-nav-title">Getting Started</h3>
-          <ul class="docs-nav-list">
-            <li class="docs-nav-item">
-              <a
-                href="/introduction/what-is-give-protocol/"
-                class="docs-nav-link "
-              >
-                What is Give Protocol?
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/getting-started/creating-account/"
-                class="docs-nav-link "
-              >
-                Creating Account
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/getting-started/wallet-connection/"
-                class="docs-nav-link "
-              >
-                Wallet Connection
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="docs-nav-section">
-          <h3 class="docs-nav-title">User Guides</h3>
-          <ul class="docs-nav-list">
-            <li class="docs-nav-item">
-              <a
-                href="/user-guides/donors/"
-                class="docs-nav-link "
-              >
-                For Donors
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/user-guides/organizations/"
-                class="docs-nav-link "
-              >
-                For Organizations
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/user-guides/volunteers/"
-                class="docs-nav-link "
-              >
-                For Volunteers
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="docs-nav-section">
-          <h3 class="docs-nav-title">Help & Support</h3>
-          <ul class="docs-nav-list">
-            <li class="docs-nav-item">
-              <a
-                href="/help-center/faq/"
-                class="docs-nav-link "
-              >
-                FAQ
-              </a>
-            </li>
-            <li class="docs-nav-item">
-              <a
-                href="/help-center/need-help/"
-                class="docs-nav-link "
-              >
-                Need Help?
-              </a>
-            </li>
-          </ul>
-        </div>
-      </aside>
-
-      <!-- Content -->
-      <div class="docs-content">
-        <article class="docs-article"><p>This comprehensive guide covers the technical implementation of cryptocurrency donations on the Give Protocol platform, including supported currencies, integration methods, and security considerations.</p>
-
-<h2 id="overview">Overview</h2>
-
-<p>Give Protocol provides seamless cryptocurrency donation capabilities, enabling organizations to accept digital assets with automatic conversion options and full regulatory compliance.</p>
-
-<h3 id="key-features">Key Features</h3>
-
-<ul>
-  <li><strong>Multi-chain support</strong>: Bitcoin, Ethereum, and major tokens</li>
-  <li><strong>Automatic conversion</strong>: Optional instant fiat conversion</li>
-  <li><strong>Non-custodial options</strong>: Direct wallet-to-wallet transfers</li>
-  <li><strong>Tax compliance</strong>: Automatic receipt generation</li>
-  <li><strong>Real-time valuations</strong>: Live exchange rate feeds</li>
-</ul>
-
-<h2 id="supported-cryptocurrencies">Supported Cryptocurrencies</h2>
-
-<h3 id="primary-currencies">Primary Currencies</h3>
-
-<p><strong>Bitcoin (BTC)</strong></p>
-
-<ul>
-  <li>Network: Bitcoin mainnet</li>
-  <li>Minimum donation: 0.0001 BTC</li>
-  <li>Confirmation requirement: 3 blocks</li>
-  <li>Average processing time: 30 minutes</li>
-</ul>
-
-<p><strong>Ethereum (ETH)</strong></p>
-
-<ul>
-  <li>Network: Ethereum mainnet</li>
-  <li>Minimum donation: 0.001 ETH</li>
-  <li>Confirmation requirement: 12 blocks</li>
-  <li>Average processing time: 3 minutes</li>
-</ul>
-
-<p><strong>USD Coin (USDC)</strong></p>
-
-<ul>
-  <li>Network: Ethereum, Polygon, Solana</li>
-  <li>Minimum donation: 1 USDC</li>
-  <li>Stable value pegged to USD</li>
-  <li>Lower transaction fees on L2</li>
-</ul>
-
-<h3 id="additional-supported-tokens">Additional Supported Tokens</h3>
-
-<p><strong>Stablecoins:</strong></p>
-
-<ul>
-  <li>Tether (USDT) - Ethereum, Tron, BSC</li>
-  <li>DAI - Ethereum mainnet</li>
-  <li>BUSD - Binance Smart Chain</li>
-</ul>
-
-<p><strong>Major Cryptocurrencies:</strong></p>
-
-<ul>
-  <li>Litecoin (LTC)</li>
-  <li>Bitcoin Cash (BCH)</li>
-  <li>Polygon (MATIC)</li>
-  <li>Binance Coin (BNB)</li>
-</ul>
-
-<h2 id="technical-architecture">Technical Architecture</h2>
-
-<h3 id="wallet-infrastructure">Wallet Infrastructure</h3>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Wallet generation example</span>
-<span class="kd">const</span> <span class="p">{</span> <span class="nx">generateWallet</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@give-protocol/crypto</span><span class="dl">'</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">wallet</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">generateWallet</span><span class="p">({</span>
-  <span class="na">currency</span><span class="p">:</span> <span class="dl">'</span><span class="s1">BTC</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">hierarchical-deterministic</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">derivationPath</span><span class="p">:</span> <span class="dl">"</span><span class="s2">m/44'/0'/0'/0/0</span><span class="dl">"</span>
-<span class="p">});</span>
-
-<span class="c1">// Returns</span>
-<span class="p">{</span>
-  <span class="na">address</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">publicKey</span><span class="p">:</span> <span class="dl">'</span><span class="s1">04678afdb0fe5548...</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">derivationPath</span><span class="p">:</span> <span class="dl">"</span><span class="s2">m/44'/0'/0'/0/0</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">qrCode</span><span class="p">:</span> <span class="dl">'</span><span class="s1">data:image/png;base64,...</span><span class="dl">'</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="address-management">Address Management</h3>
-
-<p><strong>HD Wallet Structure:</strong></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Master Seed
-├── Organization Wallets (m/44'/0'/0')
-│   ├── Org 1 (m/44'/0'/0'/0)
-│   │   ├── Donation Address 1 (m/44'/0'/0'/0/0)
-│   │   ├── Donation Address 2 (m/44'/0'/0'/0/1)
-│   │   └── ...
-│   └── Org 2 (m/44'/0'/0'/1)
-└── Platform Wallets (m/44'/0'/1')
-</code></pre></div></div>
-
-<h3 id="transaction-monitoring">Transaction Monitoring</h3>
-
-<p><strong>Blockchain Monitoring Service:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// WebSocket connection for real-time updates</span>
-<span class="kd">const</span> <span class="nx">ws</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WebSocket</span><span class="p">(</span><span class="dl">'</span><span class="s1">wss://api.give.io/crypto/monitor</span><span class="dl">'</span><span class="p">);</span>
-
-<span class="nx">ws</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">message</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-  <span class="k">if </span><span class="p">(</span><span class="nx">transaction</span><span class="p">.</span><span class="nx">confirmations</span> <span class="o">&gt;=</span> <span class="nx">requiredConfirmations</span><span class="p">[</span><span class="nx">transaction</span><span class="p">.</span><span class="nx">currency</span><span class="p">])</span> <span class="p">{</span>
-    <span class="nf">processDonation</span><span class="p">(</span><span class="nx">transaction</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">});</span>
-
-<span class="c1">// Transaction structure</span>
-<span class="p">{</span>
-  <span class="dl">"</span><span class="s2">txId</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0x123abc...</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">currency</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ETH</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">amount</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.5</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">from</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0xabc123...</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">to</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0xdef456...</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">confirmations</span><span class="dl">"</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">timestamp</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2024-01-15T10:30:00Z</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">status</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">confirmed</span><span class="dl">"</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="integration-methods">Integration Methods</h2>
-
-<h3 id="api-integration">API Integration</h3>
-
-<p><strong>Generate Donation Address:</strong></p>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">POST /api/v1/crypto/addresses
-Authorization: Bearer your_api_key
-Content-Type: application/json
-
-{
-  "organization_id": "org_123",
-  "currency": "BTC",
-  "amount": 0.01,
-  "expires_in": 3600,
-  "callback_url": "https://your-site.com/webhook"
-}
-</span></code></pre></div></div>
-
-<p><strong>Response:</strong></p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"amount_usd"</span><span class="p">:</span><span class="w"> </span><span class="mf">435.5</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T11:30:00Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"qr_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"data:image/png;base64,..."</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"payment_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bitcoin:bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh?amount=0.01"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<h3 id="sdk-implementation">SDK Implementation</h3>
-
-<p><strong>JavaScript SDK:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">CryptoGateway</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@give-protocol/crypto-sdk</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">gateway</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CryptoGateway</span><span class="p">({</span>
-  <span class="na">apiKey</span><span class="p">:</span> <span class="dl">"</span><span class="s2">your_api_key</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">environment</span><span class="p">:</span> <span class="dl">"</span><span class="s2">production</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="c1">// Create donation widget</span>
-<span class="kd">const</span> <span class="nx">widget</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">gateway</span><span class="p">.</span><span class="nf">createWidget</span><span class="p">({</span>
-  <span class="na">organizationId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">org_123</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">currencies</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">BTC</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">ETH</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">USDC</span><span class="dl">"</span><span class="p">],</span>
-  <span class="na">fiatAmount</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-  <span class="na">onSuccess</span><span class="p">:</span> <span class="p">(</span><span class="nx">transaction</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Donation received:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">transaction</span><span class="p">);</span>
-  <span class="p">},</span>
-  <span class="na">onError</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Donation failed:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
-  <span class="p">},</span>
-<span class="p">});</span>
-
-<span class="c1">// Embed in page</span>
-<span class="nx">widget</span><span class="p">.</span><span class="nf">mount</span><span class="p">(</span><span class="dl">"</span><span class="s2">#crypto-donation-container</span><span class="dl">"</span><span class="p">);</span>
-</code></pre></div></div>
-
-<h3 id="smart-contract-integration">Smart Contract Integration</h3>
-
-<p><strong>Donation Contract (Ethereum):</strong></p>
-
-<pre><code class="language-solidity">pragma solidity ^0.8.0;
-
-contract GiveProtocolDonations {
-    mapping(address =&gt; uint256) public organizationBalances;
-    mapping(address =&gt; bool) public verifiedOrganizations;
-
-    event DonationReceived(
-        address indexed donor,
-        address indexed organization,
-        uint256 amount,
-        uint256 timestamp
-    );
-
-    function donate(address organization) external payable {
-        require(verifiedOrganizations[organization], "Organization not verified");
-        require(msg.value &gt; 0, "Donation must be greater than 0");
-
-        organizationBalances[organization] += msg.value;
-
-        emit DonationReceived(
-            msg.sender,
-            organization,
-            msg.value,
-            block.timestamp
-        );
-    }
-
-    function withdraw(uint256 amount) external {
-        require(verifiedOrganizations[msg.sender], "Not a verified organization");
-        require(organizationBalances[msg.sender] &gt;= amount, "Insufficient balance");
-
-        organizationBalances[msg.sender] -= amount;
-        payable(msg.sender).transfer(amount);
-    }
-}
-</code></pre>
-
-<h2 id="conversion-and-settlement">Conversion and Settlement</h2>
-
-<h3 id="automatic-conversion">Automatic Conversion</h3>
-
-<p><strong>Configuration Options:</strong></p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"conversion_settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"auto_convert"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"target_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"conversion_threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"conversion_frequency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"immediate"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"slippage_tolerance"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.02</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p><strong>Conversion Flow:</strong></p>
-
-<pre><code class="language-mermaid">sequenceDiagram
-  participant Donor
-  participant Platform
-  participant Exchange
-  participant Organization
-
-  Donor-&gt;&gt;Platform: Send crypto donation
-  Platform-&gt;&gt;Platform: Confirm transaction
-  Platform-&gt;&gt;Exchange: Request conversion
-  Exchange-&gt;&gt;Exchange: Execute trade
-  Exchange-&gt;&gt;Platform: Return fiat value
-  Platform-&gt;&gt;Organization: Credit USD account
-</code></pre>
-
-<h3 id="exchange-integration">Exchange Integration</h3>
-
-<p><strong>Liquidity Providers:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Exchange rate aggregation</span>
-<span class="kd">const</span> <span class="nx">getExchangeRate</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">currency</span><span class="p">,</span> <span class="nx">amount</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">providers</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">coinbase</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">kraken</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">binance</span><span class="dl">"</span><span class="p">];</span>
-
-  <span class="kd">const</span> <span class="nx">rates</span> <span class="o">=</span> <span class="k">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nf">all</span><span class="p">(</span>
-    <span class="nx">providers</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">provider</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nf">fetchRate</span><span class="p">(</span><span class="nx">provider</span><span class="p">,</span> <span class="nx">currency</span><span class="p">,</span> <span class="nx">amount</span><span class="p">)),</span>
-  <span class="p">);</span>
-
-  <span class="k">return</span> <span class="p">{</span>
-    <span class="na">bestRate</span><span class="p">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">max</span><span class="p">(...</span><span class="nx">rates</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">r</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">rate</span><span class="p">)),</span>
-    <span class="na">provider</span><span class="p">:</span> <span class="nx">rates</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span>
-      <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">rate</span> <span class="o">===</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">max</span><span class="p">(...</span><span class="nx">rates</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">r</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">rate</span><span class="p">)),</span>
-    <span class="p">).</span><span class="nx">provider</span><span class="p">,</span>
-    <span class="na">timestamp</span><span class="p">:</span> <span class="k">new</span> <span class="nc">Date</span><span class="p">().</span><span class="nf">toISOString</span><span class="p">(),</span>
-  <span class="p">};</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h2 id="security-implementation">Security Implementation</h2>
-
-<h3 id="key-management">Key Management</h3>
-
-<p><strong>Hardware Security Module (HSM):</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// HSM integration for key storage</span>
-<span class="kd">const</span> <span class="p">{</span> <span class="nx">HSMClient</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@give-protocol/hsm</span><span class="dl">"</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">hsm</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HSMClient</span><span class="p">({</span>
-  <span class="na">endpoint</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">HSM_ENDPOINT</span><span class="p">,</span>
-  <span class="na">credentials</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">keyId</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">HSM_KEY_ID</span><span class="p">,</span>
-    <span class="na">secret</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">HSM_SECRET</span><span class="p">,</span>
-  <span class="p">},</span>
-<span class="p">});</span>
-
-<span class="c1">// Generate new wallet</span>
-<span class="kd">const</span> <span class="nx">wallet</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">hsm</span><span class="p">.</span><span class="nf">generateKey</span><span class="p">({</span>
-  <span class="na">algorithm</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ECDSA</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">curve</span><span class="p">:</span> <span class="dl">"</span><span class="s2">secp256k1</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">label</span><span class="p">:</span> <span class="s2">`org_</span><span class="p">${</span><span class="nx">organizationId</span><span class="p">}</span><span class="s2">_wallet`</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="c1">// Sign transaction</span>
-<span class="kd">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">hsm</span><span class="p">.</span><span class="nf">sign</span><span class="p">({</span>
-  <span class="na">keyLabel</span><span class="p">:</span> <span class="nx">wallet</span><span class="p">.</span><span class="nx">label</span><span class="p">,</span>
-  <span class="na">message</span><span class="p">:</span> <span class="nx">transactionHash</span><span class="p">,</span>
-<span class="p">});</span>
-</code></pre></div></div>
-
-<h3 id="multi-signature-wallets">Multi-Signature Wallets</h3>
-
-<p><strong>Configuration:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Multi-sig setup for high-value transactions</span>
-<span class="kd">const</span> <span class="nx">multiSigWallet</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">threshold</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-  <span class="na">signers</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">org_admin_1</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">org_admin_2</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">platform_escrow</span><span class="dl">"</span><span class="p">],</span>
-  <span class="na">timelock</span><span class="p">:</span> <span class="mi">86400</span><span class="p">,</span> <span class="c1">// 24 hours</span>
-  <span class="na">dailyLimit</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">BTC</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="na">ETH</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="na">USD</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
-  <span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h3 id="transaction-validation">Transaction Validation</h3>
-
-<p><strong>Security Checks:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">validateTransaction</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">tx</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="c1">// Check transaction format</span>
-  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nf">isValidTransactionFormat</span><span class="p">(</span><span class="nx">tx</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Invalid transaction format</span><span class="dl">"</span><span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="c1">// Verify signature</span>
-  <span class="kd">const</span> <span class="nx">isValid</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">verifySignature</span><span class="p">(</span><span class="nx">tx</span><span class="p">);</span>
-  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">isValid</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Invalid signature</span><span class="dl">"</span><span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="c1">// Check for double-spend</span>
-  <span class="kd">const</span> <span class="nx">isDuplicate</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">checkDoubleSpend</span><span class="p">(</span><span class="nx">tx</span><span class="p">);</span>
-  <span class="k">if </span><span class="p">(</span><span class="nx">isDuplicate</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Transaction already processed</span><span class="dl">"</span><span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="c1">// Validate amount limits</span>
-  <span class="k">if </span><span class="p">(</span><span class="nx">tx</span><span class="p">.</span><span class="nx">amount</span> <span class="o">&gt;</span> <span class="nx">limits</span><span class="p">[</span><span class="nx">tx</span><span class="p">.</span><span class="nx">currency</span><span class="p">])</span> <span class="p">{</span>
-    <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Amount exceeds limits</span><span class="dl">"</span><span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h2 id="compliance-and-reporting">Compliance and Reporting</h2>
-
-<h3 id="kycaml-requirements">KYC/AML Requirements</h3>
-
-<p><strong>Threshold-Based Verification:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">kycRequirements</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">anonymous</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">maxUSD</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
-    <span class="na">required</span><span class="p">:</span> <span class="p">[],</span>
-  <span class="p">},</span>
-  <span class="na">basic</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">maxUSD</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
-    <span class="na">required</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">email</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">],</span>
-  <span class="p">},</span>
-  <span class="na">enhanced</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">maxUSD</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
-    <span class="na">required</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">email</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">address</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">id_verification</span><span class="dl">"</span><span class="p">],</span>
-  <span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h3 id="transaction-reporting">Transaction Reporting</h3>
-
-<p><strong>IRS Form 8283 Generation:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Generate tax documentation for crypto donations</span>
-<span class="kd">const</span> <span class="nx">generateForm8283</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">donation</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">fairMarketValue</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">getFMV</span><span class="p">(</span>
-    <span class="nx">donation</span><span class="p">.</span><span class="nx">currency</span><span class="p">,</span>
-    <span class="nx">donation</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span>
-    <span class="nx">donation</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">,</span>
-  <span class="p">);</span>
-
-  <span class="k">return</span> <span class="p">{</span>
-    <span class="na">donorInfo</span><span class="p">:</span> <span class="nx">donation</span><span class="p">.</span><span class="nx">donor</span><span class="p">,</span>
-    <span class="na">organizationInfo</span><span class="p">:</span> <span class="nx">donation</span><span class="p">.</span><span class="nx">organization</span><span class="p">,</span>
-    <span class="na">donationDate</span><span class="p">:</span> <span class="nx">donation</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">,</span>
-    <span class="na">cryptocurrency</span><span class="p">:</span> <span class="nx">donation</span><span class="p">.</span><span class="nx">currency</span><span class="p">,</span>
-    <span class="na">amount</span><span class="p">:</span> <span class="nx">donation</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span>
-    <span class="na">fairMarketValueUSD</span><span class="p">:</span> <span class="nx">fairMarketValue</span><span class="p">,</span>
-    <span class="na">costBasis</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Not provided</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Cryptocurrency donation</span><span class="dl">"</span><span class="p">,</span>
-  <span class="p">};</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h3 id="blockchain-analytics">Blockchain Analytics</h3>
-
-<p><strong>Transaction Screening:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Integration with blockchain analytics</span>
-<span class="kd">const</span> <span class="p">{</span> <span class="nx">ChainAnalysis</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@give-protocol/compliance</span><span class="dl">"</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">screenTransaction</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">tx</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">risk</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">ChainAnalysis</span><span class="p">.</span><span class="nf">assess</span><span class="p">({</span>
-    <span class="na">address</span><span class="p">:</span> <span class="nx">tx</span><span class="p">.</span><span class="k">from</span><span class="p">,</span>
-    <span class="na">currency</span><span class="p">:</span> <span class="nx">tx</span><span class="p">.</span><span class="nx">currency</span><span class="p">,</span>
-    <span class="na">amount</span><span class="p">:</span> <span class="nx">tx</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span>
-  <span class="p">});</span>
-
-  <span class="k">if </span><span class="p">(</span><span class="nx">risk</span><span class="p">.</span><span class="nx">score</span> <span class="o">&gt;</span> <span class="mf">0.7</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">{</span>
-      <span class="na">action</span><span class="p">:</span> <span class="dl">"</span><span class="s2">block</span><span class="dl">"</span><span class="p">,</span>
-      <span class="na">reason</span><span class="p">:</span> <span class="nx">risk</span><span class="p">.</span><span class="nx">factors</span><span class="p">,</span>
-    <span class="p">};</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="k">if </span><span class="p">(</span><span class="nx">risk</span><span class="p">.</span><span class="nx">score</span> <span class="o">&gt;</span> <span class="mf">0.4</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">{</span>
-      <span class="na">action</span><span class="p">:</span> <span class="dl">"</span><span class="s2">review</span><span class="dl">"</span><span class="p">,</span>
-      <span class="na">reason</span><span class="p">:</span> <span class="nx">risk</span><span class="p">.</span><span class="nx">factors</span><span class="p">,</span>
-    <span class="p">};</span>
-  <span class="p">}</span>
-
-  <span class="k">return</span> <span class="p">{</span> <span class="na">action</span><span class="p">:</span> <span class="dl">"</span><span class="s2">approve</span><span class="dl">"</span> <span class="p">};</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h2 id="user-interface-components">User Interface Components</h2>
-
-<h3 id="donation-widget">Donation Widget</h3>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Embeddable donation widget --&gt;</span>
-<span class="nt">&lt;div</span>
-  <span class="na">id=</span><span class="s">"give-crypto-widget"</span>
-  <span class="na">data-organization=</span><span class="s">"org_123"</span>
-  <span class="na">data-currencies=</span><span class="s">"BTC,ETH,USDC"</span>
-  <span class="na">data-theme=</span><span class="s">"light"</span>
-<span class="nt">&gt;&lt;/div&gt;</span>
-
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.give.io/crypto-widget.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script&gt;</span>
-  <span class="nx">GiveCrypto</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
-    <span class="na">organizationId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">org_123</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">currencies</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">BTC</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">ETH</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">USDC</span><span class="dl">"</span><span class="p">],</span>
-    <span class="na">defaultAmount</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="na">onComplete</span><span class="p">:</span> <span class="p">(</span><span class="nx">donation</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Donation complete:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">donation</span><span class="p">);</span>
-    <span class="p">},</span>
-  <span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-</code></pre></div></div>
-
-<h3 id="qr-code-generation">QR Code Generation</h3>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Generate QR codes for crypto addresses</span>
-<span class="kd">const</span> <span class="nx">generateQRCode</span> <span class="o">=</span> <span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">amount</span><span class="p">,</span> <span class="nx">currency</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">uri</span> <span class="o">=</span> <span class="nf">buildPaymentURI</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">amount</span><span class="p">,</span> <span class="nx">currency</span><span class="p">);</span>
-
-  <span class="k">return</span> <span class="nx">QRCode</span><span class="p">.</span><span class="nf">toDataURL</span><span class="p">(</span><span class="nx">uri</span><span class="p">,</span> <span class="p">{</span>
-    <span class="na">errorCorrectionLevel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">H</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">image/png</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">width</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
-    <span class="na">margin</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-  <span class="p">});</span>
-<span class="p">};</span>
-
-<span class="c1">// Payment URI formats</span>
-<span class="kd">const</span> <span class="nx">buildPaymentURI</span> <span class="o">=</span> <span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">amount</span><span class="p">,</span> <span class="nx">currency</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">formats</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">BTC</span><span class="p">:</span> <span class="s2">`bitcoin:</span><span class="p">${</span><span class="nx">address</span><span class="p">}</span><span class="s2">?amount=</span><span class="p">${</span><span class="nx">amount</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
-    <span class="na">ETH</span><span class="p">:</span> <span class="s2">`ethereum:</span><span class="p">${</span><span class="nx">address</span><span class="p">}</span><span class="s2">?value=</span><span class="p">${</span><span class="nx">amount</span> <span class="o">*</span> <span class="mi">1</span><span class="nx">e18</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
-    <span class="na">USDC</span><span class="p">:</span> <span class="s2">`ethereum:</span><span class="p">${</span><span class="nx">USDC_CONTRACT</span><span class="p">}</span><span class="s2">/transfer?address=</span><span class="p">${</span><span class="nx">address</span><span class="p">}</span><span class="s2">&amp;uint256=</span><span class="p">${</span><span class="nx">amount</span> <span class="o">*</span> <span class="mi">1</span><span class="nx">e6</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
-  <span class="p">};</span>
-
-  <span class="k">return</span> <span class="nx">formats</span><span class="p">[</span><span class="nx">currency</span><span class="p">];</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h2 id="testing-and-development">Testing and Development</h2>
-
-<h3 id="testnet-configuration">Testnet Configuration</h3>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Testnet endpoints</span>
-<span class="kd">const</span> <span class="nx">networks</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">development</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">BTC</span><span class="p">:</span> <span class="dl">"</span><span class="s2">testnet</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">ETH</span><span class="p">:</span> <span class="dl">"</span><span class="s2">goerli</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">endpoints</span><span class="p">:</span> <span class="p">{</span>
-      <span class="na">BTC</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://testnet.blockchain.info</span><span class="dl">"</span><span class="p">,</span>
-      <span class="na">ETH</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://goerli.infura.io/v3/YOUR_KEY</span><span class="dl">"</span><span class="p">,</span>
-    <span class="p">},</span>
-  <span class="p">},</span>
-  <span class="na">production</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">BTC</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mainnet</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">ETH</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mainnet</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">endpoints</span><span class="p">:</span> <span class="p">{</span>
-      <span class="na">BTC</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://blockchain.info</span><span class="dl">"</span><span class="p">,</span>
-      <span class="na">ETH</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://mainnet.infura.io/v3/YOUR_KEY</span><span class="dl">"</span><span class="p">,</span>
-    <span class="p">},</span>
-  <span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h3 id="testing-tools">Testing Tools</h3>
-
-<p><strong>Mock Transactions:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Generate test transactions</span>
-<span class="kd">const</span> <span class="nx">createTestTransaction</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">params</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">faucet</span> <span class="o">=</span> <span class="nf">getFaucet</span><span class="p">(</span><span class="nx">params</span><span class="p">.</span><span class="nx">currency</span><span class="p">);</span>
-  <span class="kd">const</span> <span class="nx">testAddress</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">generateTestAddress</span><span class="p">();</span>
-
-  <span class="k">return</span> <span class="p">{</span>
-    <span class="na">txId</span><span class="p">:</span> <span class="nf">generateMockTxId</span><span class="p">(),</span>
-    <span class="na">from</span><span class="p">:</span> <span class="nx">faucet</span><span class="p">.</span><span class="nx">address</span><span class="p">,</span>
-    <span class="na">to</span><span class="p">:</span> <span class="nx">testAddress</span><span class="p">,</span>
-    <span class="na">amount</span><span class="p">:</span> <span class="nx">params</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span>
-    <span class="na">currency</span><span class="p">:</span> <span class="nx">params</span><span class="p">.</span><span class="nx">currency</span><span class="p">,</span>
-    <span class="na">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">pending</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">confirmations</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="p">};</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h2 id="performance-optimization">Performance Optimization</h2>
-
-<h3 id="caching-strategy">Caching Strategy</h3>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Redis caching for exchange rates</span>
-<span class="kd">const</span> <span class="nx">getCachedRate</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">currency</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">cached</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">`rate:</span><span class="p">${</span><span class="nx">currency</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
-
-  <span class="k">if </span><span class="p">(</span><span class="nx">cached</span> <span class="o">&amp;&amp;</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">cached</span><span class="p">.</span><span class="nx">timestamp</span> <span class="o">&lt;</span> <span class="mi">60000</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">cached</span><span class="p">.</span><span class="nx">rate</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="kd">const</span> <span class="nx">rate</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetchLiveRate</span><span class="p">(</span><span class="nx">currency</span><span class="p">);</span>
-  <span class="k">await</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">setex</span><span class="p">(</span>
-    <span class="s2">`rate:</span><span class="p">${</span><span class="nx">currency</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
-    <span class="mi">60</span><span class="p">,</span>
-    <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span> <span class="nx">rate</span><span class="p">,</span> <span class="na">timestamp</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="p">}),</span>
-  <span class="p">);</span>
-
-  <span class="k">return</span> <span class="nx">rate</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h3 id="batch-processing">Batch Processing</h3>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Batch transaction processing</span>
-<span class="kd">const</span> <span class="nx">processBatch</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">transactions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">grouped</span> <span class="o">=</span> <span class="nf">groupBy</span><span class="p">(</span><span class="nx">transactions</span><span class="p">,</span> <span class="dl">"</span><span class="s2">currency</span><span class="dl">"</span><span class="p">);</span>
-
-  <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="p">[</span><span class="nx">currency</span><span class="p">,</span> <span class="nx">txs</span><span class="p">]</span> <span class="k">of</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">entries</span><span class="p">(</span><span class="nx">grouped</span><span class="p">))</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">provider</span> <span class="o">=</span> <span class="nf">getProvider</span><span class="p">(</span><span class="nx">currency</span><span class="p">);</span>
-    <span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">provider</span><span class="p">.</span><span class="nf">batchProcess</span><span class="p">(</span><span class="nx">txs</span><span class="p">);</span>
-
-    <span class="k">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nf">all</span><span class="p">(</span>
-      <span class="nx">results</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="nf">updateTransactionStatus</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">txId</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="p">),</span>
-      <span class="p">),</span>
-    <span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h2 id="support-and-resources">Support and Resources</h2>
-
-<h3 id="developer-resources">Developer Resources</h3>
-
-<ul>
-  <li>API Reference: <code class="language-plaintext highlighter-rouge">developers.give.io/crypto</code></li>
-  <li>GitHub Examples: <code class="language-plaintext highlighter-rouge">github.com/give-protocol/crypto-examples</code></li>
-  <li>Testnet Faucets: <code class="language-plaintext highlighter-rouge">faucet.give.io</code></li>
-  <li>Discord Community: <code class="language-plaintext highlighter-rouge">discord.gg/giveprotocol</code></li>
-</ul>
-
-<h3 id="technical-support">Technical Support</h3>
-
-<ul>
-  <li>Email: <code class="language-plaintext highlighter-rouge">crypto-support@give.io</code></li>
-  <li>Developer Forum: <code class="language-plaintext highlighter-rouge">forum.give.io/crypto</code></li>
-  <li>Office Hours: Thursdays 2-4 PM EST</li>
-</ul>
-
-<h3 id="additional-documentation">Additional Documentation</h3>
-
-<ul>
-  <li>Security Best Practices</li>
-  <li>Regulatory Compliance Guide</li>
-  <li>Integration Checklist</li>
-  <li>Performance Benchmarks</li>
-</ul>
-</article>
-      </div>
-    </main>
-
-    <!-- Search Overlay -->
-    <div class="docs-search-overlay" id="search-overlay">
-      <div class="docs-search-results">
-        <div class="docs-search-header">
-          <h3>Search Results</h3>
-          <button class="docs-search-close" id="search-close">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div class="docs-search-list" id="search-results"></div>
-      </div>
-    </div>
-
     <!-- Google Translate -->
-    <div id="google_translate_element" style="display: none"></div>
-
-    <!-- JavaScript -->
-    <script>
-      // Settings dropdown
-      const settingsToggle = document.getElementById("settings-toggle");
-      const settingsMenu = document.getElementById("settings-menu");
-
-      settingsToggle.addEventListener("click", function (e) {
-        e.stopPropagation();
-        settingsMenu.style.display =
-          settingsMenu.style.display === "block" ? "none" : "block";
-      });
-
-      document.addEventListener("click", function (e) {
-        if (
-          !settingsToggle.contains(e.target) &&
-          !settingsMenu.contains(e.target)
-        ) {
-          settingsMenu.style.display = "none";
-        }
-      });
-
-      // Theme switching
-      const themeButtons = document.querySelectorAll(".docs-theme-btn");
-      const savedTheme = localStorage.getItem("docs-theme") || "light";
-
-      document.body.classList.toggle("dark-mode", savedTheme === "dark");
-
-      themeButtons.forEach((button) => {
-        if (button.dataset.theme === savedTheme) {
-          button.classList.add("active");
-        }
-
-        button.addEventListener("click", function () {
-          const theme = this.dataset.theme;
-          localStorage.setItem("docs-theme", theme);
-          document.body.classList.toggle("dark-mode", theme === "dark");
-
-          themeButtons.forEach((btn) => btn.classList.remove("active"));
-          this.classList.add("active");
-
-          settingsMenu.style.display = "none";
-        });
-      });
-
-      // Language switching
-      const langButtons = document.querySelectorAll(".docs-lang-btn");
-
-      langButtons.forEach((button) => {
-        button.addEventListener("click", function () {
-          const lang = this.dataset.lang;
-
-          if (lang === "en") {
-            // Clear translation
-            const url = window.location.pathname + window.location.search;
-            window.location.href = url;
-          } else {
-            // Use hash-based translation trigger
-            let langCode = lang;
-            // Map language codes to Google Translate codes
-            const langMap = {
-              'zh-CN': 'zh-CN',
-              'ar': 'ar',
-              'ko': 'ko',
-              'ja': 'ja',
-              'es': 'es',
-              'de': 'de',
-              'fr': 'fr'
-            };
-            
-            langCode = langMap[lang] || lang;
-            
-            // Set hash to trigger translation
-            window.location.hash = `googtrans(en|${langCode})`;
-            window.location.reload();
-          }
-
-          langButtons.forEach((btn) => btn.classList.remove("active"));
-          this.classList.add("active");
-
-          settingsMenu.style.display = "none";
-        });
-      });
-
-      // Enhanced search functionality
-      const searchInput = document.getElementById("search-input");
-      const searchOverlay = document.getElementById("search-overlay");
-      const searchResults = document.getElementById("search-results");
-      const searchClose = document.getElementById("search-close");
-
-      let searchData = [];
-
-      // Load search data - with fallback for non-Jekyll environments
-      const searchUrl = '/search.json' === '/search.json' 
-        ? './search.json'  // Fallback if Jekyll isn't processing
-        : '/search.json';
-      
-      fetch(searchUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          searchData = data;
-          // Search data loaded successfully
-        })
-        .catch((error) => {
-          console.error("❌ Search data loading error:", error);
-          // Fallback: Try to search through visible navigation links
-          const navLinks = document.querySelectorAll('.docs-nav-link');
-          searchData = Array.from(navLinks).map(link => ({
-            title: link.textContent.trim(),
-            url: link.getAttribute('href'),
-            content: link.textContent.trim(),
-            category: 'Navigation'
-          }));
-          // Using fallback search data from navigation
-        });
-
-      function highlightText(text, query) {
-        if (!query) return text;
-        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-        return text.replace(regex, '<mark>$1</mark>');
-      }
-
-      function calculateRelevance(item, query) {
-        const lowerQuery = query.toLowerCase();
-        const lowerTitle = item.title.toLowerCase();
-        const lowerContent = item.content.toLowerCase();
-        
-        let score = 0;
-        
-        // Title exact match gets highest score
-        if (lowerTitle === lowerQuery) score += 100;
-        // Title starts with query
-        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
-        // Title contains query
-        else if (lowerTitle.includes(lowerQuery)) score += 25;
-        
-        // Content matches
-        if (lowerContent.includes(lowerQuery)) score += 10;
-        
-        // Multiple word matches
-        const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
-        queryWords.forEach(word => {
-          if (lowerTitle.includes(word)) score += 5;
-          if (lowerContent.includes(word)) score += 2;
-        });
-        
-        return score;
-      }
-
-      function performSearch(query) {
-        if (!query.trim()) {
-          searchOverlay.classList.remove("active");
-          return;
-        }
-
-        const results = searchData
-          .filter((item) => {
-            const text = (item.title + " " + item.content + " " + (item.category || "")).toLowerCase();
-            return text.includes(query.toLowerCase());
-          })
-          .map(item => ({
-            ...item,
-            relevance: calculateRelevance(item, query)
-          }))
-          .sort((a, b) => b.relevance - a.relevance)
-          .slice(0, 8);
-
-        if (results.length === 0) {
-          searchResults.innerHTML = `
-            <div class="docs-search-item">
-              <div class="docs-result-title">No results found</div>
-              <div class="docs-result-excerpt">Try different keywords or check spelling</div>
-            </div>`;
-        } else {
-          searchResults.innerHTML = results
-            .map((result) => {
-              const highlightedTitle = highlightText(result.title, query);
-              const excerpt = result.content.substring(0, 150);
-              const highlightedExcerpt = highlightText(excerpt, query);
-              
-              return `
-                <div class="docs-search-item" onclick="window.location.href='${result.url}'">
-                  <div class="docs-result-title">${highlightedTitle}</div>
-                  <div class="docs-result-excerpt">${highlightedExcerpt}...</div>
-                  ${result.category ? `<div class="docs-result-category">${result.category}</div>` : ''}
-                </div>
-              `;
-            })
-            .join("");
-        }
-
-        searchOverlay.classList.add("active");
-      }
-
-      searchInput.addEventListener("input", function () {
-        const query = this.value;
-        clearTimeout(this.searchTimeout);
-        this.searchTimeout = setTimeout(() => performSearch(query), 300);
-      });
-
-      searchInput.addEventListener("focus", function () {
-        if (this.value.trim()) {
-          performSearch(this.value);
-        }
-      });
-
-      searchClose.addEventListener("click", function () {
-        searchOverlay.classList.remove("active");
-        searchInput.value = "";
-      });
-
-      searchOverlay.addEventListener("click", function (e) {
-        if (e.target === searchOverlay) {
-          searchOverlay.classList.remove("active");
-        }
-      });
-
-      // Keyboard navigation
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-          searchOverlay.classList.remove("active");
-        }
-      });
-      // Check for active language on page load
-      window.addEventListener('load', function() {
-        const hash = window.location.hash;
-        if (hash.includes('googtrans')) {
-          const match = hash.match(/googtrans\(en\|([^)]+)\)/);
-          if (match && match[1]) {
-            const activeLang = match[1];
-            langButtons.forEach((btn) => {
-              if (btn.dataset.lang === activeLang) {
-                btn.classList.add('active');
-              } else {
-                btn.classList.remove('active');
-              }
-            });
-          }
-        }
-      });
-    </script>
-
-    <!-- Google Translate -->
-    <script>
+    <script type="text/javascript">
       function googleTranslateElementInit() {
         new google.translate.TranslateElement(
           {
@@ -1632,6 +103,914 @@ contract GiveProtocolDonations {
         );
       }
     </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+  </head>
+
+  <body class="modern-docs preload">
+    <script>
+      // Remove preload class after page loads to enable transitions
+      window.addEventListener("load", function () {
+        document.body.classList.remove("preload");
+      });
+    </script>
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element" style="display: none"></div>
+
+    <!-- Modern Header -->
+    <header class="modern-header">
+      <div class="header-container">
+        <a href="/" class="brand">
+          <img
+            src="/assets/images/logo.svg"
+            alt="Give Protocol"
+          />
+          <span>Documentation</span>
+        </a>
+
+        <div class="header-search">
+          <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search documentation..."
+              data-translate="yes"
+            />
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <a href="https://giveprotocol.io" class="btn-link"> Main Site </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+      <!-- Modern Sidebar -->
+      <aside class="modern-sidebar">
+        <button class="mobile-nav-toggle">
+          <span>Navigation</span>
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <nav class="sidebar-nav">
+          <!-- Help Center -->
+          <div class="nav-section">
+            <h3 class="section-title">Give Protocol Help Center</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/help-center/faq/"
+                  class=""
+                >
+                  <i class="fas fa-question-circle"></i> Frequently Asked
+                  Questions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/help-center/need-help/"
+                  class=""
+                >
+                  <i class="fas fa-life-ring"></i> Need Help?
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/help-center/report-issue/"
+                  class=""
+                >
+                  <i class="fas fa-exclamation-triangle"></i> Report An Issue
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Introduction -->
+          <div class="nav-section">
+            <h3 class="section-title">Introduction</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/introduction/what-is-give-protocol/"
+                  class=""
+                >
+                  <i class="fas fa-info-circle"></i> What is Give Protocol
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/introduction/how-to-join/"
+                  class=""
+                >
+                  <i class="fas fa-door-open"></i> How To Join Give Protocol?
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Getting Started -->
+          <div class="nav-section">
+            <h3 class="section-title">Getting Started</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/getting-started/creating-account/"
+                  class=""
+                >
+                  <i class="fas fa-user-plus"></i> Creating Your Account
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/setting-up-profile/"
+                  class=""
+                >
+                  <i class="fas fa-user-edit"></i> Setting Up Your Profile
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/wallet-connection/"
+                  class=""
+                >
+                  <i class="fas fa-wallet"></i> Wallet Connection Guide
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/first-steps/"
+                  class=""
+                >
+                  <i class="fas fa-play"></i> First Steps Walkthrough
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/getting-started/dashboard/"
+                  class=""
+                >
+                  <i class="fas fa-tachometer-alt"></i> Dashboard Overview
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- User Guides -->
+          <div class="nav-section">
+            <h3 class="section-title">User Guides</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/user-guides/donors/"
+                  class=""
+                >
+                  <i class="fas fa-heart"></i> For Donors
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/user-guides/organizations/"
+                  class=""
+                >
+                  <i class="fas fa-building"></i> For Recipients/Organizations
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/user-guides/volunteers/"
+                  class=""
+                >
+                  <i class="fas fa-hands-helping"></i> For Volunteers
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Platform Features -->
+          <div class="nav-section">
+            <h3 class="section-title">Platform Features</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/platform-features/search-discovery/"
+                  class=""
+                >
+                  <i class="fas fa-search"></i> Search & Discovery Tools
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/platform-features/verification/"
+                  class=""
+                >
+                  <i class="fas fa-shield-alt"></i> Verification & Trust Badges
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/platform-features/impact-tracking/"
+                  class=""
+                >
+                  <i class="fas fa-chart-line"></i> Impact Tracking & Metrics
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/platform-features/community/"
+                  class=""
+                >
+                  <i class="fas fa-users"></i> Community Features
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Technical Documentation -->
+          <div class="nav-section">
+            <h3 class="section-title">Technical Documentation</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/technical/blockchain-integration/"
+                  class=""
+                >
+                  <i class="fas fa-link"></i> Blockchain Integration
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/smart-contracts/"
+                  class=""
+                >
+                  <i class="fas fa-file-contract"></i> Smart Contract
+                  Interactions
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/cryptocurrencies/"
+                  class="active"
+                >
+                  <i class="fab fa-bitcoin"></i> Supported Cryptocurrencies
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/fees/"
+                  class=""
+                >
+                  <i class="fas fa-percentage"></i> Transaction Fees & Gas
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/technical/api-docs/"
+                  class=""
+                >
+                  <i class="fas fa-code"></i> API Documentation
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Safety & Security -->
+          <div class="nav-section">
+            <h3 class="section-title">Safety & Security</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/safety-security/smart-giving/"
+                  class=""
+                >
+                  <i class="fas fa-brain"></i> Smart Giving Practices
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/safety-security/volunteer-safety/"
+                  class=""
+                >
+                  <i class="fas fa-hard-hat"></i> Volunteer Safety
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/safety-security/platform-security/"
+                  class=""
+                >
+                  <i class="fas fa-shield-alt"></i> Platform Security
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Resources & Tools -->
+          <div class="nav-section">
+            <h3 class="section-title">Resources & Tools</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/resources/educational-content/"
+                  class=""
+                >
+                  <i class="fas fa-graduation-cap"></i> Educational Content
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/resources/calculator/"
+                  class=""
+                >
+                  <i class="fas fa-calculator"></i> Donation Planning Tools
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/resources/time-tracking/"
+                  class=""
+                >
+                  <i class="fas fa-clock"></i> Volunteer Time Tracking
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/resources/templates/"
+                  class=""
+                >
+                  <i class="fas fa-file-alt"></i> Templates & Guides
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Community & Support -->
+          <div class="nav-section">
+            <h3 class="section-title">Community & Support</h3>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a
+                  href="/community/forums/"
+                  class=""
+                >
+                  <i class="fas fa-comments"></i> Community Forums
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/community/contact/"
+                  class=""
+                >
+                  <i class="fas fa-envelope"></i> Contact Information
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/community/social/"
+                  class=""
+                >
+                  <i class="fas fa-share-alt"></i> Social Media Links
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="modern-content">
+        <div class="content-card">
+          <!-- Breadcrumbs -->
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+                
+            <span class="separator">/</span>
+            
+            <a
+              href="/technical/"
+            >
+              Technical
+            </a>
+               
+            <span class="separator">/</span>
+            
+            <span>Cryptocurrencies</span>
+              
+          </nav>
+
+          <article><h1 id="supported-cryptocurrencies">Supported Cryptocurrencies</h1>
+
+<h2 id="overview">Overview</h2>
+
+<p>Give Protocol v1 launch works with cryptocurrencies that meet community-established criteria for security, liquidity, and utility. This ensures charitable organizations can reliably receive and utilize donations while protecting all stakeholders from unnecessary risks.</p>
+
+<h2 id="governance-framework">Governance Framework</h2>
+
+<h3 id="current-implementation">Current Implementation</h3>
+
+<p>During our initial phase, the Give Protocol core team maintains the supported token list based on the criteria outlined below. All decisions are made transparently with documented rationale.</p>
+
+<h3 id="future-governance">Future Governance</h3>
+
+<p>As Give Protocol matures, token additions and removals will transition to community governance through:</p>
+
+<ul>
+  <li><strong>Proposal submission</strong>: Any community member can propose new tokens that meet minimum criteria</li>
+  <li><strong>Technical review</strong>: Automated verification of objective metrics (liquidity, security, etc.)</li>
+  <li><strong>Community discussion</strong>: Public forum for stakeholder input</li>
+  <li><strong>Voting period</strong>: Multi-stakeholder voting including donors, verified charities, and protocol contributors</li>
+  <li><strong>Implementation</strong>: Successful proposals automatically trigger technical integration</li>
+</ul>
+
+<h2 id="minimum-criteria-for-token-support">Minimum Criteria for Token Support</h2>
+
+<p>All tokens must meet these objective, verifiable criteria to be eligible for community consideration:</p>
+
+<h3 id="1-liquidity-requirements">1. Liquidity Requirements</h3>
+
+<ul>
+  <li><strong>24-hour trading volume</strong>: Minimum $10 million USD across verified exchanges</li>
+  <li><strong>Active trading pairs</strong>: Direct fiat (USD/EUR) or major stablecoin pairs required</li>
+  <li><strong>Market depth</strong>: Must handle $50,000 conversions with &lt;2% slippage</li>
+  <li><strong>Exchange availability</strong>: Listed on 3+ reputable exchanges with charity-friendly policies</li>
+</ul>
+
+<p><strong>Rationale</strong>: Ensures charities can convert donations without significant loss or delay</p>
+
+<h3 id="2-technical-standards">2. Technical Standards</h3>
+
+<ul>
+  <li><strong>Moonbeam compatibility</strong>: Full ERC-20 standard or native token support</li>
+  <li><strong>Security history</strong>: No known vulnerabilities or history of exploits in token contracts</li>
+</ul>
+
+<p><strong>Rationale</strong>: Protects donation integrity and ensures smooth platform operations</p>
+
+<h3 id="3-accessibility-metrics">3. Accessibility Metrics</h3>
+
+<ul>
+  <li><strong>Off-ramp availability</strong>: Documented paths to USD/EUR via compliant providers</li>
+  <li><strong>Wallet support</strong>: Integration with MetaMask and/or Polkadot.js</li>
+  <li><strong>Regulatory status</strong>: No active enforcement actions in G20 jurisdictions</li>
+</ul>
+
+<p><strong>Rationale</strong>: Ensures charities can actually access and use donated funds</p>
+
+<h3 id="4-risk-parameters">4. Risk Parameters</h3>
+
+<p><strong>Volatility limits</strong>:</p>
+
+<ul>
+  <li>Stablecoins: &lt;2% deviation from peg (95% of time)</li>
+  <li>Native tokens: &lt;50% 30-day volatility</li>
+</ul>
+
+<p><strong>Audit requirements</strong>: Published security audits (stablecoins need reserve attestations)</p>
+
+<p><strong>Concentration limits</strong>: No single holder controls &gt;30% of supply</p>
+
+<p><strong>Age requirement</strong>: 12+ months since token launch</p>
+
+<p><strong>Rationale</strong>: Protects charities from extreme volatility and technical risks</p>
+
+<h2 id="currently-supported-cryptocurrencies">Currently Supported Cryptocurrencies</h2>
+
+<p>The following tokens have been verified to meet all criteria and are actively supported:</p>
+
+<h3 id="glmr-glimmer">GLMR (Glimmer)</h3>
+
+<p><strong>Classification</strong>: Platform native token</p>
+
+<ul>
+  <li><strong>Charity benefits</strong>: Lowest transaction costs on Moonbeam, direct ecosystem support</li>
+  <li><strong>Donor benefits</strong>: Native integration, no bridge risks</li>
+</ul>
+
+<h3 id="dot-polkadot">DOT (Polkadot)</h3>
+
+<p><strong>Classification</strong>: Ecosystem native token</p>
+
+<ul>
+  <li><strong>Charity benefits</strong>: Deep liquidity, institutional-grade infrastructure</li>
+  <li><strong>Donor benefits</strong>: Wide exchange support, proven security</li>
+</ul>
+
+<h3 id="usdc-usd-coin">USDC (USD Coin)</h3>
+
+<p><strong>Classification</strong>: Regulated stablecoin</p>
+
+<ul>
+  <li><strong>Key metrics</strong>: &lt;0.5% deviation from peg, Circle attestations</li>
+  <li><strong>Charity benefits</strong>: Direct USD redemption, regulatory clarity</li>
+  <li><strong>Donor benefits</strong>: No volatility risk, wide acceptance</li>
+</ul>
+
+<p><strong>Governance note</strong>: Meets all stability criteria with significant margin</p>
+
+<h3 id="usdt-tether">USDT (Tether)</h3>
+
+<p><strong>Classification</strong>: Stablecoin</p>
+
+<ul>
+  <li><strong>Key metrics</strong>: Highest stablecoin liquidity globally</li>
+  <li><strong>Charity benefits</strong>: Universal exchange support, global accessibility</li>
+  <li><strong>Donor benefits</strong>: Minimal slippage on large donations</li>
+</ul>
+</article>
+
+          <!-- Page Actions -->
+          <div class="page-actions">
+            
+
+            <div class="last-updated">
+              Last updated: 
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Search Results Overlay -->
+    <div class="search-results-overlay" id="search-overlay">
+      <div class="search-results-container">
+        <div class="search-header">
+          <h3>Search Results</h3>
+          <button class="close-search" id="close-search">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="search-results"></div>
+        <div class="search-shortcuts">
+          <div class="shortcut"><kbd>↑</kbd><kbd>↓</kbd> Navigate</div>
+          <div class="shortcut"><kbd>Enter</kbd> Select</div>
+          <div class="shortcut"><kbd>Esc</kbd> Close</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      /* global google */
+
+      // Mobile nav toggle
+      const mobileNavToggle = document.querySelector(".mobile-nav-toggle");
+      const sidebarNav = document.querySelector(".sidebar-nav");
+
+      mobileNavToggle.addEventListener("click", () => {
+        sidebarNav.style.display =
+          sidebarNav.style.display === "none" ? "block" : "none";
+      });
+
+      // Header scroll effect
+      const header = document.querySelector(".modern-header");
+      let lastScrollY = window.scrollY;
+
+      window.addEventListener("scroll", () => {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > 10) {
+          header.style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
+        } else {
+          header.style.boxShadow = "none";
+        }
+
+        lastScrollY = currentScrollY;
+      });
+    </script>
+
+    <!-- Font Awesome Icon Styles -->
+    <style>
+      /* Navigation icon styles */
+      .nav-item a i {
+        margin-right: 0.5rem;
+        width: 1rem;
+        text-align: center;
+        color: #6b7280;
+        transition: color 0.2s ease;
+      }
+
+      .nav-item a:hover i,
+      .nav-item a.active i {
+        color: #2563eb;
+      }
+
+      /* Header icon styles */
+      .search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        font-size: 0.875rem;
+      }
+
+      .mobile-nav-toggle i {
+        color: #6b7280;
+        font-size: 1rem;
+      }
+
+      .edit-link i {
+        margin-right: 0.375rem;
+        font-size: 0.875rem;
+      }
+
+      .close-search i {
+        color: #6b7280;
+        font-size: 1rem;
+        transition: color 0.2s ease;
+      }
+
+      .close-search:hover i {
+        color: #dc2626;
+      }
+
+      /* Dark mode icon colors */
+      body.dark-mode .nav-item a i {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .nav-item a:hover i,
+      body.dark-mode .nav-item a.active i {
+        color: #60a5fa;
+      }
+
+      body.dark-mode .search-icon {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .mobile-nav-toggle i {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .close-search i {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .close-search:hover i {
+        color: #f87171;
+      }
+
+      /* Enhanced Search Results Styling */
+      .search-item {
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .search-item:hover {
+        background-color: #f9fafb;
+      }
+
+      .search-item:last-child {
+        border-bottom: none;
+      }
+
+      .result-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+      }
+
+      .result-excerpt {
+        color: #6b7280;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin-bottom: 0.25rem;
+      }
+
+      .result-category {
+        color: #059669;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      mark {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-weight: 600;
+      }
+
+      /* Dark mode search results */
+      body.dark-mode .search-item {
+        border-bottom-color: #374151;
+      }
+
+      body.dark-mode .search-item:hover {
+        background-color: #374151;
+      }
+
+      body.dark-mode .result-title {
+        color: #f3f4f6;
+      }
+
+      body.dark-mode .result-excerpt {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .result-category {
+        color: #34d399;
+      }
+
+      body.dark-mode mark {
+        background-color: #451a03;
+        color: #fbbf24;
+      }
+    </style>
+
+    <!-- Enhanced Search Scripts -->
+    <script>
+      // Enhanced search functionality
+      const searchInput = document.getElementById("search-input");
+      const searchOverlay = document.getElementById("search-overlay");
+      const searchResults = document.getElementById("search-results");
+      const searchClose = document.getElementById("close-search");
+
+      let searchData = [];
+
+      // Load search data with multiple fallback strategies
+      async function loadSearchData() {
+        const possibleUrls = [
+          '/search.json',
+          "/search.json",
+          "./search.json",
+          "../search.json",
+          "../../search.json",
+        ];
+
+        for (const url of possibleUrls) {
+          try {
+            console.log(`Trying to load search data from: ${url}`);
+            const response = await fetch(url);
+            if (response.ok) {
+              const data = await response.json();
+              searchData = data;
+              console.log(
+                `Search data loaded successfully from: ${url} (${data.length} items)`,
+              );
+              return;
+            }
+          } catch (error) {
+            console.log(`Failed to load from ${url}:`, error.message);
+          }
+        }
+
+        // Final fallback: Create basic search data from navigation
+        console.log("Using navigation fallback for search data");
+        const navLinks = document.querySelectorAll(".nav-item a");
+        searchData = Array.from(navLinks).map((link) => ({
+          title: link.textContent.trim(),
+          url: link.getAttribute("href"),
+          content: link.textContent.trim(),
+          category: "Navigation",
+        }));
+        console.log(
+          `Fallback search data created (${searchData.length} items)`,
+        );
+      }
+
+      // Initialize search data
+      loadSearchData();
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(
+          `(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+          "gi",
+        );
+        return text.replace(regex, "<mark>$1</mark>");
+      }
+
+      function calculateRelevance(item, query) {
+        const lowerQuery = query.toLowerCase();
+        const lowerTitle = item.title.toLowerCase();
+        const lowerContent = item.content.toLowerCase();
+
+        let score = 0;
+
+        // Title exact match gets highest score
+        if (lowerTitle === lowerQuery) score += 100;
+        // Title starts with query
+        else if (lowerTitle.startsWith(lowerQuery)) score += 50;
+        // Title contains query
+        else if (lowerTitle.includes(lowerQuery)) score += 25;
+
+        // Content matches
+        if (lowerContent.includes(lowerQuery)) score += 10;
+
+        // Multiple word matches
+        const queryWords = lowerQuery
+          .split(" ")
+          .filter((word) => word.length > 2);
+        queryWords.forEach((word) => {
+          if (lowerTitle.includes(word)) score += 5;
+          if (lowerContent.includes(word)) score += 2;
+        });
+
+        return score;
+      }
+
+      function performSearch(query) {
+        if (!query || query.length < 2) {
+          searchOverlay.classList.remove("active");
+          return;
+        }
+
+        if (searchData.length === 0) {
+          console.log("Search data not loaded, retrying...");
+          loadSearchData().then(() => {
+            if (searchData.length > 0) {
+              performSearch(query); // Retry search after data loads
+            }
+          });
+          return;
+        }
+
+        const results = searchData
+          .map((item) => ({
+            ...item,
+            relevance: calculateRelevance(item, query),
+          }))
+          .filter((item) => item.relevance > 0)
+          .sort((a, b) => b.relevance - a.relevance)
+          .slice(0, 10);
+
+        if (results.length === 0) {
+          searchResults.innerHTML = `
+            <div class="search-item">
+              <div class="result-title">No results found</div>
+              <div class="result-excerpt">Try different keywords or check spelling</div>
+            </div>`;
+        } else {
+          searchResults.innerHTML = results
+            .map((result) => {
+              const highlightedTitle = highlightText(result.title, query);
+              const excerpt = result.content.substring(0, 150);
+              const highlightedExcerpt = highlightText(excerpt, query);
+
+              return `
+                <div class="search-item" onclick="window.location.href='${result.url}'">
+                  <div class="result-title">${highlightedTitle}</div>
+                  <div class="result-excerpt">${highlightedExcerpt}...</div>
+                  ${result.category ? `<div class="result-category">${result.category}</div>` : ""}
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        searchOverlay.classList.add("active");
+      }
+
+      // Event listeners
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          const query = this.value;
+          clearTimeout(this.searchTimeout);
+          this.searchTimeout = setTimeout(() => performSearch(query), 300);
+        });
+
+        searchInput.addEventListener("focus", function () {
+          if (this.value.trim()) {
+            performSearch(this.value);
+          }
+        });
+      }
+
+      if (searchClose) {
+        searchClose.addEventListener("click", function () {
+          searchOverlay.classList.remove("active");
+          if (searchInput) searchInput.value = "";
+        });
+      }
+
+      if (searchOverlay) {
+        searchOverlay.addEventListener("click", function (e) {
+          if (e.target === searchOverlay) {
+            searchOverlay.classList.remove("active");
+          }
+        });
+      }
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          searchOverlay.classList.remove("active");
+        }
+      });
+    </script>
+
+    <!-- i18n Helper -->
+    <script src="/assets/js/i18n-helper.js"></script>
   </body>
 </html>

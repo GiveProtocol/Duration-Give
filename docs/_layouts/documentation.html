@@ -1368,7 +1368,7 @@
               <div class="docs-search-excerpt">Please wait while we load the search index.</div>
             </div>
           `;
-          showSearchOverlay();
+          searchOverlay.classList.add("active");
 
           // Retry loading search data
           loadSearchData().then(() => {
