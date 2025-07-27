@@ -989,6 +989,75 @@
           width: 100%;
         }
       }
+
+      /* Footer Styling */
+      .docs-footer {
+        margin-top: 3rem;
+        padding: 2rem 0;
+        border-top: 1px solid #e5e7eb;
+        background-color: #f9fafb;
+      }
+
+      .docs-footer .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .docs-footer .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        justify-content: center;
+      }
+
+      .docs-footer .footer-links a {
+        color: #6b7280;
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s ease;
+      }
+
+      .docs-footer .footer-links a:hover {
+        color: #2563eb;
+      }
+
+      .docs-footer .footer-text {
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.875rem;
+      }
+
+      .docs-footer .footer-text p {
+        margin: 0;
+      }
+
+      /* Dark mode footer */
+      body.dark-mode .docs-footer {
+        border-top-color: #374151;
+        background-color: #1f2937;
+      }
+
+      body.dark-mode .docs-footer .footer-links a {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .docs-footer .footer-links a:hover {
+        color: #60a5fa;
+      }
+
+      body.dark-mode .docs-footer .footer-text {
+        color: #9ca3af;
+      }
+
+      @media (max-width: 768px) {
+        .docs-footer .footer-links {
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1164,6 +1233,21 @@
         <article class="docs-article">{{ content }}</article>
       </div>
     </main>
+
+    <!-- Footer -->
+    <footer class="docs-footer">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="{{ '/safety-security/cookie-policy/' | relative_url }}">Cookie Policy</a>
+          <a href="{{ '/safety-security/platform-security/' | relative_url }}">Privacy Policy</a>
+          <a href="{{ '/help-center/need-help/' | relative_url }}">Contact Us</a>
+          <a href="https://giveprotocol.io" target="_blank">Main Website</a>
+        </div>
+        <div class="footer-text">
+          <p>{{ site.footer_content | default: "Copyright &copy; 2025 Give Protocol. All rights reserved." }}</p>
+        </div>
+      </div>
+    </footer>
 
     <!-- Search Overlay -->
     <div class="docs-search-overlay" id="search-overlay">

@@ -13,22 +13,22 @@
 
     <!-- Cookiebot Consent Management -->
     <script data-cookieconsent="ignore">
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag("consent", "default", {
-            ad_personalization: "denied",
-            ad_storage: "denied",
-            ad_user_data: "denied",
-            analytics_storage: "denied",
-            functionality_storage: "denied",
-            personalization_storage: "denied",
-            security_storage: "granted",
-            wait_for_update: 500,
-        });
-        gtag("set", "ads_data_redaction", true);
-        gtag("set", "url_passthrough", false);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        ad_personalization: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        analytics_storage: "denied",
+        functionality_storage: "denied",
+        personalization_storage: "denied",
+        security_storage: "granted",
+        wait_for_update: 500,
+      });
+      gtag("set", "ads_data_redaction", true);
+      gtag("set", "url_passthrough", false);
     </script>
 
     <!-- Google tag (gtag.js) -->
@@ -404,6 +404,14 @@
                   class=""
                 >
                   <i class="fas fa-shield-alt"></i> Platform Security
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/safety-security/cookie-policy/"
+                  class=""
+                >
+                  <i class="fas fa-cookie-bite"></i> Cookie Policy
                 </a>
               </li>
             </ul>
@@ -1134,6 +1142,21 @@ Requested Resolution:
           </div>
         </div>
       </main>
+
+      <!-- Footer -->
+      <footer class="modern-footer">
+        <div class="footer-content">
+          <div class="footer-links">
+            <a href="/safety-security/cookie-policy/">Cookie Policy</a>
+            <a href="/safety-security/platform-security/">Privacy Policy</a>
+            <a href="/help-center/need-help/">Contact Us</a>
+            <a href="https://giveprotocol.io" target="_blank">Main Website</a>
+          </div>
+          <div class="footer-text">
+            <p>Copyright &copy; 2025 Give Protocol. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
 
     <!-- Search Results Overlay -->
@@ -1327,6 +1350,75 @@ Requested Resolution:
       body.dark-mode mark {
         background-color: #451a03;
         color: #fbbf24;
+      }
+
+      /* Footer Styling */
+      .modern-footer {
+        margin-top: 3rem;
+        padding: 2rem 0;
+        border-top: 1px solid #e5e7eb;
+        background-color: #f9fafb;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        justify-content: center;
+      }
+
+      .footer-links a {
+        color: #6b7280;
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s ease;
+      }
+
+      .footer-links a:hover {
+        color: #2563eb;
+      }
+
+      .footer-text {
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.875rem;
+      }
+
+      .footer-text p {
+        margin: 0;
+      }
+
+      /* Dark mode footer */
+      body.dark-mode .modern-footer {
+        border-top-color: #374151;
+        background-color: #1f2937;
+      }
+
+      body.dark-mode .footer-links a {
+        color: #9ca3af;
+      }
+
+      body.dark-mode .footer-links a:hover {
+        color: #60a5fa;
+      }
+
+      body.dark-mode .footer-text {
+        color: #9ca3af;
+      }
+
+      @media (max-width: 768px) {
+        .footer-links {
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+        }
       }
     </style>
 
