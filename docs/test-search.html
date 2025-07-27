@@ -83,7 +83,7 @@
 
       // HTML escaping function to prevent XSS
       function escapeHtml(text) {
-        const div = document.createElement('div');
+        const div = document.createElement("div");
         div.textContent = text;
         return div.innerHTML;
       }
@@ -140,8 +140,8 @@
           .map(
             (item) => `
                 <div class="result-item">
-                    <div class="result-title">${escapeHtml(item.title || '')}</div>
-                    <div class="result-url">${escapeHtml(item.url || '')}</div>
+                    <div class="result-title">${escapeHtml(item.title || "")}</div>
+                    <div class="result-url">${escapeHtml(item.url || "")}</div>
                 </div>
             `,
           )
