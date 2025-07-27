@@ -42,17 +42,21 @@ upgrade-insecure-requests;
 ### Trusted Domains
 
 **Analytics & Tracking:**
+
 - `www.googletagmanager.com` - Google Analytics
 - `www.google-analytics.com` - Google Analytics
 
 **Translation Services:**
+
 - `translate.google.com` - Google Translate widget
 - `translate.googleapis.com` - Google Translate API
 
 **Consent Management:**
+
 - `consent.cookiebot.com` - Cookiebot GDPR compliance
 
 **Fonts & CSS:**
+
 - `fonts.googleapis.com` - Google Fonts CSS
 - `fonts.gstatic.com` - Google Fonts files
 - `cdnjs.cloudflare.com` - Font Awesome icons
@@ -80,6 +84,7 @@ upgrade-insecure-requests;
 ### Testing CSP
 
 To test CSP compliance:
+
 1. Open browser developer tools
 2. Check Console for CSP violations
 3. Review Network tab for blocked resources
