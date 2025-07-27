@@ -15,13 +15,18 @@
     />
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-CBQHKLHD8T');
+      gtag("config", "G-CBQHKLHD8T");
     </script>
 
     <!-- Canonical URL -->
@@ -738,7 +743,7 @@
       <footer class="site-footer" role="contentinfo">
         <div class="footer-content">
           <div class="footer-text">
-            © 2025 Give Protocol. All rights reserved. 
+            © 2025 Give Protocol. All rights reserved.
             <span class="footer-divider">|</span>
             Building transparent charitable giving on blockchain technology.
           </div>
@@ -842,12 +847,13 @@
         // Don't auto-translate on page load to prevent refresh loops
         if (window.userRequestedLanguageChange) {
           console.log("User requested language change to:", lang); // Debug log
-          
+
           if (lang === "en") {
             // Reset to original English without refresh
             if (window.location.hash.includes("googtrans")) {
               console.log("Resetting to English"); // Debug log
-              window.location.href = window.location.pathname + window.location.search;
+              window.location.href =
+                window.location.pathname + window.location.search;
             }
           } else {
             // Use Google Translate API to change language
@@ -870,13 +876,16 @@
             if (targetLang === "en") {
               // Reset to original English
               if (window.location.hash.includes("googtrans")) {
-                window.location.href = window.location.pathname + window.location.search;
+                window.location.href =
+                  window.location.pathname + window.location.search;
                 return;
               }
             } else {
               // Use Google Translate hash to trigger translation
-              const currentUrl = window.location.pathname + window.location.search;
-              window.location.href = currentUrl + "#googtrans(en|" + targetLang + ")";
+              const currentUrl =
+                window.location.pathname + window.location.search;
+              window.location.href =
+                currentUrl + "#googtrans(en|" + targetLang + ")";
               return;
             }
           } catch (e) {
@@ -885,7 +894,9 @@
 
           // Method 2: Try to find and trigger the select element
           try {
-            const selectElement = document.querySelector("#google_translate_element select");
+            const selectElement = document.querySelector(
+              "#google_translate_element select",
+            );
             if (selectElement) {
               selectElement.value = targetLang;
               selectElement.dispatchEvent(new Event("change"));
@@ -900,8 +911,11 @@
             try {
               const iframe = document.querySelector(".goog-te-menu-frame");
               if (iframe) {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                const langLink = iframeDoc.querySelector(`[data-value="${targetLang}"]`);
+                const iframeDoc =
+                  iframe.contentDocument || iframe.contentWindow.document;
+                const langLink = iframeDoc.querySelector(
+                  `[data-value="${targetLang}"]`,
+                );
                 if (langLink) {
                   langLink.click();
                   return;
@@ -912,8 +926,10 @@
             }
 
             // Final fallback: Force reload with hash
-            const currentUrl = window.location.pathname + window.location.search;
-            window.location.href = currentUrl + "#googtrans(en|" + targetLang + ")";
+            const currentUrl =
+              window.location.pathname + window.location.search;
+            window.location.href =
+              currentUrl + "#googtrans(en|" + targetLang + ")";
           }, 500);
         } else {
           // Google Translate not loaded yet, wait and retry (max 3 attempts)
@@ -929,11 +945,13 @@
             console.warn(
               "Google Translate failed to load after",
               maxRetries,
-              "attempts"
+              "attempts",
             );
             // Final fallback even if Google Translate isn't loaded
-            const currentUrl = window.location.pathname + window.location.search;
-            window.location.href = currentUrl + "#googtrans(en|" + targetLang + ")";
+            const currentUrl =
+              window.location.pathname + window.location.search;
+            window.location.href =
+              currentUrl + "#googtrans(en|" + targetLang + ")";
           }
         }
       }
@@ -1064,13 +1082,15 @@
               limit: 10,
               fuzzy: false,
               exclude: ["Welcome"],
-              success: function(data) {
+              success: function (data) {
                 console.log("Search data loaded successfully:", data);
               },
-              error: function(xhr, status, error) {
+              error: function (xhr, status, error) {
                 console.error("Search data loading failed:", error);
-                console.log("Make sure the site is built and search.json is generated");
-              }
+                console.log(
+                  "Make sure the site is built and search.json is generated",
+                );
+              },
             });
           } else {
             console.error("SimpleJekyllSearch not available");
@@ -1127,17 +1147,18 @@
       // Cookie utility functions
       function setCookie(name, value, days = 365) {
         const expires = new Date();
-        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
         document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Strict`;
       }
 
       function getCookie(name) {
         const nameEQ = name + "=";
-        const ca = document.cookie.split(';');
+        const ca = document.cookie.split(";");
         for (let i = 0; i < ca.length; i++) {
           let c = ca[i];
-          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+          while (c.charAt(0) === " ") c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0)
+            return c.substring(nameEQ.length, c.length);
         }
         return null;
       }
@@ -1145,43 +1166,59 @@
       function generateSecureRandomString(length = 8) {
         // Use cryptographically secure random generation
         if (window.crypto && window.crypto.getRandomValues) {
-          const randomBytes = new Uint8Array(Math.ceil(length * 3 / 4)); // More bytes for better base36 conversion
+          const randomBytes = new Uint8Array(Math.ceil((length * 3) / 4)); // More bytes for better base36 conversion
           window.crypto.getRandomValues(randomBytes);
           // Convert to base36 and take desired length
-          return Array.from(randomBytes, byte => 
-            byte.toString(36).padStart(2, '0')
-          ).join('').substring(0, length);
+          return Array.from(randomBytes, (byte) =>
+            byte.toString(36).padStart(2, "0"),
+          )
+            .join("")
+            .substring(0, length);
         } else {
           // Fallback for very old browsers (though this should be rare in modern web)
-          console.warn('Crypto API not available, using timestamp-based fallback');
-          return Date.now().toString(36) + Math.floor(performance.now()).toString(36);
+          console.warn(
+            "Crypto API not available, using timestamp-based fallback",
+          );
+          return (
+            Date.now().toString(36) + Math.floor(performance.now()).toString(36)
+          );
         }
       }
 
       function generateSessionId() {
-        return 'sess_' + generateSecureRandomString(12) + '_' + Date.now().toString(36);
+        return (
+          "sess_" +
+          generateSecureRandomString(12) +
+          "_" +
+          Date.now().toString(36)
+        );
       }
 
       function generateUserId() {
-        return 'user_' + generateSecureRandomString(12) + '_' + Date.now().toString(36);
+        return (
+          "user_" +
+          generateSecureRandomString(12) +
+          "_" +
+          Date.now().toString(36)
+        );
       }
 
       // Page activity tracking
       function trackPageActivity() {
         const currentPage = window.location.pathname;
         const timestamp = new Date().toISOString();
-        
+
         // Get or create user and session IDs
-        let userId = getCookie('give_docs_user_id');
+        let userId = getCookie("give_docs_user_id");
         if (!userId) {
           userId = generateUserId();
-          setCookie('give_docs_user_id', userId, 365); // 1 year
+          setCookie("give_docs_user_id", userId, 365); // 1 year
         }
 
-        let sessionId = getCookie('give_docs_session_id');
+        let sessionId = getCookie("give_docs_session_id");
         if (!sessionId) {
           sessionId = generateSessionId();
-          setCookie('give_docs_session_id', sessionId, 0.5); // 12 hours
+          setCookie("give_docs_session_id", sessionId, 0.5); // 12 hours
         }
 
         // Track page view
@@ -1191,26 +1228,31 @@
           page: currentPage,
           title: document.title,
           timestamp: timestamp,
-          referrer: document.referrer || 'direct',
+          referrer: document.referrer || "direct",
           userAgent: navigator.userAgent,
           language: navigator.language,
           screenSize: `${screen.width}x${screen.height}`,
-          viewportSize: `${window.innerWidth}x${window.innerHeight}`
+          viewportSize: `${window.innerWidth}x${window.innerHeight}`,
         };
 
         // Store in localStorage for potential analytics export
         try {
-          const analyticsData = JSON.parse(localStorage.getItem('give_docs_analytics') || '[]');
+          const analyticsData = JSON.parse(
+            localStorage.getItem("give_docs_analytics") || "[]",
+          );
           analyticsData.push(pageData);
-          
+
           // Keep only last 100 page views to prevent storage bloat
           if (analyticsData.length > 100) {
             analyticsData.splice(0, analyticsData.length - 100);
           }
-          
-          localStorage.setItem('give_docs_analytics', JSON.stringify(analyticsData));
+
+          localStorage.setItem(
+            "give_docs_analytics",
+            JSON.stringify(analyticsData),
+          );
         } catch (e) {
-          console.warn('Could not store analytics data:', e);
+          console.warn("Could not store analytics data:", e);
         }
 
         // Track time on page
@@ -1219,12 +1261,17 @@
 
         const trackTimeOnPage = () => {
           timeOnPage = Date.now() - startTime;
-          setCookie('give_docs_time_on_page_' + currentPage.replace(/[^a-zA-Z0-9]/g, '_'), timeOnPage, 1);
+          setCookie(
+            "give_docs_time_on_page_" +
+              currentPage.replace(/[^a-zA-Z0-9]/g, "_"),
+            timeOnPage,
+            1,
+          );
         };
 
         // Track time on page before leaving
-        window.addEventListener('beforeunload', trackTimeOnPage);
-        
+        window.addEventListener("beforeunload", trackTimeOnPage);
+
         // Also track every 30 seconds for single-page sessions
         setInterval(trackTimeOnPage, 30000);
 
@@ -1234,90 +1281,104 @@
           const scrollTop = window.pageYOffset;
           const docHeight = document.body.scrollHeight - window.innerHeight;
           const scrollPercent = Math.round((scrollTop / docHeight) * 100);
-          
+
           if (scrollPercent > maxScrollDepth) {
             maxScrollDepth = scrollPercent;
-            setCookie('give_docs_scroll_depth_' + currentPage.replace(/[^a-zA-Z0-9]/g, '_'), maxScrollDepth, 1);
+            setCookie(
+              "give_docs_scroll_depth_" +
+                currentPage.replace(/[^a-zA-Z0-9]/g, "_"),
+              maxScrollDepth,
+              1,
+            );
           }
         };
 
-        window.addEventListener('scroll', throttle(trackScrollDepth, 1000));
+        window.addEventListener("scroll", throttle(trackScrollDepth, 1000));
 
         // Update visit count
-        const visitCount = parseInt(getCookie('give_docs_visit_count') || '0') + 1;
-        setCookie('give_docs_visit_count', visitCount, 365);
+        const visitCount =
+          parseInt(getCookie("give_docs_visit_count") || "0") + 1;
+        setCookie("give_docs_visit_count", visitCount, 365);
 
         // Track last visit
-        setCookie('give_docs_last_visit', timestamp, 365);
+        setCookie("give_docs_last_visit", timestamp, 365);
 
         // Console log for debugging (remove in production)
-        console.log('Page activity tracked:', {
+        console.log("Page activity tracked:", {
           page: currentPage,
-          userId: userId.substring(0, 10) + '...',
-          sessionId: sessionId.substring(0, 10) + '...',
-          visitCount: visitCount
+          userId: userId.substring(0, 10) + "...",
+          sessionId: sessionId.substring(0, 10) + "...",
+          visitCount: visitCount,
         });
       }
 
       // Throttle function to limit scroll tracking frequency
       function throttle(func, limit) {
         let inThrottle;
-        return function() {
+        return function () {
           const args = arguments;
           const context = this;
           if (!inThrottle) {
             func.apply(context, args);
             inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
+            setTimeout(() => (inThrottle = false), limit);
           }
         };
       }
 
       // Search activity tracking
       function trackSearchActivity(query, resultCount) {
-        if (!query || query.trim() === '') return;
+        if (!query || query.trim() === "") return;
 
         const searchData = {
-          userId: getCookie('give_docs_user_id'),
-          sessionId: getCookie('give_docs_session_id'),
+          userId: getCookie("give_docs_user_id"),
+          sessionId: getCookie("give_docs_session_id"),
           query: query.trim(),
           resultCount: resultCount || 0,
           timestamp: new Date().toISOString(),
-          page: window.location.pathname
+          page: window.location.pathname,
         };
 
         try {
-          const searchAnalytics = JSON.parse(localStorage.getItem('give_docs_search_analytics') || '[]');
+          const searchAnalytics = JSON.parse(
+            localStorage.getItem("give_docs_search_analytics") || "[]",
+          );
           searchAnalytics.push(searchData);
-          
+
           // Keep only last 50 searches
           if (searchAnalytics.length > 50) {
             searchAnalytics.splice(0, searchAnalytics.length - 50);
           }
-          
-          localStorage.setItem('give_docs_search_analytics', JSON.stringify(searchAnalytics));
+
+          localStorage.setItem(
+            "give_docs_search_analytics",
+            JSON.stringify(searchAnalytics),
+          );
         } catch (e) {
-          console.warn('Could not store search analytics:', e);
+          console.warn("Could not store search analytics:", e);
         }
       }
 
       // Hook into existing search functionality
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         // Track page activity
         trackPageActivity();
 
         // Hook into search input
-        const searchInput = document.getElementById('search-input');
+        const searchInput = document.getElementById("search-input");
         if (searchInput) {
           let searchTimeout;
-          searchInput.addEventListener('input', function() {
+          searchInput.addEventListener("input", function () {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
               const query = this.value.trim();
               if (query.length >= 2) {
                 // Count search results
-                const resultsContainer = document.getElementById('search-results');
-                const resultCount = resultsContainer ? resultsContainer.querySelectorAll('.search-result').length : 0;
+                const resultsContainer =
+                  document.getElementById("search-results");
+                const resultCount = resultsContainer
+                  ? resultsContainer.querySelectorAll(".search-result").length
+                  : 0;
                 trackSearchActivity(query, resultCount);
               }
             }, 1000); // Wait 1 second after user stops typing
@@ -1325,90 +1386,114 @@
         }
 
         // Track navigation clicks
-        document.addEventListener('click', function(e) {
-          const link = e.target.closest('a');
+        document.addEventListener("click", function (e) {
+          const link = e.target.closest("a");
           if (link && link.href) {
             const linkData = {
-              userId: getCookie('give_docs_user_id'),
-              sessionId: getCookie('give_docs_session_id'),
+              userId: getCookie("give_docs_user_id"),
+              sessionId: getCookie("give_docs_session_id"),
               from: window.location.pathname,
-              to: link.getAttribute('href'),
+              to: link.getAttribute("href"),
               linkText: link.textContent.trim(),
               timestamp: new Date().toISOString(),
-              isExternal: link.hostname !== window.location.hostname
+              isExternal: link.hostname !== window.location.hostname,
             };
 
             try {
-              const navAnalytics = JSON.parse(localStorage.getItem('give_docs_navigation_analytics') || '[]');
+              const navAnalytics = JSON.parse(
+                localStorage.getItem("give_docs_navigation_analytics") || "[]",
+              );
               navAnalytics.push(linkData);
-              
+
               // Keep only last 50 navigation events
               if (navAnalytics.length > 50) {
                 navAnalytics.splice(0, navAnalytics.length - 50);
               }
-              
-              localStorage.setItem('give_docs_navigation_analytics', JSON.stringify(navAnalytics));
+
+              localStorage.setItem(
+                "give_docs_navigation_analytics",
+                JSON.stringify(navAnalytics),
+              );
             } catch (e) {
-              console.warn('Could not store navigation analytics:', e);
+              console.warn("Could not store navigation analytics:", e);
             }
           }
         });
 
         // Track settings changes
-        document.querySelectorAll('.theme-option, .language-option').forEach(option => {
-          option.addEventListener('click', function() {
-            const settingType = this.classList.contains('theme-option') ? 'theme' : 'language';
-            const settingValue = this.dataset.theme || this.dataset.lang;
-            
-            const settingData = {
-              userId: getCookie('give_docs_user_id'),
-              sessionId: getCookie('give_docs_session_id'),
-              settingType: settingType,
-              settingValue: settingValue,
-              timestamp: new Date().toISOString(),
-              page: window.location.pathname
-            };
+        document
+          .querySelectorAll(".theme-option, .language-option")
+          .forEach((option) => {
+            option.addEventListener("click", function () {
+              const settingType = this.classList.contains("theme-option")
+                ? "theme"
+                : "language";
+              const settingValue = this.dataset.theme || this.dataset.lang;
 
-            try {
-              const settingsAnalytics = JSON.parse(localStorage.getItem('give_docs_settings_analytics') || '[]');
-              settingsAnalytics.push(settingData);
-              
-              // Keep only last 25 settings changes
-              if (settingsAnalytics.length > 25) {
-                settingsAnalytics.splice(0, settingsAnalytics.length - 25);
+              const settingData = {
+                userId: getCookie("give_docs_user_id"),
+                sessionId: getCookie("give_docs_session_id"),
+                settingType: settingType,
+                settingValue: settingValue,
+                timestamp: new Date().toISOString(),
+                page: window.location.pathname,
+              };
+
+              try {
+                const settingsAnalytics = JSON.parse(
+                  localStorage.getItem("give_docs_settings_analytics") || "[]",
+                );
+                settingsAnalytics.push(settingData);
+
+                // Keep only last 25 settings changes
+                if (settingsAnalytics.length > 25) {
+                  settingsAnalytics.splice(0, settingsAnalytics.length - 25);
+                }
+
+                localStorage.setItem(
+                  "give_docs_settings_analytics",
+                  JSON.stringify(settingsAnalytics),
+                );
+              } catch (e) {
+                console.warn("Could not store settings analytics:", e);
               }
-              
-              localStorage.setItem('give_docs_settings_analytics', JSON.stringify(settingsAnalytics));
-            } catch (e) {
-              console.warn('Could not store settings analytics:', e);
-            }
+            });
           });
-        });
       });
 
       // Export analytics data function (for debugging/analysis)
-      window.exportAnalytics = function() {
+      window.exportAnalytics = function () {
         const data = {
-          pageViews: JSON.parse(localStorage.getItem('give_docs_analytics') || '[]'),
-          searches: JSON.parse(localStorage.getItem('give_docs_search_analytics') || '[]'),
-          navigation: JSON.parse(localStorage.getItem('give_docs_navigation_analytics') || '[]'),
-          settings: JSON.parse(localStorage.getItem('give_docs_settings_analytics') || '[]'),
-          exportedAt: new Date().toISOString()
+          pageViews: JSON.parse(
+            localStorage.getItem("give_docs_analytics") || "[]",
+          ),
+          searches: JSON.parse(
+            localStorage.getItem("give_docs_search_analytics") || "[]",
+          ),
+          navigation: JSON.parse(
+            localStorage.getItem("give_docs_navigation_analytics") || "[]",
+          ),
+          settings: JSON.parse(
+            localStorage.getItem("give_docs_settings_analytics") || "[]",
+          ),
+          exportedAt: new Date().toISOString(),
         };
-        
-        console.log('Documentation Analytics Data:', data);
-        
+
+        console.log("Documentation Analytics Data:", data);
+
         // Create downloadable JSON file
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const blob = new Blob([JSON.stringify(data, null, 2)], {
+          type: "application/json",
+        });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = url;
-        a.download = `give-docs-analytics-${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `give-docs-analytics-${new Date().toISOString().split("T")[0]}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        
+
         return data;
       };
     </script>

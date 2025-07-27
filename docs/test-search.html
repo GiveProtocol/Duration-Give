@@ -1,100 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-CBQHKLHD8T"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-CBQHKLHD8T');
+      gtag("config", "G-CBQHKLHD8T");
     </script>
-    
+
     <title>Search Test</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        #search-input { width: 100%; padding: 10px; font-size: 16px; margin-bottom: 20px; }
-        #results { border: 1px solid #ddd; padding: 20px; background: #f9f9f9; }
-        .result-item { margin-bottom: 15px; padding: 10px; background: white; border-radius: 5px; }
-        .result-title { font-weight: bold; color: #333; }
-        .result-url { color: #666; font-size: 12px; }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+      }
+      #search-input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+      #results {
+        border: 1px solid #ddd;
+        padding: 20px;
+        background: #f9f9f9;
+      }
+      .result-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        background: white;
+        border-radius: 5px;
+      }
+      .result-title {
+        font-weight: bold;
+        color: #333;
+      }
+      .result-url {
+        color: #666;
+        font-size: 12px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Jekyll Documentation Search Test</h1>
-    <input type="text" id="search-input" placeholder="Type to search documentation...">
-    <div id="results">Type in the search box above to test the search functionality.</div>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Type to search documentation..."
+    />
+    <div id="results">
+      Type in the search box above to test the search functionality.
+    </div>
 
     <script>
-        let searchData = [];
-        
-        // Test multiple search.json URLs
-        async function loadSearchData() {
-            const urls = ['/search.json', './search.json', '../search.json'];
-            
-            for (const url of urls) {
-                try {
-                    console.log(`Trying: ${url}`);
-                    const response = await fetch(url);
-                    if (response.ok) {
-                        searchData = await response.json();
-                        console.log(`Loaded ${searchData.length} items from ${url}`);
-                        return true;
-                    }
-                } catch (error) {
-                    console.log(`Failed ${url}:`, error.message);
-                }
+      let searchData = [];
+
+      // Test multiple search.json URLs
+      async function loadSearchData() {
+        const urls = ["/search.json", "./search.json", "../search.json"];
+
+        for (const url of urls) {
+          try {
+            console.log(`Trying: ${url}`);
+            const response = await fetch(url);
+            if (response.ok) {
+              searchData = await response.json();
+              console.log(`Loaded ${searchData.length} items from ${url}`);
+              return true;
             }
-            return false;
+          } catch (error) {
+            console.log(`Failed ${url}:`, error.message);
+          }
+        }
+        return false;
+      }
+
+      function performSearch(query) {
+        const results = document.getElementById("results");
+
+        if (!query.trim()) {
+          results.innerHTML =
+            "Type in the search box above to test the search functionality.";
+          return;
         }
 
-        function performSearch(query) {
-            const results = document.getElementById('results');
-            
-            if (!query.trim()) {
-                results.innerHTML = 'Type in the search box above to test the search functionality.';
-                return;
-            }
+        if (!searchData.length) {
+          results.innerHTML =
+            "Search data not loaded yet. Check console for details.";
+          return;
+        }
 
-            if (!searchData.length) {
-                results.innerHTML = 'Search data not loaded yet. Check console for details.';
-                return;
-            }
+        const filtered = searchData
+          .filter(
+            (item) =>
+              item.title.toLowerCase().includes(query.toLowerCase()) ||
+              item.content.toLowerCase().includes(query.toLowerCase()),
+          )
+          .slice(0, 10);
 
-            const filtered = searchData.filter(item => 
-                item.title.toLowerCase().includes(query.toLowerCase()) ||
-                item.content.toLowerCase().includes(query.toLowerCase())
-            ).slice(0, 10);
+        if (filtered.length === 0) {
+          results.innerHTML = `No results found for "${query}"`;
+          return;
+        }
 
-            if (filtered.length === 0) {
-                results.innerHTML = `No results found for "${query}"`;
-                return;
-            }
-
-            results.innerHTML = filtered.map(item => `
+        results.innerHTML = filtered
+          .map(
+            (item) => `
                 <div class="result-item">
                     <div class="result-title">${item.title}</div>
                     <div class="result-url">${item.url}</div>
                 </div>
-            `).join('');
+            `,
+          )
+          .join("");
+      }
+
+      // Initialize
+      document.getElementById("search-input").addEventListener("input", (e) => {
+        performSearch(e.target.value);
+      });
+
+      loadSearchData().then((success) => {
+        if (success) {
+          document.getElementById("results").innerHTML =
+            "Search data loaded successfully! Try searching above.";
+        } else {
+          document.getElementById("results").innerHTML =
+            "Failed to load search data. Check console for details.";
         }
-
-        // Initialize
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            performSearch(e.target.value);
-        });
-
-        loadSearchData().then(success => {
-            if (success) {
-                document.getElementById('results').innerHTML = 'Search data loaded successfully! Try searching above.';
-            } else {
-                document.getElementById('results').innerHTML = 'Failed to load search data. Check console for details.';
-            }
-        });
+      });
     </script>
-</body>
+  </body>
 </html>
