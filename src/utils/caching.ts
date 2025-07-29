@@ -5,7 +5,8 @@ interface CacheConfig {
 
 export class CacheManager {
   private static instance: CacheManager;
-  private readonly cache: Map<string, { value: unknown; timestamp: number }> = new Map();
+  private readonly cache: Map<string, { value: unknown; timestamp: number }> =
+    new Map();
   private readonly maxSize: number;
   private readonly ttl: number;
 
@@ -30,7 +31,7 @@ export class CacheManager {
 
     this.cache.set(key, {
       value,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
