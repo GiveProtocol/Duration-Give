@@ -37,6 +37,13 @@ export class CacheManager {
     return this.instance;
   }
 
+  // Test utility method to reset singleton instance
+  static resetInstanceForTesting(): void {
+    if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+      this.instance = undefined as unknown as CacheManager;
+    }
+  }
+
   async get<T>(key: string): Promise<T | null> {
     const entry = this.cache.get(key);
     const now = Date.now();

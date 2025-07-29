@@ -15,14 +15,14 @@ describe('CacheManager', () => {
 
   beforeEach(() => {
     // Reset the singleton instance before each test
-    (CacheManager as any).instance = undefined;
+    CacheManager.resetInstanceForTesting();
     cache = CacheManager.getInstance({ maxSize: 5, ttl: 1000 });
     cache.invalidateAll();
   });
 
   afterEach(() => {
     cache.invalidateAll();
-    (CacheManager as any).instance = undefined;
+    CacheManager.resetInstanceForTesting();
   });
 
   describe('singleton pattern', () => {
@@ -67,7 +67,7 @@ describe('CacheManager', () => {
 
   describe('TTL (Time To Live)', () => {
     it('should expire data after TTL', async () => {
-      (CacheManager as any).instance = undefined;
+      CacheManager.resetInstanceForTesting();
       const shortTtlCache = CacheManager.getInstance({ ttl: 10, staleWhileRevalidate: 5 }); // 10ms TTL, 5ms stale
       shortTtlCache.set('expire-test', 'data');
       
@@ -82,7 +82,7 @@ describe('CacheManager', () => {
     });
 
     it('should serve stale data within staleWhileRevalidate window', async () => {
-      (CacheManager as any).instance = undefined;
+      CacheManager.resetInstanceForTesting();
       const staleCache = CacheManager.getInstance({ 
         ttl: 10, 
         staleWhileRevalidate: 50 
@@ -99,7 +99,7 @@ describe('CacheManager', () => {
     });
 
     it('should remove data after stale window expires', async () => {
-      (CacheManager as any).instance = undefined;
+      CacheManager.resetInstanceForTesting();
       const expiredCache = CacheManager.getInstance({ 
         ttl: 10, 
         staleWhileRevalidate: 20 
@@ -117,7 +117,7 @@ describe('CacheManager', () => {
 
   describe('cache size limits', () => {
     it('should evict oldest entries when max size is reached', async () => {
-      (CacheManager as any).instance = undefined;
+      CacheManager.resetInstanceForTesting();
       const smallCache = CacheManager.getInstance({ maxSize: 3 });
       smallCache.invalidateAll();
       
