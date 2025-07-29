@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { CheckCircle, X, ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
-import { useTranslation } from '@/hooks/useTranslation';
-import { Logger } from '@/utils/logger';
+import React, { useState } from "react";
+import { CheckCircle, X, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { useVolunteerVerification } from "@/hooks/useVolunteerVerification";
+import { useTranslation } from "@/hooks/useTranslation";
+import { Logger } from "@/utils/logger";
 
 interface ApplicationAcceptanceProps {
   applicationId: string;
@@ -16,7 +16,7 @@ export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({
   applicationId,
   applicantName,
   opportunityTitle,
-  onAccepted
+  onAccepted,
 }) => {
   const { acceptApplication, loading, error } = useVolunteerVerification();
   const [acceptanceHash, setAcceptanceHash] = useState<string | null>(null);
@@ -32,7 +32,7 @@ export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({
         onAccepted?.(hash);
       }
     } catch (err) {
-      Logger.error('Acceptance failed:', err);
+      Logger.error("Acceptance failed:", err);
     }
   };
 
@@ -41,19 +41,26 @@ export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({
       <div className="bg-green-50 border border-green-200 rounded-lg p-4">
         <div className="flex items-center mb-2">
           <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-          <h3 className="text-lg font-medium text-green-800">{t('volunteer.applicationAccepted', 'Application Accepted')}</h3>
+          <h3 className="text-lg font-medium text-green-800">
+            {t("volunteer.applicationAccepted", "Application Accepted")}
+          </h3>
         </div>
         <p className="text-sm text-green-700 mb-3">
-          {t('volunteer.applicationRecorded', 'The volunteer application has been accepted and recorded on the blockchain.')}
+          {t(
+            "volunteer.applicationRecorded",
+            "The volunteer application has been accepted and recorded on the blockchain.",
+          )}
         </p>
         {acceptanceHash && (
           <div className="bg-white p-3 rounded border border-green-200">
-            <p className="text-xs text-gray-500 mb-1">{t('volunteer.acceptanceHash', 'Acceptance Hash')}</p>
+            <p className="text-xs text-gray-500 mb-1">
+              {t("volunteer.acceptanceHash", "Acceptance Hash")}
+            </p>
             <div className="flex items-center">
               <code className="text-xs font-mono text-gray-800 break-all">
                 {acceptanceHash}
               </code>
-              <a 
+              <a
                 href={`https://moonbase.moonscan.io/tx/${acceptanceHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -74,7 +81,7 @@ export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({
         <div>
           <h3 className="text-lg font-medium text-gray-900">{applicantName}</h3>
           <p className="text-sm text-gray-500">
-            {t('volunteer.appliedFor')}: {opportunityTitle}
+            {t("volunteer.appliedFor")}: {opportunityTitle}
           </p>
         </div>
         <div className="flex space-x-2">
@@ -84,18 +91,17 @@ export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({
             className="flex items-center"
           >
             <CheckCircle className="h-4 w-4 mr-2" />
-            {loading ? t('volunteer.processing', 'Processing...') : t('volunteer.accept')}
+            {loading
+              ? t("volunteer.processing", "Processing...")
+              : t("volunteer.accept")}
           </Button>
-          <Button
-            variant="secondary"
-            className="flex items-center"
-          >
+          <Button variant="secondary" className="flex items-center">
             <X className="h-4 w-4 mr-2" />
-            {t('volunteer.reject')}
+            {t("volunteer.reject")}
           </Button>
         </div>
       </div>
-      
+
       {error && (
         <div className="p-3 bg-red-50 text-red-700 text-sm rounded-md">
           {error}
