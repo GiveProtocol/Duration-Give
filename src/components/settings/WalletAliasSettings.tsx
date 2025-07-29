@@ -56,11 +56,11 @@ export const WalletAliasSettings: React.FC = () => {
     setValidationError(null);
   };
 
-  const handleDelete = async (aliasId: string) => {
+  const handleDelete = useCallback(async (aliasId: string) => {
     if (confirm("Are you sure you want to delete this wallet alias?")) {
       await deleteWalletAlias(aliasId);
     }
-  };
+  }, [deleteWalletAlias]);
 
   // Callback handlers for better performance
   const handleStartEdit = useCallback(() => setEditMode(true), []);

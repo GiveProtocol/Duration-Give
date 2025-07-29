@@ -152,7 +152,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
 
 interface WalletSelectMenuProps {
   getInstalledWallets: () => WalletProvider[];
-  onWalletSelect: (wallet: WalletProvider) => void;
+  onWalletSelect: (_wallet: WalletProvider) => void;
 }
 
 /**
@@ -165,8 +165,8 @@ const WalletSelectMenu: React.FC<WalletSelectMenuProps> = ({
   onWalletSelect,
 }) => {
   const handleWalletSelect = useCallback(
-    (wallet: WalletProvider) => () => {
-      onWalletSelect(wallet);
+    (_wallet: WalletProvider) => () => {
+      onWalletSelect(_wallet);
     },
     [onWalletSelect],
   );
@@ -267,7 +267,7 @@ export function ConnectButton() {
   }, []);
 
   const handleWalletSelect = useCallback(
-    async (wallet: { name: string; provider: unknown }) => {
+    async (_wallet: { name: string; provider: unknown }) => {
       try {
         setConnectionError(null);
         setIsRetrying(false);
@@ -294,7 +294,7 @@ export function ConnectButton() {
           err instanceof Error ? err.message : "Failed to connect wallet";
         setConnectionError(`Wallet connection failed: ${message}`);
         Logger.error("Wallet connection failed", {
-          wallet: wallet.name,
+          wallet: _wallet.name,
           error: err,
           retryCount,
         });
@@ -307,7 +307,7 @@ export function ConnectButton() {
           setIsRetrying(true);
           setRetryCount((prev) => prev + 1);
           setTimeout(
-            () => handleWalletSelect(wallet),
+            () => handleWalletSelect(_wallet),
             RETRY_DELAY * Math.pow(2, retryCount),
           );
         }

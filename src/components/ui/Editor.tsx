@@ -18,7 +18,7 @@ import { cn } from "@/utils/cn";
 
 interface EditorProps {
   content: string;
-  onChange: (content: string) => void;
+  onChange: (_content: string) => void;
   className?: string;
   placeholder?: string;
 }
@@ -48,7 +48,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 );
 
 export const Editor: React.FC<EditorProps> = ({
-  content,
+  content: _content,
   onChange,
   className,
   placeholder = "Start writing...",
@@ -63,7 +63,7 @@ export const Editor: React.FC<EditorProps> = ({
         },
       }),
     ],
-    content,
+    content: _content,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },

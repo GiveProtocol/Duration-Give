@@ -9,7 +9,7 @@ interface ApplicationAcceptanceProps {
   applicationId: string;
   applicantName: string;
   opportunityTitle: string;
-  onAccepted?: (hash: string) => void;
+  onAccepted?: (_hash: string) => void;
 }
 
 export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({

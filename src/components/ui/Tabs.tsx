@@ -26,7 +26,7 @@ interface TabsContentProps {
 
 const TabsContext = React.createContext<{
   value: string;
-  onChange: (value: string) => void;
+  onChange: (_value: string) => void;
 } | null>(null);
 
 export const Tabs: React.FC<TabsProps> = ({ defaultValue, children, className }) => {
@@ -71,11 +71,11 @@ export const TabsTrigger: React.FC<TabsTriggerProps> = ({ value, children, class
   );
 };
 
-export const TabsContent: React.FC<TabsContentProps> = ({ value, children, className }) => {
+export const TabsContent: React.FC<TabsContentProps> = ({ value: _value, children, className }) => {
   const context = React.useContext(TabsContext);
   if (!context) throw new Error('TabsContent must be used within Tabs');
 
-  if (context.value !== value) return null;
+  if (context.value !== _value) return null;
 
   return (
     <div className={className}>

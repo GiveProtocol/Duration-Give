@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Download, Filter, Calendar } from 'lucide-react';
+import { Download, Calendar } from 'lucide-react';
 import { formatCurrency } from '@/utils/money';
 import { formatDate } from '@/utils/date';
 import { Button } from '@/components/ui/Button';

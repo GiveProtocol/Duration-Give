@@ -3,7 +3,7 @@ import { useScheduledDonation } from '@/hooks/web3/useScheduledDonation';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import { Calendar, AlertTriangle, XCircle } from 'lucide-react';
+import { Calendar, AlertTriangle } from 'lucide-react';
 import { formatDate } from '@/utils/date';
 import { useToast } from '@/contexts/ToastContext';
 import { Logger } from '@/utils/logger';
@@ -30,9 +30,9 @@ export const ScheduledDonations: React.FC = () => {
 
   useEffect(() => {
     fetchSchedules();
-  }, []);
+  }, [fetchSchedules]);
 
-  const fetchSchedules = async () => {
+  const fetchSchedules = useCallback(async () => {
     try {
       setLoadingSchedules(true);
       const donorSchedules = await getDonorSchedules();
@@ -42,7 +42,7 @@ export const ScheduledDonations: React.FC = () => {
     } finally {
       setLoadingSchedules(false);
     }
-  };
+  }, [getDonorSchedules]);
 
   const handleCancelClick = useCallback((schedule: ScheduledDonation) => {
     setSelectedSchedule(schedule);

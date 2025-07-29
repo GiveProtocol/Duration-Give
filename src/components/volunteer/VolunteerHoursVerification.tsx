@@ -13,12 +13,12 @@ interface VolunteerHoursVerificationProps {
   hours: number;
   datePerformed: string;
   description?: string;
-  onVerified?: (hash: string) => void;
+  onVerified?: (_hash: string) => void;
 }
 
 export const VolunteerHoursVerification: React.FC<VolunteerHoursVerificationProps> = ({
   hoursId,
-  volunteerId,
+  volunteerId: _volunteerId,
   volunteerName,
   hours,
   datePerformed,
