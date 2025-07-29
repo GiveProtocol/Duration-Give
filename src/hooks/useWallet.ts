@@ -177,8 +177,8 @@ class BraveWallet extends EVMWalletBase {
 class PolkadotWallet implements WalletProvider {
   name = 'Polkadot';
   icon = 'polkadot';
-  private injector: unknown = null;
-  private extensions: unknown[] = [];
+  private readonly injector: unknown = null;
+  private readonly extensions: unknown[] = [];
 
   async initialize() {
     // Polkadot.js extension functionality removed

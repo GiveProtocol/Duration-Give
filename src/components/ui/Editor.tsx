@@ -20,6 +20,21 @@ interface MenuButtonProps {
   title: string;
 }
 
+const MenuButton: React.FC<MenuButtonProps> = ({ onClick, active, icon: Icon, title }) => (
+  <Button
+    type="button"
+    variant="secondary"
+    onClick={onClick}
+    className={cn(
+      'p-2',
+      active && 'bg-indigo-100 text-indigo-900'
+    )}
+    title={title}
+  >
+    <Icon className="h-4 w-4" />
+  </Button>
+);
+
 export const Editor: React.FC<EditorProps> = ({
   content,
   onChange,
@@ -90,21 +105,6 @@ export const Editor: React.FC<EditorProps> = ({
   if (!editor) {
     return null;
   }
-
-  const MenuButton = ({ onClick, active, icon: Icon, title }: MenuButtonProps) => (
-    <Button
-      type="button"
-      variant="secondary"
-      onClick={onClick}
-      className={cn(
-        'p-2',
-        active && 'bg-indigo-100 text-indigo-900'
-      )}
-      title={title}
-    >
-      <Icon className="h-4 w-4" />
-    </Button>
-  );
 
   return (
     <div className={cn('border border-gray-200 rounded-lg', className)}>
