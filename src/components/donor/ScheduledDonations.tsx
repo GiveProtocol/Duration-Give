@@ -28,10 +28,6 @@ export const ScheduledDonations: React.FC = () => {
   const [cancelError, setCancelError] = useState<string | null>(null);
   const { showToast } = useToast();
 
-  useEffect(() => {
-    fetchSchedules();
-  }, [fetchSchedules]);
-
   const fetchSchedules = useCallback(async () => {
     try {
       setLoadingSchedules(true);
@@ -43,6 +39,10 @@ export const ScheduledDonations: React.FC = () => {
       setLoadingSchedules(false);
     }
   }, [getDonorSchedules]);
+
+  useEffect(() => {
+    fetchSchedules();
+  }, [fetchSchedules]);
 
   const handleCancelClick = useCallback((schedule: ScheduledDonation) => {
     setSelectedSchedule(schedule);

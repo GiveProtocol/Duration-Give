@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://translate.google.com https://translate.googleapis.com https://consent.cookiebot.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://consent.cookiebot.com https://translate.googleapis.com; frame-src 'self' https://consent.cookiebot.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    
     <title>
       Cryptocurrency Integration and Technical Documentation - Give Protocol Documentation
     </title>
@@ -12,6 +20,8 @@
     />
 
     <!-- Cookiebot Consent Management -->
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="eee09be3-8e06-468d-81be-3f6a9423d310" data-blockingmode="auto" type="text/javascript"></script>
+    
     <script data-cookieconsent="ignore">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -645,13 +655,21 @@
       <footer class="modern-footer">
         <div class="footer-content">
           <div class="footer-links">
-            <a href="/safety-security/cookie-policy/">Cookie Policy</a>
-            <a href="/safety-security/platform-security/">Privacy Policy</a>
-            <a href="/help-center/need-help/">Contact Us</a>
+            <a href="/safety-security/cookie-policy/"
+              >Cookie Policy</a
+            >
+            <a href="/safety-security/platform-security/"
+              >Privacy Policy</a
+            >
+            <a href="/help-center/need-help/"
+              >Contact Us</a
+            >
             <a href="https://giveprotocol.io" target="_blank">Main Website</a>
           </div>
           <div class="footer-text">
-            <p>Copyright &copy; 2025 Give Protocol. All rights reserved.</p>
+            <p>
+              Copyright &copy; 2025 Give Protocol. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>

@@ -1,1 +1,1 @@
-Sitemap: https://docs.giveprotocol.io/sitemap.xml
+Sitemap: http://localhost:4002/sitemap.xml
