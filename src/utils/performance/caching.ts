@@ -14,7 +14,7 @@ interface CacheEntry<T> {
 
 export class CacheManager {
   private static instance: CacheManager;
-  private cache: Map<string, CacheEntry<unknown>>;
+  private readonly cache: Map<string, CacheEntry<unknown>>;
   private readonly config: CacheConfig = {
     maxSize: 100,
     ttl: 5 * 60 * 1000, // 5 minutes

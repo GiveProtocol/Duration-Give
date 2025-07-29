@@ -5,7 +5,7 @@ interface CacheConfig {
 
 export class CacheManager {
   private static instance: CacheManager;
-  private cache: Map<string, { value: unknown; timestamp: number }> = new Map();
+  private readonly cache: Map<string, { value: unknown; timestamp: number }> = new Map();
   private readonly maxSize: number;
   private readonly ttl: number;
 

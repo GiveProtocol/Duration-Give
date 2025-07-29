@@ -329,11 +329,6 @@ export const CharityPortal: React.FC = () => {
     }
   };
 
-  const handleVerificationCreated = useCallback((hash: string) => {
-    Logger.info('Verification created with hash:', hash);
-    // Refresh data after verification
-    fetchCharityData();
-  }, []);
 
   const handleRetry = useCallback(() => {
     setError(null);
