@@ -1,4 +1,4 @@
-import { Logger } from '../logger';
+import { Logger } from "../logger";
 
 interface CacheConfig {
   maxSize: number;
@@ -18,7 +18,7 @@ export class CacheManager {
   private config: CacheConfig = {
     maxSize: 100,
     ttl: 5 * 60 * 1000, // 5 minutes
-    staleWhileRevalidate: 30 * 60 * 1000 // 30 minutes
+    staleWhileRevalidate: 30 * 60 * 1000, // 30 minutes
   };
 
   private constructor() {
@@ -39,7 +39,10 @@ export class CacheManager {
 
   // Test utility method to reset singleton instance
   static resetInstanceForTesting(): void {
-    if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+    if (
+      process.env.NODE_ENV === "test" ||
+      process.env.NODE_ENV === "development"
+    ) {
       this.instance = undefined as unknown as CacheManager;
     }
   }
@@ -57,7 +60,7 @@ export class CacheManager {
 
     // Return stale data if within staleWhileRevalidate window
     if (now < entry.expiresAt + this.config.staleWhileRevalidate) {
-      Logger.info('Serving stale data', { key, age: now - entry.timestamp });
+      Logger.info("Serving stale data", { key, age: now - entry.timestamp });
       return entry.data as T;
     }
 
@@ -69,15 +72,16 @@ export class CacheManager {
   set<T>(key: string, data: T): void {
     // Evict oldest if at capacity
     if (this.cache.size >= this.config.maxSize) {
-      const oldestKey = Array.from(this.cache.entries())
-        .sort(([, a], [, b]) => a.timestamp - b.timestamp)[0][0];
+      const oldestKey = Array.from(this.cache.entries()).sort(
+        ([, a], [, b]) => a.timestamp - b.timestamp,
+      )[0][0];
       this.cache.delete(oldestKey);
     }
 
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
-      expiresAt: Date.now() + this.config.ttl
+      expiresAt: Date.now() + this.config.ttl,
     });
   }
 
