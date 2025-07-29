@@ -15,7 +15,7 @@ interface CacheEntry<T> {
 export class CacheManager {
   private static instance: CacheManager;
   private readonly cache: Map<string, CacheEntry<unknown>>;
-  private readonly config: CacheConfig = {
+  private config: CacheConfig = {
     maxSize: 100,
     ttl: 5 * 60 * 1000, // 5 minutes
     staleWhileRevalidate: 30 * 60 * 1000 // 30 minutes
@@ -45,13 +45,13 @@ export class CacheManager {
 
     // Return fresh data
     if (now < entry.expiresAt) {
-      return entry.data;
+      return entry.data as T;
     }
 
     // Return stale data if within staleWhileRevalidate window
     if (now < entry.expiresAt + this.config.staleWhileRevalidate) {
       Logger.info('Serving stale data', { key, age: now - entry.timestamp });
-      return entry.data;
+      return entry.data as T;
     }
 
     // Data is too old, remove it
