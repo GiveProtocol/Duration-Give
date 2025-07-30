@@ -1,6 +1,22 @@
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
 
+// Mock import.meta for Vite environment variables
+Object.defineProperty(globalThis, 'import', {
+  value: {
+    meta: {
+      env: {
+        VITE_NODE_ENV: 'test',
+        NODE_ENV: 'test',
+        PROD: false,
+        DEV: false,
+        MODE: 'test',
+        VITE_MONITORING_ENDPOINT: undefined
+      }
+    }
+  }
+});
+
 // Mock TextEncoder/TextDecoder
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;

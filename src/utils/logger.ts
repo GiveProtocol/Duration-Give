@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/react';
+import { getEnv } from './env';
 
 type LogLevel = 'info' | 'warn' | 'error';
 
@@ -70,13 +71,15 @@ export class Logger {
         this.logs.shift();
       }
 
+      const env = getEnv();
+      
       // Send to monitoring service in production
-      if (import.meta.env.PROD) {
+      if (env.PROD) {
         this.sendToMonitoring(entry);
       }
 
-      // Console output in development
-      if (import.meta.env.DEV) {
+      // Console output in development or test
+      if (env.DEV || env.MODE === 'test') {
         const metadataStr = serializedMetadata ? ` ${JSON.stringify(serializedMetadata)}` : '';
         console[level](`[${level.toUpperCase()}] ${message}${metadataStr}`);
       }
@@ -129,7 +132,8 @@ export class Logger {
     }
 
     // Also send to custom endpoint if configured
-    const monitoringEndpoint = import.meta.env.VITE_MONITORING_ENDPOINT;
+    const env = getEnv();
+    const monitoringEndpoint = env.VITE_MONITORING_ENDPOINT;
     if (monitoringEndpoint) {
       try {
         await fetch(monitoringEndpoint, {

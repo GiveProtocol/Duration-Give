@@ -8,16 +8,7 @@ export default {
   },
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: {
-        jsx: 'react-jsx',
-        esModuleInterop: true,
-        allowSyntheticDefaultImports: true,
-        module: 'commonjs',
-        target: 'es2020',
-        moduleResolution: 'node',
-        skipLibCheck: true,
-        resolveJsonModule: true
-      }
+      tsconfig: './tsconfig.app.json'
     }]
   },
   transformIgnorePatterns: [
