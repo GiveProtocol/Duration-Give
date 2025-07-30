@@ -3,7 +3,7 @@ import { useToast } from '../contexts/ToastContext';
 import { supabase } from '../lib/supabase';
 import { useProfile } from './useProfile';
 
-interface CharityVerification {
+interface _CharityVerification {
   id: string;
   charity_id: string;
   status: 'pending' | 'approved' | 'rejected';

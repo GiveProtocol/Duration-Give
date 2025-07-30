@@ -3,7 +3,7 @@ import { Toast, ToastType } from '../components/ui/Toast';
 import { SecureRandom } from '@/utils/security/index';
 
 interface ToastContextType {
-  showToast: (type: ToastType, title: string, message?: string) => void;
+  showToast: (_type: ToastType, _title: string, _message?: string) => void;
 }
 
 // Create context with undefined initial value but proper type

@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback as _useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/contexts/ToastContext';
-import { supabase } from '@/lib/supabase';
+import { supabase as _supabase } from '@/lib/supabase';
 import { validateAuthInput } from '@/utils/validation';
 import { UserType } from '@/types/auth';
 import { Logger } from '@/utils/logger';
@@ -9,7 +9,7 @@ import { RateLimiter } from '@/utils/security/rateLimiter';
 import { useAuth as useAuthContext } from '@/contexts/AuthContext';
 import { useWeb3 } from '@/contexts/Web3Context';
 
-const MAX_LOGIN_ATTEMPTS = 5;
+const _MAX_LOGIN_ATTEMPTS = 5;
 const LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutes
 
 export function useAuth() {

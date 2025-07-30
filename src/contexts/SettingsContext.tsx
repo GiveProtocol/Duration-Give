@@ -34,9 +34,9 @@ export type Currency =
 
 interface SettingsContextType {
   language: Language;
-  setLanguage: (language: Language) => void;
+  setLanguage: (_language: Language) => void;
   currency: Currency;
-  setCurrency: (currency: Currency) => void;
+  setCurrency: (_currency: Currency) => void;
   languageOptions: { value: Language; label: string }[];
   currencyOptions: { value: Currency; label: string; symbol: string }[];
 }

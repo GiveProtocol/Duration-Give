@@ -57,7 +57,7 @@ interface Web3ContextType {
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
   error: Error | null;
-  switchChain: (chainId: number) => Promise<void>;
+  switchChain: (_chainId: number) => Promise<void>;
 }
 
 const Web3Context = createContext<Web3ContextType | undefined>(undefined);
@@ -248,7 +248,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsConnecting(false);
     }
-  }, []);
+  }, [switchChain]);
 
   const disconnect = useCallback(async () => {
     try {
