@@ -1,41 +1,43 @@
-import React, { useState } from 'react';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
-import { useDonation } from '@/hooks/web3/useDonation';
-import { validateAmount } from '@/utils/validation';
-import { Logger } from '@/utils/logger';
+import React, { useState } from "react";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
+import { useDonation } from "@/hooks/web3/useDonation";
+import { validateAmount } from "@/utils/validation";
+import { Logger } from "@/utils/logger";
 
 interface WithdrawalFormProps {
   onSuccess?: () => void;
 }
 
 export function WithdrawalForm({ onSuccess }: WithdrawalFormProps) {
-  const [amount, setAmount] = useState('');
-  const [_tokenAddress, setTokenAddress] = useState('');
+  const [amount, setAmount] = useState("");
+  const [_tokenAddress, setTokenAddress] = useState("");
   const { withdraw, loading, error: withdrawalError } = useDonation();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!validateAmount(parseFloat(amount))) {
-      setError('Please enter a valid amount between 0 and 1,000,000');
+      setError("Please enter a valid amount between 0 and 1,000,000");
       return;
     }
 
     try {
       await withdraw(amount);
-      setAmount('');
-      setTokenAddress('');
+      setAmount("");
+      setTokenAddress("");
       onSuccess?.();
 
-      Logger.info('Withdrawal submitted', {
+      Logger.info("Withdrawal submitted", {
         amount,
-        token: 'GLMR'
+        token: "GLMR",
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to process withdrawal');
+      setError(
+        err instanceof Error ? err.message : "Failed to process withdrawal",
+      );
     }
   };
 
@@ -57,12 +59,8 @@ export function WithdrawalForm({ onSuccess }: WithdrawalFormProps) {
         required
       />
 
-      <Button
-        type="submit"
-        disabled={loading || !amount}
-        className="w-full"
-      >
-        {loading ? 'Processing...' : 'Withdraw'}
+      <Button type="submit" disabled={loading || !amount} className="w-full">
+        {loading ? "Processing..." : "Withdraw"}
       </Button>
     </form>
   );
