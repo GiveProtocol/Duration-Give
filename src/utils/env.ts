@@ -5,12 +5,12 @@ export const getEnv = () => {
     return globalThis.import.meta.env;
   }
   
-  // For Vite environments where import.meta is available, we'll use dynamic evaluation
-  // This avoids Jest parsing import.meta at compile time
+  // For Vite environments where import.meta is available, we'll try to access it
+  // This avoids Jest parsing import.meta at compile time by using dynamic property access
   try {
-    const importMeta = new Function('return typeof import !== "undefined" ? import.meta : null')();
-    if (importMeta?.env) {
-      return importMeta.env;
+    const globalImport = globalThis as any;
+    if (globalImport.import?.meta?.env) {
+      return globalImport.import.meta.env;
     }
   } catch {
     // import.meta not available or failed to evaluate
