@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { User, AuthError } from '@supabase/supabase-js';
+import { User, AuthError as _AuthError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { useToast } from './ToastContext';
 import { Logger } from '@/utils/logger';
-import { ENV } from '@/config/env';
+import { ENV as _ENV } from '@/config/env';
 import { setSentryUser, clearSentryUser } from '@/lib/sentry';
 
 interface AuthState {
@@ -14,13 +14,13 @@ interface AuthState {
 }
 
 interface AuthContextType extends AuthState {
-  login: (email: string, password: string, accountType: 'donor' | 'charity') => Promise<void>;
+  login: (_email: string, _password: string, _accountType: 'donor' | 'charity') => Promise<void>;
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
+  resetPassword: (_email: string) => Promise<void>;
   refreshSession: () => Promise<void>;
-  register: (email: string, password: string, type: 'donor' | 'charity', metadata?: Record<string, unknown>) => Promise<void>;
-  sendUsernameReminder: (email: string) => Promise<void>;
+  register: (_email: string, _password: string, _type: 'donor' | 'charity', _metadata?: Record<string, unknown>) => Promise<void>;
+  sendUsernameReminder: (_email: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -402,7 +402,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setState(prev => ({ ...prev, loading: true, error: null }));
       
       // Check if user already exists with a different account type
-      const { data: existingUser, error: checkError } = await supabase.auth.signInWithPassword({
+      const { data: existingUser, error: _checkError } = await supabase.auth.signInWithPassword({
         email,
         password: 'dummy-password-for-check' // This will fail if user doesn't exist, which is what we want
       });
@@ -474,7 +474,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const sendUsernameReminder = async (email: string) => {
+  const sendUsernameReminder = async (_email: string) => {
     try {
       setState(prev => ({ ...prev, loading: true, error: null }));
       // In a real app, this would send an email with the username

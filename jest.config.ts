@@ -29,11 +29,20 @@ export default {
     'src/utils/validation.ts',
     'src/utils/errors.ts',
     'src/utils/inputValidation.ts',
+    'src/utils/performance/caching.ts',
     'src/types/charity.ts',
     'src/types/volunteer.ts',
     'src/data/charities.ts',
     'src/styles/colors.ts',
-    'src/i18n/resources/*.ts'
+    'src/i18n/resources/*.ts',
+    'src/components/ui/Tabs.tsx',
+    'src/components/ui/Editor.tsx',
+    'src/components/web3/ConnectButton.tsx',
+    'src/components/donor/DonationHistory.tsx',
+    'src/components/donor/ScheduledDonations.tsx',
+    'src/components/settings/WalletAliasSettings.tsx',
+    'src/components/volunteer/ApplicationAcceptance.tsx',
+    'src/components/volunteer/VolunteerHoursVerification.tsx'
   ],
   coverageReporters: ['text', 'lcov', 'html'],
   testMatch: [

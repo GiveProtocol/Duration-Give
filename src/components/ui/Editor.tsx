@@ -14,7 +14,7 @@ import {
   Redo,
 } from "lucide-react";
 import { Button } from "./Button";
-import { cn } from "@/utils/cn";
+import { cn } from "../../utils/cn";
 
 interface EditorProps {
   content: string;

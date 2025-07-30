@@ -119,7 +119,7 @@ export function ScheduledDonationForm({
   charityAddress,
   charityName,
   onSuccess,
-  onClose,
+  onClose: _onClose,
 }: ScheduledDonationFormProps) {
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
@@ -127,7 +127,7 @@ export function ScheduledDonationForm({
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
   const { provider, address, isConnected, connect } = useWeb3();
-  const { showToast } = useToast();
+  const { showToast: _showToast } = useToast();
 
   // Calculate start and end dates for the donation schedule
   const startDate = new Date();

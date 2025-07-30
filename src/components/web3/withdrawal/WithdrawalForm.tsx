@@ -11,7 +11,7 @@ interface WithdrawalFormProps {
 
 export function WithdrawalForm({ onSuccess }: WithdrawalFormProps) {
   const [amount, setAmount] = useState('');
-  const [tokenAddress, setTokenAddress] = useState('');
+  const [_tokenAddress, setTokenAddress] = useState('');
   const { withdraw, loading, error: withdrawalError } = useDonation();
   const [error, setError] = useState('');
 

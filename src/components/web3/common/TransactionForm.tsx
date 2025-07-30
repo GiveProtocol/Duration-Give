@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/Button';
 
 interface TransactionFormProps {
   amount: string;
-  onAmountChange: (value: string) => void;
-  onSubmit: (e: React.FormEvent) => Promise<void>;
+  onAmountChange: (_value: string) => void;
+  onSubmit: (_e: React.FormEvent) => Promise<void>;
   loading: boolean;
   error?: string;
   submitLabel: string;
