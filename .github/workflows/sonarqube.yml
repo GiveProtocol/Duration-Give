@@ -32,6 +32,19 @@ jobs:
         run: npm run lint
         continue-on-error: true
 
+      - name: Generate ESLint report for SonarCloud
+        run: |
+          # Generate ESLint report with JSON format for SonarCloud
+          npx eslint src --ext .ts,.tsx,.js,.jsx --format json --output-file eslint-report.json --max-warnings 200 || true
+          # Verify the report was generated
+          if [ -f eslint-report.json ]; then
+            echo "✅ ESLint report generated successfully"
+            ls -la eslint-report.json
+          else
+            echo "⚠️ ESLint report not generated, creating empty report"
+            echo "[]" > eslint-report.json
+          fi
+
       - name: Run tests with coverage
         run: npm run test:jest -- --coverage
         continue-on-error: true
