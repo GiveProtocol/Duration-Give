@@ -11,7 +11,7 @@ export function useTransactionForm({ onSuccess }: TransactionFormConfig) {
   const [validationError, setValidationError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent, submitFn: (amount: string) => Promise<void>) => {
+  const handleSubmit = async (e: React.FormEvent, submitFn: (_amount: string) => Promise<void>) => {
     e.preventDefault();
     setValidationError('');
 

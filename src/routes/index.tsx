@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { RouteTransition } from './RouteTransition';
@@ -49,7 +49,7 @@ const LoadingFallback = () => (
 );
 
 export function AppRoutes() {
-  const { user } = useAuth();
+  const { user: _user } = useAuth(); // Prefixed as unused
 
   return (
     <Suspense fallback={<LoadingFallback />}>

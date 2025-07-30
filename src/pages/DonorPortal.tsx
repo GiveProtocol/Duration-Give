@@ -10,7 +10,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 export const DonorPortal: React.FC = () => {
   const { user, userType } = useAuth();
-  const { profile, loading: profileLoading } = useProfile();
+  const { loading: profileLoading } = useProfile();
   const { data, loading: dataLoading, error } = useDonorData();
 
   // Convert donation data to Transaction format for the DonationHistory component

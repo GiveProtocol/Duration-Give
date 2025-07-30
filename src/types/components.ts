@@ -13,8 +13,8 @@ export interface BaseComponentProps {
 // Charity Component Props
 export interface CharityCardProps extends BaseComponentProps {
   charity: Charity;
-  onDonate?: (charityId: string) => void;
-  onShare?: (charityId: string) => void;
+  onDonate?: (_charityId: string) => void; // Prefixed as unused
+  onShare?: (_charityId: string) => void; // Prefixed as unused
   showStats?: boolean;
   compact?: boolean;
 }
@@ -23,7 +23,7 @@ export interface CharityListProps extends BaseComponentProps {
   charities: Charity[];
   loading?: boolean;
   error?: Error;
-  onCharityClick?: (charity: Charity) => void;
+  onCharityClick?: (_charity: Charity) => void; // Prefixed as unused
   layout?: 'grid' | 'list';
   showPagination?: boolean;
 }
@@ -31,15 +31,15 @@ export interface CharityListProps extends BaseComponentProps {
 export interface CharityFilterProps extends BaseComponentProps {
   categories: CharityCategory[];
   selectedCategories: CharityCategory[];
-  onCategoryChange: (categories: CharityCategory[]) => void;
+  onCategoryChange: (_categories: CharityCategory[]) => void; // Prefixed as unused
   showVerifiedOnly: boolean;
-  onVerifiedChange: (verified: boolean) => void;
+  onVerifiedChange: (_verified: boolean) => void; // Prefixed as unused
 }
 
 // Campaign Component Props
 export interface CampaignCardProps extends BaseComponentProps {
   campaign: Campaign;
-  onDonate?: (campaignId: string) => void;
+  onDonate?: (_campaignId: string) => void; // Prefixed as unused
   showProgress?: boolean;
   showTimeLeft?: boolean;
 }
@@ -48,7 +48,7 @@ export interface CampaignListProps extends BaseComponentProps {
   campaigns: Campaign[];
   loading?: boolean;
   error?: Error;
-  onCampaignClick?: (campaign: Campaign) => void;
+  onCampaignClick?: (_campaign: Campaign) => void; // Prefixed as unused
   layout?: 'grid' | 'list';
 }
 
@@ -56,7 +56,7 @@ export interface CampaignListProps extends BaseComponentProps {
 export interface DonationFormProps extends BaseComponentProps {
   charityId: string;
   campaignId?: string;
-  onSubmit: (amount: TokenAmount) => Promise<void>;
+  onSubmit: (_amount: TokenAmount) => Promise<void>; // Prefixed as unused
   onCancel?: () => void;
   minAmount?: TokenAmount;
   maxAmount?: TokenAmount;
@@ -65,15 +65,15 @@ export interface DonationFormProps extends BaseComponentProps {
 // Context Types
 export interface CharityContextType {
   selectedCharity?: Charity;
-  setSelectedCharity: (charity?: Charity) => void;
+  setSelectedCharity: (_charity?: Charity) => void; // Prefixed as unused
   loading: boolean;
   error?: Error;
 }
 
 export interface DonationContextType {
   pendingDonations: PendingDonation[];
-  addDonation: (donation: Omit<PendingDonation, 'status'>) => void;
-  removeDonation: (donationId: string) => void;
+  addDonation: (_donation: Omit<PendingDonation, 'status'>) => void; // Prefixed as unused
+  removeDonation: (_donationId: string) => void; // Prefixed as unused
 }
 
 export interface PendingDonation {
@@ -99,7 +99,7 @@ export interface InputProps extends BaseComponentProps {
   helperText?: string;
   type?: 'text' | 'number' | 'email' | 'password';
   value: string | number;
-  onChange: (value: string) => void;
+  onChange: (_value: string) => void; // Prefixed as unused
   required?: boolean;
   disabled?: boolean;
 }

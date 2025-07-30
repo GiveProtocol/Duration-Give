@@ -19,7 +19,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 }) => {
   const location = useLocation();
   const { user, userType } = useAuth();
-  const { profile, loading: profileLoading } = useProfile();
+  const { loading: profileLoading } = useProfile(); // profile variable prefixed as unused
   const { isConnected: isWalletConnected, connect } = useWeb3();
 
   // Handle loading states

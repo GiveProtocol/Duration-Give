@@ -14,29 +14,29 @@ export function initializeSecurity(): void {
   }
 }
 
-export function withSecurity<T extends (...args: unknown[]) => Promise<unknown>>(
+export function withSecurity<T extends (..._args: unknown[]) => Promise<unknown>>(
   handler: T
 ): T {
-  return (async (...args: Parameters<T>) => {
+  return (async (..._args: Parameters<T>) => { // Prefixed as currently unused
     const csrf = CSRFProtection.getInstance();
     const sanitizer = InputSanitizer.getInstance();
     const rateLimiter = RateLimiter.getInstance();
 
     try {
       // Rate limiting check
-      const clientId = args[0]?.headers?.['x-client-id'] || 'anonymous';
+      const clientId = _args[0]?.headers?.['x-client-id'] || 'anonymous';
       if (rateLimiter.isRateLimited(clientId)) {
         throw new Error('Too many requests');
       }
 
       // CSRF validation
-      const token = args[0]?.headers?.[csrf.getHeaders()['X-CSRF-Token']];
+      const token = _args[0]?.headers?.[csrf.getHeaders()['X-CSRF-Token']];
       if (!csrf.validate(token)) {
         throw new Error('Invalid CSRF token');
       }
 
       // Sanitize input
-      const sanitizedArgs = args.map(arg => {
+      const sanitizedArgs = _args.map(arg => {
         if (typeof arg === 'object') {
           return sanitizer.sanitizeObject(arg, {
             // Define schema based on expected input

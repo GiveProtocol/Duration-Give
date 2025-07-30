@@ -62,9 +62,9 @@ export const CharityPortal: React.FC = () => {
     if (profile?.id) {
       fetchCharityData();
     }
-  }, [profile?.id]);
+  }, [profile?.id, fetchCharityData]);
 
-  const fetchCharityData = async () => {
+  const fetchCharityData = useCallback(async () => {
     if (!profile?.id) return;
     
     try {
@@ -327,13 +327,13 @@ export const CharityPortal: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [profile?.id]);
 
 
   const handleRetry = useCallback(() => {
     setError(null);
     fetchCharityData();
-  }, []);
+  }, [fetchCharityData]);
 
   const handleTransactionsTab = useCallback(() => {
     setActiveTab('transactions');

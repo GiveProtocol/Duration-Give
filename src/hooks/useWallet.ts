@@ -5,10 +5,10 @@ export interface WalletProvider {
   name: string;
   icon: string;
   isInstalled: () => boolean;
-  isConnected: (address: string) => Promise<boolean>;
+  isConnected: (_address: string) => Promise<boolean>; // Prefixed as unused in interface
   connect: () => Promise<string>;
   disconnect: () => Promise<void>;
-  switchChain: (chainId: number | string) => Promise<void>;
+  switchChain: (_chainId: number | string) => Promise<void>;
 }
 
 class EVMWalletBase implements WalletProvider {
@@ -200,7 +200,7 @@ class PolkadotWallet implements WalletProvider {
     return false;
   }
 
-  async isConnected(address: string): Promise<boolean> {
+  async isConnected(_address: string): Promise<boolean> {
     return false;
   }
 

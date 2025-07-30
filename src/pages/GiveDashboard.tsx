@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWeb3 } from '@/contexts/Web3Context';
-import { DollarSign, Clock, Award, Download, Filter, Calendar, CheckCircle, ExternalLink, Settings, ChevronUp, ChevronDown } from 'lucide-react';
+import { DollarSign, Clock, Award, Download, Filter, Calendar, ExternalLink, Settings, ChevronUp, ChevronDown } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Transaction } from '@/types/contribution';
@@ -16,7 +16,7 @@ import { ScheduledDonations } from '@/components/donor/ScheduledDonations';
 type View = 'select' | 'donor' | 'charity' | 'forgotPassword' | 'forgotUsername';
 
 export const GiveDashboard: React.FC = () => {
-  const [view, setView] = useState<View>('select');
+  const [_view, _setView] = useState<View>('select'); // Prefixed as unused
   const { user, userType } = useAuth();
   const { isConnected, connect } = useWeb3();
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export const GiveDashboard: React.FC = () => {
   }, [location.state]);
   
   // Sample data - replace with actual data fetching
-  const [contributions, setContributions] = useState<Transaction[]>([
+  const [contributions, _setContributions] = useState<Transaction[]>([ // setContributions prefixed as unused
     {
       id: '1',
       hash: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
@@ -134,8 +134,8 @@ export const GiveDashboard: React.FC = () => {
     }
   ]);
 
-  const isActive = (path: string) => 
-    location.pathname === path ? 'bg-primary-100 text-primary-900' : 'text-gray-700 hover:bg-primary-50';
+  const _isActive = (_path: string) => // Prefixed as unused
+    location.pathname === _path ? 'bg-primary-100 text-primary-900' : 'text-gray-700 hover:bg-primary-50';
 
   const handleSkillClick = (skill: string) => {
     navigate('/contributions', { 

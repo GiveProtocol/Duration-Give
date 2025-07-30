@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/Card';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/lib/supabase';
+// import { supabase } from '@/lib/supabase'; // Unused import
 import { trackEvent } from '@/lib/sentry';
 
 interface AdminStats {
@@ -28,9 +28,9 @@ const AdminDashboard: React.FC = () => {
   useEffect(() => {
     fetchAdminStats();
     trackEvent('admin_dashboard_viewed', { userId: user?.id });
-  }, [user?.id]);
+  }, [user?.id, fetchAdminStats]);
 
-  const fetchAdminStats = async () => {
+  const fetchAdminStats = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -86,7 +86,7 @@ const AdminDashboard: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.id]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {

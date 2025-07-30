@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Filter, CheckCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { SearchBar } from '../components/charity/SearchBar';
 import { CharityGrid } from '../components/charity/CharityGrid';
 import { PortfolioGrid } from '../components/charity/PortfolioGrid';

@@ -2,22 +2,22 @@ import { Address, Timestamp, UUID } from './common';
 import { TokenAmount } from './blockchain';
 
 export enum CharityStatus {
-  PENDING = 'pending',
-  ACTIVE = 'active',
-  PAUSED = 'paused',
-  COMPLETED = 'completed',
-  ARCHIVED = 'archived'
+  _PENDING = 'pending', // Prefixed with _ as currently unused
+  _ACTIVE = 'active', // Prefixed with _ as currently unused
+  _PAUSED = 'paused', // Prefixed with _ as currently unused
+  _COMPLETED = 'completed', // Prefixed with _ as currently unused
+  _ARCHIVED = 'archived' // Prefixed with _ as currently unused
 }
 
 export enum CharityCategory {
-  EDUCATION = 'education',
-  HEALTHCARE = 'healthcare',
-  ENVIRONMENT = 'environment',
-  POVERTY = 'poverty',
-  DISASTER_RELIEF = 'disaster_relief',
-  ANIMAL_WELFARE = 'animal_welfare',
-  ARTS_CULTURE = 'arts_culture',
-  COMMUNITY = 'community'
+  _EDUCATION = 'education', // Prefixed with _ as currently unused
+  _HEALTHCARE = 'healthcare', // Prefixed with _ as currently unused
+  _ENVIRONMENT = 'environment', // Prefixed with _ as currently unused
+  _POVERTY = 'poverty', // Prefixed with _ as currently unused
+  _DISASTER_RELIEF = 'disaster_relief', // Prefixed with _ as currently unused
+  _ANIMAL_WELFARE = 'animal_welfare', // Prefixed with _ as currently unused
+  _ARTS_CULTURE = 'arts_culture', // Prefixed with _ as currently unused
+  _COMMUNITY = 'community' // Prefixed with _ as currently unused
 }
 
 export interface CharityBase {

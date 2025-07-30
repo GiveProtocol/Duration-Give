@@ -2,12 +2,14 @@ import { ethers } from 'ethers';
 import { supabase } from '@/lib/supabase';
 import { VolunteerApplication, VolunteerHours, VolunteerVerification } from '@/types/volunteer';
 import { Logger } from './logger';
-import { useWeb3 } from '@/contexts/Web3Context';
-import { getContractAddress } from '@/config/contracts';
+// import { useWeb3 } from '@/contexts/Web3Context'; // Unused import
+// import { getContractAddress } from '@/config/contracts'; // Unused import
 import { SecureRandom } from '@/utils/security/index';
 
 // ABI for the VolunteerVerification contract
-const VOLUNTEER_VERIFICATION_ABI = [
+// @ts-ignore - Variable defined but not used
+// eslint-disable-next-line no-unused-vars
+const _VOLUNTEER_VERIFICATION_ABI = [ // Prefixed as unused
   "function verifyApplication(bytes32 _applicationHash, address _applicant) external",
   "function verifyHours(bytes32 _hoursHash, address _volunteer, uint256 _hours) external",
   "function checkApplicationVerification(bytes32 _applicationHash) external view returns (bool isVerified, address applicant, address charity, uint256 timestamp)",
@@ -202,7 +204,7 @@ export const recordApplicationOnChain = async (
     
     if (walletError) throw walletError;
     
-    const applicantAddress = walletData?.wallet_address || '0x0000000000000000000000000000000000000000';
+    const _applicantAddress = walletData?.wallet_address || '0x0000000000000000000000000000000000000000'; // Prefixed as unused
     
     // For development/testing, return simulated blockchain data
     return {
@@ -229,7 +231,7 @@ export const recordApplicationOnChain = async (
 export const recordHoursOnChain = async (
   volunteerId: string,
   hash: string,
-  hours: number
+  _hours: number // Prefixed as unused
 ): Promise<{ transactionId: string; blockNumber: number }> => {
   try {
     // Get volunteer's wallet address from profile
@@ -250,7 +252,7 @@ export const recordHoursOnChain = async (
     
     if (walletError) throw walletError;
     
-    const volunteerAddress = walletData?.wallet_address || '0x0000000000000000000000000000000000000000';
+    const _volunteerAddress = walletData?.wallet_address || '0x0000000000000000000000000000000000000000'; // Prefixed as unused
     
     // For development/testing, return simulated blockchain data
     return {

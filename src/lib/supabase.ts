@@ -83,7 +83,7 @@ export const supabaseHelpers = {
     
     // Log to monitoring if available
     if (typeof window !== 'undefined' && 'MonitoringService' in window) {
-      const monitoringService = (window as { MonitoringService?: { trackMetric: (event: string, data: Record<string, unknown>) => void } }).MonitoringService;
+      const monitoringService = (window as { MonitoringService?: { trackMetric: (_event: string, _data: Record<string, unknown>) => void } }).MonitoringService;
       if (monitoringService?.trackMetric) {
         monitoringService.trackMetric('supabase_error', {
           context,

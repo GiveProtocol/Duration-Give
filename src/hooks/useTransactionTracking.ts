@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useToast } from '../contexts/ToastContext';
 import { supabase } from '../lib/supabase';
 import { useProfile } from './useProfile';
@@ -49,7 +49,7 @@ export function useTransactionTracking() {
     }
   };
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     if (!profile?.id) return;
 
     try {
@@ -67,11 +67,11 @@ export function useTransactionTracking() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [profile?.id, showToast]);
 
   useEffect(() => {
     fetchTransactions();
-  }, [profile?.id]);
+  }, [profile?.id, fetchTransactions]);
 
   return {
     transactions,

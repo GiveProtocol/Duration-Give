@@ -19,7 +19,7 @@ export interface UseCampaignResult {
 }
 
 export interface UseInfiniteDataOptions<T> extends QueryOptions {
-  fetchFn: (options: QueryOptions) => Promise<T[]>;
+  fetchFn: (_options: QueryOptions) => Promise<T[]>; // Prefixed as unused
   pageSize?: number;
   initialData?: T[];
 }
@@ -44,7 +44,7 @@ export interface UseWalletResult {
 }
 
 export interface UseDonationResult {
-  donate: (amount: TokenAmount, charityId: string) => Promise<TransactionHash>;
+  donate: (_amount: TokenAmount, _charityId: string) => Promise<TransactionHash>; // Prefixed as unused
   loading: boolean;
   error?: Error;
 }
@@ -61,9 +61,9 @@ export interface UseFormResult<T> {
   values: T;
   errors: Record<keyof T, string>;
   touched: Record<keyof T, boolean>;
-  handleChange: (field: keyof T, value: T[keyof T]) => void;
-  handleBlur: (field: keyof T) => void;
-  handleSubmit: (e: React.FormEvent) => void;
+  handleChange: (_field: keyof T, _value: T[keyof T]) => void; // Prefixed as unused
+  handleBlur: (_field: keyof T) => void; // Prefixed as unused
+  handleSubmit: (_e: React.FormEvent) => void; // Prefixed as unused
   isValid: boolean;
   isDirty: boolean;
   resetForm: () => void;
@@ -76,8 +76,8 @@ export interface UseFiltersResult {
     categories: CharityCategory[];
     verifiedOnly: boolean;
   };
-  setSearch: (search: string) => void;
-  setCategories: (categories: CharityCategory[]) => void;
-  setVerifiedOnly: (verified: boolean) => void;
+  setSearch: (_search: string) => void; // Prefixed as unused
+  setCategories: (_categories: CharityCategory[]) => void; // Prefixed as unused
+  setVerifiedOnly: (_verified: boolean) => void; // Prefixed as unused
   resetFilters: () => void;
 }

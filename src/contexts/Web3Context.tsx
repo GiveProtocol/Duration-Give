@@ -344,6 +344,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useWeb3() {
   const context = useContext(Web3Context);
   if (!context) {

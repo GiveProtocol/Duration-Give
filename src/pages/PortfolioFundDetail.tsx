@@ -68,7 +68,7 @@ const SAMPLE_CHARITIES = [
 ];
 
 const PortfolioFundDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id: _id } = useParams<{ id: string }>(); // Prefixed as unused
   
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useToast } from '../contexts/ToastContext';
 import { supabase } from '../lib/supabase';
 import { useProfile } from './useProfile';
@@ -22,7 +22,7 @@ export function useDonationAnalytics() {
   const { showToast } = useToast();
   const { profile } = useProfile();
 
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     if (!profile?.id) return;
 
     try {
@@ -48,11 +48,11 @@ export function useDonationAnalytics() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [profile?.id, showToast]);
 
   useEffect(() => {
     fetchAnalytics();
-  }, [profile?.id]);
+  }, [profile?.id, fetchAnalytics]);
 
   return {
     metrics,

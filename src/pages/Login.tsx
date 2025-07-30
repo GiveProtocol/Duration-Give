@@ -133,7 +133,7 @@ const Login: React.FC = () => {
   );
 };
 
-const LoginHelpers: React.FC<{ setView: (view: View) => void }> = ({ setView }) => (
+const LoginHelpers: React.FC<{ setView: (_view: View) => void }> = ({ setView }) => (
   <div className="mt-6 space-y-4">
     <div className="relative">
       <div className="absolute inset-0 flex items-center">

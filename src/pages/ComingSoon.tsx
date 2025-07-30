@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Github, Bird, Disc as Discord } from 'lucide-react';
+import { Github, Bird, Disc as Discord } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { Logger } from '@/utils/logger';
 

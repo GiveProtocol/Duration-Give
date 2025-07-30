@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Search, Filter, Award, Clock, Users, Globe } from 'lucide-react';
+import { Search, Award, Clock, Users, Globe } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { ApplicationForm } from '../components/volunteer/ApplicationForm';
 import { ConsentForm } from '../components/volunteer/ConsentForm';

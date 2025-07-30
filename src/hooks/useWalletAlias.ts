@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWeb3 } from '@/contexts/Web3Context';
@@ -23,16 +23,16 @@ export function useWalletAlias() {
     if (user && address) {
       fetchWalletAlias();
     }
-  }, [user, address]);
+  }, [user, address, fetchWalletAlias]);
 
   // Fetch all wallet aliases for the current user
   useEffect(() => {
     if (user) {
       fetchUserAliases();
     }
-  }, [user]);
+  }, [user, fetchUserAliases]);
 
-  const fetchWalletAlias = async () => {
+  const fetchWalletAlias = useCallback(async () => {
     if (!user || !address) return;
 
     try {
@@ -82,9 +82,9 @@ export function useWalletAlias() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, address, retryCount]);
 
-  const fetchUserAliases = async () => {
+  const fetchUserAliases = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -117,7 +117,7 @@ export function useWalletAlias() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   const setWalletAlias = async (newAlias: string) => {
     if (!user || !address) {

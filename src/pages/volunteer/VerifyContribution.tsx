@@ -30,7 +30,7 @@ const VerifyContribution: React.FC = () => {
       
       fetchVerification();
     }
-  }, [hash]);
+  }, [hash, getVerificationByHash]);
 
   if (loading) {
     return (

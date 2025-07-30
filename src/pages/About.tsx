@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Target, Newspaper, Heart, Shield, Globe, TrendingUp } from 'lucide-react';
+import { Users, Target, Heart, Shield, Globe, TrendingUp } from 'lucide-react';
 import { StaticPageLayout } from '@/components/layout/StaticPageLayout';
 
 export const About: React.FC = () => {

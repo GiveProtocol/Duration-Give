@@ -7,6 +7,7 @@ interface ToastContextType {
 }
 
 // Create context with undefined initial value but proper type
+// eslint-disable-next-line react-refresh/only-export-components
 export const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 /**
@@ -64,6 +65,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
  * @returns Object containing showToast function for displaying toast notifications
  * @throws {Error} When used outside of ToastProvider
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useToast() {
   const context = useContext(ToastContext);
   if (!context) {

@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/* eslint-disable no-unused-vars */
 
 interface Window {
   ethereum?: {
@@ -6,10 +7,10 @@ interface Window {
     isCoinbaseWallet?: boolean;
     isTally?: boolean;
     isBraveWallet?: boolean;
-    request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-    on: (event: string, callback: (...args: unknown[]) => void) => void;
-    removeListener: (event: string, callback: (...args: unknown[]) => void) => void;
-    removeAllListeners: (event: string) => void;
+    request: (_args: { method: string; params?: unknown[] }) => Promise<unknown>; // Prefixed as unused
+    on: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused
+    removeListener: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused
+    removeAllListeners: (_event: string) => void; // Prefixed as unused
     disconnect?: () => Promise<void>;
   };
 }

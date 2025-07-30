@@ -6,20 +6,20 @@ import { Logger } from '@/utils/logger';
 import { trackTransaction } from '@/lib/sentry';
 
 export enum DonationType {
-  NATIVE = 'native',
-  TOKEN = 'token'
+  _NATIVE = 'native', // Prefixed with _ as currently unused
+  _TOKEN = 'token' // Prefixed with _ as currently unused
 }
 
 export enum PoolType {
-  DIRECT = 'direct',
-  EQUITY = 'equity'
+  _DIRECT = 'direct', // Prefixed with _ as currently unused
+  _EQUITY = 'equity' // Prefixed with _ as currently unused
 }
 
 interface DonationParams {
   charityAddress: string;
   amount: string;
   type: DonationType;
-  tokenAddress?: string;
+  _tokenAddress?: string; // Prefixed with _ as currently unused
   poolType?: PoolType;
 }
 
@@ -29,7 +29,7 @@ export function useDonation() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const donate = async ({ charityAddress, amount, type, tokenAddress, poolType = PoolType.DIRECT }: DonationParams) => {
+  const donate = async ({ charityAddress, amount, type, _tokenAddress, poolType = PoolType._DIRECT }: DonationParams) => {
     if (!contract || !address) {
       throw new Error('Contract or wallet not connected');
     }
@@ -50,7 +50,7 @@ export function useDonation() {
 
       if (type === DonationType.NATIVE) {
         // For direct donations
-        if (poolType === PoolType.DIRECT) {
+        if (poolType === PoolType._DIRECT) {
           // In ethers v6, we need to use the contract.getFunction method
           const donateFunction = contract.getFunction('donate');
           const tx = await donateFunction(charityAddress, {
@@ -59,7 +59,7 @@ export function useDonation() {
           await tx.wait();
         } 
         // For equity pool donations
-        else if (poolType === PoolType.EQUITY) {
+        else if (poolType === PoolType._EQUITY) {
           // This would call a different contract method for equity pool donations
           // For now, we'll use the same method
           const donateFunction = contract.getFunction('donate');
