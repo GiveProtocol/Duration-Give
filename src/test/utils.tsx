@@ -1,30 +1,28 @@
-import React, { PropsWithChildren } from 'react';
-import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { ToastProvider } from '@/contexts/ToastContext';
-import { Web3Provider } from '@/contexts/Web3Context';
+import React, { PropsWithChildren } from "react";
+import { render } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ToastProvider } from "@/contexts/ToastContext";
+import { Web3Provider } from "@/contexts/Web3Context";
 
 export function renderWithProviders(
   ui: React.ReactElement,
-  { route = '/' } = {}
+  { route = "/" } = {},
 ) {
-  window.history.pushState({}, 'Test page', route);
+  window.history.pushState({}, "Test page", route);
 
   return render(ui, {
     wrapper: ({ children }: PropsWithChildren) => (
       <BrowserRouter future={{ v7_relativeSplatPath: true }}>
         <ToastProvider>
           <AuthProvider>
-            <Web3Provider>
-              {children}
-            </Web3Provider>
+            <Web3Provider>{children}</Web3Provider>
           </AuthProvider>
         </ToastProvider>
       </BrowserRouter>
-    )
+    ),
   });
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export * from '@testing-library/react';
+export * from "@testing-library/react";

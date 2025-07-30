@@ -1,7 +1,7 @@
-import React from 'react';
-import { Charity, Campaign, CharityCategory } from './charity';
-import { TokenAmount, TransactionHash } from './blockchain';
-import { ApiError, QueryOptions } from './common';
+import React from "react";
+import { Charity, Campaign, CharityCategory } from "./charity";
+import { TokenAmount, TransactionHash } from "./blockchain";
+import { ApiError, QueryOptions } from "./common";
 
 // Data Fetching Hooks
 export interface UseCharityResult {
@@ -44,14 +44,17 @@ export interface UseWalletResult {
 }
 
 export interface UseDonationResult {
-  donate: (_amount: TokenAmount, _charityId: string) => Promise<TransactionHash>; // Prefixed as unused
+  donate: (
+    _amount: TokenAmount,
+    _charityId: string,
+  ) => Promise<TransactionHash>; // Prefixed as unused
   loading: boolean;
   error?: Error;
 }
 
 export interface UseTransactionResult {
   hash?: TransactionHash;
-  status: 'pending' | 'confirmed' | 'failed';
+  status: "pending" | "confirmed" | "failed";
   loading: boolean;
   error?: Error;
 }

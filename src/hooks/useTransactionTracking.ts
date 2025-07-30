@@ -1,13 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useToast } from '../contexts/ToastContext';
-import { supabase } from '../lib/supabase';
-import { useProfile } from './useProfile';
+import { useState, useEffect, useCallback } from "react";
+import { useToast } from "../contexts/ToastContext";
+import { supabase } from "../lib/supabase";
+import { useProfile } from "./useProfile";
 
 export interface Transaction {
   id: string;
-  type: 'donation' | 'withdrawal';
+  type: "donation" | "withdrawal";
   amount: number;
-  status: 'pending' | 'completed' | 'failed';
+  status: "pending" | "completed" | "failed";
   txHash?: string;
   created_at: string;
   metadata?: Record<string, unknown>;
@@ -20,31 +20,29 @@ export function useTransactionTracking() {
   const { profile } = useProfile();
 
   const trackTransaction = async (
-    type: Transaction['type'],
+    type: Transaction["type"],
     amount: number,
     txHash?: string,
-    metadata?: Record<string, unknown>
+    metadata?: Record<string, unknown>,
   ) => {
-    if (!profile?.id) throw new Error('Profile not found');
+    if (!profile?.id) throw new Error("Profile not found");
 
     try {
-      const { error } = await supabase
-        .from('transactions')
-        .insert({
-          user_id: profile.id,
-          type,
-          amount,
-          status: 'pending',
-          tx_hash: txHash,
-          metadata
-        });
+      const { error } = await supabase.from("transactions").insert({
+        user_id: profile.id,
+        type,
+        amount,
+        status: "pending",
+        tx_hash: txHash,
+        metadata,
+      });
 
       if (error) throw error;
 
-      showToast('success', 'Transaction tracked successfully');
+      showToast("success", "Transaction tracked successfully");
       await fetchTransactions();
     } catch (error) {
-      showToast('error', 'Failed to track transaction');
+      showToast("error", "Failed to track transaction");
       throw error;
     }
   };
@@ -55,15 +53,15 @@ export function useTransactionTracking() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('transactions')
-        .select('*')
-        .eq('user_id', profile.id)
-        .order('created_at', { ascending: false });
+        .from("transactions")
+        .select("*")
+        .eq("user_id", profile.id)
+        .order("created_at", { ascending: false });
 
       if (error) throw error;
       setTransactions(data);
     } catch (error) {
-      showToast('error', 'Failed to fetch transactions');
+      showToast("error", "Failed to fetch transactions");
     } finally {
       setLoading(false);
     }
@@ -76,6 +74,6 @@ export function useTransactionTracking() {
   return {
     transactions,
     trackTransaction,
-    loading
+    loading,
   };
 }
