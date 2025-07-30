@@ -134,6 +134,11 @@ export const GiveDashboard: React.FC = () => {
     }
   ]);
 
+  /**
+   * Determines if a navigation path is currently active and returns appropriate CSS classes
+   * @param _path - The path to check against current location (unused parameter)
+   * @returns CSS classes for active or inactive navigation state
+   */
   const _isActive = (_path: string) => // Prefixed as unused
     location.pathname === _path ? 'bg-primary-100 text-primary-900' : 'text-gray-700 hover:bg-primary-50';
 

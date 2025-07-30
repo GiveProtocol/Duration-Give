@@ -58,12 +58,6 @@ export const CharityPortal: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (profile?.id) {
-      fetchCharityData();
-    }
-  }, [profile?.id, fetchCharityData]);
-
   const fetchCharityData = useCallback(async () => {
     if (!profile?.id) return;
     
@@ -329,6 +323,11 @@ export const CharityPortal: React.FC = () => {
     }
   }, [profile?.id]);
 
+  useEffect(() => {
+    if (profile?.id) {
+      fetchCharityData();
+    }
+  }, [profile?.id, fetchCharityData]);
 
   const handleRetry = useCallback(() => {
     setError(null);

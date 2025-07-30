@@ -173,6 +173,37 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
     }
   }, [handleAccountsChanged, handleChainChanged]);
 
+  const switchChain = useCallback(async (targetChainId: number) => {
+    if (typeof window.ethereum === "undefined") {
+      throw new Error("Please install MetaMask to switch networks");
+    }
+
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: `0x${targetChainId.toString(16)}` }],
+      });
+      Logger.info("Switched network", { chainId: targetChainId });
+    } catch (error: unknown) {
+      // If the chain hasn't been added to MetaMask
+      if (error.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [MOONBASE_CHAIN_INFO],
+          });
+          Logger.info("Added Moonbase Alpha network");
+        } catch (addError) {
+          Logger.error("Failed to add network", { error: addError });
+          throw new Error("Failed to add Moonbase Alpha network");
+        }
+      } else {
+        Logger.error("Failed to switch network", { error });
+        throw error;
+      }
+    }
+  }, []);
+
   const connect = useCallback(async () => {
     if (typeof window.ethereum === "undefined") {
       const error = new Error("Please install MetaMask to connect");
@@ -291,37 +322,6 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
     } catch (err) {
       Logger.error("Error during wallet disconnect", { error: err });
       // Don't throw error - we still want to clear the state
-    }
-  }, []);
-
-  const switchChain = useCallback(async (targetChainId: number) => {
-    if (typeof window.ethereum === "undefined") {
-      throw new Error("Please install MetaMask to switch networks");
-    }
-
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: `0x${targetChainId.toString(16)}` }],
-      });
-      Logger.info("Switched network", { chainId: targetChainId });
-    } catch (error: unknown) {
-      // If the chain hasn't been added to MetaMask
-      if (error.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [MOONBASE_CHAIN_INFO],
-          });
-          Logger.info("Added Moonbase Alpha network");
-        } catch (addError) {
-          Logger.error("Failed to add network", { error: addError });
-          throw new Error("Failed to add Moonbase Alpha network");
-        }
-      } else {
-        Logger.error("Failed to switch network", { error });
-        throw error;
-      }
     }
   }, []);
 

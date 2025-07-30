@@ -7,7 +7,7 @@ import { Logger } from './logger';
 import { SecureRandom } from '@/utils/security/index';
 
 // ABI for the VolunteerVerification contract
-// @ts-ignore - Variable defined but not used
+// @ts-expect-error - Variable defined but not used in current implementation, kept for future smart contract integration
 // eslint-disable-next-line no-unused-vars
 const _VOLUNTEER_VERIFICATION_ABI = [ // Prefixed as unused
   "function verifyApplication(bytes32 _applicationHash, address _applicant) external",

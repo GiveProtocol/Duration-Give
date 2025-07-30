@@ -133,6 +133,10 @@ const Login: React.FC = () => {
   );
 };
 
+/**
+ * LoginHelpers component that provides navigation links to help options
+ * @param setView - Function to change the current view in the login flow
+ */
 const LoginHelpers: React.FC<{ setView: (_view: View) => void }> = ({ setView }) => (
   <div className="mt-6 space-y-4">
     <div className="relative">

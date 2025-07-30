@@ -18,20 +18,6 @@ export function useWalletAlias() {
   const MAX_RETRIES = 3;
   const RETRY_DELAY = 1000; // 1 second base delay
 
-  // Fetch the current user's wallet alias
-  useEffect(() => {
-    if (user && address) {
-      fetchWalletAlias();
-    }
-  }, [user, address, fetchWalletAlias]);
-
-  // Fetch all wallet aliases for the current user
-  useEffect(() => {
-    if (user) {
-      fetchUserAliases();
-    }
-  }, [user, fetchUserAliases]);
-
   const fetchWalletAlias = useCallback(async () => {
     if (!user || !address) return;
 
@@ -118,6 +104,20 @@ export function useWalletAlias() {
       setLoading(false);
     }
   }, [user]);
+
+  // Fetch the current user's wallet alias
+  useEffect(() => {
+    if (user && address) {
+      fetchWalletAlias();
+    }
+  }, [user, address, fetchWalletAlias]);
+
+  // Fetch all wallet aliases for the current user
+  useEffect(() => {
+    if (user) {
+      fetchUserAliases();
+    }
+  }, [user, fetchUserAliases]);
 
   const setWalletAlias = async (newAlias: string) => {
     if (!user || !address) {

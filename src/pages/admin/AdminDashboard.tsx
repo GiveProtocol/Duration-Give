@@ -25,11 +25,6 @@ const AdminDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchAdminStats();
-    trackEvent('admin_dashboard_viewed', { userId: user?.id });
-  }, [user?.id, fetchAdminStats]);
-
   const fetchAdminStats = useCallback(async () => {
     try {
       setLoading(true);
@@ -87,6 +82,11 @@ const AdminDashboard: React.FC = () => {
       setLoading(false);
     }
   }, [user?.id]);
+
+  useEffect(() => {
+    fetchAdminStats();
+    trackEvent('admin_dashboard_viewed', { userId: user?.id });
+  }, [user?.id, fetchAdminStats]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
