@@ -1,26 +1,17 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { WalletAliasSettings } from '../WalletAliasSettings';
+import { useWalletAlias } from '@/hooks/useWalletAlias';
+import { useWeb3 } from '@/contexts/Web3Context';
+import { 
+  createMockWalletAlias, 
+  createMockWeb3,
+  testAddresses
+} from '@/test-utils/mockSetup';
 
 // Mock the dependencies
-jest.mock('@/hooks/useWalletAlias', () => ({
-  useWalletAlias: jest.fn(() => ({
-    alias: null,
-    aliases: {},
-    loading: false,
-    error: null,
-    setWalletAlias: jest.fn(),
-    deleteWalletAlias: jest.fn(),
-  })),
-}));
-
-jest.mock('@/contexts/Web3Context', () => ({
-  useWeb3: jest.fn(() => ({
-    address: '0x1234567890123456789012345678901234567890',
-    isConnected: true,
-  })),
-}));
-
+jest.mock('@/hooks/useWalletAlias');
+jest.mock('@/contexts/Web3Context');
 jest.mock('@/utils/web3', () => ({
   shortenAddress: jest.fn((address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`),
 }));
@@ -43,7 +34,7 @@ jest.mock('@/components/ui/Button', () => ({
 jest.mock('@/components/ui/Input', () => ({
   Input: ({ value, onChange, placeholder, type }: { 
     value: string; 
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; 
+    onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void; 
     placeholder?: string;
     type?: string;
   }) => (
@@ -72,8 +63,7 @@ describe('WalletAliasSettings', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     
-    const { useWalletAlias } = require('@/hooks/useWalletAlias');
-    const { useWeb3 } = require('@/contexts/Web3Context');
+    // useWalletAlias and useWeb3 are already imported and mocked
     
     useWalletAlias.mockReturnValue({
       alias: null,
@@ -84,10 +74,10 @@ describe('WalletAliasSettings', () => {
       deleteWalletAlias: mockDeleteWalletAlias,
     });
 
-    useWeb3.mockReturnValue({
-      address: '0x1234567890123456789012345678901234567890',
+    (useWeb3 as jest.Mock).mockReturnValue(createMockWeb3({
+      address: testAddresses.mainWallet,
       isConnected: true,
-    });
+    }));
 
     mockSetWalletAlias.mockResolvedValue(true);
     mockDeleteWalletAlias.mockResolvedValue(true);
@@ -147,15 +137,12 @@ describe('WalletAliasSettings', () => {
 
   describe('when alias exists', () => {
     beforeEach(() => {
-      const { useWalletAlias } = require('@/hooks/useWalletAlias');
-      useWalletAlias.mockReturnValue({
+      (useWalletAlias as jest.Mock).mockReturnValue(createMockWalletAlias({
         alias: 'ExistingAlias',
-        aliases: { '0x1234567890123456789012345678901234567890': 'ExistingAlias' },
-        loading: false,
-        error: null,
+        aliases: { [testAddresses.mainWallet]: 'ExistingAlias' },
         setWalletAlias: mockSetWalletAlias,
         deleteWalletAlias: mockDeleteWalletAlias,
-      });
+      }));
     });
 
     it('displays the existing alias', () => {
@@ -262,7 +249,7 @@ describe('WalletAliasSettings', () => {
 
   describe('loading states', () => {
     it('shows loading state when setting alias', () => {
-      const { useWalletAlias } = require('@/hooks/useWalletAlias');
+      // useWalletAlias is already imported and mocked
       useWalletAlias.mockReturnValue({
         alias: null,
         aliases: {},
@@ -297,7 +284,7 @@ describe('WalletAliasSettings', () => {
     });
 
     it('handles deleteWalletAlias failure gracefully', async () => {
-      const { useWalletAlias } = require('@/hooks/useWalletAlias');
+      // useWalletAlias is already imported and mocked
       useWalletAlias.mockReturnValue({
         alias: 'ExistingAlias',
         aliases: { '0x1234567890123456789012345678901234567890': 'ExistingAlias' },
@@ -321,11 +308,10 @@ describe('WalletAliasSettings', () => {
 
   describe('wallet not connected', () => {
     it('handles disconnected wallet state', () => {
-      const { useWeb3 } = require('@/contexts/Web3Context');
-      useWeb3.mockReturnValue({
+      (useWeb3 as jest.Mock).mockReturnValue(createMockWeb3({
         address: null,
         isConnected: false,
-      });
+      }));
 
       render(<WalletAliasSettings />);
       
@@ -336,15 +322,12 @@ describe('WalletAliasSettings', () => {
 
   describe('edit mode', () => {
     beforeEach(() => {
-      const { useWalletAlias } = require('@/hooks/useWalletAlias');
-      useWalletAlias.mockReturnValue({
+      (useWalletAlias as jest.Mock).mockReturnValue(createMockWalletAlias({
         alias: 'ExistingAlias',
-        aliases: { '0x1234567890123456789012345678901234567890': 'ExistingAlias' },
-        loading: false,
-        error: null,
+        aliases: { [testAddresses.mainWallet]: 'ExistingAlias' },
         setWalletAlias: mockSetWalletAlias,
         deleteWalletAlias: mockDeleteWalletAlias,
-      });
+      }));
     });
 
     it('shows save and cancel buttons in edit mode', () => {

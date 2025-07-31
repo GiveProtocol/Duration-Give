@@ -1,48 +1,24 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ApplicationAcceptance } from '../ApplicationAcceptance';
+import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
+import { useTranslation } from '@/hooks/useTranslation';
+import { 
+  createMockVolunteerVerification, 
+  createMockTranslation, 
+  mockLogger,
+  MockButton,
+  testPropsDefaults 
+} from '@/test-utils/mockSetup';
+import { cssClasses } from '@/test-utils/testHelpers';
 
 // Mock the dependencies
-jest.mock('@/hooks/useVolunteerVerification', () => ({
-  useVolunteerVerification: jest.fn(() => ({
-    acceptApplication: jest.fn(),
-    loading: false,
-    error: null,
-  })),
-}));
-
-jest.mock('@/hooks/useTranslation', () => ({
-  useTranslation: jest.fn(() => ({
-    t: jest.fn((key: string, fallback?: string) => fallback || key),
-  })),
-}));
-
+jest.mock('@/hooks/useVolunteerVerification');
+jest.mock('@/hooks/useTranslation');
 jest.mock('@/utils/logger', () => ({
-  Logger: {
-    error: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-  },
+  Logger: mockLogger,
 }));
-
-// Mock UI components
 jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, disabled, variant, className }: { 
-    children: React.ReactNode; 
-    onClick?: () => void; 
-    disabled?: boolean;
-    variant?: string;
-    className?: string;
-  }) => (
-    <button 
-      onClick={onClick} 
-      disabled={disabled} 
-      data-variant={variant}
-      className={className}
-    >
-      {children}
-    </button>
-  ),
+  Button: MockButton,
 }));
 
 describe('ApplicationAcceptance', () => {
@@ -51,27 +27,20 @@ describe('ApplicationAcceptance', () => {
   const mockT = jest.fn((key: string, fallback?: string) => fallback || key);
 
   const defaultProps = {
-    applicationId: 'app-123',
-    applicantName: 'John Doe',
-    opportunityTitle: 'Beach Cleanup Volunteer',
+    ...testPropsDefaults.applicationAcceptance,
     onAccepted: mockOnAccepted,
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
     
-    const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-    const { useTranslation } = require('@/hooks/useTranslation');
-    
-    useVolunteerVerification.mockReturnValue({
+    (useVolunteerVerification as jest.Mock).mockReturnValue(createMockVolunteerVerification({
       acceptApplication: mockAcceptApplication,
-      loading: false,
-      error: null,
-    });
+    }));
 
-    useTranslation.mockReturnValue({
+    (useTranslation as jest.Mock).mockReturnValue(createMockTranslation({
       t: mockT,
-    });
+    }));
 
     mockAcceptApplication.mockResolvedValue('0x1234567890abcdef');
   });
@@ -80,8 +49,8 @@ describe('ApplicationAcceptance', () => {
     it('renders the application card with applicant information', () => {
       render(<ApplicationAcceptance {...defaultProps} />);
       
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
-      expect(screen.getByText(/Beach Cleanup Volunteer/)).toBeInTheDocument();
+      expect(screen.getByText(testPropsDefaults.applicationAcceptance.applicantName)).toBeInTheDocument();
+      expect(screen.getByText(new RegExp(testPropsDefaults.applicationAcceptance.opportunityTitle))).toBeInTheDocument();
     });
 
     it('shows accept and reject buttons', () => {
@@ -110,12 +79,10 @@ describe('ApplicationAcceptance', () => {
     });
 
     it('shows loading state during acceptance', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue(createMockVolunteerVerification({
         acceptApplication: mockAcceptApplication,
         loading: true,
-        error: null,
-      });
+      }));
 
       render(<ApplicationAcceptance {...defaultProps} />);
       
@@ -123,12 +90,10 @@ describe('ApplicationAcceptance', () => {
     });
 
     it('disables button during loading', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue(createMockVolunteerVerification({
         acceptApplication: mockAcceptApplication,
         loading: true,
-        error: null,
-      });
+      }));
 
       render(<ApplicationAcceptance {...defaultProps} />);
       
@@ -184,12 +149,10 @@ describe('ApplicationAcceptance', () => {
 
   describe('error handling', () => {
     it('displays error message when provided', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue(createMockVolunteerVerification({
         acceptApplication: mockAcceptApplication,
-        loading: false,
         error: 'Connection failed',
-      });
+      }));
 
       render(<ApplicationAcceptance {...defaultProps} />);
       
@@ -207,9 +170,7 @@ describe('ApplicationAcceptance', () => {
         expect(mockAcceptApplication).toHaveBeenCalled();
       });
 
-      // Should not crash and should log error
-      const { Logger } = require('@/utils/logger');
-      expect(Logger.error).toHaveBeenCalledWith('Acceptance failed:', expect.any(Error));
+      expect(mockLogger.error).toHaveBeenCalledWith('Acceptance failed:', expect.any(Error));
     });
 
     it('handles null hash response', async () => {
@@ -230,11 +191,7 @@ describe('ApplicationAcceptance', () => {
 
   describe('optional props', () => {
     it('works without onAccepted callback', async () => {
-      const propsWithoutCallback = {
-        applicationId: 'app-123',
-        applicantName: 'John Doe',
-        opportunityTitle: 'Beach Cleanup Volunteer',
-      };
+      const propsWithoutCallback = testPropsDefaults.applicationAcceptance;
 
       render(<ApplicationAcceptance {...propsWithoutCallback} />);
       
@@ -253,8 +210,8 @@ describe('ApplicationAcceptance', () => {
     it('applies correct styling to initial state', () => {
       render(<ApplicationAcceptance {...defaultProps} />);
       
-      const container = screen.getByText('John Doe').closest('div');
-      expect(container?.parentElement).toHaveClass('bg-white', 'border', 'border-gray-200', 'rounded-lg', 'p-4');
+      const container = screen.getByText(testPropsDefaults.applicationAcceptance.applicantName).closest('div');
+      expect(container?.parentElement).toHaveClass(...cssClasses.card.default);
     });
 
     it('applies success styling after acceptance', async () => {
@@ -264,22 +221,20 @@ describe('ApplicationAcceptance', () => {
       
       await waitFor(() => {
         const successContainer = screen.getByText('volunteer.applicationAccepted').closest('div');
-        expect(successContainer).toHaveClass('bg-green-50', 'border', 'border-green-200', 'rounded-lg', 'p-4');
+        expect(successContainer).toHaveClass(...cssClasses.card.success);
       });
     });
 
     it('applies error styling when error present', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue(createMockVolunteerVerification({
         acceptApplication: mockAcceptApplication,
-        loading: false,
         error: 'Error message',
-      });
+      }));
 
       render(<ApplicationAcceptance {...defaultProps} />);
       
       const errorElement = screen.getByText('Error message');
-      expect(errorElement.closest('div')).toHaveClass('p-3', 'bg-red-50', 'text-red-700', 'text-sm', 'rounded-md');
+      expect(errorElement.closest('div')).toHaveClass(...cssClasses.card.error);
     });
   });
 
@@ -293,12 +248,10 @@ describe('ApplicationAcceptance', () => {
     });
 
     it('uses translation for dynamic loading text', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue(createMockVolunteerVerification({
         acceptApplication: mockAcceptApplication,
         loading: true,
-        error: null,
-      });
+      }));
 
       render(<ApplicationAcceptance {...defaultProps} />);
       
@@ -321,7 +274,7 @@ describe('ApplicationAcceptance', () => {
       render(<ApplicationAcceptance {...defaultProps} />);
       
       const acceptButton = screen.getByText('volunteer.accept');
-      expect(acceptButton).toHaveClass('flex', 'items-center');
+      expect(acceptButton).toHaveClass(...cssClasses.button.primary);
     });
 
     it('reject button has secondary variant', () => {

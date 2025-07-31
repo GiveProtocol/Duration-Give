@@ -1,27 +1,18 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { ConnectButton } from '../ConnectButton';
+import { useWeb3 } from '@/contexts/Web3Context';
+import { useWalletAlias } from '@/hooks/useWalletAlias';
+import { renderWithRouter } from '@/test-utils/testHelpers';
+import { createMockWeb3, createMockWalletAlias, testAddresses } from '@/test-utils/mockSetup';
 
-// Mock the dependencies
-jest.mock('@/contexts/Web3Context', () => ({
-  useWeb3: jest.fn(() => ({
-    address: null,
-    chainId: null,
-    isConnected: false,
-    connect: jest.fn(),
-    disconnect: jest.fn(),
-    switchChain: jest.fn(),
-  })),
-}));
-
+// Setup common mocks
+jest.mock('@/contexts/Web3Context');
 jest.mock('@/contexts/AuthContext', () => ({
   useAuth: jest.fn(() => ({
     user: null,
     signOut: jest.fn(),
   })),
 }));
-
 jest.mock('@/hooks/useWallet', () => ({
   useWallet: jest.fn(() => ({
     getInstalledWallets: jest.fn(() => [
@@ -31,18 +22,10 @@ jest.mock('@/hooks/useWallet', () => ({
     connectWallet: jest.fn(),
   })),
 }));
-
-jest.mock('@/hooks/useWalletAlias', () => ({
-  useWalletAlias: jest.fn(() => ({
-    alias: null,
-    isLoading: false,
-  })),
-}));
-
+jest.mock('@/hooks/useWalletAlias');
 jest.mock('@/utils/web3', () => ({
   shortenAddress: jest.fn((address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`),
 }));
-
 jest.mock('@/utils/logger', () => ({
   Logger: {
     info: jest.fn(),
@@ -50,17 +33,11 @@ jest.mock('@/utils/logger', () => ({
     warn: jest.fn(),
   },
 }));
-
 jest.mock('@/config/contracts', () => ({
   CHAIN_IDS: {
     moonbase: 1287,
   },
 }));
-
-// Wrapper component for routing
-const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <BrowserRouter>{children}</BrowserRouter>
-);
 
 describe('ConnectButton', () => {
   const mockConnect = jest.fn();
@@ -70,35 +47,22 @@ describe('ConnectButton', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     
-    // Reset mocks to default state
-    const { useWeb3 } = require('@/contexts/Web3Context');
-    useWeb3.mockReturnValue({
-      address: null,
-      chainId: null,
-      isConnected: false,
+    (useWeb3 as jest.Mock).mockReturnValue(createMockWeb3({
       connect: mockConnect,
       disconnect: mockDisconnect,
       switchChain: mockSwitchChain,
-    });
+    }));
   });
 
   describe('when wallet is not connected', () => {
     it('renders connect wallet button', () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
       expect(screen.getByText('Connect Wallet')).toBeInTheDocument();
     });
 
     it('calls connect when connect button is clicked', async () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
       fireEvent.click(screen.getByText('Connect Wallet'));
       await waitFor(() => {
@@ -109,35 +73,26 @@ describe('ConnectButton', () => {
 
   describe('when wallet is connected', () => {
     beforeEach(() => {
-      const { useWeb3 } = require('@/contexts/Web3Context');
-      useWeb3.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
+      (useWeb3 as jest.Mock).mockReturnValue(createMockWeb3({
+        address: testAddresses.mainWallet,
         chainId: 1287,
         isConnected: true,
         connect: mockConnect,
         disconnect: mockDisconnect,
         switchChain: mockSwitchChain,
-      });
+      }));
     });
 
     it('renders wallet address button', () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
-      expect(screen.getByText('0x1234...7890')).toBeInTheDocument();
+      expect(screen.getByText(testAddresses.shortAddress)).toBeInTheDocument();
     });
 
     it('shows account menu when wallet button is clicked', async () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
-      fireEvent.click(screen.getByText('0x1234...7890'));
+      fireEvent.click(screen.getByText(testAddresses.shortAddress));
       
       await waitFor(() => {
         expect(screen.getByText('Set Wallet Alias')).toBeInTheDocument();
@@ -146,13 +101,9 @@ describe('ConnectButton', () => {
     });
 
     it('calls disconnect when disconnect is clicked', async () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
-      fireEvent.click(screen.getByText('0x1234...7890'));
+      fireEvent.click(screen.getByText(testAddresses.shortAddress));
       
       await waitFor(() => {
         expect(screen.getByText('Disconnect')).toBeInTheDocument();
@@ -168,33 +119,24 @@ describe('ConnectButton', () => {
 
   describe('when wrong network is connected', () => {
     beforeEach(() => {
-      const { useWeb3 } = require('@/contexts/Web3Context');
-      useWeb3.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
+      (useWeb3 as jest.Mock).mockReturnValue(createMockWeb3({
+        address: testAddresses.mainWallet,
         chainId: 1, // Wrong network
         isConnected: true,
         connect: mockConnect,
         disconnect: mockDisconnect,
         switchChain: mockSwitchChain,
-      });
+      }));
     });
 
     it('renders switch network button', () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
       expect(screen.getByText('Switch Network')).toBeInTheDocument();
     });
 
     it('calls switchChain when switch network is clicked', async () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
       fireEvent.click(screen.getByText('Switch Network'));
       
@@ -206,40 +148,28 @@ describe('ConnectButton', () => {
 
   describe('with wallet alias', () => {
     beforeEach(() => {
-      const { useWeb3 } = require('@/contexts/Web3Context');
-      const { useWalletAlias } = require('@/hooks/useWalletAlias');
-      
-      useWeb3.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
+      (useWeb3 as jest.Mock).mockReturnValue(createMockWeb3({
+        address: testAddresses.mainWallet,
         chainId: 1287,
         isConnected: true,
         connect: mockConnect,
         disconnect: mockDisconnect,
         switchChain: mockSwitchChain,
-      });
+      }));
 
-      useWalletAlias.mockReturnValue({
+      (useWalletAlias as jest.Mock).mockReturnValue(createMockWalletAlias({
         alias: 'My Wallet',
-        isLoading: false,
-      });
+      }));
     });
 
     it('renders wallet alias instead of address', () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
       expect(screen.getByText('My Wallet')).toBeInTheDocument();
     });
 
     it('shows change alias option in menu', async () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
       fireEvent.click(screen.getByText('My Wallet'));
       
@@ -251,23 +181,18 @@ describe('ConnectButton', () => {
 
   describe('AccountMenuHeader component', () => {
     it('displays wallet connection info', () => {
-      const { useWeb3 } = require('@/contexts/Web3Context');
-      useWeb3.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
+      (useWeb3 as jest.Mock).mockReturnValue(createMockWeb3({
+        address: testAddresses.mainWallet,
         chainId: 1287,
         isConnected: true,
         connect: mockConnect,
         disconnect: mockDisconnect,
         switchChain: mockSwitchChain,
-      });
+      }));
 
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
-      fireEvent.click(screen.getByText('0x1234...7890'));
+      fireEvent.click(screen.getByText(testAddresses.shortAddress));
       
       expect(screen.getByText(/Connected with/)).toBeInTheDocument();
     });
@@ -275,11 +200,7 @@ describe('ConnectButton', () => {
 
   describe('wallet selection', () => {
     it('shows wallet selection when connecting', async () => {
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
       fireEvent.click(screen.getByText('Connect Wallet'));
       
@@ -292,11 +213,7 @@ describe('ConnectButton', () => {
     it('handles connection errors gracefully', async () => {
       mockConnect.mockRejectedValue(new Error('Connection failed'));
 
-      render(
-        <TestWrapper>
-          <ConnectButton />
-        </TestWrapper>
-      );
+      renderWithRouter(<ConnectButton />);
 
       fireEvent.click(screen.getByText('Connect Wallet'));
       

@@ -1,52 +1,27 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { VolunteerHoursVerification } from '../VolunteerHoursVerification';
+import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
+import { useTranslation } from '@/hooks/useTranslation';
+import { 
+  createMockVolunteerVerification, 
+  createMockTranslation, 
+  mockLogger,
+  mockFormatDate,
+  MockButton,
+  testPropsDefaults 
+} from '@/test-utils/mockSetup';
 
 // Mock the dependencies
-jest.mock('@/hooks/useVolunteerVerification', () => ({
-  useVolunteerVerification: jest.fn(() => ({
-    verifyHours: jest.fn(),
-    loading: false,
-    error: null,
-  })),
-}));
-
-jest.mock('@/hooks/useTranslation', () => ({
-  useTranslation: jest.fn(() => ({
-    t: jest.fn((key: string, fallback?: string) => fallback || key),
-  })),
-}));
-
+jest.mock('@/hooks/useVolunteerVerification');
+jest.mock('@/hooks/useTranslation');
 jest.mock('@/utils/date', () => ({
-  formatDate: jest.fn((date: string) => `Formatted: ${date}`),
+  formatDate: mockFormatDate,
 }));
-
 jest.mock('@/utils/logger', () => ({
-  Logger: {
-    error: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-  },
+  Logger: mockLogger,
 }));
-
-// Mock UI components
 jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, disabled, variant, className }: { 
-    children: React.ReactNode; 
-    onClick?: () => void; 
-    disabled?: boolean;
-    variant?: string;
-    className?: string;
-  }) => (
-    <button 
-      onClick={onClick} 
-      disabled={disabled} 
-      data-variant={variant}
-      className={className}
-    >
-      {children}
-    </button>
-  ),
+  Button: MockButton,
 }));
 
 describe('VolunteerHoursVerification', () => {
@@ -55,30 +30,20 @@ describe('VolunteerHoursVerification', () => {
   const mockT = jest.fn((key: string, fallback?: string) => fallback || key);
 
   const defaultProps = {
-    hoursId: 'hours-123',
-    volunteerId: 'volunteer-456',
-    volunteerName: 'Jane Smith',
-    hours: 8,
-    datePerformed: '2024-01-15',
-    description: 'Helped with beach cleanup and waste sorting',
+    ...testPropsDefaults.volunteerHours,
     onVerified: mockOnVerified,
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
     
-    const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-    const { useTranslation } = require('@/hooks/useTranslation');
-    
-    useVolunteerVerification.mockReturnValue({
+    (useVolunteerVerification as jest.Mock).mockReturnValue(createMockVolunteerVerification({
       verifyHours: mockVerifyHours,
-      loading: false,
-      error: null,
-    });
+    }));
 
-    useTranslation.mockReturnValue({
+    (useTranslation as jest.Mock).mockReturnValue(createMockTranslation({
       t: mockT,
-    });
+    }));
 
     mockVerifyHours.mockResolvedValue('0xabcdef1234567890');
   });
@@ -87,15 +52,15 @@ describe('VolunteerHoursVerification', () => {
     it('renders volunteer information', () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
       
-      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
-      expect(screen.getByText('8 volunteer.hours Formatted: 2024-01-15')).toBeInTheDocument();
+      expect(screen.getByText(testPropsDefaults.volunteerHours.volunteerName)).toBeInTheDocument();
+      expect(screen.getByText(`${testPropsDefaults.volunteerHours.hours} volunteer.hours Formatted: ${testPropsDefaults.volunteerHours.datePerformed}`)).toBeInTheDocument();
     });
 
     it('shows description when provided', () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
       
       expect(screen.getByText('volunteer.description')).toBeInTheDocument();
-      expect(screen.getByText('Helped with beach cleanup and waste sorting')).toBeInTheDocument();
+      expect(screen.getByText(testPropsDefaults.volunteerHours.description!)).toBeInTheDocument();
     });
 
     it('hides description when not provided', () => {
@@ -115,8 +80,7 @@ describe('VolunteerHoursVerification', () => {
     it('formats date using date utility', () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
       
-      const { formatDate } = require('@/utils/date');
-      expect(formatDate).toHaveBeenCalledWith('2024-01-15');
+      expect(mockFormatDate).toHaveBeenCalledWith(testPropsDefaults.volunteerHours.datePerformed);
     });
   });
 
@@ -132,8 +96,7 @@ describe('VolunteerHoursVerification', () => {
     });
 
     it('shows loading state during verification', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: true,
         error: null,
@@ -145,8 +108,7 @@ describe('VolunteerHoursVerification', () => {
     });
 
     it('disables button during loading', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: true,
         error: null,
@@ -206,8 +168,7 @@ describe('VolunteerHoursVerification', () => {
 
   describe('error handling', () => {
     it('displays error message when provided', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: false,
         error: 'Network connection failed',
@@ -229,9 +190,7 @@ describe('VolunteerHoursVerification', () => {
         expect(mockVerifyHours).toHaveBeenCalled();
       });
 
-      // Should not crash and should log error
-      const { Logger } = require('@/utils/logger');
-      expect(Logger.error).toHaveBeenCalledWith('Verification failed:', expect.any(Error));
+      expect(mockLogger.error).toHaveBeenCalledWith('Verification failed:', expect.any(Error));
     });
 
     it('handles null hash response', async () => {
@@ -276,7 +235,7 @@ describe('VolunteerHoursVerification', () => {
       const propsWithoutDescription = { ...defaultProps, description: undefined };
       render(<VolunteerHoursVerification {...propsWithoutDescription} />);
       
-      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
+      expect(screen.getByText(testPropsDefaults.volunteerHours.volunteerName)).toBeInTheDocument();
       expect(screen.queryByText('volunteer.description')).not.toBeInTheDocument();
     });
   });
@@ -301,8 +260,7 @@ describe('VolunteerHoursVerification', () => {
     });
 
     it('applies error styling when error present', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: false,
         error: 'Error message',
@@ -326,8 +284,7 @@ describe('VolunteerHoursVerification', () => {
     });
 
     it('uses translation for dynamic loading text', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-      useVolunteerVerification.mockReturnValue({
+      (useVolunteerVerification as jest.Mock).mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: true,
         error: null,

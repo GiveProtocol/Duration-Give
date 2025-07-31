@@ -1,110 +1,79 @@
+/* eslint-disable jest/expect-expect */
 import { InputValidator } from '../inputValidation';
+import { validationTestCases, testValidCases, testInvalidCases } from '@/test-utils/validationTestData';
 
 describe('InputValidator', () => {
   describe('validateEmail', () => {
     it('validates correct email addresses', () => {
-      expect(InputValidator.validateEmail('test@example.com')).toBe(true);
-      expect(InputValidator.validateEmail('user.name+tag@domain.co.uk')).toBe(true);
-      expect(InputValidator.validateEmail('user123@test-domain.org')).toBe(true);
+      testValidCases(InputValidator.validateEmail, validationTestCases.email.valid);
     });
 
     it('rejects invalid email addresses', () => {
-      expect(InputValidator.validateEmail('')).toBe(false);
-      expect(InputValidator.validateEmail('invalid')).toBe(false);
-      expect(InputValidator.validateEmail('test@')).toBe(false);
-      expect(InputValidator.validateEmail('@example.com')).toBe(false);
-      expect(InputValidator.validateEmail('test@.com')).toBe(false);
-      expect(InputValidator.validateEmail('test@example')).toBe(false);
-      expect(InputValidator.validateEmail('test..test@example.com')).toBe(false);
+      testInvalidCases(InputValidator.validateEmail, validationTestCases.email.invalid);
     });
   });
 
   describe('validatePassword', () => {
     it('validates strong passwords', () => {
-      expect(InputValidator.validatePassword('Password123!')).toBe(true);
-      expect(InputValidator.validatePassword('SecurePass1@')).toBe(true);
-      expect(InputValidator.validatePassword('MyP@ssw0rd')).toBe(true);
+      testValidCases(InputValidator.validatePassword, validationTestCases.password.valid);
     });
 
     it('rejects weak passwords', () => {
-      expect(InputValidator.validatePassword('')).toBe(false);
-      expect(InputValidator.validatePassword('password')).toBe(false); // no uppercase, no number, no special
-      expect(InputValidator.validatePassword('PASSWORD')).toBe(false); // no lowercase, no number, no special
-      expect(InputValidator.validatePassword('Password')).toBe(false); // no number, no special
-      expect(InputValidator.validatePassword('Password1')).toBe(false); // no special character
-      expect(InputValidator.validatePassword('Pass1!')).toBe(false); // too short
-      expect(InputValidator.validatePassword('password123!')).toBe(false); // no uppercase
+      testInvalidCases(InputValidator.validatePassword, validationTestCases.password.invalid);
     });
   });
 
   describe('validateURL', () => {
     it('validates correct HTTPS URLs', () => {
-      expect(InputValidator.validateURL('https://example.com')).toBe(true);
-      expect(InputValidator.validateURL('https://www.example.com')).toBe(true);
-      expect(InputValidator.validateURL('https://example.com/path')).toBe(true);
-      expect(InputValidator.validateURL('https://subdomain.example.com/path/to/page')).toBe(true);
-      expect(InputValidator.validateURL('https://api.example.co.uk/v1/endpoint')).toBe(true);
+      testValidCases(InputValidator.validateURL, validationTestCases.url.valid);
     });
 
     it('rejects invalid URLs', () => {
-      expect(InputValidator.validateURL('')).toBe(false);
-      expect(InputValidator.validateURL('http://example.com')).toBe(false); // not HTTPS
-      expect(InputValidator.validateURL('https://')).toBe(false); // incomplete
-      expect(InputValidator.validateURL('https://example')).toBe(false); // no TLD
-      expect(InputValidator.validateURL('example.com')).toBe(false); // no protocol
-      expect(InputValidator.validateURL('ftp://example.com')).toBe(false); // wrong protocol
+      testInvalidCases(InputValidator.validateURL, validationTestCases.url.invalid);
     });
   });
 
   describe('sanitizeInput', () => {
     it('removes HTML tags and quotes', () => {
-      expect(InputValidator.sanitizeInput('<script>alert("test")</script>')).toBe('scriptalert(test)/script');
-      expect(InputValidator.sanitizeInput('<div>content</div>')).toBe('divcontent/div');
-      expect(InputValidator.sanitizeInput('text with "quotes" and \'single quotes\'')).toBe('text with quotes and single quotes');
+      validationTestCases.sanitization.htmlRemoval.forEach(({ input, expected }) => {
+        expect(InputValidator.sanitizeInput(input)).toBe(expected);
+      });
+      validationTestCases.sanitization.quoteRemoval.forEach(({ input, expected }) => {
+        expect(InputValidator.sanitizeInput(input)).toBe(expected);
+      });
     });
 
     it('trims whitespace', () => {
-      expect(InputValidator.sanitizeInput('  test  ')).toBe('test');
-      expect(InputValidator.sanitizeInput('\n\ttest\n\t')).toBe('test');
+      validationTestCases.sanitization.whitespaceHandling.slice(0, 2).forEach(({ input, expected }) => {
+        expect(InputValidator.sanitizeInput(input)).toBe(expected);
+      });
     });
 
     it('handles empty and whitespace-only strings', () => {
-      expect(InputValidator.sanitizeInput('')).toBe('');
-      expect(InputValidator.sanitizeInput('   ')).toBe('');
-      expect(InputValidator.sanitizeInput('\n\t')).toBe('');
+      validationTestCases.sanitization.whitespaceHandling.slice(2).forEach(({ input, expected }) => {
+        expect(InputValidator.sanitizeInput(input)).toBe(expected);
+      });
     });
 
     it('preserves safe content', () => {
-      expect(InputValidator.sanitizeInput('normal text')).toBe('normal text');
-      expect(InputValidator.sanitizeInput('text with numbers 123')).toBe('text with numbers 123');
-      expect(InputValidator.sanitizeInput('text-with-dashes_and_underscores')).toBe('text-with-dashes_and_underscores');
+      validationTestCases.sanitization.safeContent.forEach(({ input, expected }) => {
+        expect(InputValidator.sanitizeInput(input)).toBe(expected);
+      });
     });
   });
 
   describe('validateAmount', () => {
     it('validates correct amounts', () => {
-      expect(InputValidator.validateAmount(10)).toBe(true);
-      expect(InputValidator.validateAmount(100.50)).toBe(true);
-      expect(InputValidator.validateAmount(0.01)).toBe(true);
-      expect(InputValidator.validateAmount(999999.99)).toBe(true);
-      expect(InputValidator.validateAmount(1000000)).toBe(true); // max amount
+      testValidCases(InputValidator.validateAmount, validationTestCases.amount.valid);
     });
 
     it('rejects invalid amounts', () => {
-      expect(InputValidator.validateAmount(0)).toBe(false); // zero
-      expect(InputValidator.validateAmount(-10)).toBe(false); // negative
-      expect(InputValidator.validateAmount(1000001)).toBe(false); // too large
-      expect(InputValidator.validateAmount(10.123)).toBe(false); // more than 2 decimal places
-      expect(InputValidator.validateAmount(Infinity)).toBe(false);
-      expect(InputValidator.validateAmount(-Infinity)).toBe(false);
-      expect(InputValidator.validateAmount(NaN)).toBe(false);
+      testInvalidCases(InputValidator.validateAmount, validationTestCases.amount.invalid);
     });
 
     it('handles edge cases for decimal precision', () => {
-      expect(InputValidator.validateAmount(0.99)).toBe(true);
-      expect(InputValidator.validateAmount(1.00)).toBe(true);
-      expect(InputValidator.validateAmount(10.999)).toBe(false); // 3 decimal places
-      expect(InputValidator.validateAmount(0.001)).toBe(false); // 3 decimal places
+      testValidCases(InputValidator.validateAmount, validationTestCases.amount.decimalPrecision.valid);
+      testInvalidCases(InputValidator.validateAmount, validationTestCases.amount.decimalPrecision.invalid);
     });
   });
 
