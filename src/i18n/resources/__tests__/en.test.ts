@@ -8,8 +8,8 @@ describe('English translations (en)', () => {
   });
 
   it('contains app name and tagline', () => {
-    expect(en.translation).toHaveProperty('app.name');
-    expect(en.translation).toHaveProperty('app.tagline');
+    expect(en.translation['app.name']).toBeDefined();
+    expect(en.translation['app.tagline']).toBeDefined();
     expect(en.translation['app.name']).toBe('Give Protocol');
     expect(en.translation['app.tagline']).toBe('Empower Change Through Smart Giving');
   });
@@ -35,7 +35,7 @@ describe('English translations (en)', () => {
   });
 
   it('contains basic UI translations', () => {
-    expect(en.translation).toHaveProperty('app.name');
-    expect(en.translation).toHaveProperty('app.tagline');
+    expect(en.translation['app.name']).toBeDefined();
+    expect(en.translation['app.tagline']).toBeDefined();
   });
 });
