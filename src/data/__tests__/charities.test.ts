@@ -72,9 +72,9 @@ describe('SAMPLE_CHARITIES', () => {
   it('maintains consistent data structure across all charities', () => {
     if (SAMPLE_CHARITIES.length === 0) return;
     
-    const firstCharityKeys = Object.keys(SAMPLE_CHARITIES[0]).sort();
+    const firstCharityKeys = Object.keys(SAMPLE_CHARITIES[0]).sort((a, b) => a.localeCompare(b));
     SAMPLE_CHARITIES.forEach((charity) => {
-      const charityKeys = Object.keys(charity).sort();
+      const charityKeys = Object.keys(charity).sort((a, b) => a.localeCompare(b));
       expect(charityKeys).toEqual(firstCharityKeys);
     });
   });

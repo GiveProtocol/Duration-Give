@@ -56,7 +56,7 @@ describe('VolunteerHoursStatus', () => {
   it('mirrors application status structure', () => {
     const hoursStatusValues = Object.values(VolunteerHoursStatus);
     const applicationStatusValues = Object.values(VolunteerApplicationStatus);
-    expect(hoursStatusValues.sort()).toEqual(applicationStatusValues.sort());
+    expect(hoursStatusValues.sort((a, b) => a.localeCompare(b))).toEqual(applicationStatusValues.sort((a, b) => a.localeCompare(b)));
   });
 });
 
