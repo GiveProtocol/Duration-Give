@@ -1,9 +1,9 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { VolunteerHoursVerification } from '../VolunteerHoursVerification';
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { VolunteerHoursVerification } from "../VolunteerHoursVerification";
 
 // Mock the dependencies
-jest.mock('@/hooks/useVolunteerVerification', () => ({
+jest.mock("@/hooks/useVolunteerVerification", () => ({
   useVolunteerVerification: jest.fn(() => ({
     verifyHours: jest.fn(),
     loading: false,
@@ -11,17 +11,17 @@ jest.mock('@/hooks/useVolunteerVerification', () => ({
   })),
 }));
 
-jest.mock('@/hooks/useTranslation', () => ({
+jest.mock("@/hooks/useTranslation", () => ({
   useTranslation: jest.fn(() => ({
     t: jest.fn((key: string, fallback?: string) => fallback || key),
   })),
 }));
 
-jest.mock('@/utils/date', () => ({
+jest.mock("@/utils/date", () => ({
   formatDate: jest.fn((date: string) => `Formatted: ${date}`),
 }));
 
-jest.mock('@/utils/logger', () => ({
+jest.mock("@/utils/logger", () => ({
   Logger: {
     error: jest.fn(),
     info: jest.fn(),
@@ -30,17 +30,23 @@ jest.mock('@/utils/logger', () => ({
 }));
 
 // Mock UI components
-jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, disabled, variant, className }: { 
-    children: React.ReactNode; 
-    onClick?: () => void; 
+jest.mock("@/components/ui/Button", () => ({
+  Button: ({
+    children,
+    onClick,
+    disabled,
+    variant,
+    className,
+  }: {
+    children: React.ReactNode;
+    onClick?: () => void;
     disabled?: boolean;
     variant?: string;
     className?: string;
   }) => (
-    <button 
-      onClick={onClick} 
-      disabled={disabled} 
+    <button
+      onClick={onClick}
+      disabled={disabled}
       data-variant={variant}
       className={className}
     >
@@ -49,27 +55,29 @@ jest.mock('@/components/ui/Button', () => ({
   ),
 }));
 
-describe('VolunteerHoursVerification', () => {
+describe("VolunteerHoursVerification", () => {
   const mockVerifyHours = jest.fn();
   const mockOnVerified = jest.fn();
   const mockT = jest.fn((key: string, fallback?: string) => fallback || key);
 
   const defaultProps = {
-    hoursId: 'hours-123',
-    volunteerId: 'volunteer-456',
-    volunteerName: 'Jane Smith',
+    hoursId: "hours-123",
+    volunteerId: "volunteer-456",
+    volunteerName: "Jane Smith",
     hours: 8,
-    datePerformed: '2024-01-15',
-    description: 'Helped with beach cleanup and waste sorting',
+    datePerformed: "2024-01-15",
+    description: "Helped with beach cleanup and waste sorting",
     onVerified: mockOnVerified,
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
-    const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
-    const { useTranslation } = require('@/hooks/useTranslation');
-    
+
+    const {
+      useVolunteerVerification,
+    } = require("@/hooks/useVolunteerVerification");
+    const { useTranslation } = require("@/hooks/useTranslation");
+
     useVolunteerVerification.mockReturnValue({
       verifyHours: mockVerifyHours,
       loading: false,
@@ -80,59 +88,70 @@ describe('VolunteerHoursVerification', () => {
       t: mockT,
     });
 
-    mockVerifyHours.mockResolvedValue('0xabcdef1234567890');
+    mockVerifyHours.mockResolvedValue("0xabcdef1234567890");
   });
 
-  describe('initial state', () => {
-    it('renders volunteer information', () => {
+  describe("initial state", () => {
+    it("renders volunteer information", () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
-      expect(screen.getByText('8 volunteer.hours Formatted: 2024-01-15')).toBeInTheDocument();
+
+      expect(screen.getByText("Jane Smith")).toBeInTheDocument();
+      expect(
+        screen.getByText("8 volunteer.hours Formatted: 2024-01-15"),
+      ).toBeInTheDocument();
     });
 
-    it('shows description when provided', () => {
+    it("shows description when provided", () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      expect(screen.getByText('volunteer.description')).toBeInTheDocument();
-      expect(screen.getByText('Helped with beach cleanup and waste sorting')).toBeInTheDocument();
+
+      expect(screen.getByText("volunteer.description")).toBeInTheDocument();
+      expect(
+        screen.getByText("Helped with beach cleanup and waste sorting"),
+      ).toBeInTheDocument();
     });
 
-    it('hides description when not provided', () => {
-      const propsWithoutDescription = { ...defaultProps, description: undefined };
+    it("hides description when not provided", () => {
+      const propsWithoutDescription = {
+        ...defaultProps,
+        description: undefined,
+      };
       render(<VolunteerHoursVerification {...propsWithoutDescription} />);
-      
-      expect(screen.queryByText('volunteer.description')).not.toBeInTheDocument();
+
+      expect(
+        screen.queryByText("volunteer.description"),
+      ).not.toBeInTheDocument();
     });
 
-    it('shows verify and reject buttons', () => {
+    it("shows verify and reject buttons", () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      expect(screen.getByText('volunteer.verify')).toBeInTheDocument();
-      expect(screen.getByText('volunteer.reject')).toBeInTheDocument();
+
+      expect(screen.getByText("volunteer.verify")).toBeInTheDocument();
+      expect(screen.getByText("volunteer.reject")).toBeInTheDocument();
     });
 
-    it('formats date using date utility', () => {
+    it("formats date using date utility", () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      const { formatDate } = require('@/utils/date');
-      expect(formatDate).toHaveBeenCalledWith('2024-01-15');
+
+      const { formatDate } = require("@/utils/date");
+      expect(formatDate).toHaveBeenCalledWith("2024-01-15");
     });
   });
 
-  describe('verification flow', () => {
-    it('calls verifyHours when verify button is clicked', async () => {
+  describe("verification flow", () => {
+    it("calls verifyHours when verify button is clicked", async () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      fireEvent.click(screen.getByText('volunteer.verify'));
-      
+
+      fireEvent.click(screen.getByText("volunteer.verify"));
+
       await waitFor(() => {
-        expect(mockVerifyHours).toHaveBeenCalledWith('hours-123');
+        expect(mockVerifyHours).toHaveBeenCalledWith("hours-123");
       });
     });
 
-    it('shows loading state during verification', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
+    it("shows loading state during verification", () => {
+      const {
+        useVolunteerVerification,
+      } = require("@/hooks/useVolunteerVerification");
       useVolunteerVerification.mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: true,
@@ -140,12 +159,14 @@ describe('VolunteerHoursVerification', () => {
       });
 
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      expect(screen.getByText('volunteer.verifying')).toBeInTheDocument();
+
+      expect(screen.getByText("volunteer.verifying")).toBeInTheDocument();
     });
 
-    it('disables button during loading', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
+    it("disables button during loading", () => {
+      const {
+        useVolunteerVerification,
+      } = require("@/hooks/useVolunteerVerification");
       useVolunteerVerification.mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: true,
@@ -153,180 +174,225 @@ describe('VolunteerHoursVerification', () => {
       });
 
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      const verifyButton = screen.getByText('volunteer.verifying');
+
+      const verifyButton = screen.getByText("volunteer.verifying");
       expect(verifyButton).toBeDisabled();
     });
 
-    it('calls onVerified callback when verification succeeds', async () => {
+    it("calls onVerified callback when verification succeeds", async () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      fireEvent.click(screen.getByText('volunteer.verify'));
-      
+
+      fireEvent.click(screen.getByText("volunteer.verify"));
+
       await waitFor(() => {
-        expect(mockOnVerified).toHaveBeenCalledWith('0xabcdef1234567890');
+        expect(mockOnVerified).toHaveBeenCalledWith("0xabcdef1234567890");
       });
     });
 
-    it('shows success state after verification', async () => {
+    it("shows success state after verification", async () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      fireEvent.click(screen.getByText('volunteer.verify'));
-      
+
+      fireEvent.click(screen.getByText("volunteer.verify"));
+
       await waitFor(() => {
-        expect(screen.getByText('volunteer.verificationComplete')).toBeInTheDocument();
-        expect(screen.getByText('volunteer.hoursVerified')).toBeInTheDocument();
+        expect(
+          screen.getByText("volunteer.verificationComplete"),
+        ).toBeInTheDocument();
+        expect(screen.getByText("volunteer.hoursVerified")).toBeInTheDocument();
       });
     });
 
-    it('displays verification hash in success state', async () => {
+    it("displays verification hash in success state", async () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      fireEvent.click(screen.getByText('volunteer.verify'));
-      
+
+      fireEvent.click(screen.getByText("volunteer.verify"));
+
       await waitFor(() => {
-        expect(screen.getByText('volunteer.verificationHash')).toBeInTheDocument();
-        expect(screen.getByText('0xabcdef1234567890')).toBeInTheDocument();
+        expect(
+          screen.getByText("volunteer.verificationHash"),
+        ).toBeInTheDocument();
+        expect(screen.getByText("0xabcdef1234567890")).toBeInTheDocument();
       });
     });
 
-    it('includes blockchain explorer link for hash', async () => {
+    it("includes blockchain explorer link for hash", async () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      fireEvent.click(screen.getByText('volunteer.verify'));
-      
+
+      fireEvent.click(screen.getByText("volunteer.verify"));
+
       await waitFor(() => {
-        const link = screen.getByRole('link');
-        expect(link).toHaveAttribute('href', 'https://moonbase.moonscan.io/tx/0xabcdef1234567890');
-        expect(link).toHaveAttribute('target', '_blank');
-        expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+        const link = screen.getByRole("link");
+        expect(link).toHaveAttribute(
+          "href",
+          "https://moonbase.moonscan.io/tx/0xabcdef1234567890",
+        );
+        expect(link).toHaveAttribute("target", "_blank");
+        expect(link).toHaveAttribute("rel", "noopener noreferrer");
       });
     });
   });
 
-  describe('error handling', () => {
-    it('displays error message when provided', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
+  describe("error handling", () => {
+    it("displays error message when provided", () => {
+      const {
+        useVolunteerVerification,
+      } = require("@/hooks/useVolunteerVerification");
       useVolunteerVerification.mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: false,
-        error: 'Network connection failed',
+        error: "Network connection failed",
       });
 
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      expect(screen.getByText('Network connection failed')).toBeInTheDocument();
+
+      expect(screen.getByText("Network connection failed")).toBeInTheDocument();
     });
 
-    it('handles verification failure gracefully', async () => {
-      mockVerifyHours.mockRejectedValue(new Error('Transaction failed'));
-      
+    it("handles verification failure gracefully", async () => {
+      mockVerifyHours.mockRejectedValue(new Error("Transaction failed"));
+
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      fireEvent.click(screen.getByText('volunteer.verify'));
-      
+
+      fireEvent.click(screen.getByText("volunteer.verify"));
+
       await waitFor(() => {
         expect(mockVerifyHours).toHaveBeenCalled();
       });
 
       // Should not crash and should log error
-      const { Logger } = require('@/utils/logger');
-      expect(Logger.error).toHaveBeenCalledWith('Verification failed:', expect.any(Error));
+      const { Logger } = require("@/utils/logger");
+      expect(Logger.error).toHaveBeenCalledWith(
+        "Verification failed:",
+        expect.any(Error),
+      );
     });
 
-    it('handles null hash response', async () => {
+    it("handles null hash response", async () => {
       mockVerifyHours.mockResolvedValue(null);
-      
+
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      fireEvent.click(screen.getByText('volunteer.verify'));
-      
+
+      fireEvent.click(screen.getByText("volunteer.verify"));
+
       await waitFor(() => {
         expect(mockVerifyHours).toHaveBeenCalled();
       });
 
       // Should not show success state
-      expect(screen.queryByText('volunteer.verificationComplete')).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("volunteer.verificationComplete"),
+      ).not.toBeInTheDocument();
     });
   });
 
-  describe('optional props', () => {
-    it('works without onVerified callback', async () => {
+  describe("optional props", () => {
+    it("works without onVerified callback", async () => {
       const propsWithoutCallback = {
-        hoursId: 'hours-123',
-        volunteerId: 'volunteer-456',
-        volunteerName: 'Jane Smith',
+        hoursId: "hours-123",
+        volunteerId: "volunteer-456",
+        volunteerName: "Jane Smith",
         hours: 8,
-        datePerformed: '2024-01-15',
+        datePerformed: "2024-01-15",
       };
 
       render(<VolunteerHoursVerification {...propsWithoutCallback} />);
-      
-      fireEvent.click(screen.getByText('volunteer.verify'));
-      
+
+      fireEvent.click(screen.getByText("volunteer.verify"));
+
       await waitFor(() => {
         expect(mockVerifyHours).toHaveBeenCalled();
       });
 
       // Should not throw error
-      expect(screen.getByText('volunteer.verificationComplete')).toBeInTheDocument();
+      expect(
+        screen.getByText("volunteer.verificationComplete"),
+      ).toBeInTheDocument();
     });
 
-    it('works without description', () => {
-      const propsWithoutDescription = { ...defaultProps, description: undefined };
+    it("works without description", () => {
+      const propsWithoutDescription = {
+        ...defaultProps,
+        description: undefined,
+      };
       render(<VolunteerHoursVerification {...propsWithoutDescription} />);
-      
-      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
-      expect(screen.queryByText('volunteer.description')).not.toBeInTheDocument();
+
+      expect(screen.getByText("Jane Smith")).toBeInTheDocument();
+      expect(
+        screen.queryByText("volunteer.description"),
+      ).not.toBeInTheDocument();
     });
   });
 
-  describe('UI styling and classes', () => {
-    it('applies correct styling to initial state', () => {
+  describe("UI styling and classes", () => {
+    it("applies correct styling to initial state", () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      const container = screen.getByText('Jane Smith').closest('div');
-      expect(container?.parentElement?.parentElement).toHaveClass('bg-white', 'border', 'border-gray-200', 'rounded-lg', 'p-4');
+
+      const container = screen.getByText("Jane Smith").closest("div");
+      expect(container?.parentElement?.parentElement).toHaveClass(
+        "bg-white",
+        "border",
+        "border-gray-200",
+        "rounded-lg",
+        "p-4",
+      );
     });
 
-    it('applies success styling after verification', async () => {
+    it("applies success styling after verification", async () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      fireEvent.click(screen.getByText('volunteer.verify'));
-      
+
+      fireEvent.click(screen.getByText("volunteer.verify"));
+
       await waitFor(() => {
-        const successContainer = screen.getByText('volunteer.verificationComplete').closest('div');
-        expect(successContainer).toHaveClass('bg-green-50', 'border', 'border-green-200', 'rounded-lg', 'p-4');
+        const successContainer = screen
+          .getByText("volunteer.verificationComplete")
+          .closest("div");
+        expect(successContainer).toHaveClass(
+          "bg-green-50",
+          "border",
+          "border-green-200",
+          "rounded-lg",
+          "p-4",
+        );
       });
     });
 
-    it('applies error styling when error present', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
+    it("applies error styling when error present", () => {
+      const {
+        useVolunteerVerification,
+      } = require("@/hooks/useVolunteerVerification");
       useVolunteerVerification.mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: false,
-        error: 'Error message',
+        error: "Error message",
       });
 
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      const errorElement = screen.getByText('Error message');
-      expect(errorElement.closest('div')).toHaveClass('p-3', 'bg-red-50', 'text-red-700', 'text-sm', 'rounded-md');
+
+      const errorElement = screen.getByText("Error message");
+      expect(errorElement.closest("div")).toHaveClass(
+        "p-3",
+        "bg-red-50",
+        "text-red-700",
+        "text-sm",
+        "rounded-md",
+      );
     });
   });
 
-  describe('translation integration', () => {
-    it('uses translation hook for all text', () => {
+  describe("translation integration", () => {
+    it("uses translation hook for all text", () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      expect(mockT).toHaveBeenCalledWith('volunteer.hours');
-      expect(mockT).toHaveBeenCalledWith('volunteer.verify');
-      expect(mockT).toHaveBeenCalledWith('volunteer.reject');
-      expect(mockT).toHaveBeenCalledWith('volunteer.description');
+
+      expect(mockT).toHaveBeenCalledWith("volunteer.hours");
+      expect(mockT).toHaveBeenCalledWith("volunteer.verify");
+      expect(mockT).toHaveBeenCalledWith("volunteer.reject");
+      expect(mockT).toHaveBeenCalledWith("volunteer.description");
     });
 
-    it('uses translation for dynamic loading text', () => {
-      const { useVolunteerVerification } = require('@/hooks/useVolunteerVerification');
+    it("uses translation for dynamic loading text", () => {
+      const {
+        useVolunteerVerification,
+      } = require("@/hooks/useVolunteerVerification");
       useVolunteerVerification.mockReturnValue({
         verifyHours: mockVerifyHours,
         loading: true,
@@ -334,57 +400,63 @@ describe('VolunteerHoursVerification', () => {
       });
 
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      expect(mockT).toHaveBeenCalledWith('volunteer.verifying', 'Verifying...');
+
+      expect(mockT).toHaveBeenCalledWith("volunteer.verifying", "Verifying...");
     });
   });
 
-  describe('button interactions', () => {
-    it('reject button is clickable but has no handler', () => {
+  describe("button interactions", () => {
+    it("reject button is clickable but has no handler", () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      const rejectButton = screen.getByText('volunteer.reject');
+
+      const rejectButton = screen.getByText("volunteer.reject");
       expect(rejectButton).toBeInTheDocument();
-      
+
       // Should not throw error when clicked
       fireEvent.click(rejectButton);
     });
 
-    it('verify button has proper styling classes', () => {
+    it("verify button has proper styling classes", () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      const verifyButton = screen.getByText('volunteer.verify');
-      expect(verifyButton).toHaveClass('flex', 'items-center');
+
+      const verifyButton = screen.getByText("volunteer.verify");
+      expect(verifyButton).toHaveClass("flex", "items-center");
     });
 
-    it('reject button has secondary variant', () => {
+    it("reject button has secondary variant", () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
-      
-      const rejectButton = screen.getByText('volunteer.reject');
-      expect(rejectButton).toHaveAttribute('data-variant', 'secondary');
+
+      const rejectButton = screen.getByText("volunteer.reject");
+      expect(rejectButton).toHaveAttribute("data-variant", "secondary");
     });
   });
 
-  describe('hours and date display', () => {
-    it('displays different hour amounts correctly', () => {
+  describe("hours and date display", () => {
+    it("displays different hour amounts correctly", () => {
       const singleHourProps = { ...defaultProps, hours: 1 };
       render(<VolunteerHoursVerification {...singleHourProps} />);
-      
-      expect(screen.getByText('1 volunteer.hours Formatted: 2024-01-15')).toBeInTheDocument();
+
+      expect(
+        screen.getByText("1 volunteer.hours Formatted: 2024-01-15"),
+      ).toBeInTheDocument();
     });
 
-    it('displays zero hours correctly', () => {
+    it("displays zero hours correctly", () => {
       const zeroHourProps = { ...defaultProps, hours: 0 };
       render(<VolunteerHoursVerification {...zeroHourProps} />);
-      
-      expect(screen.getByText('0 volunteer.hours Formatted: 2024-01-15')).toBeInTheDocument();
+
+      expect(
+        screen.getByText("0 volunteer.hours Formatted: 2024-01-15"),
+      ).toBeInTheDocument();
     });
 
-    it('displays decimal hours correctly', () => {
+    it("displays decimal hours correctly", () => {
       const decimalHourProps = { ...defaultProps, hours: 4.5 };
       render(<VolunteerHoursVerification {...decimalHourProps} />);
-      
-      expect(screen.getByText('4.5 volunteer.hours Formatted: 2024-01-15')).toBeInTheDocument();
+
+      expect(
+        screen.getByText("4.5 volunteer.hours Formatted: 2024-01-15"),
+      ).toBeInTheDocument();
     });
   });
 });

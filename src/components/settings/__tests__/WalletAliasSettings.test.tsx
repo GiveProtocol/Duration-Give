@@ -1,9 +1,9 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { WalletAliasSettings } from '../WalletAliasSettings';
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { WalletAliasSettings } from "../WalletAliasSettings";
 
 // Mock the dependencies
-jest.mock('@/hooks/useWalletAlias', () => ({
+jest.mock("@/hooks/useWalletAlias", () => ({
   useWalletAlias: jest.fn(() => ({
     alias: null,
     aliases: {},
@@ -14,67 +14,91 @@ jest.mock('@/hooks/useWalletAlias', () => ({
   })),
 }));
 
-jest.mock('@/contexts/Web3Context', () => ({
+jest.mock("@/contexts/Web3Context", () => ({
   useWeb3: jest.fn(() => ({
-    address: '0x1234567890123456789012345678901234567890',
+    address: "0x1234567890123456789012345678901234567890",
     isConnected: true,
   })),
 }));
 
-jest.mock('@/utils/web3', () => ({
-  shortenAddress: jest.fn((address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`),
+jest.mock("@/utils/web3", () => ({
+  shortenAddress: jest.fn(
+    (address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`,
+  ),
 }));
 
 // Mock UI components
-jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, type, variant, disabled }: { 
-    children: React.ReactNode; 
-    onClick?: () => void; 
+jest.mock("@/components/ui/Button", () => ({
+  Button: ({
+    children,
+    onClick,
+    type,
+    variant,
+    disabled,
+  }: {
+    children: React.ReactNode;
+    onClick?: () => void;
     type?: string;
-    variant?: string; 
+    variant?: string;
     disabled?: boolean;
   }) => (
-    <button onClick={onClick} type={type} disabled={disabled} data-variant={variant}>
+    <button
+      onClick={onClick}
+      type={type}
+      disabled={disabled}
+      data-variant={variant}
+    >
       {children}
     </button>
   ),
 }));
 
-jest.mock('@/components/ui/Input', () => ({
-  Input: ({ value, onChange, placeholder, type }: { 
-    value: string; 
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; 
+jest.mock("@/components/ui/Input", () => ({
+  Input: ({
+    value,
+    onChange,
+    placeholder,
+    type,
+  }: {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
     type?: string;
   }) => (
-    <input 
-      value={value} 
-      onChange={onChange} 
-      placeholder={placeholder} 
+    <input
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
       type={type}
       data-testid="alias-input"
     />
   ),
 }));
 
-jest.mock('@/components/ui/Card', () => ({
-  Card: ({ children, className }: { children: React.ReactNode; className?: string }) => (
+jest.mock("@/components/ui/Card", () => ({
+  Card: ({
+    children,
+    className,
+  }: {
+    children: React.ReactNode;
+    className?: string;
+  }) => (
     <div className={className} data-testid="card">
       {children}
     </div>
   ),
 }));
 
-describe('WalletAliasSettings', () => {
+describe("WalletAliasSettings", () => {
   const mockSetWalletAlias = jest.fn();
   const mockDeleteWalletAlias = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
-    const { useWalletAlias } = require('@/hooks/useWalletAlias');
-    const { useWeb3 } = require('@/contexts/Web3Context');
-    
+
+    const { useWalletAlias } = require("@/hooks/useWalletAlias");
+    const { useWeb3 } = require("@/contexts/Web3Context");
+
     useWalletAlias.mockReturnValue({
       alias: null,
       aliases: {},
@@ -85,7 +109,7 @@ describe('WalletAliasSettings', () => {
     });
 
     useWeb3.mockReturnValue({
-      address: '0x1234567890123456789012345678901234567890',
+      address: "0x1234567890123456789012345678901234567890",
       isConnected: true,
     });
 
@@ -93,64 +117,66 @@ describe('WalletAliasSettings', () => {
     mockDeleteWalletAlias.mockResolvedValue(true);
   });
 
-  describe('component rendering', () => {
-    it('renders the wallet alias settings component', () => {
+  describe("component rendering", () => {
+    it("renders the wallet alias settings component", () => {
       render(<WalletAliasSettings />);
-      
-      expect(screen.getByText('Wallet Alias')).toBeInTheDocument();
+
+      expect(screen.getByText("Wallet Alias")).toBeInTheDocument();
     });
 
-    it('shows current wallet address when connected', () => {
+    it("shows current wallet address when connected", () => {
       render(<WalletAliasSettings />);
-      
-      expect(screen.getByText('0x1234...7890')).toBeInTheDocument();
+
+      expect(screen.getByText("0x1234...7890")).toBeInTheDocument();
     });
 
-    it('renders the card container', () => {
+    it("renders the card container", () => {
       render(<WalletAliasSettings />);
-      
-      expect(screen.getByTestId('card')).toBeInTheDocument();
+
+      expect(screen.getByTestId("card")).toBeInTheDocument();
     });
   });
 
-  describe('when no alias is set', () => {
-    it('shows set alias form by default', () => {
+  describe("when no alias is set", () => {
+    it("shows set alias form by default", () => {
       render(<WalletAliasSettings />);
-      
-      expect(screen.getByTestId('alias-input')).toBeInTheDocument();
-      expect(screen.getByText('Set Alias')).toBeInTheDocument();
+
+      expect(screen.getByTestId("alias-input")).toBeInTheDocument();
+      expect(screen.getByText("Set Alias")).toBeInTheDocument();
     });
 
-    it('allows user to enter alias', () => {
+    it("allows user to enter alias", () => {
       render(<WalletAliasSettings />);
-      
-      const input = screen.getByTestId('alias-input');
-      fireEvent.change(input, { target: { value: 'MyWallet' } });
-      
-      expect(input).toHaveValue('MyWallet');
+
+      const input = screen.getByTestId("alias-input");
+      fireEvent.change(input, { target: { value: "MyWallet" } });
+
+      expect(input).toHaveValue("MyWallet");
     });
 
-    it('submits alias when form is submitted', async () => {
+    it("submits alias when form is submitted", async () => {
       render(<WalletAliasSettings />);
-      
-      const input = screen.getByTestId('alias-input');
-      const submitButton = screen.getByText('Set Alias');
-      
-      fireEvent.change(input, { target: { value: 'MyWallet' } });
+
+      const input = screen.getByTestId("alias-input");
+      const submitButton = screen.getByText("Set Alias");
+
+      fireEvent.change(input, { target: { value: "MyWallet" } });
       fireEvent.click(submitButton);
-      
+
       await waitFor(() => {
-        expect(mockSetWalletAlias).toHaveBeenCalledWith('MyWallet');
+        expect(mockSetWalletAlias).toHaveBeenCalledWith("MyWallet");
       });
     });
   });
 
-  describe('when alias exists', () => {
+  describe("when alias exists", () => {
     beforeEach(() => {
-      const { useWalletAlias } = require('@/hooks/useWalletAlias');
+      const { useWalletAlias } = require("@/hooks/useWalletAlias");
       useWalletAlias.mockReturnValue({
-        alias: 'ExistingAlias',
-        aliases: { '0x1234567890123456789012345678901234567890': 'ExistingAlias' },
+        alias: "ExistingAlias",
+        aliases: {
+          "0x1234567890123456789012345678901234567890": "ExistingAlias",
+        },
         loading: false,
         error: null,
         setWalletAlias: mockSetWalletAlias,
@@ -158,111 +184,119 @@ describe('WalletAliasSettings', () => {
       });
     });
 
-    it('displays the existing alias', () => {
+    it("displays the existing alias", () => {
       render(<WalletAliasSettings />);
-      
-      expect(screen.getByText('ExistingAlias')).toBeInTheDocument();
+
+      expect(screen.getByText("ExistingAlias")).toBeInTheDocument();
     });
 
-    it('shows edit and delete buttons', () => {
+    it("shows edit and delete buttons", () => {
       render(<WalletAliasSettings />);
-      
-      expect(screen.getByText('Edit')).toBeInTheDocument();
-      expect(screen.getByText('Delete')).toBeInTheDocument();
+
+      expect(screen.getByText("Edit")).toBeInTheDocument();
+      expect(screen.getByText("Delete")).toBeInTheDocument();
     });
 
-    it('enters edit mode when edit button is clicked', () => {
+    it("enters edit mode when edit button is clicked", () => {
       render(<WalletAliasSettings />);
-      
-      fireEvent.click(screen.getByText('Edit'));
-      
-      expect(screen.getByTestId('alias-input')).toBeInTheDocument();
-      expect(screen.getByTestId('alias-input')).toHaveValue('ExistingAlias');
+
+      fireEvent.click(screen.getByText("Edit"));
+
+      expect(screen.getByTestId("alias-input")).toBeInTheDocument();
+      expect(screen.getByTestId("alias-input")).toHaveValue("ExistingAlias");
     });
 
-    it('calls delete function when delete is clicked', async () => {
+    it("calls delete function when delete is clicked", async () => {
       render(<WalletAliasSettings />);
-      
-      fireEvent.click(screen.getByText('Delete'));
-      
+
+      fireEvent.click(screen.getByText("Delete"));
+
       await waitFor(() => {
         expect(mockDeleteWalletAlias).toHaveBeenCalled();
       });
     });
   });
 
-  describe('validation', () => {
-    it('shows error for empty alias', async () => {
+  describe("validation", () => {
+    it("shows error for empty alias", async () => {
       render(<WalletAliasSettings />);
-      
-      const submitButton = screen.getByText('Set Alias');
+
+      const submitButton = screen.getByText("Set Alias");
       fireEvent.click(submitButton);
-      
+
       await waitFor(() => {
-        expect(screen.getByText('Alias cannot be empty')).toBeInTheDocument();
+        expect(screen.getByText("Alias cannot be empty")).toBeInTheDocument();
       });
     });
 
-    it('shows error for alias too short', async () => {
+    it("shows error for alias too short", async () => {
       render(<WalletAliasSettings />);
-      
-      const input = screen.getByTestId('alias-input');
-      const submitButton = screen.getByText('Set Alias');
-      
-      fireEvent.change(input, { target: { value: 'ab' } });
+
+      const input = screen.getByTestId("alias-input");
+      const submitButton = screen.getByText("Set Alias");
+
+      fireEvent.change(input, { target: { value: "ab" } });
       fireEvent.click(submitButton);
-      
+
       await waitFor(() => {
-        expect(screen.getByText('Alias must be between 3 and 20 characters')).toBeInTheDocument();
+        expect(
+          screen.getByText("Alias must be between 3 and 20 characters"),
+        ).toBeInTheDocument();
       });
     });
 
-    it('shows error for alias too long', async () => {
+    it("shows error for alias too long", async () => {
       render(<WalletAliasSettings />);
-      
-      const input = screen.getByTestId('alias-input');
-      const submitButton = screen.getByText('Set Alias');
-      
-      fireEvent.change(input, { target: { value: 'a'.repeat(21) } });
+
+      const input = screen.getByTestId("alias-input");
+      const submitButton = screen.getByText("Set Alias");
+
+      fireEvent.change(input, { target: { value: "a".repeat(21) } });
       fireEvent.click(submitButton);
-      
+
       await waitFor(() => {
-        expect(screen.getByText('Alias must be between 3 and 20 characters')).toBeInTheDocument();
+        expect(
+          screen.getByText("Alias must be between 3 and 20 characters"),
+        ).toBeInTheDocument();
       });
     });
 
-    it('shows error for invalid characters', async () => {
+    it("shows error for invalid characters", async () => {
       render(<WalletAliasSettings />);
-      
-      const input = screen.getByTestId('alias-input');
-      const submitButton = screen.getByText('Set Alias');
-      
-      fireEvent.change(input, { target: { value: 'invalid@alias!' } });
+
+      const input = screen.getByTestId("alias-input");
+      const submitButton = screen.getByText("Set Alias");
+
+      fireEvent.change(input, { target: { value: "invalid@alias!" } });
       fireEvent.click(submitButton);
-      
+
       await waitFor(() => {
-        expect(screen.getByText('Alias can only contain letters, numbers, underscores, and hyphens')).toBeInTheDocument();
+        expect(
+          screen.getByText(
+            "Alias can only contain letters, numbers, underscores, and hyphens",
+          ),
+        ).toBeInTheDocument();
       });
     });
 
-    it('accepts valid alias', async () => {
+    it("accepts valid alias", async () => {
       render(<WalletAliasSettings />);
-      
-      const input = screen.getByTestId('alias-input');
-      const submitButton = screen.getByText('Set Alias');
-      
-      fireEvent.change(input, { target: { value: 'valid_alias-123' } });
+
+      const input = screen.getByTestId("alias-input");
+      const submitButton = screen.getByText("Set Alias");
+
+      fireEvent.change(input, { target: { value: "valid_alias-123" } });
       fireEvent.click(submitButton);
-      
+
       await waitFor(() => {
-        expect(mockSetWalletAlias).toHaveBeenCalledWith('valid_alias-123');
+        expect(mockSetWalletAlias).toHaveBeenCalledWith("valid_alias-123");
       });
     });
   });
 
-  describe('loading states', () => {
-    it('shows loading state when setting alias', () => {
-      const { useWalletAlias } = require('@/hooks/useWalletAlias');
+  describe("loading states", () => {
+    it("shows loading state when setting alias", () => {
+      const { useWalletAlias } = require("@/hooks/useWalletAlias");
       useWalletAlias.mockReturnValue({
         alias: null,
         aliases: {},
@@ -273,34 +307,36 @@ describe('WalletAliasSettings', () => {
       });
 
       render(<WalletAliasSettings />);
-      
+
       // Component should handle loading state
-      expect(screen.getByText('Wallet Alias')).toBeInTheDocument();
+      expect(screen.getByText("Wallet Alias")).toBeInTheDocument();
     });
   });
 
-  describe('error handling', () => {
-    it('handles setWalletAlias failure gracefully', async () => {
+  describe("error handling", () => {
+    it("handles setWalletAlias failure gracefully", async () => {
       mockSetWalletAlias.mockResolvedValue(false);
-      
+
       render(<WalletAliasSettings />);
-      
-      const input = screen.getByTestId('alias-input');
-      const submitButton = screen.getByText('Set Alias');
-      
-      fireEvent.change(input, { target: { value: 'TestAlias' } });
+
+      const input = screen.getByTestId("alias-input");
+      const submitButton = screen.getByText("Set Alias");
+
+      fireEvent.change(input, { target: { value: "TestAlias" } });
       fireEvent.click(submitButton);
-      
+
       await waitFor(() => {
-        expect(mockSetWalletAlias).toHaveBeenCalledWith('TestAlias');
+        expect(mockSetWalletAlias).toHaveBeenCalledWith("TestAlias");
       });
     });
 
-    it('handles deleteWalletAlias failure gracefully', async () => {
-      const { useWalletAlias } = require('@/hooks/useWalletAlias');
+    it("handles deleteWalletAlias failure gracefully", async () => {
+      const { useWalletAlias } = require("@/hooks/useWalletAlias");
       useWalletAlias.mockReturnValue({
-        alias: 'ExistingAlias',
-        aliases: { '0x1234567890123456789012345678901234567890': 'ExistingAlias' },
+        alias: "ExistingAlias",
+        aliases: {
+          "0x1234567890123456789012345678901234567890": "ExistingAlias",
+        },
         loading: false,
         error: null,
         setWalletAlias: mockSetWalletAlias,
@@ -308,38 +344,40 @@ describe('WalletAliasSettings', () => {
       });
 
       mockDeleteWalletAlias.mockResolvedValue(false);
-      
+
       render(<WalletAliasSettings />);
-      
-      fireEvent.click(screen.getByText('Delete'));
-      
+
+      fireEvent.click(screen.getByText("Delete"));
+
       await waitFor(() => {
         expect(mockDeleteWalletAlias).toHaveBeenCalled();
       });
     });
   });
 
-  describe('wallet not connected', () => {
-    it('handles disconnected wallet state', () => {
-      const { useWeb3 } = require('@/contexts/Web3Context');
+  describe("wallet not connected", () => {
+    it("handles disconnected wallet state", () => {
+      const { useWeb3 } = require("@/contexts/Web3Context");
       useWeb3.mockReturnValue({
         address: null,
         isConnected: false,
       });
 
       render(<WalletAliasSettings />);
-      
+
       // Component should handle disconnected state
-      expect(screen.getByText('Wallet Alias')).toBeInTheDocument();
+      expect(screen.getByText("Wallet Alias")).toBeInTheDocument();
     });
   });
 
-  describe('edit mode', () => {
+  describe("edit mode", () => {
     beforeEach(() => {
-      const { useWalletAlias } = require('@/hooks/useWalletAlias');
+      const { useWalletAlias } = require("@/hooks/useWalletAlias");
       useWalletAlias.mockReturnValue({
-        alias: 'ExistingAlias',
-        aliases: { '0x1234567890123456789012345678901234567890': 'ExistingAlias' },
+        alias: "ExistingAlias",
+        aliases: {
+          "0x1234567890123456789012345678901234567890": "ExistingAlias",
+        },
         loading: false,
         error: null,
         setWalletAlias: mockSetWalletAlias,
@@ -347,23 +385,23 @@ describe('WalletAliasSettings', () => {
       });
     });
 
-    it('shows save and cancel buttons in edit mode', () => {
+    it("shows save and cancel buttons in edit mode", () => {
       render(<WalletAliasSettings />);
-      
-      fireEvent.click(screen.getByText('Edit'));
-      
-      expect(screen.getByText('Save')).toBeInTheDocument();
-      expect(screen.getByText('Cancel')).toBeInTheDocument();
+
+      fireEvent.click(screen.getByText("Edit"));
+
+      expect(screen.getByText("Save")).toBeInTheDocument();
+      expect(screen.getByText("Cancel")).toBeInTheDocument();
     });
 
-    it('cancels edit mode when cancel is clicked', () => {
+    it("cancels edit mode when cancel is clicked", () => {
       render(<WalletAliasSettings />);
-      
-      fireEvent.click(screen.getByText('Edit'));
-      fireEvent.click(screen.getByText('Cancel'));
-      
-      expect(screen.getByText('ExistingAlias')).toBeInTheDocument();
-      expect(screen.queryByTestId('alias-input')).not.toBeInTheDocument();
+
+      fireEvent.click(screen.getByText("Edit"));
+      fireEvent.click(screen.getByText("Cancel"));
+
+      expect(screen.getByText("ExistingAlias")).toBeInTheDocument();
+      expect(screen.queryByTestId("alias-input")).not.toBeInTheDocument();
     });
   });
 });
