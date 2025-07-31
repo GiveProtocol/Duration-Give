@@ -113,6 +113,34 @@ describe('CacheManager', () => {
       // Data should be completely removed
       expect(await expiredCache.get('expired-test')).toBeNull();
     });
+
+    it('should trigger cleanup and remove expired entries', async () => {
+      CacheManager.resetInstanceForTesting();
+      const cleanupCache = CacheManager.getInstance({ 
+        ttl: 10, 
+        staleWhileRevalidate: 15,
+        maxSize: 10
+      });
+      
+      // Add multiple entries
+      cleanupCache.set('cleanup1', 'data1');
+      cleanupCache.set('cleanup2', 'data2');
+      cleanupCache.set('cleanup3', 'data3');
+      
+      // Wait for entries to expire completely (past stale window)
+      await new Promise(resolve => setTimeout(resolve, 30));
+      
+      // Trigger cleanup by setting a new entry (which calls cleanup)
+      cleanupCache.set('new-entry', 'new-data');
+      
+      // Old expired entries should be cleaned up
+      expect(await cleanupCache.get('cleanup1')).toBeNull();
+      expect(await cleanupCache.get('cleanup2')).toBeNull();
+      expect(await cleanupCache.get('cleanup3')).toBeNull();
+      
+      // New entry should still be available
+      expect(await cleanupCache.get('new-entry')).toBe('new-data');
+    });
   });
 
   describe('cache size limits', () => {
