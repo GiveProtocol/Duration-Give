@@ -202,9 +202,16 @@ export const GiveDashboard: React.FC = () => {
         return 0;
     }
 
-    if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
-    if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
-    return 0;
+    // Use localeCompare for strings, numeric comparison for numbers
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      const compareResult = aValue.localeCompare(bValue);
+      return sortConfig.direction === 'asc' ? compareResult : -compareResult;
+    } else {
+      // Numeric comparison for timestamps and other numbers
+      if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+      return 0;
+    }
   });
 
   const years = ['all', ...new Set(contributions.map(c => 
