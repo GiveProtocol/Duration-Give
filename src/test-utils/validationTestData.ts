@@ -112,6 +112,11 @@ export const validationTestCases = {
 };
 
 // Helper functions to reduce test duplication
+/**
+ * Helper function to test valid validation cases
+ * @param validator - The validation function to test
+ * @param cases - Array of test cases (strings, numbers, or objects with value property)
+ */
 export const testValidCases = (
   validator: ValidatorFunction, 
   cases: (string | number | ValidationTestCase)[]
@@ -122,6 +127,11 @@ export const testValidCases = (
   });
 };
 
+/**
+ * Helper function to test invalid validation cases
+ * @param validator - The validation function to test
+ * @param cases - Array of test cases (strings, numbers, or objects with value property)
+ */
 export const testInvalidCases = (
   validator: ValidatorFunction, 
   cases: (string | number | ValidationTestCase)[]

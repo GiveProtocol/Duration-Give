@@ -12,7 +12,10 @@ import {
   MockCard
 } from './mockSetup';
 
-// Mock configurations for common modules
+/**
+ * Sets up common Jest mocks for all test modules
+ * Mocks Web3Context, AuthContext, hooks, utilities, and UI components
+ */
 export const setupCommonMocks = () => {
   // Web3 Context mock
   jest.mock('@/contexts/Web3Context', () => ({

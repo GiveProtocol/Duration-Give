@@ -1,5 +1,11 @@
 // Shared mock configurations for tests
 import React from 'react';
+
+/**
+ * Creates a mock Web3 context object for testing
+ * @param overrides - Properties to override in the default mock
+ * @returns Mock Web3 context object
+ */
 export const createMockWeb3 = (overrides = {}) => ({
   address: null,
   chainId: null,
@@ -10,6 +16,11 @@ export const createMockWeb3 = (overrides = {}) => ({
   ...overrides,
 });
 
+/**
+ * Creates a mock wallet alias hook object for testing
+ * @param overrides - Properties to override in the default mock
+ * @returns Mock wallet alias hook object
+ */
 export const createMockWalletAlias = (overrides = {}) => ({
   alias: null,
   aliases: {},
@@ -21,6 +32,11 @@ export const createMockWalletAlias = (overrides = {}) => ({
   ...overrides,
 });
 
+/**
+ * Creates a mock volunteer verification hook object for testing
+ * @param overrides - Properties to override in the default mock
+ * @returns Mock volunteer verification hook object
+ */
 export const createMockVolunteerVerification = (overrides = {}) => ({
   verifyHours: jest.fn(),
   acceptApplication: jest.fn(),
@@ -29,6 +45,11 @@ export const createMockVolunteerVerification = (overrides = {}) => ({
   ...overrides,
 });
 
+/**
+ * Creates a mock translation hook object for testing
+ * @param overrides - Properties to override in the default mock
+ * @returns Mock translation hook object
+ */
 export const createMockTranslation = (overrides = {}) => ({
   t: jest.fn((key: string, fallback?: string) => fallback || key),
   ...overrides,
@@ -48,6 +69,11 @@ export const mockShortenAddress = jest.fn((address: string) =>
 );
 
 // Mock React components
+/**
+ * Mock Button component for testing
+ * @param props - Button component props
+ * @returns Mock button element
+ */
 export const MockButton = ({ children, onClick, disabled, variant, className, type }: { 
   children: React.ReactNode; 
   onClick?: () => void; 
@@ -63,6 +89,11 @@ export const MockButton = ({ children, onClick, disabled, variant, className, ty
   type,
 }, children);
 
+/**
+ * Mock Input component for testing
+ * @param props - Input component props
+ * @returns Mock input element
+ */
 export const MockInput = ({ value, onChange, placeholder, type }: { 
   value: string; 
   onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void; 
@@ -76,6 +107,11 @@ export const MockInput = ({ value, onChange, placeholder, type }: {
   'data-testid': 'alias-input',
 });
 
+/**
+ * Mock Card component for testing
+ * @param props - Card component props
+ * @returns Mock card element
+ */
 export const MockCard = ({ children, className }: { 
   children: React.ReactNode; 
   className?: string;
