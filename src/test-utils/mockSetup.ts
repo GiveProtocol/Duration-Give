@@ -1,5 +1,5 @@
 // Shared mock configurations for tests
-import React from 'react';
+import React from "react";
 
 /**
  * Creates a mock Web3 context object for testing
@@ -64,8 +64,8 @@ export const mockLogger = {
 
 export const mockFormatDate = jest.fn((date: string) => `Formatted: ${date}`);
 
-export const mockShortenAddress = jest.fn((address: string) => 
-  `${address.slice(0, 6)}...${address.slice(-4)}`
+export const mockShortenAddress = jest.fn(
+  (address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`,
 );
 
 // Mock React components
@@ -74,70 +74,96 @@ export const mockShortenAddress = jest.fn((address: string) =>
  * @param props - Button component props
  * @returns Mock button element
  */
-export const MockButton = ({ children, onClick, disabled, variant, className, type }: { 
-  children: React.ReactNode; 
-  onClick?: () => void; 
+export const MockButton = ({
+  children,
+  onClick,
+  disabled,
+  variant,
+  className,
+  type,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
   disabled?: boolean;
   variant?: string;
   className?: string;
   type?: string;
-}) => React.createElement('button', {
-  onClick,
-  disabled,
-  'data-variant': variant,
-  className,
-  type,
-}, children);
+}) =>
+  React.createElement(
+    "button",
+    {
+      onClick,
+      disabled,
+      "data-variant": variant,
+      className,
+      type,
+    },
+    children,
+  );
 
 /**
  * Mock Input component for testing
  * @param props - Input component props
  * @returns Mock input element
  */
-export const MockInput = ({ value, onChange, placeholder, type }: { 
-  value: string; 
-  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void; 
-  placeholder?: string;
-  type?: string;
-}) => React.createElement('input', {
+export const MockInput = ({
   value,
   onChange,
   placeholder,
   type,
-  'data-testid': 'alias-input',
-});
+}: {
+  value: string;
+  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  type?: string;
+}) =>
+  React.createElement("input", {
+    value,
+    onChange,
+    placeholder,
+    type,
+    "data-testid": "alias-input",
+  });
 
 /**
  * Mock Card component for testing
  * @param props - Card component props
  * @returns Mock card element
  */
-export const MockCard = ({ children, className }: { 
-  children: React.ReactNode; 
-  className?: string;
-}) => React.createElement('div', {
+export const MockCard = ({
+  children,
   className,
-  'data-testid': 'card',
-}, children);
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) =>
+  React.createElement(
+    "div",
+    {
+      className,
+      "data-testid": "card",
+    },
+    children,
+  );
 
 // Common test data
 export const testAddresses = {
-  mainWallet: '0x1234567890123456789012345678901234567890',
-  shortAddress: '0x1234...7890',
+  mainWallet: "0x1234567890123456789012345678901234567890",
+  shortAddress: "0x1234...7890",
 };
 
 export const testPropsDefaults = {
   applicationAcceptance: {
-    applicationId: 'app-123',
-    applicantName: 'John Doe',
-    opportunityTitle: 'Beach Cleanup Volunteer',
+    applicationId: "app-123",
+    applicantName: "John Doe",
+    opportunityTitle: "Beach Cleanup Volunteer",
   },
   volunteerHours: {
-    hoursId: 'hours-123',
-    volunteerId: 'volunteer-456',
-    volunteerName: 'Jane Smith',
+    hoursId: "hours-123",
+    volunteerId: "volunteer-456",
+    volunteerName: "Jane Smith",
     hours: 8,
-    datePerformed: '2024-01-15',
-    description: 'Helped with beach cleanup and waste sorting',
+    datePerformed: "2024-01-15",
+    description: "Helped with beach cleanup and waste sorting",
   },
 };

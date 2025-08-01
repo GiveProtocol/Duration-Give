@@ -1,7 +1,7 @@
 // Common Jest mock setup that can be imported by test files
-import { 
-  createMockWeb3, 
-  createMockWalletAlias, 
+import {
+  createMockWeb3,
+  createMockWalletAlias,
   createMockVolunteerVerification,
   createMockTranslation,
   mockLogger,
@@ -9,8 +9,8 @@ import {
   mockShortenAddress,
   MockButton,
   MockInput,
-  MockCard
-} from './mockSetup';
+  MockCard,
+} from "./mockSetup";
 
 /**
  * Sets up common Jest mocks for all test modules
@@ -18,12 +18,12 @@ import {
  */
 export const setupCommonMocks = () => {
   // Web3 Context mock
-  jest.mock('@/contexts/Web3Context', () => ({
+  jest.mock("@/contexts/Web3Context", () => ({
     useWeb3: jest.fn(() => createMockWeb3()),
   }));
 
   // Auth Context mock
-  jest.mock('@/contexts/AuthContext', () => ({
+  jest.mock("@/contexts/AuthContext", () => ({
     useAuth: jest.fn(() => ({
       user: null,
       signOut: jest.fn(),
@@ -31,61 +31,61 @@ export const setupCommonMocks = () => {
   }));
 
   // Wallet hooks mock
-  jest.mock('@/hooks/useWallet', () => ({
+  jest.mock("@/hooks/useWallet", () => ({
     useWallet: jest.fn(() => ({
       getInstalledWallets: jest.fn(() => [
-        { name: 'MetaMask', id: 'metamask' },
-        { name: 'WalletConnect', id: 'walletconnect' },
+        { name: "MetaMask", id: "metamask" },
+        { name: "WalletConnect", id: "walletconnect" },
       ]),
       connectWallet: jest.fn(),
     })),
   }));
 
   // Wallet Alias hook mock
-  jest.mock('@/hooks/useWalletAlias', () => ({
+  jest.mock("@/hooks/useWalletAlias", () => ({
     useWalletAlias: jest.fn(() => createMockWalletAlias()),
   }));
 
   // Volunteer Verification hook mock
-  jest.mock('@/hooks/useVolunteerVerification', () => ({
+  jest.mock("@/hooks/useVolunteerVerification", () => ({
     useVolunteerVerification: jest.fn(() => createMockVolunteerVerification()),
   }));
 
   // Translation hook mock
-  jest.mock('@/hooks/useTranslation', () => ({
+  jest.mock("@/hooks/useTranslation", () => ({
     useTranslation: jest.fn(() => createMockTranslation()),
   }));
 
   // Utility mocks
-  jest.mock('@/utils/web3', () => ({
+  jest.mock("@/utils/web3", () => ({
     shortenAddress: mockShortenAddress,
   }));
 
-  jest.mock('@/utils/logger', () => ({
+  jest.mock("@/utils/logger", () => ({
     Logger: mockLogger,
   }));
 
-  jest.mock('@/utils/date', () => ({
+  jest.mock("@/utils/date", () => ({
     formatDate: mockFormatDate,
   }));
 
   // Config mocks
-  jest.mock('@/config/contracts', () => ({
+  jest.mock("@/config/contracts", () => ({
     CHAIN_IDS: {
       moonbase: 1287,
     },
   }));
 
   // UI Component mocks
-  jest.mock('@/components/ui/Button', () => ({
+  jest.mock("@/components/ui/Button", () => ({
     Button: MockButton,
   }));
 
-  jest.mock('@/components/ui/Input', () => ({
+  jest.mock("@/components/ui/Input", () => ({
     Input: MockInput,
   }));
 
-  jest.mock('@/components/ui/Card', () => ({
+  jest.mock("@/components/ui/Card", () => ({
     Card: MockCard,
   }));
 };
