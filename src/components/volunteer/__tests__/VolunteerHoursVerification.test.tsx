@@ -60,7 +60,7 @@ describe('VolunteerHoursVerification', () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
       
       expect(screen.getByText('volunteer.description')).toBeInTheDocument();
-      expect(screen.getByText(testPropsDefaults.volunteerHours.description!)).toBeInTheDocument();
+      expect(screen.getByText('Helped with beach cleanup and waste sorting')).toBeInTheDocument();
     });
 
     it('hides description when not provided', () => {

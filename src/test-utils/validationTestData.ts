@@ -1,5 +1,18 @@
 // Test data for input validation tests
 /* eslint-disable no-unused-vars */
+
+// Types for validation test cases
+type ValidationTestCase = {
+  value: string | number;
+  reason?: string;
+};
+
+type SanitizationTestCase = {
+  input: string;
+  expected: string;
+};
+
+type ValidatorFunction = (input: string | number) => boolean;
 export const validationTestCases = {
   email: {
     valid: [
@@ -99,14 +112,20 @@ export const validationTestCases = {
 };
 
 // Helper functions to reduce test duplication
-export const testValidCases = (validator: (input: any) => boolean, cases: any[]) => {
+export const testValidCases = (
+  validator: ValidatorFunction, 
+  cases: (string | number | ValidationTestCase)[]
+) => {
   cases.forEach(testCase => {
     const value = typeof testCase === 'object' ? testCase.value : testCase;
     expect(validator(value)).toBe(true);
   });
 };
 
-export const testInvalidCases = (validator: (input: any) => boolean, cases: any[]) => {
+export const testInvalidCases = (
+  validator: ValidatorFunction, 
+  cases: (string | number | ValidationTestCase)[]
+) => {
   cases.forEach(testCase => {
     const value = typeof testCase === 'object' ? testCase.value : testCase;
     expect(validator(value)).toBe(false);
