@@ -56,14 +56,23 @@ export const createMockTranslation = (overrides = {}) => ({
 });
 
 // Common mock implementations
+/**
+ * Mock logger object for testing
+ */
 export const mockLogger = {
   error: jest.fn(),
   info: jest.fn(),
   warn: jest.fn(),
 };
 
+/**
+ * Mock date formatting function for testing
+ */
 export const mockFormatDate = jest.fn((date: string) => `Formatted: ${date}`);
 
+/**
+ * Mock address shortening function for testing
+ */
 export const mockShortenAddress = jest.fn((address: string) => 
   `${address.slice(0, 6)}...${address.slice(-4)}`
 );
@@ -121,11 +130,17 @@ export const MockCard = ({ children, className }: {
 }, children);
 
 // Common test data
+/**
+ * Common test wallet addresses
+ */
 export const testAddresses = {
   mainWallet: '0x1234567890123456789012345678901234567890',
   shortAddress: '0x1234...7890',
 };
 
+/**
+ * Default props for test components
+ */
 export const testPropsDefaults = {
   applicationAcceptance: {
     applicationId: 'app-123',

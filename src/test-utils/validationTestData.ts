@@ -13,6 +13,10 @@ type SanitizationTestCase = {
 };
 
 type ValidatorFunction = (input: string | number) => boolean;
+
+/**
+ * Test cases for input validation functions
+ */
 export const validationTestCases = {
   email: {
     valid: [

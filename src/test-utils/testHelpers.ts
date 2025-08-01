@@ -30,14 +30,18 @@ export const expectBlockchainLink = (element: HTMLElement, hash: string) => {
   expect(element).toHaveAttribute('rel', 'noopener noreferrer');
 };
 
-// Validation error messages
+/**
+ * Standard validation error messages for tests
+ */
 export const validationErrors = {
   emptyAlias: 'Alias cannot be empty',
   aliasLength: 'Alias must be between 3 and 20 characters',
   invalidCharacters: 'Alias can only contain letters, numbers, underscores, and hyphens',
 };
 
-// Common CSS classes for testing
+/**
+ * Common CSS classes for testing UI components
+ */
 export const cssClasses = {
   card: {
     default: ['bg-white', 'border', 'border-gray-200', 'rounded-lg', 'p-4'],
