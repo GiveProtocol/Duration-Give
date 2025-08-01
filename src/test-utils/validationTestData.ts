@@ -92,22 +92,22 @@ export const validationTestCases = {
     htmlRemoval: [
       { input: '<script>alert("test")</script>', expected: 'scriptalert(test)/script' },
       { input: '<div>content</div>', expected: 'divcontent/div' },
-    ],
+    ] as SanitizationTestCase[],
     quoteRemoval: [
       { input: 'text with "quotes" and \'single quotes\'', expected: 'text with quotes and single quotes' },
-    ],
+    ] as SanitizationTestCase[],
     whitespaceHandling: [
       { input: '  test  ', expected: 'test' },
       { input: '\n\ttest\n\t', expected: 'test' },
       { input: '', expected: '' },
       { input: '   ', expected: '' },
       { input: '\n\t', expected: '' },
-    ],
+    ] as SanitizationTestCase[],
     safeContent: [
       { input: 'normal text', expected: 'normal text' },
       { input: 'text with numbers 123', expected: 'text with numbers 123' },
       { input: 'text-with-dashes_and_underscores', expected: 'text-with-dashes_and_underscores' },
-    ],
+    ] as SanitizationTestCase[],
   },
 };
 
