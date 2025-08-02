@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ApplicationAcceptance } from '../ApplicationAcceptance';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
@@ -9,6 +9,7 @@ import {
   testPropsDefaults,
   mockLogger
 } from '@/test-utils/mockSetup';
+import { MockButtonProps } from '@/test-utils/types';
 import { cssClasses } from '@/test-utils/testHelpers';
 
 // Mock the dependencies using simplified patterns
@@ -17,18 +18,8 @@ jest.mock('@/hooks/useTranslation');
 jest.mock('@/utils/logger', () => ({
   Logger: mockLogger,
 }));
-// Button component type
-interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  variant?: string;
-  disabled?: boolean;
-  className?: string;
-  type?: string;
-}
-
 jest.mock('@/components/ui/Button', () => ({
-  Button: (props: ButtonProps) => <button {...props} data-variant={props.variant}>{props.children}</button>,
+  Button: (props: MockButtonProps) => <button {...props} data-variant={props.variant}>{props.children}</button>,
 }));
 
 describe('ApplicationAcceptance', () => {

@@ -1,9 +1,10 @@
-import React from 'react'; // Used for JSX
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { render, screen, waitFor } from '@testing-library/react';
 import { CharityPortal } from '../CharityPortal';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWeb3 } from '@/contexts/Web3Context';
 import { useParams } from 'react-router-dom';
+import { MockAuthReturn, MockWeb3Return } from '@/test-utils/types';
 
 // Mock all dependencies
 jest.mock('@/contexts/AuthContext');
@@ -94,21 +95,7 @@ jest.mock('@/components/charity/VolunteerHoursList', () => ({
   ),
 }));
 
-// Type definitions for mocked hooks
-interface MockAuthUser {
-  id: string;
-}
-
-interface MockAuthReturn {
-  user: MockAuthUser | null;
-  signOut: jest.Mock;
-  loading: boolean;
-}
-
-interface MockWeb3Return {
-  address: string | null;
-  isConnected: boolean;
-}
+// Using shared types from test-utils/types.ts
 
 const mockUseAuth = useAuth as jest.MockedFunction<typeof useAuth>;
 const mockUseWeb3 = useWeb3 as jest.MockedFunction<typeof useWeb3>;

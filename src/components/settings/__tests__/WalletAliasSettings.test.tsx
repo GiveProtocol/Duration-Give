@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { WalletAliasSettings } from '../WalletAliasSettings';
 import { useWalletAlias } from '@/hooks/useWalletAlias';
@@ -9,6 +9,7 @@ import {
   testAddresses,
   mockShortenAddress
 } from '@/test-utils/mockSetup';
+import { MockButtonProps, MockInputProps, MockCardProps } from '@/test-utils/types';
 
 // Mock the dependencies
 jest.mock('@/hooks/useWalletAlias');
@@ -17,38 +18,17 @@ jest.mock('@/utils/web3', () => ({
   shortenAddress: mockShortenAddress,
 }));
 
-// Mock UI components with proper types
-interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  variant?: string;
-  disabled?: boolean;
-  className?: string;
-  type?: string;
-}
-
-interface InputProps {
-  value?: string;
-  onChange?: (_e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  type?: string;
-}
-
-interface CardProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
+// Mock UI components using shared types
 jest.mock('@/components/ui/Button', () => ({
-  Button: (props: ButtonProps) => <button {...props} data-variant={props.variant}>{props.children}</button>,
+  Button: (props: MockButtonProps) => <button {...props} data-variant={props.variant}>{props.children}</button>,
 }));
 
 jest.mock('@/components/ui/Input', () => ({
-  Input: (props: InputProps) => <input {...props} data-testid="alias-input" />,
+  Input: (props: MockInputProps) => <input {...props} data-testid="alias-input" />,
 }));
 
 jest.mock('@/components/ui/Card', () => ({
-  Card: (props: CardProps) => <div {...props} data-testid="card">{props.children}</div>,
+  Card: (props: MockCardProps) => <div {...props} data-testid="card">{props.children}</div>,
 }));
 
 describe('WalletAliasSettings', () => {

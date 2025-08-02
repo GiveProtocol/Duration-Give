@@ -1,5 +1,6 @@
 // Shared mock configurations for tests
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
+import { MockButtonProps, MockInputProps, MockCardProps } from './types';
 
 /**
  * Creates a mock Web3 context object for testing
@@ -77,27 +78,7 @@ export const mockShortenAddress = jest.fn((address: string) =>
   `${address.slice(0, 6)}...${address.slice(-4)}`
 );
 
-// Mock React components with proper types
-interface MockButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  variant?: string;
-  disabled?: boolean;
-  className?: string;
-  type?: string;
-}
-
-interface MockInputProps {
-  value?: string;
-  onChange?: (_e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  type?: string;
-}
-
-interface MockCardProps {
-  children: React.ReactNode;
-  className?: string;
-}
+// Mock React components using shared types
 
 /**
  * Mock Button component for testing
