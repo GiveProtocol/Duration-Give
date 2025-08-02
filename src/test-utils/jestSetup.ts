@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Common Jest mock configurations
@@ -15,8 +15,8 @@ export const commonMocks = {
     warn: jest.fn(),
   },
   formatDate: jest.fn((date: string) => new Date(date).toLocaleDateString()),
-  shortenAddress: jest.fn((address: string) => 
-    `${address.slice(0, 6)}...${address.slice(-4)}`
+  shortenAddress: jest.fn(
+    (address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`,
   ),
 };
 
@@ -38,8 +38,8 @@ export const createHookMocks = () => ({
   },
   wallet: {
     getInstalledWallets: jest.fn(() => [
-      { name: 'MetaMask', id: 'metamask' },
-      { name: 'WalletConnect', id: 'walletconnect' },
+      { name: "MetaMask", id: "metamask" },
+      { name: "WalletConnect", id: "walletconnect" },
     ]),
     connectWallet: jest.fn(),
   },
@@ -67,28 +67,33 @@ export const createHookMocks = () => ({
  * Common component mock implementations
  */
 export const componentMocks = {
-  Button: ({ children, onClick, variant, disabled, className, type }: any) => (
-    React.createElement('button', {
-      onClick,
-      disabled,
-      'data-variant': variant,
-      className,
-      type,
-    }, children)
-  ),
-  Input: ({ value, onChange, placeholder, type }: any) => (
-    React.createElement('input', {
+  Button: ({ children, onClick, variant, disabled, className, type }: any) =>
+    React.createElement(
+      "button",
+      {
+        onClick,
+        disabled,
+        "data-variant": variant,
+        className,
+        type,
+      },
+      children,
+    ),
+  Input: ({ value, onChange, placeholder, type }: any) =>
+    React.createElement("input", {
       value,
       onChange,
       placeholder,
       type,
-      'data-testid': 'alias-input',
-    })
-  ),
-  Card: ({ children, className }: any) => (
-    React.createElement('div', {
-      className,
-      'data-testid': 'card',
-    }, children)
-  ),
+      "data-testid": "alias-input",
+    }),
+  Card: ({ children, className }: any) =>
+    React.createElement(
+      "div",
+      {
+        className,
+        "data-testid": "card",
+      },
+      children,
+    ),
 };
