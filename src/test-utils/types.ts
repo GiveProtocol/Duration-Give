@@ -20,11 +20,11 @@ export interface MockUIComponentProps {
 }
 
 /**
- * Legacy interfaces for backward compatibility - extend from base
+ * Legacy type aliases for backward compatibility - use subset of base interface
  */
-export interface MockButtonProps extends Pick<MockUIComponentProps, 'children' | 'onClick' | 'variant' | 'disabled' | 'className' | 'type'> {}
-export interface MockInputProps extends Pick<MockUIComponentProps, 'value' | 'onChange' | 'placeholder' | 'type'> {}
-export interface MockCardProps extends Pick<MockUIComponentProps, 'children' | 'className'> {}
+export type MockButtonProps = Pick<MockUIComponentProps, 'children' | 'onClick' | 'variant' | 'disabled' | 'className' | 'type'>;
+export type MockInputProps = Pick<MockUIComponentProps, 'value' | 'onChange' | 'placeholder' | 'type'>;
+export type MockCardProps = Pick<MockUIComponentProps, 'children' | 'className'>;
 
 /**
  * Common interface for mock auth hook return type
