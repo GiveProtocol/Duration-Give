@@ -1,4 +1,3 @@
-
 /**
  * Common Jest mock configurations
  * This file provides reusable mock objects to eliminate duplication across test files
@@ -14,8 +13,8 @@ export const commonMocks = {
     warn: jest.fn(),
   },
   formatDate: jest.fn((date: string) => new Date(date).toLocaleDateString()),
-  shortenAddress: jest.fn((address: string) => 
-    `${address.slice(0, 6)}...${address.slice(-4)}`
+  shortenAddress: jest.fn(
+    (address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`,
   ),
 };
 
@@ -37,8 +36,8 @@ export const createHookMocks = () => ({
   },
   wallet: {
     getInstalledWallets: jest.fn(() => [
-      { name: 'MetaMask', id: 'metamask' },
-      { name: 'WalletConnect', id: 'walletconnect' },
+      { name: "MetaMask", id: "metamask" },
+      { name: "WalletConnect", id: "walletconnect" },
     ]),
     connectWallet: jest.fn(),
   },
