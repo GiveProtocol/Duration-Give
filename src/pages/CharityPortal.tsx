@@ -14,6 +14,45 @@ import { supabase } from '@/lib/supabase';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { Logger } from '@/utils/logger';
 
+// Type definitions for Supabase data structures
+interface DonationData {
+  id?: string;
+  amount?: string | number;
+  created_at?: string;
+  donor_id?: string;
+  donor?: {
+    id: string;
+    user_id?: string;
+  };
+}
+
+interface HourData {
+  id?: string;
+  hours?: string | number;
+  volunteer_id?: string;
+  date_performed?: string;
+  description?: string;
+  volunteer?: {
+    id: string;
+    user_id?: string;
+  };
+}
+
+interface EndorsementData {
+  id: string;
+}
+
+interface VolunteerData {
+  volunteer_id: string;
+}
+
+interface BasicStatsData {
+  donations: DonationData[];
+  hours: HourData[];
+  endorsements: EndorsementData[];
+  volunteers: VolunteerData[];
+}
+
 interface VolunteerApplication {
   id: string;
   full_name: string;
@@ -59,7 +98,7 @@ export const CharityPortal: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Helper function to fetch basic statistics data
-  const fetchBasicStats = useCallback(async (charityId: string) => {
+  const fetchBasicStats = useCallback(async (charityId: string): Promise<BasicStatsData> => {
     const [donationsResult, hoursResult, endorsementsResult, volunteersResult] = await Promise.all([
       supabase.from('donations').select('amount').eq('charity_id', charityId),
       supabase.from('volunteer_hours').select('hours').eq('charity_id', charityId).eq('status', 'approved'),
@@ -82,7 +121,7 @@ export const CharityPortal: React.FC = () => {
   }, []);
 
   // Helper function to calculate statistics
-  const calculateStats = useCallback((data: { donations: any[], hours: any[], endorsements: any[], volunteers: any[] }) => {
+  const calculateStats = useCallback((data: BasicStatsData) => {
     const totalDonated = data.donations.reduce((sum, donation) => {
       const amount = donation?.amount ? Number(donation.amount) : 0;
       return sum + amount;

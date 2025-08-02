@@ -1,91 +1,94 @@
-// Common Jest mock setup that can be imported by test files
-import { 
-  createMockWeb3, 
-  createMockWalletAlias, 
-  createMockVolunteerVerification,
-  createMockTranslation,
-  mockLogger,
-  mockFormatDate,
-  mockShortenAddress,
-  MockButton,
-  MockInput,
-  MockCard
-} from './mockSetup';
+import React from 'react';
 
 /**
- * Sets up common Jest mocks for all test modules
- * Mocks Web3Context, AuthContext, hooks, utilities, and UI components
+ * Common Jest mock configurations
+ * This file provides reusable mock objects to eliminate duplication across test files
  */
-export const setupCommonMocks = () => {
-  // Web3 Context mock
-  jest.mock('@/contexts/Web3Context', () => ({
-    useWeb3: jest.fn(() => createMockWeb3()),
-  }));
 
-  // Auth Context mock
-  jest.mock('@/contexts/AuthContext', () => ({
-    useAuth: jest.fn(() => ({
-      user: null,
-      signOut: jest.fn(),
-    })),
-  }));
+/**
+ * Standard mock implementations for common utilities
+ */
+export const commonMocks = {
+  logger: {
+    error: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+  },
+  formatDate: jest.fn((date: string) => new Date(date).toLocaleDateString()),
+  shortenAddress: jest.fn((address: string) => 
+    `${address.slice(0, 6)}...${address.slice(-4)}`
+  ),
+};
 
-  // Wallet hooks mock
-  jest.mock('@/hooks/useWallet', () => ({
-    useWallet: jest.fn(() => ({
-      getInstalledWallets: jest.fn(() => [
-        { name: 'MetaMask', id: 'metamask' },
-        { name: 'WalletConnect', id: 'walletconnect' },
-      ]),
-      connectWallet: jest.fn(),
-    })),
-  }));
+/**
+ * Standard mock factories for hooks
+ */
+export const createHookMocks = () => ({
+  web3: {
+    address: null,
+    chainId: null,
+    isConnected: false,
+    connect: jest.fn(),
+    disconnect: jest.fn(),
+    switchChain: jest.fn(),
+  },
+  auth: {
+    user: null,
+    signOut: jest.fn(),
+  },
+  wallet: {
+    getInstalledWallets: jest.fn(() => [
+      { name: 'MetaMask', id: 'metamask' },
+      { name: 'WalletConnect', id: 'walletconnect' },
+    ]),
+    connectWallet: jest.fn(),
+  },
+  walletAlias: {
+    alias: null,
+    aliases: {},
+    isLoading: false,
+    loading: false,
+    error: null,
+    setWalletAlias: jest.fn(),
+    deleteWalletAlias: jest.fn(),
+  },
+  volunteerVerification: {
+    verifyHours: jest.fn(),
+    acceptApplication: jest.fn(),
+    loading: false,
+    error: null,
+  },
+  translation: {
+    t: jest.fn((key: string, fallback?: string) => fallback || key),
+  },
+});
 
-  // Wallet Alias hook mock
-  jest.mock('@/hooks/useWalletAlias', () => ({
-    useWalletAlias: jest.fn(() => createMockWalletAlias()),
-  }));
-
-  // Volunteer Verification hook mock
-  jest.mock('@/hooks/useVolunteerVerification', () => ({
-    useVolunteerVerification: jest.fn(() => createMockVolunteerVerification()),
-  }));
-
-  // Translation hook mock
-  jest.mock('@/hooks/useTranslation', () => ({
-    useTranslation: jest.fn(() => createMockTranslation()),
-  }));
-
-  // Utility mocks
-  jest.mock('@/utils/web3', () => ({
-    shortenAddress: mockShortenAddress,
-  }));
-
-  jest.mock('@/utils/logger', () => ({
-    Logger: mockLogger,
-  }));
-
-  jest.mock('@/utils/date', () => ({
-    formatDate: mockFormatDate,
-  }));
-
-  // Config mocks
-  jest.mock('@/config/contracts', () => ({
-    CHAIN_IDS: {
-      moonbase: 1287,
-    },
-  }));
-
-  // UI Component mocks
-  jest.mock('@/components/ui/Button', () => ({
-    Button: MockButton,
-  }));
-
-  jest.mock('@/components/ui/Input', () => ({
-    Input: MockInput,
-  }));
-
-  jest.mock('@/components/ui/Card', () => ({
-    Card: MockCard,
-  }));
+/**
+ * Common component mock implementations
+ */
+export const componentMocks = {
+  Button: ({ children, onClick, variant, disabled, className, type }: any) => (
+    React.createElement('button', {
+      onClick,
+      disabled,
+      'data-variant': variant,
+      className,
+      type,
+    }, children)
+  ),
+  Input: ({ value, onChange, placeholder, type }: any) => (
+    React.createElement('input', {
+      value,
+      onChange,
+      placeholder,
+      type,
+      'data-testid': 'alias-input',
+    })
+  ),
+  Card: ({ children, className }: any) => (
+    React.createElement('div', {
+      className,
+      'data-testid': 'card',
+    }, children)
+  ),
 };

@@ -5,7 +5,7 @@ import { useWalletAlias } from '@/hooks/useWalletAlias';
 import { renderWithRouter } from '@/test-utils/testHelpers';
 import { createMockWeb3, createMockWalletAlias, testAddresses } from '@/test-utils/mockSetup';
 
-// Setup common mocks
+// Setup common mocks using simplified patterns
 jest.mock('@/contexts/Web3Context');
 jest.mock('@/contexts/AuthContext', () => ({
   useAuth: jest.fn(() => ({

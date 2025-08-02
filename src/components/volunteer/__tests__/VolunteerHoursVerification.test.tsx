@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { VolunteerHoursVerification } from '../VolunteerHoursVerification';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
@@ -5,23 +6,32 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { 
   createMockVolunteerVerification, 
   createMockTranslation, 
-  mockLogger,
-  mockFormatDate,
-  MockButton,
   testPropsDefaults 
 } from '@/test-utils/mockSetup';
 
-// Mock the dependencies
+// Mock the dependencies using simplified patterns
 jest.mock('@/hooks/useVolunteerVerification');
 jest.mock('@/hooks/useTranslation');
 jest.mock('@/utils/date', () => ({
-  formatDate: mockFormatDate,
+  formatDate: jest.fn((date: string) => new Date(date).toLocaleDateString()),
 }));
 jest.mock('@/utils/logger', () => ({
-  Logger: mockLogger,
+  Logger: {
+    error: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+  },
 }));
 jest.mock('@/components/ui/Button', () => ({
-  Button: MockButton,
+  Button: ({ children, onClick, variant, disabled, className, type }: any) => (
+    React.createElement('button', {
+      onClick,
+      disabled,
+      'data-variant': variant,
+      className,
+      type,
+    }, children)
+  ),
 }));
 
 describe('VolunteerHoursVerification', () => {
@@ -80,7 +90,7 @@ describe('VolunteerHoursVerification', () => {
     it('formats date using date utility', () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
       
-      expect(mockFormatDate).toHaveBeenCalledWith(testPropsDefaults.volunteerHours.datePerformed);
+      expect(require('@/utils/date').formatDate).toHaveBeenCalledWith(testPropsDefaults.volunteerHours.datePerformed);
     });
   });
 
@@ -190,7 +200,7 @@ describe('VolunteerHoursVerification', () => {
         expect(mockVerifyHours).toHaveBeenCalled();
       });
 
-      expect(mockLogger.error).toHaveBeenCalledWith('Verification failed:', expect.any(Error));
+      expect(require('@/utils/logger').Logger.error).toHaveBeenCalledWith('Verification failed:', expect.any(Error));
     });
 
     it('handles null hash response', async () => {

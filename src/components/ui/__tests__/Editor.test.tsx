@@ -2,6 +2,9 @@ import _React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Editor } from '../Editor';
 
+// Import mocked functions for type safety
+import { useEditor } from '@tiptap/react';
+
 // Mock TipTap editor
 jest.mock('@tiptap/react', () => ({
   useEditor: jest.fn(() => ({
@@ -79,7 +82,7 @@ describe('Editor Component', () => {
       getHTML: jest.fn(() => '<p>Test content</p>')
     };
 
-    const useEditorMock = require('@tiptap/react').useEditor;
+    const useEditorMock = useEditor as jest.Mock;
     useEditorMock.mockReturnValue(mockEditor);
 
     render(<Editor {...defaultProps} />);
@@ -105,7 +108,7 @@ describe('Editor Component', () => {
       getHTML: jest.fn(() => '<p>Test content</p>')
     };
 
-    const useEditorMock = require('@tiptap/react').useEditor;
+    const useEditorMock = useEditor as jest.Mock;
     useEditorMock.mockReturnValue(mockEditor);
 
     render(<Editor {...defaultProps} />);
@@ -131,7 +134,7 @@ describe('Editor Component', () => {
       getHTML: jest.fn(() => '<p>Test content</p>')
     };
 
-    const useEditorMock = require('@tiptap/react').useEditor;
+    const useEditorMock = useEditor as jest.Mock;
     useEditorMock.mockReturnValue(mockEditor);
 
     render(<Editor {...defaultProps} />);
@@ -144,7 +147,7 @@ describe('Editor Component', () => {
   });
 
   it('returns null when editor is not initialized', () => {
-    const useEditorMock = require('@tiptap/react').useEditor;
+    const useEditorMock = useEditor as jest.Mock;
     useEditorMock.mockReturnValue(null);
 
     const { container } = render(<Editor {...defaultProps} />);

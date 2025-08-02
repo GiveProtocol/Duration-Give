@@ -16,43 +16,37 @@ jest.mock('@/utils/web3', () => ({
   shortenAddress: jest.fn((address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`),
 }));
 
-// Mock UI components
+// Mock UI components using consolidated mock patterns
 jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, type, variant, disabled }: { 
-    children: React.ReactNode; 
-    onClick?: () => void; 
-    type?: string;
-    variant?: string; 
-    disabled?: boolean;
-  }) => (
-    <button onClick={onClick} type={type} disabled={disabled} data-variant={variant}>
-      {children}
-    </button>
+  Button: ({ children, onClick, variant, disabled, className, type }: any) => (
+    React.createElement('button', {
+      onClick,
+      disabled,
+      'data-variant': variant,
+      className,
+      type,
+    }, children)
   ),
 }));
 
 jest.mock('@/components/ui/Input', () => ({
-  Input: ({ value, onChange, placeholder, type }: { 
-    value: string; 
-    onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void; 
-    placeholder?: string;
-    type?: string;
-  }) => (
-    <input 
-      value={value} 
-      onChange={onChange} 
-      placeholder={placeholder} 
-      type={type}
-      data-testid="alias-input"
-    />
+  Input: ({ value, onChange, placeholder, type }: any) => (
+    React.createElement('input', {
+      value,
+      onChange,
+      placeholder,
+      type,
+      'data-testid': 'alias-input',
+    })
   ),
 }));
 
 jest.mock('@/components/ui/Card', () => ({
-  Card: ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <div className={className} data-testid="card">
-      {children}
-    </div>
+  Card: ({ children, className }: any) => (
+    React.createElement('div', {
+      className,
+      'data-testid': 'card',
+    }, children)
   ),
 }));
 

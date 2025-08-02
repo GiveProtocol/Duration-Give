@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ApplicationAcceptance } from '../ApplicationAcceptance';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
@@ -5,20 +6,30 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { 
   createMockVolunteerVerification, 
   createMockTranslation, 
-  mockLogger,
-  MockButton,
   testPropsDefaults 
 } from '@/test-utils/mockSetup';
 import { cssClasses } from '@/test-utils/testHelpers';
 
-// Mock the dependencies
+// Mock the dependencies using simplified patterns
 jest.mock('@/hooks/useVolunteerVerification');
 jest.mock('@/hooks/useTranslation');
 jest.mock('@/utils/logger', () => ({
-  Logger: mockLogger,
+  Logger: {
+    error: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+  },
 }));
 jest.mock('@/components/ui/Button', () => ({
-  Button: MockButton,
+  Button: ({ children, onClick, variant, disabled, className, type }: any) => (
+    React.createElement('button', {
+      onClick,
+      disabled,
+      'data-variant': variant,
+      className,
+      type,
+    }, children)
+  ),
 }));
 
 describe('ApplicationAcceptance', () => {
@@ -170,7 +181,7 @@ describe('ApplicationAcceptance', () => {
         expect(mockAcceptApplication).toHaveBeenCalled();
       });
 
-      expect(mockLogger.error).toHaveBeenCalledWith('Acceptance failed:', expect.any(Error));
+      expect(require('@/utils/logger').Logger.error).toHaveBeenCalledWith('Acceptance failed:', expect.any(Error));
     });
 
     it('handles null hash response', async () => {
