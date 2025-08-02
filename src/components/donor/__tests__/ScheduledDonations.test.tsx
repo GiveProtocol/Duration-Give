@@ -1,27 +1,16 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ScheduledDonations } from '../ScheduledDonations';
+import { useScheduledDonation } from '@/hooks/web3/useScheduledDonation';
+import { useToast } from '@/contexts/ToastContext';
+import { formatDate } from '@/utils/date';
 
 // Mock the dependencies
-jest.mock('@/hooks/web3/useScheduledDonation', () => ({
-  useScheduledDonation: jest.fn(() => ({
-    getDonorSchedules: jest.fn(),
-    cancelSchedule: jest.fn(),
-    loading: false,
-    error: null,
-  })),
-}));
-
-jest.mock('@/contexts/ToastContext', () => ({
-  useToast: jest.fn(() => ({
-    showToast: jest.fn(),
-  })),
-}));
-
+jest.mock('@/hooks/web3/useScheduledDonation');
+jest.mock('@/contexts/ToastContext');
 jest.mock('@/utils/date', () => ({
-  formatDate: jest.fn((date: Date) => date.toLocaleDateString()),
+  formatDate: jest.fn((date: string) => new Date(date).toLocaleDateString()),
 }));
-
 jest.mock('@/utils/logger', () => ({
   Logger: {
     error: jest.fn(),
@@ -29,8 +18,6 @@ jest.mock('@/utils/logger', () => ({
     warn: jest.fn(),
   },
 }));
-
-// Mock UI components
 jest.mock('@/components/ui/Card', () => ({
   Card: ({ children, className }: { children: React.ReactNode; className?: string }) => (
     <div className={className} data-testid="card">
@@ -38,7 +25,6 @@ jest.mock('@/components/ui/Card', () => ({
     </div>
   ),
 }));
-
 jest.mock('@/components/ui/Button', () => ({
   Button: ({ children, onClick, variant, disabled }: { 
     children: React.ReactNode; 
@@ -51,7 +37,6 @@ jest.mock('@/components/ui/Button', () => ({
     </button>
   ),
 }));
-
 jest.mock('@/components/ui/LoadingSpinner', () => ({
   LoadingSpinner: () => <div data-testid="loading-spinner">Loading...</div>,
 }));
@@ -87,19 +72,20 @@ describe('ScheduledDonations', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     
-    const { useScheduledDonation } = require('@/hooks/web3/useScheduledDonation');
-    const { useToast } = require('@/contexts/ToastContext');
-    
-    useScheduledDonation.mockReturnValue({
+    (useScheduledDonation as jest.Mock).mockReturnValue({
       getDonorSchedules: mockGetDonorSchedules,
       cancelSchedule: mockCancelSchedule,
       loading: false,
       error: null,
     });
 
-    useToast.mockReturnValue({
+    (useToast as jest.Mock).mockReturnValue({
       showToast: mockShowToast,
     });
+
+    (formatDate as jest.Mock).mockImplementation((date: string) => 
+      new Date(date).toLocaleDateString()
+    );
 
     mockGetDonorSchedules.mockResolvedValue(mockSchedules);
   });
@@ -109,7 +95,7 @@ describe('ScheduledDonations', () => {
       render(<ScheduledDonations />);
       
       await waitFor(() => {
-        expect(screen.getByText('Scheduled Donations')).toBeInTheDocument();
+        expect(screen.getByText('Monthly Donation Schedules')).toBeInTheDocument();
       });
     });
 
@@ -152,8 +138,8 @@ describe('ScheduledDonations', () => {
       render(<ScheduledDonations />);
       
       await waitFor(() => {
-        expect(screen.getByText('100')).toBeInTheDocument();
-        expect(screen.getByText('50')).toBeInTheDocument();
+        expect(screen.getByText('Monthly Payment: 100 tokens')).toBeInTheDocument();
+        expect(screen.getByText('Monthly Payment: 50 tokens')).toBeInTheDocument();
       });
     });
   });
@@ -163,15 +149,15 @@ describe('ScheduledDonations', () => {
       render(<ScheduledDonations />);
       
       await waitFor(() => {
-        const buttons = screen.getAllByRole('button');
-        const cancelButton = buttons.find(button => 
-          button.textContent?.includes('Cancel') || 
-          button.getAttribute('data-variant') === 'destructive'
-        );
-        
-        if (cancelButton) {
-          fireEvent.click(cancelButton);
-        }
+        expect(screen.getByText('USDC')).toBeInTheDocument();
+      });
+      
+      const cancelButton = screen.getByText('Cancel Schedule');
+      fireEvent.click(cancelButton);
+      
+      await waitFor(() => {
+        expect(screen.getByText('Confirm Cancellation')).toBeInTheDocument();
+        expect(screen.getByText('Keep Schedule')).toBeInTheDocument();
       });
     });
 
@@ -181,12 +167,26 @@ describe('ScheduledDonations', () => {
       render(<ScheduledDonations />);
       
       await waitFor(() => {
-        const buttons = screen.getAllByRole('button');
-        // Simulate clicking cancel and then confirm
-        if (buttons.length > 0) {
-          // The actual cancel flow would be tested here
-          expect(buttons).toBeDefined();
-        }
+        expect(screen.getByText('USDC')).toBeInTheDocument();
+      });
+      
+      // Click cancel button
+      fireEvent.click(screen.getByText('Cancel Schedule'));
+      
+      await waitFor(() => {
+        expect(screen.getByText('Confirm Cancellation')).toBeInTheDocument();
+      });
+      
+      // Click confirm in modal
+      fireEvent.click(screen.getByText('Cancel Schedule'));
+      
+      await waitFor(() => {
+        expect(mockCancelSchedule).toHaveBeenCalledWith(1);
+        expect(mockShowToast).toHaveBeenCalledWith(
+          'success',
+          'Scheduled donation cancelled',
+          expect.stringContaining('Your monthly donation schedule has been cancelled')
+        );
       });
     });
   });
@@ -208,16 +208,27 @@ describe('ScheduledDonations', () => {
       render(<ScheduledDonations />);
       
       await waitFor(() => {
-        // Component should handle cancel errors without crashing
-        expect(screen.getByText('Scheduled Donations')).toBeInTheDocument();
+        expect(screen.getByText('USDC')).toBeInTheDocument();
+      });
+      
+      // Open modal and attempt cancel
+      fireEvent.click(screen.getByText('Cancel Schedule'));
+      
+      await waitFor(() => {
+        expect(screen.getByText('Confirm Cancellation')).toBeInTheDocument();
+      });
+      
+      fireEvent.click(screen.getByText('Cancel Schedule'));
+      
+      await waitFor(() => {
+        expect(screen.getByText('Cancel failed')).toBeInTheDocument();
       });
     });
   });
 
   describe('loading states', () => {
     it('shows loading state when fetching schedules', () => {
-      const { useScheduledDonation } = require('@/hooks/web3/useScheduledDonation');
-      useScheduledDonation.mockReturnValue({
+      (useScheduledDonation as jest.Mock).mockReturnValue({
         getDonorSchedules: mockGetDonorSchedules,
         cancelSchedule: mockCancelSchedule,
         loading: true,
@@ -245,31 +256,58 @@ describe('ScheduledDonations', () => {
       render(<ScheduledDonations />);
       
       await waitFor(() => {
-        // Component should handle empty state
-        expect(mockGetDonorSchedules).toHaveBeenCalled();
+        expect(screen.getByText('No Scheduled Donations')).toBeInTheDocument();
+        expect(screen.getByText('You don\'t have any active monthly donation schedules.')).toBeInTheDocument();
       });
+    });
+  });
+
+  describe('error state', () => {
+    it('displays error message when hook returns error', () => {
+      (useScheduledDonation as jest.Mock).mockReturnValue({
+        getDonorSchedules: mockGetDonorSchedules,
+        cancelSchedule: mockCancelSchedule,
+        loading: false,
+        error: 'Failed to connect to blockchain',
+      });
+
+      render(<ScheduledDonations />);
+      
+      expect(screen.getByText('Failed to connect to blockchain')).toBeInTheDocument();
     });
   });
 
   describe('date formatting', () => {
     it('formats next distribution dates correctly', async () => {
-      const { formatDate } = require('@/utils/date');
-      
       render(<ScheduledDonations />);
       
       await waitFor(() => {
-        expect(formatDate).toHaveBeenCalled();
+        expect(formatDate).toHaveBeenCalledWith('2024-02-01T00:00:00.000Z');
+        expect(formatDate).toHaveBeenCalledWith('2024-02-15T00:00:00.000Z');
       });
     });
   });
 
   describe('modal interactions', () => {
-    it('closes modal when cancel is clicked', async () => {
+    it('closes modal when Keep Schedule is clicked', async () => {
       render(<ScheduledDonations />);
       
       await waitFor(() => {
-        // Test modal close functionality
-        expect(screen.getByText('Scheduled Donations')).toBeInTheDocument();
+        expect(screen.getByText('USDC')).toBeInTheDocument();
+      });
+      
+      // Open modal
+      fireEvent.click(screen.getByText('Cancel Schedule'));
+      
+      await waitFor(() => {
+        expect(screen.getByText('Confirm Cancellation')).toBeInTheDocument();
+      });
+      
+      // Close modal
+      fireEvent.click(screen.getByText('Keep Schedule'));
+      
+      await waitFor(() => {
+        expect(screen.queryByText('Confirm Cancellation')).not.toBeInTheDocument();
       });
     });
   });
