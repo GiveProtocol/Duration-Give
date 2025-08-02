@@ -1,7 +1,7 @@
 // Shared TypeScript interfaces for test components
 // This file eliminates duplication of component prop types across test files
 
-import React from 'react';
+import React from "react";
 
 /**
  * Base interface for all mock UI components with common HTML attributes
@@ -22,9 +22,18 @@ export interface MockUIComponentProps {
 /**
  * Legacy type aliases for backward compatibility - use subset of base interface
  */
-export type MockButtonProps = Pick<MockUIComponentProps, 'children' | 'onClick' | 'variant' | 'disabled' | 'className' | 'type'>;
-export type MockInputProps = Pick<MockUIComponentProps, 'value' | 'onChange' | 'placeholder' | 'type'>;
-export type MockCardProps = Pick<MockUIComponentProps, 'children' | 'className'>;
+export type MockButtonProps = Pick<
+  MockUIComponentProps,
+  "children" | "onClick" | "variant" | "disabled" | "className" | "type"
+>;
+export type MockInputProps = Pick<
+  MockUIComponentProps,
+  "value" | "onChange" | "placeholder" | "type"
+>;
+export type MockCardProps = Pick<
+  MockUIComponentProps,
+  "children" | "className"
+>;
 
 /**
  * Common interface for mock auth hook return type
@@ -90,15 +99,15 @@ export interface MockDonationExportModalProps {
  */
 export const cssClasses = {
   card: {
-    default: ['bg-white', 'border', 'border-gray-200', 'rounded-lg', 'p-4'],
-    success: ['bg-green-50', 'border', 'border-green-200', 'rounded-lg', 'p-4'],
-    error: ['p-3', 'bg-red-50', 'text-red-700', 'text-sm', 'rounded-md'],
+    default: ["bg-white", "border", "border-gray-200", "rounded-lg", "p-4"],
+    success: ["bg-green-50", "border", "border-green-200", "rounded-lg", "p-4"],
+    error: ["p-3", "bg-red-50", "text-red-700", "text-sm", "rounded-md"],
   },
   button: {
-    primary: ['flex', 'items-center'],
-    secondary: ['flex', 'items-center'],
+    primary: ["flex", "items-center"],
+    secondary: ["flex", "items-center"],
   },
   spinner: {
-    default: ['animate-spin'],
+    default: ["animate-spin"],
   },
 };
