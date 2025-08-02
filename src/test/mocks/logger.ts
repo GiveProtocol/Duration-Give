@@ -57,5 +57,5 @@ export const Logger = {
    */
   async submitToSentry() {
     // No-op for tests
-  }
+  },
 };
