@@ -17,8 +17,18 @@ jest.mock('@/hooks/useTranslation');
 jest.mock('@/utils/logger', () => ({
   Logger: mockLogger,
 }));
+// Button component type
+interface ButtonProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: string;
+  disabled?: boolean;
+  className?: string;
+  type?: string;
+}
+
 jest.mock('@/components/ui/Button', () => ({
-  Button: (props: any) => <button {...props} data-variant={props.variant}>{props.children}</button>,
+  Button: (props: ButtonProps) => <button {...props} data-variant={props.variant}>{props.children}</button>,
 }));
 
 describe('ApplicationAcceptance', () => {

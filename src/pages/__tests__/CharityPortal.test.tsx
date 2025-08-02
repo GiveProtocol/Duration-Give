@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // Used for JSX
 import { render, screen, waitFor } from '@testing-library/react';
 import { CharityPortal } from '../CharityPortal';
 import { useAuth } from '@/contexts/AuthContext';
@@ -13,18 +13,21 @@ jest.mock('react-router-dom', () => ({
   useParams: jest.fn(),
 }));
 
-jest.mock('@/lib/supabase', () => ({
-  supabase: {
-    from: jest.fn(() => ({
-      select: jest.fn(() => ({
-        eq: jest.fn(() => ({
-          eq: jest.fn(() => Promise.resolve({ data: [], error: null })),
-          single: jest.fn(() => Promise.resolve({ data: null, error: null })),
-        })),
+// Create a mock supabase object that can be reconfigured in tests
+const mockSupabase = {
+  from: jest.fn(() => ({
+    select: jest.fn(() => ({
+      eq: jest.fn(() => ({
+        eq: jest.fn(() => Promise.resolve({ data: [], error: null })),
         single: jest.fn(() => Promise.resolve({ data: null, error: null })),
       })),
+      single: jest.fn(() => Promise.resolve({ data: null, error: null })),
     })),
-  },
+  })),
+};
+
+jest.mock('@/lib/supabase', () => ({
+  supabase: mockSupabase,
 }));
 
 jest.mock('@/utils/logger', () => ({
@@ -35,13 +38,31 @@ jest.mock('@/utils/logger', () => ({
   },
 }));
 
-// Mock UI components
+// Mock UI components with proper types
+interface MockCharityData {
+  name?: string;
+}
+
+interface MockStats {
+  totalDonated?: number;
+}
+
+interface MockApplication {
+  id: string;
+  full_name: string;
+}
+
+interface MockHour {
+  id: string;
+  hours: number;
+}
+
 jest.mock('@/components/ui/LoadingSpinner', () => ({
   LoadingSpinner: () => <div data-testid="loading-spinner">Loading...</div>,
 }));
 
 jest.mock('@/components/charity/CharityDashboard', () => ({
-  CharityDashboard: ({ charityData, stats }: any) => (
+  CharityDashboard: ({ charityData, stats }: { charityData?: MockCharityData; stats?: MockStats }) => (
     <div data-testid="charity-dashboard">
       <div data-testid="charity-name">{charityData?.name}</div>
       <div data-testid="total-donated">{stats?.totalDonated}</div>
@@ -50,9 +71,9 @@ jest.mock('@/components/charity/CharityDashboard', () => ({
 }));
 
 jest.mock('@/components/charity/VolunteerApplicationsList', () => ({
-  VolunteerApplicationsList: ({ applications }: any) => (
+  VolunteerApplicationsList: ({ applications }: { applications?: MockApplication[] }) => (
     <div data-testid="volunteer-applications">
-      {applications?.map((app: any) => (
+      {applications?.map((app: MockApplication) => (
         <div key={app.id} data-testid={`application-${app.id}`}>
           {app.full_name}
         </div>
@@ -62,9 +83,9 @@ jest.mock('@/components/charity/VolunteerApplicationsList', () => ({
 }));
 
 jest.mock('@/components/charity/VolunteerHoursList', () => ({
-  VolunteerHoursList: ({ hours }: any) => (
+  VolunteerHoursList: ({ hours }: { hours?: MockHour[] }) => (
     <div data-testid="volunteer-hours">
-      {hours?.map((hour: any) => (
+      {hours?.map((hour: MockHour) => (
         <div key={hour.id} data-testid={`hour-${hour.id}`}>
           {hour.hours} hours
         </div>
@@ -72,6 +93,22 @@ jest.mock('@/components/charity/VolunteerHoursList', () => ({
     </div>
   ),
 }));
+
+// Type definitions for mocked hooks
+interface MockAuthUser {
+  id: string;
+}
+
+interface MockAuthReturn {
+  user: MockAuthUser | null;
+  signOut: jest.Mock;
+  loading: boolean;
+}
+
+interface MockWeb3Return {
+  address: string | null;
+  isConnected: boolean;
+}
 
 const mockUseAuth = useAuth as jest.MockedFunction<typeof useAuth>;
 const mockUseWeb3 = useWeb3 as jest.MockedFunction<typeof useWeb3>;
@@ -85,12 +122,12 @@ describe('CharityPortal', () => {
       user: { id: 'user-123' },
       signOut: jest.fn(),
       loading: false,
-    } as any);
+    } as MockAuthReturn);
 
     mockUseWeb3.mockReturnValue({
       address: '0x1234567890123456789012345678901234567890',
       isConnected: true,
-    } as any);
+    } as MockWeb3Return);
 
     mockUseParams.mockReturnValue({ id: 'charity-123' });
   });
@@ -104,7 +141,6 @@ describe('CharityPortal', () => {
 
   describe('error handling', () => {
     it('displays error message when charity fetch fails', async () => {
-      const mockSupabase = require('@/lib/supabase').supabase;
       mockSupabase.from.mockReturnValue({
         select: jest.fn(() => ({
           eq: jest.fn(() => ({
@@ -140,7 +176,7 @@ describe('CharityPortal', () => {
         user: null,
         signOut: jest.fn(),
         loading: false,
-      } as any);
+      } as MockAuthReturn);
 
       render(<CharityPortal />);
 
@@ -153,7 +189,7 @@ describe('CharityPortal', () => {
       mockUseWeb3.mockReturnValue({
         address: null,
         isConnected: false,
-      } as any);
+      } as MockWeb3Return);
 
       render(<CharityPortal />);
 
@@ -165,8 +201,6 @@ describe('CharityPortal', () => {
 
   describe('successful data loading', () => {
     beforeEach(() => {
-      const mockSupabase = require('@/lib/supabase').supabase;
-      
       // Mock charity data
       mockSupabase.from.mockImplementation((table: string) => {
         if (table === 'charities') {
@@ -299,8 +333,6 @@ describe('CharityPortal', () => {
 
   describe('helper functions', () => {
     it('calculates statistics correctly', async () => {
-      const mockSupabase = require('@/lib/supabase').supabase;
-      
       mockSupabase.from.mockImplementation((table: string) => {
         if (table === 'charities') {
           return {
@@ -370,8 +402,6 @@ describe('CharityPortal', () => {
 
   describe('data type handling', () => {
     it('handles different data types in fetched data', async () => {
-      const mockSupabase = require('@/lib/supabase').supabase;
-      
       mockSupabase.from.mockImplementation((table: string) => {
         if (table === 'charities') {
           return {

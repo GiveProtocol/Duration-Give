@@ -17,17 +17,38 @@ jest.mock('@/utils/web3', () => ({
   shortenAddress: mockShortenAddress,
 }));
 
-// Mock UI components with simplified patterns
+// Mock UI components with proper types
+interface ButtonProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: string;
+  disabled?: boolean;
+  className?: string;
+  type?: string;
+}
+
+interface InputProps {
+  value?: string;
+  onChange?: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  type?: string;
+}
+
+interface CardProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
 jest.mock('@/components/ui/Button', () => ({
-  Button: (props: any) => <button {...props} data-variant={props.variant}>{props.children}</button>,
+  Button: (props: ButtonProps) => <button {...props} data-variant={props.variant}>{props.children}</button>,
 }));
 
 jest.mock('@/components/ui/Input', () => ({
-  Input: (props: any) => <input {...props} data-testid="alias-input" />,
+  Input: (props: InputProps) => <input {...props} data-testid="alias-input" />,
 }));
 
 jest.mock('@/components/ui/Card', () => ({
-  Card: (props: any) => <div {...props} data-testid="card">{props.children}</div>,
+  Card: (props: CardProps) => <div {...props} data-testid="card">{props.children}</div>,
 }));
 
 describe('WalletAliasSettings', () => {

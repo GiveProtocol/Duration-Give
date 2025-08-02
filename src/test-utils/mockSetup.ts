@@ -77,13 +77,34 @@ export const mockShortenAddress = jest.fn((address: string) =>
   `${address.slice(0, 6)}...${address.slice(-4)}`
 );
 
-// Mock React components
+// Mock React components with proper types
+interface MockButtonProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: string;
+  disabled?: boolean;
+  className?: string;
+  type?: string;
+}
+
+interface MockInputProps {
+  value?: string;
+  onChange?: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  type?: string;
+}
+
+interface MockCardProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
 /**
  * Mock Button component for testing
  * @param props - Button component props
  * @returns Mock button element
  */
-export const MockButton = (props: any) => (
+export const MockButton = (props: MockButtonProps) => (
   <button {...props} data-variant={props.variant}>{props.children}</button>
 );
 
@@ -92,7 +113,7 @@ export const MockButton = (props: any) => (
  * @param props - Input component props
  * @returns Mock input element
  */
-export const MockInput = (props: any) => (
+export const MockInput = (props: MockInputProps) => (
   <input {...props} data-testid="alias-input" />
 );
 
@@ -101,7 +122,7 @@ export const MockInput = (props: any) => (
  * @param props - Card component props
  * @returns Mock card element
  */
-export const MockCard = (props: any) => (
+export const MockCard = (props: MockCardProps) => (
   <div {...props} data-testid="card">{props.children}</div>
 );
 
