@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useProfile } from '@/hooks/useProfile';
 import { useTranslation } from '@/hooks/useTranslation';
 import { createMockAuth, createMockProfile, createMockTranslation, setupCommonMocks } from '@/test-utils/mockSetup';
-// Removed unused import MockAuthReturn
+import { MockUIComponentProps, MockDonationExportModalProps } from '@/test-utils/types';
 import { MemoryRouter } from 'react-router-dom';
 
 // Mock all dependencies
@@ -26,7 +26,7 @@ jest.mock('@/components/ui/LoadingSpinner', () => ({
 }));
 
 jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, variant, className, ...props }: any) => (
+  Button: ({ children, onClick, variant, className, ...props }: MockUIComponentProps) => (
     <button 
       onClick={onClick}
       data-variant={variant} 
@@ -39,7 +39,7 @@ jest.mock('@/components/ui/Button', () => ({
 }));
 
 jest.mock('@/components/ui/Card', () => ({
-  Card: ({ children, className, ...props }: any) => (
+  Card: ({ children, className, ...props }: MockUIComponentProps) => (
     <div className={className} {...props}>{children}</div>
   ),
 }));
@@ -51,7 +51,7 @@ jest.mock('@/components/CurrencyDisplay', () => ({
 }));
 
 jest.mock('@/components/contribution/DonationExportModal', () => ({
-  DonationExportModal: ({ donations, onClose }: any) => (
+  DonationExportModal: ({ donations, onClose }: MockDonationExportModalProps) => (
     <div data-testid="donation-export-modal">
       <button onClick={onClose}>Close</button>
       <div>Exporting {donations.length} donations</div>

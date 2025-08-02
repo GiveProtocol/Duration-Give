@@ -1,6 +1,6 @@
 // Shared mock configurations for tests
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { MockButtonProps, MockInputProps, MockCardProps } from './types';
+import { MockButtonProps, MockInputProps, MockCardProps, MockUIComponentProps } from './types';
 
 /**
  * Creates a mock Web3 context object for testing
@@ -193,7 +193,7 @@ export const setupCommonMocks = () => {
   }));
 
   jest.mock('@/components/ui/Button', () => ({
-    Button: ({ children, onClick, variant, disabled, className, ...props }: any) => (
+    Button: ({ children, onClick, variant, disabled, className, ...props }: MockUIComponentProps) => (
       <button 
         onClick={onClick}
         disabled={disabled}
@@ -207,7 +207,7 @@ export const setupCommonMocks = () => {
   }));
 
   jest.mock('@/components/ui/Card', () => ({
-    Card: ({ children, className, ...props }: any) => (
+    Card: ({ children, className, ...props }: MockUIComponentProps) => (
       <div className={className} {...props}>{children}</div>
     ),
   }));

@@ -79,6 +79,31 @@ export interface MockVolunteerVerificationReturn {
 }
 
 /**
+ * Props interface for mock DonationExportModal component
+ */
+export interface MockDonationExportModalProps {
+  donations: Array<{
+    id: string;
+    amount: number;
+    timestamp: string;
+    [key: string]: unknown;
+  }>;
+  onClose: () => void;
+}
+
+/**
+ * Generic props interface for mock UI components with common HTML attributes
+ */
+export interface MockUIComponentProps {
+  children?: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  variant?: string;
+  disabled?: boolean;
+  [key: string]: unknown;
+}
+
+/**
  * Shared CSS class patterns for test assertions
  * Centralizes common styling patterns to reduce duplication
  */
