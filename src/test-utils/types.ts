@@ -38,6 +38,7 @@ export interface MockCardProps {
  */
 export interface MockAuthReturn {
   user: { id: string } | null;
+  userType: string | null;
   signOut: jest.Mock;
   loading: boolean;
 }
@@ -49,3 +50,49 @@ export interface MockWeb3Return {
   address: string | null;
   isConnected: boolean;
 }
+
+/**
+ * Common interface for mock profile hook return type
+ */
+export interface MockProfileReturn {
+  profile: { id: string; name?: string } | null;
+  loading: boolean;
+  error: string | null;
+  refetch: jest.Mock;
+}
+
+/**
+ * Common interface for mock translation hook return type
+ */
+export interface MockTranslationReturn {
+  t: jest.Mock;
+}
+
+/**
+ * Common interface for mock volunteer verification hook return type
+ */
+export interface MockVolunteerVerificationReturn {
+  verifyHours: jest.Mock;
+  acceptApplication: jest.Mock;
+  loading: boolean;
+  error: string | null;
+}
+
+/**
+ * Shared CSS class patterns for test assertions
+ * Centralizes common styling patterns to reduce duplication
+ */
+export const cssClasses = {
+  card: {
+    default: ['bg-white', 'border', 'border-gray-200', 'rounded-lg', 'p-4'],
+    success: ['bg-green-50', 'border', 'border-green-200', 'rounded-lg', 'p-4'],
+    error: ['p-3', 'bg-red-50', 'text-red-700', 'text-sm', 'rounded-md'],
+  },
+  button: {
+    primary: ['flex', 'items-center'],
+    secondary: ['flex', 'items-center'],
+  },
+  spinner: {
+    default: ['animate-spin'],
+  },
+};

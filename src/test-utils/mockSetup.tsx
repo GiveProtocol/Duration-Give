@@ -56,6 +56,32 @@ export const createMockTranslation = (overrides = {}) => ({
   ...overrides,
 });
 
+/**
+ * Creates a mock auth context object for testing
+ * @param overrides - Properties to override in the default mock
+ * @returns Mock auth context object
+ */
+export const createMockAuth = (overrides = {}) => ({
+  user: null,
+  userType: null,
+  signOut: jest.fn(),
+  loading: false,
+  ...overrides,
+});
+
+/**
+ * Creates a mock profile hook object for testing
+ * @param overrides - Properties to override in the default mock
+ * @returns Mock profile hook object
+ */
+export const createMockProfile = (overrides = {}) => ({
+  profile: null,
+  loading: false,
+  error: null,
+  refetch: jest.fn(),
+  ...overrides,
+});
+
 // Common mock implementations
 /**
  * Mock logger object for testing
@@ -79,6 +105,7 @@ export const mockShortenAddress = jest.fn((address: string) =>
 );
 
 // Mock React components using shared types
+// These are kept for backward compatibility with existing tests
 
 /**
  * Mock Button component for testing
@@ -116,6 +143,7 @@ export const testAddresses = {
   shortAddress: '0x1234...7890',
 };
 
+
 /**
  * Default props for test components
  */
@@ -134,3 +162,86 @@ export const testPropsDefaults = {
     description: 'Helped with beach cleanup and waste sorting',
   },
 };
+
+/**
+ * Setup common mock implementations used across multiple test files
+ * This centralizes repetitive mocking patterns to reduce duplication
+ */
+export const setupCommonMocks = () => {
+  // Mock date utilities
+  jest.mock('@/utils/date', () => ({
+    formatDate: jest.fn((date: string, includeTime?: boolean) => 
+      includeTime ? `${date} 10:00 AM` : date
+    ),
+  }));
+
+  // Mock logger
+  jest.mock('@/utils/logger', () => ({
+    Logger: {
+      error: jest.fn(),
+      info: jest.fn(),
+      warn: jest.fn(),
+      debug: jest.fn(),
+    },
+  }));
+
+  // Mock common UI components
+  jest.mock('@/components/ui/LoadingSpinner', () => ({
+    LoadingSpinner: ({ size }: { size?: string }) => (
+      <div data-testid="loading-spinner" data-size={size}>Loading...</div>
+    ),
+  }));
+
+  jest.mock('@/components/ui/Button', () => ({
+    Button: ({ children, onClick, variant, disabled, className, ...props }: any) => (
+      <button 
+        onClick={onClick}
+        disabled={disabled}
+        data-variant={variant} 
+        className={className}
+        {...props}
+      >
+        {children}
+      </button>
+    ),
+  }));
+
+  jest.mock('@/components/ui/Card', () => ({
+    Card: ({ children, className, ...props }: any) => (
+      <div className={className} {...props}>{children}</div>
+    ),
+  }));
+
+  jest.mock('@/components/CurrencyDisplay', () => ({
+    CurrencyDisplay: ({ amount }: { amount: number }) => (
+      <span data-testid="currency-display">${amount}</span>
+    ),
+  }));
+};
+
+/**
+ * Creates a standardized mock Supabase client for testing
+ * @param customResponses - Custom responses for specific tables
+ * @returns Mock Supabase client object
+ */
+export const createMockSupabase = (customResponses = {}) => ({
+  from: jest.fn((table: string) => {
+    const defaultResponse = { data: [], error: null };
+    const customResponse = customResponses[table] || defaultResponse;
+    
+    return {
+      select: jest.fn(() => ({
+        eq: jest.fn(() => ({
+          eq: jest.fn(() => Promise.resolve(customResponse)),
+          single: jest.fn(() => Promise.resolve(customResponse)),
+          order: jest.fn(() => Promise.resolve(customResponse)),
+          in: jest.fn(() => ({
+            order: jest.fn(() => Promise.resolve(customResponse)),
+          })),
+        })),
+        order: jest.fn(() => Promise.resolve(customResponse)),
+        single: jest.fn(() => Promise.resolve(customResponse)),
+      })),
+    };
+  }),
+});

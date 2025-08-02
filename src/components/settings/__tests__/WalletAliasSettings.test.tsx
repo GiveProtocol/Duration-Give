@@ -7,28 +7,24 @@ import {
   createMockWalletAlias, 
   createMockWeb3,
   testAddresses,
-  mockShortenAddress
+  mockShortenAddress,
+  setupCommonMocks
 } from '@/test-utils/mockSetup';
-import { MockButtonProps, MockInputProps, MockCardProps } from '@/test-utils/types';
+import { MockInputProps } from '@/test-utils/types';
 
-// Mock the dependencies
+// Setup common mocks to reduce duplication
+setupCommonMocks();
+
+// Mock the specific dependencies
 jest.mock('@/hooks/useWalletAlias');
 jest.mock('@/contexts/Web3Context');
 jest.mock('@/utils/web3', () => ({
   shortenAddress: mockShortenAddress,
 }));
 
-// Mock UI components using shared types
-jest.mock('@/components/ui/Button', () => ({
-  Button: (props: MockButtonProps) => <button {...props} data-variant={props.variant}>{props.children}</button>,
-}));
-
+// Mock UI components using shared types (overrides setupCommonMocks for specificity)
 jest.mock('@/components/ui/Input', () => ({
   Input: (props: MockInputProps) => <input {...props} data-testid="alias-input" />,
-}));
-
-jest.mock('@/components/ui/Card', () => ({
-  Card: (props: MockCardProps) => <div {...props} data-testid="card">{props.children}</div>,
 }));
 
 describe('WalletAliasSettings', () => {
@@ -40,14 +36,10 @@ describe('WalletAliasSettings', () => {
     
     // useWalletAlias and useWeb3 are already imported and mocked
     
-    useWalletAlias.mockReturnValue({
-      alias: null,
-      aliases: {},
-      loading: false,
-      error: null,
+    (useWalletAlias as jest.Mock).mockReturnValue(createMockWalletAlias({
       setWalletAlias: mockSetWalletAlias,
       deleteWalletAlias: mockDeleteWalletAlias,
-    });
+    }));
 
     (useWeb3 as jest.Mock).mockReturnValue(createMockWeb3({
       address: testAddresses.mainWallet,

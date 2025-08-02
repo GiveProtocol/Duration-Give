@@ -7,20 +7,16 @@ import {
   createMockVolunteerVerification, 
   createMockTranslation, 
   testPropsDefaults,
-  mockLogger
+  setupCommonMocks
 } from '@/test-utils/mockSetup';
-import { MockButtonProps } from '@/test-utils/types';
-import { cssClasses } from '@/test-utils/testHelpers';
+import { cssClasses } from '@/test-utils/types';
 
-// Mock the dependencies using simplified patterns
+// Setup common mocks to reduce duplication
+setupCommonMocks();
+
+// Mock the specific dependencies
 jest.mock('@/hooks/useVolunteerVerification');
 jest.mock('@/hooks/useTranslation');
-jest.mock('@/utils/logger', () => ({
-  Logger: mockLogger,
-}));
-jest.mock('@/components/ui/Button', () => ({
-  Button: (props: MockButtonProps) => <button {...props} data-variant={props.variant}>{props.children}</button>,
-}));
 
 describe('ApplicationAcceptance', () => {
   const mockAcceptApplication = jest.fn();
@@ -171,7 +167,9 @@ describe('ApplicationAcceptance', () => {
         expect(mockAcceptApplication).toHaveBeenCalled();
       });
 
-      expect(mockLogger.error).toHaveBeenCalledWith('Acceptance failed:', expect.any(Error));
+      // Logger.error should have been called with the error
+      const { Logger } = jest.requireMock('@/utils/logger');
+      expect(Logger.error).toHaveBeenCalledWith('Acceptance failed:', expect.any(Error));
     });
 
     it('handles null hash response', async () => {
