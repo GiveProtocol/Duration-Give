@@ -1,7 +1,7 @@
 // Shared TypeScript interfaces for test components
 // This file eliminates duplication of component prop types across test files
 
-import React from 'react';
+import React from "react";
 
 /**
  * Common interface for mocked Button component props
@@ -84,15 +84,15 @@ export interface MockVolunteerVerificationReturn {
  */
 export const cssClasses = {
   card: {
-    default: ['bg-white', 'border', 'border-gray-200', 'rounded-lg', 'p-4'],
-    success: ['bg-green-50', 'border', 'border-green-200', 'rounded-lg', 'p-4'],
-    error: ['p-3', 'bg-red-50', 'text-red-700', 'text-sm', 'rounded-md'],
+    default: ["bg-white", "border", "border-gray-200", "rounded-lg", "p-4"],
+    success: ["bg-green-50", "border", "border-green-200", "rounded-lg", "p-4"],
+    error: ["p-3", "bg-red-50", "text-red-700", "text-sm", "rounded-md"],
   },
   button: {
-    primary: ['flex', 'items-center'],
-    secondary: ['flex', 'items-center'],
+    primary: ["flex", "items-center"],
+    secondary: ["flex", "items-center"],
   },
   spinner: {
-    default: ['animate-spin'],
+    default: ["animate-spin"],
   },
 };
