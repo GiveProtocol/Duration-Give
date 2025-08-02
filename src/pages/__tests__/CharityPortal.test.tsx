@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useProfile } from '@/hooks/useProfile';
 import { useTranslation } from '@/hooks/useTranslation';
 import { createMockAuth, createMockProfile, createMockTranslation, setupCommonMocks } from '@/test-utils/mockSetup';
-import { MockUIComponentProps, MockDonationExportModalProps } from '@/test-utils/types';
+import { MockDonationExportModalProps } from '@/test-utils/types';
 import { MemoryRouter } from 'react-router-dom';
 
 // Mock all dependencies
@@ -15,40 +15,8 @@ jest.mock('@/hooks/useTranslation');
 jest.mock('@/utils/logger');
 jest.mock('@/utils/date');
 
-// Setup common mocks
+// Setup common mocks to reduce duplication
 setupCommonMocks();
-
-// Mock UI components
-jest.mock('@/components/ui/LoadingSpinner', () => ({
-  LoadingSpinner: ({ size }: { size?: string }) => (
-    <div data-testid="loading-spinner" data-size={size}>Loading...</div>
-  ),
-}));
-
-jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, variant, className, ...props }: MockUIComponentProps) => (
-    <button 
-      onClick={onClick}
-      data-variant={variant} 
-      className={className}
-      {...props}
-    >
-      {children}
-    </button>
-  ),
-}));
-
-jest.mock('@/components/ui/Card', () => ({
-  Card: ({ children, className, ...props }: MockUIComponentProps) => (
-    <div className={className} {...props}>{children}</div>
-  ),
-}));
-
-jest.mock('@/components/CurrencyDisplay', () => ({
-  CurrencyDisplay: ({ amount }: { amount: number }) => (
-    <span data-testid="currency-display">${amount}</span>
-  ),
-}));
 
 jest.mock('@/components/contribution/DonationExportModal', () => ({
   DonationExportModal: ({ donations, onClose }: MockDonationExportModalProps) => (

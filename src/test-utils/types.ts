@@ -4,34 +4,27 @@
 import React from 'react';
 
 /**
- * Common interface for mocked Button component props
+ * Base interface for all mock UI components with common HTML attributes
  */
-export interface MockButtonProps {
-  children: React.ReactNode;
+export interface MockUIComponentProps {
+  children?: React.ReactNode;
+  className?: string;
   onClick?: () => void;
   variant?: string;
   disabled?: boolean;
-  className?: string;
   type?: string;
-}
-
-/**
- * Common interface for mocked Input component props
- */
-export interface MockInputProps {
   value?: string;
   onChange?: (_e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  type?: string;
+  [key: string]: unknown;
 }
 
 /**
- * Common interface for mocked Card component props
+ * Legacy interfaces for backward compatibility - extend from base
  */
-export interface MockCardProps {
-  children: React.ReactNode;
-  className?: string;
-}
+export interface MockButtonProps extends Pick<MockUIComponentProps, 'children' | 'onClick' | 'variant' | 'disabled' | 'className' | 'type'> {}
+export interface MockInputProps extends Pick<MockUIComponentProps, 'value' | 'onChange' | 'placeholder' | 'type'> {}
+export interface MockCardProps extends Pick<MockUIComponentProps, 'children' | 'className'> {}
 
 /**
  * Common interface for mock auth hook return type
@@ -89,18 +82,6 @@ export interface MockDonationExportModalProps {
     [key: string]: unknown;
   }>;
   onClose: () => void;
-}
-
-/**
- * Generic props interface for mock UI components with common HTML attributes
- */
-export interface MockUIComponentProps {
-  children?: React.ReactNode;
-  className?: string;
-  onClick?: () => void;
-  variant?: string;
-  disabled?: boolean;
-  [key: string]: unknown;
 }
 
 /**
