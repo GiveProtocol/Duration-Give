@@ -83,51 +83,27 @@ export const mockShortenAddress = jest.fn((address: string) =>
  * @param props - Button component props
  * @returns Mock button element
  */
-export const MockButton = ({ children, onClick, disabled, variant, className, type }: { 
-  children: React.ReactNode; 
-  onClick?: () => void; 
-  disabled?: boolean;
-  variant?: string;
-  className?: string;
-  type?: string;
-}) => React.createElement('button', {
-  onClick,
-  disabled,
-  'data-variant': variant,
-  className,
-  type,
-}, children);
+export const MockButton = (props: any) => (
+  <button {...props} data-variant={props.variant}>{props.children}</button>
+);
 
 /**
  * Mock Input component for testing
  * @param props - Input component props
  * @returns Mock input element
  */
-export const MockInput = ({ value, onChange, placeholder, type }: { 
-  value: string; 
-  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void; 
-  placeholder?: string;
-  type?: string;
-}) => React.createElement('input', {
-  value,
-  onChange,
-  placeholder,
-  type,
-  'data-testid': 'alias-input',
-});
+export const MockInput = (props: any) => (
+  <input {...props} data-testid="alias-input" />
+);
 
 /**
  * Mock Card component for testing
  * @param props - Card component props
  * @returns Mock card element
  */
-export const MockCard = ({ children, className }: { 
-  children: React.ReactNode; 
-  className?: string;
-}) => React.createElement('div', {
-  className,
-  'data-testid': 'card',
-}, children);
+export const MockCard = (props: any) => (
+  <div {...props} data-testid="card">{props.children}</div>
+);
 
 // Common test data
 /**

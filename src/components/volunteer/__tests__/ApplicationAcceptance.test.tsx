@@ -6,7 +6,8 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { 
   createMockVolunteerVerification, 
   createMockTranslation, 
-  testPropsDefaults 
+  testPropsDefaults,
+  mockLogger
 } from '@/test-utils/mockSetup';
 import { cssClasses } from '@/test-utils/testHelpers';
 
@@ -14,22 +15,10 @@ import { cssClasses } from '@/test-utils/testHelpers';
 jest.mock('@/hooks/useVolunteerVerification');
 jest.mock('@/hooks/useTranslation');
 jest.mock('@/utils/logger', () => ({
-  Logger: {
-    error: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-  },
+  Logger: mockLogger,
 }));
 jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, variant, disabled, className, type }: any) => (
-    React.createElement('button', {
-      onClick,
-      disabled,
-      'data-variant': variant,
-      className,
-      type,
-    }, children)
-  ),
+  Button: (props: any) => <button {...props} data-variant={props.variant}>{props.children}</button>,
 }));
 
 describe('ApplicationAcceptance', () => {
@@ -181,7 +170,7 @@ describe('ApplicationAcceptance', () => {
         expect(mockAcceptApplication).toHaveBeenCalled();
       });
 
-      expect(require('@/utils/logger').Logger.error).toHaveBeenCalledWith('Acceptance failed:', expect.any(Error));
+      expect(mockLogger.error).toHaveBeenCalledWith('Acceptance failed:', expect.any(Error));
     });
 
     it('handles null hash response', async () => {

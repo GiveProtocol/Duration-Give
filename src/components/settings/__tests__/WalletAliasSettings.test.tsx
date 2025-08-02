@@ -6,48 +6,28 @@ import { useWeb3 } from '@/contexts/Web3Context';
 import { 
   createMockWalletAlias, 
   createMockWeb3,
-  testAddresses
+  testAddresses,
+  mockShortenAddress
 } from '@/test-utils/mockSetup';
 
 // Mock the dependencies
 jest.mock('@/hooks/useWalletAlias');
 jest.mock('@/contexts/Web3Context');
 jest.mock('@/utils/web3', () => ({
-  shortenAddress: jest.fn((address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`),
+  shortenAddress: mockShortenAddress,
 }));
 
-// Mock UI components using consolidated mock patterns
+// Mock UI components with simplified patterns
 jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, variant, disabled, className, type }: any) => (
-    React.createElement('button', {
-      onClick,
-      disabled,
-      'data-variant': variant,
-      className,
-      type,
-    }, children)
-  ),
+  Button: (props: any) => <button {...props} data-variant={props.variant}>{props.children}</button>,
 }));
 
 jest.mock('@/components/ui/Input', () => ({
-  Input: ({ value, onChange, placeholder, type }: any) => (
-    React.createElement('input', {
-      value,
-      onChange,
-      placeholder,
-      type,
-      'data-testid': 'alias-input',
-    })
-  ),
+  Input: (props: any) => <input {...props} data-testid="alias-input" />,
 }));
 
 jest.mock('@/components/ui/Card', () => ({
-  Card: ({ children, className }: any) => (
-    React.createElement('div', {
-      className,
-      'data-testid': 'card',
-    }, children)
-  ),
+  Card: (props: any) => <div {...props} data-testid="card">{props.children}</div>,
 }));
 
 describe('WalletAliasSettings', () => {

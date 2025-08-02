@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * Common Jest mock configurations
@@ -64,31 +63,6 @@ export const createHookMocks = () => ({
 });
 
 /**
- * Common component mock implementations
+ * Note: Component mocks have been moved to mockSetup.ts to eliminate duplication.
+ * Use MockButton, MockInput, MockCard from @/test-utils/mockSetup instead.
  */
-export const componentMocks = {
-  Button: ({ children, onClick, variant, disabled, className, type }: any) => (
-    React.createElement('button', {
-      onClick,
-      disabled,
-      'data-variant': variant,
-      className,
-      type,
-    }, children)
-  ),
-  Input: ({ value, onChange, placeholder, type }: any) => (
-    React.createElement('input', {
-      value,
-      onChange,
-      placeholder,
-      type,
-      'data-testid': 'alias-input',
-    })
-  ),
-  Card: ({ children, className }: any) => (
-    React.createElement('div', {
-      className,
-      'data-testid': 'card',
-    }, children)
-  ),
-};

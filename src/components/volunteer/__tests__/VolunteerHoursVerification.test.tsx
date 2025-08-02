@@ -6,32 +6,22 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { 
   createMockVolunteerVerification, 
   createMockTranslation, 
-  testPropsDefaults 
+  testPropsDefaults,
+  mockLogger,
+  mockFormatDate
 } from '@/test-utils/mockSetup';
 
 // Mock the dependencies using simplified patterns
 jest.mock('@/hooks/useVolunteerVerification');
 jest.mock('@/hooks/useTranslation');
 jest.mock('@/utils/date', () => ({
-  formatDate: jest.fn((date: string) => new Date(date).toLocaleDateString()),
+  formatDate: mockFormatDate,
 }));
 jest.mock('@/utils/logger', () => ({
-  Logger: {
-    error: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-  },
+  Logger: mockLogger,
 }));
 jest.mock('@/components/ui/Button', () => ({
-  Button: ({ children, onClick, variant, disabled, className, type }: any) => (
-    React.createElement('button', {
-      onClick,
-      disabled,
-      'data-variant': variant,
-      className,
-      type,
-    }, children)
-  ),
+  Button: (props: any) => <button {...props} data-variant={props.variant}>{props.children}</button>,
 }));
 
 describe('VolunteerHoursVerification', () => {
@@ -90,7 +80,7 @@ describe('VolunteerHoursVerification', () => {
     it('formats date using date utility', () => {
       render(<VolunteerHoursVerification {...defaultProps} />);
       
-      expect(require('@/utils/date').formatDate).toHaveBeenCalledWith(testPropsDefaults.volunteerHours.datePerformed);
+      expect(mockFormatDate).toHaveBeenCalledWith(testPropsDefaults.volunteerHours.datePerformed);
     });
   });
 
@@ -200,7 +190,7 @@ describe('VolunteerHoursVerification', () => {
         expect(mockVerifyHours).toHaveBeenCalled();
       });
 
-      expect(require('@/utils/logger').Logger.error).toHaveBeenCalledWith('Verification failed:', expect.any(Error));
+      expect(mockLogger.error).toHaveBeenCalledWith('Verification failed:', expect.any(Error));
     });
 
     it('handles null hash response', async () => {

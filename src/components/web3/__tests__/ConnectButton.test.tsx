@@ -3,7 +3,7 @@ import { ConnectButton } from '../ConnectButton';
 import { useWeb3 } from '@/contexts/Web3Context';
 import { useWalletAlias } from '@/hooks/useWalletAlias';
 import { renderWithRouter } from '@/test-utils/testHelpers';
-import { createMockWeb3, createMockWalletAlias, testAddresses } from '@/test-utils/mockSetup';
+import { createMockWeb3, createMockWalletAlias, testAddresses, mockShortenAddress, mockLogger } from '@/test-utils/mockSetup';
 
 // Setup common mocks using simplified patterns
 jest.mock('@/contexts/Web3Context');
@@ -24,14 +24,10 @@ jest.mock('@/hooks/useWallet', () => ({
 }));
 jest.mock('@/hooks/useWalletAlias');
 jest.mock('@/utils/web3', () => ({
-  shortenAddress: jest.fn((address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`),
+  shortenAddress: mockShortenAddress,
 }));
 jest.mock('@/utils/logger', () => ({
-  Logger: {
-    info: jest.fn(),
-    error: jest.fn(),
-    warn: jest.fn(),
-  },
+  Logger: mockLogger,
 }));
 jest.mock('@/config/contracts', () => ({
   CHAIN_IDS: {
