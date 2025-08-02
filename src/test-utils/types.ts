@@ -1,7 +1,7 @@
 // Shared TypeScript interfaces for test components
 // This file eliminates duplication of component prop types across test files
 
-import React from 'react';
+import React from "react";
 
 /**
  * Common interface for mocked Button component props

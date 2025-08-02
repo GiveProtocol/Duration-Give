@@ -1,6 +1,6 @@
 // Shared mock configurations for tests
-import React from 'react'; // eslint-disable-line no-unused-vars
-import { MockButtonProps, MockInputProps, MockCardProps } from './types';
+import React from "react"; // eslint-disable-line no-unused-vars
+import { MockButtonProps, MockInputProps, MockCardProps } from "./types";
 
 /**
  * Creates a mock Web3 context object for testing
@@ -74,8 +74,8 @@ export const mockFormatDate = jest.fn((date: string) => `Formatted: ${date}`);
 /**
  * Mock address shortening function for testing
  */
-export const mockShortenAddress = jest.fn((address: string) => 
-  `${address.slice(0, 6)}...${address.slice(-4)}`
+export const mockShortenAddress = jest.fn(
+  (address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`,
 );
 
 // Mock React components using shared types
@@ -86,7 +86,9 @@ export const mockShortenAddress = jest.fn((address: string) =>
  * @returns Mock button element
  */
 export const MockButton = (props: MockButtonProps) => (
-  <button {...props} data-variant={props.variant}>{props.children}</button>
+  <button {...props} data-variant={props.variant}>
+    {props.children}
+  </button>
 );
 
 /**
@@ -104,7 +106,9 @@ export const MockInput = (props: MockInputProps) => (
  * @returns Mock card element
  */
 export const MockCard = (props: MockCardProps) => (
-  <div {...props} data-testid="card">{props.children}</div>
+  <div {...props} data-testid="card">
+    {props.children}
+  </div>
 );
 
 // Common test data
@@ -112,8 +116,8 @@ export const MockCard = (props: MockCardProps) => (
  * Common test wallet addresses
  */
 export const testAddresses = {
-  mainWallet: '0x1234567890123456789012345678901234567890',
-  shortAddress: '0x1234...7890',
+  mainWallet: "0x1234567890123456789012345678901234567890",
+  shortAddress: "0x1234...7890",
 };
 
 /**
@@ -121,16 +125,16 @@ export const testAddresses = {
  */
 export const testPropsDefaults = {
   applicationAcceptance: {
-    applicationId: 'app-123',
-    applicantName: 'John Doe',
-    opportunityTitle: 'Beach Cleanup Volunteer',
+    applicationId: "app-123",
+    applicantName: "John Doe",
+    opportunityTitle: "Beach Cleanup Volunteer",
   },
   volunteerHours: {
-    hoursId: 'hours-123',
-    volunteerId: 'volunteer-456',
-    volunteerName: 'Jane Smith',
+    hoursId: "hours-123",
+    volunteerId: "volunteer-456",
+    volunteerName: "Jane Smith",
     hours: 8,
-    datePerformed: '2024-01-15',
-    description: 'Helped with beach cleanup and waste sorting',
+    datePerformed: "2024-01-15",
+    description: "Helped with beach cleanup and waste sorting",
   },
 };
