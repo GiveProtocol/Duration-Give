@@ -4,6 +4,12 @@
 
 import type { MockSupabaseQuery, MockSupabaseOverrides, MockCharity, MockDonation } from './types';
 
+/**
+ * Creates a mock Supabase query response object
+ * @param data - The data to return in the query response (can be array, single item, or null)
+ * @param error - Optional error object with message property
+ * @returns Mock query response object matching Supabase's response format
+ */
 export const createMockSupabaseQuery = <T = unknown>(
   data: T[] | T | null = [], 
   error: { message: string } | null = null
