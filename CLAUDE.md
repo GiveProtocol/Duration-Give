@@ -77,3 +77,61 @@ Create a `.env` file with required variables:
 - Adding translations: Update all language files in `/src/i18n/resources/`
 - Modifying contracts: Update Solidity, compile, update TypeScript types, redeploy
 - Testing blockchain features: Use local Hardhat node with `npm run node`
+
+## CRITICAL: Code Quality & SonarCloud Guidelines
+
+**ALWAYS run `npm run lint` before committing code. Fix ALL errors, not just warnings.**
+
+### Testing Best Practices
+1. **Comprehensive Coverage**: Focus test coverage on files modified within the last 15 days (SonarCloud's "New Code" definition)
+2. **Test File Organization**: Use shared test helpers in `/src/test-utils/` to reduce duplication
+3. **Mock Patterns**: Consolidate repetitive mock setups using helper functions
+4. **Async Testing**: Always await async test helper functions and add proper assertions
+
+### Security Requirements
+- **NEVER use hard-coded passwords/secrets** in tests - use `expect.any(String)` or constants
+- **Always sanitize user inputs** and validate data before processing
+- **Never commit sensitive data** like API keys, private keys, or passwords
+
+### ESLint Error Prevention
+- **Unused Variables**: Name unused parameters with `_` prefix (e.g., `_unusedParam`) or remove them
+- **Reserved Keywords**: Avoid using `import`, `export`, `class` as property names in interfaces
+- **TypeScript Interfaces**: 
+  - Avoid `extends typeof globalThis` - use simple interfaces instead
+  - Replace `NodeJS.*` types with generic equivalents when ESLint complains
+  - Use `Record<string, unknown>` instead of `NodeJS.ProcessEnv` in tests
+- **Test Assertions**: Ensure all test functions contain assertions or disable ESLint with `// eslint-disable-next-line jest/expect-expect`
+
+### Code Duplication Prevention
+1. **Extract Common Patterns**: Create shared utilities for repetitive code
+2. **Test Helpers**: Use `/src/test-utils/` for common mock objects and setup functions
+3. **Constants**: Define reusable constants (like `MOCK_USER`) to avoid duplication
+4. **Helper Functions**: Extract common test flows into reusable functions
+
+### File Naming & Structure
+- **Test Files**: Use `.test.tsx` for React components, `.test.ts` for utilities
+- **Mock Files**: Place mocks in `/src/test-utils/` with descriptive names
+- **Helper Files**: Create focused helper files (e.g., `authTestHelpers.ts`) for specific domains
+
+### Performance Considerations
+- **Lazy Loading**: Use React.lazy() for large components
+- **Memoization**: Apply React.memo() and useMemo() for expensive calculations
+- **Bundle Analysis**: Regularly check bundle size and optimize imports
+
+### Known Integration Issues
+1. **Jest + Supabase**: Mock Supabase client to avoid ES module issues in tests
+2. **Viem + Ethers**: Use appropriate library for each use case, don't mix in same file
+3. **TypeScript + ESLint**: Some global type references need simplification for ESLint compatibility
+
+## Quality Gate Requirements
+- **Coverage**: ≥80% on new code (last 15 days)
+- **Duplication**: ≤3% on new code  
+- **Security Hotspots**: 0 (no hard-coded secrets)
+- **Reliability**: A rating (no ESLint errors)
+
+## Git Workflow
+1. Always run `npm run lint` before committing
+2. Write descriptive commit messages explaining the "why" not just "what"
+3. Keep commits focused on single logical changes
+4. Test changes locally before pushing
+5. Use conventional commit format when possible
