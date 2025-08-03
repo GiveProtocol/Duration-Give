@@ -1,176 +1,198 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
-import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import AppRoutes from '../index';
+import React from "react"; // eslint-disable-line no-unused-vars
+import { render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import AppRoutes from "../index";
 
 // Mock all dependencies
-jest.mock('@/contexts/AuthContext');
-jest.mock('./RouteTransition', () => ({
-  RouteTransition: ({ children }: { children: React.ReactNode }) => <div>{children}</div>
+jest.mock("@/contexts/AuthContext");
+jest.mock("./RouteTransition", () => ({
+  RouteTransition: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
-jest.mock('./ProtectedRoute', () => ({
-  ProtectedRoute: ({ children }: { children: React.ReactNode }) => <div data-testid="protected-route">{children}</div>
+jest.mock("./ProtectedRoute", () => ({
+  ProtectedRoute: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="protected-route">{children}</div>
+  ),
 }));
-jest.mock('@/components/ui/LoadingSpinner', () => ({
-  LoadingSpinner: ({ size }: { size?: string }) => <div data-testid="loading-spinner" data-size={size}>Loading...</div>
+jest.mock("@/components/ui/LoadingSpinner", () => ({
+  LoadingSpinner: ({ size }: { size?: string }) => (
+    <div data-testid="loading-spinner" data-size={size}>
+      Loading...
+    </div>
+  ),
 }));
 
 // Mock all page components
-jest.mock('@/pages/ComingSoon', () => ({
+jest.mock("@/pages/ComingSoon", () => ({
   __esModule: true,
-  default: () => <div data-testid="coming-soon">Coming Soon</div>
+  default: () => <div data-testid="coming-soon">Coming Soon</div>,
 }));
 
-jest.mock('@/pages/Login', () => ({
+jest.mock("@/pages/Login", () => ({
   __esModule: true,
-  default: () => <div data-testid="login">Login</div>
+  default: () => <div data-testid="login">Login</div>,
 }));
 
-jest.mock('@/pages/Register', () => ({
+jest.mock("@/pages/Register", () => ({
   __esModule: true,
-  default: () => <div data-testid="register">Register</div>
+  default: () => <div data-testid="register">Register</div>,
 }));
 
 // Mock lazy-loaded components
-jest.mock('@/pages/Home', () => ({
+jest.mock("@/pages/Home", () => ({
   __esModule: true,
-  default: () => <div data-testid="home">Home</div>
+  default: () => <div data-testid="home">Home</div>,
 }));
 
-jest.mock('@/pages/CharityBrowser', () => ({
+jest.mock("@/pages/CharityBrowser", () => ({
   __esModule: true,
-  default: () => <div data-testid="charity-browser">Charity Browser</div>
+  default: () => <div data-testid="charity-browser">Charity Browser</div>,
 }));
 
-jest.mock('@/pages/SentryTest', () => ({
+jest.mock("@/pages/SentryTest", () => ({
   __esModule: true,
-  default: () => <div data-testid="sentry-test">Sentry Test</div>
+  default: () => <div data-testid="sentry-test">Sentry Test</div>,
 }));
 
-jest.mock('@/pages/charities/GlobalWaterFoundation', () => ({
+jest.mock("@/pages/charities/GlobalWaterFoundation", () => ({
   __esModule: true,
-  default: () => <div data-testid="global-water">Global Water Foundation</div>
+  default: () => <div data-testid="global-water">Global Water Foundation</div>,
 }));
 
-jest.mock('@/pages/charities/EducationForAll', () => ({
+jest.mock("@/pages/charities/EducationForAll", () => ({
   __esModule: true,
-  default: () => <div data-testid="education-for-all">Education For All</div>
+  default: () => <div data-testid="education-for-all">Education For All</div>,
 }));
 
-jest.mock('@/pages/charities/ClimateActionNow', () => ({
+jest.mock("@/pages/charities/ClimateActionNow", () => ({
   __esModule: true,
-  default: () => <div data-testid="climate-action">Climate Action Now</div>
+  default: () => <div data-testid="climate-action">Climate Action Now</div>,
 }));
 
-jest.mock('@/pages/portfolio/EnvironmentPortfolioDetail', () => ({
+jest.mock("@/pages/portfolio/EnvironmentPortfolioDetail", () => ({
   __esModule: true,
-  default: () => <div data-testid="environment-portfolio">Environment Portfolio</div>
+  default: () => (
+    <div data-testid="environment-portfolio">Environment Portfolio</div>
+  ),
 }));
 
-jest.mock('@/pages/portfolio/EducationPortfolioDetail', () => ({
+jest.mock("@/pages/portfolio/EducationPortfolioDetail", () => ({
   __esModule: true,
-  default: () => <div data-testid="education-portfolio">Education Portfolio</div>
+  default: () => (
+    <div data-testid="education-portfolio">Education Portfolio</div>
+  ),
 }));
 
-jest.mock('@/pages/portfolio/PovertyPortfolioDetail', () => ({
+jest.mock("@/pages/portfolio/PovertyPortfolioDetail", () => ({
   __esModule: true,
-  default: () => <div data-testid="poverty-portfolio">Poverty Portfolio</div>
+  default: () => <div data-testid="poverty-portfolio">Poverty Portfolio</div>,
 }));
 
-jest.mock('@/pages/ContributionTracker', () => ({
+jest.mock("@/pages/ContributionTracker", () => ({
   __esModule: true,
-  default: () => <div data-testid="contribution-tracker">Contribution Tracker</div>
+  default: () => (
+    <div data-testid="contribution-tracker">Contribution Tracker</div>
+  ),
 }));
 
-jest.mock('@/pages/VolunteerOpportunities', () => ({
+jest.mock("@/pages/VolunteerOpportunities", () => ({
   __esModule: true,
-  default: () => <div data-testid="volunteer-opportunities">Volunteer Opportunities</div>
+  default: () => (
+    <div data-testid="volunteer-opportunities">Volunteer Opportunities</div>
+  ),
 }));
 
-jest.mock('@/pages/About', () => ({
-  About: () => <div data-testid="about">About</div>
+jest.mock("@/pages/About", () => ({
+  About: () => <div data-testid="about">About</div>,
 }));
 
-jest.mock('@/pages/Legal', () => ({
-  Legal: () => <div data-testid="legal">Legal</div>
+jest.mock("@/pages/Legal", () => ({
+  Legal: () => <div data-testid="legal">Legal</div>,
 }));
 
-jest.mock('@/pages/Privacy', () => ({
-  Privacy: () => <div data-testid="privacy">Privacy</div>
+jest.mock("@/pages/Privacy", () => ({
+  Privacy: () => <div data-testid="privacy">Privacy</div>,
 }));
 
-jest.mock('@/pages/Governance', () => ({
-  Governance: () => <div data-testid="governance">Governance</div>
+jest.mock("@/pages/Governance", () => ({
+  Governance: () => <div data-testid="governance">Governance</div>,
 }));
 
-jest.mock('@/pages/GiveDashboard', () => ({
-  GiveDashboard: () => <div data-testid="give-dashboard">Give Dashboard</div>
+jest.mock("@/pages/GiveDashboard", () => ({
+  GiveDashboard: () => <div data-testid="give-dashboard">Give Dashboard</div>,
 }));
 
-jest.mock('@/pages/CharityPortal', () => ({
-  CharityPortal: () => <div data-testid="charity-portal">Charity Portal</div>
+jest.mock("@/pages/CharityPortal", () => ({
+  CharityPortal: () => <div data-testid="charity-portal">Charity Portal</div>,
 }));
 
-jest.mock('@/pages/charity/CreateOpportunity', () => ({
+jest.mock("@/pages/charity/CreateOpportunity", () => ({
   __esModule: true,
-  default: () => <div data-testid="create-opportunity">Create Opportunity</div>
+  default: () => <div data-testid="create-opportunity">Create Opportunity</div>,
 }));
 
-jest.mock('@/pages/NotFound', () => ({
+jest.mock("@/pages/NotFound", () => ({
   __esModule: true,
-  default: () => <div data-testid="not-found">Not Found</div>
+  default: () => <div data-testid="not-found">Not Found</div>,
 }));
 
-jest.mock('@/pages/volunteer/VerifyContribution', () => ({
+jest.mock("@/pages/volunteer/VerifyContribution", () => ({
   __esModule: true,
-  default: () => <div data-testid="verify-contribution">Verify Contribution</div>
+  default: () => (
+    <div data-testid="verify-contribution">Verify Contribution</div>
+  ),
 }));
 
-jest.mock('@/pages/donor/ScheduledDonationsPage', () => ({
+jest.mock("@/pages/donor/ScheduledDonationsPage", () => ({
   __esModule: true,
-  default: () => <div data-testid="scheduled-donations">Scheduled Donations</div>
+  default: () => (
+    <div data-testid="scheduled-donations">Scheduled Donations</div>
+  ),
 }));
 
-jest.mock('@/pages/Documentation', () => ({
+jest.mock("@/pages/Documentation", () => ({
   __esModule: true,
-  default: () => <div data-testid="documentation">Documentation</div>
+  default: () => <div data-testid="documentation">Documentation</div>,
 }));
 
-jest.mock('@/pages/admin/AdminDashboard', () => ({
+jest.mock("@/pages/admin/AdminDashboard", () => ({
   __esModule: true,
-  default: () => <div data-testid="admin-dashboard">Admin Dashboard</div>
+  default: () => <div data-testid="admin-dashboard">Admin Dashboard</div>,
 }));
 
-jest.mock('@/pages/causes/CleanWaterInitiative', () => ({
+jest.mock("@/pages/causes/CleanWaterInitiative", () => ({
   __esModule: true,
-  default: () => <div data-testid="clean-water">Clean Water Initiative</div>
+  default: () => <div data-testid="clean-water">Clean Water Initiative</div>,
 }));
 
-jest.mock('@/pages/causes/EducationAccessProgram', () => ({
+jest.mock("@/pages/causes/EducationAccessProgram", () => ({
   __esModule: true,
-  default: () => <div data-testid="education-access">Education Access Program</div>
+  default: () => (
+    <div data-testid="education-access">Education Access Program</div>
+  ),
 }));
 
-jest.mock('@/pages/causes/ReforestationProject', () => ({
+jest.mock("@/pages/causes/ReforestationProject", () => ({
   __esModule: true,
-  default: () => <div data-testid="reforestation">Reforestation Project</div>
+  default: () => <div data-testid="reforestation">Reforestation Project</div>,
 }));
 
 const mockUseAuth = useAuth as jest.MockedFunction<typeof useAuth>;
 
-const renderWithRouter = (initialEntries: string[] = ['/']) => {
+const renderWithRouter = (initialEntries: string[] = ["/"]) => {
   return render(
     <MemoryRouter initialEntries={initialEntries}>
       <AppRoutes />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };
 
-describe('AppRoutes', () => {
+describe("AppRoutes", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Default auth state - not authenticated
     mockUseAuth.mockReturnValue({
       user: null,
@@ -187,191 +209,193 @@ describe('AppRoutes', () => {
     });
   });
 
-  describe('Public Routes', () => {
-    it('renders coming soon page at root', async () => {
-      renderWithRouter(['/']);
-      
+  describe("Public Routes", () => {
+    it("renders coming soon page at root", async () => {
+      renderWithRouter(["/"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('coming-soon')).toBeInTheDocument();
+        expect(screen.getByTestId("coming-soon")).toBeInTheDocument();
       });
     });
 
-    it('renders login page', async () => {
-      renderWithRouter(['/login']);
-      
+    it("renders login page", async () => {
+      renderWithRouter(["/login"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('login')).toBeInTheDocument();
+        expect(screen.getByTestId("login")).toBeInTheDocument();
       });
     });
 
-    it('renders register page', async () => {
-      renderWithRouter(['/register']);
-      
+    it("renders register page", async () => {
+      renderWithRouter(["/register"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('register')).toBeInTheDocument();
+        expect(screen.getByTestId("register")).toBeInTheDocument();
       });
     });
 
-    it('renders charity browser page', async () => {
-      renderWithRouter(['/charities']);
-      
+    it("renders charity browser page", async () => {
+      renderWithRouter(["/charities"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('charity-browser')).toBeInTheDocument();
+        expect(screen.getByTestId("charity-browser")).toBeInTheDocument();
       });
     });
 
-    it('renders sentry test page', async () => {
-      renderWithRouter(['/sentry-test']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('sentry-test')).toBeInTheDocument();
-      });
-    });
-  });
+    it("renders sentry test page", async () => {
+      renderWithRouter(["/sentry-test"]);
 
-  describe('Charity Detail Pages', () => {
-    it('renders Global Water Foundation page', async () => {
-      renderWithRouter(['/charities/global-water-foundation']);
-      
       await waitFor(() => {
-        expect(screen.getByTestId('global-water')).toBeInTheDocument();
-      });
-    });
-
-    it('renders Education For All page', async () => {
-      renderWithRouter(['/charities/education-for-all']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('education-for-all')).toBeInTheDocument();
-      });
-    });
-
-    it('renders Climate Action Now page', async () => {
-      renderWithRouter(['/charities/climate-action-now']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('climate-action')).toBeInTheDocument();
+        expect(screen.getByTestId("sentry-test")).toBeInTheDocument();
       });
     });
   });
 
-  describe('Portfolio Pages', () => {
-    it('renders Environment Portfolio page', async () => {
-      renderWithRouter(['/portfolio/environment']);
-      
+  describe("Charity Detail Pages", () => {
+    it("renders Global Water Foundation page", async () => {
+      renderWithRouter(["/charities/global-water-foundation"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('environment-portfolio')).toBeInTheDocument();
+        expect(screen.getByTestId("global-water")).toBeInTheDocument();
       });
     });
 
-    it('renders Education Portfolio page', async () => {
-      renderWithRouter(['/portfolio/education']);
-      
+    it("renders Education For All page", async () => {
+      renderWithRouter(["/charities/education-for-all"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('education-portfolio')).toBeInTheDocument();
+        expect(screen.getByTestId("education-for-all")).toBeInTheDocument();
       });
     });
 
-    it('renders Poverty Portfolio page', async () => {
-      renderWithRouter(['/portfolio/poverty']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('poverty-portfolio')).toBeInTheDocument();
-      });
-    });
-  });
+    it("renders Climate Action Now page", async () => {
+      renderWithRouter(["/charities/climate-action-now"]);
 
-  describe('Cause Pages', () => {
-    it('renders Clean Water Initiative page', async () => {
-      renderWithRouter(['/causes/clean-water-initiative']);
-      
       await waitFor(() => {
-        expect(screen.getByTestId('clean-water')).toBeInTheDocument();
-      });
-    });
-
-    it('renders Education Access Program page', async () => {
-      renderWithRouter(['/causes/education-access-program']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('education-access')).toBeInTheDocument();
-      });
-    });
-
-    it('renders Reforestation Project page', async () => {
-      renderWithRouter(['/causes/reforestation-project']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('reforestation')).toBeInTheDocument();
+        expect(screen.getByTestId("climate-action")).toBeInTheDocument();
       });
     });
   });
 
-  describe('Feature Pages', () => {
-    it('renders Contribution Tracker page', async () => {
-      renderWithRouter(['/contribution-tracker']);
-      
+  describe("Portfolio Pages", () => {
+    it("renders Environment Portfolio page", async () => {
+      renderWithRouter(["/portfolio/environment"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('contribution-tracker')).toBeInTheDocument();
+        expect(screen.getByTestId("environment-portfolio")).toBeInTheDocument();
       });
     });
 
-    it('renders Volunteer Opportunities page', async () => {
-      renderWithRouter(['/volunteer-opportunities']);
-      
+    it("renders Education Portfolio page", async () => {
+      renderWithRouter(["/portfolio/education"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('volunteer-opportunities')).toBeInTheDocument();
+        expect(screen.getByTestId("education-portfolio")).toBeInTheDocument();
       });
     });
 
-    it('renders Documentation page', async () => {
-      renderWithRouter(['/docs']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('documentation')).toBeInTheDocument();
-      });
-    });
-  });
+    it("renders Poverty Portfolio page", async () => {
+      renderWithRouter(["/portfolio/poverty"]);
 
-  describe('Static Pages', () => {
-    it('renders About page', async () => {
-      renderWithRouter(['/about']);
-      
       await waitFor(() => {
-        expect(screen.getByTestId('about')).toBeInTheDocument();
-      });
-    });
-
-    it('renders Legal page', async () => {
-      renderWithRouter(['/legal']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('legal')).toBeInTheDocument();
-      });
-    });
-
-    it('renders Privacy page', async () => {
-      renderWithRouter(['/privacy']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('privacy')).toBeInTheDocument();
-      });
-    });
-
-    it('renders Governance page', async () => {
-      renderWithRouter(['/governance']);
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('governance')).toBeInTheDocument();
+        expect(screen.getByTestId("poverty-portfolio")).toBeInTheDocument();
       });
     });
   });
 
-  describe('Protected Routes', () => {
-    it('renders Give Dashboard page when authenticated', async () => {
+  describe("Cause Pages", () => {
+    it("renders Clean Water Initiative page", async () => {
+      renderWithRouter(["/causes/clean-water-initiative"]);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("clean-water")).toBeInTheDocument();
+      });
+    });
+
+    it("renders Education Access Program page", async () => {
+      renderWithRouter(["/causes/education-access-program"]);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("education-access")).toBeInTheDocument();
+      });
+    });
+
+    it("renders Reforestation Project page", async () => {
+      renderWithRouter(["/causes/reforestation-project"]);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("reforestation")).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("Feature Pages", () => {
+    it("renders Contribution Tracker page", async () => {
+      renderWithRouter(["/contribution-tracker"]);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("contribution-tracker")).toBeInTheDocument();
+      });
+    });
+
+    it("renders Volunteer Opportunities page", async () => {
+      renderWithRouter(["/volunteer-opportunities"]);
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId("volunteer-opportunities"),
+        ).toBeInTheDocument();
+      });
+    });
+
+    it("renders Documentation page", async () => {
+      renderWithRouter(["/docs"]);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("documentation")).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("Static Pages", () => {
+    it("renders About page", async () => {
+      renderWithRouter(["/about"]);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("about")).toBeInTheDocument();
+      });
+    });
+
+    it("renders Legal page", async () => {
+      renderWithRouter(["/legal"]);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("legal")).toBeInTheDocument();
+      });
+    });
+
+    it("renders Privacy page", async () => {
+      renderWithRouter(["/privacy"]);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("privacy")).toBeInTheDocument();
+      });
+    });
+
+    it("renders Governance page", async () => {
+      renderWithRouter(["/governance"]);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("governance")).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("Protected Routes", () => {
+    it("renders Give Dashboard page when authenticated", async () => {
       mockUseAuth.mockReturnValue({
-        user: { id: '123', email: 'test@example.com' } as any,
-        userType: 'donor',
+        user: { id: "123", email: "test@example.com" } as any,
+        userType: "donor",
         loading: false,
         error: null,
         login: jest.fn(),
@@ -383,18 +407,18 @@ describe('AppRoutes', () => {
         sendUsernameReminder: jest.fn(),
       });
 
-      renderWithRouter(['/dashboard']);
-      
+      renderWithRouter(["/dashboard"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('protected-route')).toBeInTheDocument();
-        expect(screen.getByTestId('give-dashboard')).toBeInTheDocument();
+        expect(screen.getByTestId("protected-route")).toBeInTheDocument();
+        expect(screen.getByTestId("give-dashboard")).toBeInTheDocument();
       });
     });
 
-    it('renders Charity Portal page when authenticated', async () => {
+    it("renders Charity Portal page when authenticated", async () => {
       mockUseAuth.mockReturnValue({
-        user: { id: '123', email: 'test@example.com' } as any,
-        userType: 'charity',
+        user: { id: "123", email: "test@example.com" } as any,
+        userType: "charity",
         loading: false,
         error: null,
         login: jest.fn(),
@@ -406,18 +430,18 @@ describe('AppRoutes', () => {
         sendUsernameReminder: jest.fn(),
       });
 
-      renderWithRouter(['/charity-portal']);
-      
+      renderWithRouter(["/charity-portal"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('protected-route')).toBeInTheDocument();
-        expect(screen.getByTestId('charity-portal')).toBeInTheDocument();
+        expect(screen.getByTestId("protected-route")).toBeInTheDocument();
+        expect(screen.getByTestId("charity-portal")).toBeInTheDocument();
       });
     });
 
-    it('renders Create Opportunity page when authenticated', async () => {
+    it("renders Create Opportunity page when authenticated", async () => {
       mockUseAuth.mockReturnValue({
-        user: { id: '123', email: 'test@example.com' } as any,
-        userType: 'charity',
+        user: { id: "123", email: "test@example.com" } as any,
+        userType: "charity",
         loading: false,
         error: null,
         login: jest.fn(),
@@ -429,18 +453,18 @@ describe('AppRoutes', () => {
         sendUsernameReminder: jest.fn(),
       });
 
-      renderWithRouter(['/charity/create-opportunity']);
-      
+      renderWithRouter(["/charity/create-opportunity"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('protected-route')).toBeInTheDocument();
-        expect(screen.getByTestId('create-opportunity')).toBeInTheDocument();
+        expect(screen.getByTestId("protected-route")).toBeInTheDocument();
+        expect(screen.getByTestId("create-opportunity")).toBeInTheDocument();
       });
     });
 
-    it('renders Verify Contribution page when authenticated', async () => {
+    it("renders Verify Contribution page when authenticated", async () => {
       mockUseAuth.mockReturnValue({
-        user: { id: '123', email: 'test@example.com' } as any,
-        userType: 'charity',
+        user: { id: "123", email: "test@example.com" } as any,
+        userType: "charity",
         loading: false,
         error: null,
         login: jest.fn(),
@@ -452,18 +476,18 @@ describe('AppRoutes', () => {
         sendUsernameReminder: jest.fn(),
       });
 
-      renderWithRouter(['/volunteer/verify-contribution']);
-      
+      renderWithRouter(["/volunteer/verify-contribution"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('protected-route')).toBeInTheDocument();
-        expect(screen.getByTestId('verify-contribution')).toBeInTheDocument();
+        expect(screen.getByTestId("protected-route")).toBeInTheDocument();
+        expect(screen.getByTestId("verify-contribution")).toBeInTheDocument();
       });
     });
 
-    it('renders Scheduled Donations page when authenticated', async () => {
+    it("renders Scheduled Donations page when authenticated", async () => {
       mockUseAuth.mockReturnValue({
-        user: { id: '123', email: 'test@example.com' } as any,
-        userType: 'donor',
+        user: { id: "123", email: "test@example.com" } as any,
+        userType: "donor",
         loading: false,
         error: null,
         login: jest.fn(),
@@ -475,18 +499,18 @@ describe('AppRoutes', () => {
         sendUsernameReminder: jest.fn(),
       });
 
-      renderWithRouter(['/donor/scheduled-donations']);
-      
+      renderWithRouter(["/donor/scheduled-donations"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('protected-route')).toBeInTheDocument();
-        expect(screen.getByTestId('scheduled-donations')).toBeInTheDocument();
+        expect(screen.getByTestId("protected-route")).toBeInTheDocument();
+        expect(screen.getByTestId("scheduled-donations")).toBeInTheDocument();
       });
     });
 
-    it('renders Admin Dashboard page when authenticated as admin', async () => {
+    it("renders Admin Dashboard page when authenticated as admin", async () => {
       mockUseAuth.mockReturnValue({
-        user: { id: '123', email: 'admin@example.com' } as any,
-        userType: 'admin',
+        user: { id: "123", email: "admin@example.com" } as any,
+        userType: "admin",
         loading: false,
         error: null,
         login: jest.fn(),
@@ -498,53 +522,56 @@ describe('AppRoutes', () => {
         sendUsernameReminder: jest.fn(),
       });
 
-      renderWithRouter(['/admin']);
-      
+      renderWithRouter(["/admin"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('protected-route')).toBeInTheDocument();
-        expect(screen.getByTestId('admin-dashboard')).toBeInTheDocument();
+        expect(screen.getByTestId("protected-route")).toBeInTheDocument();
+        expect(screen.getByTestId("admin-dashboard")).toBeInTheDocument();
       });
     });
   });
 
-  describe('Route Redirects and Fallbacks', () => {
-    it('renders Not Found page for unknown routes', async () => {
-      renderWithRouter(['/unknown-route']);
-      
+  describe("Route Redirects and Fallbacks", () => {
+    it("renders Not Found page for unknown routes", async () => {
+      renderWithRouter(["/unknown-route"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('not-found')).toBeInTheDocument();
+        expect(screen.getByTestId("not-found")).toBeInTheDocument();
       });
     });
 
-    it('shows loading spinner while lazy components load', async () => {
-      renderWithRouter(['/charities']);
-      
+    it("shows loading spinner while lazy components load", async () => {
+      renderWithRouter(["/charities"]);
+
       // Should briefly show loading spinner before the component loads
-      expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
-      expect(screen.getByTestId('loading-spinner')).toHaveAttribute('data-size', 'lg');
+      expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
+      expect(screen.getByTestId("loading-spinner")).toHaveAttribute(
+        "data-size",
+        "lg",
+      );
     });
   });
 
-  describe('Lazy Loading', () => {
-    it('properly lazy loads Home component', async () => {
-      renderWithRouter(['/home']);
-      
+  describe("Lazy Loading", () => {
+    it("properly lazy loads Home component", async () => {
+      renderWithRouter(["/home"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('home')).toBeInTheDocument();
+        expect(screen.getByTestId("home")).toBeInTheDocument();
       });
     });
 
-    it('properly lazy loads various page components', async () => {
+    it("properly lazy loads various page components", async () => {
       const routes = [
-        ['/charities', 'charity-browser'],
-        ['/sentry-test', 'sentry-test'],
-        ['/charities/global-water-foundation', 'global-water'],
-        ['/portfolio/environment', 'environment-portfolio'],
-        ['/causes/clean-water-initiative', 'clean-water'],
-        ['/contribution-tracker', 'contribution-tracker'],
-        ['/volunteer-opportunities', 'volunteer-opportunities'],
-        ['/about', 'about'],
-        ['/docs', 'documentation'],
+        ["/charities", "charity-browser"],
+        ["/sentry-test", "sentry-test"],
+        ["/charities/global-water-foundation", "global-water"],
+        ["/portfolio/environment", "environment-portfolio"],
+        ["/causes/clean-water-initiative", "clean-water"],
+        ["/contribution-tracker", "contribution-tracker"],
+        ["/volunteer-opportunities", "volunteer-opportunities"],
+        ["/about", "about"],
+        ["/docs", "documentation"],
       ];
 
       for (const [route, testId] of routes) {
@@ -556,60 +583,60 @@ describe('AppRoutes', () => {
     });
   });
 
-  describe('Route Parameters and Navigation', () => {
-    it('handles navigation between routes', async () => {
-      const { rerender } = renderWithRouter(['/']);
-      
+  describe("Route Parameters and Navigation", () => {
+    it("handles navigation between routes", async () => {
+      const { rerender } = renderWithRouter(["/"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('coming-soon')).toBeInTheDocument();
+        expect(screen.getByTestId("coming-soon")).toBeInTheDocument();
       });
 
       // Navigate to different route
       rerender(
-        <MemoryRouter initialEntries={['/login']}>
+        <MemoryRouter initialEntries={["/login"]}>
           <AppRoutes />
-        </MemoryRouter>
+        </MemoryRouter>,
       );
 
       await waitFor(() => {
-        expect(screen.getByTestId('login')).toBeInTheDocument();
+        expect(screen.getByTestId("login")).toBeInTheDocument();
       });
     });
 
-    it('handles complex nested routes', async () => {
-      renderWithRouter(['/charities/education-for-all']);
-      
+    it("handles complex nested routes", async () => {
+      renderWithRouter(["/charities/education-for-all"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('education-for-all')).toBeInTheDocument();
+        expect(screen.getByTestId("education-for-all")).toBeInTheDocument();
       });
     });
 
-    it('handles portfolio routes with parameters', async () => {
-      renderWithRouter(['/portfolio/education']);
-      
+    it("handles portfolio routes with parameters", async () => {
+      renderWithRouter(["/portfolio/education"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('education-portfolio')).toBeInTheDocument();
+        expect(screen.getByTestId("education-portfolio")).toBeInTheDocument();
       });
     });
   });
 
-  describe('Error Boundaries and Fallbacks', () => {
-    it('shows loading fallback during component loading', () => {
-      renderWithRouter(['/charities']);
-      
-      const loadingSpinner = screen.getByTestId('loading-spinner');
+  describe("Error Boundaries and Fallbacks", () => {
+    it("shows loading fallback during component loading", () => {
+      renderWithRouter(["/charities"]);
+
+      const loadingSpinner = screen.getByTestId("loading-spinner");
       expect(loadingSpinner).toBeInTheDocument();
-      expect(loadingSpinner).toHaveAttribute('data-size', 'lg');
+      expect(loadingSpinner).toHaveAttribute("data-size", "lg");
     });
 
-    it('handles Suspense boundary correctly', async () => {
-      renderWithRouter(['/home']);
-      
+    it("handles Suspense boundary correctly", async () => {
+      renderWithRouter(["/home"]);
+
       // Should show loading initially, then the component
-      expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
-      
+      expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
+
       await waitFor(() => {
-        expect(screen.getByTestId('home')).toBeInTheDocument();
+        expect(screen.getByTestId("home")).toBeInTheDocument();
       });
     });
   });
