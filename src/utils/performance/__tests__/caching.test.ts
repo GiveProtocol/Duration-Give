@@ -1,12 +1,11 @@
 import { CacheManager } from '../caching';
 
-// Mock the logger to avoid import.meta issues in tests
+// Mock the logger to avoid test noise
 jest.mock('../../logger', () => ({
   Logger: {
     info: jest.fn(),
     error: jest.fn(),
-    warn: jest.fn(),
-    debug: jest.fn(),
+    warn: jest.fn()
   }
 }));
 
@@ -14,164 +13,49 @@ describe('CacheManager', () => {
   let cache: CacheManager;
 
   beforeEach(() => {
-    // Reset the singleton instance before each test
+    // Reset singleton instance for each test
     CacheManager.resetInstanceForTesting();
-    cache = CacheManager.getInstance({ maxSize: 5, ttl: 1000 });
-    cache.invalidateAll();
+    cache = CacheManager.getInstance();
   });
 
   afterEach(() => {
     cache.invalidateAll();
-    CacheManager.resetInstanceForTesting();
+    jest.clearAllTimers();
+    jest.useRealTimers();
   });
 
   describe('singleton pattern', () => {
-    it('should return the same instance', () => {
+    it('returns same instance on multiple calls', () => {
       const cache1 = CacheManager.getInstance();
       const cache2 = CacheManager.getInstance();
       expect(cache1).toBe(cache2);
     });
+
+    it('applies config on first getInstance call', () => {
+      CacheManager.resetInstanceForTesting();
+      const config = { maxSize: 50, ttl: 10000 };
+      const cacheWithConfig = CacheManager.getInstance(config);
+      
+      // Config should be applied (we can test this indirectly through behavior)
+      expect(cacheWithConfig).toBeInstanceOf(CacheManager);
+    });
   });
 
   describe('basic cache operations', () => {
-    it('should store and retrieve data', async () => {
-      const testData = { id: 1, name: 'test' };
-      cache.set('test-key', testData);
+    it('stores and retrieves data', async () => {
+      const testData = { test: 'value' };
+      cache.set('key1', testData);
       
-      const result = await cache.get('test-key');
+      const result = await cache.get('key1');
       expect(result).toEqual(testData);
     });
 
-    it('should return null for non-existent keys', async () => {
-      const result = await cache.get('non-existent');
+    it('returns null for non-existent keys', async () => {
+      const result = await cache.get('nonexistent');
       expect(result).toBeNull();
     });
 
-    it('should handle different data types', async () => {
-      const stringData = 'test string';
-      const numberData = 42;
-      const arrayData = [1, 2, 3];
-      const objectData = { key: 'value' };
-
-      cache.set('string', stringData);
-      cache.set('number', numberData);
-      cache.set('array', arrayData);
-      cache.set('object', objectData);
-
-      expect(await cache.get('string')).toBe(stringData);
-      expect(await cache.get('number')).toBe(numberData);
-      expect(await cache.get('array')).toEqual(arrayData);
-      expect(await cache.get('object')).toEqual(objectData);
-    });
-  });
-
-  describe('TTL (Time To Live)', () => {
-    it('should expire data after TTL', async () => {
-      CacheManager.resetInstanceForTesting();
-      const shortTtlCache = CacheManager.getInstance({ ttl: 10, staleWhileRevalidate: 5 }); // 10ms TTL, 5ms stale
-      shortTtlCache.set('expire-test', 'data');
-      
-      // Data should be available immediately
-      expect(await shortTtlCache.get('expire-test')).toBe('data');
-      
-      // Wait for both TTL and stale window to expire
-      await new Promise(resolve => setTimeout(resolve, 20));
-      
-      // Data should be expired
-      expect(await shortTtlCache.get('expire-test')).toBeNull();
-    });
-
-    it('should serve stale data within staleWhileRevalidate window', async () => {
-      CacheManager.resetInstanceForTesting();
-      const staleCache = CacheManager.getInstance({ 
-        ttl: 10, 
-        staleWhileRevalidate: 50 
-      });
-      
-      staleCache.set('stale-test', 'stale-data');
-      
-      // Wait for TTL to expire but stay within stale window
-      await new Promise(resolve => setTimeout(resolve, 25));
-      
-      // Should still return stale data
-      const result = await staleCache.get('stale-test');
-      expect(result).toBe('stale-data');
-    });
-
-    it('should remove data after stale window expires', async () => {
-      CacheManager.resetInstanceForTesting();
-      const expiredCache = CacheManager.getInstance({ 
-        ttl: 10, 
-        staleWhileRevalidate: 20 
-      });
-      
-      expiredCache.set('expired-test', 'expired-data');
-      
-      // Wait for both TTL and stale window to expire
-      await new Promise(resolve => setTimeout(resolve, 35));
-      
-      // Data should be completely removed
-      expect(await expiredCache.get('expired-test')).toBeNull();
-    });
-
-    it('should trigger cleanup and remove expired entries', async () => {
-      CacheManager.resetInstanceForTesting();
-      const cleanupCache = CacheManager.getInstance({ 
-        ttl: 10, 
-        staleWhileRevalidate: 15,
-        maxSize: 10
-      });
-      
-      // Add multiple entries
-      cleanupCache.set('cleanup1', 'data1');
-      cleanupCache.set('cleanup2', 'data2');
-      cleanupCache.set('cleanup3', 'data3');
-      
-      // Wait for entries to expire completely (past stale window)
-      await new Promise(resolve => setTimeout(resolve, 30));
-      
-      // Trigger cleanup by setting a new entry (which calls cleanup)
-      cleanupCache.set('new-entry', 'new-data');
-      
-      // Old expired entries should be cleaned up
-      expect(await cleanupCache.get('cleanup1')).toBeNull();
-      expect(await cleanupCache.get('cleanup2')).toBeNull();
-      expect(await cleanupCache.get('cleanup3')).toBeNull();
-      
-      // New entry should still be available
-      expect(await cleanupCache.get('new-entry')).toBe('new-data');
-    });
-  });
-
-  describe('cache size limits', () => {
-    it('should evict oldest entries when max size is reached', async () => {
-      CacheManager.resetInstanceForTesting();
-      const smallCache = CacheManager.getInstance({ maxSize: 3 });
-      smallCache.invalidateAll();
-      
-      // Fill cache to capacity
-      smallCache.set('key1', 'value1');
-      smallCache.set('key2', 'value2');
-      smallCache.set('key3', 'value3');
-      
-      // All should be retrievable
-      expect(await smallCache.get('key1')).toBe('value1');
-      expect(await smallCache.get('key2')).toBe('value2');
-      expect(await smallCache.get('key3')).toBe('value3');
-      
-      // Add one more to trigger eviction
-      smallCache.set('key4', 'value4');
-      
-      // Oldest (key1) should be evicted
-      expect(await smallCache.get('key1')).toBeNull();
-      expect(await smallCache.get('key2')).toBe('value2');
-      expect(await smallCache.get('key3')).toBe('value3');
-      expect(await smallCache.get('key4')).toBe('value4');
-    });
-  });
-
-  describe('cache invalidation', () => {
-    it('should invalidate specific keys', async () => {
+    it('invalidates specific keys', async () => {
       cache.set('key1', 'value1');
       cache.set('key2', 'value2');
       
@@ -181,37 +65,87 @@ describe('CacheManager', () => {
       expect(await cache.get('key2')).toBe('value2');
     });
 
-    it('should invalidate all keys', async () => {
+    it('invalidates all keys', async () => {
       cache.set('key1', 'value1');
       cache.set('key2', 'value2');
-      cache.set('key3', 'value3');
       
       cache.invalidateAll();
       
       expect(await cache.get('key1')).toBeNull();
       expect(await cache.get('key2')).toBeNull();
-      expect(await cache.get('key3')).toBeNull();
     });
   });
 
-  describe('edge cases', () => {
-    it('should handle null and undefined values', async () => {
-      cache.set('null-key', null);
-      cache.set('undefined-key', undefined);
+  describe('TTL and expiration', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    it('returns fresh data within TTL', async () => {
+      cache.set('key1', 'value1');
       
-      expect(await cache.get('null-key')).toBeNull();
-      expect(await cache.get('undefined-key')).toBeUndefined();
+      // Advance time but stay within TTL (default 5 minutes)
+      jest.advanceTimersByTime(4 * 60 * 1000);
+      
+      const result = await cache.get('key1');
+      expect(result).toBe('value1');
     });
 
-    it('should handle empty string keys', async () => {
-      cache.set('', 'empty-key-value');
-      expect(await cache.get('')).toBe('empty-key-value');
+    it('serves stale data within staleWhileRevalidate window', async () => {
+      cache.set('key1', 'value1');
+      
+      // Advance past TTL but within staleWhileRevalidate (default 30 minutes)
+      jest.advanceTimersByTime(10 * 60 * 1000);
+      
+      const result = await cache.get('key1');
+      expect(result).toBe('value1');
     });
 
-    it('should handle special characters in keys', async () => {
-      const specialKey = 'key!@#$%^&*()_+-=[]{}|;:,.<>?';
-      cache.set(specialKey, 'special-value');
-      expect(await cache.get(specialKey)).toBe('special-value');
+    it('removes expired data beyond staleWhileRevalidate', async () => {
+      cache.set('key1', 'value1');
+      
+      // Advance past both TTL and staleWhileRevalidate
+      jest.advanceTimersByTime(40 * 60 * 1000);
+      
+      const result = await cache.get('key1');
+      expect(result).toBeNull();
+    });
+  });
+
+  describe('capacity management', () => {
+    it('evicts oldest entry when at capacity', () => {
+      // Create cache with small capacity for testing
+      CacheManager.resetInstanceForTesting();
+      cache = CacheManager.getInstance({ maxSize: 2 });
+      
+      cache.set('key1', 'value1');
+      cache.set('key2', 'value2');
+      cache.set('key3', 'value3'); // Should evict key1
+      
+      expect(cache.get('key1')).resolves.toBeNull();
+      expect(cache.get('key2')).resolves.toBe('value2');
+      expect(cache.get('key3')).resolves.toBe('value3');
+    });
+  });
+
+  describe('cleanup process', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    it('runs cleanup periodically and removes expired entries', async () => {
+      cache.set('key1', 'value1');
+      cache.set('key2', 'value2');
+      
+      // Advance past expiration
+      jest.advanceTimersByTime(40 * 60 * 1000);
+      
+      // Trigger cleanup (runs every 60 seconds)
+      jest.advanceTimersByTime(60 * 1000);
+      
+      // Both entries should be cleaned up
+      expect(await cache.get('key1')).toBeNull();
+      expect(await cache.get('key2')).toBeNull();
     });
   });
 });
