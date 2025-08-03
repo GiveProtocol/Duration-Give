@@ -2,27 +2,29 @@
  * Shared route mock utilities to reduce duplication across test files
  */
 
+import React from 'react';
+
 export const mockPageComponent = (testId: string, displayName: string) => ({
   __esModule: true,
-  default: () => <div data-testid={testId}>{displayName}</div>
+  default: () => React.createElement('div', { 'data-testid': testId }, displayName)
 });
 
 export const mockNamedComponent = (testId: string, displayName: string, componentName: string) => ({
-  [componentName]: () => <div data-testid={testId}>{displayName}</div>
+  [componentName]: () => React.createElement('div', { 'data-testid': testId }, displayName)
 });
 
 export const setupCommonRouteMocks = () => {
   // Mock route utilities
   jest.mock('./RouteTransition', () => ({
-    RouteTransition: ({ children }: { children: React.ReactNode }) => <div>{children}</div>
+    RouteTransition: ({ children }: { children: React.ReactNode }) => React.createElement('div', {}, children)
   }));
   
   jest.mock('./ProtectedRoute', () => ({
-    ProtectedRoute: ({ children }: { children: React.ReactNode }) => <div data-testid="protected-route">{children}</div>
+    ProtectedRoute: ({ children }: { children: React.ReactNode }) => React.createElement('div', { 'data-testid': 'protected-route' }, children)
   }));
   
   jest.mock('@/components/ui/LoadingSpinner', () => ({
-    LoadingSpinner: ({ size }: { size?: string }) => <div data-testid="loading-spinner" data-size={size}>Loading...</div>
+    LoadingSpinner: ({ size }: { size?: string }) => React.createElement('div', { 'data-testid': 'loading-spinner', 'data-size': size }, 'Loading...')
   }));
 };
 

@@ -23,7 +23,7 @@ setupCommonMocks();
 
 // Mock export modal component
 jest.mock('@/components/contribution/DonationExportModal', () => ({
-  DonationExportModal: ({ donations, onClose }: any) => (
+  DonationExportModal: ({ donations, onClose }: { donations: Array<{ id: string; [key: string]: unknown }>; onClose: () => void }) => (
     <div data-testid="donation-export-modal">
       <button onClick={onClose} data-testid="export-modal-close">Close</button>
       <div>Exporting {donations.length} donations</div>

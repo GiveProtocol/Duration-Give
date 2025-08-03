@@ -105,7 +105,7 @@ describe('AppRoutes', () => {
 
     beforeEach(() => {
       mockUseAuth.mockReturnValue({
-        user: mockUser as any,
+        user: mockUser,
         userType: 'donor',
         loading: false,
         error: null,

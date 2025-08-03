@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { WalletAliasSettings } from '../WalletAliasSettings';
 import { useWalletAlias } from '@/hooks/useWalletAlias';
@@ -22,7 +23,7 @@ jest.mock('@/utils/web3', () => ({
 
 // Override Input component for test specificity
 jest.mock('@/components/ui/Input', () => ({
-  Input: (props: any) => <input {...props} data-testid="alias-input" />,
+  Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} data-testid="alias-input" />,
 }));
 
 describe('WalletAliasSettings', () => {

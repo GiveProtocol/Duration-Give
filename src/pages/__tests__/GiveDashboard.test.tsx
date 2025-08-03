@@ -16,7 +16,7 @@ setupCommonMocks();
 
 // Component-specific mocks
 jest.mock('@/components/contribution/DonationExportModal', () => ({
-  DonationExportModal: ({ donations, onClose }: any) => (
+  DonationExportModal: ({ donations, onClose }: { donations: Array<{ id: string; [key: string]: unknown }>; onClose: () => void }) => (
     <div data-testid="export-modal">
       <span>Export Modal - {donations.length} donations</span>
       <button onClick={onClose}>Close</button>
@@ -25,7 +25,7 @@ jest.mock('@/components/contribution/DonationExportModal', () => ({
 }));
 
 jest.mock('@/components/settings/WalletAliasSettings', () => ({
-  WalletAliasSettings: ({ onClose }: any) => (
+  WalletAliasSettings: ({ onClose }: { onClose: () => void }) => (
     <div data-testid="wallet-settings">
       <span>Wallet Settings</span>
       <button onClick={onClose}>Close</button>
@@ -34,7 +34,7 @@ jest.mock('@/components/settings/WalletAliasSettings', () => ({
 }));
 
 jest.mock('@/components/donor/ScheduledDonations', () => ({
-  ScheduledDonations: ({ onClose }: any) => (
+  ScheduledDonations: ({ onClose }: { onClose: () => void }) => (
     <div data-testid="scheduled-donations">
       <span>Scheduled Donations</span>
       <button onClick={onClose}>Close</button>

@@ -2,12 +2,17 @@
  * Shared Supabase mock utilities to reduce duplication across test files
  */
 
-export const createMockSupabaseQuery = (data: any[] = [], error: any = null) => ({
+import type { MockSupabaseQuery, MockSupabaseOverrides, MockCharity, MockDonation } from './types';
+
+export const createMockSupabaseQuery = <T = unknown>(
+  data: T[] | T | null = [], 
+  error: { message: string } | null = null
+): MockSupabaseQuery<T> => ({
   data,
   error
 });
 
-export const createMockSupabaseClient = (overrides: any = {}) => ({
+export const createMockSupabaseClient = (overrides: MockSupabaseOverrides = {}) => ({
   from: jest.fn(() => ({
     select: jest.fn(() => ({
       eq: jest.fn(() => ({
@@ -44,13 +49,13 @@ export const createMockSupabaseClient = (overrides: any = {}) => ({
   ...overrides.client
 });
 
-export const setupSupabaseMocks = (customData?: any) => {
+export const setupSupabaseMocks = (customData?: MockSupabaseOverrides) => {
   jest.mock('@/lib/supabase', () => ({
     supabase: createMockSupabaseClient(customData)
   }));
 };
 
-export const mockCharityData = [
+export const mockCharityData: MockCharity[] = [
   {
     id: 'charity-1',
     name: 'Test Charity 1',
@@ -71,7 +76,7 @@ export const mockCharityData = [
   }
 ];
 
-export const mockDonationData = [
+export const mockDonationData: MockDonation[] = [
   {
     id: 'donation-1',
     amount: '100.00',

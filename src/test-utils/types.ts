@@ -94,6 +94,74 @@ export interface MockDonationExportModalProps {
 }
 
 /**
+ * Props interface for components with onClose functionality
+ */
+export interface MockComponentWithClose {
+  onClose: () => void;
+}
+
+/**
+ * Props interface for components with donations prop
+ */
+export interface MockComponentWithDonations {
+  donations: MockDonation[];
+  onClose: () => void;
+}
+
+/**
+ * Mock data interfaces
+ */
+export interface MockDonation {
+  id: string;
+  amount: string;
+  donor_id: string;
+  charity_id: string;
+  status: string;
+  created_at: string;
+  [key: string]: unknown;
+}
+
+export interface MockCharity {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  country: string;
+  verified: boolean;
+  created_at: string;
+  [key: string]: unknown;
+}
+
+export interface MockUser {
+  id: string;
+  email: string;
+  user_metadata: { user_type: string };
+  app_metadata: Record<string, unknown>;
+  aud: string;
+  created_at: string;
+  [key: string]: unknown;
+}
+
+/**
+ * Supabase mock types
+ */
+export interface MockSupabaseQuery<T = unknown> {
+  data: T[] | T | null;
+  error: { message: string } | null;
+}
+
+export interface MockSupabaseOverrides {
+  select?: Partial<MockSupabaseQuery>;
+  selectEq?: Partial<MockSupabaseQuery>;
+  insert?: Partial<MockSupabaseQuery>;
+  update?: Partial<MockSupabaseQuery>;
+  updateEq?: Partial<MockSupabaseQuery>;
+  deleteEq?: Partial<MockSupabaseQuery>;
+  from?: Record<string, unknown>;
+  client?: Record<string, unknown>;
+}
+
+/**
  * Shared CSS class patterns for test assertions
  * Centralizes common styling patterns to reduce duplication
  */
