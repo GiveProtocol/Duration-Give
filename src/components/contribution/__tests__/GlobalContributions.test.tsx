@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { render, screen } from '@testing-library/react';
 import { GlobalContributions } from '../GlobalContributions';
 
@@ -39,7 +39,8 @@ describe('GlobalContributions', () => {
     
     render(<GlobalContributions />);
     
-    await screen.findByText(/no contributions/i);
+    const noContributions = await screen.findByText(/no contributions/i);
+    expect(noContributions).toBeInTheDocument();
   });
 
   it('handles error state', async () => {
@@ -50,6 +51,7 @@ describe('GlobalContributions', () => {
     
     render(<GlobalContributions />);
     
-    await screen.findByText(/error/i);
+    const errorMessage = await screen.findByText(/error/i);
+    expect(errorMessage).toBeInTheDocument();
   });
 });
