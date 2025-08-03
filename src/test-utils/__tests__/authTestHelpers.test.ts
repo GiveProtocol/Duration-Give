@@ -1,77 +1,79 @@
-import { 
-  createMockAuthFlow, 
-  createMockWeb3Flow, 
-  MOCK_USER, 
-  createAuthMocks, 
+import {
+  createMockAuthFlow,
+  createMockWeb3Flow,
+  MOCK_USER,
+  createAuthMocks,
   setupAuthTest,
-  commonExpectations
-} from '../authTestHelpers';
+  commonExpectations,
+} from "../authTestHelpers";
 
 // Mock dependencies
 const mockUseToast = jest.fn();
 const mockSupabase = { auth: {} };
 
-describe('authTestHelpers', () => {
-  describe('createMockAuthFlow', () => {
-    it('returns success flow', () => {
-      const result = createMockAuthFlow('success');
+describe("authTestHelpers", () => {
+  describe("createMockAuthFlow", () => {
+    it("returns success flow", () => {
+      const result = createMockAuthFlow("success");
       expect(result).toEqual({
-        data: { user: { id: '123', email: 'test@example.com' }, session: {} },
-        error: null
+        data: { user: { id: "123", email: "test@example.com" }, session: {} },
+        error: null,
       });
     });
 
-    it('returns error flow with default error', () => {
-      const result = createMockAuthFlow('error');
+    it("returns error flow with default error", () => {
+      const result = createMockAuthFlow("error");
       expect(result).toEqual({
         data: { user: null, session: null },
-        error: { message: 'Test error' }
+        error: { message: "Test error" },
       });
     });
 
-    it('returns error flow with custom error', () => {
-      const customError = { message: 'Custom error', code: 500 };
-      const result = createMockAuthFlow('error', customError);
+    it("returns error flow with custom error", () => {
+      const customError = { message: "Custom error", code: 500 };
+      const result = createMockAuthFlow("error", customError);
       expect(result).toEqual({
         data: { user: null, session: null },
-        error: customError
+        error: customError,
       });
     });
   });
 
-  describe('createMockWeb3Flow', () => {
-    it('returns success flow', () => {
-      const result = createMockWeb3Flow('success');
-      expect(result).toEqual(['0x1234567890123456789012345678901234567890']);
+  describe("createMockWeb3Flow", () => {
+    it("returns success flow", () => {
+      const result = createMockWeb3Flow("success");
+      expect(result).toEqual(["0x1234567890123456789012345678901234567890"]);
     });
 
-    it('throws error with default message', () => {
-      expect(() => createMockWeb3Flow('error')).toThrow('Test error');
+    it("throws error with default message", () => {
+      expect(() => createMockWeb3Flow("error")).toThrow("Test error");
     });
 
-    it('throws custom error', () => {
-      const customError = new Error('Custom Web3 error');
-      expect(() => createMockWeb3Flow('error', customError)).toThrow('Custom Web3 error');
+    it("throws custom error", () => {
+      const customError = new Error("Custom Web3 error");
+      expect(() => createMockWeb3Flow("error", customError)).toThrow(
+        "Custom Web3 error",
+      );
     });
   });
 
-  describe('MOCK_USER', () => {
-    it('has expected properties', () => {
+  describe("MOCK_USER", () => {
+    it("has expected properties", () => {
       expect(MOCK_USER).toEqual({
-        id: '123',
-        email: 'test@example.com',
-        user_metadata: { user_type: 'donor' },
+        id: "123",
+        email: "test@example.com",
+        user_metadata: { user_type: "donor" },
         app_metadata: {},
-        aud: 'authenticated',
-        created_at: '2024-01-01'
+        aud: "authenticated",
+        created_at: "2024-01-01",
       });
     });
   });
 
-  describe('createAuthMocks', () => {
-    it('creates all auth method mocks', () => {
+  describe("createAuthMocks", () => {
+    it("creates all auth method mocks", () => {
       const mocks = createAuthMocks();
-      
+
       expect(mocks.getSession).toBeInstanceOf(Function);
       expect(mocks.onAuthStateChange).toBeInstanceOf(Function);
       expect(mocks.signInWithPassword).toBeInstanceOf(Function);
@@ -83,65 +85,71 @@ describe('authTestHelpers', () => {
     });
   });
 
-  describe('setupAuthTest', () => {
-    it('sets up mocks and returns mockShowToast', () => {
+  describe("setupAuthTest", () => {
+    it("sets up mocks and returns mockShowToast", () => {
       const result = setupAuthTest(mockSupabase, mockUseToast);
-      
+
       expect(result.mockShowToast).toBeInstanceOf(Function);
       expect(mockUseToast).toHaveBeenCalledWith({
-        showToast: result.mockShowToast
+        showToast: result.mockShowToast,
       });
       expect(mockSupabase.auth).toBeDefined();
     });
   });
 
-  describe('commonExpectations', () => {
+  describe("commonExpectations", () => {
     const mockScreen = {
-      getByTestId: jest.fn()
+      getByTestId: jest.fn(),
     };
 
     beforeEach(() => {
       jest.clearAllMocks();
     });
 
-    it('authSuccess checks for email', () => {
+    it("authSuccess checks for email", () => {
       const mockElement = { toHaveTextContent: jest.fn() };
       mockScreen.getByTestId.mockReturnValue(mockElement);
-      
+
       commonExpectations.authSuccess(mockScreen);
-      
-      expect(mockScreen.getByTestId).toHaveBeenCalledWith('user');
-      expect(mockElement.toHaveTextContent).toHaveBeenCalledWith('test@example.com');
+
+      expect(mockScreen.getByTestId).toHaveBeenCalledWith("user");
+      expect(mockElement.toHaveTextContent).toHaveBeenCalledWith(
+        "test@example.com",
+      );
     });
 
-    it('authError checks for error message', () => {
+    it("authError checks for error message", () => {
       const mockElement = { toHaveTextContent: jest.fn() };
       mockScreen.getByTestId.mockReturnValue(mockElement);
-      
-      commonExpectations.authError(mockScreen, 'Login failed');
-      
-      expect(mockScreen.getByTestId).toHaveBeenCalledWith('error');
-      expect(mockElement.toHaveTextContent).toHaveBeenCalledWith('Login failed');
+
+      commonExpectations.authError(mockScreen, "Login failed");
+
+      expect(mockScreen.getByTestId).toHaveBeenCalledWith("error");
+      expect(mockElement.toHaveTextContent).toHaveBeenCalledWith(
+        "Login failed",
+      );
     });
 
-    it('web3Connected checks connection status', () => {
+    it("web3Connected checks connection status", () => {
       const mockElement = { toHaveTextContent: jest.fn() };
       mockScreen.getByTestId.mockReturnValue(mockElement);
-      
+
       commonExpectations.web3Connected(mockScreen);
-      
-      expect(mockScreen.getByTestId).toHaveBeenCalledWith('connected');
-      expect(mockElement.toHaveTextContent).toHaveBeenCalledWith('connected');
+
+      expect(mockScreen.getByTestId).toHaveBeenCalledWith("connected");
+      expect(mockElement.toHaveTextContent).toHaveBeenCalledWith("connected");
     });
 
-    it('web3Disconnected checks disconnection status', () => {
+    it("web3Disconnected checks disconnection status", () => {
       const mockElement = { toHaveTextContent: jest.fn() };
       mockScreen.getByTestId.mockReturnValue(mockElement);
-      
+
       commonExpectations.web3Disconnected(mockScreen);
-      
-      expect(mockScreen.getByTestId).toHaveBeenCalledWith('connected');
-      expect(mockElement.toHaveTextContent).toHaveBeenCalledWith('disconnected');
+
+      expect(mockScreen.getByTestId).toHaveBeenCalledWith("connected");
+      expect(mockElement.toHaveTextContent).toHaveBeenCalledWith(
+        "disconnected",
+      );
     });
   });
 });

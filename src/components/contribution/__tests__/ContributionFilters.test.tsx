@@ -1,58 +1,64 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
-import { render, screen, fireEvent } from '@testing-library/react';
-import { ContributionFilters } from '../ContributionFilters';
+import React from "react"; // eslint-disable-line no-unused-vars
+import { render, screen, fireEvent } from "@testing-library/react";
+import { ContributionFilters } from "../ContributionFilters";
 
 const mockProps = {
   filters: {
-    timeRange: 'all' as const,
-    sortBy: 'date' as const,
-    sortOrder: 'desc' as const
+    timeRange: "all" as const,
+    sortBy: "date" as const,
+    sortOrder: "desc" as const,
   },
-  onFiltersChange: jest.fn()
+  onFiltersChange: jest.fn(),
 };
 
-describe('ContributionFilters', () => {
+describe("ContributionFilters", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders filter controls', () => {
+  it("renders filter controls", () => {
     render(<ContributionFilters {...mockProps} />);
     expect(screen.getByLabelText(/time range/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/sort by/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/sort order/i)).toBeInTheDocument();
   });
 
-  it('calls onFiltersChange when time range changes', () => {
+  it("calls onFiltersChange when time range changes", () => {
     render(<ContributionFilters {...mockProps} />);
-    
-    fireEvent.change(screen.getByLabelText(/time range/i), { target: { value: 'week' } });
-    
+
+    fireEvent.change(screen.getByLabelText(/time range/i), {
+      target: { value: "week" },
+    });
+
     expect(mockProps.onFiltersChange).toHaveBeenCalledWith({
       ...mockProps.filters,
-      timeRange: 'week'
+      timeRange: "week",
     });
   });
 
-  it('calls onFiltersChange when sort by changes', () => {
+  it("calls onFiltersChange when sort by changes", () => {
     render(<ContributionFilters {...mockProps} />);
-    
-    fireEvent.change(screen.getByLabelText(/sort by/i), { target: { value: 'amount' } });
-    
+
+    fireEvent.change(screen.getByLabelText(/sort by/i), {
+      target: { value: "amount" },
+    });
+
     expect(mockProps.onFiltersChange).toHaveBeenCalledWith({
       ...mockProps.filters,
-      sortBy: 'amount'
+      sortBy: "amount",
     });
   });
 
-  it('calls onFiltersChange when sort order changes', () => {
+  it("calls onFiltersChange when sort order changes", () => {
     render(<ContributionFilters {...mockProps} />);
-    
-    fireEvent.change(screen.getByLabelText(/sort order/i), { target: { value: 'asc' } });
-    
+
+    fireEvent.change(screen.getByLabelText(/sort order/i), {
+      target: { value: "asc" },
+    });
+
     expect(mockProps.onFiltersChange).toHaveBeenCalledWith({
       ...mockProps.filters,
-      sortOrder: 'asc'
+      sortOrder: "asc",
     });
   });
 });
