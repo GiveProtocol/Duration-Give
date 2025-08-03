@@ -93,7 +93,7 @@ describe('SearchBar', () => {
   });
 
   it('shows loading state', () => {
-    render(<SearchBar {...mockProps} isLoading={true} />);
+    render(<SearchBar {...mockProps} isLoading />);
     expect(screen.getByRole('textbox')).toBeDisabled();
   });
 
