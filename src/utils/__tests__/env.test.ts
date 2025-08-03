@@ -223,7 +223,7 @@ describe("getEnv utility", () => {
 
     it("handles exception during dynamic import.meta access", () => {
       delete (globalThis as MockGlobalThis).importMeta;
-      
+
       // Mock a scenario where accessing globalImport.import throws
       Object.defineProperty(globalThis, "import", {
         get() {
@@ -291,7 +291,7 @@ describe("getEnv utility", () => {
       try {
         // This test is more conceptual since we can't actually delete globalThis
         delete (globalThis as MockGlobalThis).importMeta;
-        
+
         const result = getEnv();
         expect(result).toBeDefined();
       } finally {
