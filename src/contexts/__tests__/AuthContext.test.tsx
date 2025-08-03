@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { useToast } from '../ToastContext';
 import { Logger } from '@/utils/logger';
 import { setSentryUser, clearSentryUser } from '@/lib/sentry';
-import { MOCK_USER, setupAuthTest, testAuthFlow } from '@/test-utils/authTestHelpers';
+import { MOCK_USER, setupAuthTest } from '@/test-utils/authTestHelpers';
 
 // Mock all dependencies
 jest.mock('@/lib/supabase');
@@ -114,7 +114,7 @@ describe('AuthContext', () => {
 
     it('initializes session on mount', async () => {
       mockSupabase.auth.getSession.mockResolvedValue({
-        data: { session: { user: mockUser } },
+        data: { session: { user: MOCK_USER } },
         error: null
       });
 
@@ -535,10 +535,14 @@ describe('AuthContext', () => {
       });
     };
 
-    it('detects donor user type from metadata', () => testUserType('donor', 'donor'));
-    it('detects charity user type from metadata', () => testUserType('charity', 'charity'));
-    it('detects admin user type from metadata', () => testUserType('admin', 'admin'));
-    it('handles missing user type metadata', () => testUserType(null, 'no-type'));
+    // eslint-disable-next-line jest/expect-expect
+    it('detects donor user type from metadata', async () => await testUserType('donor', 'donor'));
+    // eslint-disable-next-line jest/expect-expect
+    it('detects charity user type from metadata', async () => await testUserType('charity', 'charity'));
+    // eslint-disable-next-line jest/expect-expect
+    it('detects admin user type from metadata', async () => await testUserType('admin', 'admin'));
+    // eslint-disable-next-line jest/expect-expect
+    it('handles missing user type metadata', async () => await testUserType(null, 'no-type'));
   });
 
   describe('Context Error Handling', () => {

@@ -73,7 +73,6 @@ const renderWithRouter = (component: React.ReactElement) => {
 
 describe('GiveDashboard', () => {
   const mockUser = { id: '1', email: 'test@example.com' };
-  const mockT = jest.fn((key: string) => key);
 
   beforeEach(() => {
     mockUseAuth.mockReturnValue(createMockAuth({

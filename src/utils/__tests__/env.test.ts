@@ -18,15 +18,15 @@ interface MockImport {
   meta?: MockImportMeta;
 }
 
-interface MockGlobalThis extends typeof globalThis {
-  import?: MockImport;
+interface MockGlobalThis {
+  importMeta?: MockImport;
 }
 
-interface MockProcess extends NodeJS.Process {
-  env?: NodeJS.ProcessEnv;
+interface MockProcess {
+  env?: Record<string, string | undefined>;
 }
 
-interface MockGlobal extends typeof global {
+interface MockGlobal {
   process?: MockProcess;
 }
 
@@ -51,7 +51,7 @@ describe("getEnv utility", () => {
       };
 
       // Mock globalThis.import.meta.env
-      (globalThis as MockGlobalThis).import = {
+      (globalThis as MockGlobalThis).importMeta = {
         meta: {
           env: mockEnv,
         },
@@ -71,7 +71,7 @@ describe("getEnv utility", () => {
 
       // Mock the dynamic access path
       const globalImport = globalThis as MockGlobalThis;
-      globalImport.import = {
+      globalImport.importMeta = {
         meta: {
           env: mockEnv,
         },
@@ -83,7 +83,7 @@ describe("getEnv utility", () => {
 
     it("handles missing import.meta gracefully", () => {
       // Ensure no import.meta is available
-      delete (globalThis as MockGlobalThis).import;
+      delete (globalThis as MockGlobalThis).importMeta;
 
       const result = getEnv();
 
@@ -97,7 +97,7 @@ describe("getEnv utility", () => {
   describe("Node.js/Jest environment detection", () => {
     beforeEach(() => {
       // Remove any Vite environment indicators
-      delete (globalThis as MockGlobalThis).import;
+      delete (globalThis as MockGlobalThis).importMeta;
     });
 
     it("returns process.env configuration when available", () => {
@@ -193,7 +193,7 @@ describe("getEnv utility", () => {
   describe("fallback behavior", () => {
     it("returns default configuration when no environment is available", () => {
       // Remove both Vite and Node environment indicators
-      delete (globalThis as MockGlobalThis).import;
+      delete (globalThis as MockGlobalThis).importMeta;
       delete (global as MockGlobal).process;
 
       const result = getEnv();
@@ -207,7 +207,7 @@ describe("getEnv utility", () => {
     });
 
     it("handles process without env property", () => {
-      delete (globalThis as MockGlobalThis).import;
+      delete (globalThis as MockGlobalThis).importMeta;
       global.process = { ...originalProcess };
       delete (global.process as MockProcess).env;
 
@@ -222,7 +222,7 @@ describe("getEnv utility", () => {
     });
 
     it("handles exception during dynamic import.meta access", () => {
-      delete (globalThis as MockGlobalThis).import;
+      delete (globalThis as MockGlobalThis).importMeta;
       
       // Mock a scenario where accessing globalImport.import throws
       Object.defineProperty(globalThis, "import", {
@@ -242,7 +242,7 @@ describe("getEnv utility", () => {
 
   describe("environment type detection", () => {
     it("correctly identifies production environment", () => {
-      delete (globalThis as MockGlobalThis).import;
+      delete (globalThis as MockGlobalThis).importMeta;
       global.process = {
         ...originalProcess,
         env: { NODE_ENV: "production" },
@@ -256,7 +256,7 @@ describe("getEnv utility", () => {
     });
 
     it("correctly identifies development environment", () => {
-      delete (globalThis as MockGlobalThis).import;
+      delete (globalThis as MockGlobalThis).importMeta;
       global.process = {
         ...originalProcess,
         env: { NODE_ENV: "development" },
@@ -270,7 +270,7 @@ describe("getEnv utility", () => {
     });
 
     it("correctly identifies staging environment", () => {
-      delete (globalThis as MockGlobalThis).import;
+      delete (globalThis as MockGlobalThis).importMeta;
       global.process = {
         ...originalProcess,
         env: { NODE_ENV: "staging" },
@@ -290,7 +290,7 @@ describe("getEnv utility", () => {
 
       try {
         // This test is more conceptual since we can't actually delete globalThis
-        delete (globalThis as MockGlobalThis).import;
+        delete (globalThis as MockGlobalThis).importMeta;
         
         const result = getEnv();
         expect(result).toBeDefined();
@@ -300,7 +300,7 @@ describe("getEnv utility", () => {
     });
 
     it("handles partial import.meta structure", () => {
-      (globalThis as MockGlobalThis).import = {
+      (globalThis as MockGlobalThis).importMeta = {
         meta: {}, // Missing env property
       };
 
@@ -311,7 +311,7 @@ describe("getEnv utility", () => {
     });
 
     it("handles import without meta property", () => {
-      (globalThis as MockGlobalThis).import = {}; // Missing meta property
+      (globalThis as MockGlobalThis).importMeta = {}; // Missing meta property
 
       const result = getEnv();
 
