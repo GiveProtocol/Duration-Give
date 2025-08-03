@@ -128,7 +128,7 @@ describe('AppRoutes', () => {
       { path: '/volunteer-opportunities', testId: 'volunteer-opportunities', name: 'Volunteer Opportunities' }
     ];
 
-    protectedRoutes.forEach(({ path, testId, name }) => {
+    protectedRoutes.forEach(({ path, testId: _testId, name }) => {
       it(`renders ${name} page at ${path} when authenticated`, async () => {
         renderWithRouter([path]);
         await waitFor(() => {

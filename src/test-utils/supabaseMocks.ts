@@ -12,6 +12,11 @@ export const createMockSupabaseQuery = <T = unknown>(
   error
 });
 
+/**
+ * Creates a mock Supabase client with customizable method overrides
+ * @param overrides - Optional overrides for specific Supabase methods
+ * @returns Mock Supabase client object with jest functions
+ */
 export const createMockSupabaseClient = (overrides: MockSupabaseOverrides = {}) => ({
   from: jest.fn(() => ({
     select: jest.fn(() => ({
@@ -49,6 +54,10 @@ export const createMockSupabaseClient = (overrides: MockSupabaseOverrides = {}) 
   ...overrides.client
 });
 
+/**
+ * Sets up Jest mocks for Supabase with optional custom data responses
+ * @param customData - Optional custom data responses for different tables
+ */
 export const setupSupabaseMocks = (customData?: MockSupabaseOverrides) => {
   jest.mock('@/lib/supabase', () => ({
     supabase: createMockSupabaseClient(customData)
