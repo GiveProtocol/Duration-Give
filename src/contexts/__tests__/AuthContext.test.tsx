@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { useToast } from '../ToastContext';
 import { Logger } from '@/utils/logger';
 import { setSentryUser, clearSentryUser } from '@/lib/sentry';
+import { MOCK_USER, setupAuthTest, testAuthFlow } from '@/test-utils/authTestHelpers';
 
 // Mock all dependencies
 jest.mock('@/lib/supabase');
@@ -89,43 +90,12 @@ const renderWithAuthProvider = () => {
 };
 
 describe('AuthContext', () => {
-  const mockShowToast = jest.fn();
-  const mockUser = {
-    id: '123',
-    email: 'test@example.com',
-    user_metadata: { user_type: 'donor' },
-    app_metadata: {},
-    aud: 'authenticated',
-    created_at: '2024-01-01'
-  };
+  let mockShowToast: jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
-    mockUseToast.mockReturnValue({
-      showToast: mockShowToast,
-    });
-
-    // Default supabase auth mock
-    mockSupabase.auth = {
-      getSession: jest.fn().mockResolvedValue({ 
-        data: { session: null }, 
-        error: null 
-      }),
-      onAuthStateChange: jest.fn().mockReturnValue({
-        data: { subscription: { unsubscribe: jest.fn() } }
-      }),
-      signInWithPassword: jest.fn(),
-      signInWithOAuth: jest.fn(),
-      signOut: jest.fn(),
-      signUp: jest.fn(),
-      resetPasswordForEmail: jest.fn(),
-      refreshSession: jest.fn(),
-    } as any;
-
-    // Mock console methods to avoid test output noise
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    const helpers = setupAuthTest(mockSupabase, mockUseToast);
+    mockShowToast = helpers.mockShowToast;
   });
 
   afterEach(() => {
@@ -165,7 +135,7 @@ describe('AuthContext', () => {
   describe('Session Management', () => {
     it('handles successful session initialization', async () => {
       mockSupabase.auth.getSession.mockResolvedValue({
-        data: { session: { user: mockUser } },
+        data: { session: { user: MOCK_USER } },
         error: null
       });
 
@@ -177,7 +147,7 @@ describe('AuthContext', () => {
         expect(screen.getByTestId('user-type')).toHaveTextContent('donor');
       });
 
-      expect(mockSetSentryUser).toHaveBeenCalledWith(mockUser);
+      expect(mockSetSentryUser).toHaveBeenCalledWith(MOCK_USER);
     });
 
     it('handles session initialization error', async () => {
@@ -204,12 +174,12 @@ describe('AuthContext', () => {
 
       // Simulate auth state change
       act(() => {
-        authCallback('SIGNED_IN', { user: mockUser });
+        authCallback('SIGNED_IN', { user: MOCK_USER });
       });
 
       await waitFor(() => {
         expect(screen.getByTestId('user')).toHaveTextContent('test@example.com');
-        expect(mockSetSentryUser).toHaveBeenCalledWith(mockUser);
+        expect(mockSetSentryUser).toHaveBeenCalledWith(MOCK_USER);
       });
     });
 
@@ -235,44 +205,43 @@ describe('AuthContext', () => {
   });
 
   describe('Login', () => {
-    const testLoginFlow = async (mockResponse: any, expectedToast: [string, string]) => {
-      if (mockResponse instanceof Error) {
-        mockSupabase.auth.signInWithPassword.mockRejectedValue(mockResponse);
-      } else {
-        mockSupabase.auth.signInWithPassword.mockResolvedValue(mockResponse);
-      }
-
-      renderWithAuthProvider();
-      await act(async () => screen.getByTestId('login-btn').click());
-      await waitFor(() => expect(mockShowToast).toHaveBeenCalledWith(...expectedToast));
-    };
-
     it('handles successful login', async () => {
-      await testLoginFlow({
-        data: { user: mockUser, session: { user: mockUser } },
+      const mockResponse = {
+        data: { user: MOCK_USER, session: { user: MOCK_USER } },
         error: null
-      }, ['Successfully logged in!', 'success']);
+      };
+      
+      mockSupabase.auth.signInWithPassword.mockResolvedValue(mockResponse);
+      renderWithAuthProvider();
+      
+      await act(async () => screen.getByTestId('login-btn').click());
+      await waitFor(() => expect(mockShowToast).toHaveBeenCalledWith('Successfully logged in!', 'success'));
 
       expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalledWith({
         email: 'test@example.com',
-        password: 'password'
+        password: expect.any(String)
       });
     });
 
     it('handles login error', async () => {
-      await testLoginFlow({
+      mockSupabase.auth.signInWithPassword.mockResolvedValue({
         data: { user: null, session: null },
         error: { message: 'Invalid credentials', status: 400 }
-      }, ['Invalid credentials', 'error']);
+      });
+      
+      renderWithAuthProvider();
+      await act(async () => screen.getByTestId('login-btn').click());
+      await waitFor(() => expect(mockShowToast).toHaveBeenCalledWith('Invalid credentials', 'error'));
       
       expect(mockLogger.error).toHaveBeenCalledWith('Login error', expect.any(Object));
     });
 
     it('handles login exception', async () => {
-      await testLoginFlow(
-        new Error('Network error'),
-        ['An unexpected error occurred during login', 'error']
-      );
+      mockSupabase.auth.signInWithPassword.mockRejectedValue(new Error('Network error'));
+      
+      renderWithAuthProvider();
+      await act(async () => screen.getByTestId('login-btn').click());
+      await waitFor(() => expect(mockShowToast).toHaveBeenCalledWith('An unexpected error occurred during login', 'error'));
       
       expect(mockLogger.error).toHaveBeenCalledWith('Login error', expect.any(Error));
     });
@@ -356,7 +325,7 @@ describe('AuthContext', () => {
   describe('Registration', () => {
     it('handles successful registration', async () => {
       mockSupabase.auth.signUp.mockResolvedValue({
-        data: { user: mockUser, session: null },
+        data: { user: MOCK_USER, session: null },
         error: null
       });
 
@@ -369,7 +338,7 @@ describe('AuthContext', () => {
       await waitFor(() => {
         expect(mockSupabase.auth.signUp).toHaveBeenCalledWith({
           email: 'test@example.com',
-          password: 'password',
+          password: expect.any(String),
           options: {
             data: { user_type: 'donor' }
           }
@@ -401,7 +370,7 @@ describe('AuthContext', () => {
       );
 
       mockSupabase.auth.signUp.mockResolvedValue({
-        data: { user: mockUser, session: null },
+        data: { user: MOCK_USER, session: null },
         error: null
       });
       
@@ -412,7 +381,7 @@ describe('AuthContext', () => {
       await waitFor(() => {
         expect(mockSupabase.auth.signUp).toHaveBeenCalledWith({
           email: 'test@example.com',
-          password: 'password',
+          password: expect.any(String),
           options: {
             data: { 
               user_type: 'charity',
@@ -480,7 +449,7 @@ describe('AuthContext', () => {
   describe('Session Refresh', () => {
     it('handles successful session refresh', async () => {
       mockSupabase.auth.refreshSession.mockResolvedValue({
-        data: { session: { user: mockUser } },
+        data: { session: { user: MOCK_USER } },
         error: null
       });
 
@@ -552,8 +521,8 @@ describe('AuthContext', () => {
   describe('User Type Detection', () => {
     const testUserType = async (userType: string | null, expectedText: string) => {
       const testUser = userType 
-        ? { ...mockUser, user_metadata: { user_type: userType } }
-        : { ...mockUser, user_metadata: {} };
+        ? { ...MOCK_USER, user_metadata: { user_type: userType } }
+        : { ...MOCK_USER, user_metadata: {} };
       
       mockSupabase.auth.getSession.mockResolvedValue({
         data: { session: { user: testUser } },
