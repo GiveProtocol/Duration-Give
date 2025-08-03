@@ -637,4 +637,405 @@ describe('CharityPortal', () => {
       });
     });
   });
+
+  describe('advanced data fetching and calculations', () => {
+    beforeEach(() => {
+      mockSupabase.from.mockImplementation((table: string) => {
+        switch (table) {
+          case 'donations':
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => ({
+                  order: jest.fn(() => Promise.resolve({
+                    data: [
+                      {
+                        id: 'donation-1',
+                        amount: '150.50',
+                        created_at: '2024-01-15T10:00:00Z',
+                        donor: { id: 'donor-1', user_id: 'user-1' },
+                      },
+                      {
+                        id: 'donation-2',
+                        amount: 75.25,
+                        created_at: '2024-01-10T14:30:00Z',
+                        donor: { id: 'donor-2', user_id: 'user-2' },
+                      },
+                    ],
+                    error: null,
+                  })),
+                })),
+              })),
+            };
+          case 'volunteer_hours':
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn((_field: string, _value: string) => {
+                  if (_field === 'status' && _value === 'approved') {
+                    return Promise.resolve({
+                      data: [
+                        { volunteer_id: 'vol-1', hours: '8.5' },
+                        { volunteer_id: 'vol-2', hours: 6 },
+                        { volunteer_id: 'vol-1', hours: '4.25' },
+                      ],
+                      error: null,
+                    });
+                  }
+                  return {
+                    order: jest.fn(() => Promise.resolve({
+                      data: [
+                        {
+                          id: 'hour-1',
+                          volunteer_id: 'vol-1',
+                          hours: '8.5',
+                          date_performed: '2024-01-15',
+                          description: 'Community outreach',
+                          status: 'pending',
+                          volunteer: { id: 'vol-1', user_id: 'user-vol-1' },
+                        },
+                      ],
+                      error: null,
+                    })),
+                  };
+                }),
+              })),
+            };
+          case 'skill_endorsements':
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => Promise.resolve({
+                  data: [
+                    { id: 'endorsement-1' },
+                    { id: 'endorsement-2' },
+                    { id: 'endorsement-3' },
+                  ],
+                  error: null,
+                })),
+              })),
+            };
+          case 'volunteer_opportunities':
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => Promise.resolve({
+                  data: [
+                    { id: 'opp-1' },
+                    { id: 'opp-2' },
+                  ],
+                  error: null,
+                })),
+              })),
+            };
+          case 'volunteer_applications':
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => ({
+                  in: jest.fn(() => ({
+                    order: jest.fn(() => Promise.resolve({
+                      data: [
+                        {
+                          id: 'app-1',
+                          full_name: 'John Smith',
+                          opportunity: { id: 'opp-1', title: 'Beach Cleanup' },
+                        },
+                        {
+                          id: 'app-2',
+                          full_name: 'Jane Doe',
+                          opportunity: { id: 'opp-2', title: 'Food Bank' },
+                        },
+                      ],
+                      error: null,
+                    })),
+                  })),
+                })),
+              })),
+            };
+          default:
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => Promise.resolve({ data: [], error: null })),
+              })),
+            };
+        }
+      });
+    });
+
+    it('calculates complex statistics correctly', async () => {
+      renderCharityPortal();
+
+      await waitFor(() => {
+        // Should show calculated totals (150.50 + 75.25 = 225.75 for donations)
+        expect(screen.getByText('$225.75')).toBeInTheDocument();
+        // Should show volunteer hours (8.5 + 6 + 4.25 = 18.75)
+        expect(screen.getByText('18.75')).toBeInTheDocument();
+        // Should show endorsements count (3)
+        expect(screen.getByText('3')).toBeInTheDocument();
+        // Should show unique volunteers count (vol-1, vol-2 = 2)
+        expect(screen.getByText('2')).toBeInTheDocument();
+      });
+    });
+
+    it('formats transaction data correctly', async () => {
+      renderCharityPortal();
+
+      await waitFor(() => {
+        // Check that donation data is properly formatted in the transaction display
+        expect(screen.getByText('contributions.date')).toBeInTheDocument();
+        expect(screen.getByText('contributions.details')).toBeInTheDocument();
+      });
+    });
+
+    it('displays volunteer application data', async () => {
+      renderCharityPortal();
+
+      fireEvent.click(screen.getByText('charity.applications'));
+
+      await waitFor(() => {
+        expect(screen.getByText('volunteer.pendingApplications')).toBeInTheDocument();
+      });
+    });
+
+    it('displays pending volunteer hours', async () => {
+      renderCharityPortal();
+
+      fireEvent.click(screen.getByText('charity.volunteers'));
+
+      await waitFor(() => {
+        expect(screen.getByText('volunteer.pendingHours')).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('comprehensive error scenarios', () => {
+    it('handles donation fetch errors gracefully', async () => {
+      mockSupabase.from.mockImplementation((table: string) => {
+        if (table === 'donations') {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => Promise.resolve({
+                data: null,
+                error: { message: 'Database connection failed', code: 'DB_ERROR' },
+              })),
+            })),
+          };
+        }
+        return {
+          select: jest.fn(() => ({
+            eq: jest.fn(() => Promise.resolve({ data: [], error: null })),
+          })),
+        };
+      });
+
+      renderCharityPortal();
+
+      await waitFor(() => {
+        expect(screen.getByText(/failed to load charity data/i)).toBeInTheDocument();
+        expect(screen.getByText('Retry')).toBeInTheDocument();
+      });
+    });
+
+    it('handles volunteer hours fetch errors', async () => {
+      mockSupabase.from.mockImplementation((table: string) => {
+        if (table === 'volunteer_hours') {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => Promise.resolve({
+                data: null,
+                error: { message: 'Hours table unavailable', code: 'TABLE_ERROR' },
+              })),
+            })),
+          };
+        }
+        return {
+          select: jest.fn(() => ({
+            eq: jest.fn(() => Promise.resolve({ data: [], error: null })),
+          })),
+        };
+      });
+
+      renderCharityPortal();
+
+      await waitFor(() => {
+        expect(screen.getByText(/failed to load charity data/i)).toBeInTheDocument();
+      });
+    });
+
+    it('handles skill endorsements fetch errors', async () => {
+      mockSupabase.from.mockImplementation((table: string) => {
+        if (table === 'skill_endorsements') {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => Promise.resolve({
+                data: null,
+                error: { message: 'Endorsements service down', code: 'SERVICE_ERROR' },
+              })),
+            })),
+          };
+        }
+        return {
+          select: jest.fn(() => ({
+            eq: jest.fn(() => Promise.resolve({ data: [], error: null })),
+          })),
+        };
+      });
+
+      renderCharityPortal();
+
+      await waitFor(() => {
+        expect(screen.getByText(/failed to load charity data/i)).toBeInTheDocument();
+      });
+    });
+
+    it('handles multiple concurrent errors', async () => {
+      mockSupabase.from.mockImplementation(() => ({
+        select: jest.fn(() => ({
+          eq: jest.fn(() => Promise.resolve({
+            data: null,
+            error: { message: 'Total system failure', code: 'SYSTEM_ERROR' },
+          })),
+        })),
+      }));
+
+      renderCharityPortal();
+
+      await waitFor(() => {
+        expect(screen.getByText(/failed to load charity data/i)).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('data calculation edge cases', () => {
+    it('handles null and undefined amounts in calculations', async () => {
+      mockSupabase.from.mockImplementation((table: string) => {
+        if (table === 'donations') {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => Promise.resolve({
+                data: [
+                  { amount: null },
+                  { amount: undefined },
+                  { amount: '' },
+                  { amount: '50' },
+                  { amount: 25.5 },
+                ],
+                error: null,
+              })),
+            })),
+          };
+        }
+        return {
+          select: jest.fn(() => ({
+            eq: jest.fn(() => Promise.resolve({ data: [], error: null })),
+          })),
+        };
+      });
+
+      renderCharityPortal();
+
+      await waitFor(() => {
+        // Should only sum valid amounts: 50 + 25.5 = 75.5
+        expect(screen.getByText('$75.5')).toBeInTheDocument();
+      });
+    });
+
+    it('handles null and undefined hours in calculations', async () => {
+      mockSupabase.from.mockImplementation((table: string) => {
+        if (table === 'volunteer_hours') {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => Promise.resolve({
+                data: [
+                  { volunteer_id: 'vol-1', hours: null },
+                  { volunteer_id: 'vol-2', hours: undefined },
+                  { volunteer_id: 'vol-3', hours: '' },
+                  { volunteer_id: 'vol-4', hours: '10' },
+                  { volunteer_id: 'vol-5', hours: 5.5 },
+                ],
+                error: null,
+              })),
+            })),
+          };
+        }
+        return {
+          select: jest.fn(() => ({
+            eq: jest.fn(() => Promise.resolve({ data: [], error: null })),
+          })),
+        };
+      });
+
+      renderCharityPortal();
+
+      await waitFor(() => {
+        // Should only sum valid hours: 10 + 5.5 = 15.5
+        expect(screen.getByText('15.5')).toBeInTheDocument();
+      });
+    });
+
+    it('handles duplicate volunteer IDs correctly', async () => {
+      mockSupabase.from.mockImplementation((table: string) => {
+        if (table === 'volunteer_hours') {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => Promise.resolve({
+                data: [
+                  { volunteer_id: 'vol-1' },
+                  { volunteer_id: 'vol-2' },
+                  { volunteer_id: 'vol-1' }, // duplicate
+                  { volunteer_id: 'vol-3' },
+                  { volunteer_id: 'vol-2' }, // duplicate
+                  { volunteer_id: null }, // invalid
+                  { volunteer_id: undefined }, // invalid
+                ],
+                error: null,
+              })),
+            })),
+          };
+        }
+        return {
+          select: jest.fn(() => ({
+            eq: jest.fn(() => Promise.resolve({ data: [], error: null })),
+          })),
+        };
+      });
+
+      renderCharityPortal();
+
+      await waitFor(() => {
+        // Should show unique volunteers only: vol-1, vol-2, vol-3 = 3
+        expect(screen.getByText('3')).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('retry functionality', () => {
+    it('retries data fetch when retry button is clicked after error', async () => {
+      let callCount = 0;
+      mockSupabase.from.mockImplementation(() => ({
+        select: jest.fn(() => ({
+          eq: jest.fn(() => {
+            callCount++;
+            if (callCount === 1) {
+              return Promise.resolve({
+                data: null,
+                error: { message: 'Temporary failure', code: 'TEMP_ERROR' },
+              });
+            }
+            return Promise.resolve({ data: [], error: null });
+          }),
+        })),
+      }));
+
+      renderCharityPortal();
+
+      await waitFor(() => {
+        expect(screen.getByText('Retry')).toBeInTheDocument();
+      });
+
+      fireEvent.click(screen.getByText('Retry'));
+
+      await waitFor(() => {
+        expect(screen.getByText('charity.dashboard')).toBeInTheDocument();
+      });
+
+      expect(callCount).toBeGreaterThan(1);
+    });
+  });
 });
