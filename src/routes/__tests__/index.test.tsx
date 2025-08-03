@@ -1,23 +1,23 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import { setupAllRouteMocks } from '@/test-utils/routeMocks';
-import AppRoutes from '../index';
+import { render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { setupAllRouteMocks } from "@/test-utils/routeMocks";
+import AppRoutes from "../index";
 
 // Setup all route mocks using shared utility
 setupAllRouteMocks();
 
 // Mock auth context
-jest.mock('@/contexts/AuthContext');
+jest.mock("@/contexts/AuthContext");
 
 const mockUseAuth = useAuth as jest.MockedFunction<typeof useAuth>;
 
-describe('AppRoutes', () => {
-  const renderWithRouter = (initialEntries = ['/']) => {
+describe("AppRoutes", () => {
+  const renderWithRouter = (initialEntries = ["/"]) => {
     return render(
       <MemoryRouter initialEntries={initialEntries}>
         <AppRoutes />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   };
 
@@ -25,7 +25,7 @@ describe('AppRoutes', () => {
     jest.clearAllMocks();
   });
 
-  describe('Public Routes', () => {
+  describe("Public Routes", () => {
     beforeEach(() => {
       mockUseAuth.mockReturnValue({
         user: null,
@@ -38,19 +38,23 @@ describe('AppRoutes', () => {
         resetPassword: jest.fn(),
         loginWithGoogle: jest.fn(),
         refreshSession: jest.fn(),
-        sendUsernameReminder: jest.fn()
+        sendUsernameReminder: jest.fn(),
       });
     });
 
     const publicRoutes = [
-      { path: '/', testId: 'home', name: 'Home' },
-      { path: '/login', testId: 'login', name: 'Login' },
-      { path: '/register', testId: 'register', name: 'Register' },
-      { path: '/charities', testId: 'charity-browser', name: 'Charity Browser' },
-      { path: '/about', testId: 'about', name: 'About' },
-      { path: '/legal', testId: 'legal', name: 'Legal' },
-      { path: '/privacy', testId: 'privacy', name: 'Privacy' },
-      { path: '/whitepaper', testId: 'whitepaper', name: 'Whitepaper' }
+      { path: "/", testId: "home", name: "Home" },
+      { path: "/login", testId: "login", name: "Login" },
+      { path: "/register", testId: "register", name: "Register" },
+      {
+        path: "/charities",
+        testId: "charity-browser",
+        name: "Charity Browser",
+      },
+      { path: "/about", testId: "about", name: "About" },
+      { path: "/legal", testId: "legal", name: "Legal" },
+      { path: "/privacy", testId: "privacy", name: "Privacy" },
+      { path: "/whitepaper", testId: "whitepaper", name: "Whitepaper" },
     ];
 
     publicRoutes.forEach(({ path, testId, name }) => {
@@ -63,9 +67,21 @@ describe('AppRoutes', () => {
     });
 
     const charityRoutes = [
-      { path: '/charities/global-water-foundation', testId: 'global-water', name: 'Global Water Foundation' },
-      { path: '/charities/education-for-all', testId: 'education-for-all', name: 'Education For All' },
-      { path: '/charities/climate-action-now', testId: 'climate-action', name: 'Climate Action Now' }
+      {
+        path: "/charities/global-water-foundation",
+        testId: "global-water",
+        name: "Global Water Foundation",
+      },
+      {
+        path: "/charities/education-for-all",
+        testId: "education-for-all",
+        name: "Education For All",
+      },
+      {
+        path: "/charities/climate-action-now",
+        testId: "climate-action",
+        name: "Climate Action Now",
+      },
     ];
 
     charityRoutes.forEach(({ path, testId, name }) => {
@@ -78,9 +94,21 @@ describe('AppRoutes', () => {
     });
 
     const portfolioRoutes = [
-      { path: '/portfolios/environment', testId: 'environment-portfolio', name: 'Environment Portfolio' },
-      { path: '/portfolios/education', testId: 'education-portfolio', name: 'Education Portfolio' },
-      { path: '/portfolios/poverty', testId: 'poverty-portfolio', name: 'Poverty Portfolio' }
+      {
+        path: "/portfolios/environment",
+        testId: "environment-portfolio",
+        name: "Environment Portfolio",
+      },
+      {
+        path: "/portfolios/education",
+        testId: "education-portfolio",
+        name: "Education Portfolio",
+      },
+      {
+        path: "/portfolios/poverty",
+        testId: "poverty-portfolio",
+        name: "Poverty Portfolio",
+      },
     ];
 
     portfolioRoutes.forEach(({ path, testId, name }) => {
@@ -93,20 +121,20 @@ describe('AppRoutes', () => {
     });
   });
 
-  describe('Protected Routes', () => {
+  describe("Protected Routes", () => {
     const mockUser = {
-      id: 'user-123',
-      email: 'test@example.com',
-      user_metadata: { user_type: 'donor' },
+      id: "user-123",
+      email: "test@example.com",
+      user_metadata: { user_type: "donor" },
       app_metadata: {},
-      aud: 'authenticated',
-      created_at: new Date().toISOString()
+      aud: "authenticated",
+      created_at: new Date().toISOString(),
     };
 
     beforeEach(() => {
       mockUseAuth.mockReturnValue({
         user: mockUser,
-        userType: 'donor',
+        userType: "donor",
         loading: false,
         error: null,
         login: jest.fn(),
@@ -115,31 +143,47 @@ describe('AppRoutes', () => {
         resetPassword: jest.fn(),
         loginWithGoogle: jest.fn(),
         refreshSession: jest.fn(),
-        sendUsernameReminder: jest.fn()
+        sendUsernameReminder: jest.fn(),
       });
     });
 
     const protectedRoutes = [
-      { path: '/dashboard', testId: 'give-dashboard', name: 'Give Dashboard' },
-      { path: '/charity-portal', testId: 'charity-portal', name: 'Charity Portal' },
-      { path: '/volunteer-dashboard', testId: 'volunteer-dashboard', name: 'Volunteer Dashboard' },
-      { path: '/admin', testId: 'admin-dashboard', name: 'Admin Dashboard' },
-      { path: '/contributions', testId: 'contribution-tracker', name: 'Contribution Tracker' },
-      { path: '/volunteer-opportunities', testId: 'volunteer-opportunities', name: 'Volunteer Opportunities' }
+      { path: "/dashboard", testId: "give-dashboard", name: "Give Dashboard" },
+      {
+        path: "/charity-portal",
+        testId: "charity-portal",
+        name: "Charity Portal",
+      },
+      {
+        path: "/volunteer-dashboard",
+        testId: "volunteer-dashboard",
+        name: "Volunteer Dashboard",
+      },
+      { path: "/admin", testId: "admin-dashboard", name: "Admin Dashboard" },
+      {
+        path: "/contributions",
+        testId: "contribution-tracker",
+        name: "Contribution Tracker",
+      },
+      {
+        path: "/volunteer-opportunities",
+        testId: "volunteer-opportunities",
+        name: "Volunteer Opportunities",
+      },
     ];
 
     protectedRoutes.forEach(({ path, testId: _testId, name }) => {
       it(`renders ${name} page at ${path} when authenticated`, async () => {
         renderWithRouter([path]);
         await waitFor(() => {
-          expect(screen.getByTestId('protected-route')).toBeInTheDocument();
+          expect(screen.getByTestId("protected-route")).toBeInTheDocument();
         });
       });
     });
   });
 
-  describe('Loading State', () => {
-    it('shows loading spinner when auth is loading', () => {
+  describe("Loading State", () => {
+    it("shows loading spinner when auth is loading", () => {
       mockUseAuth.mockReturnValue({
         user: null,
         userType: null,
@@ -151,36 +195,36 @@ describe('AppRoutes', () => {
         resetPassword: jest.fn(),
         loginWithGoogle: jest.fn(),
         refreshSession: jest.fn(),
-        sendUsernameReminder: jest.fn()
+        sendUsernameReminder: jest.fn(),
       });
 
-      renderWithRouter(['/']);
-      expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
+      renderWithRouter(["/"]);
+      expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
     });
   });
 
-  describe('Error Handling', () => {
-    it('handles auth errors gracefully', () => {
+  describe("Error Handling", () => {
+    it("handles auth errors gracefully", () => {
       mockUseAuth.mockReturnValue({
         user: null,
         userType: null,
         loading: false,
-        error: 'Authentication failed',
+        error: "Authentication failed",
         login: jest.fn(),
         logout: jest.fn(),
         register: jest.fn(),
         resetPassword: jest.fn(),
         loginWithGoogle: jest.fn(),
         refreshSession: jest.fn(),
-        sendUsernameReminder: jest.fn()
+        sendUsernameReminder: jest.fn(),
       });
 
-      expect(() => renderWithRouter(['/'])).not.toThrow();
+      expect(() => renderWithRouter(["/"])).not.toThrow();
     });
   });
 
-  describe('Lazy Loading', () => {
-    it('handles lazy-loaded components', async () => {
+  describe("Lazy Loading", () => {
+    it("handles lazy-loaded components", async () => {
       mockUseAuth.mockReturnValue({
         user: null,
         userType: null,
@@ -192,13 +236,13 @@ describe('AppRoutes', () => {
         resetPassword: jest.fn(),
         loginWithGoogle: jest.fn(),
         refreshSession: jest.fn(),
-        sendUsernameReminder: jest.fn()
+        sendUsernameReminder: jest.fn(),
       });
 
-      renderWithRouter(['/']);
-      
+      renderWithRouter(["/"]);
+
       await waitFor(() => {
-        expect(screen.getByTestId('home')).toBeInTheDocument();
+        expect(screen.getByTestId("home")).toBeInTheDocument();
       });
     });
   });
