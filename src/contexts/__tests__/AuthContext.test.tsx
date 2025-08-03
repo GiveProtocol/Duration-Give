@@ -235,60 +235,46 @@ describe('AuthContext', () => {
   });
 
   describe('Login', () => {
-    it('handles successful login', async () => {
-      mockSupabase.auth.signInWithPassword.mockResolvedValue({
-        data: { user: mockUser, session: { user: mockUser } },
-        error: null
-      });
+    const testLoginFlow = async (mockResponse: any, expectedToast: [string, string]) => {
+      if (mockResponse instanceof Error) {
+        mockSupabase.auth.signInWithPassword.mockRejectedValue(mockResponse);
+      } else {
+        mockSupabase.auth.signInWithPassword.mockResolvedValue(mockResponse);
+      }
 
       renderWithAuthProvider();
-      
-      await act(async () => {
-        screen.getByTestId('login-btn').click();
-      });
+      await act(async () => screen.getByTestId('login-btn').click());
+      await waitFor(() => expect(mockShowToast).toHaveBeenCalledWith(...expectedToast));
+    };
 
-      await waitFor(() => {
-        expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalledWith({
-          email: 'test@example.com',
-          password: 'password'
-        });
-        expect(mockShowToast).toHaveBeenCalledWith('Successfully logged in!', 'success');
+    it('handles successful login', async () => {
+      await testLoginFlow({
+        data: { user: mockUser, session: { user: mockUser } },
+        error: null
+      }, ['Successfully logged in!', 'success']);
+
+      expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalledWith({
+        email: 'test@example.com',
+        password: 'password'
       });
     });
 
     it('handles login error', async () => {
-      const error = { message: 'Invalid credentials', status: 400 };
-      mockSupabase.auth.signInWithPassword.mockResolvedValue({
+      await testLoginFlow({
         data: { user: null, session: null },
-        error
-      });
-
-      renderWithAuthProvider();
+        error: { message: 'Invalid credentials', status: 400 }
+      }, ['Invalid credentials', 'error']);
       
-      await act(async () => {
-        screen.getByTestId('login-btn').click();
-      });
-
-      await waitFor(() => {
-        expect(mockShowToast).toHaveBeenCalledWith('Invalid credentials', 'error');
-        expect(mockLogger.error).toHaveBeenCalledWith('Login error', expect.any(Object));
-      });
+      expect(mockLogger.error).toHaveBeenCalledWith('Login error', expect.any(Object));
     });
 
     it('handles login exception', async () => {
-      const error = new Error('Network error');
-      mockSupabase.auth.signInWithPassword.mockRejectedValue(error);
-
-      renderWithAuthProvider();
+      await testLoginFlow(
+        new Error('Network error'),
+        ['An unexpected error occurred during login', 'error']
+      );
       
-      await act(async () => {
-        screen.getByTestId('login-btn').click();
-      });
-
-      await waitFor(() => {
-        expect(mockShowToast).toHaveBeenCalledWith('An unexpected error occurred during login', 'error');
-        expect(mockLogger.error).toHaveBeenCalledWith('Login error', error);
-      });
+      expect(mockLogger.error).toHaveBeenCalledWith('Login error', expect.any(Error));
     });
   });
 
@@ -564,61 +550,26 @@ describe('AuthContext', () => {
   });
 
   describe('User Type Detection', () => {
-    it('detects donor user type from metadata', async () => {
-      const donorUser = { ...mockUser, user_metadata: { user_type: 'donor' } };
+    const testUserType = async (userType: string | null, expectedText: string) => {
+      const testUser = userType 
+        ? { ...mockUser, user_metadata: { user_type: userType } }
+        : { ...mockUser, user_metadata: {} };
+      
       mockSupabase.auth.getSession.mockResolvedValue({
-        data: { session: { user: donorUser } },
+        data: { session: { user: testUser } },
         error: null
       });
 
       renderWithAuthProvider();
-      
       await waitFor(() => {
-        expect(screen.getByTestId('user-type')).toHaveTextContent('donor');
+        expect(screen.getByTestId('user-type')).toHaveTextContent(expectedText);
       });
-    });
+    };
 
-    it('detects charity user type from metadata', async () => {
-      const charityUser = { ...mockUser, user_metadata: { user_type: 'charity' } };
-      mockSupabase.auth.getSession.mockResolvedValue({
-        data: { session: { user: charityUser } },
-        error: null
-      });
-
-      renderWithAuthProvider();
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('user-type')).toHaveTextContent('charity');
-      });
-    });
-
-    it('detects admin user type from metadata', async () => {
-      const adminUser = { ...mockUser, user_metadata: { user_type: 'admin' } };
-      mockSupabase.auth.getSession.mockResolvedValue({
-        data: { session: { user: adminUser } },
-        error: null
-      });
-
-      renderWithAuthProvider();
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('user-type')).toHaveTextContent('admin');
-      });
-    });
-
-    it('handles missing user type metadata', async () => {
-      const userWithoutType = { ...mockUser, user_metadata: {} };
-      mockSupabase.auth.getSession.mockResolvedValue({
-        data: { session: { user: userWithoutType } },
-        error: null
-      });
-
-      renderWithAuthProvider();
-      
-      await waitFor(() => {
-        expect(screen.getByTestId('user-type')).toHaveTextContent('no-type');
-      });
-    });
+    it('detects donor user type from metadata', () => testUserType('donor', 'donor'));
+    it('detects charity user type from metadata', () => testUserType('charity', 'charity'));
+    it('detects admin user type from metadata', () => testUserType('admin', 'admin'));
+    it('handles missing user type metadata', () => testUserType(null, 'no-type'));
   });
 
   describe('Context Error Handling', () => {
