@@ -1,5 +1,5 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import React from "react";
+import { render } from "@testing-library/react";
 import {
   createMockWeb3,
   createMockWalletAlias,
@@ -116,7 +116,7 @@ describe("mockSetup", () => {
 
     it("t function returns fallback or key", () => {
       const result = createMockTranslation();
-      
+
       expect(result.t("key")).toBe("key");
       expect(result.t("key", "fallback")).toBe("fallback");
     });
@@ -220,9 +220,9 @@ describe("mockSetup", () => {
         const { getByText } = render(
           <MockButton onClick={jest.fn()} variant="primary">
             Click me
-          </MockButton>
+          </MockButton>,
         );
-        
+
         const button = getByText("Click me");
         expect(button).toBeInTheDocument();
         expect(button).toHaveAttribute("data-variant", "primary");
@@ -232,9 +232,9 @@ describe("mockSetup", () => {
     describe("MockInput", () => {
       it("renders input with props", () => {
         const { getByTestId } = render(
-          <MockInput value="test" onChange={jest.fn()} />
+          <MockInput value="test" onChange={jest.fn()} />,
         );
-        
+
         const input = getByTestId("alias-input");
         expect(input).toBeInTheDocument();
         expect(input).toHaveValue("test");
@@ -244,11 +244,9 @@ describe("mockSetup", () => {
     describe("MockCard", () => {
       it("renders card with children", () => {
         const { getByTestId, getByText } = render(
-          <MockCard className="test-class">
-            Card content
-          </MockCard>
+          <MockCard className="test-class">Card content</MockCard>,
         );
-        
+
         const card = getByTestId("card");
         expect(card).toBeInTheDocument();
         expect(getByText("Card content")).toBeInTheDocument();
@@ -258,7 +256,9 @@ describe("mockSetup", () => {
 
   describe("testAddresses", () => {
     it("contains expected test addresses", () => {
-      expect(testAddresses.mainWallet).toBe("0x1234567890123456789012345678901234567890");
+      expect(testAddresses.mainWallet).toBe(
+        "0x1234567890123456789012345678901234567890",
+      );
       expect(testAddresses.shortAddress).toBe("0x1234...7890");
     });
   });
@@ -293,9 +293,9 @@ describe("mockSetup", () => {
   describe("createMockSupabase", () => {
     it("creates mock supabase client with default responses", () => {
       const client = createMockSupabase();
-      
+
       expect(client.from).toBeInstanceOf(Function);
-      
+
       const result = client.from("test_table");
       expect(result.select).toBeInstanceOf(Function);
     });
@@ -304,17 +304,17 @@ describe("mockSetup", () => {
       const customResponses = {
         users: { data: [{ id: "123", name: "Test" }], error: null },
       };
-      
+
       const client = createMockSupabase(customResponses);
       const result = client.from("users");
-      
+
       expect(result.select).toBeInstanceOf(Function);
     });
 
     it("supports chained query methods", () => {
       const client = createMockSupabase();
       const query = client.from("test_table").select();
-      
+
       expect(query.eq).toBeInstanceOf(Function);
       expect(query.order).toBeInstanceOf(Function);
       expect(query.single).toBeInstanceOf(Function);

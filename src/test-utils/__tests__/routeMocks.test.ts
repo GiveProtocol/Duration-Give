@@ -99,22 +99,32 @@ describe("routeMocks", () => {
         setupCharityPageMocks,
         setupPortfolioPageMocks,
         setupDashboardPageMocks,
-        setupAllRouteMocks
+        setupAllRouteMocks,
       };
 
       // Create spies for each function
-      const setupCommonRouteMocksSpy = jest.spyOn(routeMockModule, "setupCommonRouteMocks").mockImplementation(() => {});
-      const setupPageMocksSpy = jest.spyOn(routeMockModule, "setupPageMocks").mockImplementation(() => {});
-      const setupCharityPageMocksSpy = jest.spyOn(routeMockModule, "setupCharityPageMocks").mockImplementation(() => {});
-      const setupPortfolioPageMocksSpy = jest.spyOn(routeMockModule, "setupPortfolioPageMocks").mockImplementation(() => {});
-      const setupDashboardPageMocksSpy = jest.spyOn(routeMockModule, "setupDashboardPageMocks").mockImplementation(() => {});
+      const setupCommonRouteMocksSpy = jest
+        .spyOn(routeMockModule, "setupCommonRouteMocks")
+        .mockImplementation(() => {});
+      const setupPageMocksSpy = jest
+        .spyOn(routeMockModule, "setupPageMocks")
+        .mockImplementation(() => {});
+      const setupCharityPageMocksSpy = jest
+        .spyOn(routeMockModule, "setupCharityPageMocks")
+        .mockImplementation(() => {});
+      const setupPortfolioPageMocksSpy = jest
+        .spyOn(routeMockModule, "setupPortfolioPageMocks")
+        .mockImplementation(() => {});
+      const setupDashboardPageMocksSpy = jest
+        .spyOn(routeMockModule, "setupDashboardPageMocks")
+        .mockImplementation(() => {});
 
       // Since we mocked the implementations, call the real setupAllRouteMocks
       setupAllRouteMocks();
 
       // This should trigger real calls to the functions
       expect(setupCommonRouteMocksSpy).not.toHaveBeenCalled(); // Because we mocked the implementation
-      
+
       // Instead, test that setupAllRouteMocks actually runs without errors
       expect(() => setupAllRouteMocks()).not.toThrow();
     });
@@ -122,16 +132,20 @@ describe("routeMocks", () => {
     it("verifies mock component rendering", () => {
       const Component = mockPageComponent("test-page", "Test Page");
       const element = Component.default();
-      
+
       expect(element.type).toBe("div");
       expect(element.props["data-testid"]).toBe("test-page");
       expect(element.props.children).toBe("Test Page");
     });
 
     it("verifies named component rendering", () => {
-      const Component = mockNamedComponent("test-component", "Test Component", "TestComponent");
+      const Component = mockNamedComponent(
+        "test-component",
+        "Test Component",
+        "TestComponent",
+      );
       const element = Component.TestComponent();
-      
+
       expect(element.type).toBe("div");
       expect(element.props["data-testid"]).toBe("test-component");
       expect(element.props.children).toBe("Test Component");

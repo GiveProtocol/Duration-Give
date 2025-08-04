@@ -46,9 +46,27 @@ describe("types", () => {
 
   describe("cssClasses", () => {
     it("contains expected card classes", () => {
-      expect(cssClasses.card.default).toEqual(["bg-white", "border", "border-gray-200", "rounded-lg", "p-4"]);
-      expect(cssClasses.card.success).toEqual(["bg-green-50", "border", "border-green-200", "rounded-lg", "p-4"]);
-      expect(cssClasses.card.error).toEqual(["p-3", "bg-red-50", "text-red-700", "text-sm", "rounded-md"]);
+      expect(cssClasses.card.default).toEqual([
+        "bg-white",
+        "border",
+        "border-gray-200",
+        "rounded-lg",
+        "p-4",
+      ]);
+      expect(cssClasses.card.success).toEqual([
+        "bg-green-50",
+        "border",
+        "border-green-200",
+        "rounded-lg",
+        "p-4",
+      ]);
+      expect(cssClasses.card.error).toEqual([
+        "p-3",
+        "bg-red-50",
+        "text-red-700",
+        "text-sm",
+        "rounded-md",
+      ]);
     });
 
     it("contains expected button classes", () => {
