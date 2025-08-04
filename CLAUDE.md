@@ -94,76 +94,82 @@ Create a `.env` file with required variables:
 ### 🚫 NEVER DO (Will Cause CI/CD Failures)
 
 1. **NEVER leave unused variables** (DeepSource JS-0356 - Major)
+
    ```typescript
    // ❌ WRONG
-   const mockSpy = jest.spyOn(module, 'method');
+   const mockSpy = jest.spyOn(module, "method");
    // mockSpy never used
-   
+
    // ✅ CORRECT - Use underscore prefix for intentionally unused
-   const _mockSpy = jest.spyOn(module, 'method');
-   
+   const _mockSpy = jest.spyOn(module, "method");
+
    // ✅ CORRECT - Use the variable
-   const mockSpy = jest.spyOn(module, 'method');
+   const mockSpy = jest.spyOn(module, "method");
    expect(mockSpy).toHaveBeenCalled();
    ```
 
 2. **NEVER use empty functions without comments** (DeepSource JS-0321 - Minor)
+
    ```typescript
    // ❌ WRONG
-   jest.spyOn(obj, 'method').mockImplementation(() => {});
-   
+   jest.spyOn(obj, "method").mockImplementation(() => {});
+
    // ✅ CORRECT - Add explanatory comment
-   jest.spyOn(obj, 'method').mockImplementation(() => {
+   jest.spyOn(obj, "method").mockImplementation(() => {
      // Empty mock to prevent actual execution
    });
-   
+
    // ✅ CORRECT - Use jest.fn() for simple mocks
-   jest.spyOn(obj, 'method').mockImplementation(jest.fn());
+   jest.spyOn(obj, "method").mockImplementation(jest.fn());
    ```
 
 3. **NEVER use `any` type** (DeepSource JS-0323 - Critical)
+
    ```typescript
    // ❌ WRONG
    const props: any = { ... };
    jest.mock('@/component', () => ({ Component: (props: any) => ... }));
-   
+
    // ✅ CORRECT
    interface Props { onClose: () => void; children: React.ReactNode; }
    jest.mock('@/component', () => ({ Component: ({ onClose, children }: Props) => ... }));
    ```
 
-2. **NEVER use `require()` statements** (DeepSource JS-0359 - Major)
+4. **NEVER use `require()` statements** (DeepSource JS-0359 - Major)
+
    ```typescript
    // ❌ WRONG
-   const module = require('./module');
-   jest.spyOn(require('./module'), 'function');
-   
+   const module = require("./module");
+   jest.spyOn(require("./module"), "function");
+
    // ✅ CORRECT
-   import * as module from './module';
-   jest.spyOn(module, 'function');
+   import * as module from "./module";
+   jest.spyOn(module, "function");
    ```
 
-3. **NEVER leave unused variables** (DeepSource JS-0356 - Major)
+5. **NEVER leave unused variables** (DeepSource JS-0356 - Major)
+
    ```typescript
    // ❌ WRONG
    routes.forEach(({ path, testId, name }) => {
      // testId extracted but never used
    });
-   
+
    // ✅ CORRECT - Option 1: Use it
    routes.forEach(({ path, testId, name }) => {
      expect(screen.getByTestId(testId)).toBeInTheDocument();
    });
-   
+
    // ✅ CORRECT - Option 2: Prefix with _
    routes.forEach(({ path, testId: _testId, name }) => {
    ```
 
-4. **NEVER export functions without JSDoc** (DeepSource JS-D1001 - Minor)
+6. **NEVER export functions without JSDoc** (DeepSource JS-D1001 - Minor)
+
    ```typescript
    // ❌ WRONG
    export const createMock = (data) => ({ ... });
-   
+
    // ✅ CORRECT
    /**
     * Creates a mock object for testing
@@ -173,11 +179,12 @@ Create a `.env` file with required variables:
    export const createMock = (data: MockData) => ({ ... });
    ```
 
-5. **NEVER forget React import when using JSX**
+7. **NEVER forget React import when using JSX**
+
    ```typescript
    // ❌ WRONG (will cause "React is not defined")
    const Component = () => <div>Hello</div>;
-   
+
    // ✅ CORRECT
    import React from 'react';
    const Component = () => <div>Hello</div>;
@@ -195,6 +202,7 @@ Create a `.env` file with required variables:
 ### 🔍 Pre-Code Checklist (MANDATORY)
 
 Before writing ANY code, verify:
+
 - [ ] All types explicitly defined (no `any`)
 - [ ] All variables used or prefixed with `_`
 - [ ] ES6 imports only (no `require()`)

@@ -7,7 +7,7 @@
 ### ❌ NEVER DO (These WILL cause failures):
 
 1. **`any` type** → Define proper interfaces
-2. **`require()`** → Use `import` statements  
+2. **`require()`** → Use `import` statements
 3. **Unused variables** → Remove or prefix with `_`
 4. **Missing JSDoc** → Document all exported functions
 5. **Missing React import** → Add when using JSX
@@ -18,14 +18,14 @@
 
 ```typescript
 // ❌ BAD - Will be flagged by DeepSource
-const setupMockSpy = jest.spyOn(module, 'setup');
+const setupMockSpy = jest.spyOn(module, "setup");
 // setupMockSpy is never used after assignment
 
 // ✅ GOOD - Prefix with underscore if intentionally unused
-const _setupMockSpy = jest.spyOn(module, 'setup');
+const _setupMockSpy = jest.spyOn(module, "setup");
 
 // ✅ GOOD - Use the variable
-const setupMockSpy = jest.spyOn(module, 'setup');
+const setupMockSpy = jest.spyOn(module, "setup");
 expect(setupMockSpy).toHaveBeenCalled();
 
 // ✅ GOOD - Remove if truly not needed
@@ -38,11 +38,11 @@ expect(setupMockSpy).toHaveBeenCalled();
 
 ```typescript
 // ❌ BAD - Will be flagged by DeepSource
-jest.spyOn(module, 'method').mockImplementation(() => {});
+jest.spyOn(module, "method").mockImplementation(() => {});
 array.forEach(() => {});
 
 // ✅ GOOD - Add comment explaining why it's empty
-jest.spyOn(module, 'method').mockImplementation(() => {
+jest.spyOn(module, "method").mockImplementation(() => {
   // Empty mock to prevent actual execution
 });
 
@@ -51,7 +51,7 @@ array.forEach(() => {
 });
 
 // ✅ GOOD - Use jest.fn() for simple mocks
-jest.spyOn(module, 'method').mockImplementation(jest.fn());
+jest.spyOn(module, "method").mockImplementation(jest.fn());
 ```
 
 ### ✅ MANDATORY Code Template:
@@ -89,11 +89,13 @@ jest.mock('@/component', () => ({
 ## 📁 File Reference Patterns
 
 ### Test Files Location
+
 - Component tests: `src/components/**/__tests__/*.test.tsx`
 - Utility tests: `src/test-utils/__tests__/*.test.ts`
 - Page tests: `src/pages/**/__tests__/*.test.tsx`
 
 ### Shared Test Utilities
+
 - Mock creation: `src/test-utils/mockSetup.tsx`
 - Type definitions: `src/test-utils/types.ts`
 - Auth helpers: `src/test-utils/authTestHelpers.ts`
@@ -102,44 +104,47 @@ jest.mock('@/component', () => ({
 
 ## 🎯 Common Error Fixes
 
-| Error Code | Issue | Fix |
-|------------|-------|-----|
-| JS-0323 | `any` type usage | Define explicit interface |
-| JS-0356 | Unused variables | Remove or prefix with `_` |
-| JS-0359 | `require()` statements | Use `import` instead |
-| JS-D1001 | Missing JSDoc | Add `/** */` comments |
-| no-undef | React not defined | Add `import React` |
+| Error Code | Issue                  | Fix                       |
+| ---------- | ---------------------- | ------------------------- |
+| JS-0323    | `any` type usage       | Define explicit interface |
+| JS-0356    | Unused variables       | Remove or prefix with `_` |
+| JS-0359    | `require()` statements | Use `import` instead      |
+| JS-D1001   | Missing JSDoc          | Add `/** */` comments     |
+| no-undef   | React not defined      | Add `import React`        |
 
 ## 🚨 Common Test Anti-Patterns to AVOID
 
 ### Empty Mock Implementations
+
 ```typescript
 // ❌ NEVER DO THIS
-const spy = jest.spyOn(obj, 'method').mockImplementation(() => {});
+const spy = jest.spyOn(obj, "method").mockImplementation(() => {});
 
 // ✅ ALWAYS DO THIS
-const spy = jest.spyOn(obj, 'method').mockImplementation(() => {
+const spy = jest.spyOn(obj, "method").mockImplementation(() => {
   // Empty mock to prevent actual execution
 });
 
 // ✅ OR THIS (for truly empty mocks)
-const spy = jest.spyOn(obj, 'method').mockImplementation(jest.fn());
+const spy = jest.spyOn(obj, "method").mockImplementation(jest.fn());
 ```
 
 ### Unused Test Variables
+
 ```typescript
 // ❌ NEVER DO THIS
-const spy1 = jest.spyOn(obj, 'method1');
-const spy2 = jest.spyOn(obj, 'method2'); // Never used
+const spy1 = jest.spyOn(obj, "method1");
+const spy2 = jest.spyOn(obj, "method2"); // Never used
 
 // ✅ ALWAYS DO THIS
-const spy1 = jest.spyOn(obj, 'method1');
-const _spy2 = jest.spyOn(obj, 'method2'); // Prefix with _ if intentionally unused
+const spy1 = jest.spyOn(obj, "method1");
+const _spy2 = jest.spyOn(obj, "method2"); // Prefix with _ if intentionally unused
 ```
 
 ## 📋 Test Utility Patterns
 
 ### Mock Component Pattern:
+
 ```typescript
 jest.mock('@/components/Modal', () => ({
   Modal: ({ onClose, children }: { onClose: () => void; children: React.ReactNode }) => (
@@ -149,16 +154,18 @@ jest.mock('@/components/Modal', () => ({
 ```
 
 ### Mock Hook Pattern:
+
 ```typescript
 const mockUseHook = useHook as jest.MockedFunction<typeof useHook>;
 mockUseHook.mockReturnValue({
   data: mockData,
   loading: false,
-  error: null
+  error: null,
 });
 ```
 
 ### Unused Variable Patterns:
+
 ```typescript
 // ✅ Use the variable
 routes.forEach(({ path, testId, name }) => {
