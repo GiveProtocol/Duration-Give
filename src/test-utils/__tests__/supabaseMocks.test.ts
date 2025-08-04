@@ -66,7 +66,6 @@ describe('supabaseMocks', () => {
     });
 
     it('applies custom overrides', () => {
-      const customData = { data: [{ id: 1 }], error: null };
       const client = createMockSupabaseClient({
         select: { customMethod: jest.fn() }
       });

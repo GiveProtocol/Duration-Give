@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   mockPageComponent,
   mockNamedComponent,
@@ -9,6 +8,7 @@ import {
   setupDashboardPageMocks,
   setupAllRouteMocks
 } from '../routeMocks';
+import * as routeMocks from '../routeMocks';
 
 describe('routeMocks', () => {
   beforeEach(() => {
@@ -90,11 +90,11 @@ describe('routeMocks', () => {
   describe('setupAllRouteMocks', () => {
     it('calls all setup functions', () => {
       // Mock the individual setup functions
-      const setupCommonRouteMocksSpy = jest.spyOn(require('../routeMocks'), 'setupCommonRouteMocks');
-      const setupPageMocksSpy = jest.spyOn(require('../routeMocks'), 'setupPageMocks');
-      const setupCharityPageMocksSpy = jest.spyOn(require('../routeMocks'), 'setupCharityPageMocks');
-      const setupPortfolioPageMocksSpy = jest.spyOn(require('../routeMocks'), 'setupPortfolioPageMocks');
-      const setupDashboardPageMocksSpy = jest.spyOn(require('../routeMocks'), 'setupDashboardPageMocks');
+      const setupCommonRouteMocksSpy = jest.spyOn(routeMocks, 'setupCommonRouteMocks');
+      const setupPageMocksSpy = jest.spyOn(routeMocks, 'setupPageMocks');
+      const setupCharityPageMocksSpy = jest.spyOn(routeMocks, 'setupCharityPageMocks');
+      const setupPortfolioPageMocksSpy = jest.spyOn(routeMocks, 'setupPortfolioPageMocks');
+      const setupDashboardPageMocksSpy = jest.spyOn(routeMocks, 'setupDashboardPageMocks');
       
       setupAllRouteMocks();
       
