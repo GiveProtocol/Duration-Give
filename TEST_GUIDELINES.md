@@ -5,6 +5,7 @@ This document outlines best practices for writing test code in the Duration proj
 ## TypeScript Best Practices
 
 ### 1. Never Use `any` Type
+
 ```typescript
 // ❌ Bad
 const mockData: any = { id: '123' };
@@ -20,6 +21,7 @@ jest.mock('@/components/Modal', () => ({
 ```
 
 ### 2. Define Proper Types for All Mock Functions
+
 ```typescript
 // ❌ Bad
 export const createMockClient = (overrides: any = {}) => ({ ... });
@@ -33,17 +35,19 @@ export const createMockClient = (overrides: MockClientOverrides = {}) => ({ ... 
 ```
 
 ### 3. Use Type Imports
+
 ```typescript
 // ❌ Bad
-import { User, Profile } from './types';
+import { User, Profile } from "./types";
 
 // ✅ Good
-import type { User, Profile } from './types';
+import type { User, Profile } from "./types";
 ```
 
 ## Code Quality Practices
 
 ### 1. Handle Unused Variables
+
 ```typescript
 // ❌ Bad
 routes.forEach(({ path, testId, name }) => {
@@ -68,6 +72,7 @@ routes.forEach(({ path, name }) => {
 ```
 
 ### 2. Document Public Functions
+
 ```typescript
 // ❌ Bad
 export const setupMocks = (config?: Config) => {
@@ -88,6 +93,7 @@ export const setupMocks = (config?: Config): void => {
 ## Common Patterns to Use
 
 ### 1. Create Typed Mock Utilities
+
 ```typescript
 // In test-utils/types.ts
 export interface MockComponentProps {
@@ -105,6 +111,7 @@ jest.mock('@/components/Modal', () => ({
 ```
 
 ### 2. Use Shared Mock Creation Functions
+
 ```typescript
 // In test-utils/mocks.ts
 /**
@@ -113,10 +120,10 @@ jest.mock('@/components/Modal', () => ({
  * @returns Complete mock user object
  */
 export const createMockUser = (overrides: Partial<User> = {}): User => ({
-  id: 'user-123',
-  email: 'test@example.com',
-  role: 'donor',
-  ...overrides
+  id: "user-123",
+  email: "test@example.com",
+  role: "donor",
+  ...overrides,
 });
 ```
 
@@ -131,16 +138,17 @@ export const createMockUser = (overrides: Partial<User> = {}): User => ({
 5. **React imported when using JSX** - Prevents "React is not defined" errors
 
 ### Quick Error Fixes:
+
 ```typescript
 // ❌ DeepSource JS-0323
 jest.mock('@/component', () => ({ Component: (props: any) => ... }));
 
 // ✅ Correct
-jest.mock('@/component', () => ({ 
-  Component: ({ onClose }: { onClose: () => void }) => ... 
+jest.mock('@/component', () => ({
+  Component: ({ onClose }: { onClose: () => void }) => ...
 }));
 
-// ❌ DeepSource JS-0359  
+// ❌ DeepSource JS-0359
 const spy = jest.spyOn(require('./module'), 'func');
 
 // ✅ Correct
@@ -182,6 +190,7 @@ grep -r ": any" src/**/*.test.* src/test-utils/**/*
 ## Automated Prevention
 
 These issues are prevented by:
+
 - ESLint configuration (`.eslintrc.test.js`)
 - TypeScript strict mode
 - Pre-commit hooks (if configured)

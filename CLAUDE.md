@@ -94,48 +94,52 @@ Create a `.env` file with required variables:
 ### 🚫 NEVER DO (Will Cause CI/CD Failures)
 
 1. **NEVER use `any` type** (DeepSource JS-0323 - Critical)
+
    ```typescript
    // ❌ WRONG
    const props: any = { ... };
    jest.mock('@/component', () => ({ Component: (props: any) => ... }));
-   
+
    // ✅ CORRECT
    interface Props { onClose: () => void; children: React.ReactNode; }
    jest.mock('@/component', () => ({ Component: ({ onClose, children }: Props) => ... }));
    ```
 
 2. **NEVER use `require()` statements** (DeepSource JS-0359 - Major)
+
    ```typescript
    // ❌ WRONG
-   const module = require('./module');
-   jest.spyOn(require('./module'), 'function');
-   
+   const module = require("./module");
+   jest.spyOn(require("./module"), "function");
+
    // ✅ CORRECT
-   import * as module from './module';
-   jest.spyOn(module, 'function');
+   import * as module from "./module";
+   jest.spyOn(module, "function");
    ```
 
 3. **NEVER leave unused variables** (DeepSource JS-0356 - Major)
+
    ```typescript
    // ❌ WRONG
    routes.forEach(({ path, testId, name }) => {
      // testId extracted but never used
    });
-   
+
    // ✅ CORRECT - Option 1: Use it
    routes.forEach(({ path, testId, name }) => {
      expect(screen.getByTestId(testId)).toBeInTheDocument();
    });
-   
+
    // ✅ CORRECT - Option 2: Prefix with _
    routes.forEach(({ path, testId: _testId, name }) => {
    ```
 
 4. **NEVER export functions without JSDoc** (DeepSource JS-D1001 - Minor)
+
    ```typescript
    // ❌ WRONG
    export const createMock = (data) => ({ ... });
-   
+
    // ✅ CORRECT
    /**
     * Creates a mock object for testing
@@ -146,10 +150,11 @@ Create a `.env` file with required variables:
    ```
 
 5. **NEVER forget React import when using JSX**
+
    ```typescript
    // ❌ WRONG (will cause "React is not defined")
    const Component = () => <div>Hello</div>;
-   
+
    // ✅ CORRECT
    import React from 'react';
    const Component = () => <div>Hello</div>;
@@ -167,6 +172,7 @@ Create a `.env` file with required variables:
 ### 🔍 Pre-Code Checklist (MANDATORY)
 
 Before writing ANY code, verify:
+
 - [ ] All types explicitly defined (no `any`)
 - [ ] All variables used or prefixed with `_`
 - [ ] ES6 imports only (no `require()`)

@@ -7,7 +7,7 @@
 ### ❌ NEVER DO (These WILL cause failures):
 
 1. **`any` type** → Define proper interfaces
-2. **`require()`** → Use `import` statements  
+2. **`require()`** → Use `import` statements
 3. **Unused variables** → Remove or prefix with `_`
 4. **Missing JSDoc** → Document all exported functions
 5. **Missing React import** → Add when using JSX
@@ -47,11 +47,13 @@ jest.mock('@/component', () => ({
 ## 📁 File Reference Patterns
 
 ### Test Files Location
+
 - Component tests: `src/components/**/__tests__/*.test.tsx`
 - Utility tests: `src/test-utils/__tests__/*.test.ts`
 - Page tests: `src/pages/**/__tests__/*.test.tsx`
 
 ### Shared Test Utilities
+
 - Mock creation: `src/test-utils/mockSetup.tsx`
 - Type definitions: `src/test-utils/types.ts`
 - Auth helpers: `src/test-utils/authTestHelpers.ts`
@@ -60,17 +62,18 @@ jest.mock('@/component', () => ({
 
 ## 🎯 Common Error Fixes
 
-| Error Code | Issue | Fix |
-|------------|-------|-----|
-| JS-0323 | `any` type usage | Define explicit interface |
-| JS-0356 | Unused variables | Remove or prefix with `_` |
-| JS-0359 | `require()` statements | Use `import` instead |
-| JS-D1001 | Missing JSDoc | Add `/** */` comments |
-| no-undef | React not defined | Add `import React` |
+| Error Code | Issue                  | Fix                       |
+| ---------- | ---------------------- | ------------------------- |
+| JS-0323    | `any` type usage       | Define explicit interface |
+| JS-0356    | Unused variables       | Remove or prefix with `_` |
+| JS-0359    | `require()` statements | Use `import` instead      |
+| JS-D1001   | Missing JSDoc          | Add `/** */` comments     |
+| no-undef   | React not defined      | Add `import React`        |
 
 ## 📋 Test Utility Patterns
 
 ### Mock Component Pattern:
+
 ```typescript
 jest.mock('@/components/Modal', () => ({
   Modal: ({ onClose, children }: { onClose: () => void; children: React.ReactNode }) => (
@@ -80,16 +83,18 @@ jest.mock('@/components/Modal', () => ({
 ```
 
 ### Mock Hook Pattern:
+
 ```typescript
 const mockUseHook = useHook as jest.MockedFunction<typeof useHook>;
 mockUseHook.mockReturnValue({
   data: mockData,
   loading: false,
-  error: null
+  error: null,
 });
 ```
 
 ### Unused Variable Patterns:
+
 ```typescript
 // ✅ Use the variable
 routes.forEach(({ path, testId, name }) => {
