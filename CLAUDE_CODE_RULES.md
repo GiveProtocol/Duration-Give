@@ -12,6 +12,26 @@
 4. **Missing JSDoc** → Document all exported functions
 5. **Missing React import** → Add when using JSX
 
+### 🔴 CRITICAL: Unused Variables (JS-0356)
+
+**ALWAYS check for unused variables before committing:**
+
+```typescript
+// ❌ BAD - Will be flagged by DeepSource
+const setupMockSpy = jest.spyOn(module, 'setup');
+// setupMockSpy is never used after assignment
+
+// ✅ GOOD - Prefix with underscore if intentionally unused
+const _setupMockSpy = jest.spyOn(module, 'setup');
+
+// ✅ GOOD - Use the variable
+const setupMockSpy = jest.spyOn(module, 'setup');
+expect(setupMockSpy).toHaveBeenCalled();
+
+// ✅ GOOD - Remove if truly not needed
+// Simply don't create the variable if you won't use it
+```
+
 ### ✅ MANDATORY Code Template:
 
 ```typescript

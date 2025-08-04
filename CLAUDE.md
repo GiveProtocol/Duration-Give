@@ -93,7 +93,21 @@ Create a `.env` file with required variables:
 
 ### 🚫 NEVER DO (Will Cause CI/CD Failures)
 
-1. **NEVER use `any` type** (DeepSource JS-0323 - Critical)
+1. **NEVER leave unused variables** (DeepSource JS-0356 - Major)
+   ```typescript
+   // ❌ WRONG
+   const mockSpy = jest.spyOn(module, 'method');
+   // mockSpy never used
+   
+   // ✅ CORRECT - Use underscore prefix for intentionally unused
+   const _mockSpy = jest.spyOn(module, 'method');
+   
+   // ✅ CORRECT - Use the variable
+   const mockSpy = jest.spyOn(module, 'method');
+   expect(mockSpy).toHaveBeenCalled();
+   ```
+
+2. **NEVER use `any` type** (DeepSource JS-0323 - Critical)
    ```typescript
    // ❌ WRONG
    const props: any = { ... };

@@ -25,8 +25,10 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': ['error', {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_'
+          caughtErrorsIgnorePattern: '^_',
+          ignoreRestSiblings: true
         }],
+        'no-unused-vars': 'off', // Turn off base rule as we use TypeScript version
         
         // CRITICAL: Prevent undefined variables (e.g., missing React import)
         'no-undef': 'error',

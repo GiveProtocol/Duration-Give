@@ -104,10 +104,10 @@ describe("routeMocks", () => {
 
       // Create spies for each function
       const setupCommonRouteMocksSpy = jest.spyOn(routeMockModule, "setupCommonRouteMocks").mockImplementation(() => {});
-      const setupPageMocksSpy = jest.spyOn(routeMockModule, "setupPageMocks").mockImplementation(() => {});
-      const setupCharityPageMocksSpy = jest.spyOn(routeMockModule, "setupCharityPageMocks").mockImplementation(() => {});
-      const setupPortfolioPageMocksSpy = jest.spyOn(routeMockModule, "setupPortfolioPageMocks").mockImplementation(() => {});
-      const setupDashboardPageMocksSpy = jest.spyOn(routeMockModule, "setupDashboardPageMocks").mockImplementation(() => {});
+      const _setupPageMocksSpy = jest.spyOn(routeMockModule, "setupPageMocks").mockImplementation(() => {});
+      const _setupCharityPageMocksSpy = jest.spyOn(routeMockModule, "setupCharityPageMocks").mockImplementation(() => {});
+      const _setupPortfolioPageMocksSpy = jest.spyOn(routeMockModule, "setupPortfolioPageMocks").mockImplementation(() => {});
+      const _setupDashboardPageMocksSpy = jest.spyOn(routeMockModule, "setupDashboardPageMocks").mockImplementation(() => {});
 
       // Since we mocked the implementations, call the real setupAllRouteMocks
       setupAllRouteMocks();

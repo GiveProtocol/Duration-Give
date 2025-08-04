@@ -130,6 +130,34 @@ export const createMockUser = (overrides: Partial<User> = {}): User => ({
 4. **All exported functions documented** (JS-D1001) - Add JSDoc comments
 5. **React imported when using JSX** - Prevents "React is not defined" errors
 
+### CRITICAL: Handling Unused Variables in Tests
+
+```typescript
+// ❌ WRONG - DeepSource JS-0356
+const spy1 = jest.spyOn(module, 'method1');
+const spy2 = jest.spyOn(module, 'method2');
+const spy3 = jest.spyOn(module, 'method3');
+// Only spy1 is used in assertions
+
+// ✅ CORRECT - Option 1: Use all spies
+const spy1 = jest.spyOn(module, 'method1');
+const spy2 = jest.spyOn(module, 'method2');
+const spy3 = jest.spyOn(module, 'method3');
+expect(spy1).toHaveBeenCalled();
+expect(spy2).toHaveBeenCalled();
+expect(spy3).toHaveBeenCalled();
+
+// ✅ CORRECT - Option 2: Prefix unused with underscore
+const spy1 = jest.spyOn(module, 'method1');
+const _spy2 = jest.spyOn(module, 'method2');
+const _spy3 = jest.spyOn(module, 'method3');
+expect(spy1).toHaveBeenCalled();
+
+// ✅ CORRECT - Option 3: Only create what you need
+const spy1 = jest.spyOn(module, 'method1');
+expect(spy1).toHaveBeenCalled();
+```
+
 ### Quick Error Fixes:
 ```typescript
 // ❌ DeepSource JS-0323
