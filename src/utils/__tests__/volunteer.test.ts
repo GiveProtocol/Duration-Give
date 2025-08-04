@@ -14,6 +14,33 @@ import type {
 } from "@/types/volunteer";
 import * as supabaseModule from "@/lib/supabase";
 
+// TypeScript interfaces for Supabase mock objects
+interface MockSupabaseResult<T = unknown> {
+  data: T | null;
+  error: Error | null;
+}
+
+interface MockSupabaseQuery {
+  eq: jest.MockedFunction<(_column: string, _value: unknown) => MockSupabaseChain>;
+  or: jest.MockedFunction<(_query: string) => MockSupabaseChain>;
+}
+
+interface MockSupabaseChain {
+  eq: jest.MockedFunction<(_column: string, _value: unknown) => MockSupabaseChain>;
+  maybeSingle: jest.MockedFunction<() => MockSupabaseResult>;
+  single: jest.MockedFunction<() => MockSupabaseResult>;
+}
+
+interface MockSupabaseUpdate {
+  eq: jest.MockedFunction<(_column: string, _value: unknown) => MockSupabaseResult>;
+}
+
+interface MockSupabaseTable {
+  select: jest.MockedFunction<(_columns?: string) => MockSupabaseQuery>;
+  update: jest.MockedFunction<(_data: Record<string, unknown>) => MockSupabaseUpdate>;
+  insert: jest.MockedFunction<(_data: Record<string, unknown>) => MockSupabaseResult>;
+}
+
 // Mock dependencies
 jest.mock("@/lib/supabase", () => ({
   supabase: {
@@ -59,13 +86,15 @@ describe("volunteer utils", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     // Reset the mock to its default state with comprehensive table handling
-    jest.mocked(supabaseModule.supabase.from).mockImplementation((table) => {
+    jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
       if (table === "volunteer_hours") {
         return {
           update: jest.fn(() => ({
             eq: jest.fn(() => ({ error: null })),
           })),
-        } as any;
+          select: jest.fn(),
+          insert: jest.fn(),
+        };
       } else if (table === "volunteer_verifications") {
         return {
           select: jest.fn(() => ({
@@ -87,14 +116,15 @@ describe("volunteer utils", () => {
           update: jest.fn(() => ({
             eq: jest.fn(() => ({ error: null })),
           })),
-        } as any;
+        };
       } else if (table === "volunteer_applications") {
         return {
           update: jest.fn(() => ({
             eq: jest.fn(() => ({ error: null })),
           })),
           insert: jest.fn(() => ({ error: null })),
-        } as any;
+          select: jest.fn(),
+        };
       } else if (table === "profiles") {
         return {
           select: jest.fn(() => ({
@@ -105,7 +135,9 @@ describe("volunteer utils", () => {
               })),
             })),
           })),
-        } as any;
+          update: jest.fn(),
+          insert: jest.fn(),
+        };
       } else if (table === "wallet_aliases") {
         return {
           select: jest.fn(() => ({
@@ -116,7 +148,9 @@ describe("volunteer utils", () => {
               })),
             })),
           })),
-        } as any;
+          update: jest.fn(),
+          insert: jest.fn(),
+        };
       }
       
       // Default fallback for any other tables
@@ -140,7 +174,7 @@ describe("volunteer utils", () => {
             })),
           })),
         })),
-      } as any;
+      };
     });
   });
 
@@ -253,13 +287,15 @@ describe("volunteer utils", () => {
 
     it("handles existing verification record update", async () => {
       // Mock supabase to return existing verification data
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((table) => {
+      jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
         if (table === "volunteer_hours") {
           return {
             update: jest.fn(() => ({
               eq: jest.fn(() => ({ error: null })),
             })),
-          } as any;
+            select: jest.fn(),
+            insert: jest.fn(),
+          };
         } else if (table === "volunteer_verifications") {
           return {
             select: jest.fn(() => ({
@@ -277,9 +313,14 @@ describe("volunteer utils", () => {
             update: jest.fn(() => ({
               eq: jest.fn(() => ({ error: null })),
             })),
-          } as any;
+            insert: jest.fn(),
+          };
         }
-        return {} as any;
+        return {
+          select: jest.fn(),
+          update: jest.fn(),
+          insert: jest.fn(),
+        };
       });
 
       const hash = await createVerificationHash(mockHours);
@@ -290,13 +331,15 @@ describe("volunteer utils", () => {
 
     it("handles missing verification record creation", async () => {
       // Mock supabase to return no existing verification data
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((table) => {
+      jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
         if (table === "volunteer_hours") {
           return {
             update: jest.fn(() => ({
               eq: jest.fn(() => ({ error: null })),
             })),
-          } as any;
+            select: jest.fn(),
+            insert: jest.fn(),
+          };
         } else if (table === "volunteer_verifications") {
           return {
             select: jest.fn(() => ({
@@ -312,9 +355,14 @@ describe("volunteer utils", () => {
               })),
             })),
             insert: jest.fn(() => ({ error: null })),
-          } as any;
+            update: jest.fn(),
+          };
         }
-        return {} as any;
+        return {
+          select: jest.fn(),
+          update: jest.fn(),
+          insert: jest.fn(),
+        };
       });
 
       const hash = await createVerificationHash(mockHours);
@@ -325,11 +373,13 @@ describe("volunteer utils", () => {
 
     it("handles database errors during hours update", async () => {
       // Mock supabase to return error on hours update
-      jest.mocked(supabaseModule.supabase.from).mockImplementation(() => ({
+      jest.mocked(supabaseModule.supabase.from).mockImplementation((): MockSupabaseTable => ({
         update: jest.fn(() => ({
           eq: jest.fn(() => ({ error: new Error("Database error") })),
         })),
-      } as any));
+        select: jest.fn(),
+        insert: jest.fn(),
+      }));
 
       await expect(createVerificationHash(mockHours)).rejects.toThrow(
         "Failed to create verification hash",
@@ -338,13 +388,15 @@ describe("volunteer utils", () => {
 
     it("handles database errors during verification update", async () => {
       // Mock supabase to succeed on hours update but fail on verification update
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((table) => {
+      jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
         if (table === "volunteer_hours") {
           return {
             update: jest.fn(() => ({
               eq: jest.fn(() => ({ error: null })),
             })),
-          } as any;
+            select: jest.fn(),
+            insert: jest.fn(),
+          };
         } else if (table === "volunteer_verifications") {
           return {
             select: jest.fn(() => ({
@@ -358,9 +410,14 @@ describe("volunteer utils", () => {
             update: jest.fn(() => ({
               eq: jest.fn(() => ({ error: new Error("Update error") })),
             })),
-          } as any;
+            insert: jest.fn(),
+          };
         }
-        return {} as any;
+        return {
+          select: jest.fn(),
+          update: jest.fn(),
+          insert: jest.fn(),
+        };
       });
 
       await expect(createVerificationHash(mockHours)).rejects.toThrow(
@@ -370,13 +427,15 @@ describe("volunteer utils", () => {
 
     it("handles database errors during verification insert", async () => {
       // Mock supabase to succeed on hours update but fail on verification insert
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((table) => {
+      jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
         if (table === "volunteer_hours") {
           return {
             update: jest.fn(() => ({
               eq: jest.fn(() => ({ error: null })),
             })),
-          } as any;
+            select: jest.fn(),
+            insert: jest.fn(),
+          };
         } else if (table === "volunteer_verifications") {
           return {
             select: jest.fn(() => ({
@@ -388,9 +447,14 @@ describe("volunteer utils", () => {
               })),
             })),
             insert: jest.fn(() => ({ error: new Error("Insert error") })),
-          } as any;
+            update: jest.fn(),
+          };
         }
-        return {} as any;
+        return {
+          select: jest.fn(),
+          update: jest.fn(),
+          insert: jest.fn(),
+        };
       });
 
       await expect(createVerificationHash(mockHours)).rejects.toThrow(
@@ -411,13 +475,15 @@ describe("volunteer utils", () => {
 
     it("handles errors gracefully and returns simulated data", async () => {
       // Mock supabase to throw error
-      jest.mocked(supabaseModule.supabase.from).mockImplementation(() => ({
+      jest.mocked(supabaseModule.supabase.from).mockImplementation((): MockSupabaseTable => ({
         select: jest.fn(() => ({
           eq: jest.fn(() => ({
             single: jest.fn(() => ({ error: new Error("Database error") })),
           })),
         })),
-      } as any));
+        update: jest.fn(),
+        insert: jest.fn(),
+      }));
 
       const result = await recordApplicationOnChain("user-123", "0xhash123");
 
@@ -514,13 +580,15 @@ describe("volunteer utils", () => {
 
     it("returns false when hash is not found", async () => {
       // Mock supabase to return no data
-      jest.mocked(supabaseModule.supabase.from).mockImplementation(() => ({
+      jest.mocked(supabaseModule.supabase.from).mockImplementation((): MockSupabaseTable => ({
         select: jest.fn(() => ({
           or: jest.fn(() => ({
             maybeSingle: jest.fn(() => ({ data: null, error: null })),
           })),
         })),
-      } as any));
+        update: jest.fn(),
+        insert: jest.fn(),
+      }));
 
       const result = await verifyVolunteerHash("0xinvalidhash");
 
@@ -529,7 +597,7 @@ describe("volunteer utils", () => {
 
     it("returns false when database error occurs", async () => {
       // Mock supabase to return error
-      jest.mocked(supabaseModule.supabase.from).mockImplementation(() => ({
+      jest.mocked(supabaseModule.supabase.from).mockImplementation((): MockSupabaseTable => ({
         select: jest.fn(() => ({
           or: jest.fn(() => ({
             maybeSingle: jest.fn(() => ({
@@ -537,7 +605,9 @@ describe("volunteer utils", () => {
             })),
           })),
         })),
-      } as any));
+        update: jest.fn(),
+        insert: jest.fn(),
+      }));
 
       const result = await verifyVolunteerHash("0xhash123");
 

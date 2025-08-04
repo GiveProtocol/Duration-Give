@@ -49,43 +49,61 @@ describe('WalletAliasSettings', () => {
     mockDeleteWalletAlias.mockResolvedValue(true);
   });
 
-  const testCases = {
-    rendering: [
-      { name: 'renders the wallet alias settings component', expectation: () => expect(screen.getByText('Wallet Alias')).toBeInTheDocument() },
-      { name: 'shows current wallet address when connected', expectation: () => expect(screen.getByText('0x1234...7890')).toBeInTheDocument() },
-      { name: 'renders the card container', expectation: () => expect(screen.getByTestId('card')).toBeInTheDocument() }
-    ],
-    noAlias: [
-      { name: 'shows set alias form by default', expectation: () => {
-        expect(screen.getByTestId('alias-input')).toBeInTheDocument();
-        expect(screen.getByText('Set Alias')).toBeInTheDocument();
-      }},
-      { name: 'allows user to enter alias', action: () => fireEvent.change(screen.getByTestId('alias-input'), { target: { value: 'MyWallet' } }), expectation: () => expect(screen.getByTestId('alias-input')).toHaveValue('MyWallet') }
-    ],
-    validation: [
-      { name: 'empty alias', value: '', error: 'Alias cannot be empty' },
-      { name: 'alias too short', value: 'ab', error: 'Alias must be between 3 and 20 characters' },
-      { name: 'alias too long', value: 'a'.repeat(21), error: 'Alias must be between 3 and 20 characters' },
-      { name: 'invalid characters', value: 'invalid@alias!', error: 'Alias can only contain letters, numbers, underscores, and hyphens' }
-    ]
+  // Helper function to test validation cases - reduces nesting
+  const testValidationCase = async (value: string, expectedError: string) => {
+    render(<WalletAliasSettings />);
+    
+    const input = screen.getByTestId('alias-input');
+    const submitButton = screen.getByText('Set Alias');
+    
+    if (value) fireEvent.change(input, { target: { value } });
+    fireEvent.click(submitButton);
+    
+    await waitFor(() => {
+      expect(screen.getByText(expectedError)).toBeInTheDocument();
+    });
+  };
+
+  // Helper function to test rendering cases - reduces nesting
+  const testRenderingCase = (expectationFn: () => void) => {
+    render(<WalletAliasSettings />);
+    expectationFn();
+  };
+
+  // Helper function to test no-alias cases - reduces nesting
+  const testNoAliasCase = (actionFn?: () => void, expectationFn?: () => void) => {
+    render(<WalletAliasSettings />);
+    if (actionFn) actionFn();
+    if (expectationFn) expectationFn();
   };
 
   describe('Component Rendering', () => {
-    testCases.rendering.forEach(({ name, expectation }) => {
-      it(name, () => {
-        render(<WalletAliasSettings />);
-        expectation();
-      });
+    it('renders the wallet alias settings component', () => {
+      testRenderingCase(() => expect(screen.getByText('Wallet Alias')).toBeInTheDocument());
+    });
+
+    it('shows current wallet address when connected', () => {
+      testRenderingCase(() => expect(screen.getByText('0x1234...7890')).toBeInTheDocument());
+    });
+
+    it('renders the card container', () => {
+      testRenderingCase(() => expect(screen.getByTestId('card')).toBeInTheDocument());
     });
   });
 
   describe('No Alias Set', () => {
-    testCases.noAlias.forEach(({ name, action, expectation }) => {
-      it(name, () => {
-        render(<WalletAliasSettings />);
-        if (action) action();
-        expectation();
+    it('shows set alias form by default', () => {
+      testNoAliasCase(undefined, () => {
+        expect(screen.getByTestId('alias-input')).toBeInTheDocument();
+        expect(screen.getByText('Set Alias')).toBeInTheDocument();
       });
+    });
+
+    it('allows user to enter alias', () => {
+      testNoAliasCase(
+        () => fireEvent.change(screen.getByTestId('alias-input'), { target: { value: 'MyWallet' } }),
+        () => expect(screen.getByTestId('alias-input')).toHaveValue('MyWallet')
+      );
     });
 
     it('submits alias when form is submitted', async () => {
@@ -112,19 +130,15 @@ describe('WalletAliasSettings', () => {
       (useWalletAlias as jest.Mock).mockReturnValue(existingAliasMock);
     });
 
-    const existingAliasTests = [
-      { name: 'displays the existing alias', expectation: () => expect(screen.getByText('ExistingAlias')).toBeInTheDocument() },
-      { name: 'shows edit and delete buttons', expectation: () => {
-        expect(screen.getByText('Edit')).toBeInTheDocument();
-        expect(screen.getByText('Delete')).toBeInTheDocument();
-      }}
-    ];
+    it('displays the existing alias', () => {
+      render(<WalletAliasSettings />);
+      expect(screen.getByText('ExistingAlias')).toBeInTheDocument();
+    });
 
-    existingAliasTests.forEach(({ name, expectation }) => {
-      it(name, () => {
-        render(<WalletAliasSettings />);
-        expectation();
-      });
+    it('shows edit and delete buttons', () => {
+      render(<WalletAliasSettings />);
+      expect(screen.getByText('Edit')).toBeInTheDocument();
+      expect(screen.getByText('Delete')).toBeInTheDocument();
     });
 
     it('enters edit mode when edit button is clicked', () => {
@@ -169,20 +183,24 @@ describe('WalletAliasSettings', () => {
   });
 
   describe('Validation', () => {
-    testCases.validation.forEach(({ name, value, error }) => {
-      it(`shows error for ${name}`, async () => {
-        render(<WalletAliasSettings />);
-        
-        const input = screen.getByTestId('alias-input');
-        const submitButton = screen.getByText('Set Alias');
-        
-        if (value) fireEvent.change(input, { target: { value } });
-        fireEvent.click(submitButton);
-        
-        await waitFor(() => {
-          expect(screen.getByText(error)).toBeInTheDocument();
-        });
-      });
+    // eslint-disable-next-line jest/expect-expect
+    it('shows error for empty alias', async () => {
+      await testValidationCase('', 'Alias cannot be empty');
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    it('shows error for alias too short', async () => {
+      await testValidationCase('ab', 'Alias must be between 3 and 20 characters');
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    it('shows error for alias too long', async () => {
+      await testValidationCase('a'.repeat(21), 'Alias must be between 3 and 20 characters');
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    it('shows error for invalid characters', async () => {
+      await testValidationCase('invalid@alias!', 'Alias can only contain letters, numbers, underscores, and hyphens');
     });
 
     it('accepts valid alias', async () => {
@@ -220,48 +238,34 @@ describe('WalletAliasSettings', () => {
   });
 
   describe('Error Handling', () => {
-    const errorTests = [
-      { 
-        name: 'setWalletAlias failure',
-        setup: () => mockSetWalletAlias.mockResolvedValue(false),
-        action: () => {
-          fireEvent.change(screen.getByTestId('alias-input'), { target: { value: 'TestAlias' } });
-          fireEvent.click(screen.getByText('Set Alias'));
-        },
-        expectation: async () => {
-          await waitFor(() => {
-            expect(mockSetWalletAlias).toHaveBeenCalledWith('TestAlias');
-          });
-        }
-      },
-      {
-        name: 'deleteWalletAlias failure',
-        setup: () => {
-          (useWalletAlias as jest.Mock).mockReturnValue({
-            alias: 'ExistingAlias',
-            aliases: { [testAddresses.mainWallet]: 'ExistingAlias' },
-            loading: false,
-            error: null,
-            setWalletAlias: mockSetWalletAlias,
-            deleteWalletAlias: mockDeleteWalletAlias,
-          });
-          mockDeleteWalletAlias.mockResolvedValue(false);
-        },
-        action: () => fireEvent.click(screen.getByText('Delete')),
-        expectation: async () => {
-          await waitFor(() => {
-            expect(mockDeleteWalletAlias).toHaveBeenCalled();
-          });
-        }
-      }
-    ];
+    it('handles setWalletAlias failure gracefully', async () => {
+      mockSetWalletAlias.mockResolvedValue(false);
+      render(<WalletAliasSettings />);
+      
+      fireEvent.change(screen.getByTestId('alias-input'), { target: { value: 'TestAlias' } });
+      fireEvent.click(screen.getByText('Set Alias'));
+      
+      await waitFor(() => {
+        expect(mockSetWalletAlias).toHaveBeenCalledWith('TestAlias');
+      });
+    });
 
-    errorTests.forEach(({ name, setup, action, expectation }) => {
-      it(`handles ${name} gracefully`, async () => {
-        setup();
-        render(<WalletAliasSettings />);
-        action();
-        await expectation();
+    it('handles deleteWalletAlias failure gracefully', async () => {
+      (useWalletAlias as jest.Mock).mockReturnValue({
+        alias: 'ExistingAlias',
+        aliases: { [testAddresses.mainWallet]: 'ExistingAlias' },
+        loading: false,
+        error: null,
+        setWalletAlias: mockSetWalletAlias,
+        deleteWalletAlias: mockDeleteWalletAlias,
+      });
+      mockDeleteWalletAlias.mockResolvedValue(false);
+      
+      render(<WalletAliasSettings />);
+      fireEvent.click(screen.getByText('Delete'));
+      
+      await waitFor(() => {
+        expect(mockDeleteWalletAlias).toHaveBeenCalled();
       });
     });
   });
