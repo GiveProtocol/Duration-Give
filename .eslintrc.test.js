@@ -56,7 +56,12 @@ module.exports = {
         }],
         
         // CRITICAL: Prevent require() statements (DeepSource JS-0359)
-        '@typescript-eslint/no-var-requires': 'error'
+        '@typescript-eslint/no-var-requires': 'error',
+        
+        // CRITICAL: Prevent empty functions without comments (DeepSource JS-0321)
+        '@typescript-eslint/no-empty-function': ['warn', {
+          allow: ['arrowFunctions'] // Allow but warn, should have comments
+        }]
       }
     }
   ]

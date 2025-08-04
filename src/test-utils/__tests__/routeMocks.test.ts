@@ -103,11 +103,21 @@ describe("routeMocks", () => {
       };
 
       // Create spies for each function
-      const setupCommonRouteMocksSpy = jest.spyOn(routeMockModule, "setupCommonRouteMocks").mockImplementation(() => {});
-      const _setupPageMocksSpy = jest.spyOn(routeMockModule, "setupPageMocks").mockImplementation(() => {});
-      const _setupCharityPageMocksSpy = jest.spyOn(routeMockModule, "setupCharityPageMocks").mockImplementation(() => {});
-      const _setupPortfolioPageMocksSpy = jest.spyOn(routeMockModule, "setupPortfolioPageMocks").mockImplementation(() => {});
-      const _setupDashboardPageMocksSpy = jest.spyOn(routeMockModule, "setupDashboardPageMocks").mockImplementation(() => {});
+      const setupCommonRouteMocksSpy = jest.spyOn(routeMockModule, "setupCommonRouteMocks").mockImplementation(() => {
+        // Empty mock implementation to prevent actual function execution
+      });
+      const _setupPageMocksSpy = jest.spyOn(routeMockModule, "setupPageMocks").mockImplementation(() => {
+        // Empty mock implementation to prevent actual function execution
+      });
+      const _setupCharityPageMocksSpy = jest.spyOn(routeMockModule, "setupCharityPageMocks").mockImplementation(() => {
+        // Empty mock implementation to prevent actual function execution
+      });
+      const _setupPortfolioPageMocksSpy = jest.spyOn(routeMockModule, "setupPortfolioPageMocks").mockImplementation(() => {
+        // Empty mock implementation to prevent actual function execution
+      });
+      const _setupDashboardPageMocksSpy = jest.spyOn(routeMockModule, "setupDashboardPageMocks").mockImplementation(() => {
+        // Empty mock implementation to prevent actual function execution
+      });
 
       // Since we mocked the implementations, call the real setupAllRouteMocks
       setupAllRouteMocks();

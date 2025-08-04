@@ -158,6 +158,34 @@ const spy1 = jest.spyOn(module, 'method1');
 expect(spy1).toHaveBeenCalled();
 ```
 
+### CRITICAL: Empty Functions in Tests (JS-0321)
+
+```typescript
+// ❌ WRONG - DeepSource JS-0321
+jest.spyOn(module, 'method').mockImplementation(() => {});
+beforeEach(() => {});
+array.map(() => {});
+
+// ✅ CORRECT - Add comment explaining purpose
+jest.spyOn(module, 'method').mockImplementation(() => {
+  // Empty mock to prevent actual function execution
+});
+
+beforeEach(() => {
+  // No setup needed for this test suite
+});
+
+array.map(() => {
+  // Transform handled by external processor
+});
+
+// ✅ CORRECT - Use jest.fn() for simple empty mocks
+jest.spyOn(module, 'method').mockImplementation(jest.fn());
+
+// ✅ CORRECT - Return undefined explicitly if needed
+array.map(() => undefined);
+```
+
 ### Quick Error Fixes:
 ```typescript
 // ❌ DeepSource JS-0323

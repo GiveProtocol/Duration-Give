@@ -32,6 +32,28 @@ expect(setupMockSpy).toHaveBeenCalled();
 // Simply don't create the variable if you won't use it
 ```
 
+### 🔴 CRITICAL: Empty Functions (JS-0321)
+
+**NEVER leave empty function bodies without comments:**
+
+```typescript
+// ❌ BAD - Will be flagged by DeepSource
+jest.spyOn(module, 'method').mockImplementation(() => {});
+array.forEach(() => {});
+
+// ✅ GOOD - Add comment explaining why it's empty
+jest.spyOn(module, 'method').mockImplementation(() => {
+  // Empty mock to prevent actual execution
+});
+
+array.forEach(() => {
+  // No-op: side effects handled elsewhere
+});
+
+// ✅ GOOD - Use jest.fn() for simple mocks
+jest.spyOn(module, 'method').mockImplementation(jest.fn());
+```
+
 ### ✅ MANDATORY Code Template:
 
 ```typescript
@@ -87,6 +109,33 @@ jest.mock('@/component', () => ({
 | JS-0359 | `require()` statements | Use `import` instead |
 | JS-D1001 | Missing JSDoc | Add `/** */` comments |
 | no-undef | React not defined | Add `import React` |
+
+## 🚨 Common Test Anti-Patterns to AVOID
+
+### Empty Mock Implementations
+```typescript
+// ❌ NEVER DO THIS
+const spy = jest.spyOn(obj, 'method').mockImplementation(() => {});
+
+// ✅ ALWAYS DO THIS
+const spy = jest.spyOn(obj, 'method').mockImplementation(() => {
+  // Empty mock to prevent actual execution
+});
+
+// ✅ OR THIS (for truly empty mocks)
+const spy = jest.spyOn(obj, 'method').mockImplementation(jest.fn());
+```
+
+### Unused Test Variables
+```typescript
+// ❌ NEVER DO THIS
+const spy1 = jest.spyOn(obj, 'method1');
+const spy2 = jest.spyOn(obj, 'method2'); // Never used
+
+// ✅ ALWAYS DO THIS
+const spy1 = jest.spyOn(obj, 'method1');
+const _spy2 = jest.spyOn(obj, 'method2'); // Prefix with _ if intentionally unused
+```
 
 ## 📋 Test Utility Patterns
 

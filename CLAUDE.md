@@ -107,7 +107,21 @@ Create a `.env` file with required variables:
    expect(mockSpy).toHaveBeenCalled();
    ```
 
-2. **NEVER use `any` type** (DeepSource JS-0323 - Critical)
+2. **NEVER use empty functions without comments** (DeepSource JS-0321 - Minor)
+   ```typescript
+   // ❌ WRONG
+   jest.spyOn(obj, 'method').mockImplementation(() => {});
+   
+   // ✅ CORRECT - Add explanatory comment
+   jest.spyOn(obj, 'method').mockImplementation(() => {
+     // Empty mock to prevent actual execution
+   });
+   
+   // ✅ CORRECT - Use jest.fn() for simple mocks
+   jest.spyOn(obj, 'method').mockImplementation(jest.fn());
+   ```
+
+3. **NEVER use `any` type** (DeepSource JS-0323 - Critical)
    ```typescript
    // ❌ WRONG
    const props: any = { ... };
