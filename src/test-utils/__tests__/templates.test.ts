@@ -15,8 +15,8 @@ describe('templates', () => {
 
       expect(props.children).toBe('Test');
       expect(props.className).toBe('test-class');
-      expect(props.onClick).toBeInstanceOf(Function);
-      expect(props.onClose).toBeInstanceOf(Function);
+      expect(typeof props.onClick).toBe("function");
+      expect(typeof props.onClose).toBe("function");
       expect(props.disabled).toBe(false);
       expect(props.customProp).toBe('custom value');
     });
@@ -68,8 +68,8 @@ describe('templates', () => {
         customConfig: { timeout: 5000 }
       };
 
-      expect(overrides.fetchData).toBeInstanceOf(Function);
-      expect(overrides.updateData).toBeInstanceOf(Function);
+      expect(typeof overrides.fetchData).toBe("function");
+      expect(typeof overrides.updateData).toBe("function");
       expect(overrides.customConfig).toEqual({ timeout: 5000 });
     });
   });
