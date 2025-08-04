@@ -156,7 +156,10 @@ describe("types", () => {
         refetch: jest.fn(),
       };
 
-      expect(mockProfile.profile).toEqual({ id: "profile-123", name: "Test Profile" });
+      expect(mockProfile.profile).toEqual({
+        id: "profile-123",
+        name: "Test Profile",
+      });
       expect(mockProfile.loading).toBe(false);
       expect(mockProfile.error).toBe(null);
       expect(typeof mockProfile.refetch).toBe("function");
@@ -195,7 +198,9 @@ describe("types", () => {
       };
 
       expect(typeof mockVolunteerVerification.verifyHours).toBe("function");
-      expect(typeof mockVolunteerVerification.acceptApplication).toBe("function");
+      expect(typeof mockVolunteerVerification.acceptApplication).toBe(
+        "function",
+      );
       expect(mockVolunteerVerification.loading).toBe(false);
       expect(mockVolunteerVerification.error).toBe(null);
     });
@@ -377,7 +382,10 @@ describe("types", () => {
       };
 
       expect(mockOverrides.select).toEqual({ data: [], error: null });
-      expect(mockOverrides.selectEq).toEqual({ data: null, error: { message: "Not found" } });
+      expect(mockOverrides.selectEq).toEqual({
+        data: null,
+        error: { message: "Not found" },
+      });
       expect(mockOverrides.insert).toEqual({ data: {}, error: null });
       expect(mockOverrides.update).toEqual({ data: {}, error: null });
       expect(mockOverrides.updateEq).toEqual({ data: {}, error: null });
@@ -389,9 +397,27 @@ describe("types", () => {
 
   describe("cssClasses", () => {
     it("contains expected card classes", () => {
-      expect(cssClasses.card.default).toEqual(["bg-white", "border", "border-gray-200", "rounded-lg", "p-4"]);
-      expect(cssClasses.card.success).toEqual(["bg-green-50", "border", "border-green-200", "rounded-lg", "p-4"]);
-      expect(cssClasses.card.error).toEqual(["p-3", "bg-red-50", "text-red-700", "text-sm", "rounded-md"]);
+      expect(cssClasses.card.default).toEqual([
+        "bg-white",
+        "border",
+        "border-gray-200",
+        "rounded-lg",
+        "p-4",
+      ]);
+      expect(cssClasses.card.success).toEqual([
+        "bg-green-50",
+        "border",
+        "border-green-200",
+        "rounded-lg",
+        "p-4",
+      ]);
+      expect(cssClasses.card.error).toEqual([
+        "p-3",
+        "bg-red-50",
+        "text-red-700",
+        "text-sm",
+        "rounded-md",
+      ]);
     });
 
     it("contains expected button classes", () => {
