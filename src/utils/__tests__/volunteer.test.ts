@@ -162,6 +162,150 @@ describe("volunteer utils", () => {
       expect(typeof hash).toBe("string");
       expect(hash.startsWith("0x")).toBe(true);
     });
+
+    it("handles existing verification record update", async () => {
+      // Mock supabase to return existing verification data
+      const mockSupabase = require("@/lib/supabase").supabase;
+      mockSupabase.from = jest.fn((table) => {
+        if (table === "volunteer_hours") {
+          return {
+            update: jest.fn(() => ({
+              eq: jest.fn(() => ({ error: null })),
+            })),
+          };
+        } else if (table === "volunteer_verifications") {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => ({
+                maybeSingle: jest.fn(() => ({
+                  data: { id: "existing-verification-123" },
+                  error: null,
+                })),
+              })),
+            })),
+            update: jest.fn(() => ({
+              eq: jest.fn(() => ({ error: null })),
+            })),
+          };
+        }
+        return {};
+      });
+
+      const hash = await createVerificationHash(mockHours);
+
+      expect(hash).toBeDefined();
+      expect(typeof hash).toBe("string");
+    });
+
+    it("handles missing verification record creation", async () => {
+      // Mock supabase to return no existing verification data
+      const mockSupabase = require("@/lib/supabase").supabase;
+      mockSupabase.from = jest.fn((table) => {
+        if (table === "volunteer_hours") {
+          return {
+            update: jest.fn(() => ({
+              eq: jest.fn(() => ({ error: null })),
+            })),
+          };
+        } else if (table === "volunteer_verifications") {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => ({
+                maybeSingle: jest.fn(() => ({
+                  data: null,
+                  error: null,
+                })),
+              })),
+            })),
+            insert: jest.fn(() => ({ error: null })),
+          };
+        }
+        return {};
+      });
+
+      const hash = await createVerificationHash(mockHours);
+
+      expect(hash).toBeDefined();
+      expect(typeof hash).toBe("string");
+    });
+
+    it("handles database errors during hours update", async () => {
+      // Mock supabase to return error on hours update
+      const mockSupabase = require("@/lib/supabase").supabase;
+      mockSupabase.from = jest.fn(() => ({
+        update: jest.fn(() => ({
+          eq: jest.fn(() => ({ error: new Error("Database error") })),
+        })),
+      }));
+
+      await expect(createVerificationHash(mockHours)).rejects.toThrow(
+        "Failed to create verification hash",
+      );
+    });
+
+    it("handles database errors during verification update", async () => {
+      // Mock supabase to succeed on hours update but fail on verification update
+      const mockSupabase = require("@/lib/supabase").supabase;
+      mockSupabase.from = jest.fn((table) => {
+        if (table === "volunteer_hours") {
+          return {
+            update: jest.fn(() => ({
+              eq: jest.fn(() => ({ error: null })),
+            })),
+          };
+        } else if (table === "volunteer_verifications") {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => ({
+                maybeSingle: jest.fn(() => ({
+                  data: { id: "existing-verification-123" },
+                  error: null,
+                })),
+              })),
+            })),
+            update: jest.fn(() => ({
+              eq: jest.fn(() => ({ error: new Error("Update error") })),
+            })),
+          };
+        }
+        return {};
+      });
+
+      await expect(createVerificationHash(mockHours)).rejects.toThrow(
+        "Failed to create verification hash",
+      );
+    });
+
+    it("handles database errors during verification insert", async () => {
+      // Mock supabase to succeed on hours update but fail on verification insert
+      const mockSupabase = require("@/lib/supabase").supabase;
+      mockSupabase.from = jest.fn((table) => {
+        if (table === "volunteer_hours") {
+          return {
+            update: jest.fn(() => ({
+              eq: jest.fn(() => ({ error: null })),
+            })),
+          };
+        } else if (table === "volunteer_verifications") {
+          return {
+            select: jest.fn(() => ({
+              eq: jest.fn(() => ({
+                maybeSingle: jest.fn(() => ({
+                  data: null,
+                  error: null,
+                })),
+              })),
+            })),
+            insert: jest.fn(() => ({ error: new Error("Insert error") })),
+          };
+        }
+        return {};
+      });
+
+      await expect(createVerificationHash(mockHours)).rejects.toThrow(
+        "Failed to create verification hash",
+      );
+    });
   });
 
   describe("recordApplicationOnChain", () => {

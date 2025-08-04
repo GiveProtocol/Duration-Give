@@ -99,25 +99,94 @@ export const CharityPortal: React.FC = () => {
 
   // Helper function to fetch basic statistics data
   const fetchBasicStats = useCallback(async (charityId: string): Promise<BasicStatsData> => {
-    const [donationsResult, hoursResult, endorsementsResult, volunteersResult] = await Promise.all([
-      supabase.from('donations').select('amount').eq('charity_id', charityId),
-      supabase.from('volunteer_hours').select('hours').eq('charity_id', charityId).eq('status', 'approved'),
-      supabase.from('skill_endorsements').select('id').eq('recipient_id', charityId),
-      supabase.from('volunteer_hours').select('volunteer_id').eq('charity_id', charityId).eq('status', 'approved')
-    ]);
+    try {
+      // Fetch donations first (most critical)
+      const donationsResult = await supabase
+        .from('donations')
+        .select('amount')
+        .eq('charity_id', charityId);
 
-    // Handle errors
-    if (donationsResult.error) throw donationsResult.error;
-    if (hoursResult.error) throw hoursResult.error;
-    if (endorsementsResult.error) throw endorsementsResult.error;
-    if (volunteersResult.error) throw volunteersResult.error;
+      if (donationsResult.error) {
+        Logger.error('Error fetching donations:', { error: donationsResult.error, charityId });
+        throw donationsResult.error;
+      }
 
-    return {
-      donations: Array.isArray(donationsResult.data) ? donationsResult.data : [],
-      hours: Array.isArray(hoursResult.data) ? hoursResult.data : [],
-      endorsements: Array.isArray(endorsementsResult.data) ? endorsementsResult.data : [],
-      volunteers: Array.isArray(volunteersResult.data) ? volunteersResult.data : []
-    };
+      // Fetch volunteer hours with better error handling
+      let hoursResult = { data: [], error: null };
+      let volunteersResult = { data: [], error: null };
+      
+      try {
+        hoursResult = await supabase
+          .from('volunteer_hours')
+          .select('hours')
+          .eq('charity_id', charityId)
+          .eq('status', 'approved');
+          
+        if (hoursResult.error) {
+          Logger.warn('Error fetching volunteer hours:', { 
+            error: hoursResult.error, 
+            charityId,
+            errorCode: hoursResult.error.code,
+            errorMessage: hoursResult.error.message
+          });
+          hoursResult = { data: [], error: null }; // Use empty data instead of failing
+        }
+      } catch (err) {
+        Logger.warn('Exception fetching volunteer hours:', { error: err, charityId });
+        hoursResult = { data: [], error: null };
+      }
+
+      try {
+        volunteersResult = await supabase
+          .from('volunteer_hours')
+          .select('volunteer_id')
+          .eq('charity_id', charityId)
+          .eq('status', 'approved');
+          
+        if (volunteersResult.error) {
+          Logger.warn('Error fetching volunteers list:', { 
+            error: volunteersResult.error, 
+            charityId,
+            errorCode: volunteersResult.error.code,
+            errorMessage: volunteersResult.error.message
+          });
+          volunteersResult = { data: [], error: null }; // Use empty data instead of failing
+        }
+      } catch (err) {
+        Logger.warn('Exception fetching volunteers list:', { error: err, charityId });
+        volunteersResult = { data: [], error: null };
+      }
+
+      // Fetch skill endorsements with error handling
+      let endorsementsResult = { data: [], error: null };
+      try {
+        endorsementsResult = await supabase
+          .from('skill_endorsements')
+          .select('id')
+          .eq('recipient_id', charityId);
+          
+        if (endorsementsResult.error) {
+          Logger.warn('Error fetching skill endorsements:', { 
+            error: endorsementsResult.error, 
+            charityId 
+          });
+          endorsementsResult = { data: [], error: null }; // Use empty data instead of failing
+        }
+      } catch (err) {
+        Logger.warn('Exception fetching skill endorsements:', { error: err, charityId });
+        endorsementsResult = { data: [], error: null };
+      }
+
+      return {
+        donations: Array.isArray(donationsResult.data) ? donationsResult.data : [],
+        hours: Array.isArray(hoursResult.data) ? hoursResult.data : [],
+        endorsements: Array.isArray(endorsementsResult.data) ? endorsementsResult.data : [],
+        volunteers: Array.isArray(volunteersResult.data) ? volunteersResult.data : []
+      };
+    } catch (err) {
+      Logger.error('Critical error in fetchBasicStats:', { error: err, charityId });
+      throw err;
+    }
   }, []);
 
   // Helper function to calculate statistics
@@ -224,35 +293,48 @@ export const CharityPortal: React.FC = () => {
 
   // Helper function to fetch and format pending volunteer hours
   const fetchPendingHours = useCallback(async (charityId: string) => {
-    const { data: pendingHoursData, error } = await supabase
-      .from('volunteer_hours')
-      .select(`
-        id,
-        volunteer_id,
-        hours,
-        date_performed,
-        description,
-        volunteer:volunteer_id (
+    try {
+      const { data: pendingHoursData, error } = await supabase
+        .from('volunteer_hours')
+        .select(`
           id,
-          user_id
-        )
-      `)
-      .eq('charity_id', charityId)
-      .eq('status', 'pending')
-      .order('created_at', { ascending: false });
+          volunteer_id,
+          hours,
+          date_performed,
+          description,
+          volunteer:volunteer_id (
+            id,
+            user_id
+          )
+        `)
+        .eq('charity_id', charityId)
+        .eq('status', 'pending')
+        .order('created_at', { ascending: false });
 
-    if (error) throw error;
+      if (error) {
+        Logger.warn('Error fetching pending volunteer hours:', { 
+          error, 
+          charityId,
+          errorCode: error.code,
+          errorMessage: error.message
+        });
+        return []; // Return empty array instead of throwing
+      }
 
-    const pendingHoursList = Array.isArray(pendingHoursData) ? pendingHoursData : [];
-    
-    return pendingHoursList.map(hour => ({
-      id: hour?.id || '',
-      volunteer_id: hour?.volunteer_id || '',
-      volunteerName: hour?.volunteer?.id ? 'Volunteer' : 'Unknown Volunteer',
-      hours: hour?.hours ? Number(hour.hours) : 0,
-      date_performed: hour?.date_performed || new Date().toISOString(),
-      description: hour?.description || ''
-    }));
+      const pendingHoursList = Array.isArray(pendingHoursData) ? pendingHoursData : [];
+      
+      return pendingHoursList.map(hour => ({
+        id: hour?.id || '',
+        volunteer_id: hour?.volunteer_id || '',
+        volunteerName: hour?.volunteer?.id ? 'Volunteer' : 'Unknown Volunteer',
+        hours: hour?.hours ? Number(hour.hours) : 0,
+        date_performed: hour?.date_performed || new Date().toISOString(),
+        description: hour?.description || ''
+      }));
+    } catch (err) {
+      Logger.warn('Exception fetching pending volunteer hours:', { error: err, charityId });
+      return []; // Return empty array instead of throwing
+    }
   }, []);
 
   const fetchCharityData = useCallback(async () => {

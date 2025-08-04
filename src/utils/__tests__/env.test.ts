@@ -50,15 +50,21 @@ describe("getEnv utility", () => {
         VITE_API_URL: "http://localhost:3000",
       };
 
-      // Mock globalThis.import.meta.env
-      (globalThis as MockGlobalThis).importMeta = {
-        meta: {
-          env: mockEnv,
+      // Mock globalThis.import.meta.env - the specific path tested on line 4-6
+      Object.defineProperty(globalThis, 'import', {
+        value: {
+          meta: {
+            env: mockEnv,
+          },
         },
-      };
+        configurable: true,
+      });
 
       const result = getEnv();
       expect(result).toEqual(mockEnv);
+      
+      // Clean up
+      delete (globalThis as any).import;
     });
 
     it("handles globalThis.import.meta.env via dynamic property access", () => {
@@ -224,11 +230,12 @@ describe("getEnv utility", () => {
     it("handles exception during dynamic import.meta access", () => {
       delete (globalThis as MockGlobalThis).importMeta;
       
-      // Mock a scenario where accessing globalImport.import throws
+      // Mock a scenario where accessing globalImport.import throws - covers lines 11-17
       Object.defineProperty(globalThis, "import", {
         get() {
           throw new Error("import.meta not available");
         },
+        configurable: true,
       });
 
       const result = getEnv();
@@ -237,6 +244,32 @@ describe("getEnv utility", () => {
       expect(result).toHaveProperty("PROD");
       expect(result).toHaveProperty("DEV");
       expect(result).toHaveProperty("MODE");
+      
+      // Clean up
+      delete (globalThis as any).import;
+    });
+
+    it("covers the catch block when import.meta access fails", () => {
+      // Ensure we go through the try-catch path
+      delete (globalThis as MockGlobalThis).importMeta;
+      
+      // Mock globalThis in a way that the try block executes but fails
+      const mockGlobal = globalThis as any;
+      mockGlobal.import = {
+        get meta() {
+          throw new Error("Access denied");
+        }
+      };
+
+      const result = getEnv();
+      
+      // Should fall back gracefully
+      expect(result).toHaveProperty("PROD");
+      expect(result).toHaveProperty("DEV");
+      expect(result).toHaveProperty("MODE");
+      
+      // Clean up
+      delete mockGlobal.import;
     });
   });
 
