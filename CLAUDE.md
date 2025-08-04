@@ -89,7 +89,90 @@ Create a `.env` file with required variables:
 - Modifying contracts: Update Solidity, compile, update TypeScript types, redeploy
 - Testing blockchain features: Use local Hardhat node with `npm run node`
 
-## CRITICAL: Code Quality & SonarCloud Guidelines
+## ⚠️ CRITICAL: Code Quality Rules - MUST FOLLOW ALWAYS ⚠️
+
+### 🚫 NEVER DO (Will Cause CI/CD Failures)
+
+1. **NEVER use `any` type** (DeepSource JS-0323 - Critical)
+   ```typescript
+   // ❌ WRONG
+   const props: any = { ... };
+   jest.mock('@/component', () => ({ Component: (props: any) => ... }));
+   
+   // ✅ CORRECT
+   interface Props { onClose: () => void; children: React.ReactNode; }
+   jest.mock('@/component', () => ({ Component: ({ onClose, children }: Props) => ... }));
+   ```
+
+2. **NEVER use `require()` statements** (DeepSource JS-0359 - Major)
+   ```typescript
+   // ❌ WRONG
+   const module = require('./module');
+   jest.spyOn(require('./module'), 'function');
+   
+   // ✅ CORRECT
+   import * as module from './module';
+   jest.spyOn(module, 'function');
+   ```
+
+3. **NEVER leave unused variables** (DeepSource JS-0356 - Major)
+   ```typescript
+   // ❌ WRONG
+   routes.forEach(({ path, testId, name }) => {
+     // testId extracted but never used
+   });
+   
+   // ✅ CORRECT - Option 1: Use it
+   routes.forEach(({ path, testId, name }) => {
+     expect(screen.getByTestId(testId)).toBeInTheDocument();
+   });
+   
+   // ✅ CORRECT - Option 2: Prefix with _
+   routes.forEach(({ path, testId: _testId, name }) => {
+   ```
+
+4. **NEVER export functions without JSDoc** (DeepSource JS-D1001 - Minor)
+   ```typescript
+   // ❌ WRONG
+   export const createMock = (data) => ({ ... });
+   
+   // ✅ CORRECT
+   /**
+    * Creates a mock object for testing
+    * @param data - The data to include in the mock
+    * @returns Mock object with jest functions
+    */
+   export const createMock = (data: MockData) => ({ ... });
+   ```
+
+5. **NEVER forget React import when using JSX**
+   ```typescript
+   // ❌ WRONG (will cause "React is not defined")
+   const Component = () => <div>Hello</div>;
+   
+   // ✅ CORRECT
+   import React from 'react';
+   const Component = () => <div>Hello</div>;
+   ```
+
+### ✅ ALWAYS DO (Before Writing Any Code)
+
+1. **Define types first**, then write implementation
+2. **Import React when creating JSX elements**
+3. **Use `import type` for type-only imports**
+4. **Check test-utils/ for existing patterns before creating new ones**
+5. **Add JSDoc to all exported functions**
+6. **Use shared mock utilities to prevent duplication**
+
+### 🔍 Pre-Code Checklist (MANDATORY)
+
+Before writing ANY code, verify:
+- [ ] All types explicitly defined (no `any`)
+- [ ] All variables used or prefixed with `_`
+- [ ] ES6 imports only (no `require()`)
+- [ ] React imported when using JSX
+- [ ] JSDoc on all exported functions
+- [ ] Followed existing patterns in test-utils/
 
 **ALWAYS run `npm run lint` before committing code. Fix ALL errors, not just warnings.**
 

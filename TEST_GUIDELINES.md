@@ -120,15 +120,51 @@ export const createMockUser = (overrides: Partial<User> = {}): User => ({
 });
 ```
 
+## ⚠️ CRITICAL: DeepSource Error Prevention
+
+### MANDATORY Checks Before Writing ANY Test Code:
+
+1. **No `any` types** (JS-0323 - Critical) - WILL cause failures
+2. **No `require()` statements** (JS-0359 - Major) - Use `import` instead
+3. **No unused variables** (JS-0356 - Major) - Remove or prefix with `_`
+4. **All exported functions documented** (JS-D1001) - Add JSDoc comments
+5. **React imported when using JSX** - Prevents "React is not defined" errors
+
+### Quick Error Fixes:
+```typescript
+// ❌ DeepSource JS-0323
+jest.mock('@/component', () => ({ Component: (props: any) => ... }));
+
+// ✅ Correct
+jest.mock('@/component', () => ({ 
+  Component: ({ onClose }: { onClose: () => void }) => ... 
+}));
+
+// ❌ DeepSource JS-0359  
+const spy = jest.spyOn(require('./module'), 'func');
+
+// ✅ Correct
+import * as module from './module';
+const spy = jest.spyOn(module, 'func');
+
+// ❌ DeepSource JS-0356
+const { path, testId, name } = route; // testId unused
+
+// ✅ Correct
+const { path, testId: _testId, name } = route;
+```
+
 ## Pre-commit Checklist
 
 Before committing test code, ensure:
 
-1. ✅ No `any` types used (run: `grep -r "any" src/**/*.test.*`)
+1. ✅ No `any` types used (run: `grep -r ": any" src/**/*.test.*`)
 2. ✅ All exported functions have JSDoc comments
 3. ✅ No unused variables (check ESLint warnings)
 4. ✅ All mock props are properly typed
 5. ✅ Type imports use `import type` syntax
+6. ✅ No `require()` statements (use `import` instead)
+7. ✅ React imported when creating JSX elements
 
 ## Running Checks Locally
 
