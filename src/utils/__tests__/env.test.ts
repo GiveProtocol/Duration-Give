@@ -31,7 +31,7 @@ describe("getEnv utility", () => {
           PROD: expect.any(Boolean),
           DEV: expect.any(Boolean),
           MODE: expect.any(String),
-        })
+        }),
       );
     });
 
@@ -42,7 +42,7 @@ describe("getEnv utility", () => {
       // Can be undefined, string, or other value
       expect(
         typeof result.VITE_MONITORING_ENDPOINT === "undefined" ||
-        typeof result.VITE_MONITORING_ENDPOINT === "string"
+          typeof result.VITE_MONITORING_ENDPOINT === "string",
       ).toBe(true);
     });
   });
@@ -64,7 +64,7 @@ describe("getEnv utility", () => {
       expect(typeof result.PROD).toBe("boolean");
       expect(typeof result.DEV).toBe("boolean");
       expect(typeof result.MODE).toBe("string");
-      
+
       // In Jest, we expect test environment
       expect(result.MODE).toBe("test");
     });
@@ -84,7 +84,7 @@ describe("getEnv utility", () => {
 
       // VITE_MONITORING_ENDPOINT should be present (may be undefined)
       expect(result).toHaveProperty("VITE_MONITORING_ENDPOINT");
-      
+
       // Should be undefined or string
       const endpoint = result.VITE_MONITORING_ENDPOINT;
       expect(endpoint === undefined || typeof endpoint === "string").toBe(true);
@@ -114,7 +114,7 @@ describe("getEnv utility", () => {
 
   describe("fallback behavior", () => {
     it("provides sensible defaults when environment detection fails", () => {
-      // In Jest, we can't easily mock import.meta, but we can test that 
+      // In Jest, we can't easily mock import.meta, but we can test that
       // the function handles this gracefully and provides defaults
       const result = getEnv();
 
@@ -123,7 +123,7 @@ describe("getEnv utility", () => {
       expect(result.DEV).toBeDefined();
       expect(result.MODE).toBeDefined();
       expect(result).toHaveProperty("VITE_MONITORING_ENDPOINT");
-      
+
       expect(typeof result.PROD).toBe("boolean");
       expect(typeof result.DEV).toBe("boolean");
       expect(typeof result.MODE).toBe("string");
@@ -147,7 +147,7 @@ describe("getEnv utility", () => {
     it("handles environment detection gracefully without throwing", () => {
       // The main value of getEnv is that it never throws, always returns something usable
       expect(() => getEnv()).not.toThrow();
-      
+
       const result = getEnv();
       expect(result).toBeDefined();
       expect(typeof result).toBe("object");
@@ -160,7 +160,7 @@ describe("getEnv utility", () => {
 
       // Core consistency checks
       expect(result.MODE).toMatch(/^(development|production|test|staging)$/);
-      
+
       // Logical consistency
       if (result.PROD) {
         expect(result.DEV).toBe(false);
@@ -203,8 +203,13 @@ describe("getEnv utility", () => {
     it("provides all required properties", () => {
       const result = getEnv();
 
-      const requiredProperties = ["PROD", "DEV", "MODE", "VITE_MONITORING_ENDPOINT"];
-      requiredProperties.forEach(prop => {
+      const requiredProperties = [
+        "PROD",
+        "DEV",
+        "MODE",
+        "VITE_MONITORING_ENDPOINT",
+      ];
+      requiredProperties.forEach((prop) => {
         expect(result).toHaveProperty(prop);
       });
     });
