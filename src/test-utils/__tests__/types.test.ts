@@ -12,7 +12,7 @@ describe("types", () => {
     };
 
     expect(mockButton.children).toBe("Test");
-    expect(mockButton.onClick).toBeInstanceOf(Function);
+    expect(typeof mockButton.onClick).toBe("function");
     expect(mockButton.variant).toBe("primary");
   });
 
@@ -27,7 +27,7 @@ describe("types", () => {
     };
 
     expect(mockInput.value).toBe("test-value");
-    expect(mockInput.onChange).toBeInstanceOf(Function);
+    expect(typeof mockInput.onChange).toBe("function");
     expect(mockInput.type).toBe("text");
   });
 
@@ -40,6 +40,6 @@ describe("types", () => {
 
     expect(mockCard.children).toBe("Card content");
     expect(mockCard.className).toBe("card-class");
-    expect(mockCard.onClick).toBeInstanceOf(Function);
+    expect(typeof mockCard.onClick).toBe("function");
   });
 });
