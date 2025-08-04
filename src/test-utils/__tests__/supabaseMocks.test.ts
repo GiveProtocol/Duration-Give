@@ -65,6 +65,85 @@ describe('supabaseMocks', () => {
       expect(selectResult.single).toBeInstanceOf(Function);
     });
 
+    it('eq method returns nested chainable methods', async () => {
+      const client = createMockSupabaseClient();
+      const eqResult = client.from('test_table').select().eq('id', '123');
+      
+      expect(eqResult.eq).toBeInstanceOf(Function);
+      expect(eqResult.single).toBeInstanceOf(Function);
+      expect(eqResult.order).toBeInstanceOf(Function);
+      expect(eqResult.in).toBeInstanceOf(Function);
+      
+      // Test nested eq
+      const nestedEq = await eqResult.eq('status', 'active');
+      expect(nestedEq).toEqual({ data: [], error: null });
+      
+      // Test single
+      const single = await eqResult.single();
+      expect(single).toEqual({ data: null, error: null });
+      
+      // Test order
+      const ordered = await eqResult.order('created_at');
+      expect(ordered).toEqual({ data: [], error: null });
+      
+      // Test in with order
+      const inResult = eqResult.in('ids', ['1', '2']);
+      expect(inResult.order).toBeInstanceOf(Function);
+      const inOrdered = await inResult.order('name');
+      expect(inOrdered).toEqual({ data: [], error: null });
+    });
+
+    it('insert method returns proper methods', async () => {
+      const client = createMockSupabaseClient();
+      const insertResult = client.from('test_table').insert({ name: 'Test' });
+      
+      expect(insertResult.select).toBeInstanceOf(Function);
+      expect(insertResult.single).toBeInstanceOf(Function);
+      
+      const selectResult = await insertResult.select();
+      expect(selectResult).toEqual({ data: [], error: null });
+      
+      const singleResult = await insertResult.single();
+      expect(singleResult).toEqual({ data: null, error: null });
+    });
+
+    it('update method returns chainable eq', async () => {
+      const client = createMockSupabaseClient();
+      const updateResult = client.from('test_table').update({ name: 'Updated' });
+      
+      expect(updateResult.eq).toBeInstanceOf(Function);
+      
+      const eqResult = updateResult.eq('id', '123');
+      expect(eqResult.select).toBeInstanceOf(Function);
+      
+      const selected = await eqResult.select();
+      expect(selected).toEqual({ data: [], error: null });
+    });
+
+    it('delete method returns chainable eq', async () => {
+      const client = createMockSupabaseClient();
+      const deleteResult = client.from('test_table').delete();
+      
+      expect(deleteResult.eq).toBeInstanceOf(Function);
+      
+      const eqResult = await deleteResult.eq('id', '123');
+      expect(eqResult).toEqual({ data: [], error: null });
+    });
+
+    it('order method resolves with data', async () => {
+      const client = createMockSupabaseClient();
+      const result = await client.from('test_table').select().order('created_at', { ascending: false });
+      
+      expect(result).toEqual({ data: [], error: null });
+    });
+
+    it('single method resolves with null data', async () => {
+      const client = createMockSupabaseClient();
+      const result = await client.from('test_table').select().single();
+      
+      expect(result).toEqual({ data: null, error: null });
+    });
+
     it('applies custom overrides', () => {
       const client = createMockSupabaseClient({
         select: { customMethod: jest.fn() }
@@ -74,6 +153,66 @@ describe('supabaseMocks', () => {
       const selectResult = queryBuilder.select();
       
       expect(selectResult.customMethod).toBeInstanceOf(Function);
+    });
+
+    it('applies nested overrides for selectEq', () => {
+      const customData = { data: [{ id: '123' }], error: null };
+      const client = createMockSupabaseClient({
+        selectEq: { customData: jest.fn(() => customData) }
+      });
+      
+      const eqResult = client.from('test_table').select().eq('id', '123');
+      expect(eqResult.customData).toBeInstanceOf(Function);
+    });
+
+    it('applies overrides for insert operations', () => {
+      const client = createMockSupabaseClient({
+        insert: { customInsert: jest.fn() }
+      });
+      
+      const insertResult = client.from('test_table').insert({ data: 'test' });
+      expect(insertResult.customInsert).toBeInstanceOf(Function);
+    });
+
+    it('applies overrides for update operations', () => {
+      const client = createMockSupabaseClient({
+        update: { customUpdate: jest.fn() },
+        updateEq: { customUpdateEq: jest.fn() }
+      });
+      
+      const updateResult = client.from('test_table').update({ data: 'test' });
+      expect(updateResult.customUpdate).toBeInstanceOf(Function);
+      
+      const eqResult = updateResult.eq('id', '123');
+      expect(eqResult.customUpdateEq).toBeInstanceOf(Function);
+    });
+
+    it('applies overrides for delete operations', () => {
+      const client = createMockSupabaseClient({
+        deleteEq: { customDeleteEq: jest.fn() }
+      });
+      
+      const deleteResult = client.from('test_table').delete();
+      const eqResult = deleteResult.eq('id', '123');
+      expect(eqResult.customDeleteEq).toBeInstanceOf(Function);
+    });
+
+    it('applies client-level overrides', () => {
+      const client = createMockSupabaseClient({
+        client: { auth: { getUser: jest.fn() } }
+      });
+      
+      expect(client.auth).toBeDefined();
+      expect(client.auth.getUser).toBeInstanceOf(Function);
+    });
+
+    it('applies from-level overrides', () => {
+      const client = createMockSupabaseClient({
+        from: { customFrom: jest.fn() }
+      });
+      
+      const fromResult = client.from('test_table');
+      expect(fromResult.customFrom).toBeInstanceOf(Function);
     });
   });
 

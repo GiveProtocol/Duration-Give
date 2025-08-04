@@ -1,10 +1,22 @@
+import React from 'react';
+import { render } from '@testing-library/react';
 import {
   createMockWeb3,
   createMockWalletAlias,
   createMockAuth,
   createMockProfile,
   createMockTranslation,
+  createMockVolunteerVerification,
+  mockLogger,
+  mockFormatDate,
+  mockShortenAddress,
+  MockButton,
+  MockInput,
+  MockCard,
+  testAddresses,
+  testPropsDefaults,
   setupCommonMocks,
+  createMockSupabase,
 } from "../mockSetup";
 
 describe("mockSetup", () => {
@@ -48,9 +60,8 @@ describe("mockSetup", () => {
         isLoading: false,
         loading: false,
         error: null,
-        setAlias: expect.any(Function),
-        deleteAlias: expect.any(Function),
-        refreshAliases: expect.any(Function),
+        setWalletAlias: expect.any(Function),
+        deleteWalletAlias: expect.any(Function),
       });
     });
 
@@ -69,6 +80,61 @@ describe("mockSetup", () => {
     });
   });
 
+  describe("createMockVolunteerVerification", () => {
+    it("returns default mock volunteer verification object", () => {
+      const result = createMockVolunteerVerification();
+
+      expect(result).toEqual({
+        verifyHours: expect.any(Function),
+        acceptApplication: expect.any(Function),
+        loading: false,
+        error: null,
+      });
+    });
+
+    it("applies overrides to default mock", () => {
+      const overrides = {
+        loading: true,
+        error: "Test error",
+      };
+
+      const result = createMockVolunteerVerification(overrides);
+
+      expect(result.loading).toBe(true);
+      expect(result.error).toBe("Test error");
+    });
+  });
+
+  describe("createMockTranslation", () => {
+    it("returns default mock translation object", () => {
+      const result = createMockTranslation();
+
+      expect(result).toEqual({
+        t: expect.any(Function),
+      });
+    });
+
+    it("t function returns fallback or key", () => {
+      const result = createMockTranslation();
+      
+      expect(result.t("key")).toBe("key");
+      expect(result.t("key", "fallback")).toBe("fallback");
+    });
+
+    it("applies overrides to default mock", () => {
+      const customT = jest.fn((key: string) => `translated_${key}`);
+      const overrides = {
+        t: customT,
+      };
+
+      const result = createMockTranslation(overrides);
+
+      expect(result.t).toBe(customT);
+      result.t("test");
+      expect(customT).toHaveBeenCalledWith("test");
+    });
+  });
+
   describe("createMockAuth", () => {
     it("returns default mock auth object", () => {
       const result = createMockAuth();
@@ -76,15 +142,8 @@ describe("mockSetup", () => {
       expect(result).toEqual({
         user: null,
         userType: null,
+        signOut: expect.any(Function),
         loading: false,
-        error: null,
-        login: expect.any(Function),
-        logout: expect.any(Function),
-        register: expect.any(Function),
-        resetPassword: expect.any(Function),
-        loginWithGoogle: expect.any(Function),
-        refreshSession: expect.any(Function),
-        sendUsernameReminder: expect.any(Function),
       });
     });
 
@@ -112,7 +171,7 @@ describe("mockSetup", () => {
         profile: null,
         loading: false,
         error: null,
-        refreshProfile: expect.any(Function),
+        refetch: expect.any(Function),
       });
     });
 
@@ -121,44 +180,144 @@ describe("mockSetup", () => {
       const overrides = {
         profile,
         loading: true,
+        error: "Test error",
       };
 
       const result = createMockProfile(overrides);
 
       expect(result.profile).toBe(profile);
       expect(result.loading).toBe(true);
+      expect(result.error).toBe("Test error");
     });
   });
 
-  describe("createMockTranslation", () => {
-    it("returns default mock translation object", () => {
-      const result = createMockTranslation();
+  describe("mockLogger", () => {
+    it("provides mock logger methods", () => {
+      expect(mockLogger.error).toBeInstanceOf(Function);
+      expect(mockLogger.info).toBeInstanceOf(Function);
+      expect(mockLogger.warn).toBeInstanceOf(Function);
+    });
+  });
 
-      expect(result).toEqual({
-        t: expect.any(Function),
-        language: "en",
-        setLanguage: expect.any(Function),
-        languages: expect.any(Array),
+  describe("mockFormatDate", () => {
+    it("formats date with mock implementation", () => {
+      const result = mockFormatDate("2024-01-15");
+      expect(result).toBe("Formatted: 2024-01-15");
+    });
+  });
+
+  describe("mockShortenAddress", () => {
+    it("shortens address correctly", () => {
+      const address = "0x1234567890123456789012345678901234567890";
+      const result = mockShortenAddress(address);
+      expect(result).toBe("0x1234...7890");
+    });
+  });
+
+  describe("Mock Components", () => {
+    describe("MockButton", () => {
+      it("renders button with props", () => {
+        const { getByText } = render(
+          <MockButton onClick={jest.fn()} variant="primary">
+            Click me
+          </MockButton>
+        );
+        
+        const button = getByText("Click me");
+        expect(button).toBeInTheDocument();
+        expect(button).toHaveAttribute("data-variant", "primary");
       });
     });
 
-    it("applies overrides to default mock", () => {
-      const customT = jest.fn((key: string) => `translated_${key}`);
-      const overrides = {
-        t: customT,
-        language: "es",
-      };
+    describe("MockInput", () => {
+      it("renders input with props", () => {
+        const { getByTestId } = render(
+          <MockInput value="test" onChange={jest.fn()} />
+        );
+        
+        const input = getByTestId("alias-input");
+        expect(input).toBeInTheDocument();
+        expect(input).toHaveValue("test");
+      });
+    });
 
-      const result = createMockTranslation(overrides);
+    describe("MockCard", () => {
+      it("renders card with children", () => {
+        const { getByTestId, getByText } = render(
+          <MockCard className="test-class">
+            Card content
+          </MockCard>
+        );
+        
+        const card = getByTestId("card");
+        expect(card).toBeInTheDocument();
+        expect(getByText("Card content")).toBeInTheDocument();
+      });
+    });
+  });
 
-      expect(result.t).toBe(customT);
-      expect(result.language).toBe("es");
+  describe("testAddresses", () => {
+    it("contains expected test addresses", () => {
+      expect(testAddresses.mainWallet).toBe("0x1234567890123456789012345678901234567890");
+      expect(testAddresses.shortAddress).toBe("0x1234...7890");
+    });
+  });
+
+  describe("testPropsDefaults", () => {
+    it("contains expected application acceptance defaults", () => {
+      expect(testPropsDefaults.applicationAcceptance).toEqual({
+        applicationId: "app-123",
+        applicantName: "John Doe",
+        opportunityTitle: "Beach Cleanup Volunteer",
+      });
+    });
+
+    it("contains expected volunteer hours defaults", () => {
+      expect(testPropsDefaults.volunteerHours).toEqual({
+        hoursId: "hours-123",
+        volunteerId: "volunteer-456",
+        volunteerName: "Jane Smith",
+        hours: 8,
+        datePerformed: "2024-01-15",
+        description: "Helped with beach cleanup and waste sorting",
+      });
     });
   });
 
   describe("setupCommonMocks", () => {
     it("sets up common mocks without errors", () => {
       expect(() => setupCommonMocks()).not.toThrow();
+    });
+  });
+
+  describe("createMockSupabase", () => {
+    it("creates mock supabase client with default responses", () => {
+      const client = createMockSupabase();
+      
+      expect(client.from).toBeInstanceOf(Function);
+      
+      const result = client.from("test_table");
+      expect(result.select).toBeInstanceOf(Function);
+    });
+
+    it("creates mock supabase client with custom responses", () => {
+      const customResponses = {
+        users: { data: [{ id: "123", name: "Test" }], error: null },
+      };
+      
+      const client = createMockSupabase(customResponses);
+      const result = client.from("users");
+      
+      expect(result.select).toBeInstanceOf(Function);
+    });
+
+    it("supports chained query methods", () => {
+      const client = createMockSupabase();
+      const query = client.from("test_table").select();
+      
+      expect(query.eq).toBeInstanceOf(Function);
+      expect(query.order).toBeInstanceOf(Function);
+      expect(query.single).toBeInstanceOf(Function);
     });
   });
 });

@@ -56,6 +56,17 @@ describe('jestSetup', () => {
       ]);
     });
 
+    it('wallet.getInstalledWallets returns correct wallet list', () => {
+      const mocks = createHookMocks();
+      
+      // Call the function to cover the lines inside it
+      const result = mocks.wallet.getInstalledWallets();
+      
+      expect(result).toHaveLength(2);
+      expect(result[0]).toEqual({ name: 'MetaMask', id: 'metamask' });
+      expect(result[1]).toEqual({ name: 'WalletConnect', id: 'walletconnect' });
+    });
+
     it('creates walletAlias mock with expected properties', () => {
       const mocks = createHookMocks();
       
@@ -87,6 +98,25 @@ describe('jestSetup', () => {
       expect(mocks.translation.t).toBeInstanceOf(Function);
       expect(mocks.translation.t('key')).toBe('key');
       expect(mocks.translation.t('key', 'fallback')).toBe('fallback');
+    });
+
+    it('translation.t function works correctly with various inputs', () => {
+      const mocks = createHookMocks();
+      
+      // Test with just key
+      expect(mocks.translation.t('test.key')).toBe('test.key');
+      
+      // Test with key and fallback
+      expect(mocks.translation.t('test.key', 'Default Text')).toBe('Default Text');
+      
+      // Test with empty key
+      expect(mocks.translation.t('')).toBe('');
+      
+      // Test with empty fallback
+      expect(mocks.translation.t('key', '')).toBe('');
+      
+      // Test with undefined fallback
+      expect(mocks.translation.t('key', undefined)).toBe('key');
     });
   });
 });
