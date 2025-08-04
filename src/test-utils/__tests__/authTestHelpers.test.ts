@@ -97,6 +97,55 @@ describe("authTestHelpers", () => {
     });
   });
 
+  describe("testAuthFlow", () => {
+    it("handles successful auth flow", async () => {
+      const { testAuthFlow } = await import("../authTestHelpers");
+      const mockSupabase = { auth: { signInWithPassword: jest.fn() } };
+      const mockScreen = {
+        getByTestId: jest.fn().mockReturnValue({ click: jest.fn() }),
+        __mockShowToast: jest.fn()
+      };
+      const mockResponse = { data: { user: {} }, error: null };
+
+      mockSupabase.auth.signInWithPassword.mockResolvedValue(mockResponse);
+
+      await testAuthFlow(
+        mockSupabase,
+        "signInWithPassword",
+        mockResponse,
+        mockScreen,
+        "login-button",
+        ["Success", "Login successful"]
+      );
+
+      expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalled();
+      expect(mockScreen.getByTestId).toHaveBeenCalledWith("login-button");
+    });
+
+    it("handles error auth flow", async () => {
+      const { testAuthFlow } = await import("../authTestHelpers");
+      const mockSupabase = { auth: { signInWithPassword: jest.fn() } };
+      const mockScreen = {
+        getByTestId: jest.fn().mockReturnValue({ click: jest.fn() }),
+        __mockShowToast: jest.fn()
+      };
+      const mockError = new Error("Auth failed");
+
+      mockSupabase.auth.signInWithPassword.mockRejectedValue(mockError);
+
+      await testAuthFlow(
+        mockSupabase,
+        "signInWithPassword",
+        mockError,
+        mockScreen,
+        "login-button",
+        ["Error", "Auth failed"]
+      );
+
+      expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalled();
+    });
+  });
+
   describe("commonExpectations", () => {
     const mockScreen = {
       getByTestId: jest.fn(),
