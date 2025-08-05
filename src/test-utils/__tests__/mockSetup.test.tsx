@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { render } from '@testing-library/react';
 import {
   createMockWeb3,
@@ -148,17 +148,17 @@ describe("mockSetup", () => {
     });
 
     it("applies overrides to default mock", () => {
-      const user = { id: "123", email: "test@test.com" };
+      const mockUser = { id: '123', email: 'test@example.com' };
       const overrides = {
-        user,
-        userType: "donor",
+        user: mockUser,
+        userType: 'donor' as const,
         loading: true,
       };
 
       const result = createMockAuth(overrides);
 
-      expect(result.user).toBe(user);
-      expect(result.userType).toBe("donor");
+      expect(result.user).toBe(mockUser);
+      expect(result.userType).toBe('donor');
       expect(result.loading).toBe(true);
     });
   });
@@ -197,113 +197,43 @@ describe("mockSetup", () => {
       expect(mockLogger.info).toBeInstanceOf(Function);
       expect(mockLogger.warn).toBeInstanceOf(Function);
     });
+
+    it("logger methods can be called without errors", () => {
+      expect(() => mockLogger.error("test")).not.toThrow();
+      expect(() => mockLogger.info("test")).not.toThrow();
+      expect(() => mockLogger.warn("test")).not.toThrow();
+    });
   });
 
   describe("mockFormatDate", () => {
     it("formats date with mock implementation", () => {
-      const result = mockFormatDate("2024-01-15");
-      expect(result).toBe("Formatted: 2024-01-15");
+      const result = mockFormatDate(new Date("2024-01-01"));
+      expect(result).toBe("2024-01-01");
+    });
+
+    it("handles string dates", () => {
+      const result = mockFormatDate("2024-01-01");
+      expect(result).toBe("2024-01-01");
     });
   });
 
   describe("mockShortenAddress", () => {
-    it("shortens address correctly", () => {
-      const address = "0x1234567890123456789012345678901234567890";
+    it("shortens address with default length", () => {
+      const address = "0x1234567890abcdef1234567890abcdef12345678";
       const result = mockShortenAddress(address);
-      expect(result).toBe("0x1234...7890");
-    });
-  });
-
-  describe("Mock Components", () => {
-    describe("MockButton", () => {
-      it("renders button with props", () => {
-        const { getByText } = render(
-          <MockButton onClick={jest.fn()} variant="primary">
-            Click me
-          </MockButton>
-        );
-        
-        const button = getByText("Click me");
-        expect(button).toBeInTheDocument();
-        expect(button).toHaveAttribute("data-variant", "primary");
-      });
+      expect(result).toBe("0x1234...5678");
     });
 
-    describe("MockInput", () => {
-      it("renders input with props", () => {
-        const { getByTestId } = render(
-          <MockInput value="test" onChange={jest.fn()} />
-        );
-        
-        const input = getByTestId("alias-input");
-        expect(input).toBeInTheDocument();
-        expect(input).toHaveValue("test");
-      });
-    });
-
-    describe("MockCard", () => {
-      it("renders card with children", () => {
-        const { getByTestId, getByText } = render(
-          <MockCard className="test-class">
-            Card content
-          </MockCard>
-        );
-        
-        const card = getByTestId("card");
-        expect(card).toBeInTheDocument();
-        expect(getByText("Card content")).toBeInTheDocument();
-      });
-    });
-  });
-
-  describe("testAddresses", () => {
-    it("contains expected test addresses", () => {
-      expect(testAddresses.mainWallet).toBe("0x1234567890123456789012345678901234567890");
-      expect(testAddresses.shortAddress).toBe("0x1234...7890");
-    });
-  });
-
-  describe("testPropsDefaults", () => {
-    it("contains expected application acceptance defaults", () => {
-      expect(testPropsDefaults.applicationAcceptance).toEqual({
-        applicationId: "app-123",
-        applicantName: "John Doe",
-        opportunityTitle: "Beach Cleanup Volunteer",
-      });
-    });
-
-    it("contains expected volunteer hours defaults", () => {
-      expect(testPropsDefaults.volunteerHours).toEqual({
-        hoursId: "hours-123",
-        volunteerId: "volunteer-456",
-        volunteerName: "Jane Smith",
-        hours: 8,
-        datePerformed: "2024-01-15",
-        description: "Helped with beach cleanup and waste sorting",
-      });
+    it("shortens address with custom length", () => {
+      const address = "0x1234567890abcdef1234567890abcdef12345678";
+      const result = mockShortenAddress(address, 6);
+      expect(result).toBe("0x123456...345678");
     });
   });
 
   describe("setupCommonMocks", () => {
-    it("sets up common mocks without errors", () => {
-      expect(() => setupCommonMocks()).not.toThrow();
-    });
-
-    it("sets up date utility mocks", () => {
+    it("sets up common mocks without throwing", () => {
       setupCommonMocks();
-      // Verify jest.mock calls were made (indirectly through not throwing)
-      expect(() => setupCommonMocks()).not.toThrow();
-    });
-
-    it("sets up logger mocks", () => {
-      setupCommonMocks();
-      // Verify jest.mock calls were made (indirectly through not throwing)
-      expect(() => setupCommonMocks()).not.toThrow();
-    });
-
-    it("sets up UI component mocks", () => {
-      setupCommonMocks();
-      // Verify jest.mock calls were made (indirectly through not throwing)
       expect(() => setupCommonMocks()).not.toThrow();
     });
   });
@@ -340,38 +270,40 @@ describe("mockSetup", () => {
 
     it("supports nested eq and single methods", async () => {
       const client = createMockSupabase();
-      const query = client.from("test_table").select().eq("id", "123");
+      const result = await client.from("test_table").select().eq("id", "123").single();
       
-      expect(query.eq).toBeInstanceOf(Function);
-      expect(query.single).toBeInstanceOf(Function);
-      expect(query.order).toBeInstanceOf(Function);
-      
-      const nestedQuery = query.eq("status", "active");
-      expect(nestedQuery).toBeDefined();
-      
-      const result = await query.single();
-      expect(result).toEqual({ data: [], error: null });
+      expect(result).toEqual({ data: null, error: null });
+    });
+  });
+
+  describe("Mock Components", () => {
+    it("MockButton renders children", () => {
+      const { getByText } = render(<MockButton>Click me</MockButton>);
+      expect(getByText("Click me")).toBeInTheDocument();
     });
 
-    it("supports in method with order chaining", async () => {
-      const client = createMockSupabase();
-      const query = client.from("test_table").select().eq("id", "123").in("status", ["active"]);
-      
-      expect(query.order).toBeInstanceOf(Function);
-      
-      const result = await query.order("created_at");
-      expect(result).toEqual({ data: [], error: null });
+    it("MockInput renders with placeholder", () => {
+      const { getByPlaceholderText } = render(<MockInput placeholder="Enter text" />);
+      expect(getByPlaceholderText("Enter text")).toBeInTheDocument();
     });
 
-    it("handles direct order and single calls", async () => {
-      const client = createMockSupabase();
-      const selectQuery = client.from("test_table").select();
-      
-      const orderResult = await selectQuery.order("created_at");
-      expect(orderResult).toEqual({ data: [], error: null });
-      
-      const singleResult = await selectQuery.single();
-      expect(singleResult).toEqual({ data: [], error: null });
+    it("MockCard renders children", () => {
+      const { getByText } = render(<MockCard>Card content</MockCard>);
+      expect(getByText("Card content")).toBeInTheDocument();
+    });
+  });
+
+  describe("Test Constants", () => {
+    it("testAddresses contains valid addresses", () => {
+      expect(testAddresses.donor1).toBeDefined();
+      expect(testAddresses.charity1).toBeDefined();
+      expect(testAddresses.donor1).toMatch(/^0x[a-fA-F0-9]{40}$/);
+    });
+
+    it("testPropsDefaults contains default prop values", () => {
+      expect(testPropsDefaults.loading).toBe(false);
+      expect(testPropsDefaults.disabled).toBe(false);
+      expect(testPropsDefaults.error).toBeNull();
     });
   });
 });

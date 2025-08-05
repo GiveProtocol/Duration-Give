@@ -33,7 +33,7 @@ describe("getEnv utility", () => {
         PROD: false,
         DEV: true,
         MODE: "development",
-        VITE_MONITORING_ENDPOINT: "http://test-endpoint",
+        VITE_MONITORING_ENDPOINT: "https://test-endpoint",
       };
 
       // Create a backup of the original globalThis
@@ -65,7 +65,7 @@ describe("getEnv utility", () => {
         PROD: true,
         DEV: false,
         MODE: "production",
-        VITE_MONITORING_ENDPOINT: "http://prod-endpoint",
+        VITE_MONITORING_ENDPOINT: "https://prod-endpoint",
       };
 
       const globalWithImport = globalThis as unknown as GlobalWithImport;
@@ -186,7 +186,7 @@ describe("getEnv utility", () => {
       const originalMonitoring = process.env.VITE_MONITORING_ENDPOINT;
       
       process.env.NODE_ENV = "development";
-      process.env.VITE_MONITORING_ENDPOINT = "http://dev-monitoring";
+      process.env.VITE_MONITORING_ENDPOINT = "https://dev-monitoring";
 
       // Remove any import.meta to force process.env path
       const originalImport = (globalThis as unknown as GlobalWithImport).import;
@@ -197,7 +197,7 @@ describe("getEnv utility", () => {
       expect(result.PROD).toBe(false);
       expect(result.DEV).toBe(true);
       expect(result.MODE).toBe("development");
-      expect(result.VITE_MONITORING_ENDPOINT).toBe("http://dev-monitoring");
+      expect(result.VITE_MONITORING_ENDPOINT).toBe("https://dev-monitoring");
 
       // Restore
       process.env.NODE_ENV = originalNodeEnv;
@@ -434,6 +434,67 @@ describe("getEnv utility", () => {
         const _mode = result.MODE;
         const _endpoint = result.VITE_MONITORING_ENDPOINT;
       }).not.toThrow();
+    });
+  });
+
+  describe("edge cases and error handling", () => {
+    it("handles undefined globalThis gracefully", () => {
+      // Mock globalThis as undefined temporarily
+      const originalGlobalThis = globalThis;
+      (global as any).globalThis = undefined;
+
+      expect(() => getEnv()).not.toThrow();
+      const result = getEnv();
+      expect(result).toBeDefined();
+
+      // Restore globalThis
+      (global as any).globalThis = originalGlobalThis;
+    });
+
+    it("handles dynamic property access errors", () => {
+      const globalWithImport = globalThis as unknown as GlobalWithImport;
+      const originalImport = globalWithImport.import;
+
+      // Set up import that throws on access
+      Object.defineProperty(globalThis, 'import', {
+        get() {
+          throw new Error('Dynamic import access error');
+        },
+        configurable: true
+      });
+
+      const result = getEnv();
+      expect(result).toBeDefined();
+      expect(result.MODE).toBe("test"); // Should fall back to process.env
+
+      // Restore original
+      if (originalImport) {
+        globalWithImport.import = originalImport;
+      } else {
+        delete globalWithImport.import;
+      }
+    });
+
+    it("handles nested property access failures", () => {
+      const globalWithImport = globalThis as unknown as GlobalWithImport;
+      const originalImport = globalWithImport.import;
+
+      // Set up import.meta that throws
+      globalWithImport.import = {
+        get meta() {
+          throw new Error('Meta access error');
+        }
+      } as any;
+
+      const result = getEnv();
+      expect(result).toBeDefined();
+
+      // Restore original
+      if (originalImport) {
+        globalWithImport.import = originalImport;
+      } else {
+        delete globalWithImport.import;
+      }
     });
   });
 });
