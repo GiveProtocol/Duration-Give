@@ -27,7 +27,6 @@ describe("CharityLogin", () => {
   });
 
   it("calls login on form submission", () => {
-
     render(<CharityLogin />);
 
     fireEvent.change(screen.getByLabelText(/email/i), {
