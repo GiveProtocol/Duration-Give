@@ -2,15 +2,21 @@ import React from "react"; // eslint-disable-line no-unused-vars
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CharityLogin } from "../CharityLogin";
 
+const mockLogin = jest.fn();
+
 jest.mock("@/hooks/useAuth", () => ({
-  useAuth: () => ({
-    login: jest.fn(),
+  useAuth: jest.fn(() => ({
+    login: mockLogin,
     loading: false,
     error: null,
-  }),
+  })),
 }));
 
 describe("CharityLogin", () => {
+  beforeEach(() => {
+    mockLogin.mockClear();
+  });
+
   it("renders login form", () => {
     render(<CharityLogin />);
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
@@ -21,12 +27,6 @@ describe("CharityLogin", () => {
   });
 
   it("calls login on form submission", () => {
-    const mockLogin = jest.fn();
-    jest.mocked(jest.requireMock("@/hooks/useAuth").useAuth).mockReturnValue({
-      login: mockLogin,
-      loading: false,
-      error: null,
-    });
 
     render(<CharityLogin />);
 

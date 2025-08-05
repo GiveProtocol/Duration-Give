@@ -1,5 +1,6 @@
 // Test data for input validation tests
 /* eslint-disable no-unused-vars */
+import { expect } from '@jest/globals';
 
 // Types for validation test cases
 type ValidationTestCase = {
@@ -125,8 +126,11 @@ export const testValidCases = (
   validator: ValidatorFunction, 
   cases: (string | number | ValidationTestCase)[]
 ) => {
+  if (!cases || !Array.isArray(cases)) {
+    throw new Error('Test cases must be a valid array');
+  }
   cases.forEach(testCase => {
-    const value = typeof testCase === 'object' ? testCase.value : testCase;
+    const value = typeof testCase === 'object' && testCase !== null ? testCase.value : testCase;
     expect(validator(value)).toBe(true);
   });
 };
@@ -140,8 +144,11 @@ export const testInvalidCases = (
   validator: ValidatorFunction, 
   cases: (string | number | ValidationTestCase)[]
 ) => {
+  if (!cases || !Array.isArray(cases)) {
+    throw new Error('Test cases must be a valid array');
+  }
   cases.forEach(testCase => {
-    const value = typeof testCase === 'object' ? testCase.value : testCase;
+    const value = typeof testCase === 'object' && testCase !== null ? testCase.value : testCase;
     expect(validator(value)).toBe(false);
   });
 };
