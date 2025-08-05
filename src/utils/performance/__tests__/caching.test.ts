@@ -122,9 +122,9 @@ describe("CacheManager", () => {
       cache.set("key2", "value2");
       cache.set("key3", "value3"); // Should evict key1
 
-      expect(cache.get("key1")).resolves.toBeNull();
-      expect(cache.get("key2")).resolves.toBe("value2");
-      expect(cache.get("key3")).resolves.toBe("value3");
+      await expect(cache.get("key1")).resolves.toBeNull();
+      await expect(cache.get("key2")).resolves.toBe("value2");
+      await expect(cache.get("key3")).resolves.toBe("value3");
     });
   });
 

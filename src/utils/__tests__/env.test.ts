@@ -1,5 +1,22 @@
 import { getEnv } from "../env";
 
+// Type definitions for test environments
+interface MockImportMeta {
+  env: Record<string, unknown>;
+}
+
+interface MockImport {
+  meta: MockImportMeta;
+}
+
+interface GlobalWithImport {
+  import?: MockImport;
+}
+
+interface GlobalWithProcess {
+  process?: typeof process;
+}
+
 describe("getEnv utility", () => {
   // Store original process.env to restore after tests
   const originalProcessEnv = process.env;
@@ -20,10 +37,11 @@ describe("getEnv utility", () => {
       };
 
       // Create a backup of the original globalThis
-      const originalImport = (globalThis as any).import;
+      const globalWithImport = globalThis as unknown as GlobalWithImport;
+      const originalImport = globalWithImport.import;
 
       // Mock globalThis.import.meta.env
-      (globalThis as any).import = {
+      globalWithImport.import = {
         meta: {
           env: mockEnv,
         },
@@ -35,9 +53,9 @@ describe("getEnv utility", () => {
 
       // Restore original globalThis
       if (originalImport) {
-        (globalThis as any).import = originalImport;
+        globalWithImport.import = originalImport;
       } else {
-        delete (globalThis as any).import;
+        delete globalWithImport.import;
       }
     });
 
@@ -50,10 +68,11 @@ describe("getEnv utility", () => {
         VITE_MONITORING_ENDPOINT: "http://prod-endpoint",
       };
 
-      const originalImport = (globalThis as any).import;
+      const globalWithImport = globalThis as unknown as GlobalWithImport;
+      const originalImport = globalWithImport.import;
 
       // Set up the environment that would be accessed dynamically
-      (globalThis as any).import = {
+      globalWithImport.import = {
         meta: {
           env: mockEnv,
         },
@@ -65,14 +84,15 @@ describe("getEnv utility", () => {
 
       // Restore
       if (originalImport) {
-        (globalThis as any).import = originalImport;
+        globalWithImport.import = originalImport;
       } else {
-        delete (globalThis as any).import;
+        delete globalWithImport.import;
       }
     });
 
     it("handles import.meta access failures gracefully", () => {
-      const originalImport = (globalThis as any).import;
+      const globalWithImport = globalThis as unknown as GlobalWithImport;
+      const originalImport = globalWithImport.import;
 
       // Set up scenario where import.meta access throws
       Object.defineProperty(globalThis, 'import', {
@@ -92,9 +112,9 @@ describe("getEnv utility", () => {
 
       // Restore
       if (originalImport) {
-        (globalThis as any).import = originalImport;
+        globalWithImport.import = originalImport;
       } else {
-        delete (globalThis as any).import;
+        delete globalWithImport.import;
       }
     });
   });
@@ -144,8 +164,8 @@ describe("getEnv utility", () => {
       process.env.NODE_ENV = "production";
 
       // Remove any import.meta to force process.env path
-      const originalImport = (globalThis as any).import;
-      delete (globalThis as any).import;
+      const originalImport = (globalThis as unknown as GlobalWithImport).import;
+      delete (globalThis as unknown as GlobalWithImport).import;
 
       const result = getEnv();
 
@@ -156,7 +176,7 @@ describe("getEnv utility", () => {
       // Restore
       process.env.NODE_ENV = originalNodeEnv;
       if (originalImport) {
-        (globalThis as any).import = originalImport;
+        (globalThis as unknown as GlobalWithImport).import = originalImport;
       }
     });
 
@@ -169,8 +189,8 @@ describe("getEnv utility", () => {
       process.env.VITE_MONITORING_ENDPOINT = "http://dev-monitoring";
 
       // Remove any import.meta to force process.env path
-      const originalImport = (globalThis as any).import;
-      delete (globalThis as any).import;
+      const originalImport = (globalThis as unknown as GlobalWithImport).import;
+      delete (globalThis as unknown as GlobalWithImport).import;
 
       const result = getEnv();
 
@@ -183,7 +203,7 @@ describe("getEnv utility", () => {
       process.env.NODE_ENV = originalNodeEnv;
       process.env.VITE_MONITORING_ENDPOINT = originalMonitoring;
       if (originalImport) {
-        (globalThis as any).import = originalImport;
+        (globalThis as unknown as GlobalWithImport).import = originalImport;
       }
     });
 
@@ -193,8 +213,8 @@ describe("getEnv utility", () => {
       delete process.env.NODE_ENV;
 
       // Remove any import.meta to force process.env path
-      const originalImport = (globalThis as any).import;
-      delete (globalThis as any).import;
+      const originalImport = (globalThis as unknown as GlobalWithImport).import;
+      delete (globalThis as unknown as GlobalWithImport).import;
 
       const result = getEnv();
 
@@ -205,18 +225,20 @@ describe("getEnv utility", () => {
       // Restore
       process.env.NODE_ENV = originalNodeEnv;
       if (originalImport) {
-        (globalThis as any).import = originalImport;
+        (globalThis as unknown as GlobalWithImport).import = originalImport;
       }
     });
 
     it("uses default fallback when process is undefined", () => {
       // Mock scenario where process is undefined
-      const originalProcess = global.process;
-      delete (global as any).process;
+      const globalWithProcess = global as unknown as GlobalWithProcess;
+      const globalWithImport = globalThis as unknown as GlobalWithImport;
+      const originalProcess = globalWithProcess.process;
+      delete globalWithProcess.process;
 
       // Remove any import.meta to force fallback path
-      const originalImport = (globalThis as any).import;
-      delete (globalThis as any).import;
+      const originalImport = globalWithImport.import;
+      delete globalWithImport.import;
 
       const result = getEnv();
 
@@ -226,9 +248,9 @@ describe("getEnv utility", () => {
       expect(result.VITE_MONITORING_ENDPOINT).toBeUndefined();
 
       // Restore
-      (global as any).process = originalProcess;
+      globalWithProcess.process = originalProcess;
       if (originalImport) {
-        (globalThis as any).import = originalImport;
+        globalWithImport.import = originalImport;
       }
     });
   });
@@ -280,12 +302,7 @@ describe("getEnv utility", () => {
       const result = getEnv();
 
       // PROD and DEV should be mutually exclusive
-      if (result.PROD === true) {
-        expect(result.DEV).toBe(false);
-      }
-      if (result.DEV === true) {
-        expect(result.PROD).toBe(false);
-      }
+      expect(result.PROD && result.DEV).toBe(false);
     });
 
     it("provides additional NODE_ENV information", () => {
@@ -320,14 +337,26 @@ describe("getEnv utility", () => {
 
       expect(typeof result.PROD).toBe("boolean");
       expect(typeof result.DEV).toBe("boolean");
-      // PROD and DEV should be mutually exclusive in most cases
-      if (result.MODE === "production") {
-        expect(result.PROD).toBe(true);
-        expect(result.DEV).toBe(false);
-      } else if (result.MODE === "development") {
-        expect(result.PROD).toBe(false);
-        expect(result.DEV).toBe(true);
+    });
+
+    it("ensures PROD flag is true in production mode", () => {
+      const result = getEnv();
+      // Skip test if not in production mode
+      if (result.MODE !== "production") {
+        return;
       }
+      expect(result.PROD).toBe(true);
+      expect(result.DEV).toBe(false);
+    });
+
+    it("ensures DEV flag is true in development mode", () => {
+      const result = getEnv();
+      // Skip test if not in development mode
+      if (result.MODE !== "development") {
+        return;
+      }
+      expect(result.PROD).toBe(false);
+      expect(result.DEV).toBe(true);
     });
 
     it("handles environment detection gracefully without throwing", () => {
@@ -347,13 +376,8 @@ describe("getEnv utility", () => {
       // Core consistency checks
       expect(result.MODE).toMatch(/^(development|production|test|staging)$/);
 
-      // Logical consistency
-      if (result.PROD) {
-        expect(result.DEV).toBe(false);
-      }
-      if (result.DEV) {
-        expect(result.PROD).toBe(false);
-      }
+      // Logical consistency - PROD and DEV should be mutually exclusive
+      expect(!(result.PROD && result.DEV)).toBe(true);
     });
 
     it("handles current environment appropriately", () => {

@@ -1,4 +1,4 @@
-import React as _React from 'react';
+import React from 'react';
 import { render } from '@testing-library/react';
 import {
   createMockWeb3,

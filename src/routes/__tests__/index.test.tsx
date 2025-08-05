@@ -53,7 +53,7 @@ describe('AppRoutes', () => {
       { path: '/whitepaper', testId: 'whitepaper', name: 'Whitepaper' }
     ];
 
-    const testPublicRoute = async (path: string, testId: string, name: string) => {
+    const testPublicRoute = async (path: string, testId: string, _name: string) => {
       renderWithRouter([path]);
       await waitFor(() => {
         expect(screen.getByTestId(testId)).toBeInTheDocument();
@@ -126,7 +126,7 @@ describe('AppRoutes', () => {
       { path: '/volunteer-opportunities', testId: 'volunteer-opportunities', name: 'Volunteer Opportunities' }
     ];
 
-    const testProtectedRoute = async (path: string, name: string) => {
+    const testProtectedRoute = async (path: string, _name: string) => {
       renderWithRouter([path]);
       await waitFor(() => {
         expect(screen.getByTestId('protected-route')).toBeInTheDocument();
