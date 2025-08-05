@@ -53,14 +53,18 @@ describe('AppRoutes', () => {
       { path: '/whitepaper', testId: 'whitepaper', name: 'Whitepaper' }
     ];
 
-    publicRoutes.forEach(({ path, testId, name }) => {
-      it(`renders ${name} page at ${path}`, async () => {
-        renderWithRouter([path]);
-        await waitFor(() => {
-          expect(screen.getByTestId(testId)).toBeInTheDocument();
-        });
+    const testPublicRoute = async (path: string, testId: string, name: string) => {
+      renderWithRouter([path]);
+      await waitFor(() => {
+        expect(screen.getByTestId(testId)).toBeInTheDocument();
       });
-    });
+    };
+
+    for (const { path, testId, name } of publicRoutes) {
+      it(`renders ${name} page at ${path}`, async () => {
+        await testPublicRoute(path, testId, name);
+      });
+    }
 
     const charityRoutes = [
       { path: '/charities/global-water-foundation', testId: 'global-water', name: 'Global Water Foundation' },
@@ -68,14 +72,11 @@ describe('AppRoutes', () => {
       { path: '/charities/climate-action-now', testId: 'climate-action', name: 'Climate Action Now' }
     ];
 
-    charityRoutes.forEach(({ path, testId, name }) => {
+    for (const { path, testId, name } of charityRoutes) {
       it(`renders ${name} page at ${path}`, async () => {
-        renderWithRouter([path]);
-        await waitFor(() => {
-          expect(screen.getByTestId(testId)).toBeInTheDocument();
-        });
+        await testPublicRoute(path, testId, name);
       });
-    });
+    }
 
     const portfolioRoutes = [
       { path: '/portfolios/environment', testId: 'environment-portfolio', name: 'Environment Portfolio' },
@@ -83,14 +84,11 @@ describe('AppRoutes', () => {
       { path: '/portfolios/poverty', testId: 'poverty-portfolio', name: 'Poverty Portfolio' }
     ];
 
-    portfolioRoutes.forEach(({ path, testId, name }) => {
+    for (const { path, testId, name } of portfolioRoutes) {
       it(`renders ${name} page at ${path}`, async () => {
-        renderWithRouter([path]);
-        await waitFor(() => {
-          expect(screen.getByTestId(testId)).toBeInTheDocument();
-        });
+        await testPublicRoute(path, testId, name);
       });
-    });
+    }
   });
 
   describe('Protected Routes', () => {
@@ -128,14 +126,18 @@ describe('AppRoutes', () => {
       { path: '/volunteer-opportunities', testId: 'volunteer-opportunities', name: 'Volunteer Opportunities' }
     ];
 
-    protectedRoutes.forEach(({ path, testId: _testId, name }) => {
-      it(`renders ${name} page at ${path} when authenticated`, async () => {
-        renderWithRouter([path]);
-        await waitFor(() => {
-          expect(screen.getByTestId('protected-route')).toBeInTheDocument();
-        });
+    const testProtectedRoute = async (path: string, name: string) => {
+      renderWithRouter([path]);
+      await waitFor(() => {
+        expect(screen.getByTestId('protected-route')).toBeInTheDocument();
       });
-    });
+    };
+
+    for (const { path, testId: _testId, name } of protectedRoutes) {
+      it(`renders ${name} page at ${path} when authenticated`, async () => {
+        await testProtectedRoute(path, name);
+      });
+    }
   });
 
   describe('Loading State', () => {

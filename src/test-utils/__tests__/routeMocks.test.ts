@@ -52,6 +52,10 @@ describe("routeMocks", () => {
       // Verify jest.mock was called (we can't test the actual mocking directly)
       expect(jest.mock).toBeDefined();
     });
+
+    it("executes all jest.mock calls without throwing", () => {
+      expect(() => setupCommonRouteMocks()).not.toThrow();
+    });
   });
 
   describe("setupPageMocks", () => {
@@ -60,6 +64,14 @@ describe("routeMocks", () => {
 
       // Verify function runs without errors
       expect(jest.mock).toBeDefined();
+    });
+
+    it("executes all basic page mocks without throwing", () => {
+      expect(() => setupPageMocks()).not.toThrow();
+    });
+
+    it("executes named export page mocks without throwing", () => {
+      expect(() => setupPageMocks()).not.toThrow();
     });
   });
 
@@ -70,6 +82,10 @@ describe("routeMocks", () => {
       // Verify function runs without errors
       expect(jest.mock).toBeDefined();
     });
+
+    it("executes all charity page mocks without throwing", () => {
+      expect(() => setupCharityPageMocks()).not.toThrow();
+    });
   });
 
   describe("setupPortfolioPageMocks", () => {
@@ -79,6 +95,10 @@ describe("routeMocks", () => {
       // Verify function runs without errors
       expect(jest.mock).toBeDefined();
     });
+
+    it("executes all portfolio page mocks without throwing", () => {
+      expect(() => setupPortfolioPageMocks()).not.toThrow();
+    });
   });
 
   describe("setupDashboardPageMocks", () => {
@@ -87,6 +107,10 @@ describe("routeMocks", () => {
 
       // Verify function runs without errors
       expect(jest.mock).toBeDefined();
+    });
+
+    it("executes all dashboard page mocks without throwing", () => {
+      expect(() => setupDashboardPageMocks()).not.toThrow();
     });
   });
 

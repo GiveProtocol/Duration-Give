@@ -19,44 +19,74 @@ export const createMockSupabaseQuery = <T = unknown>(
 });
 
 /**
+ * Creates the eq chain for select operations
+ */
+const createSelectEqChain = (overrides: MockSupabaseOverrides) => ({
+  eq: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
+  single: jest.fn(() => Promise.resolve(createMockSupabaseQuery(null, null))),
+  order: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
+  in: jest.fn(() => ({
+    order: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
+  })),
+  ...overrides.selectEq
+});
+
+/**
+ * Creates the select chain for table operations
+ */
+const createSelectChain = (overrides: MockSupabaseOverrides) => ({
+  eq: jest.fn(() => createSelectEqChain(overrides)),
+  order: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
+  single: jest.fn(() => Promise.resolve(createMockSupabaseQuery(null, null))),
+  ...overrides.select
+});
+
+/**
+ * Creates the insert chain for table operations
+ */
+const createInsertChain = (overrides: MockSupabaseOverrides) => ({
+  select: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
+  single: jest.fn(() => Promise.resolve(createMockSupabaseQuery(null, null))),
+  ...overrides.insert
+});
+
+/**
+ * Creates the update chain for table operations
+ */
+const createUpdateChain = (overrides: MockSupabaseOverrides) => ({
+  eq: jest.fn(() => ({
+    select: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
+    ...overrides.updateEq
+  })),
+  ...overrides.update
+});
+
+/**
+ * Creates the delete chain for table operations
+ */
+const createDeleteChain = (overrides: MockSupabaseOverrides) => ({
+  eq: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
+  ...overrides.deleteEq
+});
+
+/**
+ * Creates the table operations object
+ */
+const createTableOperations = (overrides: MockSupabaseOverrides) => ({
+  select: jest.fn(() => createSelectChain(overrides)),
+  insert: jest.fn(() => createInsertChain(overrides)),
+  update: jest.fn(() => createUpdateChain(overrides)),
+  delete: jest.fn(() => createDeleteChain(overrides)),
+  ...overrides.from
+});
+
+/**
  * Creates a mock Supabase client with customizable method overrides
  * @param overrides - Optional overrides for specific Supabase methods
  * @returns Mock Supabase client object with jest functions
  */
 export const createMockSupabaseClient = (overrides: MockSupabaseOverrides = {}) => ({
-  from: jest.fn(() => ({
-    select: jest.fn(() => ({
-      eq: jest.fn(() => ({
-        eq: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
-        single: jest.fn(() => Promise.resolve(createMockSupabaseQuery(null, null))),
-        order: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
-        in: jest.fn(() => ({
-          order: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
-        })),
-        ...overrides.selectEq
-      })),
-      order: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
-      single: jest.fn(() => Promise.resolve(createMockSupabaseQuery(null, null))),
-      ...overrides.select
-    })),
-    insert: jest.fn(() => ({
-      select: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
-      single: jest.fn(() => Promise.resolve(createMockSupabaseQuery(null, null))),
-      ...overrides.insert
-    })),
-    update: jest.fn(() => ({
-      eq: jest.fn(() => ({
-        select: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
-        ...overrides.updateEq
-      })),
-      ...overrides.update
-    })),
-    delete: jest.fn(() => ({
-      eq: jest.fn(() => Promise.resolve(createMockSupabaseQuery([], null))),
-      ...overrides.deleteEq
-    })),
-    ...overrides.from
-  })),
+  from: jest.fn(() => createTableOperations(overrides)),
   ...overrides.client
 });
 

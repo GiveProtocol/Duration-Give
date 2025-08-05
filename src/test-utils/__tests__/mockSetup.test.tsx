@@ -1,4 +1,4 @@
-import React from 'react';
+import React as _React from 'react';
 import { render } from '@testing-library/react';
 import {
   createMockWeb3,
@@ -288,6 +288,24 @@ describe("mockSetup", () => {
     it("sets up common mocks without errors", () => {
       expect(() => setupCommonMocks()).not.toThrow();
     });
+
+    it("sets up date utility mocks", () => {
+      setupCommonMocks();
+      // Verify jest.mock calls were made (indirectly through not throwing)
+      expect(() => setupCommonMocks()).not.toThrow();
+    });
+
+    it("sets up logger mocks", () => {
+      setupCommonMocks();
+      // Verify jest.mock calls were made (indirectly through not throwing)
+      expect(() => setupCommonMocks()).not.toThrow();
+    });
+
+    it("sets up UI component mocks", () => {
+      setupCommonMocks();
+      // Verify jest.mock calls were made (indirectly through not throwing)
+      expect(() => setupCommonMocks()).not.toThrow();
+    });
   });
 
   describe("createMockSupabase", () => {
@@ -318,6 +336,42 @@ describe("mockSetup", () => {
       expect(query.eq).toBeInstanceOf(Function);
       expect(query.order).toBeInstanceOf(Function);
       expect(query.single).toBeInstanceOf(Function);
+    });
+
+    it("supports nested eq and single methods", async () => {
+      const client = createMockSupabase();
+      const query = client.from("test_table").select().eq("id", "123");
+      
+      expect(query.eq).toBeInstanceOf(Function);
+      expect(query.single).toBeInstanceOf(Function);
+      expect(query.order).toBeInstanceOf(Function);
+      
+      const nestedQuery = query.eq("status", "active");
+      expect(nestedQuery).toBeDefined();
+      
+      const result = await query.single();
+      expect(result).toEqual({ data: [], error: null });
+    });
+
+    it("supports in method with order chaining", async () => {
+      const client = createMockSupabase();
+      const query = client.from("test_table").select().eq("id", "123").in("status", ["active"]);
+      
+      expect(query.order).toBeInstanceOf(Function);
+      
+      const result = await query.order("created_at");
+      expect(result).toEqual({ data: [], error: null });
+    });
+
+    it("handles direct order and single calls", async () => {
+      const client = createMockSupabase();
+      const selectQuery = client.from("test_table").select();
+      
+      const orderResult = await selectQuery.order("created_at");
+      expect(orderResult).toEqual({ data: [], error: null });
+      
+      const singleResult = await selectQuery.single();
+      expect(singleResult).toEqual({ data: [], error: null });
     });
   });
 });

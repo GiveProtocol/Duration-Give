@@ -35,30 +35,35 @@ describe('InputValidator', () => {
 
   describe('sanitizeInput', () => {
     it('removes HTML tags and quotes', () => {
-      validationTestCases.sanitization.htmlRemoval.forEach(({ input, expected }) => {
-        expect(InputValidator.sanitizeInput(input)).toBe(expected);
-      });
-      validationTestCases.sanitization.quoteRemoval.forEach(({ input, expected }) => {
-        expect(InputValidator.sanitizeInput(input)).toBe(expected);
-      });
+      const testSanitization = (testCases: Array<{ input: string; expected: string }>) => {
+        for (const { input, expected } of testCases) {
+          expect(InputValidator.sanitizeInput(input)).toBe(expected);
+        }
+      };
+
+      testSanitization(validationTestCases.sanitization.htmlRemoval);
+      testSanitization(validationTestCases.sanitization.quoteRemoval);
     });
 
     it('trims whitespace', () => {
-      validationTestCases.sanitization.whitespaceHandling.slice(0, 2).forEach(({ input, expected }) => {
+      const testCases = validationTestCases.sanitization.whitespaceHandling.slice(0, 2);
+      for (const { input, expected } of testCases) {
         expect(InputValidator.sanitizeInput(input)).toBe(expected);
-      });
+      }
     });
 
     it('handles empty and whitespace-only strings', () => {
-      validationTestCases.sanitization.whitespaceHandling.slice(2).forEach(({ input, expected }) => {
+      const testCases = validationTestCases.sanitization.whitespaceHandling.slice(2);
+      for (const { input, expected } of testCases) {
         expect(InputValidator.sanitizeInput(input)).toBe(expected);
-      });
+      }
     });
 
     it('preserves safe content', () => {
-      validationTestCases.sanitization.safeContent.forEach(({ input, expected }) => {
+      const testCases = validationTestCases.sanitization.safeContent;
+      for (const { input, expected } of testCases) {
         expect(InputValidator.sanitizeInput(input)).toBe(expected);
-      });
+      }
     });
   });
 

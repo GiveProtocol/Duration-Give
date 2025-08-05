@@ -265,6 +265,53 @@ describe("volunteer utils", () => {
         "Failed to create acceptance hash",
       );
     });
+
+    it("handles verification insert errors", async () => {
+      // Mock supabase to succeed on application update but fail on verification insert
+      jest
+        .mocked(supabase.from)
+        .mockImplementation((table): MockSupabaseTable => {
+          if (table === "volunteer_applications") {
+            return {
+              update: jest.fn(() => ({
+                eq: jest.fn(() => ({ error: null })),
+              })),
+              select: jest.fn(),
+              insert: jest.fn(),
+            };
+          } else if (table === "volunteer_verifications") {
+            return {
+              insert: jest.fn(() => ({ error: new Error("Insert error") })),
+              select: jest.fn(),
+              update: jest.fn(),
+            };
+          }
+          return {
+            select: jest.fn(),
+            update: jest.fn(),
+            insert: jest.fn(),
+          };
+        });
+
+      await expect(createAcceptanceHash(mockApplication)).rejects.toThrow(
+        "Failed to create acceptance hash",
+      );
+    });
+
+    it("continues even if blockchain recording fails", async () => {
+      // Mock recordApplicationOnChain to throw error
+      jest.doMock("../volunteer", () => ({
+        ...jest.requireActual("../volunteer"),
+        recordApplicationOnChain: jest.fn(() => {
+          throw new Error("Blockchain error");
+        }),
+      }));
+
+      const hash = await createAcceptanceHash(mockApplication);
+
+      expect(hash).toBeDefined();
+      expect(typeof hash).toBe("string");
+    });
   });
 
   describe("createVerificationHash", () => {
@@ -526,6 +573,83 @@ describe("volunteer utils", () => {
         blockNumber: 500000,
       });
     });
+
+    it("handles profile database errors", async () => {
+      // Mock supabase to return error on profiles query
+      jest.mocked(supabase.from).mockImplementation(
+        (table): MockSupabaseTable => {
+          if (table === "profiles") {
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => ({
+                  single: jest.fn(() => ({ error: new Error("Profile error") })),
+                })),
+              })),
+              update: jest.fn(),
+              insert: jest.fn(),
+            };
+          }
+          return {
+            select: jest.fn(),
+            update: jest.fn(),
+            insert: jest.fn(),
+          };
+        },
+      );
+
+      const result = await recordHoursOnChain("user-123", "0xhash123", 8);
+
+      expect(result).toEqual({
+        transactionId: "tx-123456",
+        blockNumber: 500000,
+      });
+    });
+
+    it("handles wallet_aliases database errors", async () => {
+      // Mock supabase to succeed on profiles but fail on wallet_aliases
+      jest
+        .mocked(supabase.from)
+        .mockImplementation((table): MockSupabaseTable => {
+          if (table === "profiles") {
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => ({
+                  single: jest.fn(() => ({
+                    data: { user_id: "user-123" },
+                    error: null,
+                  })),
+                })),
+              })),
+              update: jest.fn(),
+              insert: jest.fn(),
+            };
+          } else if (table === "wallet_aliases") {
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => ({
+                  maybeSingle: jest.fn(() => ({
+                    error: new Error("Wallet error"),
+                  })),
+                })),
+              })),
+              update: jest.fn(),
+              insert: jest.fn(),
+            };
+          }
+          return {
+            select: jest.fn(),
+            update: jest.fn(),
+            insert: jest.fn(),
+          };
+        });
+
+      const result = await recordHoursOnChain("user-123", "0xhash123", 8);
+
+      expect(result).toEqual({
+        transactionId: "tx-123456",
+        blockNumber: 500000,
+      });
+    });
   });
 
   describe("recordVerificationOnChain", () => {
@@ -580,6 +704,74 @@ describe("volunteer utils", () => {
         transactionId: "tx-123456",
         blockNumber: 500000,
       });
+    });
+
+    it("handles errors during hours recording", async () => {
+      const verification: VolunteerVerification = {
+        id: "ver-123",
+        applicantId: "user-123",
+        charityId: "charity-123",
+        opportunityId: "opp-123",
+        verificationHash: "0xhash123",
+        verifiedAt: "2024-01-01T00:00:00Z",
+      };
+
+      // Mock recordHoursOnChain to throw error
+      const originalRecordHoursOnChain = jest.requireActual("../volunteer").recordHoursOnChain;
+      jest.doMock("../volunteer", () => ({
+        ...jest.requireActual("../volunteer"),
+        recordHoursOnChain: jest.fn(() => {
+          throw new Error("Hours recording error");
+        }),
+      }));
+
+      const result = await recordVerificationOnChain(verification);
+
+      // Should return simulated data even for errors
+      expect(result).toEqual({
+        transactionId: "tx-123456",
+        blockNumber: 500000,
+      });
+
+      // Restore original function
+      jest.doMock("../volunteer", () => ({
+        ...jest.requireActual("../volunteer"),
+        recordHoursOnChain: originalRecordHoursOnChain,
+      }));
+    });
+
+    it("handles errors during application recording", async () => {
+      const verification: VolunteerVerification = {
+        id: "ver-123",
+        applicantId: "user-123",
+        charityId: "charity-123",
+        opportunityId: "opp-123",
+        acceptanceHash: "0xhash123",
+        acceptedAt: "2024-01-01T00:00:00Z",
+      };
+
+      // Mock recordApplicationOnChain to throw error
+      const originalRecordApplicationOnChain = jest.requireActual("../volunteer").recordApplicationOnChain;
+      jest.doMock("../volunteer", () => ({
+        ...jest.requireActual("../volunteer"),
+        recordApplicationOnChain: jest.fn(() => {
+          throw new Error("Application recording error");
+        }),
+      }));
+
+      const result = await recordVerificationOnChain(verification);
+
+      // Should return simulated data even for errors
+      expect(result).toEqual({
+        transactionId: "tx-123456",
+        blockNumber: 500000,
+      });
+
+      // Restore original function
+      jest.doMock("../volunteer", () => ({
+        ...jest.requireActual("../volunteer"),
+        recordApplicationOnChain: originalRecordApplicationOnChain,
+      }));
     });
   });
 

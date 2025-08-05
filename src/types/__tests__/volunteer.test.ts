@@ -160,11 +160,15 @@ describe('Volunteer enum consistency', () => {
       OpportunityType
     ];
 
-    allEnums.forEach(enumObj => {
-      Object.keys(enumObj).forEach(key => {
+    const testEnumKeyNaming = (enumObj: Record<string, unknown>) => {
+      for (const key of Object.keys(enumObj)) {
         expect(key).toMatch(/^_[A-Z_]+$/); // Should start with _ and be uppercase
-      });
-    });
+      }
+    };
+
+    for (const enumObj of allEnums) {
+      testEnumKeyNaming(enumObj);
+    }
   });
 
   it('uses lowercase string values with underscores or hyphens', () => {
@@ -177,12 +181,16 @@ describe('Volunteer enum consistency', () => {
       WorkLanguage
     ];
 
-    allEnums.forEach(enumObj => {
-      Object.values(enumObj).forEach(value => {
+    const testEnumValueFormat = (enumObj: Record<string, unknown>) => {
+      for (const value of Object.values(enumObj)) {
         expect(typeof value).toBe('string');
-        expect(value).toBe(value.toLowerCase());
+        expect(value).toBe((value as string).toLowerCase());
         expect(value).toMatch(/^[a-z_-]+$/);
-      });
-    });
+      }
+    };
+
+    for (const enumObj of allEnums) {
+      testEnumValueFormat(enumObj);
+    }
   });
 });

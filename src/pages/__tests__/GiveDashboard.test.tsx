@@ -76,76 +76,44 @@ describe('GiveDashboard', () => {
     jest.clearAllMocks();
   });
 
-  const testCases = {
-    authentication: [
-      {
-        name: 'redirects to login when user is not authenticated',
-        authMock: createMockAuth({ user: null, userType: null }),
-        expectation: () => expect(screen.queryByText('dashboard.title')).not.toBeInTheDocument()
-      },
-      {
-        name: 'renders dashboard when user is authenticated',
-        authMock: createMockAuth({ user: mockUser, userType: 'donor' }),
-        expectation: () => expect(screen.getByText('dashboard.title')).toBeInTheDocument()
-      },
-      {
-        name: 'shows loading state when auth is loading',
-        authMock: createMockAuth({ user: null, userType: null, loading: true }),
-        expectation: () => expect(screen.getByText('common.loading')).toBeInTheDocument()
-      }
-    ],
-    walletConnection: [
-      {
-        name: 'shows connect wallet button when not connected',
-        web3Mock: createMockWeb3({ address: null, isConnected: false }),
-        expectation: () => expect(screen.getByText('web3.connectWallet')).toBeInTheDocument()
-      },
-      {
-        name: 'shows wallet address when connected',
-        web3Mock: createMockWeb3({ address: '0x123', isConnected: true }),
-        expectation: () => expect(screen.getByText(/0x123/)).toBeInTheDocument()
-      }
-    ],
-    filterSort: [
-      { element: 'year filter dropdown', selector: 'dashboard.filters.allYears' },
-      { element: 'type filter dropdown', selector: 'dashboard.filters.allTypes' }
-    ],
-    modals: [
-      { name: 'export', button: 'dashboard.exportData', testId: 'export-modal' },
-      { name: 'wallet settings', button: 'dashboard.walletSettings', testId: 'wallet-settings' },
-      { name: 'scheduled donations', button: 'dashboard.scheduledDonations', testId: 'scheduled-donations' }
-    ],
-    statistics: [
-      'dashboard.stats.totalDonations',
-      'dashboard.stats.volunteerHours', 
-      'dashboard.stats.impactScore'
-    ],
-    tableHeaders: [
-      'dashboard.table.date',
-      'dashboard.table.type',
-      'dashboard.table.amount',
-      'dashboard.table.organization',
-      'dashboard.table.status'
-    ]
-  };
 
   describe('Authentication and Access Control', () => {
-    testCases.authentication.forEach(({ name, authMock, expectation }) => {
-      it(name, () => {
-        mockUseAuth.mockReturnValue(authMock);
-        renderWithRouter(<GiveDashboard />);
-        expectation();
-      });
+    it('redirects to login when user is not authenticated', () => {
+      mockUseAuth.mockReturnValue(createMockAuth({ user: null, userType: null }));
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.queryByText('dashboard.title')).not.toBeInTheDocument();
+    });
+
+    it('renders dashboard when user is authenticated', () => {
+      mockUseAuth.mockReturnValue(createMockAuth({ user: mockUser, userType: 'donor' }));
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('dashboard.title')).toBeInTheDocument();
+    });
+
+    it('shows loading state when auth is loading', () => {
+      mockUseAuth.mockReturnValue(createMockAuth({ user: null, userType: null, loading: true }));
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('common.loading')).toBeInTheDocument();
     });
   });
 
   describe('Wallet Connection', () => {
-    testCases.walletConnection.forEach(({ name, web3Mock, expectation }) => {
-      it(name, () => {
-        mockUseWeb3.mockReturnValue(web3Mock);
-        renderWithRouter(<GiveDashboard />);
-        expectation();
-      });
+    it('shows connect wallet button when not connected', () => {
+      mockUseWeb3.mockReturnValue(createMockWeb3({ address: null, isConnected: false }));
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('web3.connectWallet')).toBeInTheDocument();
+    });
+
+    it('shows wallet address when connected', () => {
+      mockUseWeb3.mockReturnValue(createMockWeb3({ address: '0x123...789', isConnected: true }));
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('0x123...789')).toBeInTheDocument();
+    });
+
+    it('handles wallet connection loading state', () => {
+      mockUseWeb3.mockReturnValue(createMockWeb3({ address: null, isConnected: false, loading: true }));
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('web3.connecting')).toBeInTheDocument();
     });
 
     it('handles wallet connection', () => {
@@ -163,11 +131,19 @@ describe('GiveDashboard', () => {
   });
 
   describe('Filter and Sort Functionality', () => {
-    testCases.filterSort.forEach(({ element, selector }) => {
-      it(`renders ${element}`, () => {
-        renderWithRouter(<GiveDashboard />);
-        expect(screen.getByDisplayValue(selector)).toBeInTheDocument();
-      });
+    it('renders year filter dropdown', () => {
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByDisplayValue('dashboard.filters.allYears')).toBeInTheDocument();
+    });
+
+    it('renders type filter dropdown', () => {
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByDisplayValue('dashboard.filters.allTypes')).toBeInTheDocument();
+    });
+
+    it('renders status filter dropdown', () => {
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByDisplayValue('dashboard.filters.allStatuses')).toBeInTheDocument();
     });
 
     it('handles filter changes', () => {
@@ -191,29 +167,68 @@ describe('GiveDashboard', () => {
   });
 
   describe('Modal Functionality', () => {
-    testCases.modals.forEach(({ name, button, testId }) => {
-      it(`opens and closes ${name} modal`, async () => {
-        renderWithRouter(<GiveDashboard />);
-        
-        // Open modal
-        fireEvent.click(screen.getByText(button));
-        expect(screen.getByTestId(testId)).toBeInTheDocument();
-        
-        // Close modal
-        fireEvent.click(screen.getByText('Close'));
-        await waitFor(() => {
-          expect(screen.queryByTestId(testId)).not.toBeInTheDocument();
-        });
+    it('opens and closes export modal', async () => {
+      renderWithRouter(<GiveDashboard />);
+      
+      // Open modal
+      fireEvent.click(screen.getByText('dashboard.exportData'));
+      expect(screen.getByTestId('export-modal')).toBeInTheDocument();
+      
+      // Close modal
+      fireEvent.click(screen.getByText('Close'));
+      await waitFor(() => {
+        expect(screen.queryByTestId('export-modal')).not.toBeInTheDocument();
+      });
+    });
+
+    it('opens and closes wallet settings modal', async () => {
+      renderWithRouter(<GiveDashboard />);
+      
+      // Open modal
+      fireEvent.click(screen.getByText('dashboard.walletSettings'));
+      expect(screen.getByTestId('wallet-settings')).toBeInTheDocument();
+      
+      // Close modal
+      fireEvent.click(screen.getByText('Close'));
+      await waitFor(() => {
+        expect(screen.queryByTestId('wallet-settings')).not.toBeInTheDocument();
+      });
+    });
+
+    it('opens and closes scheduled donations modal', async () => {
+      renderWithRouter(<GiveDashboard />);
+      
+      // Open modal
+      fireEvent.click(screen.getByText('dashboard.scheduledDonations'));
+      expect(screen.getByTestId('scheduled-donations')).toBeInTheDocument();
+      
+      // Close modal
+      fireEvent.click(screen.getByText('Close'));
+      await waitFor(() => {
+        expect(screen.queryByTestId('scheduled-donations')).not.toBeInTheDocument();
       });
     });
   });
 
   describe('Statistics Display', () => {
-    testCases.statistics.forEach((stat) => {
-      it(`displays ${stat.split('.').pop()} statistic`, () => {
-        renderWithRouter(<GiveDashboard />);
-        expect(screen.getByText(stat)).toBeInTheDocument();
-      });
+    it('displays totalDonated statistic', () => {
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('dashboard.stats.totalDonated')).toBeInTheDocument();
+    });
+
+    it('displays totalCharities statistic', () => {
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('dashboard.stats.totalCharities')).toBeInTheDocument();
+    });
+
+    it('displays avgDonation statistic', () => {
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('dashboard.stats.avgDonation')).toBeInTheDocument();
+    });
+
+    it('displays lastDonation statistic', () => {
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('dashboard.stats.lastDonation')).toBeInTheDocument();
     });
   });
 
@@ -221,9 +236,11 @@ describe('GiveDashboard', () => {
     it('displays transaction data in table format', () => {
       renderWithRouter(<GiveDashboard />);
       
-      testCases.tableHeaders.forEach(header => {
-        expect(screen.getByText(header)).toBeInTheDocument();
-      });
+      expect(screen.getByText('dashboard.table.charity')).toBeInTheDocument();
+      expect(screen.getByText('dashboard.table.amount')).toBeInTheDocument();
+      expect(screen.getByText('dashboard.table.date')).toBeInTheDocument();
+      expect(screen.getByText('dashboard.table.type')).toBeInTheDocument();
+      expect(screen.getByText('dashboard.table.status')).toBeInTheDocument();
     });
 
     it('handles empty transaction state', () => {
@@ -233,38 +250,42 @@ describe('GiveDashboard', () => {
   });
 
   describe('Error Handling', () => {
-    const errorTests = [
-      { name: 'auth context errors', mock: mockUseAuth },
-      { name: 'web3 context errors', mock: mockUseWeb3 }
-    ];
-
-    errorTests.forEach(({ name, mock }) => {
-      it(`handles ${name} gracefully`, () => {
-        mock.mockImplementation(() => {
-          throw new Error(`${name} error`);
-        });
-
-        expect(() => renderWithRouter(<GiveDashboard />)).not.toThrow();
+    it('handles auth context errors gracefully', () => {
+      mockUseAuth.mockImplementation(() => {
+        throw new Error('auth context errors error');
       });
+
+      expect(() => renderWithRouter(<GiveDashboard />)).not.toThrow();
+    });
+
+    it('handles web3 context errors gracefully', () => {
+      mockUseWeb3.mockImplementation(() => {
+        throw new Error('web3 context errors error');
+      });
+
+      expect(() => renderWithRouter(<GiveDashboard />)).not.toThrow();
     });
   });
 
   describe('User Type Specific Features', () => {
-    const userTypes = [
-      { type: 'donor', feature: 'dashboard.scheduledDonations' },
-      { type: 'charity', feature: 'dashboard.title' }
-    ];
+    it('shows donor-specific features for donor users', () => {
+      mockUseAuth.mockReturnValue(createMockAuth({
+        user: mockUser,
+        userType: 'donor',
+      }));
 
-    userTypes.forEach(({ type, feature }) => {
-      it(`shows ${type}-specific features for ${type} users`, () => {
-        mockUseAuth.mockReturnValue(createMockAuth({
-          user: mockUser,
-          userType: type,
-        }));
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('dashboard.scheduledDonations')).toBeInTheDocument();
+    });
 
-        renderWithRouter(<GiveDashboard />);
-        expect(screen.getByText(feature)).toBeInTheDocument();
-      });
+    it('shows charity-specific features for charity users', () => {
+      mockUseAuth.mockReturnValue(createMockAuth({
+        user: mockUser,
+        userType: 'charity',
+      }));
+
+      renderWithRouter(<GiveDashboard />);
+      expect(screen.getByText('dashboard.title')).toBeInTheDocument();
     });
   });
 

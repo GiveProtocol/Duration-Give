@@ -28,6 +28,25 @@ describe('supabaseMocks', () => {
       });
     });
 
+    it('creates query response with single item data', () => {
+      const singleItem = { id: 1, name: 'Test' };
+      const result = createMockSupabaseQuery(singleItem);
+      
+      expect(result).toEqual({
+        data: singleItem,
+        error: null
+      });
+    });
+
+    it('creates query response with null data', () => {
+      const result = createMockSupabaseQuery(null);
+      
+      expect(result).toEqual({
+        data: null,
+        error: null
+      });
+    });
+
     it('creates query response with error', () => {
       const error = { message: 'Database error' };
       const result = createMockSupabaseQuery(null, error);

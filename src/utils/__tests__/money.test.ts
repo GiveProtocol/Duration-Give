@@ -8,11 +8,11 @@ describe('money utilities', () => {
         'CHF', 'GBP', 'INR', 'MXP', 'ILS', 'NGN', 'HKD', 'PKR'
       ];
       
-      expectedCurrencies.forEach(currency => {
+      for (const currency of expectedCurrencies) {
         expect(EXCHANGE_RATES).toHaveProperty(currency);
         expect(typeof EXCHANGE_RATES[currency]).toBe('number');
         expect(EXCHANGE_RATES[currency]).toBeGreaterThan(0);
-      });
+      }
     });
 
     it('has USD as base currency with rate 1.0', () => {
@@ -27,19 +27,19 @@ describe('money utilities', () => {
     });
 
     it('has positive values for all rates', () => {
-      Object.values(EXCHANGE_RATES).forEach(rate => {
+      for (const rate of Object.values(EXCHANGE_RATES)) {
         expect(rate).toBeGreaterThan(0);
-      });
+      }
     });
   });
 
   describe('CURRENCY_SYMBOLS', () => {
     it('contains symbols for all currencies in EXCHANGE_RATES', () => {
-      Object.keys(EXCHANGE_RATES).forEach(currency => {
+      for (const currency of Object.keys(EXCHANGE_RATES)) {
         expect(CURRENCY_SYMBOLS).toHaveProperty(currency);
         expect(typeof CURRENCY_SYMBOLS[currency]).toBe('string');
         expect(CURRENCY_SYMBOLS[currency].length).toBeGreaterThan(0);
-      });
+      }
     });
 
     it('contains expected symbols', () => {
@@ -52,10 +52,10 @@ describe('money utilities', () => {
     });
 
     it('has non-empty symbols for all currencies', () => {
-      Object.values(CURRENCY_SYMBOLS).forEach(symbol => {
+      for (const symbol of Object.values(CURRENCY_SYMBOLS)) {
         expect(symbol).toBeTruthy();
         expect(typeof symbol).toBe('string');
-      });
+      }
     });
   });
 
@@ -229,14 +229,14 @@ describe('money utilities', () => {
     it('handles complete workflow with edge cases', () => {
       const amounts = [0, 0.01, 100, 1000, 999999.99];
       
-      amounts.forEach(amount => {
+      for (const amount of amounts) {
         const growth = calculateEquityGrowth(amount);
         const formatted = formatCurrency(growth);
         
         expect(typeof growth).toBe('number');
         expect(typeof formatted).toBe('string');
         expect(formatted).toMatch(/\$/);
-      });
+      }
     });
   });
 });

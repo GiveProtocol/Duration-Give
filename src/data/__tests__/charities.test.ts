@@ -7,14 +7,18 @@ describe('SAMPLE_CHARITIES', () => {
   });
 
   it('contains charity objects with required properties', () => {
-    SAMPLE_CHARITIES.forEach((charity) => {
+    const testCharityProperties = (charity: typeof SAMPLE_CHARITIES[0]) => {
       expect(charity).toHaveProperty('id');
       expect(charity).toHaveProperty('name');
       expect(charity).toHaveProperty('category');
       expect(charity).toHaveProperty('description');
       expect(charity).toHaveProperty('image');
       expect(charity).toHaveProperty('country');
-    });
+    };
+
+    for (const charity of SAMPLE_CHARITIES) {
+      testCharityProperties(charity);
+    }
   });
 
   it('has unique charity IDs', () => {
@@ -24,30 +28,42 @@ describe('SAMPLE_CHARITIES', () => {
   });
 
   it('has valid charity data types', () => {
-    SAMPLE_CHARITIES.forEach((charity) => {
+    const testCharityDataTypes = (charity: typeof SAMPLE_CHARITIES[0]) => {
       expect(typeof charity.id).toBe('number');
       expect(typeof charity.name).toBe('string');
       expect(typeof charity.category).toBe('string');
       expect(typeof charity.description).toBe('string');
       expect(typeof charity.image).toBe('string');
       expect(typeof charity.country).toBe('string');
-    });
+    };
+
+    for (const charity of SAMPLE_CHARITIES) {
+      testCharityDataTypes(charity);
+    }
   });
 
   it('has non-empty string properties', () => {
-    SAMPLE_CHARITIES.forEach((charity) => {
+    const testNonEmptyProperties = (charity: typeof SAMPLE_CHARITIES[0]) => {
       expect(charity.name.length).toBeGreaterThan(0);
       expect(charity.category.length).toBeGreaterThan(0);
       expect(charity.description.length).toBeGreaterThan(0);
       expect(charity.image.length).toBeGreaterThan(0);
       expect(charity.country.length).toBeGreaterThan(0);
-    });
+    };
+
+    for (const charity of SAMPLE_CHARITIES) {
+      testNonEmptyProperties(charity);
+    }
   });
 
   it('has valid image URLs', () => {
-    SAMPLE_CHARITIES.forEach((charity) => {
+    const testImageURL = (charity: typeof SAMPLE_CHARITIES[0]) => {
       expect(charity.image).toMatch(/^https?:\/\/.+/);
-    });
+    };
+
+    for (const charity of SAMPLE_CHARITIES) {
+      testImageURL(charity);
+    }
   });
 
   it('includes diverse charity categories', () => {
@@ -73,9 +89,14 @@ describe('SAMPLE_CHARITIES', () => {
     if (SAMPLE_CHARITIES.length === 0) return;
     
     const firstCharityKeys = Object.keys(SAMPLE_CHARITIES[0]).sort((a, b) => a.localeCompare(b));
-    SAMPLE_CHARITIES.forEach((charity) => {
+    
+    const testCharityStructure = (charity: typeof SAMPLE_CHARITIES[0]) => {
       const charityKeys = Object.keys(charity).sort((a, b) => a.localeCompare(b));
       expect(charityKeys).toEqual(firstCharityKeys);
-    });
+    };
+
+    for (const charity of SAMPLE_CHARITIES) {
+      testCharityStructure(charity);
+    }
   });
 });

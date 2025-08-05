@@ -21,9 +21,9 @@ describe('Validation utilities', () => {
         'user123@test-domain.com',
       ];
 
-      validEmails.forEach(email => {
+      for (const email of validEmails) {
         expect(validateEmail(email)).toBe(true);
-      });
+      }
     });
 
     it('should reject invalid email addresses', () => {
@@ -35,9 +35,9 @@ describe('Validation utilities', () => {
         'test@.com'
       ];
 
-      invalidEmails.forEach(email => {
+      for (const email of invalidEmails) {
         expect(validateEmail(email)).toBe(false);
-      });
+      }
     });
   });
 
@@ -49,9 +49,9 @@ describe('Validation utilities', () => {
         'Complex#Pass99',
       ];
 
-      validPasswords.forEach(password => {
+      for (const password of validPasswords) {
         expect(validatePassword(password)).toBe(true);
-      });
+      }
     });
 
     it('should reject weak passwords', () => {
@@ -61,9 +61,9 @@ describe('Validation utilities', () => {
         '',        // Empty string
       ];
 
-      invalidPasswords.forEach(password => {
+      for (const password of invalidPasswords) {
         expect(validatePassword(password)).toBe(false);
-      });
+      }
     });
   });
 
@@ -77,9 +77,9 @@ describe('Validation utilities', () => {
         1000000,
       ];
 
-      validAmounts.forEach(amount => {
+      for (const amount of validAmounts) {
         expect(validateAmount(amount)).toBe(true);
-      });
+      }
     });
 
     it('should reject invalid amounts', () => {
@@ -92,9 +92,9 @@ describe('Validation utilities', () => {
         1000001, // Over limit
       ];
 
-      invalidAmounts.forEach(amount => {
+      for (const amount of invalidAmounts) {
         expect(validateAmount(amount)).toBe(false);
-      });
+      }
     });
   });
 
