@@ -576,13 +576,16 @@ describe("volunteer utils", () => {
 
     it("handles profile database errors", async () => {
       // Mock supabase to return error on profiles query
-      jest.mocked(supabase.from).mockImplementation(
-        (table): MockSupabaseTable => {
+      jest
+        .mocked(supabase.from)
+        .mockImplementation((table): MockSupabaseTable => {
           if (table === "profiles") {
             return {
               select: jest.fn(() => ({
                 eq: jest.fn(() => ({
-                  single: jest.fn(() => ({ error: new Error("Profile error") })),
+                  single: jest.fn(() => ({
+                    error: new Error("Profile error"),
+                  })),
                 })),
               })),
               update: jest.fn(),
@@ -594,8 +597,7 @@ describe("volunteer utils", () => {
             update: jest.fn(),
             insert: jest.fn(),
           };
-        },
-      );
+        });
 
       const result = await recordHoursOnChain("user-123", "0xhash123", 8);
 
@@ -717,7 +719,8 @@ describe("volunteer utils", () => {
       };
 
       // Mock recordHoursOnChain to throw error
-      const originalRecordHoursOnChain = jest.requireActual("../volunteer").recordHoursOnChain;
+      const originalRecordHoursOnChain =
+        jest.requireActual("../volunteer").recordHoursOnChain;
       jest.doMock("../volunteer", () => ({
         ...jest.requireActual("../volunteer"),
         recordHoursOnChain: jest.fn(() => {
@@ -751,7 +754,8 @@ describe("volunteer utils", () => {
       };
 
       // Mock recordApplicationOnChain to throw error
-      const originalRecordApplicationOnChain = jest.requireActual("../volunteer").recordApplicationOnChain;
+      const originalRecordApplicationOnChain =
+        jest.requireActual("../volunteer").recordApplicationOnChain;
       jest.doMock("../volunteer", () => ({
         ...jest.requireActual("../volunteer"),
         recordApplicationOnChain: jest.fn(() => {

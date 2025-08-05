@@ -75,11 +75,11 @@ describe("getEnv utility", () => {
       const originalImport = (globalThis as any).import;
 
       // Set up scenario where import.meta access throws
-      Object.defineProperty(globalThis, 'import', {
+      Object.defineProperty(globalThis, "import", {
         get() {
-          throw new Error('import.meta not available');
+          throw new Error("import.meta not available");
         },
-        configurable: true
+        configurable: true,
       });
 
       const result = getEnv();
@@ -164,7 +164,7 @@ describe("getEnv utility", () => {
       // Mock development environment
       const originalNodeEnv = process.env.NODE_ENV;
       const originalMonitoring = process.env.VITE_MONITORING_ENDPOINT;
-      
+
       process.env.NODE_ENV = "development";
       process.env.VITE_MONITORING_ENDPOINT = "http://dev-monitoring";
 
