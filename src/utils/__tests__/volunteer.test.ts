@@ -12,7 +12,7 @@ import type {
   VolunteerHours,
   VolunteerVerification,
 } from "@/types/volunteer";
-import * as supabaseModule from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 
 // TypeScript interfaces for Supabase mock objects
 interface MockSupabaseResult<T = unknown> {
@@ -21,24 +21,24 @@ interface MockSupabaseResult<T = unknown> {
 }
 
 interface MockSupabaseQuery {
-  eq: jest.MockedFunction<(_column: string, _value: unknown) => MockSupabaseChain>;
-  or: jest.MockedFunction<(_query: string) => MockSupabaseChain>;
+  eq: jest.MockedFunction<(..._args: unknown[]) => MockSupabaseChain>;
+  or: jest.MockedFunction<(..._args: unknown[]) => MockSupabaseChain>;
 }
 
 interface MockSupabaseChain {
-  eq: jest.MockedFunction<(_column: string, _value: unknown) => MockSupabaseChain>;
+  eq: jest.MockedFunction<(..._args: unknown[]) => MockSupabaseChain>;
   maybeSingle: jest.MockedFunction<() => MockSupabaseResult>;
   single: jest.MockedFunction<() => MockSupabaseResult>;
 }
 
 interface MockSupabaseUpdate {
-  eq: jest.MockedFunction<(_column: string, _value: unknown) => MockSupabaseResult>;
+  eq: jest.MockedFunction<(..._args: unknown[]) => MockSupabaseResult>;
 }
 
 interface MockSupabaseTable {
-  select: jest.MockedFunction<(_columns?: string) => MockSupabaseQuery>;
-  update: jest.MockedFunction<(_data: Record<string, unknown>) => MockSupabaseUpdate>;
-  insert: jest.MockedFunction<(_data: Record<string, unknown>) => MockSupabaseResult>;
+  select: jest.MockedFunction<(..._args: unknown[]) => MockSupabaseQuery>;
+  update: jest.MockedFunction<(..._args: unknown[]) => MockSupabaseUpdate>;
+  insert: jest.MockedFunction<(..._args: unknown[]) => MockSupabaseResult>;
 }
 
 // Mock dependencies
@@ -86,7 +86,7 @@ describe("volunteer utils", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     // Reset the mock to its default state with comprehensive table handling
-    jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
+    jest.mocked(supabase.from).mockImplementation((table): MockSupabaseTable => {
       if (table === "volunteer_hours") {
         return {
           update: jest.fn(() => ({
@@ -253,7 +253,7 @@ describe("volunteer utils", () => {
 
     it("handles database errors gracefully", async () => {
       // Mock supabase to return error
-      jest.mocked(supabaseModule.supabase.from).mockImplementation(() => ({
+      jest.mocked(supabase.from).mockImplementation(() => ({
         update: jest.fn(() => ({
           eq: jest.fn(() => ({ error: new Error("Database error") })),
         })),
@@ -287,7 +287,7 @@ describe("volunteer utils", () => {
 
     it("handles existing verification record update", async () => {
       // Mock supabase to return existing verification data
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
+      jest.mocked(supabase.from).mockImplementation((table): MockSupabaseTable => {
         if (table === "volunteer_hours") {
           return {
             update: jest.fn(() => ({
@@ -331,7 +331,7 @@ describe("volunteer utils", () => {
 
     it("handles missing verification record creation", async () => {
       // Mock supabase to return no existing verification data
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
+      jest.mocked(supabase.from).mockImplementation((table): MockSupabaseTable => {
         if (table === "volunteer_hours") {
           return {
             update: jest.fn(() => ({
@@ -373,7 +373,7 @@ describe("volunteer utils", () => {
 
     it("handles database errors during hours update", async () => {
       // Mock supabase to return error on hours update
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((): MockSupabaseTable => ({
+      jest.mocked(supabase.from).mockImplementation((): MockSupabaseTable => ({
         update: jest.fn(() => ({
           eq: jest.fn(() => ({ error: new Error("Database error") })),
         })),
@@ -388,7 +388,7 @@ describe("volunteer utils", () => {
 
     it("handles database errors during verification update", async () => {
       // Mock supabase to succeed on hours update but fail on verification update
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
+      jest.mocked(supabase.from).mockImplementation((table): MockSupabaseTable => {
         if (table === "volunteer_hours") {
           return {
             update: jest.fn(() => ({
@@ -427,7 +427,7 @@ describe("volunteer utils", () => {
 
     it("handles database errors during verification insert", async () => {
       // Mock supabase to succeed on hours update but fail on verification insert
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((table): MockSupabaseTable => {
+      jest.mocked(supabase.from).mockImplementation((table): MockSupabaseTable => {
         if (table === "volunteer_hours") {
           return {
             update: jest.fn(() => ({
@@ -475,7 +475,7 @@ describe("volunteer utils", () => {
 
     it("handles errors gracefully and returns simulated data", async () => {
       // Mock supabase to throw error
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((): MockSupabaseTable => ({
+      jest.mocked(supabase.from).mockImplementation((): MockSupabaseTable => ({
         select: jest.fn(() => ({
           eq: jest.fn(() => ({
             single: jest.fn(() => ({ error: new Error("Database error") })),
@@ -580,7 +580,7 @@ describe("volunteer utils", () => {
 
     it("returns false when hash is not found", async () => {
       // Mock supabase to return no data
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((): MockSupabaseTable => ({
+      jest.mocked(supabase.from).mockImplementation((): MockSupabaseTable => ({
         select: jest.fn(() => ({
           or: jest.fn(() => ({
             maybeSingle: jest.fn(() => ({ data: null, error: null })),
@@ -597,7 +597,7 @@ describe("volunteer utils", () => {
 
     it("returns false when database error occurs", async () => {
       // Mock supabase to return error
-      jest.mocked(supabaseModule.supabase.from).mockImplementation((): MockSupabaseTable => ({
+      jest.mocked(supabase.from).mockImplementation((): MockSupabaseTable => ({
         select: jest.fn(() => ({
           or: jest.fn(() => ({
             maybeSingle: jest.fn(() => ({
