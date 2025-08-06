@@ -51,10 +51,15 @@ describe("CharityLogin", () => {
     const emailInput = inputs.find(input => input.getAttribute('type') === 'email');
     const passwordInput = inputs.find(input => input.getAttribute('type') === 'password');
 
-    fireEvent.change(emailInput!, {
+    // Ensure inputs are found before using them
+    if (!emailInput || !passwordInput) {
+      throw new Error('Email or password input not found in the form');
+    }
+
+    fireEvent.change(emailInput, {
       target: { value: "test@charity.com" },
     });
-    fireEvent.change(passwordInput!, {
+    fireEvent.change(passwordInput, {
       target: { value: "password123" },
     });
     fireEvent.click(screen.getByRole("button", { name: /sign in/i }));
