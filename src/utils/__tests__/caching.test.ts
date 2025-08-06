@@ -57,8 +57,11 @@ describe('CacheManager', () => {
 
     it('overwrites existing keys', () => {
       cache.set('overwrite-key', 'value1');
+      // Verify initial value is set
+      expect(cache.get('overwrite-key')).toBe('value1');
+      
+      // Intentionally overwrite with new value
       cache.set('overwrite-key', 'value2');
-
       expect(cache.get('overwrite-key')).toBe('value2');
     });
   });
@@ -123,8 +126,11 @@ describe('CacheManager', () => {
 
     it('overwrites existing entries', () => {
       cache.set('capacity-overwrite-key', 'initial-value');
-      cache.set('capacity-overwrite-key', 'updated-value'); // Overwrite
-
+      // Verify initial value is set
+      expect(cache.get('capacity-overwrite-key')).toBe('initial-value');
+      
+      // Intentionally overwrite with updated value
+      cache.set('capacity-overwrite-key', 'updated-value');
       expect(cache.get('capacity-overwrite-key')).toBe('updated-value');
     });
 
