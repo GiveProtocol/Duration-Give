@@ -823,5 +823,131 @@ describe("volunteer utils", () => {
 
       expect(result).toBe(false);
     });
+
+    it("handles empty hash string", async () => {
+      const result = await verifyVolunteerHash("");
+
+      expect(result).toBe(true); // Should still check the database
+    });
+
+    it("handles special characters in hash", async () => {
+      const result = await verifyVolunteerHash("0x!@#$%^&*()");
+
+      expect(result).toBe(true); // Should still check the database
+    });
+  });
+
+  describe("edge cases and error handling", () => {
+    it("handles null opportunityId in createVerificationHash", async () => {
+      const mockHours: VolunteerHours = {
+        id: "hours-123",
+        volunteerId: "user-123",
+        charityId: "charity-123",
+        opportunityId: null,
+        hours: 8,
+        datePerformed: "2024-01-01",
+        status: "verified",
+        description: "Test volunteer work",
+      };
+
+      const hash = await createVerificationHash(mockHours);
+
+      expect(hash).toBeDefined();
+      expect(typeof hash).toBe("string");
+    });
+
+    it("handles missing wallet data in recordApplicationOnChain", async () => {
+      // Mock supabase to return null wallet data
+      jest
+        .mocked(supabase.from)
+        .mockImplementation((table): MockSupabaseTable => {
+          if (table === "profiles") {
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => ({
+                  single: jest.fn(() => ({
+                    data: { user_id: "user-123" },
+                    error: null,
+                  })),
+                })),
+              })),
+              update: jest.fn(),
+              insert: jest.fn(),
+            };
+          } else if (table === "wallet_aliases") {
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => ({
+                  maybeSingle: jest.fn(() => ({
+                    data: null,
+                    error: null,
+                  })),
+                })),
+              })),
+              update: jest.fn(),
+              insert: jest.fn(),
+            };
+          }
+          return {
+            select: jest.fn(),
+            update: jest.fn(),
+            insert: jest.fn(),
+          };
+        });
+
+      const result = await recordApplicationOnChain("user-123", "0xhash123");
+
+      expect(result).toEqual({
+        transactionId: "tx-123456",
+        blockNumber: 500000,
+      });
+    });
+
+    it("handles missing wallet data in recordHoursOnChain", async () => {
+      // Mock supabase to return null wallet data
+      jest
+        .mocked(supabase.from)
+        .mockImplementation((table): MockSupabaseTable => {
+          if (table === "profiles") {
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => ({
+                  single: jest.fn(() => ({
+                    data: { user_id: "user-123" },
+                    error: null,
+                  })),
+                })),
+              })),
+              update: jest.fn(),
+              insert: jest.fn(),
+            };
+          } else if (table === "wallet_aliases") {
+            return {
+              select: jest.fn(() => ({
+                eq: jest.fn(() => ({
+                  maybeSingle: jest.fn(() => ({
+                    data: null,
+                    error: null,
+                  })),
+                })),
+              })),
+              update: jest.fn(),
+              insert: jest.fn(),
+            };
+          }
+          return {
+            select: jest.fn(),
+            update: jest.fn(),
+            insert: jest.fn(),
+          };
+        });
+
+      const result = await recordHoursOnChain("user-123", "0xhash123", 8);
+
+      expect(result).toEqual({
+        transactionId: "tx-123456",
+        blockNumber: 500000,
+      });
+    });
   });
 });

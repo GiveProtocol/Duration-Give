@@ -197,4 +197,115 @@ describe("CacheManager", () => {
       }
     });
   });
+
+  describe("resetInstanceForTesting edge cases", () => {
+    it("only resets in test or development environment", () => {
+      const originalEnv = process.env.NODE_ENV;
+      
+      // Test in production environment
+      process.env.NODE_ENV = 'production';
+      const instanceBefore = CacheManager.getInstance();
+      CacheManager.resetInstanceForTesting();
+      const instanceAfter = CacheManager.getInstance();
+      
+      expect(instanceBefore).toBe(instanceAfter); // Should not reset in production
+      
+      // Restore original environment
+      process.env.NODE_ENV = originalEnv;
+    });
+
+    it("resets in development environment", () => {
+      const originalEnv = process.env.NODE_ENV;
+      
+      // Test in development environment
+      process.env.NODE_ENV = 'development';
+      CacheManager.resetInstanceForTesting();
+      const instance1 = CacheManager.getInstance();
+      CacheManager.resetInstanceForTesting();
+      const instance2 = CacheManager.getInstance();
+      
+      expect(instance1).not.toBe(instance2);
+      
+      // Restore original environment
+      process.env.NODE_ENV = originalEnv;
+    });
+
+    it("resets in test environment", () => {
+      // We're already in test environment
+      CacheManager.resetInstanceForTesting();
+      const instance1 = CacheManager.getInstance();
+      CacheManager.resetInstanceForTesting();
+      const instance2 = CacheManager.getInstance();
+      
+      expect(instance1).not.toBe(instance2);
+    });
+  });
+
+  describe("config handling edge cases", () => {
+    it("merges partial config correctly", async () => {
+      CacheManager.resetInstanceForTesting();
+      const partialConfig = { maxSize: 25 }; // Only specifying maxSize
+      const cacheWithPartialConfig = CacheManager.getInstance(partialConfig);
+
+      expect(cacheWithPartialConfig).toBeInstanceOf(CacheManager);
+      
+      // Test that the partial config is applied by testing capacity
+      for (let i = 0; i < 30; i++) {
+        cacheWithPartialConfig.set(`key${i}`, `value${i}`);
+      }
+      
+      // Should only keep the last 25 entries due to maxSize: 25
+      expect(await cacheWithPartialConfig.get('key0')).toBeNull();
+      expect(await cacheWithPartialConfig.get('key29')).toBe('value29');
+    });
+
+    it("ignores config on subsequent getInstance calls", () => {
+      CacheManager.resetInstanceForTesting();
+      const instance1 = CacheManager.getInstance({ maxSize: 50 });
+      const instance2 = CacheManager.getInstance({ maxSize: 200 }); // This should be ignored
+      
+      expect(instance1).toBe(instance2);
+    });
+  });
+
+  describe("data type handling", () => {
+    it("handles various data types correctly", async () => {
+      cache.set('string', 'hello world');
+      cache.set('number', 42);
+      cache.set('boolean', true);
+      cache.set('null', null);
+      cache.set('undefined', undefined);
+      cache.set('object', { nested: { value: 'test' } });
+      cache.set('array', [1, 2, 3, { nested: 'array' }]);
+
+      expect(await cache.get('string')).toBe('hello world');
+      expect(await cache.get('number')).toBe(42);
+      expect(await cache.get('boolean')).toBe(true);
+      expect(await cache.get('null')).toBeNull();
+      expect(await cache.get('undefined')).toBeUndefined();
+      expect(await cache.get('object')).toEqual({ nested: { value: 'test' } });
+      expect(await cache.get('array')).toEqual([1, 2, 3, { nested: 'array' }]);
+    });
+
+    it("handles complex nested objects", async () => {
+      const complexObject = {
+        level1: {
+          level2: {
+            level3: {
+              arrays: [1, 2, [3, 4, [5, 6]]],
+              dates: new Date('2024-01-01'),
+              regex: /test/g,
+              map: new Map([['key', 'value']]),
+              set: new Set([1, 2, 3])
+            }
+          }
+        }
+      };
+
+      cache.set('complex', complexObject);
+      const result = await cache.get('complex');
+      
+      expect(result).toEqual(complexObject);
+    });
+  });
 });
