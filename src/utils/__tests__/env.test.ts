@@ -441,14 +441,14 @@ describe("getEnv utility", () => {
     it("handles undefined globalThis gracefully", () => {
       // Mock globalThis as undefined temporarily
       const originalGlobalThis = globalThis;
-      (global as any).globalThis = undefined;
+      (global as unknown as { globalThis: undefined }).globalThis = undefined;
 
       expect(() => getEnv()).not.toThrow();
       const result = getEnv();
       expect(result).toBeDefined();
 
       // Restore globalThis
-      (global as any).globalThis = originalGlobalThis;
+      (global as unknown as { globalThis: typeof globalThis }).globalThis = originalGlobalThis;
     });
 
     it("handles dynamic property access errors", () => {
@@ -484,7 +484,7 @@ describe("getEnv utility", () => {
         get meta() {
           throw new Error('Meta access error');
         }
-      } as any;
+      } as { meta: unknown };
 
       const result = getEnv();
       expect(result).toBeDefined();

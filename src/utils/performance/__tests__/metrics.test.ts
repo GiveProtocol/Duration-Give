@@ -24,7 +24,7 @@ describe('PerformanceMetrics', () => {
     jest.clearAllMocks();
     mockPerformanceNow.mockReturnValue(1000);
     // Reset singleton instance
-    (PerformanceMetrics as any).instance = undefined;
+    (PerformanceMetrics as unknown as { instance: undefined }).instance = undefined;
     metrics = PerformanceMetrics.getInstance();
   });
 
@@ -84,7 +84,7 @@ describe('PerformanceMetrics', () => {
       }
 
       // Verify metrics array doesn't exceed limit
-      const storedMetrics = (metrics as any).metrics;
+      const storedMetrics = (metrics as unknown as { metrics: unknown[] }).metrics;
       expect(storedMetrics.length).toBeLessThanOrEqual(1000);
     });
 
@@ -95,7 +95,7 @@ describe('PerformanceMetrics', () => {
         metrics.measureTime(`operation-${i}`, 1000);
       }
 
-      const storedMetrics = (metrics as any).metrics;
+      const storedMetrics = (metrics as unknown as { metrics: Array<{ name: string }> }).metrics;
       expect(storedMetrics.length).toBe(1000);
       // First metric should be operation-1, not operation-0
       expect(storedMetrics[0].name).toBe('operation-1');
@@ -111,7 +111,9 @@ describe('PerformanceMetrics', () => {
       mockPerformanceNow.mockReturnValue(1500);
       metrics.measureTime('test-metric', 1000);
 
-      const storedMetrics = (metrics as any).metrics;
+      const storedMetrics = (metrics as unknown as { 
+        metrics: Array<{ name: string; value: number; timestamp: number }> 
+      }).metrics;
       expect(storedMetrics).toHaveLength(1);
       expect(storedMetrics[0]).toEqual({
         name: 'test-metric',
@@ -130,7 +132,9 @@ describe('PerformanceMetrics', () => {
 
       metrics.measureTime('precise-operation', startTime);
 
-      const storedMetrics = (metrics as any).metrics;
+      const storedMetrics = (metrics as unknown as { 
+        metrics: Array<{ value: number }> 
+      }).metrics;
       expect(storedMetrics[0].value).toBeCloseTo(0.432, 3);
     });
   });
