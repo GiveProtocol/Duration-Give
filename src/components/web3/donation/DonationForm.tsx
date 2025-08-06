@@ -44,9 +44,12 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
   const { isConnected, connect } = useWeb3();
   const [error, setError] = useState("");
 
-  const handleDonationTypeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setDonationType(e.target.value as DonationType);
-  }, []);
+  const handleDonationTypeChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setDonationType(e.target.value as DonationType);
+    },
+    [],
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,14 +107,14 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
           Donation Type
         </legend>
         <div className="flex space-x-4">
-          <RadioOption 
+          <RadioOption
             value={DonationType.NATIVE}
             checked={donationType === DonationType.NATIVE}
             onChange={handleDonationTypeChange}
           >
             GLMR
           </RadioOption>
-          <RadioOption 
+          <RadioOption
             value={DonationType.TOKEN}
             checked={donationType === DonationType.TOKEN}
             onChange={handleDonationTypeChange}
