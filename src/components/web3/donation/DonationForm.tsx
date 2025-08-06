@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useWeb3 } from '@/contexts/Web3Context';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { validateAmount } from '@/utils/validation';
-import { useDonation, DonationType } from '@/hooks/web3/useDonation';
-import { Logger } from '@/utils/logger';
+import React, { useState } from "react";
+import { useWeb3 } from "@/contexts/Web3Context";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { validateAmount } from "@/utils/validation";
+import { useDonation, DonationType } from "@/hooks/web3/useDonation";
+import { Logger } from "@/utils/logger";
 
 interface DonationFormProps {
   charityAddress: string;
@@ -12,19 +12,21 @@ interface DonationFormProps {
 }
 
 export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
-  const [amount, setAmount] = useState('');
-  const [donationType, setDonationType] = useState<DonationType>(DonationType.NATIVE);
-  const [tokenAddress, setTokenAddress] = useState('');
+  const [amount, setAmount] = useState("");
+  const [donationType, setDonationType] = useState<DonationType>(
+    DonationType.NATIVE,
+  );
+  const [tokenAddress, setTokenAddress] = useState("");
   const { donate, loading, error: donationError } = useDonation();
   const { isConnected, connect } = useWeb3();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!validateAmount(parseFloat(amount))) {
-      setError('Please enter a valid amount between 0 and 1,000,000');
+      setError("Please enter a valid amount between 0 and 1,000,000");
       return;
     }
 
@@ -33,20 +35,23 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
         charityAddress,
         amount,
         type: donationType,
-        tokenAddress: donationType === DonationType.TOKEN ? tokenAddress : undefined
+        tokenAddress:
+          donationType === DonationType.TOKEN ? tokenAddress : undefined,
       });
 
-      setAmount('');
+      setAmount("");
       onSuccess?.();
 
-      Logger.info('Donation submitted', {
+      Logger.info("Donation submitted", {
         charity: charityAddress,
         amount,
         type: donationType,
-        token: tokenAddress || 'GLMR'
+        token: tokenAddress || "GLMR",
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to process donation');
+      setError(
+        err instanceof Error ? err.message : "Failed to process donation",
+      );
     }
   };
 
@@ -77,7 +82,9 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
                 name="donationType"
                 value={DonationType.NATIVE}
                 checked={donationType === DonationType.NATIVE}
-                onChange={(e) => setDonationType(e.target.value as DonationType)}
+                onChange={(e) =>
+                  setDonationType(e.target.value as DonationType)
+                }
               />
               <span className="ml-2">GLMR</span>
             </label>
@@ -88,7 +95,9 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
                 name="donationType"
                 value={DonationType.TOKEN}
                 checked={donationType === DonationType.TOKEN}
-                onChange={(e) => setDonationType(e.target.value as DonationType)}
+                onChange={(e) =>
+                  setDonationType(e.target.value as DonationType)
+                }
               />
               <span className="ml-2">ERC20 Token</span>
             </label>
@@ -109,7 +118,7 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
       )}
 
       <Input
-        label={`Amount (${donationType === DonationType.NATIVE ? 'GLMR' : 'Tokens'})`}
+        label={`Amount (${donationType === DonationType.NATIVE ? "GLMR" : "Tokens"})`}
         type="number"
         min="0"
         step="0.000000000000000001"
@@ -120,10 +129,14 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
 
       <Button
         type="submit"
-        disabled={loading || !amount || (donationType === DonationType.TOKEN && !tokenAddress)}
+        disabled={
+          loading ||
+          !amount ||
+          (donationType === DonationType.TOKEN && !tokenAddress)
+        }
         className="w-full"
       >
-        {loading ? 'Processing...' : 'Donate'}
+        {loading ? "Processing..." : "Donate"}
       </Button>
     </form>
   );
