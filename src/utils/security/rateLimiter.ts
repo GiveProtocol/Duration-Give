@@ -1,4 +1,4 @@
-import { Logger } from '../logger';
+import { Logger } from "../logger";
 
 interface RateLimitConfig {
   windowMs: number;
@@ -15,17 +15,17 @@ interface RateLimitRecord {
 export class RateLimiter {
   private static instance: RateLimiter;
   private store: Map<string, RateLimitRecord> = new Map();
-  
+
   private readonly authConfig: RateLimitConfig = {
     windowMs: 15 * 60 * 1000, // 15 minutes
     maxAttempts: 5,
-    blockDuration: 30 * 60 * 1000 // 30 minutes
+    blockDuration: 30 * 60 * 1000, // 30 minutes
   };
 
   private readonly publicConfig: RateLimitConfig = {
     windowMs: 5 * 60 * 1000, // 5 minutes
     maxAttempts: 3,
-    blockDuration: 60 * 60 * 1000 // 60 minutes - more restrictive for public
+    blockDuration: 60 * 60 * 1000, // 60 minutes - more restrictive for public
   };
 
   private constructor() {
@@ -48,7 +48,7 @@ export class RateLimiter {
     if (!record) {
       this.store.set(key, {
         attempts: 0,
-        resetAt: now + config.windowMs
+        resetAt: now + config.windowMs,
       });
       return false;
     }
@@ -77,10 +77,10 @@ export class RateLimiter {
     // Block if max attempts exceeded
     if (record.attempts >= this.authConfig.maxAttempts) {
       record.blockedUntil = Date.now() + this.authConfig.blockDuration;
-      Logger.warn('Rate limit exceeded', {
+      Logger.warn("Rate limit exceeded", {
         key,
         attempts: record.attempts,
-        blockedUntil: new Date(record.blockedUntil)
+        blockedUntil: new Date(record.blockedUntil),
       });
     }
   }
@@ -92,7 +92,10 @@ export class RateLimiter {
   private cleanup(): void {
     const now = Date.now();
     for (const [key, record] of this.store.entries()) {
-      if (record.resetAt < now && (!record.blockedUntil || record.blockedUntil < now)) {
+      if (
+        record.resetAt < now &&
+        (!record.blockedUntil || record.blockedUntil < now)
+      ) {
         this.store.delete(key);
       }
     }
