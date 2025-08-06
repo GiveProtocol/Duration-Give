@@ -30,9 +30,9 @@ describe('CacheManager', () => {
   describe('cache operations', () => {
     it('stores and retrieves data', () => {
       const testData = { test: 'value' };
-      cache.set('key1', testData);
+      cache.set('store-retrieve-key', testData);
 
-      const result = cache.get('key1');
+      const result = cache.get('store-retrieve-key');
       expect(result).toEqual(testData);
     });
 
@@ -56,10 +56,10 @@ describe('CacheManager', () => {
     });
 
     it('overwrites existing keys', () => {
-      cache.set('key1', 'value1');
-      cache.set('key1', 'value2');
+      cache.set('overwrite-key', 'value1');
+      cache.set('overwrite-key', 'value2');
 
-      expect(cache.get('key1')).toBe('value2');
+      expect(cache.get('overwrite-key')).toBe('value2');
     });
   });
 
@@ -73,37 +73,37 @@ describe('CacheManager', () => {
     });
 
     it('returns fresh data within TTL', () => {
-      cache.set('key1', 'value1');
+      cache.set('ttl-key', 'fresh-value');
 
       // Advance time but stay within TTL (default 5 minutes)
       jest.advanceTimersByTime(4 * 60 * 1000);
 
-      const result = cache.get('key1');
-      expect(result).toBe('value1');
+      const result = cache.get('ttl-key');
+      expect(result).toBe('fresh-value');
     });
 
     it('returns null for expired data', () => {
-      cache.set('key1', 'value1');
+      cache.set('expired-key', 'expired-value');
 
       // Advance past TTL (default 5 minutes)
       jest.advanceTimersByTime(6 * 60 * 1000);
 
-      const result = cache.get('key1');
+      const result = cache.get('expired-key');
       expect(result).toBeNull();
     });
 
     it('handles multiple entries with different expiration times', () => {
-      cache.set('key1', 'value1');
+      cache.set('early-key', 'early-value');
       
       // Advance 2 minutes
       jest.advanceTimersByTime(2 * 60 * 1000);
-      cache.set('key2', 'value2');
+      cache.set('late-key', 'late-value');
       
-      // Advance another 4 minutes (key1 expired, key2 still valid)
+      // Advance another 4 minutes (early-key expired, late-key still valid)
       jest.advanceTimersByTime(4 * 60 * 1000);
       
-      expect(cache.get('key1')).toBeNull();
-      expect(cache.get('key2')).toBe('value2');
+      expect(cache.get('early-key')).toBeNull();
+      expect(cache.get('late-key')).toBe('late-value');
     });
   });
 
@@ -122,10 +122,10 @@ describe('CacheManager', () => {
     });
 
     it('overwrites existing entries', () => {
-      cache.set('key1', 'value1');
-      cache.set('key1', 'value2'); // Overwrite
+      cache.set('capacity-overwrite-key', 'initial-value');
+      cache.set('capacity-overwrite-key', 'updated-value'); // Overwrite
 
-      expect(cache.get('key1')).toBe('value2');
+      expect(cache.get('capacity-overwrite-key')).toBe('updated-value');
     });
 
     it('handles many entries', () => {
@@ -142,24 +142,24 @@ describe('CacheManager', () => {
 
   describe('clear functionality', () => {
     it('removes all entries', () => {
-      cache.set('key1', 'value1');
-      cache.set('key2', 'value2');
-      cache.set('key3', 'value3');
+      cache.set('clear-test-1', 'value1');
+      cache.set('clear-test-2', 'value2');
+      cache.set('clear-test-3', 'value3');
 
       cache.clear();
 
-      expect(cache.get('key1')).toBeNull();
-      expect(cache.get('key2')).toBeNull();
-      expect(cache.get('key3')).toBeNull();
+      expect(cache.get('clear-test-1')).toBeNull();
+      expect(cache.get('clear-test-2')).toBeNull();
+      expect(cache.get('clear-test-3')).toBeNull();
     });
 
     it('allows new entries after clear', () => {
-      cache.set('key1', 'value1');
+      cache.set('before-clear', 'old-value');
       cache.clear();
-      cache.set('key2', 'value2');
+      cache.set('after-clear', 'new-value');
 
-      expect(cache.get('key1')).toBeNull();
-      expect(cache.get('key2')).toBe('value2');
+      expect(cache.get('before-clear')).toBeNull();
+      expect(cache.get('after-clear')).toBe('new-value');
     });
   });
 
