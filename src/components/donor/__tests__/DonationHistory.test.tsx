@@ -1,4 +1,4 @@
-import _React from 'react';
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { DonationHistory } from '../DonationHistory';
 import type { Transaction } from '@/types/contribution';
@@ -7,7 +7,7 @@ import type { Transaction } from '@/types/contribution';
 jest.mock('@/components/contribution/DonationExportModal', () => ({
   DonationExportModal: ({ onClose }: { onClose: () => void }) => (
     <div data-testid="export-modal">
-      Export Modal
+      Export Modal{' '}
       <button onClick={onClose}>Close</button>
     </div>
   )
@@ -81,9 +81,10 @@ describe('DonationHistory Component', () => {
   it('displays transaction hash links when available', () => {
     render(<DonationHistory donations={mockDonations} />);
     
-    const hashLink = screen.getByText('0x123abc...');
-    expect(hashLink.closest('a')).toHaveAttribute('href', 'https://moonscan.io/tx/0x123abc...');
-    expect(hashLink.closest('a')).toHaveAttribute('target', '_blank');
+    // Find the link by its href attribute
+    const hashLink = screen.getByRole('link', { name: /0x123abc/i });
+    expect(hashLink).toHaveAttribute('href', 'https://moonscan.io/tx/0x123abc...');
+    expect(hashLink).toHaveAttribute('target', '_blank');
   });
 
   it('shows N/A for missing transaction hash', () => {
