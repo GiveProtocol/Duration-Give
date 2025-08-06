@@ -31,15 +31,20 @@ describe('Test Utilities', () => {
 
   describe('testHelpers', () => {
     it('expectBlockchainLink should validate link attributes', () => {
-      const mockElement = {
+      // Create a mock element with proper typing
+      interface MockElement {
+        toHaveAttribute: jest.Mock;
+      }
+      
+      const mockElement: MockElement = {
         toHaveAttribute: jest.fn(),
-      } as any;
+      };
       
       // Mock the expect function
       const originalExpect = global.expect;
       global.expect = jest.fn().mockReturnValue(mockElement);
       
-      expectBlockchainLink(mockElement, 'test-hash');
+      expectBlockchainLink(mockElement as unknown as HTMLElement, 'test-hash');
       
       global.expect = originalExpect;
       expect(global.expect).toHaveBeenCalledWith(mockElement);

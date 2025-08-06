@@ -1,5 +1,48 @@
+import type { Screen } from '@testing-library/react';
+import type { SupabaseClient } from '@supabase/supabase-js';
+
+// Type definitions for auth test helpers
+interface AuthError {
+  message: string;
+  status?: number;
+  code?: string;
+}
+
+interface AuthResponse {
+  data: {
+    user: {
+      id: string;
+      email: string;
+    } | null;
+    session: Record<string, unknown> | null;
+  };
+  error: AuthError | null;
+}
+
+interface MockSupabase extends Partial<SupabaseClient> {
+  auth: {
+    getSession: jest.Mock;
+    onAuthStateChange: jest.Mock;
+    signInWithPassword: jest.Mock;
+    signInWithOAuth: jest.Mock;
+    signOut: jest.Mock;
+    signUp: jest.Mock;
+    resetPasswordForEmail: jest.Mock;
+    refreshSession: jest.Mock;
+    [key: string]: jest.Mock;
+  };
+}
+
+interface _MockToast {
+  showToast: jest.Mock;
+}
+
+interface ScreenWithMock extends Screen {
+  __mockShowToast?: jest.Mock;
+}
+
 // Shared test helpers to reduce duplication in auth tests
-export const createMockAuthFlow = (mockType: 'success' | 'error', errorDetails?: any) => {
+export const createMockAuthFlow = (mockType: 'success' | 'error', errorDetails?: AuthError): AuthResponse => {
   if (mockType === 'success') {
     return {
       data: { user: { id: '123', email: 'test@example.com' }, session: {} },
@@ -12,7 +55,7 @@ export const createMockAuthFlow = (mockType: 'success' | 'error', errorDetails?:
   };
 };
 
-export const createMockWeb3Flow = (mockType: 'success' | 'error', errorDetails?: any) => {
+export const createMockWeb3Flow = (mockType: 'success' | 'error', errorDetails?: Error): string[] => {
   if (mockType === 'success') {
     return ['0x1234567890123456789012345678901234567890'];
   }
@@ -47,7 +90,7 @@ export const createAuthMocks = () => ({
 });
 
 // Standard auth test patterns
-export const setupAuthTest = (mockSupabase: any, mockUseToast: any) => {
+export const setupAuthTest = (mockSupabase: MockSupabase, mockUseToast: jest.Mock): { mockShowToast: jest.Mock } => {
   const mockShowToast = jest.fn();
   
   mockUseToast.mockReturnValue({
@@ -65,10 +108,10 @@ export const setupAuthTest = (mockSupabase: any, mockUseToast: any) => {
 
 // Common test flow handler
 export const testAuthFlow = async (
-  mockSupabase: any,
+  mockSupabase: MockSupabase,
   method: string,
-  mockResponse: any,
-  screen: any,
+  mockResponse: AuthResponse | Error,
+  screen: ScreenWithMock,
   buttonTestId: string,
   expectedToast: [string, string]
 ) => {
@@ -79,23 +122,27 @@ export const testAuthFlow = async (
   }
 
   const { act, waitFor } = await import('@testing-library/react');
-  const mockShowToast = (screen as any).__mockShowToast;
+  const mockShowToast = screen.__mockShowToast;
+  
+  if (!mockShowToast) {
+    throw new Error('mockShowToast not found on screen object');
+  }
   
   await act(async () => screen.getByTestId(buttonTestId).click());
   await waitFor(() => expect(mockShowToast).toHaveBeenCalledWith(...expectedToast));
 };
 
 export const commonExpectations = {
-  authSuccess: (screen: any) => {
+  authSuccess: (screen: Screen) => {
     expect(screen.getByTestId('user')).toHaveTextContent('test@example.com');
   },
-  authError: (screen: any, message: string) => {
+  authError: (screen: Screen, message: string) => {
     expect(screen.getByTestId('error')).toHaveTextContent(message);
   },
-  web3Connected: (screen: any) => {
+  web3Connected: (screen: Screen) => {
     expect(screen.getByTestId('connected')).toHaveTextContent('connected');
   },
-  web3Disconnected: (screen: any) => {
+  web3Disconnected: (screen: Screen) => {
     expect(screen.getByTestId('connected')).toHaveTextContent('disconnected');
   }
 };

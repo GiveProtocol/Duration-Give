@@ -14,11 +14,13 @@ describe('date utilities', () => {
     });
 
     it('returns empty string for null input', () => {
-      expect(formatDate(null as any)).toBe('');
+      // Testing null input by type assertion to unknown first
+      expect(formatDate(null as unknown as string)).toBe('');
     });
 
     it('returns empty string for undefined input', () => {
-      expect(formatDate(undefined as any)).toBe('');
+      // Testing undefined input by type assertion to unknown first
+      expect(formatDate(undefined as unknown as string)).toBe('');
     });
 
     it('formats valid date string without time', () => {
@@ -93,9 +95,10 @@ describe('date utilities', () => {
     it('handles error cases and returns original string', () => {
       // Mock date constructor to throw error
       const originalDate = global.Date;
+      // Mock Date constructor to throw error
       global.Date = jest.fn(() => {
         throw new Error('Date constructor error');
-      }) as any;
+      }) as unknown as DateConstructor;
 
       const result = formatDate('2024-01-01');
       expect(result).toBe('2024-01-01');
@@ -169,9 +172,10 @@ describe('date utilities', () => {
     it('handles error cases gracefully', () => {
       // Mock Date constructor to throw
       const originalDate = global.Date;
+      // Mock Date constructor to throw error
       global.Date = jest.fn(() => {
         throw new Error('Date error');
-      }) as any;
+      }) as unknown as DateConstructor;
 
       const result = formatDateForInput('2024-01-01');
       expect(result).toBe('');
