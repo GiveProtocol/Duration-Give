@@ -22,6 +22,12 @@ export class RateLimiter {
     blockDuration: 30 * 60 * 1000 // 30 minutes
   };
 
+  private readonly publicConfig: RateLimitConfig = {
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    maxAttempts: 3,
+    blockDuration: 60 * 60 * 1000 // 60 minutes - more restrictive for public
+  };
+
   private constructor() {
     // Clean up expired records periodically
     setInterval(() => this.cleanup(), 5 * 60 * 1000);
@@ -35,7 +41,7 @@ export class RateLimiter {
   }
 
   isRateLimited(key: string, isAuth = false): boolean {
-    const config = isAuth ? this.authConfig : this.authConfig;
+    const config = isAuth ? this.authConfig : this.publicConfig;
     const now = Date.now();
     const record = this.store.get(key);
 

@@ -231,9 +231,9 @@ export class SecurityManager {
     );
   }
 
-  public validateRequest(req: Request): boolean {
+  public async validateRequest(req: Request): Promise<boolean> {
     return (
-      this.csrf.validate(req.headers.get('X-CSRF-Token') || '') &&
+      (await this.csrf.validate(req.headers.get('X-CSRF-Token') || '')) &&
       !this.rateLimiter.isRateLimited(req.headers.get('X-Forwarded-For') || 'unknown') &&
       this.isUrlTrusted(req.url)
     );
