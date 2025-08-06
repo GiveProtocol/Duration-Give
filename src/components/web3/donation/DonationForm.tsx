@@ -1,10 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useWeb3 } from "@/contexts/Web3Context";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { validateAmount } from "@/utils/validation";
 import { useDonation, DonationType } from "@/hooks/web3/useDonation";
 import { Logger } from "@/utils/logger";
+
+interface RadioOptionProps {
+  value: DonationType;
+  checked: boolean;
+  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  children: React.ReactNode;
+}
+
+function RadioOption({ value, checked, onChange, children }: RadioOptionProps) {
+  return (
+    <label className="inline-flex items-center">
+      <input
+        type="radio"
+        className="form-radio text-indigo-600"
+        name="donationType"
+        value={value}
+        checked={checked}
+        onChange={onChange}
+      />
+      <span className="ml-2">{children}</span>
+    </label>
+  );
+}
 
 interface DonationFormProps {
   charityAddress: string;
@@ -20,6 +43,10 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
   const { donate, loading, error: donationError } = useDonation();
   const { isConnected, connect } = useWeb3();
   const [error, setError] = useState("");
+
+  const handleDonationTypeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setDonationType(e.target.value as DonationType);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,28 +104,20 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
           Donation Type
         </legend>
         <div className="flex space-x-4">
-          <label className="inline-flex items-center">
-            <input
-              type="radio"
-              className="form-radio text-indigo-600"
-              name="donationType"
-              value={DonationType.NATIVE}
-              checked={donationType === DonationType.NATIVE}
-              onChange={(e) => setDonationType(e.target.value as DonationType)}
-            />
-            <span className="ml-2">GLMR</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input
-              type="radio"
-              className="form-radio text-indigo-600"
-              name="donationType"
-              value={DonationType.TOKEN}
-              checked={donationType === DonationType.TOKEN}
-              onChange={(e) => setDonationType(e.target.value as DonationType)}
-            />
-            <span className="ml-2">ERC20 Token</span>
-          </label>
+          <RadioOption 
+            value={DonationType.NATIVE}
+            checked={donationType === DonationType.NATIVE}
+            onChange={handleDonationTypeChange}
+          >
+            GLMR
+          </RadioOption>
+          <RadioOption 
+            value={DonationType.TOKEN}
+            checked={donationType === DonationType.TOKEN}
+            onChange={handleDonationTypeChange}
+          >
+            ERC20 Token
+          </RadioOption>
         </div>
       </fieldset>
 

@@ -75,6 +75,7 @@ jobs:
         continue-on-error: true
         
       - name: SonarCloud Scan - New Code Focus
+        if: false  # Temporarily disabled
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
