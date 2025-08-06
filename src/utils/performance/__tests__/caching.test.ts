@@ -113,7 +113,7 @@ describe("CacheManager", () => {
   });
 
   describe("capacity management", () => {
-    it("evicts oldest entry when at capacity", () => {
+    it("evicts oldest entry when at capacity", async () => {
       // Create cache with small capacity for testing
       CacheManager.resetInstanceForTesting();
       cache = CacheManager.getInstance({ maxSize: 2 });
@@ -122,9 +122,9 @@ describe("CacheManager", () => {
       cache.set("key2", "value2");
       cache.set("key3", "value3"); // Should evict key1
 
-      await expect(cache.get("key1")).resolves.toBeNull();
-      await expect(cache.get("key2")).resolves.toBe("value2");
-      await expect(cache.get("key3")).resolves.toBe("value3");
+      expect(await cache.get("key1")).toBeNull();
+      expect(await cache.get("key2")).toBe("value2");
+      expect(await cache.get("key3")).toBe("value3");
     });
   });
 
@@ -146,6 +146,55 @@ describe("CacheManager", () => {
       // Both entries should be cleaned up
       expect(await cache.get("key1")).toBeNull();
       expect(await cache.get("key2")).toBeNull();
+    });
+
+    it("cleanup removes only fully expired entries", async () => {
+      // Reset cache with shorter TTL for easier testing
+      CacheManager.resetInstanceForTesting();
+      cache = CacheManager.getInstance({ 
+        maxSize: 10, 
+        ttl: 5 * 60 * 1000, // 5 minutes
+        staleWhileRevalidate: 5 * 60 * 1000 // 5 minutes
+      });
+      
+      // Set multiple entries at different times
+      cache.set("key1", "value1");
+      
+      // Advance time a bit
+      jest.advanceTimersByTime(5 * 60 * 1000);
+      cache.set("key2", "value2");
+      
+      // Advance time so key1 is past TTL+stale but key2 is only past TTL
+      jest.advanceTimersByTime(6 * 60 * 1000); // Total: 11 min for key1, 6 min for key2
+      
+      // Access cleanup method indirectly by waiting for the interval
+      jest.advanceTimersByTime(60 * 1000); // Trigger the setInterval cleanup
+
+      // key1 should be cleaned up, key2 should still be in stale period
+      expect(await cache.get("key1")).toBeNull();
+      expect(await cache.get("key2")).toBe("value2");
+    });
+
+    it("cleanup iterates through all cache entries", async () => {
+      // Reset and create a new instance to ensure clean state
+      CacheManager.resetInstanceForTesting();
+      cache = CacheManager.getInstance({ maxSize: 10, ttl: 1000, staleWhileRevalidate: 1000 });
+      
+      // Set multiple entries
+      for (let i = 0; i < 5; i++) {
+        cache.set(`key${i}`, `value${i}`);
+      }
+      
+      // Advance time past expiration for all entries
+      jest.advanceTimersByTime(3000); // Past TTL + staleWhileRevalidate
+      
+      // Trigger cleanup
+      jest.advanceTimersByTime(60 * 1000);
+      
+      // All entries should be removed
+      for (let i = 0; i < 5; i++) {
+        expect(await cache.get(`key${i}`)).toBeNull();
+      }
     });
   });
 });
