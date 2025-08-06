@@ -31,14 +31,14 @@ export const CharityProfile: React.FC = () => {
         />
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
+            <Editor
+              content={description}
+              onChange={setDescription}
+              placeholder="Describe your charity's mission and impact..."
+              className="min-h-[200px]"
+            />
             Description
           </label>
-          <Editor
-            content={description}
-            onChange={setDescription}
-            placeholder="Describe your charity's mission and impact..."
-            className="min-h-[200px]"
-          />
         </div>
         <Input
           label="Category"

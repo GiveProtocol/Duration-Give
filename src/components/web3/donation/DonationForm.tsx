@@ -69,32 +69,32 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="flex space-x-4">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                className="form-radio text-indigo-600"
+                name="donationType"
+                value={DonationType.NATIVE}
+                checked={donationType === DonationType.NATIVE}
+                onChange={(e) => setDonationType(e.target.value as DonationType)}
+              />
+              <span className="ml-2">GLMR</span>
+            </label>
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                className="form-radio text-indigo-600"
+                name="donationType"
+                value={DonationType.TOKEN}
+                checked={donationType === DonationType.TOKEN}
+                onChange={(e) => setDonationType(e.target.value as DonationType)}
+              />
+              <span className="ml-2">ERC20 Token</span>
+            </label>
+          </div>
           Donation Type
         </label>
-        <div className="flex space-x-4">
-          <label className="inline-flex items-center">
-            <input
-              type="radio"
-              className="form-radio text-indigo-600"
-              name="donationType"
-              value={DonationType.NATIVE}
-              checked={donationType === DonationType.NATIVE}
-              onChange={(e) => setDonationType(e.target.value as DonationType)}
-            />
-            <span className="ml-2">GLMR</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input
-              type="radio"
-              className="form-radio text-indigo-600"
-              name="donationType"
-              value={DonationType.TOKEN}
-              checked={donationType === DonationType.TOKEN}
-              onChange={(e) => setDonationType(e.target.value as DonationType)}
-            />
-            <span className="ml-2">ERC20 Token</span>
-          </label>
-        </div>
       </div>
 
       {donationType === DonationType.TOKEN && (

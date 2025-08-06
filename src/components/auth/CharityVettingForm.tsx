@@ -167,16 +167,16 @@ export const CharityVettingForm: React.FC = () => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={4}
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
+              required
+            />
             Description
           </label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows={4}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
-            required
-          />
           {validationErrors['description'] && (
             <p className="mt-1 text-sm text-red-600">{validationErrors['description']}</p>
           )}
@@ -234,22 +234,22 @@ export const CharityVettingForm: React.FC = () => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
+              <select
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
+                required
+              >
+                <option value="">Select Country</option>
+                {countries.map(country => (
+                  <option key={country.code} value={country.code}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
               Country
             </label>
-            <select
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
-              required
-            >
-              <option value="">Select Country</option>
-              {countries.map(country => (
-                <option key={country.code} value={country.code}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
             {validationErrors['country'] && (
               <p className="mt-1 text-sm text-red-600">{validationErrors['country']}</p>
             )}

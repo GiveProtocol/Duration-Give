@@ -41,15 +41,15 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       />
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
+          <textarea
+            value={formData.description}
+            onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+            rows={4}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
+            required
+          />
           Description
         </label>
-        <textarea
-          value={formData.description}
-          onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-          rows={4}
-          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
-          required
-        />
       </div>
       <Input
         label="Category"

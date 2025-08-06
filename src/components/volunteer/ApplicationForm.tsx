@@ -270,6 +270,37 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
               </h3>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday",
+                      "Saturday",
+                      "Sunday",
+                    ].map((day) => (
+                      <label key={day} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          checked={formData.availability.days.includes(day)}
+                          onChange={(e) => {
+                            const days = e.target.checked
+                              ? [...formData.availability.days, day]
+                              : formData.availability.days.filter(
+                                  (d) => d !== day,
+                                );
+                            handleInputChange("availability", {
+                              ...formData.availability,
+                              days,
+                            });
+                          }}
+                          className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        />
+                        <span className="text-sm text-gray-700">{day}</span>
+                      </label>
+                    ))}
+                  </div>
                   Preferred Days
                 </label>
                 {validationErrors["availability.days"] && (
@@ -277,40 +308,32 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                     {validationErrors["availability.days"]}
                   </p>
                 )}
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                    "Sunday",
-                  ].map((day) => (
-                    <label key={day} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={formData.availability.days.includes(day)}
-                        onChange={(e) => {
-                          const days = e.target.checked
-                            ? [...formData.availability.days, day]
-                            : formData.availability.days.filter(
-                                (d) => d !== day,
-                              );
-                          handleInputChange("availability", {
-                            ...formData.availability,
-                            days,
-                          });
-                        }}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <span className="text-sm text-gray-700">{day}</span>
-                    </label>
-                  ))}
-                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <div className="grid grid-cols-2 gap-2">
+                    {["Morning", "Afternoon", "Evening"].map((time) => (
+                      <label key={time} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          checked={formData.availability.times.includes(time)}
+                          onChange={(e) => {
+                            const times = e.target.checked
+                              ? [...formData.availability.times, time]
+                              : formData.availability.times.filter(
+                                  (t) => t !== time,
+                                );
+                            handleInputChange("availability", {
+                              ...formData.availability,
+                              times,
+                            });
+                          }}
+                          className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        />
+                        <span className="text-sm text-gray-700">{time}</span>
+                      </label>
+                    ))}
+                  </div>
                   Preferred Times
                 </label>
                 {validationErrors["availability.times"] && (
@@ -318,45 +341,22 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                     {validationErrors["availability.times"]}
                   </p>
                 )}
-                <div className="grid grid-cols-2 gap-2">
-                  {["Morning", "Afternoon", "Evening"].map((time) => (
-                    <label key={time} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={formData.availability.times.includes(time)}
-                        onChange={(e) => {
-                          const times = e.target.checked
-                            ? [...formData.availability.times, time]
-                            : formData.availability.times.filter(
-                                (t) => t !== time,
-                              );
-                          handleInputChange("availability", {
-                            ...formData.availability,
-                            times,
-                          });
-                        }}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <span className="text-sm text-gray-700">{time}</span>
-                    </label>
-                  ))}
-                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <select
+                    value={formData.commitmentType}
+                    onChange={(e) =>
+                      handleInputChange("commitmentType", e.target.value)
+                    }
+                    className={selectClasses}
+                  >
+                    <option value="one-time">One-time</option>
+                    <option value="short-term">Short-term</option>
+                    <option value="long-term">Long-term</option>
+                  </select>
                   Commitment Level
                 </label>
-                <select
-                  value={formData.commitmentType}
-                  onChange={(e) =>
-                    handleInputChange("commitmentType", e.target.value)
-                  }
-                  className={selectClasses}
-                >
-                  <option value="one-time">One-time</option>
-                  <option value="short-term">Short-term</option>
-                  <option value="long-term">Long-term</option>
-                </select>
               </div>
             </div>
 
@@ -367,6 +367,15 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
               </h3>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <textarea
+                    value={formData.experience}
+                    onChange={(e) =>
+                      handleInputChange("experience", e.target.value)
+                    }
+                    rows={4}
+                    className={textareaClasses}
+                    required
+                  />
                   Relevant Experience *
                 </label>
                 {validationErrors["experience"] && (
@@ -374,15 +383,6 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                     {validationErrors["experience"]}
                   </p>
                 )}
-                <textarea
-                  value={formData.experience}
-                  onChange={(e) =>
-                    handleInputChange("experience", e.target.value)
-                  }
-                  rows={4}
-                  className={textareaClasses}
-                  required
-                />
               </div>
               <Input
                 label="Skills (comma-separated)"
