@@ -152,3 +152,28 @@ export const testInvalidCases = (
     expect(validator(value)).toBe(false);
   });
 };
+
+// Legacy exports for backward compatibility
+export const validEmailCases = validationTestCases.email.valid;
+export const invalidEmailCases = validationTestCases.email.invalid.map(item => 
+  typeof item === 'object' ? item.value : item
+);
+export const validPasswordCases = validationTestCases.password.valid;
+export const invalidPasswordCases = validationTestCases.password.invalid.map(item => 
+  typeof item === 'object' ? item.value : item
+);
+export const validNameCases = [
+  'John Doe',
+  'Jane Smith',
+  'María González',
+  'Jean-Pierre Dubois',
+  '李小明',
+];
+export const invalidNameCases = [
+  '',
+  '   ',
+  'A',
+  'Very Very Very Very Very Long Name That Exceeds Character Limits',
+  'Name123',
+  'Name!@#',
+];

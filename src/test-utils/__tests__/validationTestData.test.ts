@@ -11,7 +11,7 @@ describe("validationTestData", () => {
   describe("validEmailCases", () => {
     it("contains valid email examples", () => {
       expect(validEmailCases).toContain("test@example.com");
-      expect(validEmailCases).toContain("user.name@domain.org");
+      expect(validEmailCases).toContain("user.name+tag@domain.co.uk");
       expect(validEmailCases.length).toBeGreaterThan(0);
 
       validEmailCases.forEach((email) => {
@@ -23,7 +23,7 @@ describe("validationTestData", () => {
 
   describe("invalidEmailCases", () => {
     it("contains invalid email examples", () => {
-      expect(invalidEmailCases).toContain("invalid-email");
+      expect(invalidEmailCases).toContain("invalid");
       expect(invalidEmailCases).toContain("test@");
       expect(invalidEmailCases.length).toBeGreaterThan(0);
 
@@ -46,8 +46,8 @@ describe("validationTestData", () => {
 
   describe("invalidPasswordCases", () => {
     it("contains invalid password examples", () => {
-      expect(invalidPasswordCases).toContain("123");
-      expect(invalidPasswordCases).toContain("weak");
+      expect(invalidPasswordCases).toContain("password");
+      expect(invalidPasswordCases).toContain("PASSWORD");
       expect(invalidPasswordCases.length).toBeGreaterThan(0);
     });
   });
@@ -55,7 +55,7 @@ describe("validationTestData", () => {
   describe("validNameCases", () => {
     it("contains valid name examples", () => {
       expect(validNameCases).toContain("John Doe");
-      expect(validNameCases).toContain("Test Organization");
+      expect(validNameCases).toContain("Jane Smith");
       expect(validNameCases.length).toBeGreaterThan(0);
     });
   });

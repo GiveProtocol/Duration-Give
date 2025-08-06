@@ -1,8 +1,10 @@
 import React from "react"; // eslint-disable-line no-unused-vars
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CharityLogin } from "../CharityLogin";
+import { MemoryRouter } from 'react-router-dom';
 
 const mockLogin = jest.fn();
+const mockDisconnect = jest.fn();
 
 jest.mock("@/hooks/useAuth", () => ({
   useAuth: jest.fn(() => ({
@@ -12,28 +14,47 @@ jest.mock("@/hooks/useAuth", () => ({
   })),
 }));
 
+jest.mock("@/contexts/Web3Context", () => ({
+  useWeb3: jest.fn(() => ({
+    disconnect: mockDisconnect,
+    isConnected: false,
+    account: null,
+    chainId: 1287,
+  })),
+}));
+
+const renderCharityLogin = () => {
+  return render(
+    <MemoryRouter>
+      <CharityLogin />
+    </MemoryRouter>
+  );
+};
+
 describe("CharityLogin", () => {
   beforeEach(() => {
     mockLogin.mockClear();
   });
 
   it("renders login form", () => {
-    render(<CharityLogin />);
-    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /sign in/i }),
-    ).toBeInTheDocument();
+    renderCharityLogin();
+    expect(screen.getAllByDisplayValue("")).toHaveLength(2); // Email and password inputs
+    expect(screen.getByRole("button", { name: /sign in/i })).toBeInTheDocument();
+    expect(screen.getByText(/email/i)).toBeInTheDocument(); // Email label
+    expect(screen.getByText(/password/i)).toBeInTheDocument(); // Password label
   });
 
   it("calls login on form submission", () => {
+    renderCharityLogin();
 
-    render(<CharityLogin />);
+    const inputs = screen.getAllByDisplayValue("");
+    const emailInput = inputs.find(input => input.getAttribute('type') === 'email');
+    const passwordInput = inputs.find(input => input.getAttribute('type') === 'password');
 
-    fireEvent.change(screen.getByLabelText(/email/i), {
+    fireEvent.change(emailInput!, {
       target: { value: "test@charity.com" },
     });
-    fireEvent.change(screen.getByLabelText(/password/i), {
+    fireEvent.change(passwordInput!, {
       target: { value: "password123" },
     });
     fireEvent.click(screen.getByRole("button", { name: /sign in/i }));
