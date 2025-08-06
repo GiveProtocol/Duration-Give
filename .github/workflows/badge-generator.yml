@@ -1,4 +1,6 @@
 name: Update Badges
+permissions:
+  contents: read
 
 on:
   workflow_run:
