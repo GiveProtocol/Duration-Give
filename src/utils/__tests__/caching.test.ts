@@ -109,10 +109,6 @@ describe('CacheManager', () => {
 
   describe('capacity management', () => {
     it('evicts oldest entry when at capacity', () => {
-      // This uses a singleton, so we need to create a separate test setup
-      // The capacity is set at instance creation time
-      const testData = { test: 'data' };
-      
       // Fill up to capacity and verify eviction behavior
       // Since we can't control the singleton's capacity here,
       // we'll test the behavior indirectly
