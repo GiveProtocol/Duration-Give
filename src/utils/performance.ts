@@ -53,7 +53,7 @@ export class PerformanceMonitor {
     const p95Index = Math.floor(samples.length * 0.95);
 
     return {
-      avg: samples.reduce((a, b) => a + b) / samples.length,
+      avg: samples.reduce((a, b) => a + b, 0) / samples.length,
       p95: sorted[p95Index],
       max: sorted[sorted.length - 1]
     };

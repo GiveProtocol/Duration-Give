@@ -31,7 +31,7 @@ export function withSecurity<T extends (..._args: unknown[]) => Promise<unknown>
 
       // CSRF validation
       const token = _args[0]?.headers?.[csrf.getHeaders()['X-CSRF-Token']];
-      if (!csrf.validate(token)) {
+      if (!(await csrf.validate(token))) {
         throw new Error('Invalid CSRF token');
       }
 
