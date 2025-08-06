@@ -267,12 +267,34 @@ Before writing ANY code, verify:
 6. **Git Push Failures**: Always check for remote changes with `git status` before pushing. Use `git pull --rebase` to handle conflicts, but stash unstaged changes first.
 7. **DeepSource Violations**: The most common violations are JS-0323 ('any' types), JS-0356 (unused variables), and JS-0339 (non-null assertions). Always prefix unused variables with `_` and create proper TypeScript interfaces.
 
+#### 🔧 CRITICAL: SonarCloud/DeepSource Issue Patterns (Session Learned)
+
+8. **Promise Misuse (S6544)**: Always `await` Promise-returning methods in boolean conditions. Check method signatures - if they return `Promise<boolean>`, use `if (await method())` not `if (method())`.
+9. **Array.reduce() Safety (S6959)**: Always provide initial value to `reduce()` calls: `array.reduce((a, b) => a + b, 0)` prevents TypeError on empty arrays.
+10. **Form Accessibility (S6853)**: For radio button groups, use `<fieldset><legend>` instead of nested labels. For single controls, wrap with label: `<label><input/>Label Text</label>`.
+11. **Intentional Overwrites (S4143)**: In tests that verify overwrite behavior, always verify the initial value first, then overwrite, to make intent clear to static analysis tools.
+12. **Method Documentation (JS-D1001)**: Always add JSDoc to exported functions and public methods. Include `@param` and `@returns` tags with types and descriptions.
+
 ## Quality Gate Requirements
 
 - **Coverage**: ≥80% on new code (last 15 days)
 - **Duplication**: ≤3% on new code
 - **Security Hotspots**: 0 (no hard-coded secrets)
 - **Reliability**: A rating (no ESLint errors)
+
+### 📋 Systematic Quality Issue Resolution (Session Learned)
+
+**When fixing SonarCloud/DeepSource issues:**
+
+1. **Group by Type**: Fix similar issues together (all Promise misuse, all accessibility issues, etc.)
+2. **Use TodoWrite Tool**: Track progress when handling multiple files/issues
+3. **Verify Method Signatures**: Before fixing Promise issues, check if methods are actually async
+4. **Test Semantics**: In tests that intentionally violate patterns (overwrites, duplicates), add verification steps to make intent clear
+5. **Accessibility Patterns**: 
+   - Radio groups: `<fieldset><legend>` 
+   - Single inputs: `<label><input/>Text</label>`
+   - Custom components: Treat as controls and wrap with labels
+6. **Commit Patterns**: Group related fixes in single commits with descriptive messages explaining the rule violation and fix
 
 ## Git Workflow
 
