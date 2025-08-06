@@ -211,6 +211,14 @@ Before writing ANY code, verify:
 3. **Mock Patterns**: Consolidate repetitive mock setups using helper functions
 4. **Async Testing**: Always await async test helper functions and add proper assertions
 
+#### ⚠️ CRITICAL: Test Writing Rules (From Session Experience)
+
+5. **ALWAYS mark test functions as `async` when using `await`** - Missing `async` causes "Unexpected strict mode reserved word" syntax errors
+6. **Singleton Pattern Testing**: Use `resetInstanceForTesting()` methods when testing singletons to ensure test isolation
+7. **Configuration Testing**: Test config merging with partial configs - don't assume full config objects
+8. **Capacity Management**: When testing cache/storage limits, use realistic numbers that work with default configurations
+9. **Mock TypeScript Interfaces**: Always create proper TypeScript interfaces for mocks instead of using `any` - prevents DeepSource violations
+
 ### Security Requirements
 
 - **NEVER use hard-coded passwords/secrets** in tests - use `expect.any(String)` or constants
@@ -251,6 +259,13 @@ Before writing ANY code, verify:
 1. **Jest + Supabase**: Mock Supabase client to avoid ES module issues in tests
 2. **Viem + Ethers**: Use appropriate library for each use case, don't mix in same file
 3. **TypeScript + ESLint**: Some global type references need simplification for ESLint compatibility
+
+#### ⚠️ CRITICAL: Session-Learned Issues to Avoid
+
+4. **React Import Consistency**: Never remove React import and then re-add underscore prefix (`_React`) - this creates a loop of ESLint errors. When JSX is used, keep `import React from 'react'` or use `import _React from 'react'` consistently throughout the session.
+5. **Test Coverage Context**: When SonarCloud reports low coverage, always check if files already have comprehensive tests before writing new ones. Run `npx jest --coverage` to verify actual coverage.
+6. **Git Push Failures**: Always check for remote changes with `git status` before pushing. Use `git pull --rebase` to handle conflicts, but stash unstaged changes first.
+7. **DeepSource Violations**: The most common violations are JS-0323 ('any' types), JS-0356 (unused variables), and JS-0339 (non-null assertions). Always prefix unused variables with `_` and create proper TypeScript interfaces.
 
 ## Quality Gate Requirements
 
