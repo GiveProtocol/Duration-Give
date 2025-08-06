@@ -151,22 +151,22 @@ describe("CacheManager", () => {
     it("cleanup removes only fully expired entries", async () => {
       // Reset cache with shorter TTL for easier testing
       CacheManager.resetInstanceForTesting();
-      cache = CacheManager.getInstance({ 
-        maxSize: 10, 
+      cache = CacheManager.getInstance({
+        maxSize: 10,
         ttl: 5 * 60 * 1000, // 5 minutes
-        staleWhileRevalidate: 5 * 60 * 1000 // 5 minutes
+        staleWhileRevalidate: 5 * 60 * 1000, // 5 minutes
       });
-      
+
       // Set multiple entries at different times
       cache.set("key1", "value1");
-      
+
       // Advance time a bit
       jest.advanceTimersByTime(5 * 60 * 1000);
       cache.set("key2", "value2");
-      
+
       // Advance time so key1 is past TTL+stale but key2 is only past TTL
       jest.advanceTimersByTime(6 * 60 * 1000); // Total: 11 min for key1, 6 min for key2
-      
+
       // Access cleanup method indirectly by waiting for the interval
       jest.advanceTimersByTime(60 * 1000); // Trigger the setInterval cleanup
 
@@ -178,19 +178,23 @@ describe("CacheManager", () => {
     it("cleanup iterates through all cache entries", async () => {
       // Reset and create a new instance to ensure clean state
       CacheManager.resetInstanceForTesting();
-      cache = CacheManager.getInstance({ maxSize: 10, ttl: 1000, staleWhileRevalidate: 1000 });
-      
+      cache = CacheManager.getInstance({
+        maxSize: 10,
+        ttl: 1000,
+        staleWhileRevalidate: 1000,
+      });
+
       // Set multiple entries
       for (let i = 0; i < 5; i++) {
         cache.set(`key${i}`, `value${i}`);
       }
-      
+
       // Advance time past expiration for all entries
       jest.advanceTimersByTime(3000); // Past TTL + staleWhileRevalidate
-      
+
       // Trigger cleanup
       jest.advanceTimersByTime(60 * 1000);
-      
+
       // All entries should be removed
       for (let i = 0; i < 5; i++) {
         expect(await cache.get(`key${i}`)).toBeNull();
