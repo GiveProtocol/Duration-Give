@@ -24,7 +24,7 @@ describe("DurationDonation", function () {
         .withArgs(charity.address);
 
       const charityInfo = await donation.getCharityInfo(charity.address);
-      expect(charityInfo.isRegistered).to.be.true;
+      expect(charityInfo.isRegistered).to.equal(true);
     });
 
     it("Should not allow non-owner to register a charity", async function () {

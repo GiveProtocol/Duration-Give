@@ -20,15 +20,19 @@ describe("VolunteerVerification", function () {
 
   describe("Charity Registration", function () {
     it("Should allow owner to register a charity", async function () {
-      const expectedTimestamp = await ethers.provider.getBlock("latest").then(b => b!.timestamp);
+      const latestBlock = await ethers.provider.getBlock("latest");
+      if (!latestBlock) {
+        throw new Error("Could not get latest block");
+      }
+      const expectedTimestamp = latestBlock.timestamp;
       
       await expect(verification.registerCharity(charity.address))
         .to.emit(verification, "CharityRegistered")
         .withArgs(charity.address, expectedTimestamp);
 
       const charityInfo = await verification.charities(charity.address);
-      expect(charityInfo.isRegistered).to.be.true;
-      expect(charityInfo.isActive).to.be.true;
+      expect(charityInfo.isRegistered).to.equal(true);
+      expect(charityInfo.isActive).to.equal(true);
     });
 
     it("Should not allow non-owner to register a charity", async function () {
@@ -58,7 +62,7 @@ describe("VolunteerVerification", function () {
         );
 
       const app = await verification.checkApplicationVerification(applicationHash);
-      expect(app.isVerified).to.be.true;
+      expect(app.isVerified).to.equal(true);
       expect(app.applicant).to.equal(applicant.address);
       expect(app.charity).to.equal(charity.address);
     });
@@ -100,7 +104,7 @@ describe("VolunteerVerification", function () {
         );
 
       const hoursVerification = await verification.checkHoursVerification(hoursHash);
-      expect(hoursVerification.isVerified).to.be.true;
+      expect(hoursVerification.isVerified).to.equal(true);
       expect(hoursVerification.volunteer).to.equal(volunteer.address);
       expect(hoursVerification.charity).to.equal(charity.address);
       expect(hoursVerification.hours).to.equal(hours);
@@ -132,7 +136,7 @@ describe("VolunteerVerification", function () {
         .withArgs(charity.address, false);
 
       const charityInfo = await verification.charities(charity.address);
-      expect(charityInfo.isActive).to.be.false;
+      expect(charityInfo.isActive).to.equal(false);
     });
 
     it("Should not allow inactive charity to verify applications", async function () {

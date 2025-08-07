@@ -44,13 +44,13 @@ describe("CharityScheduledDistribution", function () {
         .to.emit(distribution, "CharityAdded")
         .withArgs(newCharity);
 
-      expect(await distribution.verifiedCharities(newCharity)).to.be.true;
+      expect(await distribution.verifiedCharities(newCharity)).to.equal(true);
 
       await expect(distribution.removeCharity(newCharity))
         .to.emit(distribution, "CharityRemoved")
         .withArgs(newCharity);
 
-      expect(await distribution.verifiedCharities(newCharity)).to.be.false;
+      expect(await distribution.verifiedCharities(newCharity)).to.equal(false);
     });
 
     it("Should not allow non-owner to add charities", async function () {
@@ -116,7 +116,7 @@ describe("CharityScheduledDistribution", function () {
       expect(schedule.totalAmount).to.equal(TOTAL_AMOUNT);
       expect(schedule.amountPerMonth).to.equal(MONTHLY_AMOUNT);
       expect(schedule.monthsRemaining).to.equal(12);
-      expect(schedule.active).to.be.true;
+      expect(schedule.active).to.equal(true);
     });
 
     it("Should not create schedule for unverified charity", async function () {
@@ -221,7 +221,7 @@ describe("CharityScheduledDistribution", function () {
       
       // Check schedule is inactive
       const schedule = await distribution.donationSchedules(1);
-      expect(schedule.active).to.be.false;
+      expect(schedule.active).to.equal(false);
       expect(schedule.monthsRemaining).to.equal(0);
       
       // Check tokens returned to donor

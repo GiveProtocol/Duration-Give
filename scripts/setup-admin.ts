@@ -47,6 +47,11 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+/**
+ * Custom error class for admin setup operations
+ * @class AdminSetupError
+ * @extends Error
+ */
 class AdminSetupError extends Error {
   constructor(message: string, public exitCode: number = 1) {
     super(message);
@@ -54,8 +59,13 @@ class AdminSetupError extends Error {
   }
 }
 
+/**
+ * Custom error class for user-cancelled operations
+ * @class UserCancelledError
+ * @extends Error
+ */
 class UserCancelledError extends Error {
-  constructor(message: string = 'Operation cancelled by user') {
+  constructor(message = 'Operation cancelled by user') {
     super(message);
     this.name = 'UserCancelledError';
   }
