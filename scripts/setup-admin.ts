@@ -4,8 +4,8 @@
  * This script allows you to grant admin privileges to existing users.
  * Run with: npx tsx scripts/setup-admin.ts
  *
- * Note: This is a CLI script where process.exit() usage is appropriate
- * skipcq: JS-0263 - CLI scripts should use process.exit() for proper exit codes
+ * Note: This script now uses proper error handling with throw statements
+ * and process.exitCode instead of direct process.exit() calls
  */
 
 import { createClient } from "@supabase/supabase-js";
@@ -30,8 +30,8 @@ if (!supabaseUrl || !supabaseServiceKey) {
   console.error(
     "- SUPABASE_SERVICE_ROLE_KEY (get this from Supabase dashboard > Settings > API)",
   );
-  // skipcq: JS-0263 - Appropriate use of process.exit() in CLI script for configuration error
-  process.exit(1);
+  process.exitCode = 1;
+  throw new Error("Missing required environment variables");
 }
 
 // Create Supabase client with service role key (bypasses RLS)
@@ -47,6 +47,20 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+class AdminSetupError extends Error {
+  constructor(message: string, public exitCode: number = 1) {
+    super(message);
+    this.name = 'AdminSetupError';
+  }
+}
+
+class UserCancelledError extends Error {
+  constructor(message: string = 'Operation cancelled by user') {
+    super(message);
+    this.name = 'UserCancelledError';
+  }
+}
+
 async function setupAdmin() {
   console.log("🛡️  Give Protocol Admin Setup Tool");
   console.log("==================================\n");
@@ -59,7 +73,7 @@ async function setupAdmin() {
 
     if (!email || !email.includes("@")) {
       console.error("❌ Invalid email address");
-      process.exit(1);
+      throw new AdminSetupError("Invalid email address");
     }
 
     console.log(`\nSearching for user with email: ${email}...`);
@@ -70,14 +84,14 @@ async function setupAdmin() {
 
     if (authError) {
       console.error("❌ Error accessing auth users:", authError.message);
-      process.exit(1);
+      throw new AdminSetupError(`Error accessing auth users: ${authError.message}`);
     }
 
     const user = authUser.users.find((u) => u.email === email);
 
     if (!user) {
       console.error("❌ User not found in auth.users table.");
-      process.exit(1);
+      throw new AdminSetupError("User not found in auth.users table.");
     }
 
     // Now find their profile
@@ -92,7 +106,7 @@ async function setupAdmin() {
         "❌ Profile not found. Make sure the user has completed registration.",
       );
       console.error("Error details:", profileError?.message);
-      process.exit(1);
+      throw new AdminSetupError("Profile not found. User may not have completed registration.");
     }
 
     const users = profile;
@@ -111,7 +125,7 @@ async function setupAdmin() {
       );
       if (proceed.toLowerCase() !== "y") {
         console.log("Operation cancelled.");
-        process.exit(0);
+        throw new UserCancelledError();
       }
     }
 
@@ -125,7 +139,7 @@ async function setupAdmin() {
 
     if (confirm.toLowerCase() !== "y") {
       console.log("Operation cancelled.");
-      process.exit(0);
+      throw new UserCancelledError();
     }
 
     // Update user profile to admin
@@ -137,7 +151,7 @@ async function setupAdmin() {
 
     if (updateError) {
       console.error("❌ Failed to update profile:", updateError.message);
-      process.exit(1);
+      throw new AdminSetupError(`Failed to update profile: ${updateError.message}`);
     }
 
     console.log("\n✅ Success! User has been granted admin privileges.");
@@ -147,11 +161,30 @@ async function setupAdmin() {
     );
   } catch (error) {
     console.error("❌ An unexpected error occurred:", error);
-    process.exit(1);
+    throw new AdminSetupError(`An unexpected error occurred: ${error}`);
   } finally {
     rl.close();
   }
 }
 
+// Main execution with proper error handling
+async function main() {
+  try {
+    await setupAdmin();
+  } catch (error) {
+    if (error instanceof UserCancelledError) {
+      // User cancellation is not an error, exit cleanly
+      process.exitCode = 0;
+    } else if (error instanceof AdminSetupError) {
+      // Admin setup errors should exit with error code
+      process.exitCode = error.exitCode;
+    } else {
+      // Unexpected errors
+      process.exitCode = 1;
+    }
+    // Error messages are already logged by the throwing functions
+  }
+}
+
 // Run the setup
-setupAdmin();
+main();

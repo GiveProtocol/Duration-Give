@@ -16,7 +16,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   className,
   ...props
 }) => {
-  const items = Array.from({ length: count }, (_, i) => i);
+  const items = Array.from({ length: count }, (_, i) => `skeleton-${i}`);
 
   const getAnimationClass = () => {
     switch (animation) {
@@ -36,10 +36,9 @@ export const Skeleton: React.FC<SkeletonProps> = ({
 
   return (
     <>
-      {/* skipcq: JS-0437 - Skeleton placeholders are identical elements, index is appropriate */}
-      {items.map((index) => (
+      {items.map((skeletonId) => (
         <div
-          key={index}
+          key={skeletonId}
           className={cn("bg-gray-200 rounded", getAnimationClass(), className)}
           style={style}
           {...props}

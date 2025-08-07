@@ -20,9 +20,11 @@ describe("VolunteerVerification", function () {
 
   describe("Charity Registration", function () {
     it("Should allow owner to register a charity", async function () {
+      const expectedTimestamp = await ethers.provider.getBlock("latest").then(b => b!.timestamp);
+      
       await expect(verification.registerCharity(charity.address))
         .to.emit(verification, "CharityRegistered")
-        .withArgs(charity.address, await ethers.provider.getBlock("latest").then(b => b.timestamp));
+        .withArgs(charity.address, expectedTimestamp);
 
       const charityInfo = await verification.charities(charity.address);
       expect(charityInfo.isRegistered).to.be.true;

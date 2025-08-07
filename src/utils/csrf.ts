@@ -10,7 +10,12 @@ export class CSRFProtection {
     if (!this.token) {
       this.initialize();
     }
-    return this.token!;
+    
+    if (!this.token) {
+      throw new Error('Failed to initialize CSRF token');
+    }
+    
+    return this.token;
   }
 
   static validate(token: string): boolean {

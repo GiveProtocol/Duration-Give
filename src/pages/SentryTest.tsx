@@ -4,15 +4,21 @@ import { Logger } from "@/utils/logger";
 import { captureCustomEvent } from "@/lib/sentry";
 import { useAuth } from "@/hooks/useAuth";
 
+interface TestResult {
+  id: string;
+  message: string;
+}
+
 export default function SentryTest() {
-  const [testResults, setTestResults] = useState<string[]>([]);
+  const [testResults, setTestResults] = useState<TestResult[]>([]);
   const { user } = useAuth();
 
   const addResult = (result: string) => {
-    setTestResults((prev) => [
-      ...prev,
-      `${new Date().toLocaleTimeString()}: ${result}`,
-    ]);
+    const newResult: TestResult = {
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      message: `${new Date().toLocaleTimeString()}: ${result}`,
+    };
+    setTestResults((prev) => [...prev, newResult]);
   };
 
   const testJavaScriptError = () => {
@@ -157,10 +163,9 @@ export default function SentryTest() {
               </p>
             ) : (
               <ul className="space-y-2">
-                {/* skipcq: JS-0437 - Test results are append-only log entries, index is appropriate */}
-                {testResults.map((result, index) => (
-                  <li key={index} className="text-sm font-mono">
-                    {result}
+                {testResults.map((result) => (
+                  <li key={result.id} className="text-sm font-mono">
+                    {result.message}
                   </li>
                 ))}
               </ul>

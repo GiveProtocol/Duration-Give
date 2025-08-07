@@ -83,8 +83,8 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
                   onChange={(e) => setOptions({
                     ...options,
                     dateRange: {
-                      ...options.dateRange!,
-                      start: e.target.value
+                      start: e.target.value,
+                      end: options.dateRange?.end || ''
                     }
                   })}
                 />
@@ -97,7 +97,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
                   onChange={(e) => setOptions({
                     ...options,
                     dateRange: {
-                      ...options.dateRange!,
+                      start: options.dateRange?.start || '',
                       end: e.target.value
                     }
                   })}
