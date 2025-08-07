@@ -1,27 +1,36 @@
-import React, { useState, useCallback } from 'react';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
-import { Editor } from '@/components/ui/Editor';
-import { useCharityProfile } from '@/hooks/useCharityProfile';
+import React, { useState, useCallback } from "react";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
+import { Editor } from "@/components/ui/Editor";
+import { useCharityProfile } from "@/hooks/useCharityProfile";
 
 export const CharityProfile: React.FC = () => {
   const { profile, updateProfile, loading, error } = useCharityProfile();
-  const [name, setName] = useState(profile?.name || '');
-  const [description, setDescription] = useState(profile?.description || '');
-  const [category, setCategory] = useState(profile?.category || '');
-  const [imageUrl, setImageUrl] = useState(profile?.image_url || '');
+  const [name, setName] = useState(profile?.name || "");
+  const [description, setDescription] = useState(profile?.description || "");
+  const [category, setCategory] = useState(profile?.category || "");
+  const [imageUrl, setImageUrl] = useState(profile?.image_url || "");
 
-  const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  }, []);
+  const handleNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setName(e.target.value);
+    },
+    [],
+  );
 
-  const handleCategoryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setCategory(e.target.value);
-  }, []);
+  const handleCategoryChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCategory(e.target.value);
+    },
+    [],
+  );
 
-  const handleImageUrlChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setImageUrl(e.target.value);
-  }, []);
+  const handleImageUrlChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setImageUrl(e.target.value);
+    },
+    [],
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,9 +39,13 @@ export const CharityProfile: React.FC = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-semibold text-gray-900 mb-6">Charity Profile</h2>
+      <h2 className="text-xl font-semibold text-gray-900 mb-6">
+        Charity Profile
+      </h2>
       {error && (
-        <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md">{error}</div>
+        <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md">
+          {error}
+        </div>
       )}
       <form onSubmit={handleSubmit} className="space-y-6">
         <Input
@@ -65,12 +78,8 @@ export const CharityProfile: React.FC = () => {
           onChange={handleImageUrlChange}
           required
         />
-        <Button
-          type="submit"
-          disabled={loading}
-          className="w-full"
-        >
-          {loading ? 'Saving...' : 'Save Changes'}
+        <Button type="submit" disabled={loading} className="w-full">
+          {loading ? "Saving..." : "Save Changes"}
         </Button>
       </form>
     </div>
