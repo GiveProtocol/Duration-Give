@@ -11,7 +11,7 @@ describe("CharityScheduledDistribution", function () {
   let charity: SignerWithAddress;
   let donor: SignerWithAddress;
 
-  const TOKEN_PRICE = BigInt(100 * 10**8); // $100 USD with 8 decimals
+  const TOKEN_PRICE = BigInt(100 * 10 ** 8); // $100 USD with 8 decimals
   const TOTAL_AMOUNT = ethers.parseEther("12.0"); // 12 tokens
   const MONTHLY_AMOUNT = ethers.parseEther("1.0"); // 1 token per month
 
@@ -24,12 +24,18 @@ describe("CharityScheduledDistribution", function () {
     await token.mint(donor.address, ethers.parseEther("100.0"));
 
     // Deploy distribution contract
-    const CharityScheduledDistribution = await ethers.getContractFactory("CharityScheduledDistribution");
+    const CharityScheduledDistribution = await ethers.getContractFactory(
+      "CharityScheduledDistribution",
+    );
     distribution = await CharityScheduledDistribution.deploy();
 
     // Deploy executor contract
-    const DistributionExecutor = await ethers.getContractFactory("DistributionExecutor");
-    executor = await DistributionExecutor.deploy(await distribution.getAddress());
+    const DistributionExecutor = await ethers.getContractFactory(
+      "DistributionExecutor",
+    );
+    executor = await DistributionExecutor.deploy(
+      await distribution.getAddress(),
+    );
 
     // Setup distribution contract
     await distribution.addCharity(charity.address);
@@ -39,7 +45,7 @@ describe("CharityScheduledDistribution", function () {
   describe("Charity Management", function () {
     it("Should allow owner to add and remove charities", async function () {
       const newCharity = ethers.Wallet.createRandom().address;
-      
+
       await expect(distribution.addCharity(newCharity))
         .to.emit(distribution, "CharityAdded")
         .withArgs(newCharity);
@@ -55,18 +61,21 @@ describe("CharityScheduledDistribution", function () {
 
     it("Should not allow non-owner to add charities", async function () {
       const newCharity = ethers.Wallet.createRandom().address;
-      
+
       await expect(
-        distribution.connect(donor).addCharity(newCharity)
-      ).to.be.revertedWithCustomError(distribution, "OwnableUnauthorizedAccount");
+        distribution.connect(donor).addCharity(newCharity),
+      ).to.be.revertedWithCustomError(
+        distribution,
+        "OwnableUnauthorizedAccount",
+      );
     });
   });
 
   describe("Token Price Management", function () {
     it("Should allow owner to set token prices", async function () {
       const newToken = ethers.Wallet.createRandom().address;
-      const newPrice = BigInt(200 * 10**8); // $200 USD
-      
+      const newPrice = BigInt(200 * 10 ** 8); // $200 USD
+
       await expect(distribution.setTokenPrice(newToken, newPrice))
         .to.emit(distribution, "TokenPriceSet")
         .withArgs(newToken, newPrice);
@@ -76,27 +85,34 @@ describe("CharityScheduledDistribution", function () {
 
     it("Should not allow non-owner to set token prices", async function () {
       const newToken = ethers.Wallet.createRandom().address;
-      const newPrice = BigInt(200 * 10**8); // $200 USD
-      
+      const newPrice = BigInt(200 * 10 ** 8); // $200 USD
+
       await expect(
-        distribution.connect(donor).setTokenPrice(newToken, newPrice)
-      ).to.be.revertedWithCustomError(distribution, "OwnableUnauthorizedAccount");
+        distribution.connect(donor).setTokenPrice(newToken, newPrice),
+      ).to.be.revertedWithCustomError(
+        distribution,
+        "OwnableUnauthorizedAccount",
+      );
     });
   });
 
   describe("Schedule Creation", function () {
     beforeEach(async function () {
       // Approve tokens for distribution contract
-      await token.connect(donor).approve(await distribution.getAddress(), TOTAL_AMOUNT);
+      await token
+        .connect(donor)
+        .approve(await distribution.getAddress(), TOTAL_AMOUNT);
     });
 
     it("Should create a monthly distribution schedule", async function () {
       await expect(
-        distribution.connect(donor).createSchedule(
-          charity.address,
-          await token.getAddress(),
-          TOTAL_AMOUNT
-        )
+        distribution
+          .connect(donor)
+          .createSchedule(
+            charity.address,
+            await token.getAddress(),
+            TOTAL_AMOUNT,
+          ),
       )
         .to.emit(distribution, "ScheduleCreated")
         .withArgs(
@@ -106,7 +122,7 @@ describe("CharityScheduledDistribution", function () {
           await token.getAddress(),
           TOTAL_AMOUNT,
           MONTHLY_AMOUNT,
-          12 // months
+          12, // months
         );
 
       const schedule = await distribution.donationSchedules(1);
@@ -121,25 +137,25 @@ describe("CharityScheduledDistribution", function () {
 
     it("Should not create schedule for unverified charity", async function () {
       const unverifiedCharity = ethers.Wallet.createRandom().address;
-      
+
       await expect(
-        distribution.connect(donor).createSchedule(
-          unverifiedCharity,
-          await token.getAddress(),
-          TOTAL_AMOUNT
-        )
+        distribution
+          .connect(donor)
+          .createSchedule(
+            unverifiedCharity,
+            await token.getAddress(),
+            TOTAL_AMOUNT,
+          ),
       ).to.be.revertedWith("Charity not verified");
     });
 
     it("Should not create schedule for unsupported token", async function () {
       const unsupportedToken = ethers.Wallet.createRandom().address;
-      
+
       await expect(
-        distribution.connect(donor).createSchedule(
-          charity.address,
-          unsupportedToken,
-          TOTAL_AMOUNT
-        )
+        distribution
+          .connect(donor)
+          .createSchedule(charity.address, unsupportedToken, TOTAL_AMOUNT),
       ).to.be.revertedWith("Token not supported");
     });
   });
@@ -147,19 +163,23 @@ describe("CharityScheduledDistribution", function () {
   describe("Distribution Execution", function () {
     beforeEach(async function () {
       // Approve tokens for distribution contract
-      await token.connect(donor).approve(await distribution.getAddress(), TOTAL_AMOUNT);
-      
+      await token
+        .connect(donor)
+        .approve(await distribution.getAddress(), TOTAL_AMOUNT);
+
       // Create a schedule
-      await distribution.connect(donor).createSchedule(
-        charity.address,
-        await token.getAddress(),
-        TOTAL_AMOUNT
-      );
+      await distribution
+        .connect(donor)
+        .createSchedule(
+          charity.address,
+          await token.getAddress(),
+          TOTAL_AMOUNT,
+        );
     });
 
     it("Should not distribute before the interval has passed", async function () {
       await distribution.executeDistributions([1]);
-      
+
       // No distribution should have occurred
       const schedule = await distribution.donationSchedules(1);
       expect(schedule.monthsRemaining).to.equal(12);
@@ -170,7 +190,7 @@ describe("CharityScheduledDistribution", function () {
       // Advance time by 31 days
       await ethers.provider.send("evm_increaseTime", [31 * 24 * 60 * 60]);
       await ethers.provider.send("evm_mine", []);
-      
+
       await expect(distribution.executeDistributions([1]))
         .to.emit(distribution, "DistributionExecuted")
         .withArgs(
@@ -178,9 +198,9 @@ describe("CharityScheduledDistribution", function () {
           charity.address,
           await token.getAddress(),
           MONTHLY_AMOUNT,
-          11 // monthsRemaining
+          11, // monthsRemaining
         );
-      
+
       // Check distribution occurred
       const schedule = await distribution.donationSchedules(1);
       expect(schedule.monthsRemaining).to.equal(11);
@@ -191,9 +211,9 @@ describe("CharityScheduledDistribution", function () {
       // Advance time by 31 days
       await ethers.provider.send("evm_increaseTime", [31 * 24 * 60 * 60]);
       await ethers.provider.send("evm_mine", []);
-      
+
       await executor.executeDistributionBatch(1, 1);
-      
+
       // Check distribution occurred
       const schedule = await distribution.donationSchedules(1);
       expect(schedule.monthsRemaining).to.equal(11);
@@ -204,33 +224,37 @@ describe("CharityScheduledDistribution", function () {
   describe("Schedule Cancellation", function () {
     beforeEach(async function () {
       // Approve tokens for distribution contract
-      await token.connect(donor).approve(await distribution.getAddress(), TOTAL_AMOUNT);
-      
+      await token
+        .connect(donor)
+        .approve(await distribution.getAddress(), TOTAL_AMOUNT);
+
       // Create a schedule
-      await distribution.connect(donor).createSchedule(
-        charity.address,
-        await token.getAddress(),
-        TOTAL_AMOUNT
-      );
+      await distribution
+        .connect(donor)
+        .createSchedule(
+          charity.address,
+          await token.getAddress(),
+          TOTAL_AMOUNT,
+        );
     });
 
     it("Should allow donor to cancel schedule", async function () {
       await expect(distribution.connect(donor).cancelSchedule(1))
         .to.emit(distribution, "ScheduleCancelled")
         .withArgs(1);
-      
+
       // Check schedule is inactive
       const schedule = await distribution.donationSchedules(1);
       expect(schedule.active).to.equal(false);
       expect(schedule.monthsRemaining).to.equal(0);
-      
+
       // Check tokens returned to donor
       expect(await token.balanceOf(donor.address)).to.equal(TOTAL_AMOUNT);
     });
 
     it("Should not allow non-donor to cancel schedule", async function () {
       await expect(
-        distribution.connect(charity).cancelSchedule(1)
+        distribution.connect(charity).cancelSchedule(1),
       ).to.be.revertedWith("Not the donor");
     });
   });
@@ -238,20 +262,26 @@ describe("CharityScheduledDistribution", function () {
   describe("Donor Schedules", function () {
     beforeEach(async function () {
       // Approve tokens for distribution contract
-      await token.connect(donor).approve(await distribution.getAddress(), TOTAL_AMOUNT.mul(2));
-      
+      await token
+        .connect(donor)
+        .approve(await distribution.getAddress(), TOTAL_AMOUNT.mul(2));
+
       // Create two schedules
-      await distribution.connect(donor).createSchedule(
-        charity.address,
-        await token.getAddress(),
-        TOTAL_AMOUNT
-      );
-      
-      await distribution.connect(donor).createSchedule(
-        charity.address,
-        await token.getAddress(),
-        TOTAL_AMOUNT
-      );
+      await distribution
+        .connect(donor)
+        .createSchedule(
+          charity.address,
+          await token.getAddress(),
+          TOTAL_AMOUNT,
+        );
+
+      await distribution
+        .connect(donor)
+        .createSchedule(
+          charity.address,
+          await token.getAddress(),
+          TOTAL_AMOUNT,
+        );
     });
 
     it("Should return all active schedules for a donor", async function () {
@@ -263,7 +293,7 @@ describe("CharityScheduledDistribution", function () {
 
     it("Should not include cancelled schedules", async function () {
       await distribution.connect(donor).cancelSchedule(1);
-      
+
       const schedules = await distribution.getDonorSchedules(donor.address);
       expect(schedules.length).to.equal(1);
       expect(schedules[0]).to.equal(2);
