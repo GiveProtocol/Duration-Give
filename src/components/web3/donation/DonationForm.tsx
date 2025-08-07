@@ -51,13 +51,19 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
     [],
   );
 
-  const handleTokenAddressChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setTokenAddress(e.target.value);
-  }, []);
+  const handleTokenAddressChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setTokenAddress(e.target.value);
+    },
+    [],
+  );
 
-  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value);
-  }, []);
+  const handleAmountChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setAmount(e.target.value);
+    },
+    [],
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

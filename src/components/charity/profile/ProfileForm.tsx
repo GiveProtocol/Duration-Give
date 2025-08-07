@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
-import { CharityDetails } from '@/types/charity';
+import React, { useCallback } from "react";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
+import { CharityDetails } from "@/types/charity";
 
 interface ProfileFormProps {
   profile: Partial<CharityDetails>;
@@ -14,30 +14,42 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   profile,
   onSubmit,
   loading,
-  error
+  error,
 }) => {
   const [formData, setFormData] = React.useState<CharityDetails>({
-    name: profile.name || '',
-    description: profile.description || '',
-    category: profile.category || '',
-    image_url: profile.image_url || ''
+    name: profile.name || "",
+    description: profile.description || "",
+    category: profile.category || "",
+    image_url: profile.image_url || "",
   });
 
-  const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, name: e.target.value }));
-  }, []);
+  const handleNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, name: e.target.value }));
+    },
+    [],
+  );
 
-  const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, description: e.target.value }));
-  }, []);
+  const handleDescriptionChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setFormData((prev) => ({ ...prev, description: e.target.value }));
+    },
+    [],
+  );
 
-  const handleCategoryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, category: e.target.value }));
-  }, []);
+  const handleCategoryChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, category: e.target.value }));
+    },
+    [],
+  );
 
-  const handleImageUrlChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, image_url: e.target.value }));
-  }, []);
+  const handleImageUrlChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, image_url: e.target.value }));
+    },
+    [],
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,12 +92,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
         onChange={handleImageUrlChange}
         required
       />
-      <Button
-        type="submit"
-        disabled={loading}
-        className="w-full"
-      >
-        {loading ? 'Saving...' : 'Save Changes'}
+      <Button type="submit" disabled={loading} className="w-full">
+        {loading ? "Saving..." : "Save Changes"}
       </Button>
     </form>
   );
