@@ -53,9 +53,12 @@ const rl = readline.createInterface({
  * @extends Error
  */
 class AdminSetupError extends Error {
-  constructor(message: string, public exitCode: number = 1) {
+  constructor(
+    message: string,
+    public exitCode: number = 1,
+  ) {
     super(message);
-    this.name = 'AdminSetupError';
+    this.name = "AdminSetupError";
   }
 }
 
@@ -65,9 +68,9 @@ class AdminSetupError extends Error {
  * @extends Error
  */
 class UserCancelledError extends Error {
-  constructor(message = 'Operation cancelled by user') {
+  constructor(message = "Operation cancelled by user") {
     super(message);
-    this.name = 'UserCancelledError';
+    this.name = "UserCancelledError";
   }
 }
 
@@ -94,7 +97,9 @@ async function setupAdmin() {
 
     if (authError) {
       console.error("❌ Error accessing auth users:", authError.message);
-      throw new AdminSetupError(`Error accessing auth users: ${authError.message}`);
+      throw new AdminSetupError(
+        `Error accessing auth users: ${authError.message}`,
+      );
     }
 
     const user = authUser.users.find((u) => u.email === email);
@@ -116,7 +121,9 @@ async function setupAdmin() {
         "❌ Profile not found. Make sure the user has completed registration.",
       );
       console.error("Error details:", profileError?.message);
-      throw new AdminSetupError("Profile not found. User may not have completed registration.");
+      throw new AdminSetupError(
+        "Profile not found. User may not have completed registration.",
+      );
     }
 
     const users = profile;
@@ -161,7 +168,9 @@ async function setupAdmin() {
 
     if (updateError) {
       console.error("❌ Failed to update profile:", updateError.message);
-      throw new AdminSetupError(`Failed to update profile: ${updateError.message}`);
+      throw new AdminSetupError(
+        `Failed to update profile: ${updateError.message}`,
+      );
     }
 
     console.log("\n✅ Success! User has been granted admin privileges.");

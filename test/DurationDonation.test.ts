@@ -13,7 +13,8 @@ describe("DurationDonation", function () {
     [_owner, charity, donor] = await ethers.getSigners();
 
     // Deploy donation contract
-    const DurationDonation = await ethers.getContractFactory("DurationDonation");
+    const DurationDonation =
+      await ethers.getContractFactory("DurationDonation");
     donation = await DurationDonation.deploy();
   });
 
@@ -29,7 +30,7 @@ describe("DurationDonation", function () {
 
     it("Should not allow non-owner to register a charity", async function () {
       await expect(
-        donation.connect(donor).registerCharity(charity.address)
+        donation.connect(donor).registerCharity(charity.address),
       ).to.be.revertedWithCustomError(donation, "OwnableUnauthorizedAccount");
     });
   });
@@ -41,9 +42,9 @@ describe("DurationDonation", function () {
 
     it("Should allow native token donations", async function () {
       const amount = ethers.parseEther("1.0");
-      
+
       await expect(
-        donation.connect(donor).donate(charity.address, { value: amount })
+        donation.connect(donor).donate(charity.address, { value: amount }),
       )
         .to.emit(donation, "DonationReceived")
         .withArgs(donor.address, charity.address, amount);
@@ -59,13 +60,13 @@ describe("DurationDonation", function () {
 
     beforeEach(async function () {
       await donation.registerCharity(charity.address);
-      await donation.connect(donor).donate(charity.address, { value: donationAmount });
+      await donation
+        .connect(donor)
+        .donate(charity.address, { value: donationAmount });
     });
 
     it("Should allow charity to withdraw", async function () {
-      await expect(
-        donation.connect(charity).withdraw(donationAmount)
-      )
+      await expect(donation.connect(charity).withdraw(donationAmount))
         .to.emit(donation, "WithdrawalProcessed")
         .withArgs(charity.address, donationAmount);
 
@@ -76,13 +77,13 @@ describe("DurationDonation", function () {
     it("Should not allow withdrawal more than available balance", async function () {
       const excessAmount = ethers.parseEther("2.0");
       await expect(
-        donation.connect(charity).withdraw(excessAmount)
+        donation.connect(charity).withdraw(excessAmount),
       ).to.be.revertedWith("Insufficient balance");
     });
 
     it("Should not allow non-charity to withdraw", async function () {
       await expect(
-        donation.connect(donor).withdraw(donationAmount)
+        donation.connect(donor).withdraw(donationAmount),
       ).to.be.revertedWith("Not a registered charity");
     });
   });
