@@ -1,5 +1,3 @@
-#!/usr/bin/env -S deno run --allow-read --allow-write --allow-run --allow-env --allow-net
-
 import { serve } from "https://deno.land/std@0.220.1/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.220.1/http/file_server.ts";
 

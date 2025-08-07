@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Editor } from '@/components/ui/Editor';
@@ -10,6 +10,18 @@ export const CharityProfile: React.FC = () => {
   const [description, setDescription] = useState(profile?.description || '');
   const [category, setCategory] = useState(profile?.category || '');
   const [imageUrl, setImageUrl] = useState(profile?.image_url || '');
+
+  const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  }, []);
+
+  const handleCategoryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setCategory(e.target.value);
+  }, []);
+
+  const handleImageUrlChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setImageUrl(e.target.value);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +38,7 @@ export const CharityProfile: React.FC = () => {
         <Input
           label="Charity Name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
           required
         />
         <div>
@@ -43,14 +55,14 @@ export const CharityProfile: React.FC = () => {
         <Input
           label="Category"
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={handleCategoryChange}
           required
         />
         <Input
           label="Image URL"
           type="url"
           value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
+          onChange={handleImageUrlChange}
           required
         />
         <Button

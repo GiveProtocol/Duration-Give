@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { useWithdrawals } from '@/hooks/useWithdrawals';
@@ -6,6 +6,10 @@ import { useWithdrawals } from '@/hooks/useWithdrawals';
 export const WithdrawalForm: React.FC = () => {
   const { requestWithdrawal, loading, error } = useWithdrawals();
   const [amount, setAmount] = useState('');
+
+  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +30,7 @@ export const WithdrawalForm: React.FC = () => {
           min="0"
           step="0.01"
           value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={handleAmountChange}
           required
         />
         <Button

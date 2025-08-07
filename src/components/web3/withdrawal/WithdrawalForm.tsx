@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { useDonation } from '@/hooks/web3/useDonation';
@@ -14,6 +14,10 @@ export function WithdrawalForm({ onSuccess }: WithdrawalFormProps) {
   const [_tokenAddress, setTokenAddress] = useState('');
   const { withdraw, loading, error: withdrawalError } = useDonation();
   const [error, setError] = useState('');
+
+  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +57,7 @@ export function WithdrawalForm({ onSuccess }: WithdrawalFormProps) {
         min="0"
         step="0.000000000000000001"
         value={amount}
-        onChange={(e) => setAmount(e.target.value)}
+        onChange={handleAmountChange}
         required
       />
 

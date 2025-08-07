@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
@@ -93,6 +93,79 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
       });
     }
   };
+
+  // useCallback handlers for form inputs
+  const handleFullNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange("fullName", e.target.value);
+  }, []);
+
+  const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange("phoneNumber", e.target.value);
+  }, []);
+
+  const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange("email", e.target.value);
+  }, []);
+
+  const handleDateOfBirthChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange("dateOfBirth", e.target.value);
+  }, []);
+
+  const handleDaysChange = useCallback((day: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const days = e.target.checked
+      ? [...formData.availability.days, day]
+      : formData.availability.days.filter((d) => d !== day);
+    handleInputChange("availability", {
+      ...formData.availability,
+      days,
+    });
+  }, [formData.availability, validationErrors]);
+
+  const handleTimesChange = useCallback((time: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const times = e.target.checked
+      ? [...formData.availability.times, time]
+      : formData.availability.times.filter((t) => t !== time);
+    handleInputChange("availability", {
+      ...formData.availability,
+      times,
+    });
+  }, [formData.availability, validationErrors]);
+
+  const handleCommitmentChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleInputChange("commitmentType", e.target.value);
+  }, []);
+
+  const handleExperienceChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    handleInputChange("experience", e.target.value);
+  }, []);
+
+  const handleSkillsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange("skills", e.target.value);
+  }, []);
+
+  const handleCertificationsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange("certifications", e.target.value);
+  }, []);
+
+  const handleInterestsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange("interests", e.target.value);
+  }, []);
+
+  const handleReferenceNameChange = useCallback((index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newReferences = [...formData.references];
+    newReferences[index] = { ...newReferences[index], name: e.target.value };
+    handleInputChange("references", newReferences);
+  }, [formData.references, validationErrors]);
+
+  const handleReferenceContactChange = useCallback((index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newReferences = [...formData.references];
+    newReferences[index] = { ...newReferences[index], contact: e.target.value };
+    handleInputChange("references", newReferences);
+  }, [formData.references, validationErrors]);
+
+  const handleWorkSamplesChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange("workSamples", e.target.value);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -227,7 +300,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
               <Input
                 label="Full Name *"
                 value={formData.fullName}
-                onChange={(e) => handleInputChange("fullName", e.target.value)}
+                onChange={handleFullNameChange}
                 required
                 className={inputClasses}
                 error={validationErrors["fullName"]}
@@ -236,9 +309,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                 label="Phone Number *"
                 type="tel"
                 value={formData.phoneNumber}
-                onChange={(e) =>
-                  handleInputChange("phoneNumber", e.target.value)
-                }
+                onChange={handlePhoneChange}
                 required
                 className={inputClasses}
                 error={validationErrors["phoneNumber"]}
@@ -247,7 +318,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                 label="Email Address *"
                 type="email"
                 value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
+                onChange={handleEmailChange}
                 required
                 className={inputClasses}
                 error={validationErrors["email"]}
@@ -256,9 +327,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                 label="Date of Birth"
                 type="date"
                 value={formData.dateOfBirth}
-                onChange={(e) =>
-                  handleInputChange("dateOfBirth", e.target.value)
-                }
+                onChange={handleDateOfBirthChange}
                 className={inputClasses}
               />
             </div>
@@ -284,17 +353,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                         <input
                           type="checkbox"
                           checked={formData.availability.days.includes(day)}
-                          onChange={(e) => {
-                            const days = e.target.checked
-                              ? [...formData.availability.days, day]
-                              : formData.availability.days.filter(
-                                  (d) => d !== day,
-                                );
-                            handleInputChange("availability", {
-                              ...formData.availability,
-                              days,
-                            });
-                          }}
+                          onChange={handleDaysChange(day)}
                           className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                         />
                         <span className="text-sm text-gray-700">{day}</span>
@@ -317,17 +376,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                         <input
                           type="checkbox"
                           checked={formData.availability.times.includes(time)}
-                          onChange={(e) => {
-                            const times = e.target.checked
-                              ? [...formData.availability.times, time]
-                              : formData.availability.times.filter(
-                                  (t) => t !== time,
-                                );
-                            handleInputChange("availability", {
-                              ...formData.availability,
-                              times,
-                            });
-                          }}
+                          onChange={handleTimesChange(time)}
                           className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                         />
                         <span className="text-sm text-gray-700">{time}</span>
@@ -346,9 +395,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   <select
                     value={formData.commitmentType}
-                    onChange={(e) =>
-                      handleInputChange("commitmentType", e.target.value)
-                    }
+                    onChange={handleCommitmentChange}
                     className={selectClasses}
                   >
                     <option value="one-time">One-time</option>
@@ -369,9 +416,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   <textarea
                     value={formData.experience}
-                    onChange={(e) =>
-                      handleInputChange("experience", e.target.value)
-                    }
+                    onChange={handleExperienceChange}
                     rows={4}
                     className={textareaClasses}
                     required
@@ -387,15 +432,13 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
               <Input
                 label="Skills (comma-separated)"
                 value={formData.skills}
-                onChange={(e) => handleInputChange("skills", e.target.value)}
+                onChange={handleSkillsChange}
                 className={inputClasses}
               />
               <Input
                 label="Certifications (comma-separated)"
                 value={formData.certifications}
-                onChange={(e) =>
-                  handleInputChange("certifications", e.target.value)
-                }
+                onChange={handleCertificationsChange}
                 className={inputClasses}
               />
             </div>
@@ -408,7 +451,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
               <Input
                 label="Areas of Interest (comma-separated)"
                 value={formData.interests}
-                onChange={(e) => handleInputChange("interests", e.target.value)}
+                onChange={handleInterestsChange}
                 className={inputClasses}
               />
             </div>
@@ -421,21 +464,13 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                   <Input
                     label={`Reference ${index + 1} Name`}
                     value={ref.name}
-                    onChange={(e) => {
-                      const newRefs = [...formData.references];
-                      newRefs[index] = { ...ref, name: e.target.value };
-                      handleInputChange("references", newRefs);
-                    }}
+                    onChange={handleReferenceNameChange(index)}
                     className={inputClasses}
                   />
                   <Input
                     label={`Reference ${index + 1} Contact`}
                     value={ref.contact}
-                    onChange={(e) => {
-                      const newRefs = [...formData.references];
-                      newRefs[index] = { ...ref, contact: e.target.value };
-                      handleInputChange("references", newRefs);
-                    }}
+                    onChange={handleReferenceContactChange(index)}
                     className={inputClasses}
                   />
                 </div>
@@ -450,9 +485,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
               <Input
                 label="Links to Work Samples (comma-separated)"
                 value={formData.workSamples}
-                onChange={(e) =>
-                  handleInputChange("workSamples", e.target.value)
-                }
+                onChange={handleWorkSamplesChange}
                 className={inputClasses}
               />
             </div>

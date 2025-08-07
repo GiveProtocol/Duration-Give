@@ -51,6 +51,14 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
     [],
   );
 
+  const handleTokenAddressChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setTokenAddress(e.target.value);
+  }, []);
+
+  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -129,7 +137,7 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
           label="Token Address"
           type="text"
           value={tokenAddress}
-          onChange={(e) => setTokenAddress(e.target.value)}
+          onChange={handleTokenAddressChange}
           placeholder="Enter ERC20 token address"
           required
         />
@@ -141,7 +149,7 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
         min="0"
         step="0.000000000000000001"
         value={amount}
-        onChange={(e) => setAmount(e.target.value)}
+        onChange={handleAmountChange}
         required
       />
 
