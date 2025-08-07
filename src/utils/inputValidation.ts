@@ -1,7 +1,8 @@
 // Safe email regex that avoids catastrophic backtracking
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-// Safe URL regex with proper escaping and bounded quantifiers  
+const PASSWORD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+// Safe URL regex with proper escaping and bounded quantifiers
 const URL_REGEX = /^https:\/\/[a-zA-Z0-9.-]+(?:\.[a-zA-Z]{2,})?(?:\/[^\s]*)?$/;
 
 /**
@@ -27,8 +28,8 @@ export const InputValidator = {
 
   sanitizeInput(input: string): string {
     return input
-      .replace(/[<>]/g, '') // Remove potential HTML tags
-      .replace(/['"]/g, '') // Remove quotes
+      .replace(/[<>]/g, "") // Remove potential HTML tags
+      .replace(/['"]/g, "") // Remove quotes
       .trim();
   },
 
@@ -39,5 +40,5 @@ export const InputValidator = {
       amount <= 1000000 &&
       Number.isInteger(amount * 100) // Ensure max 2 decimal places
     );
-  }
+  },
 } as const;

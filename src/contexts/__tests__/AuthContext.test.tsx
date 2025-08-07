@@ -1,79 +1,78 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
-import { render, screen, waitFor, act } from '@testing-library/react';
-import { AuthProvider, useAuth } from '../AuthContext';
-import { supabase } from '@/lib/supabase';
-import { useToast } from '../ToastContext';
-import { Logger } from '@/utils/logger';
-import { setSentryUser, clearSentryUser } from '@/lib/sentry';
-import { MOCK_USER, setupAuthTest } from '@/test-utils/authTestHelpers';
+import React from "react"; // eslint-disable-line no-unused-vars
+import { render, screen, waitFor, act } from "@testing-library/react";
+import { AuthProvider, useAuth } from "../AuthContext";
+import { supabase } from "@/lib/supabase";
+import { useToast } from "../ToastContext";
+import { Logger } from "@/utils/logger";
+import { setSentryUser, clearSentryUser } from "@/lib/sentry";
+import { MOCK_USER, setupAuthTest } from "@/test-utils/authTestHelpers";
 
 // Mock all dependencies
-jest.mock('@/lib/supabase');
-jest.mock('../ToastContext');
-jest.mock('@/utils/logger');
-jest.mock('@/lib/sentry');
-jest.mock('@/config/env', () => ({
+jest.mock("@/lib/supabase");
+jest.mock("../ToastContext");
+jest.mock("@/utils/logger");
+jest.mock("@/lib/sentry");
+jest.mock("@/config/env", () => ({
   ENV: {
-    VITE_SUPABASE_URL: 'http://localhost:54321',
-    VITE_SUPABASE_ANON_KEY: 'test-key'
-  }
+    VITE_SUPABASE_URL: "http://localhost:54321",
+    VITE_SUPABASE_ANON_KEY: "test-key",
+  },
 }));
 
 const mockSupabase = supabase as jest.Mocked<typeof supabase>;
 const mockUseToast = useToast as jest.MockedFunction<typeof useToast>;
 const mockLogger = Logger as jest.Mocked<typeof Logger>;
-const mockSetSentryUser = setSentryUser as jest.MockedFunction<typeof setSentryUser>;
-const mockClearSentryUser = clearSentryUser as jest.MockedFunction<typeof clearSentryUser>;
+const mockSetSentryUser = setSentryUser as jest.MockedFunction<
+  typeof setSentryUser
+>;
+const mockClearSentryUser = clearSentryUser as jest.MockedFunction<
+  typeof clearSentryUser
+>;
 
 // Test component to access auth context
 const TestComponent: React.FC = () => {
   const auth = useAuth();
-  
+
   return (
     <div>
-      <div data-testid="loading">{auth.loading ? 'loading' : 'not-loading'}</div>
-      <div data-testid="user">{auth.user ? auth.user.email : 'no-user'}</div>
-      <div data-testid="user-type">{auth.userType || 'no-type'}</div>
-      <div data-testid="error">{auth.error ? auth.error.message : 'no-error'}</div>
-      <button 
-        data-testid="login-btn" 
-        onClick={() => auth.login('test@example.com', 'password', 'donor')}
+      <div data-testid="loading">
+        {auth.loading ? "loading" : "not-loading"}
+      </div>
+      <div data-testid="user">{auth.user ? auth.user.email : "no-user"}</div>
+      <div data-testid="user-type">{auth.userType || "no-type"}</div>
+      <div data-testid="error">
+        {auth.error ? auth.error.message : "no-error"}
+      </div>
+      <button
+        data-testid="login-btn"
+        onClick={() => auth.login("test@example.com", "password", "donor")}
       >
         Login
       </button>
-      <button 
-        data-testid="logout-btn" 
-        onClick={() => auth.logout()}
-      >
+      <button data-testid="logout-btn" onClick={() => auth.logout()}>
         Logout
       </button>
-      <button 
-        data-testid="refresh-btn" 
-        onClick={() => auth.refreshSession()}
-      >
+      <button data-testid="refresh-btn" onClick={() => auth.refreshSession()}>
         Refresh
       </button>
-      <button 
-        data-testid="register-btn" 
-        onClick={() => auth.register('test@example.com', 'password', 'donor')}
+      <button
+        data-testid="register-btn"
+        onClick={() => auth.register("test@example.com", "password", "donor")}
       >
         Register
       </button>
-      <button 
-        data-testid="reset-btn" 
-        onClick={() => auth.resetPassword('test@example.com')}
+      <button
+        data-testid="reset-btn"
+        onClick={() => auth.resetPassword("test@example.com")}
       >
         Reset Password
       </button>
-      <button 
-        data-testid="google-btn" 
-        onClick={() => auth.loginWithGoogle()}
-      >
+      <button data-testid="google-btn" onClick={() => auth.loginWithGoogle()}>
         Login with Google
       </button>
-      <button 
-        data-testid="username-reminder-btn" 
-        onClick={() => auth.sendUsernameReminder('test@example.com')}
+      <button
+        data-testid="username-reminder-btn"
+        onClick={() => auth.sendUsernameReminder("test@example.com")}
       >
         Send Username Reminder
       </button>
@@ -85,11 +84,11 @@ const renderWithAuthProvider = () => {
   return render(
     <AuthProvider>
       <TestComponent />
-    </AuthProvider>
+    </AuthProvider>,
   );
 };
 
-describe('AuthContext', () => {
+describe("AuthContext", () => {
   let mockShowToast: jest.Mock;
 
   beforeEach(() => {
@@ -102,69 +101,77 @@ describe('AuthContext', () => {
     jest.restoreAllMocks();
   });
 
-  describe('Initial State', () => {
-    it('renders with initial loading state', () => {
+  describe("Initial State", () => {
+    it("renders with initial loading state", () => {
       renderWithAuthProvider();
-      
-      expect(screen.getByTestId('loading')).toHaveTextContent('loading');
-      expect(screen.getByTestId('user')).toHaveTextContent('no-user');
-      expect(screen.getByTestId('user-type')).toHaveTextContent('no-type');
-      expect(screen.getByTestId('error')).toHaveTextContent('no-error');
+
+      expect(screen.getByTestId("loading")).toHaveTextContent("loading");
+      expect(screen.getByTestId("user")).toHaveTextContent("no-user");
+      expect(screen.getByTestId("user-type")).toHaveTextContent("no-type");
+      expect(screen.getByTestId("error")).toHaveTextContent("no-error");
     });
 
-    it('initializes session on mount', async () => {
+    it("initializes session on mount", async () => {
       mockSupabase.auth.getSession.mockResolvedValue({
         data: { session: { user: MOCK_USER } },
-        error: null
+        error: null,
       });
 
       renderWithAuthProvider();
-      
+
       await waitFor(() => {
         expect(mockSupabase.auth.getSession).toHaveBeenCalled();
       });
     });
 
-    it('sets up auth state change listener', () => {
+    it("sets up auth state change listener", () => {
       renderWithAuthProvider();
-      
+
       expect(mockSupabase.auth.onAuthStateChange).toHaveBeenCalled();
     });
   });
 
-  describe('Session Management', () => {
-    it('handles successful session initialization', async () => {
+  describe("Session Management", () => {
+    it("handles successful session initialization", async () => {
       mockSupabase.auth.getSession.mockResolvedValue({
         data: { session: { user: MOCK_USER } },
-        error: null
+        error: null,
       });
 
       renderWithAuthProvider();
-      
+
       await waitFor(() => {
-        expect(screen.getByTestId('loading')).toHaveTextContent('not-loading');
-        expect(screen.getByTestId('user')).toHaveTextContent('test@example.com');
-        expect(screen.getByTestId('user-type')).toHaveTextContent('donor');
+        expect(screen.getByTestId("loading")).toHaveTextContent("not-loading");
+        expect(screen.getByTestId("user")).toHaveTextContent(
+          "test@example.com",
+        );
+        expect(screen.getByTestId("user-type")).toHaveTextContent("donor");
       });
 
       expect(mockSetSentryUser).toHaveBeenCalledWith(MOCK_USER);
     });
 
-    it('handles session initialization error', async () => {
-      const error = new Error('Session error');
+    it("handles session initialization error", async () => {
+      const error = new Error("Session error");
       mockSupabase.auth.getSession.mockRejectedValue(error);
 
       renderWithAuthProvider();
-      
+
       await waitFor(() => {
-        expect(screen.getByTestId('loading')).toHaveTextContent('not-loading');
-        expect(mockLogger.error).toHaveBeenCalledWith('Failed to get session', error);
+        expect(screen.getByTestId("loading")).toHaveTextContent("not-loading");
+        expect(mockLogger.error).toHaveBeenCalledWith(
+          "Failed to get session",
+          error,
+        );
       });
     });
 
-    it('handles auth state changes', async () => {
-      let authCallback: (event: string, session: { user: typeof MOCK_USER } | null) => void = () => {};
-      
+    it("handles auth state changes", async () => {
+      let authCallback: (
+        event: string,
+        session: { user: typeof MOCK_USER } | null,
+      ) => void = () => {};
+
       mockSupabase.auth.onAuthStateChange.mockImplementation((callback) => {
         authCallback = callback;
         return { data: { subscription: { unsubscribe: jest.fn() } } };
@@ -174,18 +181,23 @@ describe('AuthContext', () => {
 
       // Simulate auth state change
       act(() => {
-        authCallback('SIGNED_IN', { user: MOCK_USER });
+        authCallback("SIGNED_IN", { user: MOCK_USER });
       });
 
       await waitFor(() => {
-        expect(screen.getByTestId('user')).toHaveTextContent('test@example.com');
+        expect(screen.getByTestId("user")).toHaveTextContent(
+          "test@example.com",
+        );
         expect(mockSetSentryUser).toHaveBeenCalledWith(MOCK_USER);
       });
     });
 
-    it('handles sign out auth state change', async () => {
-      let authCallback: (event: string, session: { user: typeof MOCK_USER } | null) => void = () => {};
-      
+    it("handles sign out auth state change", async () => {
+      let authCallback: (
+        event: string,
+        session: { user: typeof MOCK_USER } | null,
+      ) => void = () => {};
+
       mockSupabase.auth.onAuthStateChange.mockImplementation((callback) => {
         authCallback = callback;
         return { data: { subscription: { unsubscribe: jest.fn() } } };
@@ -194,169 +206,202 @@ describe('AuthContext', () => {
       renderWithAuthProvider();
 
       act(() => {
-        authCallback('SIGNED_OUT', null);
+        authCallback("SIGNED_OUT", null);
       });
 
       await waitFor(() => {
-        expect(screen.getByTestId('user')).toHaveTextContent('no-user');
+        expect(screen.getByTestId("user")).toHaveTextContent("no-user");
         expect(mockClearSentryUser).toHaveBeenCalled();
       });
     });
   });
 
-  describe('Login', () => {
-    it('handles successful login', async () => {
+  describe("Login", () => {
+    it("handles successful login", async () => {
       const mockResponse = {
         data: { user: MOCK_USER, session: { user: MOCK_USER } },
-        error: null
+        error: null,
       };
-      
+
       mockSupabase.auth.signInWithPassword.mockResolvedValue(mockResponse);
       renderWithAuthProvider();
-      
-      await act(async () => screen.getByTestId('login-btn').click());
-      await waitFor(() => expect(mockShowToast).toHaveBeenCalledWith('Successfully logged in!', 'success'));
+
+      await act(async () => screen.getByTestId("login-btn").click());
+      await waitFor(() =>
+        expect(mockShowToast).toHaveBeenCalledWith(
+          "Successfully logged in!",
+          "success",
+        ),
+      );
 
       expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalledWith({
-        email: 'test@example.com',
-        password: expect.any(String)
+        email: "test@example.com",
+        password: expect.any(String),
       });
     });
 
-    it('handles login error', async () => {
+    it("handles login error", async () => {
       mockSupabase.auth.signInWithPassword.mockResolvedValue({
         data: { user: null, session: null },
-        error: { message: 'Invalid credentials', status: 400 }
+        error: { message: "Invalid credentials", status: 400 },
       });
-      
+
       renderWithAuthProvider();
-      await act(async () => screen.getByTestId('login-btn').click());
-      await waitFor(() => expect(mockShowToast).toHaveBeenCalledWith('Invalid credentials', 'error'));
-      
-      expect(mockLogger.error).toHaveBeenCalledWith('Login error', expect.any(Object));
+      await act(async () => screen.getByTestId("login-btn").click());
+      await waitFor(() =>
+        expect(mockShowToast).toHaveBeenCalledWith(
+          "Invalid credentials",
+          "error",
+        ),
+      );
+
+      expect(mockLogger.error).toHaveBeenCalledWith(
+        "Login error",
+        expect.any(Object),
+      );
     });
 
-    it('handles login exception', async () => {
-      mockSupabase.auth.signInWithPassword.mockRejectedValue(new Error('Network error'));
-      
+    it("handles login exception", async () => {
+      mockSupabase.auth.signInWithPassword.mockRejectedValue(
+        new Error("Network error"),
+      );
+
       renderWithAuthProvider();
-      await act(async () => screen.getByTestId('login-btn').click());
-      await waitFor(() => expect(mockShowToast).toHaveBeenCalledWith('An unexpected error occurred during login', 'error'));
-      
-      expect(mockLogger.error).toHaveBeenCalledWith('Login error', expect.any(Error));
+      await act(async () => screen.getByTestId("login-btn").click());
+      await waitFor(() =>
+        expect(mockShowToast).toHaveBeenCalledWith(
+          "An unexpected error occurred during login",
+          "error",
+        ),
+      );
+
+      expect(mockLogger.error).toHaveBeenCalledWith(
+        "Login error",
+        expect.any(Error),
+      );
     });
   });
 
-  describe('Google Login', () => {
-    it('handles successful Google login', async () => {
+  describe("Google Login", () => {
+    it("handles successful Google login", async () => {
       mockSupabase.auth.signInWithOAuth.mockResolvedValue({
-        data: { provider: 'google', url: null },
-        error: null
+        data: { provider: "google", url: null },
+        error: null,
       });
 
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('google-btn').click();
+        screen.getByTestId("google-btn").click();
       });
 
       await waitFor(() => {
         expect(mockSupabase.auth.signInWithOAuth).toHaveBeenCalledWith({
-          provider: 'google',
+          provider: "google",
           options: {
-            redirectTo: `${window.location.origin}/`
-          }
+            redirectTo: `${window.location.origin}/`,
+          },
         });
       });
     });
 
-    it('handles Google login error', async () => {
-      const error = { message: 'OAuth error' };
+    it("handles Google login error", async () => {
+      const error = { message: "OAuth error" };
       mockSupabase.auth.signInWithOAuth.mockResolvedValue({
         data: { provider: null, url: null },
-        error
+        error,
       });
 
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('google-btn').click();
+        screen.getByTestId("google-btn").click();
       });
 
       await waitFor(() => {
-        expect(mockShowToast).toHaveBeenCalledWith('OAuth error', 'error');
+        expect(mockShowToast).toHaveBeenCalledWith("OAuth error", "error");
       });
     });
   });
 
-  describe('Logout', () => {
-    it('handles successful logout', async () => {
+  describe("Logout", () => {
+    it("handles successful logout", async () => {
       mockSupabase.auth.signOut.mockResolvedValue({ error: null });
 
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('logout-btn').click();
+        screen.getByTestId("logout-btn").click();
       });
 
       await waitFor(() => {
         expect(mockSupabase.auth.signOut).toHaveBeenCalled();
-        expect(mockShowToast).toHaveBeenCalledWith('Successfully logged out', 'success');
-      });
-    });
-
-    it('handles logout error', async () => {
-      const error = { message: 'Logout failed' };
-      mockSupabase.auth.signOut.mockResolvedValue({ error });
-
-      renderWithAuthProvider();
-      
-      await act(async () => {
-        screen.getByTestId('logout-btn').click();
-      });
-
-      await waitFor(() => {
-        expect(mockShowToast).toHaveBeenCalledWith('Logout failed', 'error');
-        expect(mockLogger.error).toHaveBeenCalledWith('Logout error', expect.any(Object));
-      });
-    });
-  });
-
-  describe('Registration', () => {
-    it('handles successful registration', async () => {
-      mockSupabase.auth.signUp.mockResolvedValue({
-        data: { user: MOCK_USER, session: null },
-        error: null
-      });
-
-      renderWithAuthProvider();
-      
-      await act(async () => {
-        screen.getByTestId('register-btn').click();
-      });
-
-      await waitFor(() => {
-        expect(mockSupabase.auth.signUp).toHaveBeenCalledWith({
-          email: 'test@example.com',
-          password: expect.any(String),
-          options: {
-            data: { user_type: 'donor' }
-          }
-        });
         expect(mockShowToast).toHaveBeenCalledWith(
-          'Registration successful! Please check your email for verification.',
-          'success'
+          "Successfully logged out",
+          "success",
         );
       });
     });
 
-    it('handles registration with metadata', async () => {
+    it("handles logout error", async () => {
+      const error = { message: "Logout failed" };
+      mockSupabase.auth.signOut.mockResolvedValue({ error });
+
+      renderWithAuthProvider();
+
+      await act(async () => {
+        screen.getByTestId("logout-btn").click();
+      });
+
+      await waitFor(() => {
+        expect(mockShowToast).toHaveBeenCalledWith("Logout failed", "error");
+        expect(mockLogger.error).toHaveBeenCalledWith(
+          "Logout error",
+          expect.any(Object),
+        );
+      });
+    });
+  });
+
+  describe("Registration", () => {
+    it("handles successful registration", async () => {
+      mockSupabase.auth.signUp.mockResolvedValue({
+        data: { user: MOCK_USER, session: null },
+        error: null,
+      });
+
+      renderWithAuthProvider();
+
+      await act(async () => {
+        screen.getByTestId("register-btn").click();
+      });
+
+      await waitFor(() => {
+        expect(mockSupabase.auth.signUp).toHaveBeenCalledWith({
+          email: "test@example.com",
+          password: expect.any(String),
+          options: {
+            data: { user_type: "donor" },
+          },
+        });
+        expect(mockShowToast).toHaveBeenCalledWith(
+          "Registration successful! Please check your email for verification.",
+          "success",
+        );
+      });
+    });
+
+    it("handles registration with metadata", async () => {
       const TestComponentWithMetadata: React.FC = () => {
         const auth = useAuth();
         return (
-          <button 
-            data-testid="register-metadata-btn" 
-            onClick={() => auth.register('test@example.com', 'password', 'charity', { name: 'Test Charity' })}
+          <button
+            data-testid="register-metadata-btn"
+            onClick={() =>
+              auth.register("test@example.com", "password", "charity", {
+                name: "Test Charity",
+              })
+            }
           >
             Register with Metadata
           </button>
@@ -366,97 +411,104 @@ describe('AuthContext', () => {
       render(
         <AuthProvider>
           <TestComponentWithMetadata />
-        </AuthProvider>
+        </AuthProvider>,
       );
 
       mockSupabase.auth.signUp.mockResolvedValue({
         data: { user: MOCK_USER, session: null },
-        error: null
+        error: null,
       });
-      
+
       await act(async () => {
-        screen.getByTestId('register-metadata-btn').click();
+        screen.getByTestId("register-metadata-btn").click();
       });
 
       await waitFor(() => {
         expect(mockSupabase.auth.signUp).toHaveBeenCalledWith({
-          email: 'test@example.com',
+          email: "test@example.com",
           password: expect.any(String),
           options: {
-            data: { 
-              user_type: 'charity',
-              name: 'Test Charity'
-            }
-          }
+            data: {
+              user_type: "charity",
+              name: "Test Charity",
+            },
+          },
         });
       });
     });
 
-    it('handles registration error', async () => {
-      const error = { message: 'Email already exists' };
+    it("handles registration error", async () => {
+      const error = { message: "Email already exists" };
       mockSupabase.auth.signUp.mockResolvedValue({
         data: { user: null, session: null },
-        error
+        error,
       });
 
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('register-btn').click();
+        screen.getByTestId("register-btn").click();
       });
 
       await waitFor(() => {
-        expect(mockShowToast).toHaveBeenCalledWith('Email already exists', 'error');
+        expect(mockShowToast).toHaveBeenCalledWith(
+          "Email already exists",
+          "error",
+        );
       });
     });
   });
 
-  describe('Password Reset', () => {
-    it('handles successful password reset', async () => {
-      mockSupabase.auth.resetPasswordForEmail.mockResolvedValue({ error: null });
+  describe("Password Reset", () => {
+    it("handles successful password reset", async () => {
+      mockSupabase.auth.resetPasswordForEmail.mockResolvedValue({
+        error: null,
+      });
 
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('reset-btn').click();
+        screen.getByTestId("reset-btn").click();
       });
 
       await waitFor(() => {
-        expect(mockSupabase.auth.resetPasswordForEmail).toHaveBeenCalledWith('test@example.com');
+        expect(mockSupabase.auth.resetPasswordForEmail).toHaveBeenCalledWith(
+          "test@example.com",
+        );
         expect(mockShowToast).toHaveBeenCalledWith(
-          'Password reset email sent. Please check your inbox.',
-          'success'
+          "Password reset email sent. Please check your inbox.",
+          "success",
         );
       });
     });
 
-    it('handles password reset error', async () => {
-      const error = { message: 'Email not found' };
+    it("handles password reset error", async () => {
+      const error = { message: "Email not found" };
       mockSupabase.auth.resetPasswordForEmail.mockResolvedValue({ error });
 
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('reset-btn').click();
+        screen.getByTestId("reset-btn").click();
       });
 
       await waitFor(() => {
-        expect(mockShowToast).toHaveBeenCalledWith('Email not found', 'error');
+        expect(mockShowToast).toHaveBeenCalledWith("Email not found", "error");
       });
     });
   });
 
-  describe('Session Refresh', () => {
-    it('handles successful session refresh', async () => {
+  describe("Session Refresh", () => {
+    it("handles successful session refresh", async () => {
       mockSupabase.auth.refreshSession.mockResolvedValue({
         data: { session: { user: MOCK_USER } },
-        error: null
+        error: null,
       });
 
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('refresh-btn').click();
+        screen.getByTestId("refresh-btn").click();
       });
 
       await waitFor(() => {
@@ -464,92 +516,104 @@ describe('AuthContext', () => {
       });
     });
 
-    it('handles session refresh error', async () => {
-      const error = { message: 'Session expired', status: 401 };
+    it("handles session refresh error", async () => {
+      const error = { message: "Session expired", status: 401 };
       mockSupabase.auth.refreshSession.mockResolvedValue({
         data: { session: null },
-        error
+        error,
       });
 
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('refresh-btn').click();
+        screen.getByTestId("refresh-btn").click();
       });
 
       await waitFor(() => {
-        expect(mockLogger.error).toHaveBeenCalledWith('Session refresh error', expect.any(Object));
+        expect(mockLogger.error).toHaveBeenCalledWith(
+          "Session refresh error",
+          expect.any(Object),
+        );
       });
     });
   });
 
-  describe('Username Reminder', () => {
-    it('handles successful username reminder', async () => {
+  describe("Username Reminder", () => {
+    it("handles successful username reminder", async () => {
       // Mock the username reminder functionality
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('username-reminder-btn').click();
+        screen.getByTestId("username-reminder-btn").click();
       });
 
       await waitFor(() => {
         expect(mockShowToast).toHaveBeenCalledWith(
-          'Username reminder sent to your email',
-          'success'
+          "Username reminder sent to your email",
+          "success",
         );
       });
     });
 
-    it('handles username reminder error', async () => {
+    it("handles username reminder error", async () => {
       // Mock the error scenario for username reminder
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('username-reminder-btn').click();
+        screen.getByTestId("username-reminder-btn").click();
       });
 
       // Since this is not implemented yet, it should still show success
       await waitFor(() => {
         expect(mockShowToast).toHaveBeenCalledWith(
-          'Username reminder sent to your email',
-          'success'
+          "Username reminder sent to your email",
+          "success",
         );
       });
     });
   });
 
-  describe('User Type Detection', () => {
-    const testUserType = async (userType: string | null, expectedText: string) => {
-      const testUser = userType 
+  describe("User Type Detection", () => {
+    const testUserType = async (
+      userType: string | null,
+      expectedText: string,
+    ) => {
+      const testUser = userType
         ? { ...MOCK_USER, user_metadata: { user_type: userType } }
         : { ...MOCK_USER, user_metadata: {} };
-      
+
       mockSupabase.auth.getSession.mockResolvedValue({
         data: { session: { user: testUser } },
-        error: null
+        error: null,
       });
 
       renderWithAuthProvider();
       await waitFor(() => {
-        expect(screen.getByTestId('user-type')).toHaveTextContent(expectedText);
+        expect(screen.getByTestId("user-type")).toHaveTextContent(expectedText);
       });
     };
 
     // eslint-disable-next-line jest/expect-expect
-    it('detects donor user type from metadata', async () => await testUserType('donor', 'donor'));
+    it("detects donor user type from metadata", async () =>
+      await testUserType("donor", "donor"));
     // eslint-disable-next-line jest/expect-expect
-    it('detects charity user type from metadata', async () => await testUserType('charity', 'charity'));
+    it("detects charity user type from metadata", async () =>
+      await testUserType("charity", "charity"));
     // eslint-disable-next-line jest/expect-expect
-    it('detects admin user type from metadata', async () => await testUserType('admin', 'admin'));
+    it("detects admin user type from metadata", async () =>
+      await testUserType("admin", "admin"));
     // eslint-disable-next-line jest/expect-expect
-    it('handles missing user type metadata', async () => await testUserType(null, 'no-type'));
+    it("handles missing user type metadata", async () =>
+      await testUserType(null, "no-type"));
   });
 
-  describe('Context Error Handling', () => {
-    it('throws error when useAuth is used outside provider', () => {
+  describe("Context Error Handling", () => {
+    it("throws error when useAuth is used outside provider", () => {
       // Silence error boundary console errors for this test
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-      
+      const consoleSpy = jest
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
+
       const TestWithoutProvider = () => {
         try {
           useAuth();
@@ -559,52 +623,60 @@ describe('AuthContext', () => {
         }
       };
 
-      expect(() => render(<TestWithoutProvider />)).toThrow('useAuth must be used within an AuthProvider');
-      
+      expect(() => render(<TestWithoutProvider />)).toThrow(
+        "useAuth must be used within an AuthProvider",
+      );
+
       consoleSpy.mockRestore();
     });
   });
 
-  describe('Cleanup', () => {
-    it('unsubscribes from auth state changes on unmount', () => {
+  describe("Cleanup", () => {
+    it("unsubscribes from auth state changes on unmount", () => {
       const mockUnsubscribe = jest.fn();
       mockSupabase.auth.onAuthStateChange.mockReturnValue({
-        data: { subscription: { unsubscribe: mockUnsubscribe } }
+        data: { subscription: { unsubscribe: mockUnsubscribe } },
       });
 
       const { unmount } = renderWithAuthProvider();
-      
+
       unmount();
-      
+
       expect(mockUnsubscribe).toHaveBeenCalled();
     });
   });
 
-  describe('Error States', () => {
-    it('handles general authentication errors', async () => {
-      const authError = new Error('General auth error');
+  describe("Error States", () => {
+    it("handles general authentication errors", async () => {
+      const authError = new Error("General auth error");
       mockSupabase.auth.getSession.mockRejectedValue(authError);
 
       renderWithAuthProvider();
-      
+
       await waitFor(() => {
-        expect(mockLogger.error).toHaveBeenCalledWith('Failed to get session', authError);
-        expect(screen.getByTestId('loading')).toHaveTextContent('not-loading');
+        expect(mockLogger.error).toHaveBeenCalledWith(
+          "Failed to get session",
+          authError,
+        );
+        expect(screen.getByTestId("loading")).toHaveTextContent("not-loading");
       });
     });
 
-    it('handles network errors during operations', async () => {
-      const networkError = new Error('Network unavailable');
+    it("handles network errors during operations", async () => {
+      const networkError = new Error("Network unavailable");
       mockSupabase.auth.signInWithPassword.mockRejectedValue(networkError);
 
       renderWithAuthProvider();
-      
+
       await act(async () => {
-        screen.getByTestId('login-btn').click();
+        screen.getByTestId("login-btn").click();
       });
 
       await waitFor(() => {
-        expect(mockShowToast).toHaveBeenCalledWith('An unexpected error occurred during login', 'error');
+        expect(mockShowToast).toHaveBeenCalledWith(
+          "An unexpected error occurred during login",
+          "error",
+        );
       });
     });
   });
