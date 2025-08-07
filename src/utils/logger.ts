@@ -18,6 +18,10 @@ export class Logger {
   private static readonly MAX_LOG_SIZE = 1000;
   private static logs: LogEntry[] = [];
 
+  private constructor() {
+    // Prevent instantiation - this class is only for static methods
+  }
+
   private static serializeValue(value: unknown): unknown {
     if (value === undefined) {
       return 'undefined';

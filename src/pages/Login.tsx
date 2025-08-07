@@ -35,6 +35,35 @@ const Login: React.FC = () => {
     return <Navigate to={from} replace />;
   }
 
+  // LoginHelpers component that provides navigation links to help options
+  const LoginHelpers: React.FC<{ setView: (_view: View) => void }> = ({ setView }) => (
+    <div className="mt-6 space-y-4">
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-200" />
+        </div>
+        <div className="relative flex justify-center text-sm">
+          <span className="px-2 bg-white text-gray-500">Need help?</span>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-4">
+        <button
+          onClick={() => setView('forgotUsername')}
+          className="text-sm text-indigo-600 hover:text-indigo-500"
+        >
+          Forgot username?
+        </button>
+        <button
+          onClick={() => setView('forgotPassword')}
+          className="text-sm text-indigo-600 hover:text-indigo-500"
+        >
+          Forgot password?
+        </button>
+      </div>
+    </div>
+  );
+
   const renderView = () => {
     switch (view) {
       case 'select':
@@ -133,46 +162,5 @@ const Login: React.FC = () => {
   );
 };
 
-/**
- * LoginHelpers component that provides navigation links to help options
- * @param setView - Function to change the current view in the login flow
- */
-const LoginHelpers: React.FC<{ setView: (_view: View) => void }> = ({ setView }) => (
-  <div className="mt-6 space-y-4">
-    <div className="relative">
-      <div className="absolute inset-0 flex items-center">
-        <div className="w-full border-t border-gray-200" />
-      </div>
-      <div className="relative flex justify-center text-sm">
-        <span className="px-2 bg-white text-gray-500">Need help?</span>
-      </div>
-    </div>
-    
-    <div className="grid grid-cols-2 gap-4">
-      <button
-        onClick={() => setView('forgotUsername')}
-        className="text-sm text-indigo-600 hover:text-indigo-500"
-      >
-        Forgot username?
-      </button>
-      <button
-        onClick={() => setView('forgotPassword')}
-        className="text-sm text-indigo-600 hover:text-indigo-500"
-      >
-        Forgot password?
-      </button>
-    </div>
-
-    <div className="text-center pt-4 border-t border-gray-200">
-      <p className="text-sm text-gray-600">Don&apos;t have an account?</p>
-      <Link
-        to="/register"
-        className="text-sm text-indigo-600 hover:text-indigo-500 font-medium"
-      >
-        Create new account
-      </Link>
-    </div>
-  </div>
-);
 
 export default Login;

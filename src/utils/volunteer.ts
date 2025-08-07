@@ -39,6 +39,100 @@ export const generateVerificationHash = (data: Record<string, unknown>): string 
 };
 
 /**
+ * Records application verification on blockchain
+ * @param applicantId The applicant's ID
+ * @param hash The verification hash
+ */
+export const recordApplicationOnChain = async (
+  applicantId: string,
+  hash: string
+): Promise<{ transactionId: string; blockNumber: number }> => {
+  try {
+    // Get applicant's wallet address from profile
+    const { data: profileData, error: profileError } = await supabase
+      .from('profiles')
+      .select('user_id')
+      .eq('id', applicantId)
+      .single();
+    
+    if (profileError) throw profileError;
+    
+    // Get wallet address from wallet_aliases
+    const { data: walletData, error: walletError } = await supabase
+      .from('wallet_aliases')
+      .select('wallet_address')
+      .eq('user_id', profileData.user_id)
+      .maybeSingle();
+    
+    if (walletError) throw walletError;
+    
+    const _applicantAddress = walletData?.wallet_address || '0x0000000000000000000000000000000000000000'; // Prefixed as unused
+    
+    // For development/testing, return simulated blockchain data
+    return {
+      transactionId: SecureRandom.generateTransactionId(),
+      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
+    };
+  } catch (error) {
+    Logger.error('Error recording application on chain', { error, applicantId, hash });
+    
+    // For development/testing, return simulated blockchain data
+    return {
+      transactionId: SecureRandom.generateTransactionId(),
+      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
+    };
+  }
+};
+
+/**
+ * Records hours verification on blockchain
+ * @param volunteerId The volunteer's ID
+ * @param hash The verification hash
+ * @param hours The number of hours
+ */
+export const recordHoursOnChain = async (
+  volunteerId: string,
+  hash: string,
+  _hours: number // Prefixed as unused
+): Promise<{ transactionId: string; blockNumber: number }> => {
+  try {
+    // Get volunteer's wallet address from profile
+    const { data: profileData, error: profileError } = await supabase
+      .from('profiles')
+      .select('user_id')
+      .eq('id', volunteerId)
+      .single();
+    
+    if (profileError) throw profileError;
+    
+    // Get wallet address from wallet_aliases
+    const { data: walletData, error: walletError } = await supabase
+      .from('wallet_aliases')
+      .select('wallet_address')
+      .eq('user_id', profileData.user_id)
+      .maybeSingle();
+    
+    if (walletError) throw walletError;
+    
+    const _volunteerAddress = walletData?.wallet_address || '0x0000000000000000000000000000000000000000'; // Prefixed as unused
+    
+    // For development/testing, return simulated blockchain data
+    return {
+      transactionId: SecureRandom.generateTransactionId(),
+      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
+    };
+  } catch (error) {
+    Logger.error('Error recording hours on chain', { error, volunteerId, hash });
+    
+    // For development/testing, return simulated blockchain data
+    return {
+      transactionId: SecureRandom.generateTransactionId(),
+      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
+    };
+  }
+};
+
+/**
  * Creates a hash for volunteer application acceptance
  * @param application The volunteer application
  * @returns The generated hash
@@ -173,100 +267,6 @@ export const createVerificationHash = async (hours: VolunteerHours): Promise<str
   } catch (error) {
     Logger.error('Error creating verification hash', { error, hoursId: hours.id });
     throw new Error('Failed to create verification hash');
-  }
-};
-
-/**
- * Records application verification on blockchain
- * @param applicantId The applicant's ID
- * @param hash The verification hash
- */
-export const recordApplicationOnChain = async (
-  applicantId: string,
-  hash: string
-): Promise<{ transactionId: string; blockNumber: number }> => {
-  try {
-    // Get applicant's wallet address from profile
-    const { data: profileData, error: profileError } = await supabase
-      .from('profiles')
-      .select('user_id')
-      .eq('id', applicantId)
-      .single();
-    
-    if (profileError) throw profileError;
-    
-    // Get wallet address from wallet_aliases
-    const { data: walletData, error: walletError } = await supabase
-      .from('wallet_aliases')
-      .select('wallet_address')
-      .eq('user_id', profileData.user_id)
-      .maybeSingle();
-    
-    if (walletError) throw walletError;
-    
-    const _applicantAddress = walletData?.wallet_address || '0x0000000000000000000000000000000000000000'; // Prefixed as unused
-    
-    // For development/testing, return simulated blockchain data
-    return {
-      transactionId: SecureRandom.generateTransactionId(),
-      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
-    };
-  } catch (error) {
-    Logger.error('Error recording application on chain', { error, applicantId, hash });
-    
-    // For development/testing, return simulated blockchain data
-    return {
-      transactionId: SecureRandom.generateTransactionId(),
-      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
-    };
-  }
-};
-
-/**
- * Records hours verification on blockchain
- * @param volunteerId The volunteer's ID
- * @param hash The verification hash
- * @param hours The number of hours
- */
-export const recordHoursOnChain = async (
-  volunteerId: string,
-  hash: string,
-  _hours: number // Prefixed as unused
-): Promise<{ transactionId: string; blockNumber: number }> => {
-  try {
-    // Get volunteer's wallet address from profile
-    const { data: profileData, error: profileError } = await supabase
-      .from('profiles')
-      .select('user_id')
-      .eq('id', volunteerId)
-      .single();
-    
-    if (profileError) throw profileError;
-    
-    // Get wallet address from wallet_aliases
-    const { data: walletData, error: walletError } = await supabase
-      .from('wallet_aliases')
-      .select('wallet_address')
-      .eq('user_id', profileData.user_id)
-      .maybeSingle();
-    
-    if (walletError) throw walletError;
-    
-    const _volunteerAddress = walletData?.wallet_address || '0x0000000000000000000000000000000000000000'; // Prefixed as unused
-    
-    // For development/testing, return simulated blockchain data
-    return {
-      transactionId: SecureRandom.generateTransactionId(),
-      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
-    };
-  } catch (error) {
-    Logger.error('Error recording hours on chain', { error, volunteerId, hash });
-    
-    // For development/testing, return simulated blockchain data
-    return {
-      transactionId: SecureRandom.generateTransactionId(),
-      blockNumber: SecureRandom.generateSecureNumber(1, 1000000)
-    };
   }
 };
 

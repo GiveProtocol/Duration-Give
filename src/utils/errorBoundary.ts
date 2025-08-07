@@ -1,7 +1,7 @@
 import { Logger } from './logger';
 
-export class ErrorHandler {
-  static handle(error: unknown, context?: string): Error {
+export const ErrorHandler = {
+  handle(error: unknown, context?: string): Error {
     const err = error instanceof Error ? error : new Error(String(error));
     
     // Log the error
@@ -17,9 +17,9 @@ export class ErrorHandler {
     }
 
     return err;
-  }
+  },
 
-  static async handleAsync<T>(
+  async handleAsync<T>(
     promise: Promise<T>,
     context?: string
   ): Promise<[T | null, Error | null]> {
@@ -31,4 +31,4 @@ export class ErrorHandler {
       return [null, handledError];
     }
   }
-}
+} as const;

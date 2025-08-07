@@ -1,6 +1,10 @@
 export class CSRFProtection {
   private static token: string | null = null;
 
+  private constructor() {
+    // Prevent instantiation - this class is only for static methods
+  }
+
   static initialize(): void {
     this.token = crypto.randomUUID();
     document.cookie = `csrf-token=${this.token}; path=/; samesite=strict`;
