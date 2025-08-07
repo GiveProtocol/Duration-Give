@@ -8,6 +8,7 @@ enabled = true
   plugins = ["react"]
   environment = ["nodejs"]
   style_guide = "standard"
+  skip_doc_coverage = ["test-function", "test-class", "arrow-function", "function-expression"]
 
 [[analyzers]]
 name = "secrets"

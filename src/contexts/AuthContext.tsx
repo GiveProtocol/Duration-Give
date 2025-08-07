@@ -29,6 +29,11 @@ const SESSION_REFRESH_INTERVAL = 10 * 60 * 1000; // 10 minutes
 const MAX_RETRY_ATTEMPTS = 3;
 const RETRY_DELAY = 1000; // 1 second
 
+/**
+ * Authentication provider component that manages user authentication state
+ * Handles session initialization, refresh, and auth state changes
+ * @param children - React components to wrap with auth context
+ */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<AuthState>({
     user: null,
@@ -511,6 +516,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
+/**
+ * Hook to access the authentication context
+ * Must be used within an AuthProvider component
+ * @returns AuthContextType containing user state and authentication methods
+ * @throws Error if used outside of AuthProvider
+ */
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {

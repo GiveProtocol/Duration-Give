@@ -27,6 +27,13 @@ const DEFAULT_CONFIG: ContractConfig = {
   ],
 };
 
+/**
+ * Hook for interacting with blockchain smart contracts
+ * Handles contract initialization, connection retries, and fallback RPC endpoints
+ * @param contractType - The type of contract to connect to ('donation')
+ * @param config - Optional configuration for retry logic and fallback RPCs
+ * @returns Object containing contract instance, connection state, and error information
+ */
 export function useContract(
   contractType: ContractType,
   config: ContractConfig = DEFAULT_CONFIG,

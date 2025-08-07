@@ -1,5 +1,9 @@
 import { Logger } from './logger';
 
+/**
+ * Security manager for handling OAuth state validation and CSRF protection
+ * Implements singleton pattern and automatic cleanup of expired security tokens
+ */
 export class SecurityManager {
   private static instance: SecurityManager;
   private readonly oauthStates: Map<string, number> = new Map();

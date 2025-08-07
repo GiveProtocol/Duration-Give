@@ -74,6 +74,11 @@ const MOONBASE_CHAIN_INFO = {
   blockExplorerUrls: ["https://moonbase.moonscan.io/"],
 };
 
+/**
+ * Web3 provider component that manages blockchain wallet connections and state
+ * Handles MetaMask/wallet connections, chain switching, and account management
+ * @param children - React components to wrap with Web3 context
+ */
 export function Web3Provider({ children }: { children: React.ReactNode }) {
   const [provider, setProvider] = useState<ethers.Provider | null>(null);
   const [address, setAddress] = useState<string | null>(null);
@@ -345,6 +350,12 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
+/**
+ * Hook to access Web3 context for blockchain interactions
+ * Provides wallet connection state, provider access, and connection methods
+ * @returns Web3ContextType containing wallet state and blockchain interaction methods
+ * @throws Error if used outside of Web3Provider
+ */
 export function useWeb3() {
   const context = useContext(Web3Context);
   if (!context) {

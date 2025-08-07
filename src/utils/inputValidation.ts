@@ -1,3 +1,7 @@
+/**
+ * Input validation utility class with security-focused regex patterns
+ * Provides validation methods for common input types with protection against ReDoS attacks
+ */
 export class InputValidator {
   // Safe email regex that avoids catastrophic backtracking
   static readonly EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

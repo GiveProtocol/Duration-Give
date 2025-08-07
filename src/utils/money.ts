@@ -1,5 +1,7 @@
-// Currency conversion rates (as of April 2024)
-// In a real app, these would be fetched from an API
+/**
+ * Static currency conversion rates (as of April 2024)
+ * In production, these should be fetched from a real-time currency API
+ */
 export const EXCHANGE_RATES: Record<string, number> = {
   USD: 1.0,
   CAD: 1.35,
@@ -19,7 +21,9 @@ export const EXCHANGE_RATES: Record<string, number> = {
   PKR: 278.25
 };
 
-// Currency symbols
+/**
+ * Currency symbols mapped to their currency codes
+ */
 export const CURRENCY_SYMBOLS: Record<string, string> = {
   USD: '$',
   CAD: 'C$',
@@ -39,7 +43,12 @@ export const CURRENCY_SYMBOLS: Record<string, string> = {
   PKR: '₨'
 };
 
-// Utility functions for money formatting and calculations
+/**
+ * Formats a monetary amount with proper currency formatting and conversion
+ * @param amount - The amount in USD to format
+ * @param currencyCode - The target currency code (defaults to USD)
+ * @returns Formatted currency string with proper symbols and decimal places
+ */
 export const formatCurrency = (amount: number, currencyCode = 'USD'): string => {
   // Convert amount to the target currency
   const rate = EXCHANGE_RATES[currencyCode] || 1;
@@ -54,6 +63,11 @@ export const formatCurrency = (amount: number, currencyCode = 'USD'): string => 
   }).format(convertedAmount);
 };
 
+/**
+ * Calculates projected equity growth based on a fixed 12% annual growth rate
+ * @param amount - The principal amount to calculate growth for
+ * @returns The growth amount (12% of the principal)
+ */
 export const calculateEquityGrowth = (amount: number): number => {
   return amount * 0.12; // 12% growth rate
 };

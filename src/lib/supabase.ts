@@ -11,7 +11,10 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-// Create Supabase client with security and performance optimizations
+/**
+ * Supabase client instance configured for the Give Protocol application
+ * Provides authenticated access to the database and authentication services
+ */
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     // Configure auth settings
@@ -57,7 +60,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 });
 
-// Helper functions for common operations
+/**
+ * Helper functions for common Supabase operations
+ * Provides convenient wrappers around frequently used Supabase functionality
+ */
 export const supabaseHelpers = {
   // Auth helpers
   async getCurrentUser() {

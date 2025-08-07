@@ -12,6 +12,11 @@ import { useWeb3 } from '@/contexts/Web3Context';
 const _MAX_LOGIN_ATTEMPTS = 5;
 const LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutes
 
+/**
+ * Authentication hook that provides login, registration, and session management functionality
+ * Integrates with Supabase auth, includes rate limiting, and handles wallet disconnection
+ * @returns Object containing auth state, user info, and authentication methods
+ */
 export function useAuth() {
   const authContext = useAuthContext();
   const { disconnect } = useWeb3();

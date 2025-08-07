@@ -10,6 +10,10 @@ interface LogEntry {
   metadata?: Record<string, unknown>;
 }
 
+/**
+ * Centralized logging utility that integrates with Sentry for production error tracking
+ * Maintains an in-memory log buffer for debugging and provides structured logging
+ */
 export class Logger {
   private static readonly MAX_LOG_SIZE = 1000;
   private static logs: LogEntry[] = [];
@@ -90,14 +94,29 @@ export class Logger {
     }
   }
 
+  /**
+   * Logs an informational message
+   * @param message - The message to log
+   * @param metadata - Optional structured data to include with the log
+   */
   static info(message: string, metadata?: Record<string, unknown>) {
     this.log('info', message, metadata);
   }
 
+  /**
+   * Logs a warning message
+   * @param message - The warning message to log
+   * @param metadata - Optional structured data to include with the log
+   */
   static warn(message: string, metadata?: Record<string, unknown>) {
     this.log('warn', message, metadata);
   }
 
+  /**
+   * Logs an error message and sends to Sentry in production
+   * @param message - The error message to log
+   * @param metadata - Optional structured data, including error objects
+   */
   static error(message: string, metadata?: Record<string, unknown>) {
     this.log('error', message, metadata);
   }
