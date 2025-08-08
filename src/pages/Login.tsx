@@ -1,41 +1,54 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link, Navigate, useLocation, useSearchParams } from 'react-router-dom';
-import { Building2, Users } from 'lucide-react';
-import { DonorLogin } from '../components/auth/DonorLogin';
-import { CharityLogin } from '../components/auth/CharityLogin';
-import { ForgotPassword } from '../components/auth/ForgotPassword';
-import { ForgotUsername } from '../components/auth/ForgotUsername';
-import { Button } from '../components/ui/Button';
-import { Logo } from '../components/Logo';
-import { useAuth } from '@/contexts/AuthContext';
+import React, { useState, useEffect, useCallback } from "react";
+import { Link, Navigate, useLocation, useSearchParams } from "react-router-dom";
+import { Building2, Users } from "lucide-react";
+import { DonorLogin } from "../components/auth/DonorLogin";
+import { CharityLogin } from "../components/auth/CharityLogin";
+import { ForgotPassword } from "../components/auth/ForgotPassword";
+import { ForgotUsername } from "../components/auth/ForgotUsername";
+import { Button } from "../components/ui/Button";
+import { Logo } from "../components/Logo";
+import { useAuth } from "@/contexts/AuthContext";
 
-type View = 'select' | 'donor' | 'charity' | 'forgotPassword' | 'forgotUsername';
+type View =
+  | "select"
+  | "donor"
+  | "charity"
+  | "forgotPassword"
+  | "forgotUsername";
 
 const Login: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const typeParam = searchParams.get('type');
-  const [view, setView] = useState<View>(typeParam === 'charity' ? 'charity' : typeParam === 'donor' ? 'donor' : 'select');
+  const typeParam = searchParams.get("type");
+  const [view, setView] = useState<View>(
+    typeParam === "charity"
+      ? "charity"
+      : typeParam === "donor"
+        ? "donor"
+        : "select",
+  );
   const { user, userType } = useAuth();
   const location = useLocation();
 
   // Get the intended destination from location state, or default to dashboard
-  const from = location.state?.from?.pathname || (userType === 'charity' ? '/charity-portal' : '/give-dashboard');
+  const from =
+    location.state?.from?.pathname ||
+    (userType === "charity" ? "/charity-portal" : "/give-dashboard");
 
   // Memoized handlers for forgot username/password
   const handleForgotUsername = useCallback(() => {
-    setView('forgotUsername');
+    setView("forgotUsername");
   }, []);
 
   const handleForgotPassword = useCallback(() => {
-    setView('forgotPassword');
+    setView("forgotPassword");
   }, []);
 
   // Set view based on URL parameter on mount and when it changes
   useEffect(() => {
-    if (typeParam === 'charity') {
-      setView('charity');
-    } else if (typeParam === 'donor') {
-      setView('donor');
+    if (typeParam === "charity") {
+      setView("charity");
+    } else if (typeParam === "donor") {
+      setView("donor");
     }
   }, [typeParam]);
 
@@ -55,7 +68,7 @@ const Login: React.FC = () => {
           <span className="px-2 bg-white text-gray-500">Need help?</span>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-2 gap-4">
         <button
           onClick={handleForgotUsername}
@@ -75,34 +88,42 @@ const Login: React.FC = () => {
 
   const renderView = () => {
     switch (view) {
-      case 'select':
+      case "select":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-center text-gray-900">Choose Account Type</h2>
+            <h2 className="text-2xl font-semibold text-center text-gray-900">
+              Choose Account Type
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Button
-                onClick={() => setView('donor')}
+                onClick={() => setView("donor")}
                 variant="secondary"
                 className="p-6 h-auto flex flex-col items-center space-y-2"
               >
                 <Users className="h-8 w-8" />
                 <span className="text-lg font-medium">Donor Login</span>
-                <span className="text-sm text-gray-500">For donors and volunteers</span>
+                <span className="text-sm text-gray-500">
+                  For donors and volunteers
+                </span>
               </Button>
-              
+
               <Button
-                onClick={() => setView('charity')}
+                onClick={() => setView("charity")}
                 variant="secondary"
                 className="p-6 h-auto flex flex-col items-center space-y-2"
               >
                 <Building2 className="h-8 w-8" />
                 <span className="text-lg font-medium">Charity Login</span>
-                <span className="text-sm text-gray-500">For registered charities</span>
+                <span className="text-sm text-gray-500">
+                  For registered charities
+                </span>
               </Button>
             </div>
-            
+
             <div className="text-center space-y-2 mt-6">
-              <p className="text-sm text-gray-600">Don&apos;t have an account?</p>
+              <p className="text-sm text-gray-600">
+                Don&apos;t have an account?
+              </p>
               <Link
                 to="/register"
                 className="text-sm text-indigo-600 hover:text-indigo-500 font-medium"
@@ -112,21 +133,23 @@ const Login: React.FC = () => {
             </div>
           </div>
         );
-      case 'forgotPassword':
-        return <ForgotPassword onBack={() => setView('select')} />;
-      case 'forgotUsername':
-        return <ForgotUsername onBack={() => setView('select')} />;
-      case 'donor':
+      case "forgotPassword":
+        return <ForgotPassword onBack={() => setView("select")} />;
+      case "forgotUsername":
+        return <ForgotUsername onBack={() => setView("select")} />;
+      case "donor":
         return (
           <>
             <div className="mb-6">
               <button
-                onClick={() => setView('select')}
+                onClick={() => setView("select")}
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
                 ← Back to selection
               </button>
-              <h2 className="mt-4 text-2xl font-semibold text-center">Donor Portal Login</h2>
+              <h2 className="mt-4 text-2xl font-semibold text-center">
+                Donor Portal Login
+              </h2>
               <p className="text-center text-sm text-gray-500 mt-1">
                 Access your donor dashboard and volunteer opportunities
               </p>
@@ -135,17 +158,19 @@ const Login: React.FC = () => {
             <LoginHelpers />
           </>
         );
-      case 'charity':
+      case "charity":
         return (
           <>
             <div className="mb-6">
               <button
-                onClick={() => setView('select')}
+                onClick={() => setView("select")}
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
                 ← Back to selection
               </button>
-              <h2 className="mt-4 text-2xl font-semibold text-center">Charity Portal Login</h2>
+              <h2 className="mt-4 text-2xl font-semibold text-center">
+                Charity Portal Login
+              </h2>
               <p className="text-center text-sm text-gray-500 mt-1">
                 Manage your charity profile and donations
               </p>
@@ -173,6 +198,5 @@ const Login: React.FC = () => {
     </div>
   );
 };
-
 
 export default Login;
