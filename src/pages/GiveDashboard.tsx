@@ -299,91 +299,79 @@ export const GiveDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* Metrics Grid */}
+      {/* Metrics Grid - Flattened from 4 to 3 levels */}
       <div className="grid gap-6 mb-8 md:grid-cols-3">
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
-              <DollarSign className="h-6 w-6" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">{t('dashboard.totalDonations')}</p>
-              <p className="text-2xl font-semibold text-gray-900">
-                <CurrencyDisplay amount={2450} />
-              </p>
-            </div>
+        <Card className="p-6 flex items-center">
+          <div className="p-3 rounded-full bg-indigo-100 text-indigo-600 mr-4">
+            <DollarSign className="h-6 w-6" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-600">{t('dashboard.totalDonations')}</p>
+            <p className="text-2xl font-semibold text-gray-900">
+              <CurrencyDisplay amount={2450} />
+            </p>
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-full bg-green-100 text-green-600">
-              <Clock className="h-6 w-6" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">{t('dashboard.volunteerHours')}</p>
-              <p className="text-2xl font-semibold text-gray-900">48</p>
-            </div>
+        <Card className="p-6 flex items-center">
+          <div className="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+            <Clock className="h-6 w-6" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-600">{t('dashboard.volunteerHours')}</p>
+            <p className="text-2xl font-semibold text-gray-900">48</p>
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-full bg-purple-100 text-purple-600">
-              <Award className="h-6 w-6" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">{t('dashboard.skillsEndorsed')}</p>
-              <p className="text-2xl font-semibold text-gray-900">12</p>
-            </div>
+        <Card className="p-6 flex items-center">
+          <div className="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+            <Award className="h-6 w-6" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-600">{t('dashboard.skillsEndorsed')}</p>
+            <p className="text-2xl font-semibold text-gray-900">12</p>
           </div>
         </Card>
       </div>
 
-      {/* Contributions */}
+      {/* Contributions - Flattened header from 5 to 3 levels */}
       <div className="bg-white rounded-lg shadow-md mb-8">
-        <div className="p-6 border-b border-gray-200">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
-            <h2 className="text-xl font-semibold text-gray-900">{t('dashboard.contributions')}</h2>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <Filter className="h-5 w-5 text-gray-400" />
-                <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                  aria-label="Filter by year"
-                >
-                  {years.map(year => (
-                    <option key={year} value={year}>
-                      {year === 'all' ? t('filter.allYears', 'All Years') : year}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Calendar className="h-5 w-5 text-gray-400" />
-                <select
-                  value={selectedType}
-                  onChange={(e) => setSelectedType(e.target.value)}
-                  className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                  aria-label="Filter by type"
-                >
-                  <option value="all">{t('filter.allTypes', 'All Types')}</option>
-                  <option value="Donation">{t('filter.donations', 'Donations')}</option>
-                  <option value="Volunteer Application">{t('filter.volunteerApplications', 'Volunteer Applications')}</option>
-                  <option value="Volunteer Hours">{t('filter.volunteerHours', 'Volunteer Hours')}</option>
-                </select>
-              </div>
-              <Button
-                onClick={() => setShowExportModal(true)}
-                variant="secondary"
-                className="flex items-center"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                {t('contributions.export')}
-              </Button>
-            </div>
+        <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+          <h2 className="text-xl font-semibold text-gray-900">{t('dashboard.contributions')}</h2>
+          <div className="flex items-center space-x-4">
+            <Filter className="h-5 w-5 text-gray-400" />
+            <select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+              className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              aria-label="Filter by year"
+            >
+              {years.map(year => (
+                <option key={year} value={year}>
+                  {year === 'all' ? t('filter.allYears', 'All Years') : year}
+                </option>
+              ))}
+            </select>
+            <Calendar className="h-5 w-5 text-gray-400" />
+            <select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              aria-label="Filter by type"
+            >
+              <option value="all">{t('filter.allTypes', 'All Types')}</option>
+              <option value="Donation">{t('filter.donations', 'Donations')}</option>
+              <option value="Volunteer Application">{t('filter.volunteerApplications', 'Volunteer Applications')}</option>
+              <option value="Volunteer Hours">{t('filter.volunteerHours', 'Volunteer Hours')}</option>
+            </select>
+            <Button
+              onClick={() => setShowExportModal(true)}
+              variant="secondary"
+              className="flex items-center"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              {t('contributions.export')}
+            </Button>
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -391,41 +379,39 @@ export const GiveDashboard: React.FC = () => {
             <thead>
               <tr>
                 <th 
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                   onClick={() => handleSort('date')}
                 >
-                  <div className="flex items-center space-x-1">
-                    <span>{t('contributions.date')}</span>
-                    {getSortIcon('date')}
-                  </div>
+                  <span>{t('contributions.date')}</span>
+                  {getSortIcon('date')}
                 </th>
                 <th 
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
                   onClick={() => handleSort('type')}
                 >
-                  <div className="flex items-center space-x-1">
+                  <span className="flex items-center space-x-1">
                     <span>{t('contributions.type')}</span>
                     {getSortIcon('type')}
-                  </div>
+                  </span>
                 </th>
                 <th 
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
                   onClick={() => handleSort('organization')}
                 >
-                  <div className="flex items-center space-x-1">
+                  <span className="flex items-center space-x-1">
                     <span>{t('contributions.organization')}</span>
                     {getSortIcon('organization')}
-                  </div>
+                  </span>
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.details')}</th>
                 <th 
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
                   onClick={() => handleSort('status')}
                 >
-                  <div className="flex items-center space-x-1">
+                  <span className="flex items-center space-x-1">
                     <span>{t('contributions.status')}</span>
                     {getSortIcon('status')}
-                  </div>
+                  </span>
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.verification')}</th>
               </tr>
@@ -473,10 +459,10 @@ export const GiveDashboard: React.FC = () => {
                         rel="noopener noreferrer"
                         className="text-indigo-600 hover:text-indigo-900 flex items-center"
                       >
-                        <span className="truncate max-w-[100px]">
+                        <span className="truncate max-w-[100px] mr-1">
                           {(contribution.hash || contribution.metadata?.verificationHash || '').substring(0, 10)}...
                         </span>
-                        <ExternalLink className="h-3 w-3 ml-1" />
+                        <ExternalLink className="h-3 w-3" />
                       </a>
                     ) : (
                       t('common.notAvailable', 'N/A')
@@ -494,31 +480,29 @@ export const GiveDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Skills & Endorsements */}
+      {/* Skills & Endorsements - Flattened from 4 to 3 levels */}
       <div className="bg-white rounded-lg shadow-md">
         <div className="p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">{t('skills.endorsements', 'Skills & Endorsements')}</h2>
         </div>
-        <div className="p-6">
-          <div className="grid gap-4 md:grid-cols-2">
-            {[
-              { skill: 'Web Development', endorsements: 5 },
-              { skill: 'Project Management', endorsements: 3 },
-              { skill: 'Event Planning', endorsements: 4 }
-            ].map((item) => (
-              <button
-                key={item.skill}
-                onClick={() => handleSkillClick(item.skill)}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                <div>
-                  <h3 className="font-medium text-gray-900">{item.skill}</h3>
-                  <p className="text-sm text-gray-500">{item.endorsements} {t('skills.endorsements', 'endorsements')}</p>
-                </div>
-                <Award className="h-5 w-5 text-indigo-600" />
-              </button>
-            ))}
-          </div>
+        <div className="p-6 grid gap-4 md:grid-cols-2">
+          {[
+            { skill: 'Web Development', endorsements: 5 },
+            { skill: 'Project Management', endorsements: 3 },
+            { skill: 'Event Planning', endorsements: 4 }
+          ].map((item) => (
+            <button
+              key={item.skill}
+              onClick={() => handleSkillClick(item.skill)}
+              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              <div>
+                <h3 className="font-medium text-gray-900">{item.skill}</h3>
+                <p className="text-sm text-gray-500">{item.endorsements} {t('skills.endorsements', 'endorsements')}</p>
+              </div>
+              <Award className="h-5 w-5 text-indigo-600" />
+            </button>
+          ))}
         </div>
       </div>
 

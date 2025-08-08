@@ -39,8 +39,7 @@ const EducationForAll: React.FC = () => {
             alt={charity.name}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-40" />
-          <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 text-white">
             <div className="flex items-center mb-2">
               <span className="px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full">
                 Verified
@@ -57,24 +56,18 @@ const EducationForAll: React.FC = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Impact Statistics
             </h2>
-            <div className="grid grid-cols-3 gap-4">
-              <div>
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="space-y-1">
                 <p className="text-sm text-gray-500">Total Donated</p>
-                <p className="text-xl font-bold text-gray-900">
-                  {formatCurrency(charity.stats.totalDonated)}
-                </p>
+                <p className="text-xl font-bold text-gray-900">{formatCurrency(charity.stats.totalDonated)}</p>
               </div>
-              <div>
+              <div className="space-y-1">
                 <p className="text-sm text-gray-500">Donors</p>
-                <p className="text-xl font-bold text-gray-900">
-                  {charity.stats.donorCount}
-                </p>
+                <p className="text-xl font-bold text-gray-900">{charity.stats.donorCount}</p>
               </div>
-              <div>
+              <div className="space-y-1">
                 <p className="text-sm text-gray-500">Projects</p>
-                <p className="text-xl font-bold text-gray-900">
-                  {charity.stats.projectsCompleted}
-                </p>
+                <p className="text-xl font-bold text-gray-900">{charity.stats.projectsCompleted}</p>
               </div>
             </div>
           </div>

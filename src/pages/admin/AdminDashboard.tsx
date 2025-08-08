@@ -165,91 +165,79 @@ const AdminDashboard: React.FC = () => {
         </button>
       </div>
 
-      {/* Stats Overview */}
+      {/* Stats Overview - Flattened from 4 to 3 levels */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Total Users</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalUsers.toLocaleString()}</p>
-            </div>
-            <div className="text-2xl">👥</div>
+        <Card className="p-6 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-600">Total Users</p>
+            <p className="text-2xl font-bold text-gray-900">{stats.totalUsers.toLocaleString()}</p>
           </div>
+          <div className="text-2xl">👥</div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Total Donations</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalDonations}</p>
-            </div>
-            <div className="text-2xl">💰</div>
+        <Card className="p-6 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-600">Total Donations</p>
+            <p className="text-2xl font-bold text-gray-900">{stats.totalDonations}</p>
           </div>
+          <div className="text-2xl">💰</div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Verified Charities</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalCharities}</p>
-            </div>
-            <div className="text-2xl">🏛️</div>
+        <Card className="p-6 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-600">Verified Charities</p>
+            <p className="text-2xl font-bold text-gray-900">{stats.totalCharities}</p>
           </div>
+          <div className="text-2xl">🏛️</div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Active Volunteers</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalVolunteers}</p>
-            </div>
-            <div className="text-2xl">🤝</div>
+        <Card className="p-6 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-600">Active Volunteers</p>
+            <p className="text-2xl font-bold text-gray-900">{stats.totalVolunteers}</p>
           </div>
+          <div className="text-2xl">🤝</div>
         </Card>
       </div>
 
-      {/* Recent Activity */}
+      {/* Recent Activity - Flattened from 5 to 3 levels */}
       <Card className="p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
         <div className="space-y-4">
           {stats.recentActivity.map((activity) => (
             <div key={activity.id} className="flex items-center justify-between p-4 border rounded-lg">
-              <div className="flex items-center space-x-4">
-                <span className="text-2xl">{getActivityIcon(activity.type)}</span>
-                <div>
-                  <p className="font-medium text-gray-900">{activity.description}</p>
-                  <p className="text-sm text-gray-500">{formatRelativeTime(activity.timestamp)}</p>
-                </div>
+              <span className="text-2xl mr-4">{getActivityIcon(activity.type)}</span>
+              <div className="flex-1">
+                <p className="font-medium text-gray-900">{activity.description}</p>
+                <p className="text-sm text-gray-500">{formatRelativeTime(activity.timestamp)}</p>
               </div>
               {activity.amount && (
-                <div className="text-right">
-                  <p className="font-semibold text-green-600">{formatCurrency(activity.amount)}</p>
-                </div>
+                <p className="font-semibold text-green-600 text-right">{formatCurrency(activity.amount)}</p>
               )}
             </div>
           ))}
         </div>
       </Card>
 
-      {/* Quick Actions */}
+      {/* Quick Actions - Flattened from 4 to 3 levels */}
       <Card className="p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <button className="p-4 border rounded-lg hover:bg-gray-50 text-left">
             <div className="text-2xl mb-2">📊</div>
-            <div className="font-medium">View Reports</div>
+            <div className="font-medium mb-1">View Reports</div>
             <div className="text-sm text-gray-500">Generate detailed analytics</div>
           </button>
           
           <button className="p-4 border rounded-lg hover:bg-gray-50 text-left">
             <div className="text-2xl mb-2">🏛️</div>
-            <div className="font-medium">Manage Charities</div>
+            <div className="font-medium mb-1">Manage Charities</div>
             <div className="text-sm text-gray-500">Review and approve organizations</div>
           </button>
           
           <button className="p-4 border rounded-lg hover:bg-gray-50 text-left">
             <div className="text-2xl mb-2">⚙️</div>
-            <div className="font-medium">System Settings</div>
+            <div className="font-medium mb-1">System Settings</div>
             <div className="text-sm text-gray-500">Configure platform parameters</div>
           </button>
         </div>

@@ -615,67 +615,59 @@ export const CharityPortal: React.FC = () => {
 
       {/* Metrics Grid */}
       <div className="grid gap-6 mb-8 md:grid-cols-4">
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
-              <DollarSign className="h-6 w-6" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                {t("dashboard.totalDonations")}
-              </p>
-              <p className="text-2xl font-semibold text-gray-900">
-                <CurrencyDisplay amount={charityStats.totalDonated} />
-              </p>
-            </div>
+        <Card className="p-6 flex items-center">
+          <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
+            <DollarSign className="h-6 w-6" />
+          </div>
+          <div className="ml-4">
+            <p className="text-sm font-medium text-gray-600">
+              {t("dashboard.totalDonations")}
+            </p>
+            <p className="text-2xl font-semibold text-gray-900">
+              <CurrencyDisplay amount={charityStats.totalDonated} />
+            </p>
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-full bg-green-100 text-green-600">
-              <Users className="h-6 w-6" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                {t("charity.activeVolunteers")}
-              </p>
-              <p className="text-2xl font-semibold text-gray-900">
-                {charityStats.activeVolunteers}
-              </p>
-            </div>
+        <Card className="p-6 flex items-center">
+          <div className="p-3 rounded-full bg-green-100 text-green-600">
+            <Users className="h-6 w-6" />
+          </div>
+          <div className="ml-4">
+            <p className="text-sm font-medium text-gray-600">
+              {t("charity.activeVolunteers")}
+            </p>
+            <p className="text-2xl font-semibold text-gray-900">
+              {charityStats.activeVolunteers}
+            </p>
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-full bg-purple-100 text-purple-600">
-              <Clock className="h-6 w-6" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                {t("dashboard.volunteerHours")}
-              </p>
-              <p className="text-2xl font-semibold text-gray-900">
-                {charityStats.volunteerHours}
-              </p>
-            </div>
+        <Card className="p-6 flex items-center">
+          <div className="p-3 rounded-full bg-purple-100 text-purple-600">
+            <Clock className="h-6 w-6" />
+          </div>
+          <div className="ml-4">
+            <p className="text-sm font-medium text-gray-600">
+              {t("dashboard.volunteerHours")}
+            </p>
+            <p className="text-2xl font-semibold text-gray-900">
+              {charityStats.volunteerHours}
+            </p>
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-full bg-amber-100 text-amber-600">
-              <Award className="h-6 w-6" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                {t("dashboard.skillsEndorsed")}
-              </p>
-              <p className="text-2xl font-semibold text-gray-900">
-                {charityStats.skillsEndorsed}
-              </p>
-            </div>
+        <Card className="p-6 flex items-center">
+          <div className="p-3 rounded-full bg-amber-100 text-amber-600">
+            <Award className="h-6 w-6" />
+          </div>
+          <div className="ml-4">
+            <p className="text-sm font-medium text-gray-600">
+              {t("dashboard.skillsEndorsed")}
+            </p>
+            <p className="text-2xl font-semibold text-gray-900">
+              {charityStats.skillsEndorsed}
+            </p>
           </div>
         </Card>
       </div>
@@ -890,7 +882,7 @@ export const CharityPortal: React.FC = () => {
                   className="bg-white border border-gray-200 rounded-lg p-4"
                 >
                   <div className="flex justify-between items-start mb-4">
-                    <div>
+                    <div className="flex-grow">
                       <h3 className="text-lg font-medium text-gray-900">
                         {hours.volunteerName}
                       </h3>
@@ -912,14 +904,14 @@ export const CharityPortal: React.FC = () => {
                   </div>
 
                   {hours.description && (
-                    <div className="mb-4">
+                    <>
                       <p className="text-sm text-gray-500 mb-1">
                         {t("volunteer.description")}
                       </p>
-                      <p className="text-sm text-gray-700">
+                      <p className="text-sm text-gray-700 mb-4">
                         {hours.description}
                       </p>
-                    </div>
+                    </>
                   )}
                 </div>
               ))
@@ -948,29 +940,27 @@ export const CharityPortal: React.FC = () => {
               pendingApplications.map((application) => (
                 <div
                   key={application.id}
-                  className="bg-white border border-gray-200 rounded-lg p-4"
+                  className="bg-white border border-gray-200 rounded-lg p-4 flex justify-between items-start"
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h3 className="text-lg font-medium text-gray-900">
-                        {application.full_name}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {t("volunteer.appliedFor")}:{" "}
-                        {application.opportunity?.title ||
-                          "Unknown Opportunity"}
-                      </p>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button className="flex items-center">
-                        <CheckCircle className="h-4 w-4 mr-2" />
-                        {t("volunteer.accept")}
-                      </Button>
-                      <Button variant="secondary" className="flex items-center">
-                        <X className="h-4 w-4 mr-2" />
-                        {t("volunteer.reject")}
-                      </Button>
-                    </div>
+                  <div className="flex-grow">
+                    <h3 className="text-lg font-medium text-gray-900">
+                      {application.full_name}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {t("volunteer.appliedFor")}:{" "}
+                      {application.opportunity?.title ||
+                        "Unknown Opportunity"}
+                    </p>
+                  </div>
+                  <div className="flex space-x-2 ml-4">
+                    <Button className="flex items-center">
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      {t("volunteer.accept")}
+                    </Button>
+                    <Button variant="secondary" className="flex items-center">
+                      <X className="h-4 w-4 mr-2" />
+                      {t("volunteer.reject")}
+                    </Button>
                   </div>
                 </div>
               ))
@@ -1000,19 +990,12 @@ export const CharityPortal: React.FC = () => {
               </Button>
             </Link>
           </div>
-          <div className="bg-white rounded-lg shadow-md">
-            <div className="p-6 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">
-                {t("volunteer.opportunities", "Volunteer Opportunities")}
-              </h2>
-            </div>
-            <div className="p-6">
-              <div className="text-center py-8 text-gray-500">
-                {t(
-                  "volunteer.noOpportunitiesYet",
-                  'No opportunities created yet. Click "Create New" to get started.',
-                )}
-              </div>
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="text-center py-8 text-gray-500">
+              {t(
+                "volunteer.noOpportunitiesYet",
+                'No opportunities created yet. Click "Create New" to get started.',
+              )}
             </div>
           </div>
         </div>

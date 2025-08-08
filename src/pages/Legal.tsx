@@ -115,10 +115,9 @@ export const Legal: React.FC = () => {
         
         <section className="mt-12 pt-8 border-t border-gray-200">
           <p>If you have any questions about these Terms, please contact us at:</p>
-          
-          <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-            <p><strong>Email:</strong> legal@giveprotocol.io</p>
-          </div>
+          <p className="mt-4 p-4 bg-gray-50 rounded-lg">
+            <strong>Email:</strong> legal@giveprotocol.io
+          </p>
         </section>
       </div>
     </StaticPageLayout>

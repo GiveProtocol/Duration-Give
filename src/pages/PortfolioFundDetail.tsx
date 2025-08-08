@@ -73,13 +73,12 @@ const PortfolioFundDetail: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <div className="relative h-64 rounded-xl overflow-hidden mb-6">
+        <div className="relative h-64 rounded-xl overflow-hidden mb-6 bg-black bg-opacity-40">
           <img
             src={SAMPLE_PORTFOLIO.image}
             alt={SAMPLE_PORTFOLIO.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-60"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-40" />
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
             <h1 className="text-3xl font-bold mb-2">{SAMPLE_PORTFOLIO.name}</h1>
             <p className="text-lg opacity-90">{SAMPLE_PORTFOLIO.description}</p>

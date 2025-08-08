@@ -225,7 +225,8 @@ const VolunteerOpportunities: React.FC = () => {
                 <p className="text-sm font-medium text-indigo-600 mb-2">{opportunity.organization}</p>
                 <p className="text-gray-600 mb-4">{opportunity.description}</p>
                 
-                <div className="space-y-2">
+                {/* Flattened opportunity details from 4 to 3 levels */}
+                <div className="space-y-2 mb-4">
                   <div className="flex items-center text-sm text-gray-500">
                     <Clock className="h-4 w-4 mr-2" />
                     {opportunity.commitment}
@@ -238,7 +239,7 @@ const VolunteerOpportunities: React.FC = () => {
                     <Globe className="h-4 w-4 mr-2" />
                     {t(`language.${opportunity.workLanguage}`, formatLanguageName(opportunity.workLanguage))}
                   </div>
-                  <div className="flex flex-wrap gap-2 mt-3">
+                  <div className="flex flex-wrap gap-2">
                     {opportunity.skills.map((skill) => (
                       <span
                         key={skill}
@@ -253,7 +254,7 @@ const VolunteerOpportunities: React.FC = () => {
 
                 <button
                   onClick={createApplyHandler(opportunity)}
-                  className="mt-4 w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+                  className="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
                 >
                   {t('volunteer.applyNow', 'Apply Now')}
                 </button>
@@ -263,8 +264,8 @@ const VolunteerOpportunities: React.FC = () => {
         </div>
 
         {filteredOpportunities.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500">{t('volunteer.noOpportunitiesFound', 'No opportunities found matching your criteria.')}</p>
+          <div className="text-center py-12 text-gray-500">
+            {t('volunteer.noOpportunitiesFound', 'No opportunities found matching your criteria.')}
           </div>
         )}
       </div>

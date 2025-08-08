@@ -21,35 +21,11 @@ interface OpportunityCardProps {
  */
 const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, formatLanguageName }) => (
   <div className="border border-gray-200 rounded-lg p-4">
-    <div className="flex justify-between items-start">
-      <div>
-        <h3 className="text-lg font-medium text-gray-900">
-          {opportunity.title}
-        </h3>
-        <div className="flex items-center mt-1 text-sm text-gray-500">
-          <Globe className="h-4 w-4 mr-1" />
-          <span>
-            {t(
-              `language.${opportunity.work_language}`,
-              formatLanguageName(opportunity.work_language),
-            )}
-          </span>
-        </div>
-        <p className="mt-2 text-gray-600">
-          {opportunity.description}
-        </p>
-        <div className="mt-2 flex flex-wrap gap-2">
-          {opportunity.skills.map((skill) => (
-            <span
-              key={skill}
-              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="flex space-x-2">
+    <div className="flex justify-between items-start mb-4">
+      <h3 className="text-lg font-medium text-gray-900 flex-grow">
+        {opportunity.title}
+      </h3>
+      <div className="flex space-x-2 ml-4">
         <Button
           variant="secondary"
           size="sm"
@@ -68,31 +44,45 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, forma
         </Button>
       </div>
     </div>
-    <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-500">
-      <div>
-        <span className="font-medium">
-          {t("volunteer.commitment", "Commitment")}:
-        </span>{" "}
-        {opportunity.commitment}
-      </div>
-      <div>
-        <span className="font-medium">
-          {t("volunteer.location", "Location")}:
-        </span>{" "}
-        {opportunity.location}
-      </div>
-      <div>
-        <span className="font-medium">
-          {t("volunteer.type", "Type")}:
-        </span>{" "}
-        {opportunity.type}
-      </div>
-      <div>
-        <span className="font-medium">
-          {t("volunteer.status", "Status")}:
-        </span>{" "}
-        {opportunity.status}
-      </div>
+    
+    <div className="flex items-center mb-2 text-sm text-gray-500">
+      <Globe className="h-4 w-4 mr-1" />
+      <span>
+        {t(
+          `language.${opportunity.work_language}`,
+          formatLanguageName(opportunity.work_language),
+        )}
+      </span>
+    </div>
+    
+    <p className="mb-3 text-gray-600">
+      {opportunity.description}
+    </p>
+    
+    <div className="mb-4 flex flex-wrap gap-2">
+      {opportunity.skills.map((skill) => (
+        <span
+          key={skill}
+          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
+        >
+          {skill}
+        </span>
+      ))}
+    </div>
+    
+    <div className="flex flex-wrap gap-4 text-sm text-gray-500">
+      <span>
+        <span className="font-medium">{t("volunteer.commitment", "Commitment")}:</span> {opportunity.commitment}
+      </span>
+      <span>
+        <span className="font-medium">{t("volunteer.location", "Location")}:</span> {opportunity.location}
+      </span>
+      <span>
+        <span className="font-medium">{t("volunteer.type", "Type")}:</span> {opportunity.type}
+      </span>
+      <span>
+        <span className="font-medium">{t("volunteer.status", "Status")}:</span> {opportunity.status}
+      </span>
     </div>
   </div>
 );

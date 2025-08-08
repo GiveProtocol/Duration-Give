@@ -110,14 +110,12 @@ export default function SentryTest() {
           Sentry Integration Test Page
         </h1>
 
-        <div className="bg-yellow-50 border border-yellow-200 p-4 mb-6 rounded-lg">
-          <p className="text-sm text-yellow-800">
-            <strong>Note:</strong> Sentry is only active in production by
-            default. To test in development, temporarily modify{" "}
-            <code>src/lib/sentry.ts</code> line 6: change{" "}
-            <code>if (!import.meta.env.PROD)</code> to <code>if (false)</code>
-          </p>
-        </div>
+        <p className="bg-yellow-50 border border-yellow-200 p-4 mb-6 rounded-lg text-sm text-yellow-800">
+          <strong>Note:</strong> Sentry is only active in production by
+          default. To test in development, temporarily modify{" "}
+          <code>src/lib/sentry.ts</code> line 6: change{" "}
+          <code>if (!import.meta.env.PROD)</code> to <code>if (false)</code>
+        </p>
 
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4">Test Actions</h2>

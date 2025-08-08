@@ -75,8 +75,7 @@ const EducationPortfolioDetail: React.FC = () => {
             alt={PORTFOLIO.name}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-40" />
-          <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-6 text-white">
             <h1 className="text-3xl font-bold mb-2">{PORTFOLIO.name}</h1>
             <p className="text-lg opacity-90">{PORTFOLIO.description}</p>
           </div>

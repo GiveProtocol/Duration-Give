@@ -44,14 +44,10 @@ const ComingSoon: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative">
       {/* Animated Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="relative w-full h-full">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.1),transparent_50%)] animate-pulse" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(167,139,250,0.1),transparent_50%)]" />
-        </div>
-      </div>
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.1),transparent_50%)] animate-pulse" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_80%_20%,rgba(167,139,250,0.1),transparent_50%)]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Logo */}
@@ -71,40 +67,38 @@ const ComingSoon: React.FC = () => {
             </p>
 
             {/* Email Form */}
-            <div className="max-w-md mx-auto">
-              <form onSubmit={handleSubmit} className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  disabled={status === 'loading' || status === 'success'}
-                />
-                <button
-                  type="submit"
-                  disabled={status === 'loading' || status === 'success'}
-                  className={`absolute right-2 top-2 px-4 py-1 rounded-md transition-all ${
-                    status === 'loading' 
-                      ? 'bg-gray-100 cursor-wait'
-                      : status === 'success'
-                      ? 'bg-green-500 text-white'
-                      : 'bg-indigo-600 text-white hover:bg-indigo-700'
-                  }`}
-                >
-                  Notify Me
-                </button>
-              </form>
+            <form onSubmit={handleSubmit} className="relative max-w-md mx-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                disabled={status === 'loading' || status === 'success'}
+              />
+              <button
+                type="submit"
+                disabled={status === 'loading' || status === 'success'}
+                className={`absolute right-2 top-2 px-4 py-1 rounded-md transition-all ${
+                  status === 'loading' 
+                    ? 'bg-gray-100 cursor-wait'
+                    : status === 'success'
+                    ? 'bg-green-500 text-white'
+                    : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                }`}
+              >
+                Notify Me
+              </button>
+            </form>
 
-              {status === 'success' && (
-                <p className="mt-2 text-green-600">
-                  Thanks for joining! We&apos;ll keep you updated.
-                </p>
-              )}
-              {status === 'error' && (
-                <p className="mt-2 text-red-600">{errorMessage}</p>
-              )}
-            </div>
+            {status === 'success' && (
+              <p className="mt-2 text-green-600 text-center">
+                Thanks for joining! We&apos;ll keep you updated.
+              </p>
+            )}
+            {status === 'error' && (
+              <p className="mt-2 text-red-600 text-center">{errorMessage}</p>
+            )}
 
             {/* Features Preview */}
             <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -125,23 +119,21 @@ const ComingSoon: React.FC = () => {
         </main>
 
         {/* Footer */}
-        <footer className="py-12">
-          <div className="flex flex-col items-center space-y-4">
-            <div className="flex space-x-6">
-              <a href="https://giveprotocol.bsky.social" className="text-gray-400 hover:text-gray-600">
-                <Bird className="h-6 w-6" />
-              </a>
-              <a href="https://github.com/giveprotocol" className="text-gray-400 hover:text-gray-600">
-                <Github className="h-6 w-6" />
-              </a>
-              <a href="https://discord.gg/giveprotocol" className="text-gray-400 hover:text-gray-600">
-                <Discord className="h-6 w-6" />
-              </a>
-            </div>
-            <p className="text-sm text-gray-500">
-              © {new Date().getFullYear()} Give Protocol. All rights reserved.
-            </p>
+        <footer className="py-12 text-center">
+          <div className="flex justify-center space-x-6 mb-4">
+            <a href="https://giveprotocol.bsky.social" className="text-gray-400 hover:text-gray-600">
+              <Bird className="h-6 w-6" />
+            </a>
+            <a href="https://github.com/giveprotocol" className="text-gray-400 hover:text-gray-600">
+              <Github className="h-6 w-6" />
+            </a>
+            <a href="https://discord.gg/giveprotocol" className="text-gray-400 hover:text-gray-600">
+              <Discord className="h-6 w-6" />
+            </a>
           </div>
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} Give Protocol. All rights reserved.
+          </p>
         </footer>
       </div>
     </div>

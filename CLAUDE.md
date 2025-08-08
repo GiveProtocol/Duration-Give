@@ -443,6 +443,41 @@ Before writing ANY code, verify:
 5. **Test After Extraction**: Always run linter after component extraction to catch new performance issues introduced by the refactoring.
 
 **⚠️ WARNING: Component extraction WITHOUT proper memoization creates cascade failures - one JS-0415 (nesting) violation becomes 16+ JS-0417 (arrow function) violations. This anti-pattern makes the code quality WORSE, not better.**
+
+### 🎯 CRITICAL: JSX Nesting Prevention Strategy
+
+**PREFERRED: Structure Flattening (prevents recurring violations)**
+```typescript
+// WRONG - 5 levels of nesting
+<nav>
+  <div className="container">
+    <div className="flex justify-between">
+      <div className="flex items-center">
+        <div className="navigation"> // Level 5 - VIOLATION
+          <Links />
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+// CORRECT - Combine div responsibilities into fewer levels
+<nav>
+  <div className="container flex justify-between items-center">
+    <div className="flex items-center">
+      <div className="navigation"> // Level 4 - COMPLIANT
+        <Links />
+      </div>
+    </div>
+  </div>
+</nav>
+```
+
+**Strategy Priority Order:**
+1. **Combine CSS classes** - Merge wrapper div responsibilities
+2. **Remove unnecessary wrappers** - Question every div's necessity  
+3. **Use CSS Grid/Flexbox** - Replace nested layout divs
+4. **LAST RESORT: Extract components** - Only with proper memoization
 4. **Test Semantics**: In tests that intentionally violate patterns (overwrites, duplicates), add verification steps to make intent clear
 5. **Accessibility Patterns**:
    - Radio groups: `<fieldset><legend>`

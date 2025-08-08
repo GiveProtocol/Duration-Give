@@ -329,31 +329,28 @@ export const AppNavbar: React.FC = () => {
       aria-label="Application navigation"
     >
       <div 
-        className="max-w-7xl mx-auto px-4"
+        className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16"
         onKeyDown={handleKeyDown}
         role="menubar"
         tabIndex={0}
       >
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <NavHeader />
-            {/* Desktop Navigation */}
-            <div className="hidden md:ml-6 md:flex md:space-x-2">
-              <DesktopNavLinks
-                isLimitedNavPage={isLimitedNavPage}
-                isActive={isActive}
-                userType={userType}
-                handleDashboardClick={handleDashboardClick}
-                t={t}
-              />
-            </div>
+        <div className="flex items-center">
+          <NavHeader />
+          <div className="hidden md:ml-6 md:flex md:space-x-2">
+            <DesktopNavLinks
+              isLimitedNavPage={isLimitedNavPage}
+              isActive={isActive}
+              userType={userType}
+              handleDashboardClick={handleDashboardClick}
+              t={t}
+            />
           </div>
-          <NavActions 
-            isMenuOpen={isMenuOpen}
-            toggleMenu={toggleMenu}
-            menuButtonRef={menuButtonRef}
-          />
         </div>
+        <NavActions 
+          isMenuOpen={isMenuOpen}
+          toggleMenu={toggleMenu}
+          menuButtonRef={menuButtonRef}
+        />
       </div>
 
       {/* Mobile menu */}

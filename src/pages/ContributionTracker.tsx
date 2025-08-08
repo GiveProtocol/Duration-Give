@@ -87,17 +87,15 @@ export const ContributionTracker: React.FC = () => {
       {/* Filters */}
       <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
         <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-          <div className="flex-grow">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <Input
-                type="text"
-                placeholder="Search contributors..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
+          <div className="flex-grow relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <Input
+              type="text"
+              placeholder="Search contributors..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
           </div>
           
           <TimeRangeFilter value={timeRange} onChange={(value) => setTimeRange(value as TimeRange)} />
@@ -137,62 +135,56 @@ export const ContributionTracker: React.FC = () => {
             </label>
           </div>
           
-          {isConnected && (
-            <div>
-              {alias ? (
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600">Your alias: <span className="font-medium text-indigo-600">{alias}</span></span>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={handleChangeAlias}
-                  >
-                    Change
-                  </Button>
-                </div>
-              ) : (
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={handleShowAliasModal}
-                >
-                  Set Wallet Alias
-                </Button>
-              )}
+          {isConnected && alias ? (
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-600">Your alias: <span className="font-medium text-indigo-600">{alias}</span></span>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={handleChangeAlias}
+              >
+                Change
+              </Button>
             </div>
-          )}
+          ) : isConnected ? (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleShowAliasModal}
+            >
+              Set Wallet Alias
+            </Button>
+          ) : null}
         </div>
       </div>
 
       {/* Alias Modal */}
       {showAliasModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-            <div className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Set Wallet Alias</h2>
-              <p className="text-gray-600 mb-4">
-                Your alias will be displayed on the contribution tracker instead of your wallet address.
-              </p>
-              <Input
-                label="Alias"
-                value={newAlias}
-                onChange={(e) => setNewAlias(e.target.value)}
-                placeholder="Enter your preferred alias"
-                className="mb-4"
-              />
-              <div className="flex justify-end space-x-3">
-                <Button
-                  variant="secondary"
-                  onClick={handleHideAliasModal}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleSetAlias}
-                >
-                  Save Alias
-                </Button>
-              </div>
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Set Wallet Alias</h2>
+            <p className="text-gray-600 mb-4">
+              Your alias will be displayed on the contribution tracker instead of your wallet address.
+            </p>
+            <Input
+              label="Alias"
+              value={newAlias}
+              onChange={(e) => setNewAlias(e.target.value)}
+              placeholder="Enter your preferred alias"
+              className="mb-4"
+            />
+            <div className="flex justify-end space-x-3">
+              <Button
+                variant="secondary"
+                onClick={handleHideAliasModal}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSetAlias}
+              >
+                Save Alias
+              </Button>
             </div>
           </div>
         </div>
