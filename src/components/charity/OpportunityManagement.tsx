@@ -120,12 +120,6 @@ export const OpportunityManagement: React.FC = () => {
 
   const handleShowForm = useCallback(() => setShowForm(true), []);
 
-  useEffect(() => {
-    if (profile?.id) {
-      fetchOpportunities();
-    }
-  }, [profile?.id, fetchOpportunities]);
-
   const fetchOpportunities = useCallback(async () => {
     try {
       setLoading(true);
@@ -145,6 +139,12 @@ export const OpportunityManagement: React.FC = () => {
       setLoading(false);
     }
   }, [profile?.id]);
+
+  useEffect(() => {
+    if (profile?.id) {
+      fetchOpportunities();
+    }
+  }, [profile?.id, fetchOpportunities]);
 
   const handleCreateSuccess = () => {
     setShowForm(false);

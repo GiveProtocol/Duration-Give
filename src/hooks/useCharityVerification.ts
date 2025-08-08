@@ -19,6 +19,31 @@ export function useCharityVerification() {
   const { showToast } = useToast();
   const { profile } = useProfile();
 
+  const fetchDocuments = async () => {
+    if (!profile?.id) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('charity_documents')
+        .select('*')
+        .eq('charity_id', profile.id)
+        .order('uploaded_at', { ascending: false });
+
+      if (error) throw error;
+
+      setDocuments(data.map(doc => ({
+        id: doc.id,
+        type: doc.document_type,
+        url: doc.document_url,
+        verified: doc.verified,
+        uploadedAt: new Date(doc.uploaded_at)
+      })));
+    } catch (error) {
+      showToast('error', 'Failed to fetch documents');
+      throw error;
+    }
+  };
+
   const uploadDocument = async (file: File, type: DocumentType) => {
     if (!profile?.id) {
       throw new Error('Profile not found');
@@ -67,31 +92,6 @@ export function useCharityVerification() {
       throw error;
     } finally {
       setUploading(false);
-    }
-  };
-
-  const fetchDocuments = async () => {
-    if (!profile?.id) return;
-
-    try {
-      const { data, error } = await supabase
-        .from('charity_documents')
-        .select('*')
-        .eq('charity_id', profile.id)
-        .order('uploaded_at', { ascending: false });
-
-      if (error) throw error;
-
-      setDocuments(data.map(doc => ({
-        id: doc.id,
-        type: doc.document_type,
-        url: doc.document_url,
-        verified: doc.verified,
-        uploadedAt: new Date(doc.uploaded_at)
-      })));
-    } catch (error) {
-      showToast('error', 'Failed to fetch documents');
-      throw error;
     }
   };
 

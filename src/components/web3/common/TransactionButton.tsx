@@ -3,6 +3,11 @@ import { DivideIcon as LucideIcon } from 'lucide-react';
 import { Button } from '../../ui/Button';
 import { useWeb3 } from '../../../contexts/Web3Context';
 
+// Import cn utility
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
+}
+
 interface TransactionButtonProps {
   icon: LucideIcon;
   label: string;
@@ -34,8 +39,3 @@ export const TransactionButton: React.FC<TransactionButtonProps> = ({
     </Button>
   );
 };
-
-// Import cn utility
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ');
-}

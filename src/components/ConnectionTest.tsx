@@ -9,10 +9,6 @@ export const ConnectionTest: React.FC = () => {
   const [supabaseError, setSupabaseError] = useState<string>('');
   const { connect, isConnected, chainId, error: web3Error } = useWeb3();
 
-  useEffect(() => {
-    testSupabaseConnection();
-  }, []);
-
   const testSupabaseConnection = async () => {
     try {
       const { data: _data, error } = await supabase.from('profiles').select('count');
@@ -23,6 +19,10 @@ export const ConnectionTest: React.FC = () => {
       setSupabaseError(err instanceof Error ? err.message : 'Failed to connect to Supabase');
     }
   };
+
+  useEffect(() => {
+    testSupabaseConnection();
+  }, []);
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">

@@ -19,6 +19,26 @@ export function useTransactionTracking() {
   const { showToast } = useToast();
   const { profile } = useProfile();
 
+  const fetchTransactions = useCallback(async () => {
+    if (!profile?.id) return;
+
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('user_id', profile.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setTransactions(data);
+    } catch (error) {
+      showToast('error', 'Failed to fetch transactions');
+    } finally {
+      setLoading(false);
+    }
+  }, [profile?.id, showToast]);
+
   const trackTransaction = async (
     type: Transaction['type'],
     amount: number,
@@ -48,26 +68,6 @@ export function useTransactionTracking() {
       throw error;
     }
   };
-
-  const fetchTransactions = useCallback(async () => {
-    if (!profile?.id) return;
-
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('transactions')
-        .select('*')
-        .eq('user_id', profile.id)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setTransactions(data);
-    } catch (error) {
-      showToast('error', 'Failed to fetch transactions');
-    } finally {
-      setLoading(false);
-    }
-  }, [profile?.id, showToast]);
 
   useEffect(() => {
     fetchTransactions();

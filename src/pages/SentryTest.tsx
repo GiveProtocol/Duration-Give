@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/Button";
 import { Logger } from "@/utils/logger";
 import { captureCustomEvent } from "@/lib/sentry";
@@ -13,15 +13,15 @@ export default function SentryTest() {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const { user } = useAuth();
 
-  const addResult = (result: string) => {
+  const addResult = useCallback((result: string) => {
     const newResult: TestResult = {
       id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       message: `${new Date().toLocaleTimeString()}: ${result}`,
     };
     setTestResults((prev) => [...prev, newResult]);
-  };
+  }, []);
 
-  const testJavaScriptError = () => {
+  const testJavaScriptError = useCallback(() => {
     try {
       addResult("Throwing JavaScript error...");
       throw new Error(
@@ -31,9 +31,9 @@ export default function SentryTest() {
       addResult("Error thrown and should be captured by Sentry");
       throw error; // Re-throw to let Sentry catch it
     }
-  };
+  }, [addResult]);
 
-  const testLoggerInfo = () => {
+  const testLoggerInfo = useCallback(() => {
     addResult("Sending info log...");
     Logger.info("Test Info Log", {
       testType: "manual",
@@ -41,9 +41,9 @@ export default function SentryTest() {
       user: user?.email,
     });
     addResult("Info log sent to Logger (and Sentry in production)");
-  };
+  }, [addResult, user?.email]);
 
-  const testLoggerWarning = () => {
+  const testLoggerWarning = useCallback(() => {
     addResult("Sending warning log...");
     Logger.warn("Test Warning Log", {
       testType: "manual",
@@ -51,9 +51,9 @@ export default function SentryTest() {
       details: "This is a test warning",
     });
     addResult("Warning log sent to Logger (and Sentry in production)");
-  };
+  }, [addResult]);
 
-  const testLoggerError = () => {
+  const testLoggerError = useCallback(() => {
     addResult("Sending error log...");
     Logger.error("Test Error Log", {
       error: new Error("Test error object"),
@@ -61,9 +61,9 @@ export default function SentryTest() {
       context: "SentryTest component",
     });
     addResult("Error log sent to Logger (and Sentry in production)");
-  };
+  }, [addResult]);
 
-  const testCustomEvent = () => {
+  const testCustomEvent = useCallback(() => {
     addResult("Sending custom event...");
     captureCustomEvent("test_custom_event", {
       action: "button_click",
@@ -71,17 +71,17 @@ export default function SentryTest() {
       timestamp: new Date().toISOString(),
     });
     addResult("Custom event sent directly to Sentry (in production)");
-  };
+  }, [addResult]);
 
-  const testAsyncError = async () => {
+  const testAsyncError = useCallback(async () => {
     addResult("Triggering async error...");
     setTimeout(() => {
       throw new Error("Test Async Error - Delayed error after 2 seconds");
     }, 2000);
     addResult("Async error will be thrown in 2 seconds...");
-  };
+  }, [addResult]);
 
-  const testNetworkError = async () => {
+  const testNetworkError = useCallback(async () => {
     addResult("Triggering network error...");
     try {
       await fetch("https://nonexistent-api-endpoint.example.com/test");
@@ -89,19 +89,19 @@ export default function SentryTest() {
       addResult("Network error occurred and should be captured");
       Logger.error("Network request failed", { error });
     }
-  };
+  }, [addResult]);
 
-  const testReferenceError = () => {
+  const testReferenceError = useCallback(() => {
     addResult("Triggering reference error...");
     // @ts-expect-error - Intentionally calling undefined function to test Sentry's ReferenceError capture in production
     // eslint-disable-next-line no-undef
     nonExistentFunction(); // This will cause a ReferenceError
-  };
+  }, [addResult]);
 
-  const clearResults = () => {
+  const clearResults = useCallback(() => {
     setTestResults([]);
     addResult("Test results cleared");
-  };
+  }, [addResult]);
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">

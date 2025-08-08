@@ -50,6 +50,19 @@ const fetchLeaderboardData = async (): Promise<LeaderboardEntry[]> => {
   ];
 };
 
+const getRankColor = (rank: number): string => {
+  switch (rank) {
+    case 1:
+      return "bg-yellow-500";
+    case 2:
+      return "bg-gray-400";
+    case 3:
+      return "bg-amber-600";
+    default:
+      return "bg-gray-300";
+  }
+};
+
 export const DonationLeaderboard: React.FC = () => {
   const {
     data: leaderboard,
@@ -170,17 +183,4 @@ export const DonationLeaderboard: React.FC = () => {
       </div>
     </div>
   );
-};
-
-const getRankColor = (rank: number): string => {
-  switch (rank) {
-    case 1:
-      return "bg-yellow-500";
-    case 2:
-      return "bg-gray-400";
-    case 3:
-      return "bg-amber-600";
-    default:
-      return "bg-gray-300";
-  }
 };
