@@ -183,13 +183,13 @@ Create a `.env` file with required variables:
 
    ```typescript
    // WRONG
-   const message: string = 'Operation cancelled by user';
+   const message: string = "Operation cancelled by user";
    const active: boolean = true;
    const count: number = 0;
 
    // CORRECT
-   const message = 'Operation cancelled by user';
-   const active = true;  
+   const message = "Operation cancelled by user";
+   const active = true;
    const count = 0;
    ```
 
@@ -234,7 +234,7 @@ Create a `.env` file with required variables:
     ```typescript
     // WRONG (creates new function on every render)
     <Button onClick={(e) => handleClick(e)}>Click</Button>
-    
+
     // CORRECT (use useCallback)
     const handleClick = useCallback((e: React.MouseEvent) => {
       // handle click
@@ -247,21 +247,24 @@ Create a `.env` file with required variables:
     ```typescript
     // WRONG
     if (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       process.exit(1);
     }
-    
+
     // CORRECT
     class ScriptError extends Error {
-      constructor(message: string, public exitCode: number = 1) {
+      constructor(
+        message: string,
+        public exitCode: number = 1,
+      ) {
         super(message);
       }
     }
-    
+
     if (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       process.exitCode = 1;
-      throw new ScriptError('Operation failed');
+      throw new ScriptError("Operation failed");
     }
     ```
 
@@ -270,7 +273,7 @@ Create a `.env` file with required variables:
     ```typescript
     // WRONG
     {items.map((item, index) => <Item key={index} />)}
-    
+
     // CORRECT
     {items.map((item) => <Item key={item.id} />)}
     // OR generate stable IDs
@@ -409,10 +412,10 @@ Before writing ANY code, verify:
 
 2. **Documentation Strategy**: For 400+ documentation warnings, use `.deepsource.toml` configuration to skip low-value cases and focus documentation on:
    - Authentication hooks and contexts
-   - Web3/blockchain utilities  
+   - Web3/blockchain utilities
    - Security and validation functions
    - Complex business logic
-   Skip documentation for test files, simple UI components, and internal helpers.
+     Skip documentation for test files, simple UI components, and internal helpers.
 
 3. **Tool Configuration First**: Before mass fixes, configure quality tools properly:
    - Verify configuration options against official docs
@@ -426,7 +429,7 @@ Before writing ANY code, verify:
 **When working with database/performance optimization scripts:**
 
 1. **Complete Implementation Over Removal**: Scripts like `fix-supabase-performance.js` often contain "unused" variables that represent incomplete but critical functionality:
-   - `policyFixes` mapping was intended for RLS optimization 
+   - `policyFixes` mapping was intended for RLS optimization
    - `rlsPatterns` contained reusable security patterns
    - `multiplePermissivePolicies` identified consolidation opportunities
    - Always implement the intended functionality rather than removing as "unused"
