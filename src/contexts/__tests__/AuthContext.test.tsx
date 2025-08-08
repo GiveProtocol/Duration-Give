@@ -163,7 +163,9 @@ describe('AuthContext', () => {
     });
 
     it('handles auth state changes', async () => {
-      let authCallback: (event: string, session: { user: typeof MOCK_USER } | null) => void = () => {};
+      let authCallback: (_event: string, _session: { user: typeof MOCK_USER } | null) => void = () => {
+        // Initial empty callback - will be replaced by mockImplementation
+      };
       
       mockSupabase.auth.onAuthStateChange.mockImplementation((callback) => {
         authCallback = callback;
@@ -184,7 +186,9 @@ describe('AuthContext', () => {
     });
 
     it('handles sign out auth state change', async () => {
-      let authCallback: (event: string, session: { user: typeof MOCK_USER } | null) => void = () => {};
+      let authCallback: (_event: string, _session: { user: typeof MOCK_USER } | null) => void = () => {
+        // Initial empty callback - will be replaced by mockImplementation
+      };
       
       mockSupabase.auth.onAuthStateChange.mockImplementation((callback) => {
         authCallback = callback;

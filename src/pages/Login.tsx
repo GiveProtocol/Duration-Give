@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, Navigate, useLocation, useSearchParams } from 'react-router-dom';
 import { Building2, Users } from 'lucide-react';
 import { DonorLogin } from '../components/auth/DonorLogin';
@@ -21,6 +21,15 @@ const Login: React.FC = () => {
   // Get the intended destination from location state, or default to dashboard
   const from = location.state?.from?.pathname || (userType === 'charity' ? '/charity-portal' : '/give-dashboard');
 
+  // Memoized handlers for forgot username/password
+  const handleForgotUsername = useCallback(() => {
+    setView('forgotUsername');
+  }, []);
+
+  const handleForgotPassword = useCallback(() => {
+    setView('forgotPassword');
+  }, []);
+
   // Set view based on URL parameter on mount and when it changes
   useEffect(() => {
     if (typeParam === 'charity') {
@@ -36,7 +45,7 @@ const Login: React.FC = () => {
   }
 
   // LoginHelpers component that provides navigation links to help options
-  const LoginHelpers: React.FC<{ setView: (_view: View) => void }> = ({ setView }) => (
+  const LoginHelpers: React.FC = () => (
     <div className="mt-6 space-y-4">
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
@@ -49,13 +58,13 @@ const Login: React.FC = () => {
       
       <div className="grid grid-cols-2 gap-4">
         <button
-          onClick={() => setView('forgotUsername')}
+          onClick={handleForgotUsername}
           className="text-sm text-indigo-600 hover:text-indigo-500"
         >
           Forgot username?
         </button>
         <button
-          onClick={() => setView('forgotPassword')}
+          onClick={handleForgotPassword}
           className="text-sm text-indigo-600 hover:text-indigo-500"
         >
           Forgot password?
@@ -123,7 +132,7 @@ const Login: React.FC = () => {
               </p>
             </div>
             <DonorLogin />
-            <LoginHelpers setView={setView} />
+            <LoginHelpers />
           </>
         );
       case 'charity':
@@ -142,7 +151,7 @@ const Login: React.FC = () => {
               </p>
             </div>
             <CharityLogin />
-            <LoginHelpers setView={setView} />
+            <LoginHelpers />
           </>
         );
     }
