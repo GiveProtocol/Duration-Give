@@ -103,7 +103,14 @@ const MobileNavLinks: React.FC<{
   handleDashboardClick: (_e: React.MouseEvent) => void;
   setIsMenuOpen: (_isOpen: boolean) => void;
   t: (_key: string) => string;
-}> = ({ isLimitedNavPage, isActive, userType, handleDashboardClick, setIsMenuOpen, t }) => {
+}> = ({
+  isLimitedNavPage,
+  isActive,
+  userType,
+  handleDashboardClick,
+  setIsMenuOpen,
+  t,
+}) => {
   const handleLinkClick = () => setIsMenuOpen(false);
 
   if (isLimitedNavPage) {
@@ -274,7 +281,7 @@ export const AppNavbar: React.FC = () => {
       className="bg-background-primary border-b border-gray-200 shadow-sm"
       aria-label="Application navigation"
     >
-      <div 
+      <div
         className="max-w-7xl mx-auto px-4"
         onKeyDown={handleKeyDown}
         role="menubar"
