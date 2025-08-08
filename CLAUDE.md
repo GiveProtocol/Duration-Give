@@ -397,6 +397,52 @@ Before writing ANY code, verify:
 1. **Group by Type**: Fix similar issues together (all Promise misuse, all accessibility issues, etc.)
 2. **Use TodoWrite Tool**: Track progress when handling multiple files/issues
 3. **Verify Method Signatures**: Before fixing Promise issues, check if methods are actually async
+
+### 🚨 CRITICAL: Component Extraction Anti-Pattern (Session Learned)
+
+**When extracting components to reduce JSX nesting depth, ALWAYS:**
+
+1. **Memoize All Callbacks First**: Before extracting components, wrap all event handlers in `useCallback`:
+   ```typescript
+   // WRONG - Creates new function on every render
+   const handleClick = () => setIsOpen(false);
+   
+   // CORRECT - Memoized function reference
+   const handleClick = useCallback(() => setIsOpen(false), []);
+   ```
+
+2. **Memoize Function Props**: When passing functions as props, ensure they're stable references:
+   ```typescript
+   // WRONG - isActive recreated on every render
+   const isActive = (path: string) => location.pathname === path ? "active" : "";
+   
+   // CORRECT - Memoized with dependencies
+   const isActive = useCallback((path: string) => 
+     location.pathname === path ? "active" : ""
+   , [location.pathname]);
+   ```
+
+3. **Replace Anchors Acting as Buttons**: Use semantic HTML:
+   ```typescript
+   // WRONG - Anchor without navigation
+   <a href="#" onClick={handleDashboardClick}>Dashboard</a>
+   
+   // CORRECT - Button for actions
+   <button onClick={handleDashboardClick}>Dashboard</button>
+   ```
+
+4. **Extract Components Strategically**: When reducing nesting, create wrapper components that reduce depth without creating new prop drilling issues:
+   ```typescript
+   // Good extraction - reduces nesting by 2 levels
+   const MobileMenu = ({ isOpen, children }) => {
+     if (!isOpen) return null;
+     return <div className="mobile-menu">{children}</div>;
+   };
+   ```
+
+5. **Test After Extraction**: Always run linter after component extraction to catch new performance issues introduced by the refactoring.
+
+**⚠️ WARNING: Component extraction WITHOUT proper memoization creates cascade failures - one JS-0415 (nesting) violation becomes 16+ JS-0417 (arrow function) violations. This anti-pattern makes the code quality WORSE, not better.**
 4. **Test Semantics**: In tests that intentionally violate patterns (overwrites, duplicates), add verification steps to make intent clear
 5. **Accessibility Patterns**:
    - Radio groups: `<fieldset><legend>`

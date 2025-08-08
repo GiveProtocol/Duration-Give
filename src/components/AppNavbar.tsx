@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "./Logo";
 import { ConnectButton } from "./web3/ConnectButton";
@@ -13,7 +13,7 @@ const DesktopNavLinks: React.FC<{
   isLimitedNavPage: boolean;
   isActive: (_path: string) => string;
   userType: string | null;
-  handleDashboardClick: (_e: React.MouseEvent) => void;
+  handleDashboardClick: () => void;
   t: (_key: string) => string;
 }> = ({ isLimitedNavPage, isActive, userType, handleDashboardClick, t }) => {
   if (isLimitedNavPage) {
@@ -67,15 +67,14 @@ const DesktopNavLinks: React.FC<{
       >
         <span>{t("nav.contributions")}</span>
       </Link>
-      <a
-        href="#"
+      <button
         onClick={handleDashboardClick}
         className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${
           isActive("/give-dashboard") || isActive("/charity-portal")
         }`}
       >
         <span>{t("nav.dashboard")}</span>
-      </a>
+      </button>
       {userType === "donor" && (
         <Link
           to="/scheduled-donations"
@@ -100,11 +99,14 @@ const MobileNavLinks: React.FC<{
   isLimitedNavPage: boolean;
   isActive: (_path: string) => string;
   userType: string | null;
-  handleDashboardClick: (_e: React.MouseEvent) => void;
-  setIsMenuOpen: (_isOpen: boolean) => void;
+  handleDashboardClick: () => void;
+  handleLinkClick: () => void;
   t: (_key: string) => string;
-}> = ({ isLimitedNavPage, isActive, userType, handleDashboardClick, setIsMenuOpen, t }) => {
-  const handleLinkClick = () => setIsMenuOpen(false);
+}> = ({ isLimitedNavPage, isActive, userType, handleDashboardClick, handleLinkClick, t }) => {
+  const handleDashboardAndClose = useCallback(() => {
+    handleLinkClick();
+    handleDashboardClick();
+  }, [handleLinkClick, handleDashboardClick]);
 
   if (isLimitedNavPage) {
     return (
@@ -164,18 +166,14 @@ const MobileNavLinks: React.FC<{
       >
         {t("nav.contributions")}
       </Link>
-      <a
-        href="#"
-        onClick={(e) => {
-          handleLinkClick();
-          handleDashboardClick(e);
-        }}
-        className={`block px-3 py-3 rounded-md text-base font-medium ${
+      <button
+        onClick={handleDashboardAndClose}
+        className={`block w-full text-left px-3 py-3 rounded-md text-base font-medium ${
           isActive("/give-dashboard") || isActive("/charity-portal")
         }`}
       >
         {t("nav.dashboard")}
-      </a>
+      </button>
       {userType === "donor" && (
         <Link
           to="/scheduled-donations"
@@ -194,6 +192,27 @@ const MobileNavLinks: React.FC<{
         {t("nav.governance")}
       </Link>
     </>
+  );
+};
+
+// Mobile menu wrapper to reduce nesting
+const MobileMenu: React.FC<{
+  isMenuOpen: boolean;
+  children: React.ReactNode;
+}> = ({ isMenuOpen, children }) => {
+  if (!isMenuOpen) return null;
+  
+  return (
+    <div
+      className="md:hidden"
+      id="mobile-menu"
+      role="navigation"
+      aria-label="Mobile navigation"
+    >
+      <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg rounded-b-lg">
+        {children}
+      </div>
+    </div>
   );
 };
 
@@ -220,6 +239,37 @@ const MobileMenuButton: React.FC<{
   </button>
 );
 
+// Nav header component to reduce nesting
+const NavHeader: React.FC = () => (
+  <Link
+    to="/"
+    className="flex items-center"
+    aria-label="Give Protocol home"
+  >
+    <Logo className="h-8 w-8" />
+    <span className="ml-2 text-2xl font-bold text-primary-900">
+      Give Protocol
+    </span>
+  </Link>
+);
+
+// Nav actions component
+const NavActions: React.FC<{
+  isMenuOpen: boolean;
+  toggleMenu: () => void;
+  menuButtonRef: React.RefObject<HTMLButtonElement>;
+}> = ({ isMenuOpen, toggleMenu, menuButtonRef }) => (
+  <div className="flex items-center space-x-2">
+    <SettingsMenu />
+    <ConnectButton />
+    <MobileMenuButton
+      isMenuOpen={isMenuOpen}
+      toggleMenu={toggleMenu}
+      menuButtonRef={menuButtonRef}
+    />
+  </div>
+);
+
 export const AppNavbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -229,21 +279,26 @@ export const AppNavbar: React.FC = () => {
   const { userType } = useAuth();
 
   // Check if current page should only show limited navigation
-  const isLimitedNavPage = [
+  const isLimitedNavPage = useMemo(() => [
     "/about",
     "/legal",
     "/privacy",
     "/governance",
-  ].includes(location.pathname);
+  ].includes(location.pathname), [location.pathname]);
 
-  const isActive = (path: string) =>
+  const isActive = useCallback((path: string) =>
     location.pathname === path
       ? "bg-primary-100 text-primary-900"
-      : "text-gray-700 hover:bg-primary-50";
+      : "text-gray-700 hover:bg-primary-50"
+  , [location.pathname]);
 
-  const toggleMenu = () => {
+  const toggleMenu = useCallback(() => {
     setIsMenuOpen(!isMenuOpen);
-  };
+  }, [isMenuOpen]);
+
+  const handleLinkClick = useCallback(() => {
+    setIsMenuOpen(false);
+  }, []);
 
   // Close menu when route changes
   useEffect(() => {
@@ -251,15 +306,14 @@ export const AppNavbar: React.FC = () => {
   }, [location]);
 
   // Handle keyboard navigation
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
       setIsMenuOpen(false);
     }
-  };
+  }, []);
 
   // Handle dashboard navigation based on user type
-  const handleDashboardClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleDashboardClick = useCallback(() => {
     if (userType === "admin") {
       navigate("/admin");
     } else if (userType === "charity") {
@@ -267,7 +321,7 @@ export const AppNavbar: React.FC = () => {
     } else {
       navigate("/give-dashboard");
     }
-  };
+  }, [userType, navigate]);
 
   return (
     <nav
@@ -282,17 +336,7 @@ export const AppNavbar: React.FC = () => {
       >
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link
-              to="/"
-              className="flex items-center"
-              aria-label="Give Protocol home"
-            >
-              <Logo className="h-8 w-8" />
-              <span className="ml-2 text-2xl font-bold text-primary-900">
-                Give Protocol
-              </span>
-            </Link>
-
+            <NavHeader />
             {/* Desktop Navigation */}
             <div className="hidden md:ml-6 md:flex md:space-x-2">
               <DesktopNavLinks
@@ -304,39 +348,25 @@ export const AppNavbar: React.FC = () => {
               />
             </div>
           </div>
-
-          <div className="flex items-center space-x-2">
-            <SettingsMenu />
-            <ConnectButton />
-            <MobileMenuButton
-              isMenuOpen={isMenuOpen}
-              toggleMenu={toggleMenu}
-              menuButtonRef={menuButtonRef}
-            />
-          </div>
+          <NavActions 
+            isMenuOpen={isMenuOpen}
+            toggleMenu={toggleMenu}
+            menuButtonRef={menuButtonRef}
+          />
         </div>
       </div>
 
       {/* Mobile menu */}
-      {isMenuOpen && (
-        <div
-          className="md:hidden"
-          id="mobile-menu"
-          role="navigation"
-          aria-label="Mobile navigation"
-        >
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg rounded-b-lg">
-            <MobileNavLinks
-              isLimitedNavPage={isLimitedNavPage}
-              isActive={isActive}
-              userType={userType}
-              handleDashboardClick={handleDashboardClick}
-              setIsMenuOpen={setIsMenuOpen}
-              t={t}
-            />
-          </div>
-        </div>
-      )}
+      <MobileMenu isMenuOpen={isMenuOpen}>
+        <MobileNavLinks
+          isLimitedNavPage={isLimitedNavPage}
+          isActive={isActive}
+          userType={userType}
+          handleDashboardClick={handleDashboardClick}
+          handleLinkClick={handleLinkClick}
+          t={t}
+        />
+      </MobileMenu>
     </nav>
   );
 };
