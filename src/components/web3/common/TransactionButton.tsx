@@ -1,11 +1,11 @@
-import React from 'react';
-import { DivideIcon as LucideIcon } from 'lucide-react';
-import { Button } from '../../ui/Button';
-import { useWeb3 } from '../../../contexts/Web3Context';
+import React from "react";
+import { DivideIcon as LucideIcon } from "lucide-react";
+import { Button } from "../../ui/Button";
+import { useWeb3 } from "../../../contexts/Web3Context";
 
 // Import cn utility
 function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 interface TransactionButtonProps {
@@ -21,7 +21,7 @@ export const TransactionButton: React.FC<TransactionButtonProps> = ({
   label,
   onClick,
   disabled,
-  className
+  className,
 }) => {
   const { isConnected } = useWeb3();
 
@@ -31,7 +31,7 @@ export const TransactionButton: React.FC<TransactionButtonProps> = ({
       disabled={disabled || !isConnected}
       className={cn(
         "shadow-sm hover:shadow-md rounded-md transition-all duration-200",
-        className
+        className,
       )}
       icon={<Icon className="h-5 w-5" />}
     >
