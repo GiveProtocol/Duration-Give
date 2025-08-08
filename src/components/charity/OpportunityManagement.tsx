@@ -19,18 +19,18 @@ interface OpportunityCardProps {
  * @param t - Translation function
  * @param formatLanguageName - Function to format language names
  */
-const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, formatLanguageName }) => (
+const OpportunityCard: React.FC<OpportunityCardProps> = ({
+  opportunity,
+  t,
+  formatLanguageName,
+}) => (
   <div className="border border-gray-200 rounded-lg p-4">
     <div className="flex justify-between items-start mb-4">
       <h3 className="text-lg font-medium text-gray-900 flex-grow">
         {opportunity.title}
       </h3>
       <div className="flex space-x-2 ml-4">
-        <Button
-          variant="secondary"
-          size="sm"
-          className="flex items-center"
-        >
+        <Button variant="secondary" size="sm" className="flex items-center">
           <Edit className="h-4 w-4 mr-1" />
           {t("common.edit", "Edit")}
         </Button>
@@ -44,7 +44,7 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, forma
         </Button>
       </div>
     </div>
-    
+
     <div className="flex items-center mb-2 text-sm text-gray-500">
       <Globe className="h-4 w-4 mr-1" />
       <span>
@@ -54,11 +54,9 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, forma
         )}
       </span>
     </div>
-    
-    <p className="mb-3 text-gray-600">
-      {opportunity.description}
-    </p>
-    
+
+    <p className="mb-3 text-gray-600">{opportunity.description}</p>
+
     <div className="mb-4 flex flex-wrap gap-2">
       {opportunity.skills.map((skill) => (
         <span
@@ -69,19 +67,27 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, t, forma
         </span>
       ))}
     </div>
-    
+
     <div className="flex flex-wrap gap-4 text-sm text-gray-500">
       <span>
-        <span className="font-medium">{t("volunteer.commitment", "Commitment")}:</span> {opportunity.commitment}
+        <span className="font-medium">
+          {t("volunteer.commitment", "Commitment")}:
+        </span>{" "}
+        {opportunity.commitment}
       </span>
       <span>
-        <span className="font-medium">{t("volunteer.location", "Location")}:</span> {opportunity.location}
+        <span className="font-medium">
+          {t("volunteer.location", "Location")}:
+        </span>{" "}
+        {opportunity.location}
       </span>
       <span>
-        <span className="font-medium">{t("volunteer.type", "Type")}:</span> {opportunity.type}
+        <span className="font-medium">{t("volunteer.type", "Type")}:</span>{" "}
+        {opportunity.type}
       </span>
       <span>
-        <span className="font-medium">{t("volunteer.status", "Status")}:</span> {opportunity.status}
+        <span className="font-medium">{t("volunteer.status", "Status")}:</span>{" "}
+        {opportunity.status}
       </span>
     </div>
   </div>
@@ -187,7 +193,7 @@ export const OpportunityManagement: React.FC = () => {
           ) : (
             <div className="space-y-4">
               {opportunities.map((opportunity) => (
-                <OpportunityCard 
+                <OpportunityCard
                   key={opportunity.id}
                   opportunity={opportunity}
                   t={t}

@@ -59,15 +59,21 @@ const GlobalWaterFoundation: React.FC = () => {
             <div className="grid grid-cols-3 gap-4 text-center">
               <div className="space-y-1">
                 <p className="text-sm text-gray-500">Total Donated</p>
-                <p className="text-xl font-bold text-gray-900">{formatCurrency(charity.stats.totalDonated)}</p>
+                <p className="text-xl font-bold text-gray-900">
+                  {formatCurrency(charity.stats.totalDonated)}
+                </p>
               </div>
               <div className="space-y-1">
                 <p className="text-sm text-gray-500">Donors</p>
-                <p className="text-xl font-bold text-gray-900">{charity.stats.donorCount}</p>
+                <p className="text-xl font-bold text-gray-900">
+                  {charity.stats.donorCount}
+                </p>
               </div>
               <div className="space-y-1">
                 <p className="text-sm text-gray-500">Projects</p>
-                <p className="text-xl font-bold text-gray-900">{charity.stats.projectsCompleted}</p>
+                <p className="text-xl font-bold text-gray-900">
+                  {charity.stats.projectsCompleted}
+                </p>
               </div>
             </div>
           </div>

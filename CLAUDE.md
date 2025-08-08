@@ -403,35 +403,41 @@ Before writing ANY code, verify:
 **When extracting components to reduce JSX nesting depth, ALWAYS:**
 
 1. **Memoize All Callbacks First**: Before extracting components, wrap all event handlers in `useCallback`:
+
    ```typescript
    // WRONG - Creates new function on every render
    const handleClick = () => setIsOpen(false);
-   
+
    // CORRECT - Memoized function reference
    const handleClick = useCallback(() => setIsOpen(false), []);
    ```
 
 2. **Memoize Function Props**: When passing functions as props, ensure they're stable references:
+
    ```typescript
    // WRONG - isActive recreated on every render
-   const isActive = (path: string) => location.pathname === path ? "active" : "";
-   
+   const isActive = (path: string) =>
+     location.pathname === path ? "active" : "";
+
    // CORRECT - Memoized with dependencies
-   const isActive = useCallback((path: string) => 
-     location.pathname === path ? "active" : ""
-   , [location.pathname]);
+   const isActive = useCallback(
+     (path: string) => (location.pathname === path ? "active" : ""),
+     [location.pathname],
+   );
    ```
 
 3. **Replace Anchors Acting as Buttons**: Use semantic HTML:
+
    ```typescript
    // WRONG - Anchor without navigation
    <a href="#" onClick={handleDashboardClick}>Dashboard</a>
-   
+
    // CORRECT - Button for actions
    <button onClick={handleDashboardClick}>Dashboard</button>
    ```
 
 4. **Extract Components Strategically**: When reducing nesting, create wrapper components that reduce depth without creating new prop drilling issues:
+
    ```typescript
    // Good extraction - reduces nesting by 2 levels
    const MobileMenu = ({ isOpen, children }) => {
@@ -447,6 +453,7 @@ Before writing ANY code, verify:
 ### 🎯 CRITICAL: JSX Nesting Prevention Strategy
 
 **PREFERRED: Structure Flattening (prevents recurring violations)**
+
 ```typescript
 // WRONG - 5 levels of nesting
 <nav>
@@ -474,16 +481,17 @@ Before writing ANY code, verify:
 ```
 
 **Strategy Priority Order:**
+
 1. **Combine CSS classes** - Merge wrapper div responsibilities
-2. **Remove unnecessary wrappers** - Question every div's necessity  
+2. **Remove unnecessary wrappers** - Question every div's necessity
 3. **Use CSS Grid/Flexbox** - Replace nested layout divs
 4. **LAST RESORT: Extract components** - Only with proper memoization
-4. **Test Semantics**: In tests that intentionally violate patterns (overwrites, duplicates), add verification steps to make intent clear
-5. **Accessibility Patterns**:
+5. **Test Semantics**: In tests that intentionally violate patterns (overwrites, duplicates), add verification steps to make intent clear
+6. **Accessibility Patterns**:
    - Radio groups: `<fieldset><legend>`
    - Single inputs: `<label><input/>Text</label>`
    - Custom components: Treat as controls and wrap with labels
-6. **Commit Patterns**: Group related fixes in single commits with descriptive messages explaining the rule violation and fix
+7. **Commit Patterns**: Group related fixes in single commits with descriptive messages explaining the rule violation and fix
 
 ### 🎯 Code Quality Issue Resolution Strategy (Session Learned)
 

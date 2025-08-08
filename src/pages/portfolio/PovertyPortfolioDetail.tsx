@@ -1,68 +1,77 @@
-import React from 'react';
-import { CharityCard } from '@/components/charity/CharityCard';
-import { DonationButton } from '@/components/web3/donation/DonationButton';
-import { formatCurrency } from '@/utils/money';
+import React from "react";
+import { CharityCard } from "@/components/charity/CharityCard";
+import { DonationButton } from "@/components/web3/donation/DonationButton";
+import { formatCurrency } from "@/utils/money";
 
 const PORTFOLIO = {
-  id: '2',
-  name: 'Poverty Relief Impact Fund',
-  description: 'Empowering communities through sustainable poverty alleviation programs and initiatives that create lasting change.',
-  category: 'Poverty Relief',
+  id: "2",
+  name: "Poverty Relief Impact Fund",
+  description:
+    "Empowering communities through sustainable poverty alleviation programs and initiatives that create lasting change.",
+  category: "Poverty Relief",
   totalDonated: 850000,
-  image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800'
+  image:
+    "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800",
 };
 
 const CHARITIES = [
   {
-    id: '6',
-    name: 'Global Hunger Initiative',
-    description: 'Combating food insecurity and malnutrition in vulnerable communities',
-    category: 'Poverty Relief',
-    image: 'https://images.unsplash.com/photo-1459183885421-5cc683b8dbba?auto=format&fit=crop&w=800',
+    id: "6",
+    name: "Global Hunger Initiative",
+    description:
+      "Combating food insecurity and malnutrition in vulnerable communities",
+    category: "Poverty Relief",
+    image:
+      "https://images.unsplash.com/photo-1459183885421-5cc683b8dbba?auto=format&fit=crop&w=800",
     verified: true,
-    country: 'United States',
-    causes: []
+    country: "United States",
+    causes: [],
   },
   {
-    id: '7',
-    name: 'Microfinance Empowerment Fund',
-    description: 'Providing microloans to entrepreneurs in developing regions',
-    category: 'Poverty Relief',
-    image: 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=800',
+    id: "7",
+    name: "Microfinance Empowerment Fund",
+    description: "Providing microloans to entrepreneurs in developing regions",
+    category: "Poverty Relief",
+    image:
+      "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=800",
     verified: true,
-    country: 'Bangladesh',
-    causes: []
+    country: "Bangladesh",
+    causes: [],
   },
   {
-    id: '8',
-    name: 'Housing for Humanity',
-    description: 'Building affordable housing for families in need',
-    category: 'Poverty Relief',
-    image: 'https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=800',
+    id: "8",
+    name: "Housing for Humanity",
+    description: "Building affordable housing for families in need",
+    category: "Poverty Relief",
+    image:
+      "https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=800",
     verified: true,
-    country: 'Mexico',
-    causes: []
+    country: "Mexico",
+    causes: [],
   },
   {
-    id: '9',
-    name: 'Community Development Alliance',
-    description: 'Supporting sustainable community development projects',
-    category: 'Poverty Relief',
-    image: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?auto=format&fit=crop&w=800',
+    id: "9",
+    name: "Community Development Alliance",
+    description: "Supporting sustainable community development projects",
+    category: "Poverty Relief",
+    image:
+      "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?auto=format&fit=crop&w=800",
     verified: true,
-    country: 'Kenya',
-    causes: []
+    country: "Kenya",
+    causes: [],
   },
   {
-    id: '10',
-    name: 'Economic Opportunity Fund',
-    description: 'Creating pathways to economic independence through job training',
-    category: 'Poverty Relief',
-    image: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=800',
+    id: "10",
+    name: "Economic Opportunity Fund",
+    description:
+      "Creating pathways to economic independence through job training",
+    category: "Poverty Relief",
+    image:
+      "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=800",
     verified: true,
-    country: 'India',
-    causes: []
-  }
+    country: "India",
+    causes: [],
+  },
 ];
 
 const PovertyPortfolioDetail: React.FC = () => {
