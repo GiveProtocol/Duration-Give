@@ -362,6 +362,16 @@ Before writing ANY code, verify:
 6. **Git Push Failures**: Always check for remote changes with `git status` before pushing. Use `git pull --rebase` to handle conflicts, but stash unstaged changes first.
 7. **DeepSource Violations**: The most common violations are JS-0323 ('any' types), JS-0356 (unused variables), JS-0339 (non-null assertions), JS-0331 (explicit type annotations), JS-0354 (unused expressions in tests), JS-0263 (process.exit usage), JS-0437 (array index as key), and JS-0417 (arrow functions in JSX). Always prefix unused variables with `_` and create proper TypeScript interfaces.
 
+#### 🔧 CRITICAL: DeepSource Configuration and Code Quality Patterns
+
+8. **DeepSource Configuration**: Always verify configuration options in `.deepsource.toml` against official documentation. Use correct `skip_doc_coverage` options: `["function-expression", "arrow-function-expression", "class-expression", "method-definition"]` instead of invalid options like `"test-function"`.
+9. **Strategic Over Complete**: When fixing 400+ code quality issues, prioritize strategically - implement functionality rather than removing unused code, focus documentation on critical exports (auth, Web3, security), and configure tools to skip low-value warnings.
+10. **Namespace Classes Pattern**: Classes used only for static methods should either: (a) have private constructor to prevent instantiation (for classes with state like Logger), or (b) be converted to const objects with `as const` (for pure utility functions like InputValidator).
+11. **Function Declaration Order**: Organize code to avoid "used before defined" issues by: (a) placing helper functions before their first usage, (b) moving component definitions before JSX usage, (c) restructuring files when necessary to maintain logical flow.
+12. **TypeScript Directive Best Practices**: Use `@ts-expect-error` instead of `@ts-ignore` for intentional errors in tests. Always include detailed explanations: `// @ts-expect-error - Intentionally calling undefined function to test Sentry's ReferenceError capture`.
+13. **Proper Type Inference**: Instead of `any`, use `typeof MOCK_USER` or create proper interfaces. For test callbacks, define exact signatures like `(event: string, session: { user: typeof MOCK_USER } | null) => void`.
+14. **React Fragment Optimization**: Remove unnecessary fragments that wrap single children - use `return children` instead of `return <>{children}</>` in components.
+
 #### 🔧 CRITICAL: SonarCloud/DeepSource Issue Patterns (Session Learned)
 
 8. **Promise Misuse (S6544)**: Always `await` Promise-returning methods in boolean conditions. Check method signatures - if they return `Promise<boolean>`, use `if (await method())` not `if (method())`.
@@ -390,6 +400,48 @@ Before writing ANY code, verify:
    - Single inputs: `<label><input/>Text</label>`
    - Custom components: Treat as controls and wrap with labels
 6. **Commit Patterns**: Group related fixes in single commits with descriptive messages explaining the rule violation and fix
+
+### 🎯 Code Quality Issue Resolution Strategy (Session Learned)
+
+**Strategic Approach for Large-Scale Quality Issues:**
+
+1. **Implement vs Remove**: When code quality tools flag "unused" variables/functions, first determine if they represent incomplete but valuable functionality. Implement the intended functionality rather than removing it (e.g., fix-supabase-performance.js had unused variables that represented incomplete but critical database optimization features).
+
+2. **Documentation Strategy**: For 400+ documentation warnings, use `.deepsource.toml` configuration to skip low-value cases and focus documentation on:
+   - Authentication hooks and contexts
+   - Web3/blockchain utilities  
+   - Security and validation functions
+   - Complex business logic
+   Skip documentation for test files, simple UI components, and internal helpers.
+
+3. **Tool Configuration First**: Before mass fixes, configure quality tools properly:
+   - Verify configuration options against official docs
+   - Use strategic `skip_` options to reduce noise
+   - Focus on high-impact issues (Critical/Major over Minor)
+
+4. **Preserve Functionality**: Maintain all existing behavior while improving code quality. Never break working features to satisfy static analysis tools.
+
+### 🔧 Performance Optimization Script Patterns (Session Learned)
+
+**When working with database/performance optimization scripts:**
+
+1. **Complete Implementation Over Removal**: Scripts like `fix-supabase-performance.js` often contain "unused" variables that represent incomplete but critical functionality:
+   - `policyFixes` mapping was intended for RLS optimization 
+   - `rlsPatterns` contained reusable security patterns
+   - `multiplePermissivePolicies` identified consolidation opportunities
+   - Always implement the intended functionality rather than removing as "unused"
+
+2. **Database Migration Generation**: Performance scripts should generate actual migration files:
+   - RLS performance fixes (wrap auth.uid() in subqueries)
+   - Index deduplication with documentation of kept vs removed indexes
+   - Policy consolidation with proper OR logic combinations
+   - Include comprehensive comments explaining the performance benefits
+
+3. **Systematic Approach**: For 66+ performance issues:
+   - Create pattern-to-table mapping objects
+   - Generate migrations systematically using the patterns
+   - Document which optimizations were applied and why
+   - Preserve development vs production behavior differences
 
 ## Git Workflow
 
