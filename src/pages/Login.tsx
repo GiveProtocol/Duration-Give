@@ -154,6 +154,9 @@ const Login: React.FC = () => {
             <LoginHelpers />
           </>
         );
+      default:
+        // This should never happen as we have all cases covered
+        return null;
     }
   };
 

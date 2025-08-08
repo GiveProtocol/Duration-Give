@@ -61,6 +61,8 @@ export const AppNavbar: React.FC = () => {
     <nav
       className="bg-background-primary border-b border-gray-200 shadow-sm"
       aria-label="Application navigation"
+      role="navigation"
+      tabIndex={-1}
       onKeyDown={handleKeyDown}
     >
       <div className="max-w-7xl mx-auto px-4">

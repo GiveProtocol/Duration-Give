@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React, { useCallback } from 'react'; // eslint-disable-line no-unused-vars
 import { render, screen, waitFor, act } from '@testing-library/react';
 import { AuthProvider, useAuth } from '../AuthContext';
 import { supabase } from '@/lib/supabase';
@@ -29,6 +29,34 @@ const mockClearSentryUser = clearSentryUser as jest.MockedFunction<typeof clearS
 const TestComponent: React.FC = () => {
   const auth = useAuth();
   
+  const handleLogin = useCallback(() => {
+    auth.login('test@example.com', 'password', 'donor');
+  }, [auth]);
+  
+  const handleLogout = useCallback(() => {
+    auth.logout();
+  }, [auth]);
+  
+  const handleRefresh = useCallback(() => {
+    auth.refreshSession();
+  }, [auth]);
+  
+  const handleRegister = useCallback(() => {
+    auth.register('test@example.com', 'password', 'donor');
+  }, [auth]);
+  
+  const handleResetPassword = useCallback(() => {
+    auth.resetPassword('test@example.com');
+  }, [auth]);
+  
+  const handleGoogleLogin = useCallback(() => {
+    auth.loginWithGoogle();
+  }, [auth]);
+  
+  const handleUsernameReminder = useCallback(() => {
+    auth.sendUsernameReminder('test@example.com');
+  }, [auth]);
+  
   return (
     <div>
       <div data-testid="loading">{auth.loading ? 'loading' : 'not-loading'}</div>
@@ -37,43 +65,43 @@ const TestComponent: React.FC = () => {
       <div data-testid="error">{auth.error ? auth.error.message : 'no-error'}</div>
       <button 
         data-testid="login-btn" 
-        onClick={() => auth.login('test@example.com', 'password', 'donor')}
+        onClick={handleLogin}
       >
         Login
       </button>
       <button 
         data-testid="logout-btn" 
-        onClick={() => auth.logout()}
+        onClick={handleLogout}
       >
         Logout
       </button>
       <button 
         data-testid="refresh-btn" 
-        onClick={() => auth.refreshSession()}
+        onClick={handleRefresh}
       >
         Refresh
       </button>
       <button 
         data-testid="register-btn" 
-        onClick={() => auth.register('test@example.com', 'password', 'donor')}
+        onClick={handleRegister}
       >
         Register
       </button>
       <button 
         data-testid="reset-btn" 
-        onClick={() => auth.resetPassword('test@example.com')}
+        onClick={handleResetPassword}
       >
         Reset Password
       </button>
       <button 
         data-testid="google-btn" 
-        onClick={() => auth.loginWithGoogle()}
+        onClick={handleGoogleLogin}
       >
         Login with Google
       </button>
       <button 
         data-testid="username-reminder-btn" 
-        onClick={() => auth.sendUsernameReminder('test@example.com')}
+        onClick={handleUsernameReminder}
       >
         Send Username Reminder
       </button>
@@ -357,10 +385,14 @@ describe('AuthContext', () => {
     it('handles registration with metadata', async () => {
       const TestComponentWithMetadata: React.FC = () => {
         const auth = useAuth();
+        const handleRegisterWithMetadata = useCallback(() => {
+          auth.register('test@example.com', 'password', 'charity', { name: 'Test Charity' });
+        }, [auth]);
+        
         return (
           <button 
             data-testid="register-metadata-btn" 
-            onClick={() => auth.register('test@example.com', 'password', 'charity', { name: 'Test Charity' })}
+            onClick={handleRegisterWithMetadata}
           >
             Register with Metadata
           </button>
@@ -552,7 +584,9 @@ describe('AuthContext', () => {
   describe('Context Error Handling', () => {
     it('throws error when useAuth is used outside provider', () => {
       // Silence error boundary console errors for this test
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+        // Suppress console.error for this test to avoid noise from expected errors
+      });
       
       const TestWithoutProvider = () => {
         try {
