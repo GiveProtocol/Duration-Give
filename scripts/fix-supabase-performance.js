@@ -438,7 +438,7 @@ rlsAuthIssues.forEach((issue) => {
   if (fix) {
     const patternFunc = rlsPatterns[fix.pattern];
     if (patternFunc) {
-      rlsMigration += patternFunc(issue.table, issue.policy, fix.column) + "\n\n";
+      rlsMigration += `${patternFunc(issue.table, issue.policy, fix.column)}\n\n`;
     }
   }
 });
