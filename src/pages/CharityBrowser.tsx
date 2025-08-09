@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { CheckCircle } from 'lucide-react';
-import { SearchBar } from '../components/charity/SearchBar';
+import React, { useState, useCallback } from 'react';
+import { CheckCircle, Search } from 'lucide-react';
 import { CharityGrid } from '../components/charity/CharityGrid';
 import { PortfolioGrid } from '../components/charity/PortfolioGrid';
 import { CauseGrid } from '../components/charity/CauseGrid';
@@ -14,9 +13,13 @@ const CharityBrowser: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
 
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-  };
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
+  const handleCategoryChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value);
+  }, []);
 
   const renderContent = () => {
     switch (viewMode) {
@@ -73,20 +76,33 @@ const CharityBrowser: React.FC = () => {
           </div>
 
           <div className="space-y-4">
-            <SearchBar
-              searchTerm={searchTerm}
-              onSearchChange={handleSearch}
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
-              categories={[
-                'Water & Sanitation',
-                'Education',
-                'Healthcare',
-                'Environment',
-                'Poverty Relief',
-                'Animal Welfare'
-              ]}
-            />
+            <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+              <div className="relative flex-grow">
+                <input
+                  type="text"
+                  placeholder="Search charities..."
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+              </div>
+              
+              <select
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+                className="px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                aria-label="Select category"
+              >
+                <option value="">All Categories</option>
+                <option value="Water & Sanitation">Water & Sanitation</option>
+                <option value="Education">Education</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Environment">Environment</option>
+                <option value="Poverty Relief">Poverty Relief</option>
+                <option value="Animal Welfare">Animal Welfare</option>
+              </select>
+            </div>
 
             {viewMode === 'charities' && (
               <div className="flex items-center space-x-2">
