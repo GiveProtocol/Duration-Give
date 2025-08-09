@@ -28,6 +28,8 @@ env:
 jobs:
   code-quality:
     name: Code Quality Checks
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 30
     
