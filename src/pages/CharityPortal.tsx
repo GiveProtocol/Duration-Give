@@ -723,20 +723,18 @@ export const CharityPortal: React.FC = () => {
       {/* Transaction History */}
       {activeTab === "transactions" && (
         <div className="bg-white rounded-lg shadow-md mb-8">
-          <div className="p-6 border-b border-gray-200">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-900">
-                {t("charity.transactions")}
-              </h2>
-              <Button
-                onClick={handleShowExportModal}
-                variant="secondary"
-                className="flex items-center"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                {t("contributions.export")}
-              </Button>
-            </div>
+          <div className="p-6 border-b border-gray-200 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-gray-900">
+              {t("charity.transactions")}
+            </h2>
+            <Button
+              onClick={handleShowExportModal}
+              variant="secondary"
+              className="flex items-center"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              {t("contributions.export")}
+            </Button>
           </div>
           {transactions.length > 0 ? (
             <div className="overflow-x-auto">
