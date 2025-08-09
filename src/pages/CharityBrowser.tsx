@@ -61,6 +61,15 @@ const CharityBrowser: React.FC = () => {
             category={selectedCategory}
           />
         );
+      default:
+        // Fallback to charities view
+        return (
+          <CharityGrid
+            searchTerm={searchTerm}
+            category={selectedCategory}
+            verifiedOnly={verifiedOnly}
+          />
+        );
     }
   };
 

@@ -434,8 +434,8 @@ const policyFixes = {
 // Generate the actual RLS fixes using the patterns and mappings
 rlsAuthIssues.forEach((issue) => {
   const tableFixMap = policyFixes[issue.table];
-  if (tableFixMap && tableFixMap[issue.policy]) {
-    const fix = tableFixMap[issue.policy];
+  const fix = tableFixMap?.[issue.policy];
+  if (fix) {
     const patternFunc = rlsPatterns[fix.pattern];
     if (patternFunc) {
       rlsMigration += patternFunc(issue.table, issue.policy, fix.column) + "\n\n";
@@ -493,15 +493,15 @@ Object.values(policyGroups).forEach((group) => {
     
     // Create consolidated policy
     const consolidatedName = `${group.table}_${group.role}_${group.action.toLowerCase()}`;
-    policyConsolidationMigration += `\n-- Create consolidated policy\n`;
+    policyConsolidationMigration += '\n-- Create consolidated policy\n';
     policyConsolidationMigration += `CREATE POLICY "${consolidatedName}" ON ${group.table}\n`;
     policyConsolidationMigration += `  FOR ${group.action}\n`;
     policyConsolidationMigration += `  TO ${group.role}\n`;
-    policyConsolidationMigration += `  USING (\n`;
-    policyConsolidationMigration += `    -- TODO: Combine the logic from the original policies\n`;
-    policyConsolidationMigration += `    -- This requires analyzing each policy's USING clause and combining with OR\n`;
-    policyConsolidationMigration += `    true\n`;
-    policyConsolidationMigration += `  );\n\n`;
+    policyConsolidationMigration += '  USING (\n';
+    policyConsolidationMigration += '    -- TODO: Combine the logic from the original policies\n';
+    policyConsolidationMigration += '    -- This requires analyzing each policy\'s USING clause and combining with OR\n';
+    policyConsolidationMigration += '    true\n';
+    policyConsolidationMigration += '  );\n\n';
   }
 });
 
