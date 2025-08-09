@@ -343,17 +343,29 @@ CREATE POLICY "${policy}" ON ${table}
 // Map issues to patterns - comprehensive mapping for all 66 issues
 const policyFixes = {
   withdrawal_requests: {
-    "Charities can create withdrawals": { pattern: "charity_owns_record", column: "charity_id" },
+    "Charities can create withdrawals": {
+      pattern: "charity_owns_record",
+      column: "charity_id",
+    },
     "Admin can update withdrawal status": { pattern: "admin_only" },
-    "Charities can view own withdrawals": { pattern: "charity_owns_record", column: "charity_id" },
+    "Charities can view own withdrawals": {
+      pattern: "charity_owns_record",
+      column: "charity_id",
+    },
   },
   profiles: {
     "Users can insert own profile": { pattern: "user_owns_record" },
     "Users can update own profile": { pattern: "user_owns_record" },
   },
   profile_update_approvals: {
-    "Charities can view their own profile update approvals": { pattern: "charity_owns_record", column: "profile_id" },
-    "Charities can create profile update requests": { pattern: "charity_owns_record", column: "profile_id" },
+    "Charities can view their own profile update approvals": {
+      pattern: "charity_owns_record",
+      column: "profile_id",
+    },
+    "Charities can create profile update requests": {
+      pattern: "charity_owns_record",
+      column: "profile_id",
+    },
     "Admins can view all profile update approvals": { pattern: "admin_only" },
     "Admins can update profile update approvals": { pattern: "admin_only" },
   },
@@ -368,16 +380,33 @@ const policyFixes = {
     "Anyone can view their own audit logs": { pattern: "user_owns_record" },
   },
   donations: {
-    "Users can view their own donations": { pattern: "user_owns_record", column: "donor_id" },
-    "Donors can read own donations": { pattern: "user_owns_via_profile", column: "donor_profile_id" },
-    "Charities can read received donations": { pattern: "charity_owns_record", column: "charity_id" },
+    "Users can view their own donations": {
+      pattern: "user_owns_record",
+      column: "donor_id",
+    },
+    "Donors can read own donations": {
+      pattern: "user_owns_via_profile",
+      column: "donor_profile_id",
+    },
+    "Charities can read received donations": {
+      pattern: "charity_owns_record",
+      column: "charity_id",
+    },
   },
   volunteer_profiles: {
-    "Users can view their own volunteer profile": { pattern: "user_owns_record" },
-    "Users can create their own volunteer profile": { pattern: "user_owns_record" },
-    "Users can update their own volunteer profile": { pattern: "user_owns_record" },
+    "Users can view their own volunteer profile": {
+      pattern: "user_owns_record",
+    },
+    "Users can create their own volunteer profile": {
+      pattern: "user_owns_record",
+    },
+    "Users can update their own volunteer profile": {
+      pattern: "user_owns_record",
+    },
     "Admins can view all volunteer profiles": { pattern: "admin_only" },
-    "Charities can view volunteer profiles of applicants": { pattern: "charity_owns_record" },
+    "Charities can view volunteer profiles of applicants": {
+      pattern: "charity_owns_record",
+    },
   },
   waitlist: {
     "Admins can read waitlist data": { pattern: "admin_only" },
@@ -387,47 +416,90 @@ const policyFixes = {
     "Users can manage own skills": { pattern: "user_owns_record" },
   },
   volunteer_hours: {
-    "Users can create own volunteer hours": { pattern: "user_owns_record", column: "volunteer_id" },
-    "Users can read own volunteer hours": { pattern: "user_owns_record", column: "volunteer_id" },
-    "Charities can approve volunteer hours": { pattern: "charity_owns_record", column: "charity_id" },
+    "Users can create own volunteer hours": {
+      pattern: "user_owns_record",
+      column: "volunteer_id",
+    },
+    "Users can read own volunteer hours": {
+      pattern: "user_owns_record",
+      column: "volunteer_id",
+    },
+    "Charities can approve volunteer hours": {
+      pattern: "charity_owns_record",
+      column: "charity_id",
+    },
   },
   volunteer_opportunities: {
-    "Charities can manage own opportunities": { pattern: "charity_owns_record" },
+    "Charities can manage own opportunities": {
+      pattern: "charity_owns_record",
+    },
   },
   volunteer_applications: {
-    "Users can view own applications": { pattern: "user_owns_record", column: "applicant_id" },
-    "Users can create applications": { pattern: "user_owns_record", column: "applicant_id" },
-    "Charities can view applications for their opportunities": { pattern: "charity_owns_record" },
+    "Users can view own applications": {
+      pattern: "user_owns_record",
+      column: "applicant_id",
+    },
+    "Users can create applications": {
+      pattern: "user_owns_record",
+      column: "applicant_id",
+    },
+    "Charities can view applications for their opportunities": {
+      pattern: "charity_owns_record",
+    },
     "Charities can update applications": { pattern: "charity_owns_record" },
   },
   volunteer_verifications: {
     "Charities can create verifications": { pattern: "charity_owns_record" },
-    "Charities can update own verifications": { pattern: "charity_owns_record" },
+    "Charities can update own verifications": {
+      pattern: "charity_owns_record",
+    },
   },
   wallet_aliases: {
-    "Users can manage their own wallet aliases": { pattern: "user_owns_record" },
+    "Users can manage their own wallet aliases": {
+      pattern: "user_owns_record",
+    },
   },
   donor_profiles: {
-    "Donors can read own profile": { pattern: "user_owns_via_profile", column: "profile_id" },
-    "Donors can update own profile": { pattern: "user_owns_via_profile", column: "profile_id" },
+    "Donors can read own profile": {
+      pattern: "user_owns_via_profile",
+      column: "profile_id",
+    },
+    "Donors can update own profile": {
+      pattern: "user_owns_via_profile",
+      column: "profile_id",
+    },
   },
   user_preferences: {
     "Users can manage own preferences": { pattern: "user_owns_record" },
   },
   impact_metrics: {
-    "Charities can create own impact metrics": { pattern: "charity_owns_record" },
+    "Charities can create own impact metrics": {
+      pattern: "charity_owns_record",
+    },
   },
   skill_endorsements: {
-    "Users can create endorsements": { pattern: "user_owns_record", column: "endorser_id" },
+    "Users can create endorsements": {
+      pattern: "user_owns_record",
+      column: "endorser_id",
+    },
   },
   charity_details: {
-    "Charities can update own details": { pattern: "charity_owns_record", column: "charity_id" },
+    "Charities can update own details": {
+      pattern: "charity_owns_record",
+      column: "charity_id",
+    },
   },
   charity_approvals: {
     "Admins can view all charity approvals": { pattern: "admin_only" },
     "Admins can update charity approvals": { pattern: "admin_only" },
-    "Charities can view their own approvals": { pattern: "charity_owns_record", column: "charity_id" },
-    "Charities can create approval requests": { pattern: "charity_owns_record", column: "charity_id" },
+    "Charities can view their own approvals": {
+      pattern: "charity_owns_record",
+      column: "charity_id",
+    },
+    "Charities can create approval requests": {
+      pattern: "charity_owns_record",
+      column: "charity_id",
+    },
   },
 };
 
@@ -485,23 +557,25 @@ Object.values(policyGroups).forEach((group) => {
   if (group.policies.length > 1) {
     policyConsolidationMigration += `-- Consolidate ${group.policies.length} policies for ${group.table} (${group.role}, ${group.action})\n`;
     policyConsolidationMigration += `-- Policies to consolidate: ${group.policies.join(", ")}\n`;
-    
+
     // Drop existing policies
     group.policies.forEach((policy) => {
       policyConsolidationMigration += `DROP POLICY IF EXISTS "${policy}" ON ${group.table};\n`;
     });
-    
+
     // Create consolidated policy
     const consolidatedName = `${group.table}_${group.role}_${group.action.toLowerCase()}`;
-    policyConsolidationMigration += '\n-- Create consolidated policy\n';
+    policyConsolidationMigration += "\n-- Create consolidated policy\n";
     policyConsolidationMigration += `CREATE POLICY "${consolidatedName}" ON ${group.table}\n`;
     policyConsolidationMigration += `  FOR ${group.action}\n`;
     policyConsolidationMigration += `  TO ${group.role}\n`;
-    policyConsolidationMigration += '  USING (\n';
-    policyConsolidationMigration += '    -- TODO: Combine the logic from the original policies\n';
-    policyConsolidationMigration += '    -- This requires analyzing each policy\'s USING clause and combining with OR\n';
-    policyConsolidationMigration += '    true\n';
-    policyConsolidationMigration += '  );\n\n';
+    policyConsolidationMigration += "  USING (\n";
+    policyConsolidationMigration +=
+      "    -- TODO: Combine the logic from the original policies\n";
+    policyConsolidationMigration +=
+      "    -- This requires analyzing each policy's USING clause and combining with OR\n";
+    policyConsolidationMigration += "    true\n";
+    policyConsolidationMigration += "  );\n\n";
   }
 });
 

@@ -41,10 +41,10 @@ export class MonitoringService {
 
     // Only log in development, in production this would integrate with monitoring service
     if (import.meta.env.DEV) {
-      console.log('MonitoringService initialized with config:', {
+      console.log("MonitoringService initialized with config:", {
         appId: config.appId,
         environment: config.environment,
-        enabledMonitors: config.enabledMonitors
+        enabledMonitors: config.enabledMonitors,
       });
     }
 
@@ -56,63 +56,68 @@ export class MonitoringService {
     if (!this.config || !this.initialized) return;
 
     // Performance monitoring
-    if (this.config.enabledMonitors.includes('performance')) {
+    if (this.config.enabledMonitors.includes("performance")) {
       this.monitorPerformance();
     }
 
     // Error monitoring (already handled by Sentry)
-    if (this.config.enabledMonitors.includes('errors')) {
+    if (this.config.enabledMonitors.includes("errors")) {
       this.monitorErrors();
     }
 
     // User interaction monitoring
-    if (this.config.enabledMonitors.includes('interactions')) {
+    if (this.config.enabledMonitors.includes("interactions")) {
       this.monitorInteractions();
     }
   }
 
   private monitorPerformance(): void {
     // Monitor Core Web Vitals
-    if ('web-vitals' in window || typeof window !== 'undefined') {
+    if ("web-vitals" in window || typeof window !== "undefined") {
       // This would integrate with web-vitals library in a real implementation
-      this.trackMetric('performance_monitoring_started', {
+      this.trackMetric("performance_monitoring_started", {
         timestamp: Date.now(),
         userAgent: navigator.userAgent,
-        url: window.location.href
+        url: window.location.href,
       });
     }
   }
 
   private monitorErrors(): void {
     // Global error handler (supplement to Sentry)
-    window.addEventListener('error', (event) => {
-      this.trackMetric('javascript_error', {
+    window.addEventListener("error", (event) => {
+      this.trackMetric("javascript_error", {
         message: event.message,
         filename: event.filename,
         lineno: event.lineno,
         colno: event.colno,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     });
 
-    window.addEventListener('unhandledrejection', (event) => {
-      this.trackMetric('unhandled_promise_rejection', {
-        reason: event.reason?.toString() || 'Unknown reason',
-        timestamp: Date.now()
+    window.addEventListener("unhandledrejection", (event) => {
+      this.trackMetric("unhandled_promise_rejection", {
+        reason: event.reason?.toString() || "Unknown reason",
+        timestamp: Date.now(),
       });
     });
   }
 
   private monitorInteractions(): void {
     // Track key user interactions
-    document.addEventListener('click', (event) => {
+    document.addEventListener("click", (event) => {
       const target = event.target as HTMLElement;
-      if (target.tagName === 'BUTTON' || target.tagName === 'A' || target.closest('button') || target.closest('a')) {
-        this.trackMetric('user_interaction', {
-          type: 'click',
+      if (
+        target.tagName === "BUTTON" ||
+        target.tagName === "A" ||
+        target.closest("button") ||
+        target.closest("a")
+      ) {
+        this.trackMetric("user_interaction", {
+          type: "click",
           element: target.tagName.toLowerCase(),
-          text: target.textContent?.trim().substring(0, 50) || '',
-          timestamp: Date.now()
+          text: target.textContent?.trim().substring(0, 50) || "",
+          timestamp: Date.now(),
         });
       }
     });
@@ -126,12 +131,12 @@ export class MonitoringService {
       event,
       data,
       userId: this.getCurrentUserId(),
-      sessionId: this.getCurrentSessionId()
+      sessionId: this.getCurrentSessionId(),
     };
 
     // In development, just log to console
     if (import.meta.env.DEV) {
-      console.log('MonitoringService metric:', metric);
+      console.log("MonitoringService metric:", metric);
       return;
     }
 
@@ -143,17 +148,22 @@ export class MonitoringService {
     // This would send metrics to your monitoring backend
     // For now, store in localStorage as fallback
     try {
-      const existingMetrics = JSON.parse(localStorage.getItem('monitoring_metrics') || '[]');
+      const existingMetrics = JSON.parse(
+        localStorage.getItem("monitoring_metrics") || "[]",
+      );
       existingMetrics.push(metric);
-      
+
       // Keep only last 100 metrics to prevent storage bloat
       if (existingMetrics.length > 100) {
         existingMetrics.splice(0, existingMetrics.length - 100);
       }
-      
-      localStorage.setItem('monitoring_metrics', JSON.stringify(existingMetrics));
+
+      localStorage.setItem(
+        "monitoring_metrics",
+        JSON.stringify(existingMetrics),
+      );
     } catch (error) {
-      console.warn('Failed to store monitoring metric:', error);
+      console.warn("Failed to store monitoring metric:", error);
     }
   }
 
@@ -161,9 +171,9 @@ export class MonitoringService {
     // Get user ID from localStorage or auth context
     try {
       const userCookie = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('give_docs_user_id='));
-      return userCookie?.split('=')[1];
+        .split("; ")
+        .find((row) => row.startsWith("give_docs_user_id="));
+      return userCookie?.split("=")[1];
     } catch {
       return undefined;
     }
@@ -173,9 +183,9 @@ export class MonitoringService {
     // Get session ID from localStorage or auth context
     try {
       const sessionCookie = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('give_docs_session_id='));
-      return sessionCookie?.split('=')[1];
+        .split("; ")
+        .find((row) => row.startsWith("give_docs_session_id="));
+      return sessionCookie?.split("=")[1];
     } catch {
       return undefined;
     }
@@ -183,14 +193,14 @@ export class MonitoringService {
 
   public exportMetrics(): MonitoringMetrics[] {
     try {
-      return JSON.parse(localStorage.getItem('monitoring_metrics') || '[]');
+      return JSON.parse(localStorage.getItem("monitoring_metrics") || "[]");
     } catch {
       return [];
     }
   }
 
   public clearMetrics(): void {
-    localStorage.removeItem('monitoring_metrics');
+    localStorage.removeItem("monitoring_metrics");
   }
 }
 
