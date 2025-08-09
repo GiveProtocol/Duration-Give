@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface LogoProps {
   className?: string;
@@ -6,6 +6,19 @@ interface LogoProps {
 
 export const Logo: React.FC<LogoProps> = ({ className }) => {
   const [error, setError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+
+    const handleError = () => setError(true);
+    img.addEventListener('error', handleError);
+
+    return () => {
+      img.removeEventListener('error', handleError);
+    };
+  }, []);
   
   if (error) {
     return (
@@ -17,12 +30,12 @@ export const Logo: React.FC<LogoProps> = ({ className }) => {
 
   return (
     <img
+      ref={imgRef}
       src="/logo.svg"
       alt="Give Protocol"
       className={className}
       width={32}
       height={32}
-      onError={() => setError(true)}
     />
   );
 };

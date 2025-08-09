@@ -32,10 +32,24 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
     }
   }, [priority]);
 
-  const handleError = () => {
-    setError(true);
-    setIsLoaded(true);
-  };
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+
+    const handleLoad = () => setIsLoaded(true);
+    const handleError = () => {
+      setError(true);
+      setIsLoaded(true);
+    };
+
+    img.addEventListener('load', handleLoad);
+    img.addEventListener('error', handleError);
+
+    return () => {
+      img.removeEventListener('load', handleLoad);
+      img.removeEventListener('error', handleError);
+    };
+  }, []);
 
   if (error) {
     return (
@@ -74,8 +88,6 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
           width={width}
           height={height}
           loading={loading}
-          onLoad={() => setIsLoaded(true)}
-          onError={handleError}
           className={cn(
             'transition-opacity duration-300',
             isLoaded ? 'opacity-100' : 'opacity-0'
