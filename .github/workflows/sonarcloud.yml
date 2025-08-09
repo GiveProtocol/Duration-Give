@@ -14,6 +14,8 @@ jobs:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
     if: false  # Set to true to re-enable
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
