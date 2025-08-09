@@ -136,10 +136,14 @@ export const OpportunityManagement: React.FC = () => {
     }
   }, [profile?.id, fetchOpportunities]);
 
-  const handleCreateSuccess = () => {
+  const handleCreateSuccess = useCallback(() => {
     setShowForm(false);
     fetchOpportunities();
-  };
+  }, [fetchOpportunities]);
+
+  const handleFormCancel = useCallback(() => {
+    setShowForm(false);
+  }, []);
 
   const formatLanguageName = (language: string): string => {
     return language
@@ -172,7 +176,7 @@ export const OpportunityManagement: React.FC = () => {
         <div className="p-6">
           <OpportunityForm
             onSuccess={handleCreateSuccess}
-            onCancel={() => setShowForm(false)}
+            onCancel={handleFormCancel}
           />
         </div>
       ) : (

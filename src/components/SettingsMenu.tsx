@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Settings, Check, Globe, DollarSign } from 'lucide-react';
 import { useSettings, Language, Currency } from '@/contexts/SettingsContext';
 import { cn } from '@/utils/cn';
@@ -60,10 +60,28 @@ export const SettingsMenu: React.FC = () => {
     setCurrency(newCurrency);
   };
 
+  const toggleMenu = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+
+  const handleLanguageClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = e.currentTarget.dataset.value as Language;
+    if (value) {
+      handleLanguageChange(value);
+    }
+  }, [handleLanguageChange]);
+
+  const handleCurrencyClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = e.currentTarget.dataset.value as Currency;
+    if (value) {
+      handleCurrencyChange(value);
+    }
+  }, [handleCurrencyChange]);
+
   return (
     <div className="relative" ref={menuRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleMenu}
         className="p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
         aria-expanded={isOpen}
         aria-haspopup="true"
@@ -88,7 +106,8 @@ export const SettingsMenu: React.FC = () => {
               {languageOptions.map((option) => (
                 <button
                   key={option.value}
-                  onClick={() => handleLanguageChange(option.value)}
+                  data-value={option.value}
+                  onClick={handleLanguageClick}
                   className={cn(
                     "flex items-center justify-between px-3 py-2 text-sm rounded-md",
                     language === option.value
@@ -115,7 +134,8 @@ export const SettingsMenu: React.FC = () => {
               {currencyOptions.map((option) => (
                 <button
                   key={option.value}
-                  onClick={() => handleCurrencyChange(option.value)}
+                  data-value={option.value}
+                  onClick={handleCurrencyClick}
                   className={cn(
                     "flex items-center justify-between px-3 py-2 text-sm rounded-md",
                     currency === option.value

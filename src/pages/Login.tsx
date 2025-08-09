@@ -43,6 +43,18 @@ const Login: React.FC = () => {
     setView("forgotPassword");
   }, []);
 
+  const handleDonorView = useCallback(() => {
+    setView("donor");
+  }, []);
+
+  const handleCharityView = useCallback(() => {
+    setView("charity");
+  }, []);
+
+  const handleSelectView = useCallback(() => {
+    setView("select");
+  }, []);
+
   // Set view based on URL parameter on mount and when it changes
   useEffect(() => {
     if (typeParam === "charity") {
@@ -96,7 +108,7 @@ const Login: React.FC = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Button
-                onClick={() => setView("donor")}
+                onClick={handleDonorView}
                 variant="secondary"
                 className="p-6 h-auto flex flex-col items-center space-y-2"
               >
@@ -108,7 +120,7 @@ const Login: React.FC = () => {
               </Button>
 
               <Button
-                onClick={() => setView("charity")}
+                onClick={handleCharityView}
                 variant="secondary"
                 className="p-6 h-auto flex flex-col items-center space-y-2"
               >
@@ -134,15 +146,15 @@ const Login: React.FC = () => {
           </div>
         );
       case "forgotPassword":
-        return <ForgotPassword onBack={() => setView("select")} />;
+        return <ForgotPassword onBack={handleSelectView} />;
       case "forgotUsername":
-        return <ForgotUsername onBack={() => setView("select")} />;
+        return <ForgotUsername onBack={handleSelectView} />;
       case "donor":
         return (
           <>
             <div className="mb-6">
               <button
-                onClick={() => setView("select")}
+                onClick={handleSelectView}
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
                 ← Back to selection
@@ -163,7 +175,7 @@ const Login: React.FC = () => {
           <>
             <div className="mb-6">
               <button
-                onClick={() => setView("select")}
+                onClick={handleSelectView}
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
                 ← Back to selection

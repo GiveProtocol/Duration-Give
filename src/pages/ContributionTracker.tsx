@@ -48,6 +48,10 @@ export const ContributionTracker: React.FC = () => {
   const handleExportPdf = useCallback(() => handleExport('pdf'), [handleExport]);
   const handleShowAliasModal = useCallback(() => setShowAliasModal(true), []);
   const handleHideAliasModal = useCallback(() => setShowAliasModal(false), []);
+
+  const handleTabChange = useCallback((value: string) => {
+    setActiveTab(value as 'donations' | 'volunteer');
+  }, []);
   const handleChangeAlias = useCallback(() => {
     setNewAlias(alias);
     setShowAliasModal(true);
@@ -211,7 +215,7 @@ export const ContributionTracker: React.FC = () => {
       )}
 
       {/* Rankings Tabs */}
-      <Tabs defaultValue={activeTab} value={activeTab} onValueChange={(value: string) => setActiveTab(value as 'donations' | 'volunteer')} className="space-y-6">
+      <Tabs defaultValue={activeTab} value={activeTab} onValueChange={handleTabChange} className="space-y-6">
         <TabsList>
           <TabsTrigger value="donations">Donation Rankings</TabsTrigger>
           <TabsTrigger value="volunteer">Volunteer Rankings</TabsTrigger>
