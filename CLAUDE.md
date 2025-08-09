@@ -89,21 +89,21 @@ Create a `.env` file with required variables:
 - Modifying contracts: Update Solidity, compile, update TypeScript types, redeploy
 - Testing blockchain features: Use local Hardhat node with `npm run node`
 
-## ⚠️ CRITICAL: Code Quality Rules - MUST FOLLOW ALWAYS ⚠️
+## CRITICAL: Code Quality Rules - MUST FOLLOW ALWAYS
 
-### 🚫 NEVER DO (Will Cause CI/CD Failures)
+### NEVER DO (Will Cause CI/CD Failures)
 
 1. **NEVER leave unused variables** (DeepSource JS-0356 - Major)
 
    ```typescript
-   // ❌ WRONG
+   // WRONG
    const mockSpy = jest.spyOn(module, "method");
    // mockSpy never used
 
-   // ✅ CORRECT - Use underscore prefix for intentionally unused
+   // CORRECT - Use underscore prefix for intentionally unused
    const _mockSpy = jest.spyOn(module, "method");
 
-   // ✅ CORRECT - Use the variable
+   // CORRECT - Use the variable
    const mockSpy = jest.spyOn(module, "method");
    expect(mockSpy).toHaveBeenCalled();
    ```
@@ -111,26 +111,26 @@ Create a `.env` file with required variables:
 2. **NEVER use empty functions without comments** (DeepSource JS-0321 - Minor)
 
    ```typescript
-   // ❌ WRONG
+   // WRONG
    jest.spyOn(obj, "method").mockImplementation(() => {});
 
-   // ✅ CORRECT - Add explanatory comment
+   // CORRECT - Add explanatory comment
    jest.spyOn(obj, "method").mockImplementation(() => {
      // Empty mock to prevent actual execution
    });
 
-   // ✅ CORRECT - Use jest.fn() for simple mocks
+   // CORRECT - Use jest.fn() for simple mocks
    jest.spyOn(obj, "method").mockImplementation(jest.fn());
    ```
 
 3. **NEVER use `any` type** (DeepSource JS-0323 - Critical)
 
    ```typescript
-   // ❌ WRONG
+   // WRONG
    const props: any = { ... };
    jest.mock('@/component', () => ({ Component: (props: any) => ... }));
 
-   // ✅ CORRECT
+   // CORRECT
    interface Props { onClose: () => void; children: React.ReactNode; }
    jest.mock('@/component', () => ({ Component: ({ onClose, children }: Props) => ... }));
    ```
@@ -138,11 +138,11 @@ Create a `.env` file with required variables:
 4. **NEVER use `require()` statements** (DeepSource JS-0359 - Major)
 
    ```typescript
-   // ❌ WRONG
+   // WRONG
    const module = require("./module");
    jest.spyOn(require("./module"), "function");
 
-   // ✅ CORRECT
+   // CORRECT
    import * as module from "./module";
    jest.spyOn(module, "function");
    ```
@@ -150,27 +150,27 @@ Create a `.env` file with required variables:
 5. **NEVER leave unused variables** (DeepSource JS-0356 - Major)
 
    ```typescript
-   // ❌ WRONG
+   // WRONG
    routes.forEach(({ path, testId, name }) => {
      // testId extracted but never used
    });
 
-   // ✅ CORRECT - Option 1: Use it
+   // CORRECT - Option 1: Use it
    routes.forEach(({ path, testId, name }) => {
      expect(screen.getByTestId(testId)).toBeInTheDocument();
    });
 
-   // ✅ CORRECT - Option 2: Prefix with _
+   // CORRECT - Option 2: Prefix with _
    routes.forEach(({ path, testId: _testId, name }) => {
    ```
 
 6. **NEVER export functions without JSDoc** (DeepSource JS-D1001 - Minor)
 
    ```typescript
-   // ❌ WRONG
+   // WRONG
    export const createMock = (data) => ({ ... });
 
-   // ✅ CORRECT
+   // CORRECT
    /**
     * Creates a mock object for testing
     * @param data - The data to include in the mock
@@ -280,7 +280,43 @@ Create a `.env` file with required variables:
     {items.map((item) => <Item key={`${item.type}-${item.timestamp}`} />)}
     ```
 
-### ✅ ALWAYS DO (Before Writing Any Code)
+14. **NEVER create class-based mocks with empty methods** (DeepSource JS-0105, JS-0358)
+
+    ```typescript
+    // WRONG - Creates unnecessary constructors and methods that don't use 'this'
+    global.ResizeObserver = class ResizeObserver {
+      constructor() {} // JS-0358: Unnecessary constructor
+      disconnect() {}  // JS-0105: Method doesn't use 'this'
+      observe() {}     // JS-0105: Method doesn't use 'this'
+    };
+
+    // CORRECT - Use jest.fn() for proper mocking
+    global.ResizeObserver = jest.fn().mockImplementation(() => ({
+      disconnect: jest.fn(),
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    })) as unknown as typeof ResizeObserver;
+    ```
+
+15. **ALWAYS add comments to empty functions** (DeepSource JS-0321)
+
+    ```typescript
+    // WRONG
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    private constructor() {}
+
+    // CORRECT
+    jest.spyOn(console, 'error').mockImplementation(() => {
+      // Empty mock to suppress console.error output during tests
+    });
+    private constructor() {
+      // Private constructor to enforce singleton pattern
+    }
+    ```
+
+16. **ALWAYS check DeepSource results after fixes** - Fixes can introduce new violations
+
+### ALWAYS DO (Before Writing Any Code)
 
 1. **Define types first**, then write implementation
 2. **Import React when creating JSX elements**
@@ -289,7 +325,7 @@ Create a `.env` file with required variables:
 5. **Add JSDoc to all exported functions and classes**
 6. **Use shared mock utilities to prevent duplication**
 
-### 🔍 Pre-Code Checklist (MANDATORY)
+### Pre-Code Checklist (MANDATORY)
 
 Before writing ANY code, verify:
 
@@ -309,7 +345,7 @@ Before writing ANY code, verify:
 3. **Mock Patterns**: Consolidate repetitive mock setups using helper functions
 4. **Async Testing**: Always await async test helper functions and add proper assertions
 
-#### ⚠️ CRITICAL: Test Writing Rules (From Session Experience)
+#### CRITICAL: Test Writing Rules (From Session Experience)
 
 5. **ALWAYS mark test functions as `async` when using `await`** - Missing `async` causes "Unexpected strict mode reserved word" syntax errors
 6. **Singleton Pattern Testing**: Use `resetInstanceForTesting()` methods when testing singletons to ensure test isolation
@@ -358,19 +394,19 @@ Before writing ANY code, verify:
 2. **Viem + Ethers**: Use appropriate library for each use case, don't mix in same file
 3. **TypeScript + ESLint**: Some global type references need simplification for ESLint compatibility
 
-#### ⚠️ CRITICAL: Session-Learned Issues to Avoid
+#### CRITICAL: Session-Learned Issues to Avoid
 
 4. **React Import Consistency**: Never remove React import and then re-add underscore prefix (`_React`) - this creates a loop of ESLint errors. When JSX is used, keep `import React from 'react'` or use `import _React from 'react'` consistently throughout the session.
 5. **Test Coverage Context**: When SonarCloud reports low coverage, always check if files already have comprehensive tests before writing new ones. Run `npx jest --coverage` to verify actual coverage.
 6. **Git Push Failures**: Always check for remote changes with `git status` before pushing. Use `git pull --rebase` to handle conflicts, but stash unstaged changes first.
 7. **DeepSource Violations**: The most common violations are JS-0323 ('any' types), JS-0356 (unused variables), JS-0339 (non-null assertions), JS-0331 (explicit type annotations), JS-0354 (unused expressions in tests), JS-0263 (process.exit usage), JS-0437 (array index as key), and JS-0417 (arrow functions in JSX). Always prefix unused variables with `_` and create proper TypeScript interfaces.
 
-#### 🔧 CRITICAL: DeepSource Configuration and Code Quality Patterns
+#### CRITICAL: DeepSource Configuration and Code Quality Patterns
 
 8. **DeepSource Configuration**: Always verify configuration options in `.deepsource.toml` against official documentation. Use correct `skip_doc_coverage` options: `["function-expression", "arrow-function-expression", "class-expression", "method-definition"]` instead of invalid options like `"test-function"`.
 9. **Strategic Over Complete**: When fixing 400+ code quality issues, prioritize strategically - implement functionality rather than removing unused code, focus documentation on critical exports (auth, Web3, security), and configure tools to skip low-value warnings.
 10. **Namespace Classes Pattern**: Classes used only for static methods should either: (a) have private constructor to prevent instantiation (for classes with state like Logger), or (b) be converted to const objects with `as const` (for pure utility functions like InputValidator).
-11. **⚠️ CRITICAL: Function Declaration Order (JS-0357)**: NEVER use variables/functions before they are defined:
+11. **CRITICAL: Function Declaration Order (JS-0357)**: NEVER use variables/functions before they are defined:
 
 ```typescript
 // WRONG - handleSort used before it's defined
@@ -394,7 +430,7 @@ const handleSortByDate = useCallback(() => {
 13. **Proper Type Inference**: Instead of `any`, use `typeof MOCK_USER` or create proper interfaces. For test callbacks, define exact signatures like `(event: string, session: { user: typeof MOCK_USER } | null) => void`.
 14. **React Fragment Optimization**: Remove unnecessary fragments that wrap single children - use `return children` instead of `return <>{children}</>` in components.
 
-15. **⚠️ CRITICAL: Arrow Functions in JSX (JS-0417)**: NEVER use arrow functions directly in JSX props:
+15. **CRITICAL: Arrow Functions in JSX (JS-0417)**: NEVER use arrow functions directly in JSX props:
 
 ```typescript
 // WRONG - Creates new function on every render (Major Performance Issue)
@@ -415,7 +451,7 @@ const handleValueChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) =
 <input onChange={handleValueChange} />
 ```
 
-16. **⚠️ CRITICAL: JSX Nesting Prevention Rules**:
+16. **CRITICAL: JSX Nesting Prevention Rules**:
 
 ```typescript
 // WRONG - 6+ levels cause violations
@@ -458,7 +494,7 @@ const handleValueChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) =
 ) : null}
 ```
 
-#### 🔧 CRITICAL: SonarCloud/DeepSource Issue Patterns (Session Learned)
+#### CRITICAL: SonarCloud/DeepSource Issue Patterns (Session Learned)
 
 8. **Promise Misuse (S6544)**: Always `await` Promise-returning methods in boolean conditions. Check method signatures - if they return `Promise<boolean>`, use `if (await method())` not `if (method())`.
 9. **Array.reduce() Safety (S6959)**: Always provide initial value to `reduce()` calls: `array.reduce((a, b) => a + b, 0)` prevents TypeError on empty arrays.
@@ -473,7 +509,7 @@ const handleValueChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) =
 - **Security Hotspots**: 0 (no hard-coded secrets)
 - **Reliability**: A rating (no ESLint errors)
 
-### 📋 Systematic Quality Issue Resolution (Session Learned)
+### Systematic Quality Issue Resolution (Session Learned)
 
 **When fixing SonarCloud/DeepSource issues:**
 
@@ -481,7 +517,7 @@ const handleValueChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) =
 2. **Use TodoWrite Tool**: Track progress when handling multiple files/issues
 3. **Verify Method Signatures**: Before fixing Promise issues, check if methods are actually async
 
-### 🚨 CRITICAL: Component Extraction Anti-Pattern (Session Learned)
+### CRITICAL: Component Extraction Anti-Pattern (Session Learned)
 
 **When extracting components to reduce JSX nesting depth, ALWAYS:**
 
@@ -531,9 +567,9 @@ const handleValueChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) =
 
 5. **Test After Extraction**: Always run linter after component extraction to catch new performance issues introduced by the refactoring.
 
-**⚠️ WARNING: Component extraction WITHOUT proper memoization creates cascade failures - one JS-0415 (nesting) violation becomes 16+ JS-0417 (arrow function) violations. This anti-pattern makes the code quality WORSE, not better.**
+**WARNING: Component extraction WITHOUT proper memoization creates cascade failures - one JS-0415 (nesting) violation becomes 16+ JS-0417 (arrow function) violations. This anti-pattern makes the code quality WORSE, not better.**
 
-### 🎯 CRITICAL: JSX Nesting Prevention Strategy
+### CRITICAL: JSX Nesting Prevention Strategy
 
 **PREFERRED: Structure Flattening (prevents recurring violations)**
 
@@ -576,7 +612,7 @@ const handleValueChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) =
    - Custom components: Treat as controls and wrap with labels
 7. **Commit Patterns**: Group related fixes in single commits with descriptive messages explaining the rule violation and fix
 
-### 🎯 Code Quality Issue Resolution Strategy (Session Learned)
+### Code Quality Issue Resolution Strategy (Session Learned)
 
 **Strategic Approach for Large-Scale Quality Issues:**
 
@@ -596,7 +632,7 @@ const handleValueChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) =
 
 4. **Preserve Functionality**: Maintain all existing behavior while improving code quality. Never break working features to satisfy static analysis tools.
 
-### 🔧 Performance Optimization Script Patterns (Session Learned)
+### Performance Optimization Script Patterns (Session Learned)
 
 **When working with database/performance optimization scripts:**
 
