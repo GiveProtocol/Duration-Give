@@ -39,8 +39,8 @@ const EducationAccessProgram: React.FC = () => {
             alt={cause.name}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end">
-            <div className="p-8 text-white">
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end p-8 text-white">
+            <div>
               <h1 className="text-4xl font-bold mb-2">{cause.name}</h1>
               <p className="text-lg opacity-90">{cause.description}</p>
             </div>

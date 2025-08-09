@@ -744,43 +744,35 @@ export const CharityPortal: React.FC = () => {
                 <thead>
                   <tr>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                       onClick={handleSortByDate}
                     >
-                      <div className="flex items-center space-x-1">
-                        <span>{t("contributions.date")}</span>
-                        {getSortIcon("date")}
-                      </div>
+                      <span>{t("contributions.date")}</span>
+                      {getSortIcon("date")}
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                       onClick={handleSortByType}
                     >
-                      <div className="flex items-center space-x-1">
-                        <span>{t("contributions.type")}</span>
-                        {getSortIcon("type")}
-                      </div>
+                      <span>{t("contributions.type")}</span>
+                      {getSortIcon("type")}
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                       onClick={handleSortByOrganization}
                     >
-                      <div className="flex items-center space-x-1">
-                        <span>{t("donor.volunteer", "Donor/Volunteer")}</span>
-                        {getSortIcon("organization")}
-                      </div>
+                      <span>{t("donor.volunteer", "Donor/Volunteer")}</span>
+                      {getSortIcon("organization")}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t("contributions.details")}
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                       onClick={handleSortByStatus}
                     >
-                      <div className="flex items-center space-x-1">
-                        <span>{t("contributions.status")}</span>
-                        {getSortIcon("status")}
-                      </div>
+                      <span>{t("contributions.status")}</span>
+                      {getSortIcon("status")}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t("contributions.verification")}
@@ -879,40 +871,37 @@ export const CharityPortal: React.FC = () => {
               pendingHours.map((hours) => (
                 <div
                   key={hours.id}
-                  className="bg-white border border-gray-200 rounded-lg p-4"
+                  className="bg-white border border-gray-200 rounded-lg p-4 flex justify-between items-start"
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex-grow">
-                      <h3 className="text-lg font-medium text-gray-900">
-                        {hours.volunteerName}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {hours.hours} {t("volunteer.hours")}{" "}
-                        {formatDate(hours.date_performed)}
-                      </p>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button className="flex items-center">
-                        <CheckCircle className="h-4 w-4 mr-2" />
-                        {t("volunteer.verify")}
-                      </Button>
-                      <Button variant="secondary" className="flex items-center">
-                        <X className="h-4 w-4 mr-2" />
-                        {t("volunteer.reject")}
-                      </Button>
-                    </div>
+                  <div className="flex-grow pr-4">
+                    <h3 className="text-lg font-medium text-gray-900">
+                      {hours.volunteerName}
+                    </h3>
+                    <p className="text-sm text-gray-500 mb-2">
+                      {hours.hours} {t("volunteer.hours")}{" "}
+                      {formatDate(hours.date_performed)}
+                    </p>
+                    {hours.description && (
+                      <>
+                        <p className="text-sm text-gray-500 mb-1">
+                          {t("volunteer.description")}
+                        </p>
+                        <p className="text-sm text-gray-700">
+                          {hours.description}
+                        </p>
+                      </>
+                    )}
                   </div>
-
-                  {hours.description && (
-                    <>
-                      <p className="text-sm text-gray-500 mb-1">
-                        {t("volunteer.description")}
-                      </p>
-                      <p className="text-sm text-gray-700 mb-4">
-                        {hours.description}
-                      </p>
-                    </>
-                  )}
+                  <div className="flex space-x-2">
+                    <Button className="flex items-center">
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      {t("volunteer.verify")}
+                    </Button>
+                    <Button variant="secondary" className="flex items-center">
+                      <X className="h-4 w-4 mr-2" />
+                      {t("volunteer.reject")}
+                    </Button>
+                  </div>
                 </div>
               ))
             ) : (

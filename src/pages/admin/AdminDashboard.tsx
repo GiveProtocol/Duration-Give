@@ -203,42 +203,40 @@ const AdminDashboard: React.FC = () => {
       {/* Recent Activity - Flattened from 5 to 3 levels */}
       <Card className="p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
-        <div className="space-y-4">
-          {stats.recentActivity.map((activity) => (
-            <div key={activity.id} className="flex items-center justify-between p-4 border rounded-lg">
-              <span className="text-2xl mr-4">{getActivityIcon(activity.type)}</span>
-              <div className="flex-1">
-                <p className="font-medium text-gray-900">{activity.description}</p>
-                <p className="text-sm text-gray-500">{formatRelativeTime(activity.timestamp)}</p>
-              </div>
-              {activity.amount && (
-                <p className="font-semibold text-green-600 text-right">{formatCurrency(activity.amount)}</p>
-              )}
+        {stats.recentActivity.map((activity) => (
+          <div key={activity.id} className="flex items-center justify-between p-4 mb-4 border rounded-lg">
+            <span className="text-2xl mr-4">{getActivityIcon(activity.type)}</span>
+            <div className="flex-1">
+              <p className="font-medium text-gray-900">{activity.description}</p>
+              <p className="text-sm text-gray-500">{formatRelativeTime(activity.timestamp)}</p>
             </div>
-          ))}
-        </div>
+            {activity.amount && (
+              <p className="font-semibold text-green-600 text-right">{formatCurrency(activity.amount)}</p>
+            )}
+          </div>
+        ))}
       </Card>
 
-      {/* Quick Actions - Flattened from 4 to 3 levels */}
+      {/* Quick Actions - Flattened to 3 levels */}
       <Card className="p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <button className="p-4 border rounded-lg hover:bg-gray-50 text-left">
-            <div className="text-2xl mb-2">📊</div>
-            <div className="font-medium mb-1">View Reports</div>
-            <div className="text-sm text-gray-500">Generate detailed analytics</div>
+            <span className="text-2xl block mb-2">📊</span>
+            <span className="font-medium block mb-1">View Reports</span>
+            <span className="text-sm text-gray-500 block">Generate detailed analytics</span>
           </button>
           
           <button className="p-4 border rounded-lg hover:bg-gray-50 text-left">
-            <div className="text-2xl mb-2">🏛️</div>
-            <div className="font-medium mb-1">Manage Charities</div>
-            <div className="text-sm text-gray-500">Review and approve organizations</div>
+            <span className="text-2xl block mb-2">🏛️</span>
+            <span className="font-medium block mb-1">Manage Charities</span>
+            <span className="text-sm text-gray-500 block">Review and approve organizations</span>
           </button>
           
           <button className="p-4 border rounded-lg hover:bg-gray-50 text-left">
-            <div className="text-2xl mb-2">⚙️</div>
-            <div className="font-medium mb-1">System Settings</div>
-            <div className="text-sm text-gray-500">Configure platform parameters</div>
+            <span className="text-2xl block mb-2">⚙️</span>
+            <span className="font-medium block mb-1">System Settings</span>
+            <span className="text-sm text-gray-500 block">Configure platform parameters</span>
           </button>
         </div>
       </Card>

@@ -142,7 +142,9 @@ export const GiveDashboard: React.FC = () => {
   const _isActive = (_path: string) => // Prefixed as unused
     location.pathname === _path ? 'bg-primary-100 text-primary-900' : 'text-gray-700 hover:bg-primary-50';
 
-  const handleSkillClick = (skill: string) => {
+  const handleSkillClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const skill = e.currentTarget.dataset.skill;
+    if (!skill) return;
     navigate('/contributions', { 
       state: { 
         activeTab: 'volunteer',
@@ -150,7 +152,47 @@ export const GiveDashboard: React.FC = () => {
         skill 
       }
     });
-  };
+  }, [navigate]);
+
+  const handleYearChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedYear(e.target.value);
+  }, []);
+
+  const handleTypeChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedType(e.target.value);
+  }, []);
+
+  const handleShowExportModal = useCallback(() => {
+    setShowExportModal(true);
+  }, []);
+
+  const toggleScheduledDonations = useCallback(() => {
+    setShowScheduledDonations(!showScheduledDonations);
+  }, [showScheduledDonations]);
+
+  const toggleWalletSettings = useCallback(() => {
+    setShowWalletSettings(!showWalletSettings);
+  }, [showWalletSettings]);
+
+  const handleAdminRedirect = useCallback(() => {
+    window.location.href = `${window.location.origin}/admin`;
+  }, []);
+
+  const handleSortByDate = useCallback(() => {
+    handleSort('date');
+  }, [handleSort]);
+
+  const handleSortByType = useCallback(() => {
+    handleSort('type');
+  }, [handleSort]);
+
+  const handleSortByOrganization = useCallback(() => {
+    handleSort('organization');
+  }, [handleSort]);
+
+  const handleSortByStatus = useCallback(() => {
+    handleSort('status');
+  }, [handleSort]);
 
   const handleSort = useCallback((key: 'date' | 'type' | 'status' | 'organization') => {
     setSortConfig(prevConfig => ({
@@ -236,7 +278,7 @@ export const GiveDashboard: React.FC = () => {
           <p className="text-gray-600 mb-6">
             Please use the admin panel to manage the platform.
           </p>
-          <Button onClick={() => window.location.href = `${window.location.origin}/admin`}>
+          <Button onClick={handleAdminRedirect}>
             Go to Admin Panel
           </Button>
         </div>
@@ -269,7 +311,7 @@ export const GiveDashboard: React.FC = () => {
           <div className="flex space-x-3">
             <Button
               variant="secondary"
-              onClick={() => setShowScheduledDonations(!showScheduledDonations)}
+              onClick={toggleScheduledDonations}
               className="flex items-center"
             >
               <Calendar className="h-4 w-4 mr-2" />
@@ -277,7 +319,7 @@ export const GiveDashboard: React.FC = () => {
             </Button>
             <Button
               variant="secondary"
-              onClick={() => setShowWalletSettings(!showWalletSettings)}
+              onClick={toggleWalletSettings}
               className="flex items-center"
             >
               <Settings className="h-4 w-4 mr-2" />
@@ -342,7 +384,7 @@ export const GiveDashboard: React.FC = () => {
             <Filter className="h-5 w-5 text-gray-400" />
             <select
               value={selectedYear}
-              onChange={(e) => setSelectedYear(e.target.value)}
+              onChange={handleYearChange}
               className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               aria-label="Filter by year"
             >
@@ -355,7 +397,7 @@ export const GiveDashboard: React.FC = () => {
             <Calendar className="h-5 w-5 text-gray-400" />
             <select
               value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
+              onChange={handleTypeChange}
               className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               aria-label="Filter by type"
             >
@@ -365,7 +407,7 @@ export const GiveDashboard: React.FC = () => {
               <option value="Volunteer Hours">{t('filter.volunteerHours', 'Volunteer Hours')}</option>
             </select>
             <Button
-              onClick={() => setShowExportModal(true)}
+              onClick={handleShowExportModal}
               variant="secondary"
               className="flex items-center"
             >
@@ -380,14 +422,14 @@ export const GiveDashboard: React.FC = () => {
               <tr>
                 <th 
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
-                  onClick={() => handleSort('date')}
+                  onClick={handleSortByDate}
                 >
                   <span>{t('contributions.date')}</span>
                   {getSortIcon('date')}
                 </th>
                 <th 
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
-                  onClick={() => handleSort('type')}
+                  onClick={handleSortByType}
                 >
                   <span className="flex items-center space-x-1">
                     <span>{t('contributions.type')}</span>
@@ -396,7 +438,7 @@ export const GiveDashboard: React.FC = () => {
                 </th>
                 <th 
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
-                  onClick={() => handleSort('organization')}
+                  onClick={handleSortByOrganization}
                 >
                   <span className="flex items-center space-x-1">
                     <span>{t('contributions.organization')}</span>
@@ -406,7 +448,7 @@ export const GiveDashboard: React.FC = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('contributions.details')}</th>
                 <th 
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
-                  onClick={() => handleSort('status')}
+                  onClick={handleSortByStatus}
                 >
                   <span className="flex items-center space-x-1">
                     <span>{t('contributions.status')}</span>
@@ -493,7 +535,8 @@ export const GiveDashboard: React.FC = () => {
           ].map((item) => (
             <button
               key={item.skill}
-              onClick={() => handleSkillClick(item.skill)}
+              data-skill={item.skill}
+              onClick={handleSkillClick}
               className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <div>

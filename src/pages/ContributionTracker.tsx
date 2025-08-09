@@ -53,7 +53,7 @@ export const ContributionTracker: React.FC = () => {
     setShowAliasModal(true);
   }, [alias]);
 
-  const handleSetAlias = async () => {
+  const handleSetAlias = useCallback(async () => {
     if (!isConnected || !address) {
       showToast('error', 'Wallet not connected', 'Please connect your wallet to set an alias');
       return;
@@ -69,7 +69,27 @@ export const ContributionTracker: React.FC = () => {
       setNewAlias('');
       setShowAliasModal(false);
     }
-  };
+  }, [isConnected, address, newAlias, showToast, setWalletAlias]);
+
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
+  const handleNewAliasChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewAlias(e.target.value);
+  }, []);
+
+  const handleOptOutChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setShowOptOut(e.target.checked);
+  }, []);
+
+  const handleTimeRangeChange = useCallback((value: TimeRange) => {
+    setTimeRange(value);
+  }, []);
+
+  const handleRegionChange = useCallback((value: Region) => {
+    setRegion(value);
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -93,12 +113,12 @@ export const ContributionTracker: React.FC = () => {
               type="text"
               placeholder="Search contributors..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={handleSearchChange}
               className="pl-10"
             />
           </div>
           
-          <TimeRangeFilter value={timeRange} onChange={(value) => setTimeRange(value as TimeRange)} />
+          <TimeRangeFilter value={timeRange} onChange={handleTimeRangeChange} />
           
           <div className="flex items-center space-x-2">
             <Button
@@ -122,13 +142,13 @@ export const ContributionTracker: React.FC = () => {
 
         <div className="mt-4 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
           <div className="flex items-center space-x-4">
-            <RegionFilter value={region} onChange={(value) => setRegion(value as Region)} />
+            <RegionFilter value={region} onChange={handleRegionChange} />
             
             <label className="flex items-center space-x-2 text-sm text-gray-600">
               <input
                 type="checkbox"
                 checked={showOptOut}
-                onChange={(e) => setShowOptOut(e.target.checked)}
+                onChange={handleOptOutChange}
                 className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
               <span>Hide my contributions from rankings</span>
@@ -169,7 +189,7 @@ export const ContributionTracker: React.FC = () => {
             <Input
               label="Alias"
               value={newAlias}
-              onChange={(e) => setNewAlias(e.target.value)}
+              onChange={handleNewAliasChange}
               placeholder="Enter your preferred alias"
               className="mb-4"
             />

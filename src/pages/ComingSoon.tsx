@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Github, Bird, Disc as Discord } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { Logger } from '@/utils/logger';
@@ -8,7 +8,7 @@ const ComingSoon: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email.trim() || !email.includes('@')) {
@@ -41,37 +41,43 @@ const ComingSoon: React.FC = () => {
       setStatus('error');
       setErrorMessage('Failed to join waitlist. Please try again.');
     }
-  };
+  }, [email]);
+
+  const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    if (status === 'error') {
+      setStatus('idle');
+      setErrorMessage('');
+    }
+  }, [status]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative">
-      {/* Animated Background */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.1),transparent_50%)] animate-pulse" />
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_80%_20%,rgba(167,139,250,0.1),transparent_50%)]" />
+      {/* Combined Animated Background */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.1),transparent_50%),radial-gradient(circle_at_80%_20%,rgba(167,139,250,0.1),transparent_50%)] animate-pulse" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <div className="py-8 flex items-center justify-center">
+        <header className="py-8 flex items-center justify-center">
           <Logo className="h-10 w-10" />
           <span className="ml-3 text-2xl font-bold text-gray-900">Give Protocol</span>
-        </div>
+        </header>
 
         {/* Hero Section */}
-        <main className="py-20 sm:py-24">
-          <div className="text-center">
-            <h1 className="text-6xl sm:text-8xl font-bold text-gray-900 mb-6">
-              COMING SOON
-            </h1>
-            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-              Join the future of philanthropy, with transparent, efficient and impactful social investment
-            </p>
+        <main className="py-20 sm:py-24 text-center">
+          <h1 className="text-6xl sm:text-8xl font-bold text-gray-900 mb-6">
+            COMING SOON
+          </h1>
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+            Join the future of philanthropy, with transparent, efficient and impactful social investment
+          </p>
 
             {/* Email Form */}
             <form onSubmit={handleSubmit} className="relative max-w-md mx-auto">
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
                 placeholder="Enter your email address"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 disabled={status === 'loading' || status === 'success'}
@@ -100,20 +106,19 @@ const ComingSoon: React.FC = () => {
               <p className="mt-2 text-red-600 text-center">{errorMessage}</p>
             )}
 
-            {/* Features Preview */}
-            <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm">
-                <h3 className="text-lg font-semibold mb-2">Transparent</h3>
-                <p className="text-gray-600">Track your impact with blockchain-verified donations</p>
-              </div>
-              <div className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm">
-                <h3 className="text-lg font-semibold mb-2">Efficient</h3>
-                <p className="text-gray-600">Smart contracts ensure funds reach their destination</p>
-              </div>
-              <div className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm">
-                <h3 className="text-lg font-semibold mb-2">Impactful</h3>
-                <p className="text-gray-600">Maximize your giving through innovative DeFi strategies</p>
-              </div>
+          {/* Features Preview */}
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm">
+              <h3 className="text-lg font-semibold mb-2">Transparent</h3>
+              <p className="text-gray-600">Track your impact with blockchain-verified donations</p>
+            </div>
+            <div className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm">
+              <h3 className="text-lg font-semibold mb-2">Efficient</h3>
+              <p className="text-gray-600">Smart contracts ensure funds reach their destination</p>
+            </div>
+            <div className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm">
+              <h3 className="text-lg font-semibold mb-2">Impactful</h3>
+              <p className="text-gray-600">Maximize your giving through innovative DeFi strategies</p>
             </div>
           </div>
         </main>
