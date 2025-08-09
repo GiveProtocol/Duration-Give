@@ -16,7 +16,7 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
 
   useEffect(() => {
     const img = imgRef.current;
-    if (!img) return;
+    if (!img) return undefined;
 
     const handleError = () => setImgSrc(fallbackSrc);
     img.addEventListener("error", handleError);

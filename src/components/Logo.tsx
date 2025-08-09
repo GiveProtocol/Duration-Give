@@ -10,7 +10,7 @@ export const Logo: React.FC<LogoProps> = ({ className }) => {
 
   useEffect(() => {
     const img = imgRef.current;
-    if (!img) return;
+    if (!img) return undefined;
 
     const handleError = () => setError(true);
     img.addEventListener("error", handleError);

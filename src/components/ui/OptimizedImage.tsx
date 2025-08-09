@@ -34,7 +34,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
   useEffect(() => {
     const img = imgRef.current;
-    if (!img) return;
+    if (!img) return undefined;
 
     const handleLoad = () => setIsLoaded(true);
     const handleError = () => {
