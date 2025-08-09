@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
 interface LogoProps {
   className?: string;
@@ -13,13 +13,13 @@ export const Logo: React.FC<LogoProps> = ({ className }) => {
     if (!img) return;
 
     const handleError = () => setError(true);
-    img.addEventListener('error', handleError);
+    img.addEventListener("error", handleError);
 
     return () => {
-      img.removeEventListener('error', handleError);
+      img.removeEventListener("error", handleError);
     };
   }, []);
-  
+
   if (error) {
     return (
       <div className={`flex items-center justify-center ${className}`}>

@@ -843,10 +843,10 @@ export const CharityPortal: React.FC = () => {
               </table>
             </div>
           ) : (
-              <div className="text-center py-8 text-gray-500">
-                No transactions found.
-              </div>
-            )}
+            <div className="text-center py-8 text-gray-500">
+              No transactions found.
+            </div>
+          )}
         </div>
       )}
 
@@ -935,8 +935,7 @@ export const CharityPortal: React.FC = () => {
                     </h3>
                     <p className="text-sm text-gray-500">
                       {t("volunteer.appliedFor")}:{" "}
-                      {application.opportunity?.title ||
-                        "Unknown Opportunity"}
+                      {application.opportunity?.title || "Unknown Opportunity"}
                     </p>
                   </div>
                   <div className="flex space-x-2 ml-4">

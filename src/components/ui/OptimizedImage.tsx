@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ImageOptimizer } from '@/utils/performance/imageOptimizer';
-import { cn } from '@/utils/cn';
+import React, { useState, useRef, useEffect } from "react";
+import { ImageOptimizer } from "@/utils/performance/imageOptimizer";
+import { cn } from "@/utils/cn";
 
 interface OptimizedImageProps {
   src: string;
@@ -9,7 +9,7 @@ interface OptimizedImageProps {
   height?: number;
   className?: string;
   priority?: boolean;
-  loading?: 'lazy' | 'eager';
+  loading?: "lazy" | "eager";
 }
 
 export const OptimizedImage: React.FC<OptimizedImageProps> = ({
@@ -19,7 +19,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   height,
   className,
   priority = false,
-  loading = 'lazy'
+  loading = "lazy",
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -42,21 +42,21 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
       setIsLoaded(true);
     };
 
-    img.addEventListener('load', handleLoad);
-    img.addEventListener('error', handleError);
+    img.addEventListener("load", handleLoad);
+    img.addEventListener("error", handleError);
 
     return () => {
-      img.removeEventListener('load', handleLoad);
-      img.removeEventListener('error', handleError);
+      img.removeEventListener("load", handleLoad);
+      img.removeEventListener("error", handleError);
     };
   }, []);
 
   if (error) {
     return (
-      <div 
+      <div
         className={cn(
-          'bg-gray-100 flex items-center justify-center',
-          className
+          "bg-gray-100 flex items-center justify-center",
+          className,
         )}
         style={{ width, height }}
       >
@@ -66,18 +66,18 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   }
 
   return (
-    <div className={cn('relative overflow-hidden', className)}>
+    <div className={cn("relative overflow-hidden", className)}>
       <picture>
         {/* AVIF format */}
         <source
           type="image/avif"
-          srcSet={imageOptimizer.generateSrcSet(src, 'avif')}
+          srcSet={imageOptimizer.generateSrcSet(src, "avif")}
           sizes={imageOptimizer.generateSizes(width)}
         />
         {/* WebP format */}
         <source
           type="image/webp"
-          srcSet={imageOptimizer.generateSrcSet(src, 'webp')}
+          srcSet={imageOptimizer.generateSrcSet(src, "webp")}
           sizes={imageOptimizer.generateSizes(width)}
         />
         {/* Fallback image */}
@@ -89,19 +89,19 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
           height={height}
           loading={loading}
           className={cn(
-            'transition-opacity duration-300',
-            isLoaded ? 'opacity-100' : 'opacity-0'
+            "transition-opacity duration-300",
+            isLoaded ? "opacity-100" : "opacity-0",
           )}
         />
       </picture>
-      
+
       {!isLoaded && (
-        <div 
+        <div
           className="absolute inset-0 bg-gray-200 animate-pulse"
-          style={{ 
+          style={{
             backgroundImage: `url(${imageOptimizer.generatePlaceholder(src)})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         />
       )}
