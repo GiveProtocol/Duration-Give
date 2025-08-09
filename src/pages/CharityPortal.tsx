@@ -738,8 +738,8 @@ export const CharityPortal: React.FC = () => {
               </Button>
             </div>
           </div>
-          <div className="overflow-x-auto">
-            {transactions.length > 0 ? (
+          {transactions.length > 0 ? (
+            <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
@@ -747,21 +747,21 @@ export const CharityPortal: React.FC = () => {
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                       onClick={handleSortByDate}
                     >
-                      <span>{t("contributions.date")}</span>
+                      {t("contributions.date")}
                       {getSortIcon("date")}
                     </th>
                     <th
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                       onClick={handleSortByType}
                     >
-                      <span>{t("contributions.type")}</span>
+                      {t("contributions.type")}
                       {getSortIcon("type")}
                     </th>
                     <th
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                       onClick={handleSortByOrganization}
                     >
-                      <span>{t("donor.volunteer", "Donor/Volunteer")}</span>
+                      {t("donor.volunteer", "Donor/Volunteer")}
                       {getSortIcon("organization")}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -771,7 +771,7 @@ export const CharityPortal: React.FC = () => {
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                       onClick={handleSortByStatus}
                     >
-                      <span>{t("contributions.status")}</span>
+                      {t("contributions.status")}
                       {getSortIcon("status")}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -843,12 +843,12 @@ export const CharityPortal: React.FC = () => {
                   ))}
                 </tbody>
               </table>
-            ) : (
+            </div>
+          ) : (
               <div className="text-center py-8 text-gray-500">
                 No transactions found.
               </div>
             )}
-          </div>
         </div>
       )}
 

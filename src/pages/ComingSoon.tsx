@@ -52,11 +52,9 @@ const ComingSoon: React.FC = () => {
   }, [status]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Combined Animated Background */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.1),transparent_50%),radial-gradient(circle_at_80%_20%,rgba(167,139,250,0.1),transparent_50%)] animate-pulse" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <header className="py-8 flex items-center justify-center">
           <Logo className="h-10 w-10" />
@@ -106,41 +104,41 @@ const ComingSoon: React.FC = () => {
               <p className="mt-2 text-red-600 text-center">{errorMessage}</p>
             )}
 
-          {/* Features Preview */}
-          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm">
-              <h3 className="text-lg font-semibold mb-2">Transparent</h3>
-              <p className="text-gray-600">Track your impact with blockchain-verified donations</p>
-            </div>
-            <div className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm">
-              <h3 className="text-lg font-semibold mb-2">Efficient</h3>
-              <p className="text-gray-600">Smart contracts ensure funds reach their destination</p>
-            </div>
-            <div className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm">
-              <h3 className="text-lg font-semibold mb-2">Impactful</h3>
-              <p className="text-gray-600">Maximize your giving through innovative DeFi strategies</p>
-            </div>
-          </div>
         </main>
 
+        {/* Features Preview */}
+        <section className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+          <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
+            <h3 className="text-lg font-semibold">Transparent</h3>
+            <p className="text-gray-600">Track your impact with blockchain-verified donations</p>
+          </article>
+          <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
+            <h3 className="text-lg font-semibold">Efficient</h3>
+            <p className="text-gray-600">Smart contracts ensure funds reach their destination</p>
+          </article>
+          <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
+            <h3 className="text-lg font-semibold">Impactful</h3>
+            <p className="text-gray-600">Maximize your giving through innovative DeFi strategies</p>
+          </article>
+        </section>
+
         {/* Footer */}
-        <footer className="py-12 text-center">
-          <div className="flex justify-center space-x-6 mb-4">
-            <a href="https://giveprotocol.bsky.social" className="text-gray-400 hover:text-gray-600">
-              <Bird className="h-6 w-6" />
-            </a>
-            <a href="https://github.com/giveprotocol" className="text-gray-400 hover:text-gray-600">
-              <Github className="h-6 w-6" />
-            </a>
-            <a href="https://discord.gg/giveprotocol" className="text-gray-400 hover:text-gray-600">
-              <Discord className="h-6 w-6" />
-            </a>
-          </div>
-          <p className="text-sm text-gray-500">
-            © {new Date().getFullYear()} Give Protocol. All rights reserved.
-          </p>
-        </footer>
-      </div>
+      <footer className="py-12 text-center">
+        <div className="flex justify-center space-x-6 mb-4">
+          <a href="https://giveprotocol.bsky.social" className="text-gray-400 hover:text-gray-600">
+            <Bird className="h-6 w-6" />
+          </a>
+          <a href="https://github.com/giveprotocol" className="text-gray-400 hover:text-gray-600">
+            <Github className="h-6 w-6" />
+          </a>
+          <a href="https://discord.gg/giveprotocol" className="text-gray-400 hover:text-gray-600">
+            <Discord className="h-6 w-6" />
+          </a>
+        </div>
+        <p className="text-sm text-gray-500">
+          © {new Date().getFullYear()} Give Protocol. All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 };

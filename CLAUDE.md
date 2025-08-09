@@ -370,10 +370,89 @@ Before writing ANY code, verify:
 8. **DeepSource Configuration**: Always verify configuration options in `.deepsource.toml` against official documentation. Use correct `skip_doc_coverage` options: `["function-expression", "arrow-function-expression", "class-expression", "method-definition"]` instead of invalid options like `"test-function"`.
 9. **Strategic Over Complete**: When fixing 400+ code quality issues, prioritize strategically - implement functionality rather than removing unused code, focus documentation on critical exports (auth, Web3, security), and configure tools to skip low-value warnings.
 10. **Namespace Classes Pattern**: Classes used only for static methods should either: (a) have private constructor to prevent instantiation (for classes with state like Logger), or (b) be converted to const objects with `as const` (for pure utility functions like InputValidator).
-11. **Function Declaration Order**: Organize code to avoid "used before defined" issues by: (a) placing helper functions before their first usage, (b) moving component definitions before JSX usage, (c) restructuring files when necessary to maintain logical flow.
+11. **⚠️ CRITICAL: Function Declaration Order (JS-0357)**: NEVER use variables/functions before they are defined:
+   ```typescript
+   // WRONG - handleSort used before it's defined
+   const handleSortByDate = useCallback(() => {
+     handleSort('date'); // Error: handleSort not yet defined
+   }, [handleSort]);
+   
+   const handleSort = useCallback(...);
+   
+   // CORRECT - Base function defined first
+   const handleSort = useCallback((key) => {
+     setSortConfig(prevConfig => ({ key, direction: ... }));
+   }, []);
+   
+   const handleSortByDate = useCallback(() => {
+     handleSort('date'); // Success: handleSort already defined
+   }, [handleSort]);
+   ```
 12. **TypeScript Directive Best Practices**: Use `@ts-expect-error` instead of `@ts-ignore` for intentional errors in tests. Always include detailed explanations: `// @ts-expect-error - Intentionally calling undefined function to test Sentry's ReferenceError capture`.
 13. **Proper Type Inference**: Instead of `any`, use `typeof MOCK_USER` or create proper interfaces. For test callbacks, define exact signatures like `(event: string, session: { user: typeof MOCK_USER } | null) => void`.
 14. **React Fragment Optimization**: Remove unnecessary fragments that wrap single children - use `return children` instead of `return <>{children}</>` in components.
+
+15. **⚠️ CRITICAL: Arrow Functions in JSX (JS-0417)**: NEVER use arrow functions directly in JSX props:
+   ```typescript
+   // WRONG - Creates new function on every render (Major Performance Issue)
+   <button onClick={() => handleClick(id)}>Click</button>
+   <input onChange={(e) => setValue(e.target.value)} />
+   
+   // CORRECT - Use data attributes + useCallback
+   const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+     const id = e.currentTarget.dataset.id;
+     // handle click with id
+   }, []);
+   <button data-id={id} onClick={handleClick}>Click</button>
+   
+   // CORRECT - Dedicated change handler with useCallback
+   const handleValueChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+     setValue(e.target.value);
+   }, []);
+   <input onChange={handleValueChange} />
+   ```
+
+16. **⚠️ CRITICAL: JSX Nesting Prevention Rules**:
+   ```typescript
+   // WRONG - 6+ levels cause violations
+   <div>                           {/* Level 1 */}
+     <div className="container">   {/* Level 2 */}
+       <div className="wrapper">   {/* Level 3 */}
+         <div className="content">  {/* Level 4 */}
+           <div className="inner">  {/* Level 5 */}
+             <span>Text</span>      {/* Level 6 - VIOLATION */}
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+   
+   // CORRECT - Combine CSS classes to flatten
+   <div className="container wrapper content">  {/* Level 1 */}
+     <div className="inner">                    {/* Level 2 */}
+       <span>Text</span>                        {/* Level 3 */}
+     </div>
+   </div>
+   
+   // CORRECT - Move conditionals outside containers
+   {/* WRONG */}
+   <div className="table-wrapper">
+     {data.length > 0 ? (
+       <table>
+         <thead><tr><th><span>Header</span></th></tr></thead>
+       </table>
+     ) : null}
+   </div>
+   
+   {/* CORRECT */}
+   {data.length > 0 ? (
+     <div className="table-wrapper">
+       <table>
+         <thead><tr><th>Header</th></tr></thead>
+       </table>
+     </div>
+   ) : null}
+   ```
 
 #### 🔧 CRITICAL: SonarCloud/DeepSource Issue Patterns (Session Learned)
 

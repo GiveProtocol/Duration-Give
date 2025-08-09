@@ -178,6 +178,13 @@ export const GiveDashboard: React.FC = () => {
     window.location.href = `${window.location.origin}/admin`;
   }, []);
 
+  const handleSort = useCallback((key: 'date' | 'type' | 'status' | 'organization') => {
+    setSortConfig(prevConfig => ({
+      key,
+      direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
+    }));
+  }, []);
+
   const handleSortByDate = useCallback(() => {
     handleSort('date');
   }, [handleSort]);
@@ -193,13 +200,6 @@ export const GiveDashboard: React.FC = () => {
   const handleSortByStatus = useCallback(() => {
     handleSort('status');
   }, [handleSort]);
-
-  const handleSort = useCallback((key: 'date' | 'type' | 'status' | 'organization') => {
-    setSortConfig(prevConfig => ({
-      key,
-      direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
-    }));
-  }, []);
 
   const getSortIcon = useCallback((key: 'date' | 'type' | 'status' | 'organization') => {
     if (sortConfig.key !== key) {
