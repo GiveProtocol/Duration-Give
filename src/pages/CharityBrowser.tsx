@@ -1,29 +1,35 @@
-import React, { useState, useCallback } from 'react';
-import { CheckCircle, Search } from 'lucide-react';
-import { CharityGrid } from '../components/charity/CharityGrid';
-import { PortfolioGrid } from '../components/charity/PortfolioGrid';
-import { CauseGrid } from '../components/charity/CauseGrid';
-import { Button } from '../components/ui/Button';
+import React, { useState, useCallback } from "react";
+import { CheckCircle, Search } from "lucide-react";
+import { CharityGrid } from "../components/charity/CharityGrid";
+import { PortfolioGrid } from "../components/charity/PortfolioGrid";
+import { CauseGrid } from "../components/charity/CauseGrid";
+import { Button } from "../components/ui/Button";
 
-type ViewMode = 'charities' | 'causes' | 'portfolios';
+type ViewMode = "charities" | "causes" | "portfolios";
 
 const CharityBrowser: React.FC = () => {
-  const [viewMode, setViewMode] = useState<ViewMode>('charities');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [viewMode, setViewMode] = useState<ViewMode>("charities");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
 
-  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  }, []);
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(e.target.value);
+    },
+    [],
+  );
 
-  const handleCategoryChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategory(e.target.value);
-  }, []);
+  const handleCategoryChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedCategory(e.target.value);
+    },
+    [],
+  );
 
   const renderContent = () => {
     switch (viewMode) {
-      case 'charities':
+      case "charities":
         return (
           <CharityGrid
             searchTerm={searchTerm}
@@ -31,19 +37,13 @@ const CharityBrowser: React.FC = () => {
             verifiedOnly={verifiedOnly}
           />
         );
-      case 'causes':
+      case "causes":
         return (
-          <CauseGrid
-            searchTerm={searchTerm}
-            category={selectedCategory}
-          />
+          <CauseGrid searchTerm={searchTerm} category={selectedCategory} />
         );
-      case 'portfolios':
+      case "portfolios":
         return (
-          <PortfolioGrid
-            searchTerm={searchTerm}
-            category={selectedCategory}
-          />
+          <PortfolioGrid searchTerm={searchTerm} category={selectedCategory} />
         );
     }
   };
@@ -52,24 +52,26 @@ const CharityBrowser: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Discover Impact Opportunities</h1>
-          
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            Discover Impact Opportunities
+          </h1>
+
           <div className="flex space-x-4 mb-6">
             <Button
-              variant={viewMode === 'charities' ? 'primary' : 'secondary'}
-              onClick={() => setViewMode('charities')}
+              variant={viewMode === "charities" ? "primary" : "secondary"}
+              onClick={() => setViewMode("charities")}
             >
               Charities
             </Button>
             <Button
-              variant={viewMode === 'causes' ? 'primary' : 'secondary'}
-              onClick={() => setViewMode('causes')}
+              variant={viewMode === "causes" ? "primary" : "secondary"}
+              onClick={() => setViewMode("causes")}
             >
               Causes
             </Button>
             <Button
-              variant={viewMode === 'portfolios' ? 'primary' : 'secondary'}
-              onClick={() => setViewMode('portfolios')}
+              variant={viewMode === "portfolios" ? "primary" : "secondary"}
+              onClick={() => setViewMode("portfolios")}
             >
               Portfolio Funds
             </Button>
@@ -87,7 +89,7 @@ const CharityBrowser: React.FC = () => {
                 />
                 <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
               </div>
-              
+
               <select
                 value={selectedCategory}
                 onChange={handleCategoryChange}
@@ -104,7 +106,7 @@ const CharityBrowser: React.FC = () => {
               </select>
             </div>
 
-            {viewMode === 'charities' && (
+            {viewMode === "charities" && (
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -113,7 +115,10 @@ const CharityBrowser: React.FC = () => {
                   onChange={(e) => setVerifiedOnly(e.target.checked)}
                   className="h-4 w-4 text-indigo-600 rounded border-gray-300"
                 />
-                <label htmlFor="verified" className="text-sm text-gray-700 flex items-center">
+                <label
+                  htmlFor="verified"
+                  className="text-sm text-gray-700 flex items-center"
+                >
                   <CheckCircle className="h-4 w-4 mr-1 text-indigo-600" />
                   Verified Charities Only
                 </label>
@@ -121,7 +126,7 @@ const CharityBrowser: React.FC = () => {
             )}
           </div>
         </div>
-        
+
         {renderContent()}
       </div>
     </div>
