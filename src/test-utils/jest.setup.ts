@@ -17,16 +17,32 @@ Object.defineProperty(window, 'matchMedia', {
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  unobserve() {}
+  constructor() {
+    // Empty constructor for test mock
+  }
+  disconnect() {
+    // Empty method for test mock
+  }
+  observe() {
+    // Empty method for test mock
+  }
+  unobserve() {
+    // Empty method for test mock
+  }
 } as typeof IntersectionObserver;
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  unobserve() {}
+  constructor() {
+    // Empty constructor for test mock
+  }
+  disconnect() {
+    // Empty method for test mock
+  }
+  observe() {
+    // Empty method for test mock
+  }
+  unobserve() {
+    // Empty method for test mock
+  }
 } as typeof ResizeObserver;

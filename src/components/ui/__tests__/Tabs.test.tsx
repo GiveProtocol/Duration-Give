@@ -58,7 +58,9 @@ describe('Tabs Component', () => {
 
   it('throws error when TabsTrigger used outside Tabs', () => {
     // Suppress console.error for this test
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      // Empty mock to suppress console.error output during tests
+    });
     
     expect(() => {
       render(<TabsTrigger value="test">Test</TabsTrigger>);
@@ -69,7 +71,9 @@ describe('Tabs Component', () => {
 
   it('throws error when TabsContent used outside Tabs', () => {
     // Suppress console.error for this test
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      // Empty mock to suppress console.error output during tests
+    });
     
     expect(() => {
       render(<TabsContent value="test">Test Content</TabsContent>);

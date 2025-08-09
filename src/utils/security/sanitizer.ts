@@ -27,7 +27,9 @@ export class InputSanitizer {
     amount: /^\d+(?:\.\d{1,18})?$/
   };
 
-  private constructor() {}
+  private constructor() {
+    // Private constructor to enforce singleton pattern
+  }
 
   static getInstance(): InputSanitizer {
     if (!this.instance) {

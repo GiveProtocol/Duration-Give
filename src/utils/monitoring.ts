@@ -19,7 +19,9 @@ export class MonitoringService {
   private config: MonitoringConfig | null = null;
   private initialized = false;
 
-  private constructor() {}
+  private constructor() {
+    // Private constructor to enforce singleton pattern
+  }
 
   static getInstance(config?: MonitoringConfig): MonitoringService {
     if (!MonitoringService.instance) {

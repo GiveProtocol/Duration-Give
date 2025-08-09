@@ -100,8 +100,12 @@ export const setupAuthTest = (mockSupabase: MockSupabase, mockUseToast: jest.Moc
   mockSupabase.auth = createAuthMocks();
 
   // Mock console methods to avoid test output noise
-  jest.spyOn(console, 'error').mockImplementation(() => {});
-  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {
+    // Empty mock to suppress console.error output during tests
+  });
+  jest.spyOn(console, 'log').mockImplementation(() => {
+    // Empty mock to suppress console.log output during tests
+  });
 
   return { mockShowToast };
 };

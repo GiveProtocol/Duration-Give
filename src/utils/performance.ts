@@ -5,7 +5,9 @@ export class PerformanceMonitor {
   private metrics: Map<string, number[]> = new Map();
   private readonly SAMPLE_SIZE = 100;
 
-  private constructor() {}
+  private constructor() {
+    // Private constructor to enforce singleton pattern
+  }
 
   static getInstance(): PerformanceMonitor {
     if (!this.instance) {

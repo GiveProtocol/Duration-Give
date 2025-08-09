@@ -172,7 +172,9 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
             handleAccountsChanged,
           );
           window.ethereum.removeListener("chainChanged", handleChainChanged);
-          window.ethereum.removeListener("disconnect", () => {});
+          window.ethereum.removeListener("disconnect", () => {
+            // Empty handler for disconnect event cleanup
+          });
         }
       };
     }

@@ -56,8 +56,12 @@ Cypress.Commands.add("connectWallet", () => {
         }
         return Promise.resolve();
       },
-      on: () => {},
-      removeListener: () => {},
+      on: () => {
+        // Empty mock method for test purposes
+      },
+      removeListener: () => {
+        // Empty mock method for test purposes
+      },
     };
   });
 
