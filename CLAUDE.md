@@ -286,8 +286,8 @@ Create a `.env` file with required variables:
     // WRONG - Creates unnecessary constructors and methods that don't use 'this'
     global.ResizeObserver = class ResizeObserver {
       constructor() {} // JS-0358: Unnecessary constructor
-      disconnect() {}  // JS-0105: Method doesn't use 'this'
-      observe() {}     // JS-0105: Method doesn't use 'this'
+      disconnect() {} // JS-0105: Method doesn't use 'this'
+      observe() {} // JS-0105: Method doesn't use 'this'
     };
 
     // CORRECT - Use jest.fn() for proper mocking
