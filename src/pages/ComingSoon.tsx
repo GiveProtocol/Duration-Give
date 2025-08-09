@@ -1,137 +1,162 @@
-import React, { useState, useCallback } from 'react';
-import { Github, Bird, Disc as Discord } from 'lucide-react';
-import { Logo } from '@/components/Logo';
-import { Logger } from '@/utils/logger';
+import React, { useState, useCallback } from "react";
+import { Github, Bird, Disc as Discord } from "lucide-react";
+import { Logo } from "@/components/Logo";
+import { Logger } from "@/utils/logger";
 
 const ComingSoon: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email.trim() || !email.includes('@')) {
-      setErrorMessage('Please enter a valid email address');
-      setStatus('error');
-      return;
-    }
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
 
-    setStatus('loading');
-    try {
-      // Call the MailChimp API endpoint
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to subscribe');
+      if (!email.trim() || !email.includes("@")) {
+        setErrorMessage("Please enter a valid email address");
+        setStatus("error");
+        return;
       }
-      
-      setStatus('success');
-      setEmail('');
-    } catch (err) {
-      Logger.error('Subscription error', { error: err });
-      setStatus('error');
-      setErrorMessage('Failed to join waitlist. Please try again.');
-    }
-  }, [email]);
 
-  const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-    if (status === 'error') {
-      setStatus('idle');
-      setErrorMessage('');
-    }
-  }, [status]);
+      setStatus("loading");
+      try {
+        // Call the MailChimp API endpoint
+        const response = await fetch("/api/subscribe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to subscribe");
+        }
+
+        setStatus("success");
+        setEmail("");
+      } catch (err) {
+        Logger.error("Subscription error", { error: err });
+        setStatus("error");
+        setErrorMessage("Failed to join waitlist. Please try again.");
+      }
+    },
+    [email],
+  );
+
+  const handleEmailChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(e.target.value);
+      if (status === "error") {
+        setStatus("idle");
+        setErrorMessage("");
+      }
+    },
+    [status],
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Combined Animated Background */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.1),transparent_50%),radial-gradient(circle_at_80%_20%,rgba(167,139,250,0.1),transparent_50%)] animate-pulse" />
-        {/* Logo */}
-        <header className="py-8 flex items-center justify-center">
-          <Logo className="h-10 w-10" />
-          <span className="ml-3 text-2xl font-bold text-gray-900">Give Protocol</span>
-        </header>
+      {/* Logo */}
+      <header className="py-8 flex items-center justify-center">
+        <Logo className="h-10 w-10" />
+        <span className="ml-3 text-2xl font-bold text-gray-900">
+          Give Protocol
+        </span>
+      </header>
 
-        {/* Hero Section */}
-        <main className="py-20 sm:py-24 text-center">
-          <h1 className="text-6xl sm:text-8xl font-bold text-gray-900 mb-6">
-            COMING SOON
-          </h1>
-          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-            Join the future of philanthropy, with transparent, efficient and impactful social investment
+      {/* Hero Section */}
+      <main className="py-20 sm:py-24 text-center">
+        <h1 className="text-6xl sm:text-8xl font-bold text-gray-900 mb-6">
+          COMING SOON
+        </h1>
+        <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+          Join the future of philanthropy, with transparent, efficient and
+          impactful social investment
+        </p>
+
+        {/* Email Form */}
+        <form onSubmit={handleSubmit} className="relative max-w-md mx-auto">
+          <input
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="Enter your email address"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            disabled={status === "loading" || status === "success"}
+          />
+          <button
+            type="submit"
+            disabled={status === "loading" || status === "success"}
+            className={`absolute right-2 top-2 px-4 py-1 rounded-md transition-all ${
+              status === "loading"
+                ? "bg-gray-100 cursor-wait"
+                : status === "success"
+                  ? "bg-green-500 text-white"
+                  : "bg-indigo-600 text-white hover:bg-indigo-700"
+            }`}
+          >
+            Notify Me
+          </button>
+        </form>
+
+        {status === "success" && (
+          <p className="mt-2 text-green-600 text-center">
+            Thanks for joining! We&apos;ll keep you updated.
           </p>
+        )}
+        {status === "error" && (
+          <p className="mt-2 text-red-600 text-center">{errorMessage}</p>
+        )}
+      </main>
 
-            {/* Email Form */}
-            <form onSubmit={handleSubmit} className="relative max-w-md mx-auto">
-              <input
-                type="email"
-                value={email}
-                onChange={handleEmailChange}
-                placeholder="Enter your email address"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                disabled={status === 'loading' || status === 'success'}
-              />
-              <button
-                type="submit"
-                disabled={status === 'loading' || status === 'success'}
-                className={`absolute right-2 top-2 px-4 py-1 rounded-md transition-all ${
-                  status === 'loading' 
-                    ? 'bg-gray-100 cursor-wait'
-                    : status === 'success'
-                    ? 'bg-green-500 text-white'
-                    : 'bg-indigo-600 text-white hover:bg-indigo-700'
-                }`}
-              >
-                Notify Me
-              </button>
-            </form>
+      {/* Features Preview */}
+      <section className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+        <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
+          <h3 className="text-lg font-semibold">Transparent</h3>
+          <p className="text-gray-600">
+            Track your impact with blockchain-verified donations
+          </p>
+        </article>
+        <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
+          <h3 className="text-lg font-semibold">Efficient</h3>
+          <p className="text-gray-600">
+            Smart contracts ensure funds reach their destination
+          </p>
+        </article>
+        <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
+          <h3 className="text-lg font-semibold">Impactful</h3>
+          <p className="text-gray-600">
+            Maximize your giving through innovative DeFi strategies
+          </p>
+        </article>
+      </section>
 
-            {status === 'success' && (
-              <p className="mt-2 text-green-600 text-center">
-                Thanks for joining! We&apos;ll keep you updated.
-              </p>
-            )}
-            {status === 'error' && (
-              <p className="mt-2 text-red-600 text-center">{errorMessage}</p>
-            )}
-
-        </main>
-
-        {/* Features Preview */}
-        <section className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
-          <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
-            <h3 className="text-lg font-semibold">Transparent</h3>
-            <p className="text-gray-600">Track your impact with blockchain-verified donations</p>
-          </article>
-          <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
-            <h3 className="text-lg font-semibold">Efficient</h3>
-            <p className="text-gray-600">Smart contracts ensure funds reach their destination</p>
-          </article>
-          <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
-            <h3 className="text-lg font-semibold">Impactful</h3>
-            <p className="text-gray-600">Maximize your giving through innovative DeFi strategies</p>
-          </article>
-        </section>
-
-        {/* Footer */}
+      {/* Footer */}
       <footer className="py-12 text-center">
         <div className="flex justify-center space-x-6 mb-4">
-          <a href="https://giveprotocol.bsky.social" className="text-gray-400 hover:text-gray-600">
+          <a
+            href="https://giveprotocol.bsky.social"
+            className="text-gray-400 hover:text-gray-600"
+          >
             <Bird className="h-6 w-6" />
           </a>
-          <a href="https://github.com/giveprotocol" className="text-gray-400 hover:text-gray-600">
+          <a
+            href="https://github.com/giveprotocol"
+            className="text-gray-400 hover:text-gray-600"
+          >
             <Github className="h-6 w-6" />
           </a>
-          <a href="https://discord.gg/giveprotocol" className="text-gray-400 hover:text-gray-600">
+          <a
+            href="https://discord.gg/giveprotocol"
+            className="text-gray-400 hover:text-gray-600"
+          >
             <Discord className="h-6 w-6" />
           </a>
         </div>
