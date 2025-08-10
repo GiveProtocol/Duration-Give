@@ -17,10 +17,12 @@ import { Button } from "./Button";
 import { cn } from "../../utils/cn";
 
 interface EditorProps {
+  id?: string;
   content: string;
   onChange: (_content: string) => void;
   className?: string;
   placeholder?: string;
+  variant?: 'default' | 'enhanced';
 }
 
 interface MenuButtonProps {
@@ -48,10 +50,12 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 );
 
 export const Editor: React.FC<EditorProps> = ({
+  id,
   content: _content,
   onChange,
   className,
   placeholder = "Start writing...",
+  variant = 'default',
 }) => {
   const editor = useEditor({
     extensions: [
@@ -119,9 +123,21 @@ export const Editor: React.FC<EditorProps> = ({
     return null;
   }
 
+  const containerClasses = variant === 'enhanced' 
+    ? "border-[1.5px] border-[#e1e4e8] rounded-lg transition-all duration-200 focus-within:border-[#0366d6] focus-within:shadow-[0_0_0_3px_rgba(3,102,214,0.1)]"
+    : "border border-gray-200 rounded-lg";
+
+  const editorClasses = variant === 'enhanced'
+    ? "px-4 py-3 min-h-[200px] max-h-[600px] overflow-y-auto bg-[#fafbfc] focus-within:bg-white"
+    : "p-4 min-h-[200px] max-h-[600px] overflow-y-auto bg-indigo-50";
+
+  const toolbarClasses = variant === 'enhanced'
+    ? "border-b border-[#e1e4e8] p-2 flex flex-wrap gap-1 bg-[#fafbfc]"
+    : "border-b border-gray-200 p-2 flex flex-wrap gap-1";
+
   return (
-    <div className={cn("border border-gray-200 rounded-lg", className)}>
-      <div className="border-b border-gray-200 p-2 flex flex-wrap gap-1">
+    <div id={id} className={cn(containerClasses, className)}>
+      <div className={toolbarClasses}>
         <MenuButton
           onClick={handleBold}
           active={editor.isActive("bold")}
@@ -171,7 +187,7 @@ export const Editor: React.FC<EditorProps> = ({
       </div>
       <EditorContent
         editor={editor}
-        className="p-4 min-h-[200px] max-h-[600px] overflow-y-auto bg-indigo-50"
+        className={editorClasses}
       />
     </div>
   );

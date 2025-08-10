@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { Editor } from '@/components/ui/Editor';
 import { useProfile } from '@/hooks/useProfile';
 import { supabase } from '@/lib/supabase';
 import { CommitmentType, OpportunityType, WorkLanguage } from '@/types/volunteer';
@@ -24,7 +25,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
   
   const [formData, setFormData] = useState({
     title: '',
-    description: '',
+    description: '<p></p>', // Empty paragraph for Tiptap editor
     skills: '',
     commitment: CommitmentType.SHORT_TERM,
     location: '',
@@ -41,7 +42,9 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
       case 'title':
         return value.trim().length > 0 ? '' : 'Title is required';
       case 'description':
-        return value.trim().length > 0 ? '' : 'Description is required';
+        // Strip HTML tags to check if there's actual content
+        const textContent = value.replace(/<[^>]*>/g, '').trim();
+        return textContent.length > 0 ? '' : 'Description is required';
       case 'skills':
         return value.trim().length > 0 ? '' : 'At least one skill is required';
       case 'location':
@@ -167,21 +170,31 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
           name="title"
           value={formData.title}
           onChange={handleChange}
+          variant="enhanced"
           required
           error={validationErrors['title']}
         />
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="opportunity-description" className="block text-sm font-medium text-gray-700 mb-1">
             {t('volunteer.description', 'Description')}
           </label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows={4}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
-            required
+          <Editor
+            id="opportunity-description"
+            content={formData.description}
+            onChange={(content) => {
+              setFormData(prev => ({ ...prev, description: content }));
+              // Clear validation error for description
+              if (validationErrors['description']) {
+                setValidationErrors(prev => {
+                  const newErrors = { ...prev };
+                  delete newErrors['description'];
+                  return newErrors;
+                });
+              }
+            }}
+            placeholder="Describe the volunteer opportunity in detail..."
+            variant="enhanced"
           />
           {validationErrors['description'] && (
             <p className="mt-1 text-sm text-red-600">{validationErrors['description']}</p>
@@ -193,6 +206,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
           name="skills"
           value={formData.skills}
           onChange={handleChange}
+          variant="enhanced"
           placeholder="e.g., Web Development, Project Management, Translation"
           required
           error={validationErrors['skills']}
@@ -207,7 +221,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
               name="commitment"
               value={formData.commitment}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
+              className="block w-full border-[1.5px] border-[#e1e4e8] rounded-lg px-4 py-3 text-base transition-all duration-200 bg-[#fafbfc] focus:border-[#0366d6] focus:shadow-[0_0_0_3px_rgba(3,102,214,0.1)] focus:bg-white focus:outline-none"
               required
             >
               <option value={CommitmentType.ONE_TIME}>
@@ -230,7 +244,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
               name="type"
               value={formData.type}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
+              className="block w-full border-[1.5px] border-[#e1e4e8] rounded-lg px-4 py-3 text-base transition-all duration-200 bg-[#fafbfc] focus:border-[#0366d6] focus:shadow-[0_0_0_3px_rgba(3,102,214,0.1)] focus:bg-white focus:outline-none"
               required
             >
               <option value={OpportunityType.REMOTE}>
@@ -252,6 +266,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
             name="location"
             value={formData.location}
             onChange={handleChange}
+            variant="enhanced"
             placeholder="e.g., Remote, New York, Berlin"
             required
             error={validationErrors['location']}
@@ -265,7 +280,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
               name="workLanguage"
               value={formData.workLanguage}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
+              className="block w-full border-[1.5px] border-[#e1e4e8] rounded-lg px-4 py-3 text-base transition-all duration-200 bg-[#fafbfc] focus:border-[#0366d6] focus:shadow-[0_0_0_3px_rgba(3,102,214,0.1)] focus:bg-white focus:outline-none"
               required
             >
               {Object.values(WorkLanguage).map((language) => (
