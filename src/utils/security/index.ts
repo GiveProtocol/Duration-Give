@@ -35,9 +35,9 @@ export class SecurityManager {
     this.securityHeaders = this.initializeSecurityHeaders();
     this.highRiskPatterns = [
       "sql injection",
-      "xss attempt", 
+      "xss attempt",
       "csrf attempt",
-      "path traversal"
+      "path traversal",
     ];
   }
 

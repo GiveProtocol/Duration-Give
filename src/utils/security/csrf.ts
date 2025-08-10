@@ -88,7 +88,7 @@ export class CSRFProtection {
 
   private async timingSafeEqual(a: string, b: string): Promise<boolean> {
     this.validationAttempts++;
-    
+
     if (a.length !== b.length) {
       return false;
     }
