@@ -15,6 +15,8 @@ export class CSRFProtection {
   private token: string | null = null;
   private readonly headerName = "X-CSRF-Token";
   private readonly cookieName = "XSRF-TOKEN";
+  private lastCookieSet: string | null = null;
+  private validationAttempts: number = 0;
   private readonly cookieOptions = {
     httpOnly: true,
     secure: true,
@@ -65,6 +67,7 @@ export class CSRFProtection {
     if (options.sameSite) cookie += `; SameSite=${options.sameSite}`;
 
     document.cookie = cookie;
+    this.lastCookieSet = cookie;
   }
 
   getToken(): string {
@@ -84,6 +87,8 @@ export class CSRFProtection {
   }
 
   private async timingSafeEqual(a: string, b: string): Promise<boolean> {
+    this.validationAttempts++;
+    
     if (a.length !== b.length) {
       return false;
     }

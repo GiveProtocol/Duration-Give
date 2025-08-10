@@ -25,6 +25,7 @@ export class SecurityManager {
   private rateLimiter: RateLimiter;
   private readonly trustedDomains: string[];
   private readonly securityHeaders: SecurityHeaders;
+  private readonly highRiskPatterns: string[];
 
   private constructor() {
     this.csrf = CSRFProtection.getInstance();
@@ -32,6 +33,12 @@ export class SecurityManager {
     this.rateLimiter = RateLimiter.getInstance();
     this.trustedDomains = this.initializeTrustedDomains();
     this.securityHeaders = this.initializeSecurityHeaders();
+    this.highRiskPatterns = [
+      "sql injection",
+      "xss attempt", 
+      "csrf attempt",
+      "path traversal"
+    ];
   }
 
   static getInstance(): SecurityManager {
@@ -234,14 +241,7 @@ export class SecurityManager {
     type: string,
     details: Record<string, unknown>,
   ): boolean {
-    const highRiskPatterns = [
-      "sql injection",
-      "xss attempt",
-      "csrf attempt",
-      "path traversal",
-    ];
-
-    return highRiskPatterns.some(
+    return this.highRiskPatterns.some(
       (pattern) =>
         type.toLowerCase().includes(pattern) ||
         JSON.stringify(details).toLowerCase().includes(pattern),

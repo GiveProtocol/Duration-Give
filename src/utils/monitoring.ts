@@ -18,6 +18,9 @@ export class MonitoringService {
   private static instance: MonitoringService | null = null;
   private config: MonitoringConfig | null = null;
   private initialized = false;
+  private metricsCache: MonitoringMetrics[] = [];
+  private currentUserId: string | undefined = undefined;
+  private currentSessionId: string | undefined = undefined;
 
   private constructor() {
     // Private constructor to enforce singleton pattern
@@ -141,16 +144,21 @@ export class MonitoringService {
 
   private sendMetric(metric: MonitoringMetrics): void {
     // This would send metrics to your monitoring backend
-    // For now, store in localStorage as fallback
+    // For now, store in localStorage as fallback and cache in instance
     try {
-      const existingMetrics = JSON.parse(localStorage.getItem('monitoring_metrics') || '[]');
-      existingMetrics.push(metric);
+      this.metricsCache.push(metric);
       
-      // Keep only last 100 metrics to prevent storage bloat
+      // Keep only last 100 metrics to prevent memory bloat
+      if (this.metricsCache.length > 100) {
+        this.metricsCache.splice(0, this.metricsCache.length - 100);
+      }
+      
+      // Also persist to localStorage
+      const existingMetrics = this.exportMetrics();
+      existingMetrics.push(metric);
       if (existingMetrics.length > 100) {
         existingMetrics.splice(0, existingMetrics.length - 100);
       }
-      
       localStorage.setItem('monitoring_metrics', JSON.stringify(existingMetrics));
     } catch (error) {
       console.warn('Failed to store monitoring metric:', error);
@@ -158,24 +166,34 @@ export class MonitoringService {
   }
 
   private getCurrentUserId(): string | undefined {
-    // Get user ID from localStorage or auth context
+    // Get user ID from cache or fetch from localStorage/auth context
+    if (this.currentUserId) {
+      return this.currentUserId;
+    }
+    
     try {
       const userCookie = document.cookie
         .split('; ')
         .find(row => row.startsWith('give_docs_user_id='));
-      return userCookie?.split('=')[1];
+      this.currentUserId = userCookie?.split('=')[1];
+      return this.currentUserId;
     } catch {
       return undefined;
     }
   }
 
   private getCurrentSessionId(): string | undefined {
-    // Get session ID from localStorage or auth context
+    // Get session ID from cache or fetch from localStorage/auth context
+    if (this.currentSessionId) {
+      return this.currentSessionId;
+    }
+    
     try {
       const sessionCookie = document.cookie
         .split('; ')
         .find(row => row.startsWith('give_docs_session_id='));
-      return sessionCookie?.split('=')[1];
+      this.currentSessionId = sessionCookie?.split('=')[1];
+      return this.currentSessionId;
     } catch {
       return undefined;
     }
@@ -183,13 +201,16 @@ export class MonitoringService {
 
   public exportMetrics(): MonitoringMetrics[] {
     try {
-      return JSON.parse(localStorage.getItem('monitoring_metrics') || '[]');
+      // Return both cached metrics and persisted metrics
+      const persistedMetrics = JSON.parse(localStorage.getItem('monitoring_metrics') || '[]');
+      return [...this.metricsCache, ...persistedMetrics];
     } catch {
-      return [];
+      return this.metricsCache.slice(); // Return copy of cached metrics
     }
   }
 
   public clearMetrics(): void {
+    this.metricsCache = [];
     localStorage.removeItem('monitoring_metrics');
   }
 }
