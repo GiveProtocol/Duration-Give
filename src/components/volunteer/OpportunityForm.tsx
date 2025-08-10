@@ -37,13 +37,34 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   
+  // Safely strip HTML tags by repeatedly applying sanitization until no more changes occur
+  // This prevents incomplete multi-character sanitization vulnerabilities
+  const stripHtmlTags = (input: string): string => {
+    let sanitized = input;
+    let previous;
+    
+    do {
+      previous = sanitized;
+      // Remove HTML tags and common HTML entities that could be used for injection
+      sanitized = sanitized
+        .replace(/<[^>]*>/g, '') // Remove HTML tags
+        .replace(/&lt;/g, '')    // Remove encoded < 
+        .replace(/&gt;/g, '')    // Remove encoded >
+        .replace(/&amp;/g, '')   // Remove encoded &
+        .replace(/&quot;/g, '')  // Remove encoded "
+        .replace(/&#x?[0-9a-fA-F]+;?/g, ''); // Remove numeric entities
+    } while (sanitized !== previous);
+    
+    return sanitized;
+  };
+
   const validateField = (name: string, value: string): string => {
     switch (name) {
       case 'title':
         return value.trim().length > 0 ? '' : 'Title is required';
       case 'description': {
-        // Strip HTML tags to check if there's actual content
-        const textContent = value.replace(/<[^>]*>/g, '').trim();
+        // Safely strip HTML tags to check if there's actual content
+        const textContent = stripHtmlTags(value).trim();
         return textContent.length > 0 ? '' : 'Description is required';
       }
       case 'skills':

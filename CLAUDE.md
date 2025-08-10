@@ -422,6 +422,34 @@ Before writing ANY code, verify:
 - **NEVER use hard-coded passwords/secrets** in tests - use `expect.any(String)` or constants
 - **Always sanitize user inputs** and validate data before processing
 - **Never commit sensitive data** like API keys, private keys, or passwords
+- **NEVER use incomplete HTML sanitization** - Use repeated sanitization to prevent injection vulnerabilities
+
+#### 🔒 HTML Sanitization Security Pattern (CodeQL js/incomplete-multi-character-sanitization)
+
+```typescript
+// ❌ WRONG - Vulnerable to incomplete sanitization
+const sanitized = input.replace(/<[^>]*>/g, '');
+// Input: "<<script>alert('xss')</script>" becomes "<script>" 
+
+// ✅ CORRECT - Repeatedly sanitize until no more changes occur
+const stripHtmlTags = (input: string): string => {
+  let sanitized = input;
+  let previous;
+  
+  do {
+    previous = sanitized;
+    sanitized = sanitized
+      .replace(/<[^>]*>/g, '')           // Remove HTML tags
+      .replace(/&lt;/g, '')             // Remove encoded <
+      .replace(/&gt;/g, '')             // Remove encoded >
+      .replace(/&amp;/g, '')            // Remove encoded &
+      .replace(/&quot;/g, '')           // Remove encoded "
+      .replace(/&#x?[0-9a-fA-F]+;?/g, ''); // Remove numeric entities
+  } while (sanitized !== previous);
+  
+  return sanitized;
+};
+```
 
 ### ESLint Error Prevention
 
