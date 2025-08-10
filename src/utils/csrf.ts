@@ -7,7 +7,9 @@ export class CSRFProtection {
 
   // Private constructor prevents instantiation - this is a singleton utility class with state
   private constructor() {
-    throw new Error('CSRFProtection cannot be instantiated. Use static methods instead.');
+    throw new Error(
+      "CSRFProtection cannot be instantiated. Use static methods instead.",
+    );
   }
 
   static initialize(): void {
@@ -19,11 +21,11 @@ export class CSRFProtection {
     if (!this.token) {
       this.initialize();
     }
-    
+
     if (!this.token) {
-      throw new Error('Failed to initialize CSRF token');
+      throw new Error("Failed to initialize CSRF token");
     }
-    
+
     return this.token;
   }
 
@@ -33,7 +35,7 @@ export class CSRFProtection {
 
   static getHeaders(): Record<string, string> {
     return {
-      'X-CSRF-Token': this.getToken()
+      "X-CSRF-Token": this.getToken(),
     };
   }
 }
