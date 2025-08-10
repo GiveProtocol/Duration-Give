@@ -27,7 +27,7 @@ export const useVolunteerVerification = () => {
   const acceptApplication = async (applicationId: string) => {
     if (!profile?.id) {
       setError('User profile not found');
-      return;
+      return null;
     }
 
     try {
@@ -71,7 +71,7 @@ export const useVolunteerVerification = () => {
         id: application.id,
         opportunityId: application.opportunity_id,
         applicantId: application.applicant_id,
-        charityId: charityId,
+        charityId,
         fullName: '', // Not needed for hash generation
         phoneNumber: '', // Not needed for hash generation
         email: '', // Not needed for hash generation
@@ -91,6 +91,7 @@ export const useVolunteerVerification = () => {
       setError(message);
       showToast('error', 'Error', message);
       Logger.error('Application acceptance failed', { error: err, applicationId });
+      return null;
     } finally {
       setLoading(false);
     }
@@ -103,7 +104,7 @@ export const useVolunteerVerification = () => {
   const verifyHours = async (hoursId: string) => {
     if (!profile?.id) {
       setError('User profile not found');
-      return;
+      return null;
     }
 
     try {
@@ -202,6 +203,7 @@ export const useVolunteerVerification = () => {
       setError(message);
       showToast('error', 'Error', message);
       Logger.error('Hours verification failed', { error: err, hoursId });
+      return null;
     } finally {
       setLoading(false);
     }

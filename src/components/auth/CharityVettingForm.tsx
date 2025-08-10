@@ -37,9 +37,8 @@ export const CharityVettingForm: React.FC = () => {
     // Clear validation error for this field
     if (validationErrors[name]) {
       setValidationErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
+        const { [name]: _, ...rest } = prev;
+        return rest;
       });
     }
   };

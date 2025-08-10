@@ -224,6 +224,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             loading: false
           }));
         }
+        return undefined;
       }
     };
 

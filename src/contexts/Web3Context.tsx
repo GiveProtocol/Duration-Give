@@ -178,6 +178,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
         }
       };
     }
+    return undefined;
   }, [handleAccountsChanged, handleChainChanged]);
 
   const switchChain = useCallback(async (targetChainId: number) => {

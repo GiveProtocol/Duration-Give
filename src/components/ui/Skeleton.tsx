@@ -30,8 +30,8 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   };
 
   const style = {
-    width: width,
-    height: height,
+    width,
+    height,
   };
 
   return (

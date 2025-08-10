@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { setupAllRouteMocks } from '@/test-utils/routeMocks';
-import AppRoutes from '../index';
+import { AppRoutes } from '../index';
 
 // Setup all route mocks using shared utility
 setupAllRouteMocks();

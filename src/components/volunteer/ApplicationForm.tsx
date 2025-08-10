@@ -90,9 +90,8 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
     // Clear validation error for this field
     if (validationErrors[field]) {
       setValidationErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
+        const { [field]: _, ...rest } = prev;
+        return rest;
       });
     }
   };
