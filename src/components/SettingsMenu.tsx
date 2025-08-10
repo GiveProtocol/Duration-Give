@@ -1,18 +1,18 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Settings, Check, Globe, DollarSign } from 'lucide-react';
-import { useSettings, Language, Currency } from '@/contexts/SettingsContext';
-import { cn } from '@/utils/cn';
-import { useTranslation } from '@/hooks/useTranslation';
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { Settings, Check, Globe, DollarSign } from "lucide-react";
+import { useSettings, Language, Currency } from "@/contexts/SettingsContext";
+import { cn } from "@/utils/cn";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export const SettingsMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { 
-    language, 
-    setLanguage, 
-    currency, 
+  const {
+    language,
+    setLanguage,
+    currency,
     setCurrency,
     languageOptions,
-    currencyOptions
+    currencyOptions,
   } = useSettings();
   const { t } = useTranslation();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -26,28 +26,28 @@ export const SettingsMenu: React.FC = () => {
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
-    
+
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
 
   // Close menu when pressing Escape
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         setIsOpen(false);
       }
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
     }
-    
+
     return () => {
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen]);
 
@@ -64,19 +64,25 @@ export const SettingsMenu: React.FC = () => {
     setIsOpen(!isOpen);
   }, [isOpen]);
 
-  const handleLanguageClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    const value = e.currentTarget.dataset.value as Language;
-    if (value) {
-      handleLanguageChange(value);
-    }
-  }, [handleLanguageChange]);
+  const handleLanguageClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const value = e.currentTarget.dataset.value as Language;
+      if (value) {
+        handleLanguageChange(value);
+      }
+    },
+    [handleLanguageChange],
+  );
 
-  const handleCurrencyClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    const value = e.currentTarget.dataset.value as Currency;
-    if (value) {
-      handleCurrencyChange(value);
-    }
-  }, [handleCurrencyChange]);
+  const handleCurrencyClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const value = e.currentTarget.dataset.value as Currency;
+      if (value) {
+        handleCurrencyChange(value);
+      }
+    },
+    [handleCurrencyChange],
+  );
 
   return (
     <div className="relative" ref={menuRef}>
@@ -93,14 +99,18 @@ export const SettingsMenu: React.FC = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
           <div className="py-2 px-4 border-b border-gray-100">
-            <h3 className="text-sm font-medium text-gray-900">{t('settings.title')}</h3>
+            <h3 className="text-sm font-medium text-gray-900">
+              {t("settings.title")}
+            </h3>
           </div>
 
           {/* Language Selection */}
           <div className="py-3 px-4 border-b border-gray-100">
             <div className="flex items-center mb-2">
               <Globe className="h-4 w-4 text-gray-500 mr-2" />
-              <h4 className="text-sm font-medium text-gray-700">{t('settings.language')}</h4>
+              <h4 className="text-sm font-medium text-gray-700">
+                {t("settings.language")}
+              </h4>
             </div>
             <div className="grid grid-cols-2 gap-2 mt-2">
               {languageOptions.map((option) => (
@@ -112,7 +122,7 @@ export const SettingsMenu: React.FC = () => {
                     "flex items-center justify-between px-3 py-2 text-sm rounded-md",
                     language === option.value
                       ? "bg-indigo-50 text-indigo-700"
-                      : "text-gray-700 hover:bg-gray-50"
+                      : "text-gray-700 hover:bg-gray-50",
                   )}
                 >
                   <span>{option.label}</span>
@@ -128,7 +138,9 @@ export const SettingsMenu: React.FC = () => {
           <div className="py-3 px-4">
             <div className="flex items-center mb-2">
               <DollarSign className="h-4 w-4 text-gray-500 mr-2" />
-              <h4 className="text-sm font-medium text-gray-700">{t('settings.currency')}</h4>
+              <h4 className="text-sm font-medium text-gray-700">
+                {t("settings.currency")}
+              </h4>
             </div>
             <div className="grid grid-cols-2 gap-2 mt-2">
               {currencyOptions.map((option) => (
@@ -140,10 +152,12 @@ export const SettingsMenu: React.FC = () => {
                     "flex items-center justify-between px-3 py-2 text-sm rounded-md",
                     currency === option.value
                       ? "bg-indigo-50 text-indigo-700"
-                      : "text-gray-700 hover:bg-gray-50"
+                      : "text-gray-700 hover:bg-gray-50",
                   )}
                 >
-                  <span>{option.symbol} {option.value}</span>
+                  <span>
+                    {option.symbol} {option.value}
+                  </span>
                   {currency === option.value && (
                     <Check className="h-4 w-4 text-indigo-600" />
                   )}
