@@ -1,8 +1,13 @@
+/**
+ * CSRF protection utility that generates and validates tokens
+ * Uses class pattern with private constructor due to maintaining static state (token)
+ */
 export class CSRFProtection {
   private static token: string | null = null;
 
+  // Private constructor prevents instantiation - this is a singleton utility class with state
   private constructor() {
-    // Prevent instantiation - this class is only for static methods
+    throw new Error('CSRFProtection cannot be instantiated. Use static methods instead.');
   }
 
   static initialize(): void {

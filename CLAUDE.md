@@ -436,19 +436,84 @@ const handleSortByDate = useCallback(() => {
 // WRONG - Creates new function on every render (Major Performance Issue)
 <button onClick={() => handleClick(id)}>Click</button>
 <input onChange={(e) => setValue(e.target.value)} />
+<select onChange={(e) => setLanguage(e.target.value)}>
+<Tabs onValueChange={(value) => setActiveTab(value)}>
 
-// CORRECT - Use data attributes + useCallback
-const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-  const id = e.currentTarget.dataset.id;
-  // handle click with id
-}, []);
-<button data-id={id} onClick={handleClick}>Click</button>
+// CORRECT PATTERNS:
 
-// CORRECT - Dedicated change handler with useCallback
-const handleValueChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-  setValue(e.target.value);
+// 1. Simple state setters - Direct callbacks
+const handleLanguageChange = useCallback((newLanguage: Language) => {
+  setLanguage(newLanguage);
 }, []);
-<input onChange={handleValueChange} />
+
+// 2. Event handlers with value extraction
+const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  setSearchTerm(e.target.value);
+}, []);
+
+// 3. Parameterized handlers using data attributes
+const handleLanguageClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+  const value = e.currentTarget.dataset.value as Language;
+  if (value) {
+    handleLanguageChange(value);
+  }
+}, [handleLanguageChange]);
+// Usage: <button data-value={option.value} onClick={handleLanguageClick}>
+
+// 4. Complex handlers with dependencies
+const handleSetAlias = useCallback(async () => {
+  if (!isConnected || !address) {
+    showToast('error', 'Wallet not connected', 'Please connect your wallet');
+    return;
+  }
+  const success = await setWalletAlias(newAlias);
+  if (success) {
+    setNewAlias('');
+    setShowAliasModal(false);
+  }
+}, [isConnected, address, newAlias, showToast, setWalletAlias]);
+
+// 5. Form submission handlers
+const handleCreateSuccess = useCallback(() => {
+  setShowForm(false);
+  fetchOpportunities();
+}, [fetchOpportunities]);
+
+const handleFormCancel = useCallback(() => {
+  setShowForm(false);
+}, []);
+
+// 6. Tab change handlers with type casting
+const handleTabChange = useCallback((value: string) => {
+  setActiveTab(value as 'donations' | 'volunteer');
+}, []);
+
+// 7. Toggle handlers with computed state
+const toggleMenu = useCallback(() => {
+  setIsOpen(!isOpen);
+}, [isOpen]);
+```
+
+**Key Rules for JS-0417 Prevention:**
+
+1. **Always use `useCallback`** for functions passed to JSX props
+2. **Include proper dependencies** in the dependency array
+3. **Use data attributes** for parameterized handlers instead of closures
+4. **Extract values in the handler** rather than in arrow functions
+5. **Memoize complex handlers** to prevent unnecessary re-renders
+6. **Type handlers properly** with React event types
+7. **Group related handlers** together for better organization
+
+**Common Violation Patterns to Avoid:**
+
+```typescript
+// WRONG - All create new functions on every render
+<Button onClick={() => setView("donor")}>
+<Input onChange={(e) => setValue(e.target.value)}>
+<Select onValueChange={(value) => handleChange(value)}>
+<Tabs onValueChange={(tab) => setActiveTab(tab as TabType)}>
+<Form onCancel={() => setShowForm(false)}>
+<Form onSuccess={() => { setShowForm(false); refetch(); }}>
 ```
 
 16. **CRITICAL: JSX Nesting Prevention Rules**:

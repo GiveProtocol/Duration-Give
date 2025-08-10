@@ -13,6 +13,7 @@ interface MockEthereum {
 }
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace -- Cypress requires this namespace declaration pattern for custom commands
   namespace Cypress {
     interface Chainable {
       login(email?: string, password?: string): Chainable<void>;

@@ -13,13 +13,15 @@ interface LogEntry {
 /**
  * Centralized logging utility that integrates with Sentry for production error tracking
  * Maintains an in-memory log buffer for debugging and provides structured logging
+ * Uses class pattern with private constructor due to maintaining static state (logs array)
  */
 export class Logger {
   private static readonly MAX_LOG_SIZE = 1000;
   private static logs: LogEntry[] = [];
 
+  // Private constructor prevents instantiation - this is a singleton utility class with state
   private constructor() {
-    // Prevent instantiation - this class is only for static methods
+    throw new Error('Logger cannot be instantiated. Use static methods instead.');
   }
 
   private static serializeValue(value: unknown): unknown {

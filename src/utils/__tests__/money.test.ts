@@ -62,47 +62,47 @@ describe('money utilities', () => {
   describe('formatCurrency', () => {
     it('formats USD by default', () => {
       const result = formatCurrency(100);
-      expect(result).toMatch(/\$100\.00/);
+      expect(result).toMatch(/\$100\.00/u);
     });
 
     it('formats different currencies correctly', () => {
       // Test USD (base case)
-      expect(formatCurrency(100, 'USD')).toMatch(/\$100\.00/);
+      expect(formatCurrency(100, 'USD')).toMatch(/\$100\.00/u);
       
       // Test EUR (should convert)
       const eurResult = formatCurrency(100, 'EUR');
-      expect(eurResult).toMatch(/€/);
-      expect(eurResult).toMatch(/92\.00/); // 100 * 0.92
+      expect(eurResult).toMatch(/€/u);
+      expect(eurResult).toMatch(/92\.00/u); // 100 * 0.92
       
       // Test JPY (large rate)
       const jpyResult = formatCurrency(100, 'JPY');
-      expect(jpyResult).toMatch(/¥/);
-      expect(jpyResult).toMatch(/15,168\.00/); // 100 * 151.68
+      expect(jpyResult).toMatch(/¥/u);
+      expect(jpyResult).toMatch(/15,168\.00/u); // 100 * 151.68
     });
 
     it('handles zero amount', () => {
       const result = formatCurrency(0);
-      expect(result).toMatch(/\$0\.00/);
+      expect(result).toMatch(/\$0\.00/u);
     });
 
     it('handles negative amounts', () => {
       const result = formatCurrency(-100);
-      expect(result).toMatch(/-\$100\.00/);
+      expect(result).toMatch(/-\$100\.00/u);
     });
 
     it('handles decimal amounts', () => {
       const result = formatCurrency(123.456);
-      expect(result).toMatch(/\$123\.46/); // Should round to 2 decimal places
+      expect(result).toMatch(/\$123\.46/u); // Should round to 2 decimal places
     });
 
     it('handles very small amounts', () => {
       const result = formatCurrency(0.01);
-      expect(result).toMatch(/\$0\.01/);
+      expect(result).toMatch(/\$0\.01/u);
     });
 
     it('handles very large amounts', () => {
       const result = formatCurrency(1000000);
-      expect(result).toMatch(/\$1,000,000\.00/);
+      expect(result).toMatch(/\$1,000,000\.00/u);
     });
 
     it('uses exchange rate 1 for unknown currency', () => {
@@ -118,7 +118,7 @@ describe('money utilities', () => {
       delete EXCHANGE_RATES.EUR;
       
       const result = formatCurrency(100, 'EUR');
-      expect(result).toMatch(/€100\.00/); // Should use rate 1 as fallback
+      expect(result).toMatch(/€100\.00/u); // Should use rate 1 as fallback
       
       // Restore original rate
       EXCHANGE_RATES.EUR = originalRate;
@@ -126,17 +126,17 @@ describe('money utilities', () => {
 
     it('formats with proper thousand separators', () => {
       const result = formatCurrency(1234567.89);
-      expect(result).toMatch(/\$1,234,567\.89/);
+      expect(result).toMatch(/\$1,234,567\.89/u);
     });
 
     it('converts currencies correctly with different rates', () => {
       // Test CAD conversion
       const cadResult = formatCurrency(100, 'CAD');
-      expect(cadResult).toMatch(/135\.00/); // 100 * 1.35
+      expect(cadResult).toMatch(/135\.00/u); // 100 * 1.35
 
       // Test GBP conversion  
       const gbpResult = formatCurrency(100, 'GBP');
-      expect(gbpResult).toMatch(/79\.00/); // 100 * 0.79
+      expect(gbpResult).toMatch(/79\.00/u); // 100 * 0.79
     });
 
     it('handles edge case with zero exchange rate', () => {
@@ -145,7 +145,7 @@ describe('money utilities', () => {
       EXCHANGE_RATES.USD = 0;
       
       const result = formatCurrency(100, 'USD');
-      expect(result).toMatch(/\$100\.00/); // 100 * (0 || 1) = 100
+      expect(result).toMatch(/\$100\.00/u); // 100 * (0 || 1) = 100
       
       // Restore original rate
       EXCHANGE_RATES.USD = originalRate;
@@ -154,7 +154,7 @@ describe('money utilities', () => {
     it('formats floating point precision correctly', () => {
       // Test precision issues with floating point arithmetic
       const result = formatCurrency(0.1 + 0.2); // Classic floating point issue
-      expect(result).toMatch(/\$0\.30/); // Should be properly formatted
+      expect(result).toMatch(/\$0\.30/u); // Should be properly formatted
     });
   });
 
@@ -212,7 +212,7 @@ describe('money utilities', () => {
       const growth = calculateEquityGrowth(principal);
       const formatted = formatCurrency(growth);
       
-      expect(formatted).toMatch(/\$120\.00/);
+      expect(formatted).toMatch(/\$120\.00/u);
     });
 
     it('works with different currencies for growth calculation', () => {
@@ -222,8 +222,8 @@ describe('money utilities', () => {
       const usdFormatted = formatCurrency(growth, 'USD');
       const eurFormatted = formatCurrency(growth, 'EUR');
       
-      expect(usdFormatted).toMatch(/\$120\.00/);
-      expect(eurFormatted).toMatch(/€110\.40/); // 120 * 0.92
+      expect(usdFormatted).toMatch(/\$120\.00/u);
+      expect(eurFormatted).toMatch(/€110\.40/u); // 120 * 0.92
     });
 
     it('handles complete workflow with edge cases', () => {
@@ -235,7 +235,7 @@ describe('money utilities', () => {
         
         expect(typeof growth).toBe('number');
         expect(typeof formatted).toBe('string');
-        expect(formatted).toMatch(/\$/);
+        expect(formatted).toMatch(/\$/u);
       }
     });
   });
