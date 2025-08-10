@@ -106,7 +106,7 @@ Create a `.env` file with required variables:
    // CORRECT - Use the variable
    const mockSpy = jest.spyOn(module, "method");
    expect(mockSpy).toHaveBeenCalled();
-   
+
    // CORRECT - Prefix destructured unused variables with underscore
    const { description: _description, ...rest } = prev;
    return rest;
@@ -331,11 +331,11 @@ Create a `.env` file with required variables:
     const handleDescriptionChange = useCallback((content: string) => {
       setDescription(content);
     }, []);
-    
+
     const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
       handleClick(e.currentTarget.value);
     }, []);
-    
+
     <Editor onChange={handleDescriptionChange} />
     <button onClick={handleClick}>Click</button>
     ```
@@ -345,7 +345,7 @@ Create a `.env` file with required variables:
     ```typescript
     // WRONG - delete operator with computed property access
     if (validationErrors[fieldName]) {
-      setValidationErrors(prev => {
+      setValidationErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[fieldName];
         return newErrors;
@@ -354,7 +354,7 @@ Create a `.env` file with required variables:
 
     // CORRECT - Use object destructuring for performance
     if (validationErrors[fieldName]) {
-      setValidationErrors(prev => {
+      setValidationErrors((prev) => {
         const { [fieldName]: removedField, ...rest } = prev;
         return rest;
       });
@@ -366,16 +366,16 @@ Create a `.env` file with required variables:
     ```typescript
     // WRONG - const/let declarations need block scope in switch cases
     switch (name) {
-      case 'description':
-        const textContent = value.replace(/<[^>]*>/g, '').trim();
-        return textContent.length > 0 ? '' : 'Description is required';
+      case "description":
+        const textContent = value.replace(/<[^>]*>/g, "").trim();
+        return textContent.length > 0 ? "" : "Description is required";
     }
 
     // CORRECT - Wrap case body in braces to create block scope
     switch (name) {
-      case 'description': {
-        const textContent = value.replace(/<[^>]*>/g, '').trim();
-        return textContent.length > 0 ? '' : 'Description is required';
+      case "description": {
+        const textContent = value.replace(/<[^>]*>/g, "").trim();
+        return textContent.length > 0 ? "" : "Description is required";
       }
     }
     ```
