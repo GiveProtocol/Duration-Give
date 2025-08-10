@@ -112,6 +112,89 @@ export interface Database {
           updated_at?: string;
         };
       };
+      volunteer_applications: {
+        Row: {
+          id: string;
+          opportunity_id: string;
+          applicant_id: string;
+          charity_id: string;
+          full_name: string;
+          email: string;
+          phone?: string;
+          message?: string;
+          status: "pending" | "approved" | "rejected";
+          applied_at: string;
+          reviewed_at?: string;
+          reviewed_by?: string;
+          opportunity?: {
+            id: string;
+            title: string;
+          };
+        };
+        Insert: {
+          id?: string;
+          opportunity_id: string;
+          applicant_id: string;
+          charity_id: string;
+          full_name: string;
+          email: string;
+          phone?: string;
+          message?: string;
+          status?: "pending" | "approved" | "rejected";
+          applied_at?: string;
+          reviewed_at?: string;
+          reviewed_by?: string;
+        };
+        Update: {
+          id?: string;
+          opportunity_id?: string;
+          applicant_id?: string;
+          charity_id?: string;
+          full_name?: string;
+          email?: string;
+          phone?: string;
+          message?: string;
+          status?: "pending" | "approved" | "rejected";
+          applied_at?: string;
+          reviewed_at?: string;
+          reviewed_by?: string;
+        };
+      };
+      volunteer_verifications: {
+        Row: {
+          id: string;
+          volunteer_id: string;
+          charity_id: string;
+          volunteer_hours_id: string;
+          verification_method: string;
+          verified_at: string;
+          verified_by?: string;
+          nft_token_id?: number;
+          blockchain_tx_hash?: string;
+        };
+        Insert: {
+          id?: string;
+          volunteer_id: string;
+          charity_id: string;
+          volunteer_hours_id: string;
+          verification_method: string;
+          verified_at?: string;
+          verified_by?: string;
+          nft_token_id?: number;
+          blockchain_tx_hash?: string;
+        };
+        Update: {
+          id?: string;
+          volunteer_id?: string;
+          charity_id?: string;
+          volunteer_hours_id?: string;
+          verification_method?: string;
+          verified_at?: string;
+          verified_by?: string;
+          nft_token_id?: number;
+          blockchain_tx_hash?: string;
+        };
+      };
     };
   };
 }
