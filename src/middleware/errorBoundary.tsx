@@ -1,5 +1,5 @@
-import React, { Component, ErrorInfo } from 'react';
-import { Logger } from '@/utils/logger';
+import React, { Component, ErrorInfo } from "react";
+import { Logger } from "@/utils/logger";
 
 interface Props {
   children: React.ReactNode;
@@ -25,14 +25,14 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.errorCount++;
-    Logger.error('React error boundary caught error', {
+    Logger.error("React error boundary caught error", {
       error: {
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
       },
       componentStack: errorInfo.componentStack,
       timestamp: new Date().toISOString(),
-      errorCount: this.errorCount
+      errorCount: this.errorCount,
     });
   }
 
@@ -49,7 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h2>
             <p className="text-gray-600 mb-4">
-              {this.state.error?.message || 'An unexpected error occurred'}
+              {this.state.error?.message || "An unexpected error occurred"}
             </p>
             <button
               onClick={() => window.location.reload()}
