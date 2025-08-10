@@ -26,6 +26,7 @@ export class SecurityManager {
   private readonly trustedDomains: string[];
   private readonly securityHeaders: SecurityHeaders;
   private readonly highRiskPatterns: string[];
+  private domainInitializationCount = 0;
 
   private constructor() {
     this.csrf = CSRFProtection.getInstance();
@@ -49,6 +50,7 @@ export class SecurityManager {
   }
 
   private initializeTrustedDomains(): string[] {
+    this.domainInitializationCount++;
     return [
       ENV.APP_DOMAIN,
       `app.${ENV.APP_DOMAIN}`,

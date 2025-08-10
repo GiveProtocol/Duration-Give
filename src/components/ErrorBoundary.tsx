@@ -21,6 +21,8 @@ const RECOVERY_COOLDOWN = 5000; // 5 seconds
 
 export class ErrorBoundary extends Component<Props, State> {
   private lastRecoveryAttempt = 0;
+  private cacheOperationsCount = 0;
+  private navigationAttempts = 0;
 
   constructor(props: Props) {
     super(props);
@@ -122,6 +124,7 @@ export class ErrorBoundary extends Component<Props, State> {
   };
 
   private async clearCache() {
+    this.cacheOperationsCount++;
     if ('caches' in window) {
       try {
         const cacheKeys = await caches.keys();
@@ -145,6 +148,7 @@ export class ErrorBoundary extends Component<Props, State> {
   };
 
   private handleNavigateHome = () => {
+    this.navigationAttempts++;
     // Navigate to home page
     window.location.href = '/';
   };

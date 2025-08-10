@@ -16,7 +16,7 @@ export class CSRFProtection {
   private readonly headerName = "X-CSRF-Token";
   private readonly cookieName = "XSRF-TOKEN";
   private lastCookieSet: string | null = null;
-  private validationAttempts: number = 0;
+  private validationAttempts = 0;
   private readonly cookieOptions = {
     httpOnly: true,
     secure: true,

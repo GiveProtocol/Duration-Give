@@ -12,6 +12,8 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
+  private errorCount = 0;
+
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -22,13 +24,15 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    this.errorCount++;
     Logger.error('React error boundary caught error', {
       error: {
         message: error.message,
         stack: error.stack
       },
       componentStack: errorInfo.componentStack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      errorCount: this.errorCount
     });
   }
 

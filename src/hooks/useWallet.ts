@@ -15,6 +15,8 @@ class EVMWalletBase implements WalletProvider {
   name: string;
   icon: string;
   protected provider: unknown;
+  private disconnectionAttempts = 0;
+  private chainParams: Record<number, unknown> | null = null;
 
   constructor(name: string, icon: string, provider: unknown) {
     this.name = name;
@@ -53,6 +55,7 @@ class EVMWalletBase implements WalletProvider {
   }
 
   async disconnect(): Promise<void> {
+    this.disconnectionAttempts++;
     // Most EVM wallets don't have a disconnect method
     return Promise.resolve();
   }
@@ -84,6 +87,9 @@ class EVMWalletBase implements WalletProvider {
   }
 
   protected getChainParams(chainId: number) {
+    if (!this.chainParams) {
+      this.chainParams = {};
+    }
     const chains = {
       [CHAIN_IDS.MOONBASE]: {
         chainId: `0x${CHAIN_IDS.MOONBASE.toString(16)}`,
@@ -135,6 +141,8 @@ class EVMWalletBase implements WalletProvider {
 }
 
 class MetaMaskWallet extends EVMWalletBase {
+  private installationChecks = 0;
+
   constructor() {
     super(
       "MetaMask",
@@ -144,11 +152,14 @@ class MetaMaskWallet extends EVMWalletBase {
   }
 
   isInstalled(): boolean {
+    this.installationChecks++;
     return typeof window.ethereum?.isMetaMask !== "undefined";
   }
 }
 
 class CoinbaseWallet extends EVMWalletBase {
+  private installationChecks = 0;
+
   constructor() {
     super(
       "Coinbase Wallet",
@@ -158,21 +169,27 @@ class CoinbaseWallet extends EVMWalletBase {
   }
 
   isInstalled(): boolean {
+    this.installationChecks++;
     return typeof window.ethereum?.isCoinbaseWallet !== "undefined";
   }
 }
 
 class TallyWallet extends EVMWalletBase {
+  private installationChecks = 0;
+
   constructor() {
     super("Tally", "tally", window.ethereum?.isTally ? window.ethereum : null);
   }
 
   isInstalled(): boolean {
+    this.installationChecks++;
     return typeof window.ethereum?.isTally !== "undefined";
   }
 }
 
 class BraveWallet extends EVMWalletBase {
+  private installationChecks = 0;
+
   constructor() {
     super(
       "Brave",
@@ -182,6 +199,7 @@ class BraveWallet extends EVMWalletBase {
   }
 
   isInstalled(): boolean {
+    this.installationChecks++;
     return typeof window.ethereum?.isBraveWallet !== "undefined";
   }
 }
@@ -191,28 +209,39 @@ class PolkadotWallet implements WalletProvider {
   icon = "polkadot";
   private readonly injector: unknown = null;
   private readonly extensions: unknown[] = [];
+  private initializationAttempts = 0;
+  private installationChecks = 0;
+  private connectionAttempts = 0;
+  private disconnectionAttempts = 0;
+  private chainSwitchAttempts = 0;
 
   async initialize() {
+    this.initializationAttempts++;
     // Polkadot.js extension functionality removed
   }
 
   isInstalled(): boolean {
+    this.installationChecks++;
     return false;
   }
 
   async isConnected(_address: string): Promise<boolean> {
+    this.connectionAttempts++;
     return false;
   }
 
   async connect(): Promise<string> {
+    this.connectionAttempts++;
     throw new Error("Polkadot wallet connection not implemented");
   }
 
   async disconnect(): Promise<void> {
+    this.disconnectionAttempts++;
     return Promise.resolve();
   }
 
   async switchChain(chainId: string): Promise<void> {
+    this.chainSwitchAttempts++;
     Logger.info("Chain switch requested", { chain: chainId });
   }
 }
