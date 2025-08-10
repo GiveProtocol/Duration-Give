@@ -51,14 +51,20 @@ export const SettingsMenu: React.FC = () => {
     };
   }, [isOpen]);
 
-  const handleLanguageChange = useCallback((newLanguage: Language) => {
-    setLanguage(newLanguage);
-    // The language change will be handled by the useTranslation hook
-  }, [setLanguage]);
+  const handleLanguageChange = useCallback(
+    (newLanguage: Language) => {
+      setLanguage(newLanguage);
+      // The language change will be handled by the useTranslation hook
+    },
+    [setLanguage],
+  );
 
-  const handleCurrencyChange = useCallback((newCurrency: Currency) => {
-    setCurrency(newCurrency);
-  }, [setCurrency]);
+  const handleCurrencyChange = useCallback(
+    (newCurrency: Currency) => {
+      setCurrency(newCurrency);
+    },
+    [setCurrency],
+  );
 
   const toggleMenu = useCallback(() => {
     setIsOpen(!isOpen);
