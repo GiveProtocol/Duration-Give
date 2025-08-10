@@ -1,8 +1,8 @@
-import React from 'react';
-import { WithdrawalRequest } from '../../../types/charity';
-import { WithdrawalStatus } from './WithdrawalStatus';
-import { formatCurrency } from '../../../utils/money';
-import { formatDate } from '../../../utils/date';
+import React from "react";
+import { WithdrawalRequest } from "../../../types/charity";
+import { WithdrawalStatus } from "./WithdrawalStatus";
+import { formatCurrency } from "../../../utils/money";
+import { formatDate } from "../../../utils/date";
 
 interface WithdrawalTableProps {
   withdrawals: WithdrawalRequest[];
