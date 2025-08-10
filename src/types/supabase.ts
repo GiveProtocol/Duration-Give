@@ -29,6 +29,89 @@ export interface Database {
           created_at?: string
         }
       }
+      volunteer_hours: {
+        Row: {
+          id: string
+          volunteer_id: string
+          charity_id: string
+          hours: number
+          date_performed: string
+          description: string
+          status: 'pending' | 'approved' | 'rejected'
+          created_at: string
+          updated_at: string
+          volunteer?: {
+            id: string
+            user_id: string
+          }
+        }
+        Insert: {
+          id?: string
+          volunteer_id: string
+          charity_id: string
+          hours: number
+          date_performed: string
+          description: string
+          status?: 'pending' | 'approved' | 'rejected'
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          volunteer_id?: string
+          charity_id?: string
+          hours?: number
+          date_performed?: string
+          description?: string
+          status?: 'pending' | 'approved' | 'rejected'
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      volunteer_opportunities: {
+        Row: {
+          id: string
+          charity_id: string
+          title: string
+          description: string
+          skills: string[]
+          commitment: string
+          location: string
+          type: string
+          work_language: string
+          status: 'active' | 'inactive' | 'completed'
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          charity_id: string
+          title: string
+          description: string
+          skills: string[]
+          commitment: string
+          location: string
+          type: string
+          work_language: string
+          status?: 'active' | 'inactive' | 'completed'
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          charity_id?: string
+          title?: string
+          description?: string
+          skills?: string[]
+          commitment?: string
+          location?: string
+          type?: string
+          work_language?: string
+          status?: 'active' | 'inactive' | 'completed'
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
   }
 }
