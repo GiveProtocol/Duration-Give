@@ -407,21 +407,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       setState(prev => ({ ...prev, loading: true, error: null }));
       
-      // Check if user already exists with a different account type
-      const { data: existingUser, error: _checkError } = await supabase.auth.signInWithPassword({
-        email,
-        password: 'dummy-password-for-check' // This will fail if user doesn't exist, which is what we want
-      });
-      
-      // If login succeeded, the user exists with the provided password
-      if (existingUser?.user) {
-        const existingType = existingUser.user.user_metadata?.type;
-        if (existingType && existingType !== type) {
-          throw new Error(`This email is already registered as a ${existingType} account. Please use a different email.`);
-        }
-      }
-      
-      // If we get here, either the user doesn't exist or has the same account type
+      // Attempt to sign up the user
+      // If the email is already registered, Supabase will return an error
+      // This approach avoids using dummy credentials for checking
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -435,6 +423,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (error) {
+        // Check if error is because user already exists
+        if (error.message?.toLowerCase().includes('already registered') || 
+            error.message?.toLowerCase().includes('already exists') ||
+            error.message?.toLowerCase().includes('user already registered')) {
+          // For better UX, we don't reveal which account type the email is registered with
+          throw new Error('This email is already registered. Please sign in or use a different email.');
+        }
         Logger.error('Registration error', { 
           error: error.message,
           code: error.status,
