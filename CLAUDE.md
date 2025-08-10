@@ -106,6 +106,10 @@ Create a `.env` file with required variables:
    // CORRECT - Use the variable
    const mockSpy = jest.spyOn(module, "method");
    expect(mockSpy).toHaveBeenCalled();
+   
+   // CORRECT - Prefix destructured unused variables with underscore
+   const { description: _description, ...rest } = prev;
+   return rest;
    ```
 
 2. **NEVER use empty functions without comments** (DeepSource JS-0321 - Minor)

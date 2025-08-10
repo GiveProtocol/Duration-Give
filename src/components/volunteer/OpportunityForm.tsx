@@ -74,7 +74,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
     // Clear validation error for description
     if (validationErrors.description) {
       setValidationErrors(prev => {
-        const { description, ...rest } = prev;
+        const { description: _description, ...rest } = prev;
         return rest;
       });
     }
