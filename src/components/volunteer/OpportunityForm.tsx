@@ -37,25 +37,12 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   
-  // Safely strip HTML tags by repeatedly applying sanitization until no more changes occur
+  // Safely strip HTML by removing individual characters that could form HTML
   // This prevents incomplete multi-character sanitization vulnerabilities
   const stripHtmlTags = (input: string): string => {
-    let sanitized = input;
-    let previous;
-    
-    do {
-      previous = sanitized;
-      // Remove HTML tags and common HTML entities that could be used for injection
-      sanitized = sanitized
-        .replace(/<[^>]*>/g, '') // Remove HTML tags
-        .replace(/&lt;/g, '')    // Remove encoded < 
-        .replace(/&gt;/g, '')    // Remove encoded >
-        .replace(/&amp;/g, '')   // Remove encoded &
-        .replace(/&quot;/g, '')  // Remove encoded "
-        .replace(/&#x?[0-9a-fA-F]+;?/g, ''); // Remove numeric entities
-    } while (sanitized !== previous);
-    
-    return sanitized;
+    // Remove all < and > characters which are the core of HTML tags
+    // This is more secure than trying to match complete tag patterns
+    return input.replace(/[<>]/g, '');
   };
 
   const validateField = (name: string, value: string): string => {

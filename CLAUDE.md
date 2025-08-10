@@ -431,24 +431,17 @@ Before writing ANY code, verify:
 const sanitized = input.replace(/<[^>]*>/g, '');
 // Input: "<<script>alert('xss')</script>" becomes "<script>" 
 
-// ✅ CORRECT - Repeatedly sanitize until no more changes occur
+// ✅ CORRECT - Remove individual HTML characters instead of multi-character patterns
 const stripHtmlTags = (input: string): string => {
-  let sanitized = input;
-  let previous;
-  
-  do {
-    previous = sanitized;
-    sanitized = sanitized
-      .replace(/<[^>]*>/g, '')           // Remove HTML tags
-      .replace(/&lt;/g, '')             // Remove encoded <
-      .replace(/&gt;/g, '')             // Remove encoded >
-      .replace(/&amp;/g, '')            // Remove encoded &
-      .replace(/&quot;/g, '')           // Remove encoded "
-      .replace(/&#x?[0-9a-fA-F]+;?/g, ''); // Remove numeric entities
-  } while (sanitized !== previous);
-  
-  return sanitized;
+  // Remove all < and > characters which are the core of HTML tags
+  // This is more secure than trying to match complete tag patterns
+  return input.replace(/[<>]/g, '');
 };
+
+// Alternative: Use a well-tested sanitization library
+// npm install sanitize-html
+// const sanitizeHtml = require('sanitize-html');
+// const sanitized = sanitizeHtml(input, { allowedTags: [] });
 ```
 
 ### ESLint Error Prevention
