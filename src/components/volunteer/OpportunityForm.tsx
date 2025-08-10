@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -41,10 +41,11 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
     switch (name) {
       case 'title':
         return value.trim().length > 0 ? '' : 'Title is required';
-      case 'description':
+      case 'description': {
         // Strip HTML tags to check if there's actual content
         const textContent = value.replace(/<[^>]*>/g, '').trim();
         return textContent.length > 0 ? '' : 'Description is required';
+      }
       case 'skills':
         return value.trim().length > 0 ? '' : 'At least one skill is required';
       case 'location':
@@ -67,6 +68,17 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
       });
     }
   };
+
+  const handleDescriptionChange = useCallback((content: string) => {
+    setFormData(prev => ({ ...prev, description: content }));
+    // Clear validation error for description
+    if (validationErrors.description) {
+      setValidationErrors(prev => {
+        const { description, ...rest } = prev;
+        return rest;
+      });
+    }
+  }, [validationErrors.description]);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -182,17 +194,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
           <Editor
             id="opportunity-description"
             content={formData.description}
-            onChange={(content) => {
-              setFormData(prev => ({ ...prev, description: content }));
-              // Clear validation error for description
-              if (validationErrors['description']) {
-                setValidationErrors(prev => {
-                  const newErrors = { ...prev };
-                  delete newErrors['description'];
-                  return newErrors;
-                });
-              }
-            }}
+            onChange={handleDescriptionChange}
             placeholder="Describe the volunteer opportunity in detail..."
             variant="enhanced"
           />

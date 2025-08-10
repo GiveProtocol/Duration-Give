@@ -316,6 +316,66 @@ Create a `.env` file with required variables:
 
 16. **ALWAYS check DeepSource results after fixes** - Fixes can introduce new violations
 
+17. **NEVER use arrow functions directly in JSX props** (DeepSource JS-0417 - Major Performance)
+
+    ```typescript
+    // WRONG - Creates new function on every render
+    <Editor onChange={(content: string) => setDescription(content)} />
+    <button onClick={(e) => handleClick(e.target.value)}>Click</button>
+
+    // CORRECT - Use useCallback for performance
+    const handleDescriptionChange = useCallback((content: string) => {
+      setDescription(content);
+    }, []);
+    
+    const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+      handleClick(e.currentTarget.value);
+    }, []);
+    
+    <Editor onChange={handleDescriptionChange} />
+    <button onClick={handleClick}>Click</button>
+    ```
+
+18. **NEVER use delete operator with computed keys** (DeepSource JS-0320 - Performance)
+
+    ```typescript
+    // WRONG - delete operator with computed property access
+    if (validationErrors[fieldName]) {
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[fieldName];
+        return newErrors;
+      });
+    }
+
+    // CORRECT - Use object destructuring for performance
+    if (validationErrors[fieldName]) {
+      setValidationErrors(prev => {
+        const { [fieldName]: removedField, ...rest } = prev;
+        return rest;
+      });
+    }
+    ```
+
+19. **NEVER use lexical declarations directly in case clauses** (DeepSource JS-0054 - Syntax)
+
+    ```typescript
+    // WRONG - const/let declarations need block scope in switch cases
+    switch (name) {
+      case 'description':
+        const textContent = value.replace(/<[^>]*>/g, '').trim();
+        return textContent.length > 0 ? '' : 'Description is required';
+    }
+
+    // CORRECT - Wrap case body in braces to create block scope
+    switch (name) {
+      case 'description': {
+        const textContent = value.replace(/<[^>]*>/g, '').trim();
+        return textContent.length > 0 ? '' : 'Description is required';
+      }
+    }
+    ```
+
 ### ALWAYS DO (Before Writing Any Code)
 
 1. **Define types first**, then write implementation
