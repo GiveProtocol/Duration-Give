@@ -390,7 +390,7 @@ Create a `.env` file with required variables:
 
     // CORRECT - Use explicit type conversion functions
     const isConnected = Boolean(address);
-    const isInstalled = Boolean(this.provider); 
+    const isInstalled = Boolean(this.provider);
     const hasData = Boolean(data);
     ```
 
@@ -398,7 +398,7 @@ Create a `.env` file with required variables:
 
     ```typescript
     // WRONG - String concatenation is less readable
-    url = '/' + url;
+    url = "/" + url;
     const message = "Hello, " + name + "!";
 
     // CORRECT - Use template literals for better readability
@@ -443,7 +443,7 @@ Create a `.env` file with required variables:
 
     // ACCEPTABLE - With skipcq comment for modules that don't expose ES modules
     // skipcq: JS-C1003 - Sentry does not expose itself as an ES Module
-    import * as Sentry from '@sentry/node';
+    import * as Sentry from "@sentry/node";
     ```
 
 ### ALWAYS DO (Before Writing Any Code)
