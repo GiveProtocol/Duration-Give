@@ -42,7 +42,7 @@ function generateSearchData() {
       
       // Ensure URL starts with /
       if (!url.startsWith('/')) {
-        url = '/' + url;
+        url = `/${url}`;
       }
       
       // Clean up double slashes

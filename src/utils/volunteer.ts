@@ -322,7 +322,7 @@ export const verifyVolunteerHash = async (hash: string): Promise<boolean> => {
     
     if (error) throw error;
     
-    return !!data;
+    return Boolean(data);
   } catch (error) {
     Logger.error('Error verifying volunteer hash', { error, hash });
     return false;

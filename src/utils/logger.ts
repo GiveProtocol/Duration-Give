@@ -18,6 +18,7 @@ interface LogEntry {
 export class Logger {
   private static readonly MAX_LOG_SIZE = 1000;
   private static logs: LogEntry[] = [];
+  private static logCount = 0;
 
   // Private constructor prevents instantiation - this is a singleton utility class with state
   private constructor() {
@@ -85,6 +86,7 @@ export class Logger {
       };
 
       this.logs.push(entry);
+      this.logCount++;
       if (this.logs.length > this.MAX_LOG_SIZE) {
         this.logs.shift();
       }

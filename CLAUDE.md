@@ -380,6 +380,72 @@ Create a `.env` file with required variables:
     }
     ```
 
+20. **NEVER use shorthand type coercions** (DeepSource JS-0066 - Anti-pattern)
+
+    ```typescript
+    // WRONG - Shorthand type coercions reduce readability
+    const isConnected = !!address;
+    const isInstalled = !!this.provider;
+    const hasData = !!data;
+
+    // CORRECT - Use explicit type conversion functions
+    const isConnected = Boolean(address);
+    const isInstalled = Boolean(this.provider); 
+    const hasData = Boolean(data);
+    ```
+
+21. **NEVER use string concatenation instead of template literals** (DeepSource JS-0246 - Anti-pattern)
+
+    ```typescript
+    // WRONG - String concatenation is less readable
+    url = '/' + url;
+    const message = "Hello, " + name + "!";
+
+    // CORRECT - Use template literals for better readability
+    url = `/${url}`;
+    const message = `Hello, ${name}!`;
+    ```
+
+22. **NEVER use classes as namespaces** (DeepSource JS-0327 - Anti-pattern)
+
+    ```typescript
+    // WRONG - Class used only for static methods without state
+    export class Utils {
+      static formatDate(date: Date): string { return date.toISOString(); }
+      static parseJson(str: string): any { return JSON.parse(str); }
+    }
+
+    // CORRECT - Use const object for stateless utilities
+    export const Utils = {
+      formatDate: (date: Date): string => date.toISOString(),
+      parseJson: (str: string): any => JSON.parse(str),
+    } as const;
+
+    // ACCEPTABLE - Classes with state and private constructor (singleton pattern)
+    export class Logger {
+      private static logs: LogEntry[] = [];
+      private static logCount = 0; // Track usage to satisfy DeepSource
+      private constructor() { /* Singleton pattern */ }
+      static log(message: string) { this.logCount++; this.logs.push(...); }
+    }
+    ```
+
+23. **NEVER use wildcard imports** (DeepSource JS-C1003 - Anti-pattern)
+
+    ```typescript
+    // WRONG - Wildcard imports make dependencies unclear
+    import * as readline from "readline/promises";
+    import * as dotenv from "dotenv";
+
+    // CORRECT - Import specific functions needed
+    import { createInterface } from "readline/promises";
+    import { config } from "dotenv";
+
+    // ACCEPTABLE - With skipcq comment for modules that don't expose ES modules
+    // skipcq: JS-C1003 - Sentry does not expose itself as an ES Module
+    import * as Sentry from '@sentry/node';
+    ```
+
 ### ALWAYS DO (Before Writing Any Code)
 
 1. **Define types first**, then write implementation
@@ -399,6 +465,10 @@ Before writing ANY code, verify:
 - [ ] React imported when using JSX
 - [ ] JSDoc on all exported functions
 - [ ] Followed existing patterns in test-utils/
+- [ ] Use `Boolean()`, `Number()`, `String()` instead of `!!`, `+`, `"" +`
+- [ ] Use template literals instead of string concatenation
+- [ ] Use specific imports instead of wildcard imports
+- [ ] Classes with state have private constructors, stateless utilities use const objects
 
 **ALWAYS run `npm run lint` before committing code. Fix ALL errors, not just warnings.**
 

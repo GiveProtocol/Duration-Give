@@ -9,15 +9,15 @@
  */
 
 import { createClient } from "@supabase/supabase-js";
-import * as readline from "readline/promises";
-import * as dotenv from "dotenv";
+import { createInterface } from "readline/promises";
+import { config } from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
 // Load environment variables
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-dotenv.config({ path: join(__dirname, "..", ".env") });
+config({ path: join(__dirname, "..", ".env") });
 
 // Validate environment variables
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
@@ -42,7 +42,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey, {
   },
 });
 
-const rl = readline.createInterface({
+const rl = createInterface({
   input: process.stdin,
   output: process.stdout,
 });

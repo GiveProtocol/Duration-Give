@@ -4,6 +4,7 @@
  */
 export class CSRFProtection {
   private static token: string | null = null;
+  private static initializationCount = 0;
 
   // Private constructor prevents instantiation - this is a singleton utility class with state
   private constructor() {
@@ -13,6 +14,7 @@ export class CSRFProtection {
   }
 
   static initialize(): void {
+    this.initializationCount++;
     this.token = crypto.randomUUID();
     document.cookie = `csrf-token=${this.token}; path=/; samesite=strict`;
   }

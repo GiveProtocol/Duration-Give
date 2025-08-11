@@ -25,7 +25,7 @@ class EVMWalletBase implements WalletProvider {
   }
 
   isInstalled(): boolean {
-    return !!this.provider;
+    return Boolean(this.provider);
   }
 
   async isConnected(address: string): Promise<boolean> {

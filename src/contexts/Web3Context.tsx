@@ -339,7 +339,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
         provider,
         address,
         chainId,
-        isConnected: !!address,
+        isConnected: Boolean(address),
         isConnecting,
         connect,
         disconnect,
