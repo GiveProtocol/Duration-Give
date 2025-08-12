@@ -626,7 +626,49 @@ const handleSortByDate = useCallback(() => {
 16. **Proper Type Inference**: Instead of `any`, use `typeof MOCK_USER` or create proper interfaces. For test callbacks, define exact signatures like `(event: string, session: { user: typeof MOCK_USER } | null) => void`.
 17. **React Fragment Optimization**: Remove unnecessary fragments that wrap single children - use `return children` instead of `return <>{children}</>` in components.
 
-18. **CRITICAL: Arrow Functions in JSX (JS-0417)**: NEVER use arrow functions directly in JSX props:
+18. **Alert/Confirm/Prompt Replacement (JS-0052)**: Replace browser dialogs with custom modal components using existing UI patterns:
+
+```typescript
+// WRONG - Browser dialogs are obtrusive and non-customizable
+const url = window.prompt("Enter URL");
+if (confirm("Are you sure?")) { delete(); }
+
+// CORRECT - Custom modals with proper state management
+const [showLinkModal, setShowLinkModal] = useState(false);
+const [linkUrl, setLinkUrl] = useState("");
+
+const handleLinkSubmit = useCallback((e: React.FormEvent) => {
+  e.preventDefault();
+  if (linkUrl.trim()) {
+    editor?.chain().focus().setLink({ href: linkUrl.trim() }).run();
+  }
+  setShowLinkModal(false);
+}, [editor, linkUrl]);
+
+// Modal with proper accessibility and styling
+{showLinkModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+      <form onSubmit={handleLinkSubmit}>
+        <Input label="URL" value={linkUrl} onChange={handleUrlChange} />
+        <Button type="submit">Add Link</Button>
+      </form>
+    </div>
+  </div>
+)}
+```
+
+19. **Const vs Let (JS-0242)**: Always use `const` for variables that are never reassigned, even for complex expressions:
+
+```typescript
+// WRONG - Using let for never-reassigned variable
+let sanitized = input.trim().slice(0, max).replace(/[<>]/g, '');
+
+// CORRECT - Use const for immutable references
+const sanitized = input.trim().slice(0, max).replace(/[<>]/g, '');
+```
+
+20. **CRITICAL: Arrow Functions in JSX (JS-0417)**: NEVER use arrow functions directly in JSX props:
 
 ```typescript
 // WRONG - Creates new function on every render (Major Performance Issue)
