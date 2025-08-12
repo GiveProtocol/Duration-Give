@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useWalletAlias } from "@/hooks/useWalletAlias";
 import { useWeb3 } from "@/contexts/Web3Context";
+import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
@@ -11,9 +12,11 @@ export const WalletAliasSettings: React.FC = () => {
   const { address, isConnected } = useWeb3();
   const { alias, aliases, loading, error, setWalletAlias, deleteWalletAlias } =
     useWalletAlias();
+  const { showToast } = useToast();
   const [newAlias, setNewAlias] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,19 +59,33 @@ export const WalletAliasSettings: React.FC = () => {
     setValidationError(null);
   };
 
-  const handleDelete = useCallback(async (aliasId: string) => {
-    if (confirm("Are you sure you want to delete this wallet alias?")) {
-      await deleteWalletAlias(aliasId);
+  const handleDeleteRequest = useCallback((aliasId: string) => {
+    setDeleteConfirmId(aliasId);
+  }, []);
+
+  const handleDeleteConfirm = useCallback(async () => {
+    if (deleteConfirmId) {
+      try {
+        await deleteWalletAlias(deleteConfirmId);
+        showToast('success', 'Wallet alias deleted successfully');
+      } catch (err) {
+        showToast('error', 'Failed to delete wallet alias', err instanceof Error ? err.message : 'Unknown error');
+      }
+      setDeleteConfirmId(null);
     }
-  }, [deleteWalletAlias]);
+  }, [deleteConfirmId, deleteWalletAlias, showToast]);
+
+  const handleDeleteCancel = useCallback(() => {
+    setDeleteConfirmId(null);
+  }, []);
 
   // Callback handlers for better performance
   const handleStartEdit = useCallback(() => setEditMode(true), []);
   const createDeleteHandler = useCallback(
     (aliasId: string) => {
-      return () => handleDelete(aliasId);
+      return () => handleDeleteRequest(aliasId);
     },
-    [handleDelete],
+    [handleDeleteRequest],
   );
 
   if (!isConnected) {
@@ -202,6 +219,37 @@ export const WalletAliasSettings: React.FC = () => {
                 </Button>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {deleteConfirmId && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+            <div className="flex items-center mb-4">
+              <AlertCircle className="h-6 w-6 text-red-500 mr-3" />
+              <h3 className="text-lg font-medium text-gray-900">Confirm Deletion</h3>
+            </div>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this wallet alias? This action cannot be undone.
+            </p>
+            <div className="flex justify-end space-x-3">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={handleDeleteCancel}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={handleDeleteConfirm}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                Delete
+              </Button>
+            </div>
           </div>
         </div>
       )}

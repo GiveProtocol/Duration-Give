@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -14,6 +14,7 @@ import {
   Redo,
 } from "lucide-react";
 import { Button } from "./Button";
+import { Input } from "./Input";
 import { cn } from "../../utils/cn";
 
 interface EditorProps {
@@ -104,12 +105,37 @@ export const Editor: React.FC<EditorProps> = ({
     editor?.chain().focus().toggleOrderedList().run();
   }, [editor]);
 
+  const [showLinkModal, setShowLinkModal] = useState(false);
+  const [linkUrl, setLinkUrl] = useState("");
+
   const handleLink = useCallback(() => {
-    const url = window.prompt("Enter URL");
-    if (url) {
-      editor?.chain().focus().setLink({ href: url }).run();
-    }
-  }, [editor]);
+    setShowLinkModal(true);
+    setLinkUrl("");
+  }, []);
+
+  const handleLinkSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (linkUrl.trim()) {
+        editor?.chain().focus().setLink({ href: linkUrl.trim() }).run();
+      }
+      setShowLinkModal(false);
+      setLinkUrl("");
+    },
+    [editor, linkUrl],
+  );
+
+  const handleLinkCancel = useCallback(() => {
+    setShowLinkModal(false);
+    setLinkUrl("");
+  }, []);
+
+  const handleLinkUrlChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setLinkUrl(e.target.value);
+    },
+    [],
+  );
 
   const handleUndo = useCallback(() => {
     editor?.chain().focus().undo().run();
@@ -137,6 +163,33 @@ export const Editor: React.FC<EditorProps> = ({
 
   return (
     <div id={id} className={cn(containerClasses, className)}>
+      {showLinkModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+            <h3 className="text-lg font-medium mb-4">Add Link</h3>
+            <form onSubmit={handleLinkSubmit} className="space-y-4">
+              <Input
+                label="URL"
+                type="url"
+                value={linkUrl}
+                onChange={handleLinkUrlChange}
+                placeholder="https://example.com"
+                autoFocus
+              />
+              <div className="flex justify-end space-x-3">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={handleLinkCancel}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit">Add Link</Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       <div className={toolbarClasses}>
         <MenuButton
           onClick={handleBold}
