@@ -22,31 +22,34 @@ export function WithdrawalForm({ onSuccess }: WithdrawalFormProps) {
     [],
   );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError("");
 
-    if (!validateAmount(parseFloat(amount))) {
-      setError("Please enter a valid amount between 0 and 1,000,000");
-      return;
-    }
+      if (!validateAmount(parseFloat(amount))) {
+        setError("Please enter a valid amount between 0 and 1,000,000");
+        return;
+      }
 
-    try {
-      await withdraw(amount);
-      setAmount("");
-      setTokenAddress("");
-      onSuccess?.();
+      try {
+        await withdraw(amount);
+        setAmount("");
+        setTokenAddress("");
+        onSuccess?.();
 
-      Logger.info("Withdrawal submitted", {
-        amount,
-        token: "GLMR",
-      });
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to process withdrawal",
-      );
-    }
-  };
+        Logger.info("Withdrawal submitted", {
+          amount,
+          token: "GLMR",
+        });
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to process withdrawal",
+        );
+      }
+    },
+    [amount, withdraw, onSuccess],
+  );
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

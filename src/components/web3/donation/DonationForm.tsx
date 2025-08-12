@@ -65,39 +65,42 @@ export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
     [],
   );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError("");
 
-    if (!validateAmount(parseFloat(amount))) {
-      setError("Please enter a valid amount between 0 and 1,000,000");
-      return;
-    }
+      if (!validateAmount(parseFloat(amount))) {
+        setError("Please enter a valid amount between 0 and 1,000,000");
+        return;
+      }
 
-    try {
-      await donate({
-        charityAddress,
-        amount,
-        type: donationType,
-        tokenAddress:
-          donationType === DonationType.TOKEN ? tokenAddress : undefined,
-      });
+      try {
+        await donate({
+          charityAddress,
+          amount,
+          type: donationType,
+          tokenAddress:
+            donationType === DonationType.TOKEN ? tokenAddress : undefined,
+        });
 
-      setAmount("");
-      onSuccess?.();
+        setAmount("");
+        onSuccess?.();
 
-      Logger.info("Donation submitted", {
-        charity: charityAddress,
-        amount,
-        type: donationType,
-        token: tokenAddress || "GLMR",
-      });
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to process donation",
-      );
-    }
-  };
+        Logger.info("Donation submitted", {
+          charity: charityAddress,
+          amount,
+          type: donationType,
+          token: tokenAddress || "GLMR",
+        });
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to process donation",
+        );
+      }
+    },
+    [amount, charityAddress, donationType, tokenAddress, donate, onSuccess],
+  );
 
   if (!isConnected) {
     return (

@@ -31,32 +31,35 @@ export const CharityLogin: React.FC = () => {
     [],
   );
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+  const handleEmailLogin = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError("");
 
-    try {
-      await login(email, password, "charity");
-      // The login function will handle the redirect to charity-portal
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to sign in";
+      try {
+        await login(email, password, "charity");
+        // The login function will handle the redirect to charity-portal
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Failed to sign in";
 
-      // Check for account type mismatch
-      if (message.includes("registered as a donor account")) {
-        setError(
-          "Charity User Not Found. This email is registered as a donor account. Please use the Donor Login.",
-        );
+        // Check for account type mismatch
+        if (message.includes("registered as a donor account")) {
+          setError(
+            "Charity User Not Found. This email is registered as a donor account. Please use the Donor Login.",
+          );
 
-        // Disconnect wallet and redirect to login page after a short delay
-        await disconnect();
-        setTimeout(() => {
-          navigate("/login?type=donor");
-        }, 3000);
-      } else {
-        setError(message);
+          // Disconnect wallet and redirect to login page after a short delay
+          await disconnect();
+          setTimeout(() => {
+            navigate("/login?type=donor");
+          }, 3000);
+        } else {
+          setError(message);
+        }
       }
-    }
-  };
+    },
+    [email, password, login, disconnect, navigate],
+  );
 
   return (
     <form onSubmit={handleEmailLogin} className="space-y-4">

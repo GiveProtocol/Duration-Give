@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -29,19 +29,22 @@ export const CharityVettingForm: React.FC = () => {
     confirmPassword: ''
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    setError('');
-    
-    // Clear validation error for this field
-    if (validationErrors[name]) {
-      setValidationErrors(prev => {
-        const { [name]: _, ...rest } = prev;
-        return rest;
-      });
-    }
-  };
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({ ...prev, [name]: value }));
+      setError('');
+      
+      // Clear validation error for this field
+      if (validationErrors[name]) {
+        setValidationErrors(prev => {
+          const { [name]: _, ...rest } = prev;
+          return rest;
+        });
+      }
+    },
+    [validationErrors],
+  );
 
   const validateField = (name: string, value: string): string => {
     switch (name) {
@@ -62,87 +65,90 @@ export const CharityVettingForm: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setValidationErrors({});
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError('');
+      setValidationErrors({});
 
-    // Validate all fields
-    const errors: Record<string, string> = {};
-    
-    // Required fields to validate
-    const fieldsToValidate = [
-      { name: 'organizationName', value: formData.organizationName },
-      { name: 'contactName', value: formData.contactName },
-      { name: 'contactEmail', value: formData.contactEmail },
-      { name: 'contactPhone', value: formData.contactPhone },
-      { name: 'password', value: formData.password },
-      { name: 'confirmPassword', value: formData.confirmPassword }
-    ];
-    
-    fieldsToValidate.forEach(({ name, value }) => {
-      const error = validateField(name, value);
-      if (error) {
-        errors[name] = error;
-      }
-    });
-    
-    // Additional required fields
-    if (!formData.description.trim()) {
-      errors['description'] = 'Description is required';
-    }
-    
-    if (!formData.category.trim()) {
-      errors['category'] = 'Category is required';
-    }
-    
-    if (!formData.taxId.trim()) {
-      errors['taxId'] = 'Tax ID is required';
-    }
-    
-    if (!formData.streetAddress.trim()) {
-      errors['streetAddress'] = 'Street address is required';
-    }
-    
-    if (!formData.city.trim()) {
-      errors['city'] = 'City is required';
-    }
-    
-    if (!formData.country) {
-      errors['country'] = 'Country is required';
-    }
-
-    // If there are validation errors, don't submit
-    if (Object.keys(errors).length > 0) {
-      setValidationErrors(errors);
-      setError('Please correct the validation errors');
-      return;
-    }
-
-    try {
-      await register(formData.contactEmail, formData.password, 'charity', {
-        organizationName: formData.organizationName,
-        description: formData.description,
-        category: formData.category,
-        type: 'charity', // Explicitly set type to ensure it's stored in metadata
-        address: {
-          street: formData.streetAddress,
-          city: formData.city,
-          state: formData.state,
-          country: formData.country,
-          postalCode: formData.postalCode
-        },
-        taxId: formData.taxId,
-        contact: {
-          name: formData.contactName,
-          phone: formData.contactPhone
+      // Validate all fields
+      const errors: Record<string, string> = {};
+      
+      // Required fields to validate
+      const fieldsToValidate = [
+        { name: 'organizationName', value: formData.organizationName },
+        { name: 'contactName', value: formData.contactName },
+        { name: 'contactEmail', value: formData.contactEmail },
+        { name: 'contactPhone', value: formData.contactPhone },
+        { name: 'password', value: formData.password },
+        { name: 'confirmPassword', value: formData.confirmPassword }
+      ];
+      
+      fieldsToValidate.forEach(({ name, value }) => {
+        const error = validateField(name, value);
+        if (error) {
+          errors[name] = error;
         }
       });
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to submit application';
-      setError(message);
-    }
-  };
+      
+      // Additional required fields
+      if (!formData.description.trim()) {
+        errors['description'] = 'Description is required';
+      }
+      
+      if (!formData.category.trim()) {
+        errors['category'] = 'Category is required';
+      }
+      
+      if (!formData.taxId.trim()) {
+        errors['taxId'] = 'Tax ID is required';
+      }
+      
+      if (!formData.streetAddress.trim()) {
+        errors['streetAddress'] = 'Street address is required';
+      }
+      
+      if (!formData.city.trim()) {
+        errors['city'] = 'City is required';
+      }
+      
+      if (!formData.country) {
+        errors['country'] = 'Country is required';
+      }
+
+      // If there are validation errors, don't submit
+      if (Object.keys(errors).length > 0) {
+        setValidationErrors(errors);
+        setError('Please correct the validation errors');
+        return;
+      }
+
+      try {
+        await register(formData.contactEmail, formData.password, 'charity', {
+          organizationName: formData.organizationName,
+          description: formData.description,
+          category: formData.category,
+          type: 'charity', // Explicitly set type to ensure it's stored in metadata
+          address: {
+            street: formData.streetAddress,
+            city: formData.city,
+            state: formData.state,
+            country: formData.country,
+            postalCode: formData.postalCode
+          },
+          taxId: formData.taxId,
+          contact: {
+            name: formData.contactName,
+            phone: formData.contactPhone
+          }
+        });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to submit application';
+        setError(message);
+      }
+    },
+    [formData, register],
+  );
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">

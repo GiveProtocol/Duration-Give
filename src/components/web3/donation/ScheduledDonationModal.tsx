@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ScheduledDonationForm } from './ScheduledDonationForm';
 import { TransactionModal } from '@/components/web3/common/TransactionModal';
 
@@ -15,6 +15,11 @@ export const ScheduledDonationModal: React.FC<ScheduledDonationModalProps> = ({
   onClose,
   onSuccess
 }) => {
+  const handleSuccess = useCallback(() => {
+    onSuccess?.();
+    onClose();
+  }, [onSuccess, onClose]);
+
   return (
     <TransactionModal
       title={`Schedule Monthly Donations to ${charityName}`}
@@ -23,10 +28,7 @@ export const ScheduledDonationModal: React.FC<ScheduledDonationModalProps> = ({
       <ScheduledDonationForm
         charityAddress={charityAddress}
         charityName={charityName}
-        onSuccess={() => {
-          onSuccess?.();
-          onClose();
-        }}
+        onSuccess={handleSuccess}
         onClose={onClose}
       />
     </TransactionModal>

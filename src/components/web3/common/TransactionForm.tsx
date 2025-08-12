@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 
@@ -19,6 +19,10 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
   error,
   submitLabel
 }) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    onAmountChange(e.target.value);
+  }, [onAmountChange]);
+
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       {error && (
@@ -32,7 +36,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
         min="0"
         step="0.01"
         value={amount}
-        onChange={(e) => onAmountChange(e.target.value)}
+        onChange={handleChange}
         required
       />
       <Button

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { cn } from '../../utils/cn';
 
 interface TabsProps {
@@ -55,9 +55,13 @@ export const TabsTrigger: React.FC<TabsTriggerProps> = ({ value, children, class
 
   const isActive = context.value === value;
 
+  const handleClick = useCallback(() => {
+    context.onChange(value);
+  }, [context, value]);
+
   return (
     <button
-      onClick={() => context.onChange(value)}
+      onClick={handleClick}
       className={cn(
         'px-3 py-1.5 text-sm font-medium rounded-md transition-all',
         isActive

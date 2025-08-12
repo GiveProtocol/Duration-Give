@@ -78,23 +78,26 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
     }
   };
 
-  const handleInputChange = (
-    field: string,
-    value: string | string[] | { name: string; contact: string }[],
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+  const handleInputChange = useCallback(
+    (
+      field: string,
+      value: string | string[] | { name: string; contact: string }[],
+    ) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
 
-    // Clear validation error for this field
-    if (validationErrors[field]) {
-      setValidationErrors((prev) => {
-        const { [field]: _, ...rest } = prev;
-        return rest;
-      });
-    }
-  };
+      // Clear validation error for this field
+      if (validationErrors[field]) {
+        setValidationErrors((prev) => {
+          const { [field]: _, ...rest } = prev;
+          return rest;
+        });
+      }
+    },
+    [validationErrors],
+  );
 
   // useCallback handlers for form inputs
   const handleFullNameChange = useCallback(
@@ -214,107 +217,110 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
     [],
   );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user || !profile) {
-      setError("User profile not found");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError(null);
-      setValidationErrors({});
-
-      // Validate all required fields
-      const errors: Record<string, string> = {};
-
-      const fieldsToValidate = [
-        { name: "fullName", value: formData.fullName },
-        { name: "email", value: formData.email },
-        { name: "phoneNumber", value: formData.phoneNumber },
-        { name: "experience", value: formData.experience },
-      ];
-
-      fieldsToValidate.forEach(({ name, value }) => {
-        const error = validateField(name, value);
-        if (error) {
-          errors[name] = error;
-        }
-      });
-
-      // Check if availability is selected
-      if (formData.availability.days.length === 0) {
-        errors["availability.days"] = "Please select at least one day";
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!user || !profile) {
+        setError("User profile not found");
+        return;
       }
 
-      if (formData.availability.times.length === 0) {
-        errors["availability.times"] = "Please select at least one time";
-      }
+      try {
+        setLoading(true);
+        setError(null);
+        setValidationErrors({});
 
-      // If there are validation errors, don't submit
-      if (Object.keys(errors).length > 0) {
-        setValidationErrors(errors);
-        throw new Error("Please correct the validation errors");
-      }
+        // Validate all required fields
+        const errors: Record<string, string> = {};
 
-      Logger.info("Submitting volunteer application", {
-        opportunityId,
-        applicantId: profile.id,
-      });
+        const fieldsToValidate = [
+          { name: "fullName", value: formData.fullName },
+          { name: "email", value: formData.email },
+          { name: "phoneNumber", value: formData.phoneNumber },
+          { name: "experience", value: formData.experience },
+        ];
 
-      const { error: submitError } = await supabase
-        .from("volunteer_applications")
-        .insert({
-          opportunity_id: opportunityId,
-          applicant_id: profile.id,
-          full_name: formData.fullName,
-          phone_number: formData.phoneNumber,
-          email: formData.email,
-          date_of_birth: formData.dateOfBirth || null,
-          availability: {
-            days: formData.availability.days,
-            times: formData.availability.times,
-          },
-          commitment_type: formData.commitmentType,
-          experience: formData.experience,
-          skills: formData.skills
-            .split(",")
-            .map((s) => s.trim())
-            .filter(Boolean),
-          certifications: formData.certifications
-            .split(",")
-            .map((c) => c.trim())
-            .filter(Boolean),
-          interests: formData.interests
-            .split(",")
-            .map((i) => i.trim())
-            .filter(Boolean),
-          reference_contacts: formData.references,
-          work_samples: formData.workSamples
-            .split(",")
-            .map((w) => w.trim())
-            .filter(Boolean),
+        fieldsToValidate.forEach(({ name, value }) => {
+          const error = validateField(name, value);
+          if (error) {
+            errors[name] = error;
+          }
         });
 
-      if (submitError) throw submitError;
+        // Check if availability is selected
+        if (formData.availability.days.length === 0) {
+          errors["availability.days"] = "Please select at least one day";
+        }
 
-      Logger.info("Volunteer application submitted", {
-        opportunityId,
-        applicantId: profile.id,
-      });
+        if (formData.availability.times.length === 0) {
+          errors["availability.times"] = "Please select at least one time";
+        }
 
-      onSuccess?.();
-      onClose();
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to submit application";
-      setError(message);
-      Logger.error("Application submission failed", { error: err });
-    } finally {
-      setLoading(false);
-    }
-  };
+        // If there are validation errors, don't submit
+        if (Object.keys(errors).length > 0) {
+          setValidationErrors(errors);
+          throw new Error("Please correct the validation errors");
+        }
+
+        Logger.info("Submitting volunteer application", {
+          opportunityId,
+          applicantId: profile.id,
+        });
+
+        const { error: submitError } = await supabase
+          .from("volunteer_applications")
+          .insert({
+            opportunity_id: opportunityId,
+            applicant_id: profile.id,
+            full_name: formData.fullName,
+            phone_number: formData.phoneNumber,
+            email: formData.email,
+            date_of_birth: formData.dateOfBirth || null,
+            availability: {
+              days: formData.availability.days,
+              times: formData.availability.times,
+            },
+            commitment_type: formData.commitmentType,
+            experience: formData.experience,
+            skills: formData.skills
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean),
+            certifications: formData.certifications
+              .split(",")
+              .map((c) => c.trim())
+              .filter(Boolean),
+            interests: formData.interests
+              .split(",")
+              .map((i) => i.trim())
+              .filter(Boolean),
+            reference_contacts: formData.references,
+            work_samples: formData.workSamples
+              .split(",")
+              .map((w) => w.trim())
+              .filter(Boolean),
+          });
+
+        if (submitError) throw submitError;
+
+        Logger.info("Volunteer application submitted", {
+          opportunityId,
+          applicantId: profile.id,
+        });
+
+        onSuccess?.();
+        onClose();
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : "Failed to submit application";
+        setError(message);
+        Logger.error("Application submission failed", { error: err });
+      } finally {
+        setLoading(false);
+      }
+    },
+    [formData, user, profile, opportunityId, onSuccess, onClose],
+  );
 
   const inputClasses =
     "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50 font-sans";

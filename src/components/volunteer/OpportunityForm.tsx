@@ -69,22 +69,25 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const handleChange = useCallback(
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+      >,
+    ) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear validation error for this field
-    if (validationErrors[name]) {
-      setValidationErrors((prev) => {
-        const { [name]: _, ...rest } = prev;
-        return rest;
-      });
-    }
-  };
+      // Clear validation error for this field
+      if (validationErrors[name]) {
+        setValidationErrors((prev) => {
+          const { [name]: _, ...rest } = prev;
+          return rest;
+        });
+      }
+    },
+    [validationErrors],
+  );
 
   const handleDescriptionChange = useCallback(
     (content: string) => {
@@ -100,85 +103,88 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
     [validationErrors.description],
   );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
 
-    if (!profile?.id) {
-      setError("User profile not found");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError(null);
-      setValidationErrors({});
-
-      // Validate all required fields
-      const errors: Record<string, string> = {};
-
-      const fieldsToValidate = [
-        { name: "title", value: formData.title },
-        { name: "description", value: formData.description },
-        { name: "skills", value: formData.skills },
-        { name: "location", value: formData.location },
-      ];
-
-      fieldsToValidate.forEach(({ name, value }) => {
-        const error = validateField(name, value);
-        if (error) {
-          errors[name] = error;
-        }
-      });
-
-      // If there are validation errors, don't submit
-      if (Object.keys(errors).length > 0) {
-        setValidationErrors(errors);
-        throw new Error("Please correct the validation errors");
+      if (!profile?.id) {
+        setError("User profile not found");
+        return;
       }
 
-      Logger.info("Creating volunteer opportunity", {
-        charityId: profile.id,
-        title: formData.title.trim(),
-      });
+      try {
+        setLoading(true);
+        setError(null);
+        setValidationErrors({});
 
-      const { error: submitError } = await supabase
-        .from("volunteer_opportunities")
-        .insert({
-          charity_id: profile.id,
-          title: formData.title.trim(),
-          description: formData.description.trim(),
-          skills: formData.skills
-            .split(",")
-            .map((s) => s.trim())
-            .filter(Boolean),
-          commitment: formData.commitment,
-          location: formData.location.trim(),
-          type: formData.type,
-          work_language: formData.workLanguage,
-          status: "active",
+        // Validate all required fields
+        const errors: Record<string, string> = {};
+
+        const fieldsToValidate = [
+          { name: "title", value: formData.title },
+          { name: "description", value: formData.description },
+          { name: "skills", value: formData.skills },
+          { name: "location", value: formData.location },
+        ];
+
+        fieldsToValidate.forEach(({ name, value }) => {
+          const error = validateField(name, value);
+          if (error) {
+            errors[name] = error;
+          }
         });
 
-      if (submitError) throw submitError;
+        // If there are validation errors, don't submit
+        if (Object.keys(errors).length > 0) {
+          setValidationErrors(errors);
+          throw new Error("Please correct the validation errors");
+        }
 
-      Logger.info("Volunteer opportunity created", {
-        charityId: profile.id,
-        title: formData.title,
-      });
+        Logger.info("Creating volunteer opportunity", {
+          charityId: profile.id,
+          title: formData.title.trim(),
+        });
 
-      if (onSuccess) {
-        onSuccess();
-      } else {
-        navigate("/charity-portal");
+        const { error: submitError } = await supabase
+          .from("volunteer_opportunities")
+          .insert({
+            charity_id: profile.id,
+            title: formData.title.trim(),
+            description: formData.description.trim(),
+            skills: formData.skills
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean),
+            commitment: formData.commitment,
+            location: formData.location.trim(),
+            type: formData.type,
+            work_language: formData.workLanguage,
+            status: "active",
+          });
+
+        if (submitError) throw submitError;
+
+        Logger.info("Volunteer opportunity created", {
+          charityId: profile.id,
+          title: formData.title,
+        });
+
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          navigate("/charity-portal");
+        }
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to create opportunity";
+        setError(errorMessage);
+        Logger.error("Failed to create volunteer opportunity", { error: err });
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Failed to create opportunity";
-      setError(errorMessage);
-      Logger.error("Failed to create volunteer opportunity", { error: err });
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [formData, profile?.id, onSuccess, navigate],
+  );
 
   const formatLanguageName = (language: string): string => {
     return language

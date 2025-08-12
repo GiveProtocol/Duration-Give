@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Calendar } from 'lucide-react';
 import { ScheduledDonationModal } from './ScheduledDonationModal';
 import { TransactionButton } from '@/components/web3/common/TransactionButton';
@@ -18,12 +18,20 @@ export const ScheduledDonationButton: React.FC<ScheduledDonationButtonProps> = (
 }) => {
   const [showModal, setShowModal] = useState(false);
 
+  const handleOpenModal = useCallback(() => {
+    setShowModal(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
+
   return (
     <>
       <TransactionButton
         icon={Calendar}
         label={buttonText}
-        onClick={() => setShowModal(true)}
+        onClick={handleOpenModal}
         className="w-full flex items-center justify-center"
       />
 
@@ -31,7 +39,7 @@ export const ScheduledDonationButton: React.FC<ScheduledDonationButtonProps> = (
         <ScheduledDonationModal
           charityName={charityName}
           charityAddress={charityAddress}
-          onClose={() => setShowModal(false)}
+          onClose={handleCloseModal}
           onSuccess={onSuccess}
         />
       )}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Mail } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/Button';
@@ -15,42 +15,56 @@ export const DonorRegistration: React.FC = () => {
   });
   const [error, setError] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    setError(''); // Clear error when user types
-  };
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({ ...prev, [name]: value }));
+      setError(''); // Clear error when user types
+    },
+    [],
+  );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError('');
 
-    // Validate inputs
-    if (!validateEmail(formData.email)) {
-      setError('Please enter a valid email address');
-      return;
-    }
+      // Validate inputs
+      if (!validateEmail(formData.email)) {
+        setError('Please enter a valid email address');
+        return;
+      }
 
-    if (!validatePassword(formData.password)) {
-      setError('Password must be at least 8 characters long');
-      return;
-    }
+      if (!validatePassword(formData.password)) {
+        setError('Password must be at least 8 characters long');
+        return;
+      }
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
+      if (formData.password !== formData.confirmPassword) {
+        setError('Passwords do not match');
+        return;
+      }
 
-    try {
-      await register(formData.email, formData.password, 'donor', {
-        name: formData.name,
-        type: 'donor' // Explicitly set type to ensure it's stored in metadata
-      });
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to create account';
-      setError(message);
-    }
-  };
+      try {
+        await register(formData.email, formData.password, 'donor', {
+          name: formData.name,
+          type: 'donor' // Explicitly set type to ensure it's stored in metadata
+        });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Failed to create account';
+        setError(message);
+      }
+    },
+    [formData, register],
+  );
+
+  const handleGoogleOAuth = useCallback(
+    () => {
+      // TODO: Implement Google OAuth
+      // This is a placeholder for future implementation
+    },
+    [],
+  );
 
   return (
     <div className="space-y-6">
@@ -118,7 +132,7 @@ export const DonorRegistration: React.FC = () => {
         type="button"
         variant="secondary"
         className="w-full"
-        onClick={() => {/* Implement Google OAuth */}}
+        onClick={handleGoogleOAuth}
       >
         <Mail className="w-5 h-5 mr-2" />
         Continue with Google

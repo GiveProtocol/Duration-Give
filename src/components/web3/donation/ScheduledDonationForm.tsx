@@ -134,7 +134,11 @@ export function ScheduledDonationForm({
   const endDate = new Date();
   endDate.setMonth(endDate.getMonth() + 12);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value);
+  }, []);
+
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -233,7 +237,7 @@ export function ScheduledDonationForm({
     } finally {
       setLoading(false);
     }
-  };
+  }, [amount, charityAddress, isConnected, provider, address, connect]);
 
   const handleConfirmationClose = useCallback(() => {
     setAmount("");
@@ -283,7 +287,7 @@ export function ScheduledDonationForm({
         min="0"
         step="0.01"
         value={amount}
-        onChange={(e) => setAmount(e.target.value)}
+        onChange={handleAmountChange}
         required
         helperText="This amount will be divided into 12 equal monthly payments"
       />

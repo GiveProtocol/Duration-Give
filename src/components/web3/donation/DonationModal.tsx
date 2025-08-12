@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { DonationForm } from './DonationForm';
 import { TransactionModal } from '@/components/web3/common/TransactionModal';
 
@@ -15,6 +15,11 @@ export const DonationModal: React.FC<DonationModalProps> = ({
   onClose,
   onSuccess
 }) => {
+  const handleSuccess = useCallback(() => {
+    onSuccess?.();
+    onClose();
+  }, [onSuccess, onClose]);
+
   return (
     <TransactionModal
       title={`Donate to ${charityName}`}
@@ -22,10 +27,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
     >
       <DonationForm
         charityAddress={charityAddress}
-        onSuccess={() => {
-          onSuccess?.();
-          onClose();
-        }}
+        onSuccess={handleSuccess}
       />
     </TransactionModal>
   );

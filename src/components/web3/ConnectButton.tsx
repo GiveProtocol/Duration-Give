@@ -362,6 +362,10 @@ export function ConnectButton() {
     navigate("/give-dashboard", { state: { showWalletSettings: true } });
   }, [navigate]);
 
+  const handleToggleAccountMenu = useCallback(() => {
+    setShowAccountMenu(!showAccountMenu);
+  }, [showAccountMenu]);
+
   const getExplorerUrl = useCallback(() => {
     if (!address) return "#";
 
@@ -397,7 +401,7 @@ export function ConnectButton() {
     return (
       <div className="relative wallet-dropdown">
         <Button
-          onClick={() => setShowAccountMenu(!showAccountMenu)}
+          onClick={handleToggleAccountMenu}
           variant="secondary"
           size="sm"
           className="flex items-center shadow-sm hover:shadow-md rounded-md px-4 py-2 transition-all duration-200"
