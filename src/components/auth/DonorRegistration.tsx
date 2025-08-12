@@ -60,8 +60,8 @@ export const DonorRegistration: React.FC = () => {
 
   const handleGoogleOAuth = useCallback(
     () => {
-      // TODO: Implement Google OAuth
-      // This is a placeholder for future implementation
+      // Google OAuth integration placeholder
+      // Full implementation pending OAuth provider configuration
     },
     [],
   );
