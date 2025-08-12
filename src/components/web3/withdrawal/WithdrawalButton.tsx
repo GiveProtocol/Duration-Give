@@ -1,13 +1,15 @@
-import React, { useState, useCallback } from 'react';
-import { Wallet } from 'lucide-react';
-import { WithdrawalModal } from './WithdrawalModal';
-import { TransactionButton } from '../common/TransactionButton';
+import React, { useState, useCallback } from "react";
+import { Wallet } from "lucide-react";
+import { WithdrawalModal } from "./WithdrawalModal";
+import { TransactionButton } from "../common/TransactionButton";
 
 interface WithdrawalButtonProps {
   onSuccess?: () => void;
 }
 
-export const WithdrawalButton: React.FC<WithdrawalButtonProps> = ({ onSuccess }) => {
+export const WithdrawalButton: React.FC<WithdrawalButtonProps> = ({
+  onSuccess,
+}) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = useCallback(() => {
@@ -27,10 +29,7 @@ export const WithdrawalButton: React.FC<WithdrawalButtonProps> = ({ onSuccess })
       />
 
       {showModal && (
-        <WithdrawalModal
-          onClose={handleCloseModal}
-          onSuccess={onSuccess}
-        />
+        <WithdrawalModal onClose={handleCloseModal} onSuccess={onSuccess} />
       )}
     </>
   );

@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
-import { DonationForm } from './DonationForm';
-import { TransactionModal } from '@/components/web3/common/TransactionModal';
+import React, { useCallback } from "react";
+import { DonationForm } from "./DonationForm";
+import { TransactionModal } from "@/components/web3/common/TransactionModal";
 
 interface DonationModalProps {
   charityName: string;
@@ -13,7 +13,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
   charityName,
   charityAddress,
   onClose,
-  onSuccess
+  onSuccess,
 }) => {
   const handleSuccess = useCallback(() => {
     onSuccess?.();
@@ -21,14 +21,8 @@ export const DonationModal: React.FC<DonationModalProps> = ({
   }, [onSuccess, onClose]);
 
   return (
-    <TransactionModal
-      title={`Donate to ${charityName}`}
-      onClose={onClose}
-    >
-      <DonationForm
-        charityAddress={charityAddress}
-        onSuccess={handleSuccess}
-      />
+    <TransactionModal title={`Donate to ${charityName}`} onClose={onClose}>
+      <DonationForm charityAddress={charityAddress} onSuccess={handleSuccess} />
     </TransactionModal>
   );
 };

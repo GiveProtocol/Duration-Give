@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
-import { Heart } from 'lucide-react';
-import { DonationModal } from './DonationModal';
-import { TransactionButton } from '@/components/web3/common/TransactionButton';
+import React, { useState, useCallback } from "react";
+import { Heart } from "lucide-react";
+import { DonationModal } from "./DonationModal";
+import { TransactionButton } from "@/components/web3/common/TransactionButton";
 
 interface DonationButtonProps {
   charityName: string;
@@ -14,7 +14,7 @@ export const DonationButton: React.FC<DonationButtonProps> = ({
   charityName,
   charityAddress,
   buttonText = "Donate",
-  onSuccess
+  onSuccess,
 }) => {
   const [showModal, setShowModal] = useState(false);
 

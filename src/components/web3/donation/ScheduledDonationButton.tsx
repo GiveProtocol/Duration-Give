@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
-import { Calendar } from 'lucide-react';
-import { ScheduledDonationModal } from './ScheduledDonationModal';
-import { TransactionButton } from '@/components/web3/common/TransactionButton';
+import React, { useState, useCallback } from "react";
+import { Calendar } from "lucide-react";
+import { ScheduledDonationModal } from "./ScheduledDonationModal";
+import { TransactionButton } from "@/components/web3/common/TransactionButton";
 
 interface ScheduledDonationButtonProps {
   charityName: string;
@@ -10,11 +10,13 @@ interface ScheduledDonationButtonProps {
   onSuccess?: () => void;
 }
 
-export const ScheduledDonationButton: React.FC<ScheduledDonationButtonProps> = ({
+export const ScheduledDonationButton: React.FC<
+  ScheduledDonationButtonProps
+> = ({
   charityName,
   charityAddress,
   buttonText = "Donate Monthly",
-  onSuccess
+  onSuccess,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
