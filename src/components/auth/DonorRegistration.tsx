@@ -1,78 +1,71 @@
-import React, { useState, useCallback } from 'react';
-import { Mail } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { validateEmail, validatePassword } from '@/utils/validation';
+import React, { useState, useCallback } from "react";
+import { Mail } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { validateEmail, validatePassword } from "@/utils/validation";
 
 export const DonorRegistration: React.FC = () => {
   const { register, loading } = useAuth();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    name: ''
+    email: "",
+    password: "",
+    confirmPassword: "",
+    name: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setFormData(prev => ({ ...prev, [name]: value }));
-      setError(''); // Clear error when user types
-    },
-    [],
-  );
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setError(""); // Clear error when user types
+  }, []);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      setError('');
+      setError("");
 
       // Validate inputs
       if (!validateEmail(formData.email)) {
-        setError('Please enter a valid email address');
+        setError("Please enter a valid email address");
         return;
       }
 
       if (!validatePassword(formData.password)) {
-        setError('Password must be at least 8 characters long');
+        setError("Password must be at least 8 characters long");
         return;
       }
 
       if (formData.password !== formData.confirmPassword) {
-        setError('Passwords do not match');
+        setError("Passwords do not match");
         return;
       }
 
       try {
-        await register(formData.email, formData.password, 'donor', {
+        await register(formData.email, formData.password, "donor", {
           name: formData.name,
-          type: 'donor' // Explicitly set type to ensure it's stored in metadata
+          type: "donor", // Explicitly set type to ensure it's stored in metadata
         });
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'Failed to create account';
+        const message =
+          error instanceof Error ? error.message : "Failed to create account";
         setError(message);
       }
     },
     [formData, register],
   );
 
-  const handleGoogleOAuth = useCallback(
-    () => {
-      // Google OAuth integration placeholder
-      // Full implementation pending OAuth provider configuration
-    },
-    [],
-  );
+  const handleGoogleOAuth = useCallback(() => {
+    // Google OAuth integration placeholder
+    // Full implementation pending OAuth provider configuration
+  }, []);
 
   return (
     <div className="space-y-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="p-3 bg-red-50 text-red-600 rounded-md">
-            {error}
-          </div>
+          <div className="p-3 bg-red-50 text-red-600 rounded-md">{error}</div>
         )}
 
         <Input
@@ -110,12 +103,8 @@ export const DonorRegistration: React.FC = () => {
           required
         />
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={loading}
-        >
-          {loading ? 'Creating Account...' : 'Create Donor Account'}
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? "Creating Account..." : "Create Donor Account"}
         </Button>
       </form>
 
