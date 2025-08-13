@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -32,6 +32,10 @@ const VerifyContribution: React.FC = () => {
     }
   }, [hash, getVerificationByHash]);
 
+  const handleBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
   if (loading) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-12">
@@ -47,7 +51,7 @@ const VerifyContribution: React.FC = () => {
     <div className="max-w-3xl mx-auto px-4 py-12">
       <Button
         variant="ghost"
-        onClick={() => navigate(-1)}
+        onClick={handleBack}
         className="mb-6 flex items-center text-gray-600 hover:text-gray-900"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />

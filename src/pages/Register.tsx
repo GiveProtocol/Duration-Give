@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { DonorRegistration } from '../components/auth/DonorRegistration';
 import { CharityVettingForm } from '../components/auth/CharityVettingForm';
@@ -20,6 +20,14 @@ export const Register: React.FC = () => {
     }
   }, [typeParam]);
 
+  const handleDonorClick = useCallback(() => {
+    setUserType('donor');
+  }, []);
+
+  const handleCharityClick = useCallback(() => {
+    setUserType('charity');
+  }, []);
+
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -38,7 +46,7 @@ export const Register: React.FC = () => {
 
         <div className="flex justify-center space-x-4 mb-8">
           <Button
-            onClick={() => setUserType('donor')}
+            onClick={handleDonorClick}
             variant="secondary"
             className={`px-4 py-2 text-sm font-medium rounded-md flex items-center ${
               userType === 'donor'
@@ -50,7 +58,7 @@ export const Register: React.FC = () => {
             Donor Account
           </Button>
           <Button
-            onClick={() => setUserType('charity')}
+            onClick={handleCharityClick}
             variant="secondary"
             className={`px-4 py-2 text-sm font-medium rounded-md flex items-center ${
               userType === 'charity'

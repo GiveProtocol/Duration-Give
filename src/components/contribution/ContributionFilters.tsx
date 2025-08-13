@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Filter } from 'lucide-react';
 import { ContributionFilters as FilterType } from '@/types/contribution';
 
@@ -13,9 +13,25 @@ export const ContributionFilters: React.FC<ContributionFiltersProps> = ({
   onChange,
   className
 }) => {
-  const handleChange = (key: keyof FilterType, value: string) => {
+  const handleChange = useCallback((key: keyof FilterType, value: string) => {
     onChange({ ...filters, [key]: value });
-  };
+  }, [filters, onChange]);
+
+  const handleOrganizationChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleChange('organization', e.target.value);
+  }, [handleChange]);
+
+  const handleCategoryChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleChange('category', e.target.value);
+  }, [handleChange]);
+
+  const handleRegionChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleChange('region', e.target.value);
+  }, [handleChange]);
+
+  const handleTimeRangeChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleChange('timeRange', e.target.value);
+  }, [handleChange]);
 
   return (
     <div className={`bg-white p-4 rounded-lg shadow-md mb-6 ${className}`}>
@@ -29,7 +45,7 @@ export const ContributionFilters: React.FC<ContributionFiltersProps> = ({
           <span className="sr-only">Organization</span>
           <select
             value={filters.organization}
-            onChange={(e) => handleChange('organization', e.target.value)}
+            onChange={handleOrganizationChange}
             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             aria-label="Select organization"
           >
@@ -43,7 +59,7 @@ export const ContributionFilters: React.FC<ContributionFiltersProps> = ({
           <span className="sr-only">Category</span>
           <select
             value={filters.category}
-            onChange={(e) => handleChange('category', e.target.value)}
+            onChange={handleCategoryChange}
             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             aria-label="Select category"
           >
@@ -58,7 +74,7 @@ export const ContributionFilters: React.FC<ContributionFiltersProps> = ({
           <span className="sr-only">Region</span>
           <select
             value={filters.region}
-            onChange={(e) => handleChange('region', e.target.value)}
+            onChange={handleRegionChange}
             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             aria-label="Select region"
           >
@@ -73,7 +89,7 @@ export const ContributionFilters: React.FC<ContributionFiltersProps> = ({
           <span className="sr-only">Time Range</span>
           <select
             value={filters.timeRange}
-            onChange={(e) => handleChange('timeRange', e.target.value)}
+            onChange={handleTimeRangeChange}
             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             aria-label="Select time range"
           >

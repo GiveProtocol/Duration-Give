@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Home, ArrowLeft, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -30,6 +30,14 @@ const NotFound: React.FC<NotFoundProps> = ({
     });
   }, []);
 
+  const handleGoHome = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
+
+  const handleGoBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4">
       <div className="text-center">
@@ -40,7 +48,7 @@ const NotFound: React.FC<NotFoundProps> = ({
         <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
           {showHomeButton && (
             <Button
-              onClick={() => navigate('/')}
+              onClick={handleGoHome}
               className="flex items-center justify-center"
             >
               <Home className="mr-2 h-5 w-5" />
@@ -51,7 +59,7 @@ const NotFound: React.FC<NotFoundProps> = ({
           {showBackButton && (
             <Button
               variant="secondary"
-              onClick={() => navigate(-1)}
+              onClick={handleGoBack}
               className="flex items-center justify-center"
             >
               <ArrowLeft className="mr-2 h-5 w-5" />

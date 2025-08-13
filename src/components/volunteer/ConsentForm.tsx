@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/Button';
 import { AlertCircle } from 'lucide-react';
 
@@ -30,6 +30,31 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({ onAccept, onDecline })
     setValidationError(null);
     onAccept();
   };
+
+  const handleEssentialProcessingChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEssentialProcessing(e.target.checked);
+    if (e.target.checked && validationError?.includes("Essential Processing")) {
+      setValidationError(null);
+    }
+  }, [validationError]);
+
+  const handleInternationalTransfersChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInternationalTransfers(e.target.checked);
+  }, []);
+
+  const handleAgeConfirmationChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setAgeConfirmation(e.target.checked);
+    if (e.target.checked && privacyNotice && validationError?.includes("confirm your age")) {
+      setValidationError(null);
+    }
+  }, [privacyNotice, validationError]);
+
+  const handlePrivacyNoticeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setPrivacyNotice(e.target.checked);
+    if (e.target.checked && ageConfirmation && validationError?.includes("confirm your age")) {
+      setValidationError(null);
+    }
+  }, [ageConfirmation, validationError]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -90,12 +115,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({ onAccept, onDecline })
                   type="checkbox"
                   id="essential-processing"
                   checked={essentialProcessing}
-                  onChange={(e) => {
-                    setEssentialProcessing(e.target.checked);
-                    if (e.target.checked && validationError?.includes("Essential Processing")) {
-                      setValidationError(null);
-                    }
-                  }}
+                  onChange={handleEssentialProcessingChange}
                   className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
                 <label htmlFor="essential-processing" className="text-sm">
@@ -115,7 +135,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({ onAccept, onDecline })
                   type="checkbox"
                   id="international-transfers"
                   checked={internationalTransfers}
-                  onChange={(e) => setInternationalTransfers(e.target.checked)}
+                  onChange={handleInternationalTransfersChange}
                   className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
                 <label htmlFor="international-transfers" className="text-sm">
@@ -136,12 +156,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({ onAccept, onDecline })
                   type="checkbox"
                   id="age-confirmation"
                   checked={ageConfirmation}
-                  onChange={(e) => {
-                    setAgeConfirmation(e.target.checked);
-                    if (e.target.checked && privacyNotice && validationError?.includes("confirm your age")) {
-                      setValidationError(null);
-                    }
-                  }}
+                  onChange={handleAgeConfirmationChange}
                   className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
                 <label htmlFor="age-confirmation" className="text-sm">
@@ -155,12 +170,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({ onAccept, onDecline })
                   type="checkbox"
                   id="privacy-notice"
                   checked={privacyNotice}
-                  onChange={(e) => {
-                    setPrivacyNotice(e.target.checked);
-                    if (e.target.checked && ageConfirmation && validationError?.includes("confirm your age")) {
-                      setValidationError(null);
-                    }
-                  }}
+                  onChange={handlePrivacyNoticeChange}
                   className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
                 <label htmlFor="privacy-notice" className="text-sm">

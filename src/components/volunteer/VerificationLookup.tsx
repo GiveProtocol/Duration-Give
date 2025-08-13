@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Search, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -26,6 +26,10 @@ export const VerificationLookup: React.FC = () => {
     }
   };
 
+  const handleHashChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setHash(e.target.value);
+  }, []);
+
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -37,7 +41,7 @@ export const VerificationLookup: React.FC = () => {
           <div className="flex-grow">
             <Input
               value={hash}
-              onChange={(e) => setHash(e.target.value)}
+              onChange={handleHashChange}
               placeholder="Enter verification hash"
               className="w-full"
             />

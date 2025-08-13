@@ -79,6 +79,10 @@ export const WalletAliasSettings: React.FC = () => {
     setDeleteConfirmId(null);
   }, []);
 
+  const handleAliasChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewAlias(e.target.value);
+  }, []);
+
   // Callback handlers for better performance
   const handleStartEdit = useCallback(() => setEditMode(true), []);
   const createDeleteHandler = useCallback(
@@ -148,7 +152,7 @@ export const WalletAliasSettings: React.FC = () => {
           <Input
             label="Wallet Alias"
             value={newAlias}
-            onChange={(e) => setNewAlias(e.target.value)}
+            onChange={handleAliasChange}
             placeholder="Enter a public alias for your wallet"
             error={validationError || undefined}
           />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Globe } from 'lucide-react';
 
 interface RegionFilterProps {
@@ -7,12 +7,16 @@ interface RegionFilterProps {
 }
 
 export const RegionFilter: React.FC<RegionFilterProps> = ({ value, onChange }) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(e.target.value);
+  }, [onChange]);
+
   return (
     <div className="flex items-center space-x-2">
       <Globe className="h-5 w-5 text-gray-400" />
       <select
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={handleChange}
         className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
         aria-label="Filter by region"
       >

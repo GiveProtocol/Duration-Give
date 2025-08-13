@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
@@ -12,12 +12,16 @@ const CreateOpportunity: React.FC = () => {
   const handleSuccess = () => {
     navigate('/charity-portal');
   };
+
+  const handleBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
   
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <Button
         variant="ghost"
-        onClick={() => navigate(-1)}
+        onClick={handleBack}
         className="mb-6 flex items-center text-gray-600 hover:text-gray-900"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />

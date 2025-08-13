@@ -36,6 +36,10 @@ export class ErrorBoundary extends Component<Props, State> {
     });
   }
 
+  handleReload = () => {
+    window.location.reload();
+  };
+
   render() {
     if (this.state.hasError) {
       if (this.props.fallback) {
@@ -52,7 +56,7 @@ export class ErrorBoundary extends Component<Props, State> {
               {this.state.error?.message || "An unexpected error occurred"}
             </p>
             <button
-              onClick={() => window.location.reload()}
+              onClick={this.handleReload}
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors"
             >
               Reload Page
