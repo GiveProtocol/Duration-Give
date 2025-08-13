@@ -1,15 +1,21 @@
-import React, { useCallback } from 'react';
-import { Globe } from 'lucide-react';
+import React, { useCallback } from "react";
+import { Globe } from "lucide-react";
 
 interface RegionFilterProps {
   value: string;
   onChange: (_value: string) => void;
 }
 
-export const RegionFilter: React.FC<RegionFilterProps> = ({ value, onChange }) => {
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(e.target.value);
-  }, [onChange]);
+export const RegionFilter: React.FC<RegionFilterProps> = ({
+  value,
+  onChange,
+}) => {
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      onChange(e.target.value);
+    },
+    [onChange],
+  );
 
   return (
     <div className="flex items-center space-x-2">

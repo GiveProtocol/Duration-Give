@@ -67,9 +67,13 @@ export const WalletAliasSettings: React.FC = () => {
     if (deleteConfirmId) {
       try {
         await deleteWalletAlias(deleteConfirmId);
-        showToast('success', 'Wallet alias deleted successfully');
+        showToast("success", "Wallet alias deleted successfully");
       } catch (err) {
-        showToast('error', 'Failed to delete wallet alias', err instanceof Error ? err.message : 'Unknown error');
+        showToast(
+          "error",
+          "Failed to delete wallet alias",
+          err instanceof Error ? err.message : "Unknown error",
+        );
       }
       setDeleteConfirmId(null);
     }
@@ -79,9 +83,12 @@ export const WalletAliasSettings: React.FC = () => {
     setDeleteConfirmId(null);
   }, []);
 
-  const handleAliasChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewAlias(e.target.value);
-  }, []);
+  const handleAliasChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setNewAlias(e.target.value);
+    },
+    [],
+  );
 
   // Callback handlers for better performance
   const handleStartEdit = useCallback(() => setEditMode(true), []);
@@ -232,10 +239,13 @@ export const WalletAliasSettings: React.FC = () => {
           <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
             <div className="flex items-center mb-4">
               <AlertCircle className="h-6 w-6 text-red-500 mr-3" />
-              <h3 className="text-lg font-medium text-gray-900">Confirm Deletion</h3>
+              <h3 className="text-lg font-medium text-gray-900">
+                Confirm Deletion
+              </h3>
             </div>
             <p className="text-gray-600 mb-6">
-              Are you sure you want to delete this wallet alias? This action cannot be undone.
+              Are you sure you want to delete this wallet alias? This action
+              cannot be undone.
             </p>
             <div className="flex justify-end space-x-3">
               <Button

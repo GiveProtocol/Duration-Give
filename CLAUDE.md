@@ -662,10 +662,10 @@ const handleLinkSubmit = useCallback((e: React.FormEvent) => {
 
 ```typescript
 // WRONG - Using let for never-reassigned variable
-let sanitized = input.trim().slice(0, max).replace(/[<>]/g, '');
+let sanitized = input.trim().slice(0, max).replace(/[<>]/g, "");
 
 // CORRECT - Use const for immutable references
-const sanitized = input.trim().slice(0, max).replace(/[<>]/g, '');
+const sanitized = input.trim().slice(0, max).replace(/[<>]/g, "");
 ```
 
 20. **CRITICAL: Arrow Functions in JSX (JS-0417)**: NEVER use arrow functions directly in JSX props:

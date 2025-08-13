@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
-import { Filter } from 'lucide-react';
-import { ContributionFilters as FilterType } from '@/types/contribution';
+import React, { useCallback } from "react";
+import { Filter } from "lucide-react";
+import { ContributionFilters as FilterType } from "@/types/contribution";
 
 interface ContributionFiltersProps {
   filters: FilterType;
@@ -11,27 +11,42 @@ interface ContributionFiltersProps {
 export const ContributionFilters: React.FC<ContributionFiltersProps> = ({
   filters,
   onChange,
-  className
+  className,
 }) => {
-  const handleChange = useCallback((key: keyof FilterType, value: string) => {
-    onChange({ ...filters, [key]: value });
-  }, [filters, onChange]);
+  const handleChange = useCallback(
+    (key: keyof FilterType, value: string) => {
+      onChange({ ...filters, [key]: value });
+    },
+    [filters, onChange],
+  );
 
-  const handleOrganizationChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    handleChange('organization', e.target.value);
-  }, [handleChange]);
+  const handleOrganizationChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      handleChange("organization", e.target.value);
+    },
+    [handleChange],
+  );
 
-  const handleCategoryChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    handleChange('category', e.target.value);
-  }, [handleChange]);
+  const handleCategoryChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      handleChange("category", e.target.value);
+    },
+    [handleChange],
+  );
 
-  const handleRegionChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    handleChange('region', e.target.value);
-  }, [handleChange]);
+  const handleRegionChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      handleChange("region", e.target.value);
+    },
+    [handleChange],
+  );
 
-  const handleTimeRangeChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    handleChange('timeRange', e.target.value);
-  }, [handleChange]);
+  const handleTimeRangeChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      handleChange("timeRange", e.target.value);
+    },
+    [handleChange],
+  );
 
   return (
     <div className={`bg-white p-4 rounded-lg shadow-md mb-6 ${className}`}>
