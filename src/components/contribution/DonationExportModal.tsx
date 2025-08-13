@@ -26,7 +26,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
     }
   });
 
-  const handleExport = () => {
+  const handleExport = useCallback(() => {
     // Filter donations based on date range if provided
     let filteredDonations = [...donations];
     
@@ -44,7 +44,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
     // Export the filtered donations
     exportDonationsToCSV(filteredDonations, `${filename}.csv`);
     onClose();
-  };
+  }, [donations, options.dateRange, filename, onClose]);
 
   const handleFilenameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setFilename(e.target.value);
@@ -77,13 +77,17 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
     });
   }, [options]);
 
+  const handleClose = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
         <div className="flex justify-between items-center p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">{t('export.title')}</h2>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="text-gray-400 hover:text-gray-500"
           >
             <X className="h-5 w-5" />
@@ -158,7 +162,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
         <div className="flex justify-end space-x-3 p-6 border-t border-gray-200">
           <Button
             variant="secondary"
-            onClick={onClose}
+            onClick={handleClose}
           >
             {t('export.cancel')}
           </Button>
