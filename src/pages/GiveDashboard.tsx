@@ -239,6 +239,10 @@ export const GiveDashboard: React.FC = () => {
     handleSort("status");
   }, [handleSort]);
 
+  const handleCloseExportModal = useCallback(() => {
+    setShowExportModal(false);
+  }, []);
+
   const getSortIcon = useCallback(
     (key: "date" | "type" | "status" | "organization") => {
       if (sortConfig.key !== key) {
@@ -650,7 +654,7 @@ export const GiveDashboard: React.FC = () => {
       {showExportModal && (
         <DonationExportModal
           donations={contributions}
-          onClose={() => setShowExportModal(false)}
+          onClose={handleCloseExportModal}
         />
       )}
     </div>

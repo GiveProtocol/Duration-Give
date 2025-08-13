@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Award, Clock, Search } from "lucide-react";
 import { useWalletAlias } from "@/hooks/useWalletAlias";
@@ -137,6 +137,18 @@ export const VolunteerLeaderboard: React.FC<VolunteerLeaderboardProps> = ({
     updateAliases();
   }, [leaders, getAliasForAddress]);
 
+  const handleHoursTabClick = useCallback(() => {
+    setActiveTab("hours");
+  }, []);
+
+  const handleEndorsementsTabClick = useCallback(() => {
+    setActiveTab("endorsements");
+  }, []);
+
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalSearchTerm(e.target.value);
+  }, []);
+
   // Filter leaders based on search term
   const filteredLeaders = displayLeaders.filter((leader) => {
     const searchTermToUse = localSearchTerm || searchTerm;
@@ -158,7 +170,7 @@ export const VolunteerLeaderboard: React.FC<VolunteerLeaderboardProps> = ({
     <div className="space-y-4">
       <div className="flex space-x-4 mb-4">
         <button
-          onClick={() => setActiveTab("hours")}
+          onClick={handleHoursTabClick}
           className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
             activeTab === "hours"
               ? "bg-indigo-100 text-indigo-700"
@@ -169,7 +181,7 @@ export const VolunteerLeaderboard: React.FC<VolunteerLeaderboardProps> = ({
           Hours
         </button>
         <button
-          onClick={() => setActiveTab("endorsements")}
+          onClick={handleEndorsementsTabClick}
           className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
             activeTab === "endorsements"
               ? "bg-indigo-100 text-indigo-700"
@@ -184,7 +196,7 @@ export const VolunteerLeaderboard: React.FC<VolunteerLeaderboardProps> = ({
       <div className="relative mb-4">
         <Input
           value={localSearchTerm}
-          onChange={(e) => setLocalSearchTerm(e.target.value)}
+          onChange={handleSearchChange}
           placeholder="Search volunteers or skills..."
           className="pl-10"
         />

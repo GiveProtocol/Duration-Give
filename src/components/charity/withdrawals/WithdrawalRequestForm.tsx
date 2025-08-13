@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Input } from '../../ui/Input';
 import { Button } from '../../ui/Button';
 import { isValidAmount } from '../../../utils/validation';
@@ -43,6 +43,11 @@ const WithdrawalRequestForm: React.FC<WithdrawalRequestFormProps> = ({
     }
   };
 
+  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value);
+    setValidationError('');
+  }, []);
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {(error || validationError) && (
@@ -56,10 +61,7 @@ const WithdrawalRequestForm: React.FC<WithdrawalRequestFormProps> = ({
         min="0"
         step="0.01"
         value={amount}
-        onChange={(e) => {
-          setAmount(e.target.value);
-          setValidationError('');
-        }}
+        onChange={handleAmountChange}
         required
         helperText={`Available balance: ${formatCurrency(availableBalance)}`}
       />

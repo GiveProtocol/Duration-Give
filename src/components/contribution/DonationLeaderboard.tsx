@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Trophy, Search } from "lucide-react";
 import { formatCurrency } from "@/utils/money";
@@ -107,6 +107,10 @@ export const DonationLeaderboard: React.FC = () => {
     );
   }, [displayLeaderboard, searchTerm]);
 
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
   if (isLoading) {
     return <LoadingSpinner size="lg" />;
   }
@@ -158,7 +162,7 @@ export const DonationLeaderboard: React.FC = () => {
       <div className="relative mb-4">
         <Input
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSearchChange}
           placeholder="Search contributors..."
           className="pl-10"
         />

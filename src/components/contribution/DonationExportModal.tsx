@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Calendar, Download, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -46,6 +46,37 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
     onClose();
   };
 
+  const handleFilenameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilename(e.target.value);
+  }, []);
+
+  const handleStartDateChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setOptions({
+      ...options,
+      dateRange: {
+        start: e.target.value,
+        end: options.dateRange?.end || ''
+      }
+    });
+  }, [options]);
+
+  const handleEndDateChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setOptions({
+      ...options,
+      dateRange: {
+        start: options.dateRange?.start || '',
+        end: e.target.value
+      }
+    });
+  }, [options]);
+
+  const handleIncludePersonalInfoChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setOptions({
+      ...options,
+      includePersonalInfo: e.target.checked
+    });
+  }, [options]);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
@@ -66,7 +97,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
             </label>
             <Input
               value={filename}
-              onChange={(e) => setFilename(e.target.value)}
+              onChange={handleFilenameChange}
               placeholder="contributions_export"
             />
           </div>
@@ -80,13 +111,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
                 <Input
                   type="date"
                   value={options.dateRange?.start || ''}
-                  onChange={(e) => setOptions({
-                    ...options,
-                    dateRange: {
-                      start: e.target.value,
-                      end: options.dateRange?.end || ''
-                    }
-                  })}
+                  onChange={handleStartDateChange}
                 />
                 <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               </div>
@@ -94,13 +119,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
                 <Input
                   type="date"
                   value={options.dateRange?.end || ''}
-                  onChange={(e) => setOptions({
-                    ...options,
-                    dateRange: {
-                      start: options.dateRange?.start || '',
-                      end: e.target.value
-                    }
-                  })}
+                  onChange={handleEndDateChange}
                 />
                 <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               </div>
@@ -112,10 +131,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
               type="checkbox"
               id="includePersonalInfo"
               checked={options.includePersonalInfo}
-              onChange={(e) => setOptions({
-                ...options,
-                includePersonalInfo: e.target.checked
-              })}
+              onChange={handleIncludePersonalInfoChange}
               className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
             />
             <label htmlFor="includePersonalInfo" className="ml-2 block text-sm text-gray-900">
