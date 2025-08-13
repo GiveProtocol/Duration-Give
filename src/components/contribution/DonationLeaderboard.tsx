@@ -107,9 +107,12 @@ export const DonationLeaderboard: React.FC = () => {
     );
   }, [displayLeaderboard, searchTerm]);
 
-  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  }, []);
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(e.target.value);
+    },
+    [],
+  );
 
   if (isLoading) {
     return <LoadingSpinner size="lg" />;

@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
-import { Input } from '../../ui/Input';
-import { Button } from '../../ui/Button';
-import { isValidAmount } from '../../../utils/validation';
-import { formatCurrency } from '../../../utils/money';
+import React, { useState, useCallback } from "react";
+import { Input } from "../../ui/Input";
+import { Button } from "../../ui/Button";
+import { isValidAmount } from "../../../utils/validation";
+import { formatCurrency } from "../../../utils/money";
 
 interface WithdrawalRequestFormProps {
   onSubmit: (_amount: number) => Promise<void>;
@@ -15,38 +15,43 @@ const WithdrawalRequestForm: React.FC<WithdrawalRequestFormProps> = ({
   onSubmit,
   availableBalance,
   loading,
-  error
+  error,
 }) => {
-  const [amount, setAmount] = useState('');
-  const [validationError, setValidationError] = useState('');
+  const [amount, setAmount] = useState("");
+  const [validationError, setValidationError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const numAmount = parseFloat(amount);
 
     if (!isValidAmount(numAmount)) {
-      setValidationError('Please enter a valid amount');
+      setValidationError("Please enter a valid amount");
       return;
     }
 
     if (numAmount > availableBalance) {
-      setValidationError(`Amount cannot exceed available balance of ${formatCurrency(availableBalance)}`);
+      setValidationError(
+        `Amount cannot exceed available balance of ${formatCurrency(availableBalance)}`,
+      );
       return;
     }
 
     try {
       await onSubmit(numAmount);
-      setAmount('');
-      setValidationError('');
+      setAmount("");
+      setValidationError("");
     } catch (err) {
       // Error handling is done by parent component
     }
   };
 
-  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value);
-    setValidationError('');
-  }, []);
+  const handleAmountChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setAmount(e.target.value);
+      setValidationError("");
+    },
+    [],
+  );
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -65,12 +70,8 @@ const WithdrawalRequestForm: React.FC<WithdrawalRequestFormProps> = ({
         required
         helperText={`Available balance: ${formatCurrency(availableBalance)}`}
       />
-      <Button
-        type="submit"
-        disabled={loading || !amount}
-        className="w-full"
-      >
-        {loading ? 'Processing...' : 'Request Withdrawal'}
+      <Button type="submit" disabled={loading || !amount} className="w-full">
+        {loading ? "Processing..." : "Request Withdrawal"}
       </Button>
     </form>
   );
