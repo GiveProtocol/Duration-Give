@@ -17,6 +17,7 @@ export interface AuthError extends Error {
  * ```
  */
 export function getAuthErrorMessage(code: AuthErrorCode): string {
+  // skipcq: SCT-A000 - These are user-facing error messages, not actual secrets
   const messages: Record<AuthErrorCode, string> = {
     invalid_credentials: "Invalid email or password",
     email_taken: "This email is already registered",
