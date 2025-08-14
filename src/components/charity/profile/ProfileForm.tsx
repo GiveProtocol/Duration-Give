@@ -51,10 +51,13 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
     [],
   );
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    await onSubmit(formData);
-  }, [formData, onSubmit]);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      await onSubmit(formData);
+    },
+    [formData, onSubmit],
+  );
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
