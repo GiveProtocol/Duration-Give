@@ -13,10 +13,13 @@ const CharityProfileSection: React.FC = () => {
     [isEditing],
   );
 
-  const handleFormSubmit = useCallback(async (data) => {
-    await updateProfile(data);
-    setIsEditing(false);
-  }, [updateProfile]);
+  const handleFormSubmit = useCallback(
+    async (data) => {
+      await updateProfile(data);
+      setIsEditing(false);
+    },
+    [updateProfile],
+  );
 
   if (!profile) {
     return (
