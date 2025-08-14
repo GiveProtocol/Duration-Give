@@ -1,8 +1,8 @@
-import { supabase } from '../lib/supabase';
+import { supabase } from "../lib/supabase";
 
 /**
  * Authenticates a user with email and password credentials.
- * 
+ *
  * @function signInWithEmail
  * @param {string} email - The user's email address
  * @param {string} password - The user's password
@@ -21,16 +21,16 @@ import { supabase } from '../lib/supabase';
 export async function signInWithEmail(email: string, password: string) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
-    password
+    password,
   });
-  
+
   if (error) throw error;
   return data;
 }
 
 /**
  * Registers a new user with email, password, and account type.
- * 
+ *
  * @function signUpWithEmail
  * @param {string} email - The user's email address
  * @param {string} password - The user's password
@@ -54,10 +54,10 @@ export async function signInWithEmail(email: string, password: string) {
  * ```
  */
 export async function signUpWithEmail(
-  email: string, 
-  password: string, 
-  type: 'donor' | 'charity',
-  metadata = {}
+  email: string,
+  password: string,
+  type: "donor" | "charity",
+  metadata = {},
 ) {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -65,9 +65,9 @@ export async function signUpWithEmail(
     options: {
       data: {
         type,
-        ...metadata
-      }
-    }
+        ...metadata,
+      },
+    },
   });
 
   if (error) throw error;
@@ -76,7 +76,7 @@ export async function signUpWithEmail(
 
 /**
  * Creates a user profile record in the database.
- * 
+ *
  * @function createProfile
  * @param {string} userId - The authenticated user's ID
  * @param {'donor' | 'charity'} type - The profile type (donor or charity)
@@ -92,13 +92,11 @@ export async function signUpWithEmail(
  * }
  * ```
  */
-export async function createProfile(userId: string, type: 'donor' | 'charity') {
-  const { error } = await supabase
-    .from('profiles')
-    .insert({
-      user_id: userId,
-      type
-    });
+export async function createProfile(userId: string, type: "donor" | "charity") {
+  const { error } = await supabase.from("profiles").insert({
+    user_id: userId,
+    type,
+  });
 
   if (error) throw error;
 }

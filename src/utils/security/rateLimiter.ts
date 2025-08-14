@@ -19,19 +19,19 @@ interface RateLimitRecord {
  * @example
  * ```typescript
  * const rateLimiter = RateLimiter.getInstance();
- * 
+ *
  * // Check if IP is rate limited for authentication
  * const isBlocked = rateLimiter.isRateLimited('192.168.1.1', true);
  * if (isBlocked) {
  *   throw new Error('Rate limit exceeded, try again later');
  * }
- * 
+ *
  * // Increment attempt counter after failed login
  * rateLimiter.increment('192.168.1.1');
- * 
+ *
  * // Check public API rate limits (more restrictive)
  * const isPublicBlocked = rateLimiter.isRateLimited('192.168.1.1', false);
- * 
+ *
  * // Reset rate limit for user after successful authentication
  * rateLimiter.reset('192.168.1.1');
  * ```

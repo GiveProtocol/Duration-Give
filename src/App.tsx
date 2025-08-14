@@ -69,14 +69,14 @@ const AppRouter = () => (
 /**
  * Main application component that sets up all providers, routing, and error boundaries.
  * Initializes monitoring, React Query, authentication, Web3, and global error handling.
- * 
+ *
  * @function App
  * @returns {JSX.Element} The complete application with all providers and routing
  * @example
  * ```typescript
  * // App entry point in main.tsx
  * import App from './App';
- * 
+ *
  * createRoot(document.getElementById('root')!).render(
  *   <React.StrictMode>
  *     <App />

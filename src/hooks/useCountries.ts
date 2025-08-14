@@ -13,7 +13,7 @@ interface Country {
  * @example
  * ```tsx
  * const { countries } = useCountries();
- * 
+ *
  * return (
  *   <select>
  *     <option value="">Select Country</option>
@@ -28,9 +28,9 @@ interface Country {
  */
 export function useCountries() {
   const countries: Country[] = [
-    { code: 'US', name: 'United States' },
-    { code: 'GB', name: 'United Kingdom' },
-    { code: 'CA', name: 'Canada' },
+    { code: "US", name: "United States" },
+    { code: "GB", name: "United Kingdom" },
+    { code: "CA", name: "Canada" },
     // Add more countries as needed
   ];
 

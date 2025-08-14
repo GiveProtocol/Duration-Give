@@ -77,7 +77,7 @@ class UserCancelledError extends Error {
 /**
  * Main function to set up admin privileges for a user account.
  * Prompts for user email, validates the account, and upgrades to admin type.
- * 
+ *
  * @function setupAdmin
  * @returns {Promise<void>} Resolves when admin setup is complete
  * @throws {AdminSetupError} When setup operations fail

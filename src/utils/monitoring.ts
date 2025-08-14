@@ -17,12 +17,12 @@ export interface MonitoringMetrics {
 /**
  * Application monitoring service for performance tracking, error monitoring, and user interaction analytics.
  * Implements singleton pattern to ensure consistent monitoring across the application.
- * 
+ *
  * @class MonitoringService
  * @description Provides comprehensive monitoring capabilities including performance metrics,
  * error tracking, and user interaction monitoring. Integrates with external monitoring services
  * in production and provides local logging in development.
- * 
+ *
  * @example
  * ```typescript
  * const config = {
@@ -31,7 +31,7 @@ export interface MonitoringMetrics {
  *   environment: 'production',
  *   enabledMonitors: ['performance', 'errors', 'interactions']
  * };
- * 
+ *
  * const monitor = MonitoringService.getInstance(config);
  * monitor.trackMetric('user_action', { action: 'button_click', component: 'navbar' });
  * ```
@@ -50,7 +50,7 @@ export class MonitoringService {
 
   /**
    * Gets the singleton instance of MonitoringService.
-   * 
+   *
    * @function getInstance
    * @param {MonitoringConfig} [config] - Optional configuration to initialize the service
    * @returns {MonitoringService} The singleton instance
@@ -166,7 +166,7 @@ export class MonitoringService {
 
   /**
    * Tracks a custom metric with associated data.
-   * 
+   *
    * @function trackMetric
    * @param {string} event - The event name to track
    * @param {Record<string, unknown>} data - Additional data associated with the event
@@ -263,7 +263,7 @@ export class MonitoringService {
 
   /**
    * Exports all collected metrics for analysis or reporting.
-   * 
+   *
    * @function exportMetrics
    * @returns {MonitoringMetrics[]} Array of all collected metrics
    * @example
@@ -286,7 +286,7 @@ export class MonitoringService {
 
   /**
    * Clears all stored metrics from memory and localStorage.
-   * 
+   *
    * @function clearMetrics
    * @returns {void}
    * @example
@@ -302,13 +302,13 @@ export class MonitoringService {
 
 /**
  * Gets the MonitoringService singleton instance.
- * 
+ *
  * @function getMonitoringService
  * @returns {MonitoringService} The singleton monitoring service instance
  * @example
  * ```typescript
  * import { getMonitoringService } from './monitoring';
- * 
+ *
  * const monitor = getMonitoringService();
  * monitor.trackMetric('page_view', { path: window.location.pathname });
  * ```

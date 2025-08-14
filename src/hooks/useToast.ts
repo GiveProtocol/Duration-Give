@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { ToastContext } from '../contexts/ToastContext';
+import { useContext } from "react";
+import { ToastContext } from "../contexts/ToastContext";
 
 /**
  * Toast notification hook for accessing toast context functionality
@@ -14,13 +14,13 @@ import { ToastContext } from '../contexts/ToastContext';
  * @example
  * ```tsx
  * const { showToast } = useToast();
- * 
+ *
  * // Show success notification
  * showToast('success', 'Transaction Complete', 'Your donation was processed successfully');
- * 
+ *
  * // Show error notification
  * showToast('error', 'Connection Failed', 'Unable to connect to wallet');
- * 
+ *
  * // Show simple notification
  * showToast('info', 'Profile Updated');
  * ```
@@ -28,7 +28,7 @@ import { ToastContext } from '../contexts/ToastContext';
 export function useToast() {
   const context = useContext(ToastContext);
   if (!context) {
-    throw new Error('useToast must be used within a ToastProvider');
+    throw new Error("useToast must be used within a ToastProvider");
   }
   return context;
 }

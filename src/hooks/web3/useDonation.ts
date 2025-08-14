@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { useContract } from './useContract';
-import { useWeb3 } from '@/contexts/Web3Context';
-import { parseEther } from 'ethers';
-import { Logger } from '@/utils/logger';
-import { trackTransaction } from '@/lib/sentry';
+import { useState } from "react";
+import { useContract } from "./useContract";
+import { useWeb3 } from "@/contexts/Web3Context";
+import { parseEther } from "ethers";
+import { Logger } from "@/utils/logger";
+import { trackTransaction } from "@/lib/sentry";
 
 export enum DonationType {
-  _NATIVE = 'native', // Prefixed with _ as currently unused
-  _TOKEN = 'token' // Prefixed with _ as currently unused
+  _NATIVE = "native", // Prefixed with _ as currently unused
+  _TOKEN = "token", // Prefixed with _ as currently unused
 }
 
 export enum PoolType {
-  _DIRECT = 'direct', // Prefixed with _ as currently unused
-  _EQUITY = 'equity' // Prefixed with _ as currently unused
+  _DIRECT = "direct", // Prefixed with _ as currently unused
+  _EQUITY = "equity", // Prefixed with _ as currently unused
 }
 
 interface DonationParams {
@@ -37,7 +37,7 @@ interface DonationParams {
  * @example
  * ```tsx
  * const { donate, withdraw, loading, error } = useDonation();
- * 
+ *
  * const handleDonation = async () => {
  *   try {
  *     await donate({
@@ -51,7 +51,7 @@ interface DonationParams {
  *     // Error handling included in hook
  *   }
  * };
- * 
+ *
  * const handleWithdrawal = async () => {
  *   try {
  *     const txHash = await withdraw('0.05');
@@ -60,7 +60,7 @@ interface DonationParams {
  *     // Error handling included in hook
  *   }
  * };
- * 
+ *
  * return (
  *   <div>
  *     <button onClick={handleDonation} disabled={loading}>
@@ -72,22 +72,28 @@ interface DonationParams {
  * ```
  */
 export function useDonation() {
-  const { contract } = useContract('donation');
+  const { contract } = useContract("donation");
   const { address } = useWeb3();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const donate = async ({ charityAddress, amount, type, _tokenAddress, poolType = PoolType._DIRECT }: DonationParams) => {
+  const donate = async ({
+    charityAddress,
+    amount,
+    type,
+    _tokenAddress,
+    poolType = PoolType._DIRECT,
+  }: DonationParams) => {
     if (!contract || !address) {
-      throw new Error('Contract or wallet not connected');
+      throw new Error("Contract or wallet not connected");
     }
 
     // Start Sentry transaction tracking
-    const transaction = trackTransaction('donation', {
+    const transaction = trackTransaction("donation", {
       amount,
       charityId: charityAddress,
       donationType: type,
-      status: 'started'
+      status: "started",
     });
 
     try {
@@ -100,50 +106,51 @@ export function useDonation() {
         // For direct donations
         if (poolType === PoolType._DIRECT) {
           // In ethers v6, we need to use the contract.getFunction method
-          const donateFunction = contract.getFunction('donate');
+          const donateFunction = contract.getFunction("donate");
           const tx = await donateFunction(charityAddress, {
-            value: parsedAmount
+            value: parsedAmount,
           });
           await tx.wait();
-        } 
+        }
         // For equity pool donations
         else if (poolType === PoolType._EQUITY) {
           // This would call a different contract method for equity pool donations
           // For now, we'll use the same method
-          const donateFunction = contract.getFunction('donate');
+          const donateFunction = contract.getFunction("donate");
           const tx = await donateFunction(charityAddress, {
-            value: parsedAmount
+            value: parsedAmount,
           });
           await tx.wait();
         }
 
-        Logger.info('Donation successful', {
+        Logger.info("Donation successful", {
           amount,
           charity: charityAddress,
-          type: 'native',
-          poolType
+          type: "native",
+          poolType,
         });
 
         // Mark transaction as successful
-        transaction.finish('ok');
+        transaction.finish("ok");
       } else {
         // For token donations, we would need to implement this
         // based on the contract's token donation functionality
-        throw new Error('Token donations not yet implemented');
+        throw new Error("Token donations not yet implemented");
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to process donation';
+      const message =
+        err instanceof Error ? err.message : "Failed to process donation";
       setError(message);
-      Logger.error('Donation failed', {
+      Logger.error("Donation failed", {
         error: err,
         amount,
         charity: charityAddress,
-        type
+        type,
       });
-      
+
       // Mark transaction as failed
-      transaction.finish('error');
-      
+      transaction.finish("error");
+
       throw err;
     } finally {
       setLoading(false);
@@ -152,7 +159,7 @@ export function useDonation() {
 
   const withdraw = async (amount: string) => {
     if (!contract || !address) {
-      throw new Error('Contract or wallet not connected');
+      throw new Error("Contract or wallet not connected");
     }
 
     try {
@@ -160,22 +167,23 @@ export function useDonation() {
       setError(null);
 
       const parsedAmount = parseEther(amount);
-      const withdrawFunction = contract.getFunction('withdraw');
+      const withdrawFunction = contract.getFunction("withdraw");
       const tx = await withdrawFunction(parsedAmount);
       const receipt = await tx.wait();
 
-      Logger.info('Withdrawal successful', {
+      Logger.info("Withdrawal successful", {
         amount,
-        txHash: receipt.hash
+        txHash: receipt.hash,
       });
-      
+
       return receipt.hash;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to process withdrawal';
+      const message =
+        err instanceof Error ? err.message : "Failed to process withdrawal";
       setError(message);
-      Logger.error('Withdrawal failed', {
+      Logger.error("Withdrawal failed", {
         error: err,
-        amount
+        amount,
       });
       throw err;
     } finally {
@@ -187,6 +195,6 @@ export function useDonation() {
     donate,
     withdraw,
     loading,
-    error
+    error,
   };
 }

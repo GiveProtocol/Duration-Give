@@ -1,46 +1,82 @@
-import { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import { RouteTransition } from './RouteTransition';
-import { ProtectedRoute } from './ProtectedRoute';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { Suspense, lazy } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { RouteTransition } from "./RouteTransition";
+import { ProtectedRoute } from "./ProtectedRoute";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 // Eagerly load critical routes
-import ComingSoon from '@/pages/ComingSoon';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
+import ComingSoon from "@/pages/ComingSoon";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
 
 // Lazy load other routes
-const Home = lazy(() => import('@/pages/Home'));
-const CharityBrowser = lazy(() => import('@/pages/CharityBrowser'));
-const SentryTest = lazy(() => import('@/pages/SentryTest'));
-const GlobalWaterFoundation = lazy(() => import('@/pages/charities/GlobalWaterFoundation'));
-const EducationForAll = lazy(() => import('@/pages/charities/EducationForAll'));
-const ClimateActionNow = lazy(() => import('@/pages/charities/ClimateActionNow'));
-const EnvironmentPortfolioDetail = lazy(() => import('@/pages/portfolio/EnvironmentPortfolioDetail'));
-const EducationPortfolioDetail = lazy(() => import('@/pages/portfolio/EducationPortfolioDetail'));
-const PovertyPortfolioDetail = lazy(() => import('@/pages/portfolio/PovertyPortfolioDetail'));
-const ContributionTracker = lazy(() => import('@/pages/ContributionTracker'));
-const VolunteerOpportunities = lazy(() => import('@/pages/VolunteerOpportunities'));
-const About = lazy(() => import('@/pages/About').then(m => ({ default: m.About })));
-const Legal = lazy(() => import('@/pages/Legal').then(m => ({ default: m.Legal })));
-const Privacy = lazy(() => import('@/pages/Privacy').then(m => ({ default: m.Privacy })));
-const Governance = lazy(() => import('@/pages/Governance').then(m => ({ default: m.Governance })));
-const GiveDashboard = lazy(() => import('@/pages/GiveDashboard').then(m => ({ default: m.GiveDashboard })));
-const CharityPortal = lazy(() => import('@/pages/CharityPortal').then(m => ({ default: m.CharityPortal })));
-const CreateOpportunity = lazy(() => import('@/pages/charity/CreateOpportunity'));
-const NotFound = lazy(() => import('@/pages/NotFound'));
-const VerifyContribution = lazy(() => import('@/pages/volunteer/VerifyContribution'));
-const ScheduledDonationsPage = lazy(() => import('@/pages/donor/ScheduledDonationsPage'));
-const Documentation = lazy(() => import('@/pages/Documentation'));
+const Home = lazy(() => import("@/pages/Home"));
+const CharityBrowser = lazy(() => import("@/pages/CharityBrowser"));
+const SentryTest = lazy(() => import("@/pages/SentryTest"));
+const GlobalWaterFoundation = lazy(
+  () => import("@/pages/charities/GlobalWaterFoundation"),
+);
+const EducationForAll = lazy(() => import("@/pages/charities/EducationForAll"));
+const ClimateActionNow = lazy(
+  () => import("@/pages/charities/ClimateActionNow"),
+);
+const EnvironmentPortfolioDetail = lazy(
+  () => import("@/pages/portfolio/EnvironmentPortfolioDetail"),
+);
+const EducationPortfolioDetail = lazy(
+  () => import("@/pages/portfolio/EducationPortfolioDetail"),
+);
+const PovertyPortfolioDetail = lazy(
+  () => import("@/pages/portfolio/PovertyPortfolioDetail"),
+);
+const ContributionTracker = lazy(() => import("@/pages/ContributionTracker"));
+const VolunteerOpportunities = lazy(
+  () => import("@/pages/VolunteerOpportunities"),
+);
+const About = lazy(() =>
+  import("@/pages/About").then((m) => ({ default: m.About })),
+);
+const Legal = lazy(() =>
+  import("@/pages/Legal").then((m) => ({ default: m.Legal })),
+);
+const Privacy = lazy(() =>
+  import("@/pages/Privacy").then((m) => ({ default: m.Privacy })),
+);
+const Governance = lazy(() =>
+  import("@/pages/Governance").then((m) => ({ default: m.Governance })),
+);
+const GiveDashboard = lazy(() =>
+  import("@/pages/GiveDashboard").then((m) => ({ default: m.GiveDashboard })),
+);
+const CharityPortal = lazy(() =>
+  import("@/pages/CharityPortal").then((m) => ({ default: m.CharityPortal })),
+);
+const CreateOpportunity = lazy(
+  () => import("@/pages/charity/CreateOpportunity"),
+);
+const NotFound = lazy(() => import("@/pages/NotFound"));
+const VerifyContribution = lazy(
+  () => import("@/pages/volunteer/VerifyContribution"),
+);
+const ScheduledDonationsPage = lazy(
+  () => import("@/pages/donor/ScheduledDonationsPage"),
+);
+const Documentation = lazy(() => import("@/pages/Documentation"));
 
 // Admin routes
-const AdminDashboard = lazy(() => import('@/pages/admin/AdminDashboard'));
+const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard"));
 
 // Lazy load cause pages
-const CleanWaterInitiative = lazy(() => import('@/pages/causes/CleanWaterInitiative'));
-const EducationAccessProgram = lazy(() => import('@/pages/causes/EducationAccessProgram'));
-const ReforestationProject = lazy(() => import('@/pages/causes/ReforestationProject'));
+const CleanWaterInitiative = lazy(
+  () => import("@/pages/causes/CleanWaterInitiative"),
+);
+const EducationAccessProgram = lazy(
+  () => import("@/pages/causes/EducationAccessProgram"),
+);
+const ReforestationProject = lazy(
+  () => import("@/pages/causes/ReforestationProject"),
+);
 
 const LoadingFallback = () => (
   <div className="flex min-h-screen items-center justify-center">
@@ -51,7 +87,7 @@ const LoadingFallback = () => (
 /**
  * Main application routing component that defines all routes and navigation.
  * Handles lazy loading, route protection, and transitions between pages.
- * 
+ *
  * @function AppRoutes
  * @returns {JSX.Element} The complete application routing structure
  * @example
@@ -87,7 +123,7 @@ export function AppRoutes() {
         <Route
           path="/admin/*"
           element={
-            <ProtectedRoute requiredRoles={['admin']}>
+            <ProtectedRoute requiredRoles={["admin"]}>
               <RouteTransition>
                 <Suspense fallback={<LoadingFallback />}>
                   <AdminDashboard />
@@ -219,7 +255,7 @@ export function AppRoutes() {
         <Route
           path="/charity-portal/create-opportunity"
           element={
-            <ProtectedRoute requiredRoles={['charity']}>
+            <ProtectedRoute requiredRoles={["charity"]}>
               <RouteTransition>
                 <Suspense fallback={<LoadingFallback />}>
                   <CreateOpportunity />
@@ -233,7 +269,7 @@ export function AppRoutes() {
         <Route
           path="/scheduled-donations"
           element={
-            <ProtectedRoute requiredRoles={['donor']}>
+            <ProtectedRoute requiredRoles={["donor"]}>
               <RouteTransition>
                 <Suspense fallback={<LoadingFallback />}>
                   <ScheduledDonationsPage />
@@ -285,7 +321,7 @@ export function AppRoutes() {
         <Route
           path="/donor-portal"
           element={
-            <ProtectedRoute requiredRoles={['donor']}>
+            <ProtectedRoute requiredRoles={["donor"]}>
               <RouteTransition>
                 <Suspense fallback={<LoadingFallback />}>
                   <Navigate to="/give-dashboard" replace />
@@ -297,7 +333,7 @@ export function AppRoutes() {
         <Route
           path="/charity-portal/*"
           element={
-            <ProtectedRoute requiredRoles={['charity']}>
+            <ProtectedRoute requiredRoles={["charity"]}>
               <RouteTransition>
                 <Suspense fallback={<LoadingFallback />}>
                   <CharityPortal />
@@ -358,9 +394,7 @@ export function AppRoutes() {
         />
         <Route
           path="/docs"
-          element={
-            <Navigate to="/documentation" replace />
-          }
+          element={<Navigate to="/documentation" replace />}
         />
         <Route
           path="/documentation"

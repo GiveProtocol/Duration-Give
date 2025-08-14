@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useWeb3 } from '@/contexts/Web3Context';
-import { Logger } from '@/utils/logger';
+import { useEffect, useState } from "react";
+import { useWeb3 } from "@/contexts/Web3Context";
+import { Logger } from "@/utils/logger";
 
 interface CharityInfo {
   totalReceived: number;
@@ -21,11 +21,11 @@ interface CharityInfo {
  * @example
  * ```tsx
  * const { charityInfo, loading, error } = useCharity(charityAddress);
- * 
+ *
  * if (loading) return <FinancialDataSkeleton />;
  * if (error) return <ErrorDisplay error={error} />;
  * if (!charityInfo) return <NoFinancialData />;
- * 
+ *
  * return (
  *   <div className="charity-financials">
  *     <div>Total Received: {charityInfo.totalReceived} ETH</div>
@@ -52,14 +52,18 @@ export function useCharity(charityAddress: string) {
         // Simulate fetching data
         setCharityInfo({
           totalReceived: 1000,
-          availableBalance: 500
+          availableBalance: 500,
         });
       } catch (err) {
-        Logger.error('Failed to fetch charity info', {
+        Logger.error("Failed to fetch charity info", {
           error: err,
-          charityAddress
+          charityAddress,
         });
-        setError(err instanceof Error ? err : new Error('Failed to fetch charity info'));
+        setError(
+          err instanceof Error
+            ? err
+            : new Error("Failed to fetch charity info"),
+        );
       } finally {
         setLoading(false);
       }

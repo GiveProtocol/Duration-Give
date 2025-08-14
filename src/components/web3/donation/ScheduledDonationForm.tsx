@@ -53,7 +53,12 @@ interface SuccessMessageProps {
  * @param transactionHash - The blockchain transaction hash
  * @param onClose - Callback function to close the success message
  */
-const SuccessMessage: React.FC<SuccessMessageProps> = ({ amount, charityName, transactionHash, onClose }) => {
+const SuccessMessage: React.FC<SuccessMessageProps> = ({
+  amount,
+  charityName,
+  transactionHash,
+  onClose,
+}) => {
   const startDate = new Date();
   const endDate = new Date();
   endDate.setMonth(endDate.getMonth() + 12);
@@ -63,12 +68,23 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ amount, charityName, tr
       <div className="bg-green-50 p-4 rounded-md border border-green-200">
         <div className="flex items-start">
           <div className="flex-shrink-0">
-            <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            <svg
+              className="h-5 w-5 text-green-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clipRule="evenodd"
+              />
             </svg>
           </div>
           <div className="ml-3">
-            <h3 className="text-sm font-medium text-green-800">Monthly donation scheduled successfully!</h3>
+            <h3 className="text-sm font-medium text-green-800">
+              Monthly donation scheduled successfully!
+            </h3>
             <div className="mt-2 text-sm text-green-700">
               <p>Your donation of {amount} tokens has been scheduled.</p>
             </div>
@@ -77,20 +93,35 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ amount, charityName, tr
       </div>
 
       <div className="bg-white p-4 rounded-md border border-gray-200">
-        <h4 className="text-sm font-medium text-gray-900 mb-2">Schedule Details:</h4>
+        <h4 className="text-sm font-medium text-gray-900 mb-2">
+          Schedule Details:
+        </h4>
         <ul className="space-y-2 text-sm text-gray-600">
-          <li><span className="font-medium">Total Amount:</span> {amount} tokens</li>
-          <li><span className="font-medium">Monthly Payment:</span> {(parseFloat(amount) / 12).toFixed(2)} tokens</li>
-          <li><span className="font-medium">Start Date:</span> {formatDate(startDate.toISOString())}</li>
-          <li><span className="font-medium">End Date:</span> {formatDate(endDate.toISOString())}</li>
-          <li><span className="font-medium">Recipient:</span> {charityName}</li>
+          <li>
+            <span className="font-medium">Total Amount:</span> {amount} tokens
+          </li>
+          <li>
+            <span className="font-medium">Monthly Payment:</span>{" "}
+            {(parseFloat(amount) / 12).toFixed(2)} tokens
+          </li>
+          <li>
+            <span className="font-medium">Start Date:</span>{" "}
+            {formatDate(startDate.toISOString())}
+          </li>
+          <li>
+            <span className="font-medium">End Date:</span>{" "}
+            {formatDate(endDate.toISOString())}
+          </li>
+          <li>
+            <span className="font-medium">Recipient:</span> {charityName}
+          </li>
         </ul>
       </div>
 
       {transactionHash && (
         <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
           <p className="text-xs text-gray-500 mb-1">Transaction Hash:</p>
-          <a 
+          <a
             href={`https://moonbase.moonscan.io/tx/${transactionHash}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -128,7 +159,7 @@ interface ScheduledDonationFormProps {
  * @returns {React.ReactElement} Complete scheduled donation form with amount input, schedule preview, and transaction handling
  * @example
  * ```tsx
- * <ScheduledDonationForm 
+ * <ScheduledDonationForm
  *   charityAddress="0x1234...abcd"
  *   charityName="Save the Children"
  *   onSuccess={() => refreshSchedules()}
@@ -155,110 +186,116 @@ export function ScheduledDonationForm({
   const endDate = new Date();
   endDate.setMonth(endDate.getMonth() + 12);
 
-  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value);
-  }, []);
+  const handleAmountChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setAmount(e.target.value);
+    },
+    [],
+  );
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError(null);
 
-    if (!validateAmount(parseFloat(amount))) {
-      setError("Please enter a valid amount between 0 and 1,000,000");
-      return;
-    }
-
-    if (!isConnected || !provider || !address) {
-      try {
-        await connect();
-      } catch (err) {
-        setError("Please connect your wallet to continue");
+      if (!validateAmount(parseFloat(amount))) {
+        setError("Please enter a valid amount between 0 and 1,000,000");
         return;
       }
-    }
 
-    try {
-      setLoading(true);
-
-      // Get the distribution contract address
-      const distributionAddress = getContractAddress("DISTRIBUTION");
-
-      // Create contract instance
-      const signer = await provider.getSigner();
-      const distributionContract = new ethers.Contract(
-        distributionAddress,
-        CharityScheduledDistributionABI.abi,
-        signer,
-      );
-
-      // For now, we'll use the native token (GLMR)
-      // In a real implementation, you would get the token address from a dropdown
-      const tokenAddress = getContractAddress("TOKEN");
-
-      // First, approve the token transfer
-      const tokenContract = new ethers.Contract(
-        tokenAddress,
-        ["function approve(address spender, uint256 amount) returns (bool)"],
-        signer,
-      );
-
-      const parsedAmount = ethers.parseEther(amount);
+      if (!isConnected || !provider || !address) {
+        try {
+          await connect();
+        } catch (err) {
+          setError("Please connect your wallet to continue");
+          return;
+        }
+      }
 
       try {
-        const approveTx = await tokenContract.approve(
+        setLoading(true);
+
+        // Get the distribution contract address
+        const distributionAddress = getContractAddress("DISTRIBUTION");
+
+        // Create contract instance
+        const signer = await provider.getSigner();
+        const distributionContract = new ethers.Contract(
           distributionAddress,
-          parsedAmount,
+          CharityScheduledDistributionABI.abi,
+          signer,
         );
-        await approveTx.wait();
-      } catch (approveError: unknown) {
-        // Check if user rejected the transaction
-        if (isUserRejection(approveError)) {
-          throw new Error(
-            "Transaction was rejected. Please approve the transaction in your wallet to continue.",
-          );
-        }
-        throw approveError;
-      }
 
-      // Create the scheduled donation
-      try {
-        const tx = await distributionContract.createSchedule(
-          charityAddress,
+        // For now, we'll use the native token (GLMR)
+        // In a real implementation, you would get the token address from a dropdown
+        const tokenAddress = getContractAddress("TOKEN");
+
+        // First, approve the token transfer
+        const tokenContract = new ethers.Contract(
           tokenAddress,
-          parsedAmount,
+          ["function approve(address spender, uint256 amount) returns (bool)"],
+          signer,
         );
 
-        const receipt = await tx.wait();
-        setTransactionHash(receipt.hash);
-        setShowConfirmation(true);
+        const parsedAmount = ethers.parseEther(amount);
 
-        Logger.info("Scheduled donation created", {
-          charity: charityAddress,
-          amount,
-          token: tokenAddress,
-          txHash: receipt.hash,
-        });
-      } catch (txError: unknown) {
-        // Check if user rejected the transaction
-        if (
-          txError.code === 4001 ||
-          txError.message?.includes("user rejected")
-        ) {
-          throw new Error(
-            "Transaction was rejected. Please confirm the transaction in your wallet to schedule your donation.",
+        try {
+          const approveTx = await tokenContract.approve(
+            distributionAddress,
+            parsedAmount,
           );
+          await approveTx.wait();
+        } catch (approveError: unknown) {
+          // Check if user rejected the transaction
+          if (isUserRejection(approveError)) {
+            throw new Error(
+              "Transaction was rejected. Please approve the transaction in your wallet to continue.",
+            );
+          }
+          throw approveError;
         }
-        throw txError;
+
+        // Create the scheduled donation
+        try {
+          const tx = await distributionContract.createSchedule(
+            charityAddress,
+            tokenAddress,
+            parsedAmount,
+          );
+
+          const receipt = await tx.wait();
+          setTransactionHash(receipt.hash);
+          setShowConfirmation(true);
+
+          Logger.info("Scheduled donation created", {
+            charity: charityAddress,
+            amount,
+            token: tokenAddress,
+            txHash: receipt.hash,
+          });
+        } catch (txError: unknown) {
+          // Check if user rejected the transaction
+          if (
+            txError.code === 4001 ||
+            txError.message?.includes("user rejected")
+          ) {
+            throw new Error(
+              "Transaction was rejected. Please confirm the transaction in your wallet to schedule your donation.",
+            );
+          }
+          throw txError;
+        }
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : "Failed to schedule donation";
+        setError(message);
+        Logger.error("Scheduled donation failed", { error: err });
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to schedule donation";
-      setError(message);
-      Logger.error("Scheduled donation failed", { error: err });
-    } finally {
-      setLoading(false);
-    }
-  }, [amount, charityAddress, isConnected, provider, address, connect]);
+    },
+    [amount, charityAddress, isConnected, provider, address, connect],
+  );
 
   const handleConfirmationClose = useCallback(() => {
     setAmount("");
@@ -269,7 +306,7 @@ export function ScheduledDonationForm({
 
   if (showConfirmation) {
     return (
-      <SuccessMessage 
+      <SuccessMessage
         amount={amount}
         charityName={charityName}
         transactionHash={transactionHash}

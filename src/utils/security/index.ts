@@ -27,16 +27,16 @@ interface SecurityHeaders {
  * // Initialize security system
  * const security = SecurityManager.getInstance();
  * security.initialize();
- * 
+ *
  * // Validate incoming request
  * const isRequestValid = await security.validateRequest(request);
  * if (!isRequestValid) {
  *   throw new Error('Security validation failed');
  * }
- * 
+ *
  * // Sanitize user input
  * const safeInput = security.sanitizeInput(userInput, 'description');
- * 
+ *
  * // All security features are automatically active:
  * // - CSRF tokens in all requests
  * // - Rate limiting on authentication endpoints

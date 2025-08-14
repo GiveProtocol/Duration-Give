@@ -43,14 +43,14 @@ interface ContractError extends Error {
  * @returns {string | null} returns.error - Error message or null if no error
  * @example
  * ```tsx
- * const { 
- *   createSchedule, 
- *   cancelSchedule, 
- *   getDonorSchedules, 
- *   loading, 
- *   error 
+ * const {
+ *   createSchedule,
+ *   cancelSchedule,
+ *   getDonorSchedules,
+ *   loading,
+ *   error
  * } = useScheduledDonation();
- * 
+ *
  * const handleCreateSchedule = async () => {
  *   try {
  *     const txHash = await createSchedule({
@@ -63,7 +63,7 @@ interface ContractError extends Error {
  *     // Error handling included in hook
  *   }
  * };
- * 
+ *
  * useEffect(() => {
  *   const loadSchedules = async () => {
  *     const schedules = await getDonorSchedules();
