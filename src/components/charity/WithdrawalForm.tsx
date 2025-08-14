@@ -14,11 +14,14 @@ export const WithdrawalForm: React.FC = () => {
     [],
   );
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    await requestWithdrawal(parseFloat(amount));
-    setAmount("");
-  }, [amount, requestWithdrawal]);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      await requestWithdrawal(parseFloat(amount));
+      setAmount("");
+    },
+    [amount, requestWithdrawal],
+  );
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
