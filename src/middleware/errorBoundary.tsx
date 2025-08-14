@@ -49,7 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
     });
   }
 
-  handleReload = () => {
+  static handleReload = () => {
     window.location.reload();
   };
 
@@ -69,7 +69,7 @@ export class ErrorBoundary extends Component<Props, State> {
               {this.state.error?.message || "An unexpected error occurred"}
             </p>
             <button
-              onClick={this.handleReload}
+              onClick={ErrorBoundary.handleReload}
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors"
             >
               Reload Page

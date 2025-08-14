@@ -2,6 +2,7 @@
  * CSRF protection utility that generates and validates tokens
  * Uses class pattern with private constructor due to maintaining static state (token)
  */
+// skipcq: JS-0327 - Class with static state (token) requires singleton pattern, not namespace object
 export class CSRFProtection {
   private static token: string | null = null;
   private static initializationCount = 0;

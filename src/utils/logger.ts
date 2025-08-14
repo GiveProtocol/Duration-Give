@@ -15,6 +15,7 @@ interface LogEntry {
  * Maintains an in-memory log buffer for debugging and provides structured logging
  * Uses class pattern with private constructor due to maintaining static state (logs array)
  */
+// skipcq: JS-0327 - Class with static state (logs array) requires singleton pattern, not namespace object
 export class Logger {
   private static readonly MAX_LOG_SIZE = 1000;
   private static logs: LogEntry[] = [];
