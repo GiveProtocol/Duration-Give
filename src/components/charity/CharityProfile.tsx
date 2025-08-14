@@ -36,10 +36,13 @@ export const CharityProfile: React.FC = () => {
     setDescription(content);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await updateProfile({ name, description, category, image_url: imageUrl });
-  };
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      await updateProfile({ name, description, category, image_url: imageUrl });
+    },
+    [updateProfile, name, description, category, imageUrl],
+  );
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">

@@ -13,7 +13,7 @@ export const VerificationLookup: React.FC = () => {
   const { getVerificationByHash, loading, error } = useVolunteerVerification();
   const [verification, setVerification] = useState<VolunteerVerification | null>(null);
 
-  const handleSearch = async (e: React.FormEvent) => {
+  const handleSearch = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     if (!hash.trim()) return;
 
@@ -24,7 +24,7 @@ export const VerificationLookup: React.FC = () => {
     } catch (err) {
       Logger.error('Verification lookup failed:', err);
     }
-  };
+  }, [hash, getVerificationByHash]);
 
   const handleHashChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setHash(e.target.value);

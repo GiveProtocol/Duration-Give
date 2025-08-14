@@ -18,7 +18,7 @@ export const WalletAliasSettings: React.FC = () => {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setValidationError(null);
 
@@ -45,19 +45,19 @@ export const WalletAliasSettings: React.FC = () => {
       setNewAlias("");
       setEditMode(false);
     }
-  };
+  }, [newAlias, setWalletAlias]);
 
-  const handleEdit = () => {
+  const handleEdit = useCallback(() => {
     setNewAlias(alias || "");
     setEditMode(true);
     setValidationError(null);
-  };
+  }, [alias]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setNewAlias("");
     setEditMode(false);
     setValidationError(null);
-  };
+  }, []);
 
   const handleDeleteRequest = useCallback((aliasId: string) => {
     setDeleteConfirmId(aliasId);

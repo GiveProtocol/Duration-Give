@@ -14,7 +14,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({ onAccept, onDecline })
   const [internationalTransfers, setInternationalTransfers] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  const handleAccept = () => {
+  const handleAccept = useCallback(() => {
     // Validate required checkboxes
     if (!essentialProcessing) {
       setValidationError("Essential Processing consent is required to proceed");
@@ -29,7 +29,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({ onAccept, onDecline })
     // Clear any validation errors and proceed
     setValidationError(null);
     onAccept();
-  };
+  }, [essentialProcessing, ageConfirmation, privacyNotice, onAccept]);
 
   const handleEssentialProcessingChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setEssentialProcessing(e.target.checked);

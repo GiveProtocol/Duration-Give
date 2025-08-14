@@ -95,10 +95,12 @@ export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t } = useTranslation();
 
-  const isActive = (path: string) =>
+  const isActive = useCallback((path: string) =>
     location.pathname === path
       ? "bg-primary-100 text-primary-900"
-      : "text-gray-700 hover:bg-primary-50";
+      : "text-gray-700 hover:bg-primary-50",
+    [location.pathname]
+  );
 
   const handleMenuToggle = useCallback(() => {
     setIsMenuOpen(!isMenuOpen);

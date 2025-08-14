@@ -63,7 +63,7 @@ export const ScheduledDonations: React.FC = () => {
     [handleCancelClick],
   );
 
-  const handleConfirmCancel = async () => {
+  const handleConfirmCancel = useCallback(async () => {
     if (!selectedSchedule) return;
 
     try {
@@ -93,7 +93,7 @@ export const ScheduledDonations: React.FC = () => {
         );
       }
     }
-  };
+  }, [selectedSchedule, cancelSchedule, showToast, fetchSchedules]);
 
   if (loadingSchedules) {
     return (

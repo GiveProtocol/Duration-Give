@@ -151,12 +151,12 @@ export const OpportunityManagement: React.FC = () => {
     setShowForm(false);
   }, []);
 
-  const formatLanguageName = (language: string): string => {
+  const formatLanguageName = useCallback((language: string): string => {
     return language
       .split("_")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
-  };
+  }, []);
 
   if (loading) {
     return <div className="text-center py-8">Loading&hellip;</div>;
