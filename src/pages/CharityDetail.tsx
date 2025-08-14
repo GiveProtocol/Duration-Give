@@ -1,9 +1,8 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { DonationButton } from "@/components/web3/donation/DonationButton";
 import { ScheduledDonationButton } from "@/components/web3/donation/ScheduledDonationButton";
 import { formatCurrency } from "@/utils/money";
-import { Link } from "react-router-dom";
 
 interface CharityStats {
   totalDonated: number;

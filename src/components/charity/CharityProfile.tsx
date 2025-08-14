@@ -32,6 +32,10 @@ export const CharityProfile: React.FC = () => {
     [],
   );
 
+  const handleDescriptionChange = useCallback((content: string) => {
+    setDescription(content);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await updateProfile({ name, description, category, image_url: imageUrl });
@@ -64,7 +68,7 @@ export const CharityProfile: React.FC = () => {
           <Editor
             id="charity-description"
             content={description}
-            onChange={setDescription}
+            onChange={handleDescriptionChange}
             placeholder="Describe your charity's mission and impact..."
             className="min-h-[200px]"
           />

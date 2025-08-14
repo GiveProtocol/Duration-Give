@@ -9,9 +9,9 @@ const CreateOpportunity: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   
-  const handleSuccess = () => {
+  const handleSuccess = useCallback(() => {
     navigate('/charity-portal');
-  };
+  }, [navigate]);
 
   const handleBack = useCallback(() => {
     navigate(-1);

@@ -13,6 +13,11 @@ const CharityProfileSection: React.FC = () => {
     [isEditing],
   );
 
+  const handleFormSubmit = useCallback(async (data) => {
+    await updateProfile(data);
+    setIsEditing(false);
+  }, [updateProfile]);
+
   if (!profile) {
     return (
       <div className="bg-white rounded-lg shadow-md p-6">
@@ -36,10 +41,7 @@ const CharityProfileSection: React.FC = () => {
       {isEditing ? (
         <ProfileForm
           profile={profile}
-          onSubmit={async (data) => {
-            await updateProfile(data);
-            setIsEditing(false);
-          }}
+          onSubmit={handleFormSubmit}
           loading={loading}
           error={error}
         />

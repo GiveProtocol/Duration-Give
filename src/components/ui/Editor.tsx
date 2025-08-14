@@ -174,7 +174,6 @@ export const Editor: React.FC<EditorProps> = ({
                 value={linkUrl}
                 onChange={handleLinkUrlChange}
                 placeholder="https://example.com"
-                autoFocus
               />
               <div className="flex justify-end space-x-3">
                 <Button

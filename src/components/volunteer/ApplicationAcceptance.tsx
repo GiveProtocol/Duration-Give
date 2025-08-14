@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { CheckCircle, X, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
@@ -23,7 +23,7 @@ export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({
   const [isAccepted, setIsAccepted] = useState(false);
   const { t } = useTranslation();
 
-  const handleAccept = async () => {
+  const handleAccept = useCallback(async () => {
     try {
       const hash = await acceptApplication(applicationId);
       if (hash) {
@@ -34,7 +34,12 @@ export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({
     } catch (err) {
       Logger.error('Acceptance failed:', err);
     }
-  };
+  }, [acceptApplication, applicationId, onAccepted]);
+
+  const handleReject = useCallback(() => {
+    // Rejection logic placeholder
+    // Full implementation pending rejection workflow
+  }, []);
 
   if (isAccepted) {
     return (
@@ -88,6 +93,7 @@ export const ApplicationAcceptance: React.FC<ApplicationAcceptanceProps> = ({
           </Button>
           <Button
             variant="secondary"
+            onClick={handleReject}
             className="flex items-center"
           >
             <X className="h-4 w-4 mr-2" />

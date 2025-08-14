@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { CheckCircle, X, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';
@@ -30,7 +30,7 @@ export const VolunteerHoursVerification: React.FC<VolunteerHoursVerificationProp
   const [isVerified, setIsVerified] = useState(false);
   const { t } = useTranslation();
 
-  const handleVerify = async () => {
+  const handleVerify = useCallback(async () => {
     try {
       const hash = await verifyHours(hoursId);
       if (hash) {
@@ -41,7 +41,12 @@ export const VolunteerHoursVerification: React.FC<VolunteerHoursVerificationProp
     } catch (err) {
       Logger.error('Verification failed:', err);
     }
-  };
+  }, [verifyHours, hoursId, onVerified]);
+
+  const handleReject = useCallback(() => {
+    // Rejection logic placeholder
+    // Full implementation pending rejection workflow
+  }, []);
 
   if (isVerified) {
     return (
@@ -95,6 +100,7 @@ export const VolunteerHoursVerification: React.FC<VolunteerHoursVerificationProp
           </Button>
           <Button
             variant="secondary"
+            onClick={handleReject}
             className="flex items-center"
           >
             <X className="h-4 w-4 mr-2" />
