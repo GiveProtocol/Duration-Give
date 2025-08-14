@@ -17,10 +17,10 @@ interface CookieOptions {
  * @example
  * ```typescript
  * const csrf = CSRFProtection.getInstance();
- * 
+ *
  * // Get CSRF token for requests
  * const token = csrf.getToken();
- * 
+ *
  * // Add CSRF headers to fetch requests
  * const headers = csrf.getHeaders();
  * fetch('/api/secure-endpoint', {
@@ -31,10 +31,10 @@ interface CookieOptions {
  *   },
  *   body: JSON.stringify(data)
  * });
- * 
+ *
  * // Validate token on server side
  * const isValid = await csrf.validate(receivedToken);
- * 
+ *
  * // Refresh token after authentication changes
  * csrf.refreshToken();
  * ```

@@ -1,14 +1,14 @@
-import React, { PropsWithChildren } from 'react';
-import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { ToastProvider } from '@/contexts/ToastContext';
-import { Web3Provider } from '@/contexts/Web3Context';
+import React, { PropsWithChildren } from "react";
+import { render } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ToastProvider } from "@/contexts/ToastContext";
+import { Web3Provider } from "@/contexts/Web3Context";
 
 /**
  * Test utility function that renders React components with all necessary providers.
  * Wraps components with Router, Auth, Toast, and Web3 providers for complete testing.
- * 
+ *
  * @function renderWithProviders
  * @param {React.ReactElement} ui - The React component to render
  * @param {object} [options={}] - Rendering options
@@ -18,37 +18,35 @@ import { Web3Provider } from '@/contexts/Web3Context';
  * ```typescript
  * // Basic component testing
  * const { getByText } = renderWithProviders(<MyComponent />);
- * 
+ *
  * // Testing with specific route
  * const { getByRole } = renderWithProviders(
- *   <NavigationComponent />, 
+ *   <NavigationComponent />,
  *   { route: '/dashboard' }
  * );
- * 
+ *
  * // Testing with authentication context
  * const { queryByText } = renderWithProviders(<ProtectedComponent />);
  * ```
  */
 export function renderWithProviders(
   ui: React.ReactElement,
-  { route = '/' } = {}
+  { route = "/" } = {},
 ) {
-  window.history.pushState({}, 'Test page', route);
+  window.history.pushState({}, "Test page", route);
 
   return render(ui, {
     wrapper: ({ children }: PropsWithChildren) => (
       <BrowserRouter future={{ v7_relativeSplatPath: true }}>
         <ToastProvider>
           <AuthProvider>
-            <Web3Provider>
-              {children}
-            </Web3Provider>
+            <Web3Provider>{children}</Web3Provider>
           </AuthProvider>
         </ToastProvider>
       </BrowserRouter>
-    )
+    ),
   });
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export * from '@testing-library/react';
+export * from "@testing-library/react";

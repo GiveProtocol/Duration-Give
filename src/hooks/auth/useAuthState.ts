@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { User } from '@supabase/supabase-js';
-import { supabase } from '../../lib/supabase';
+import { useState, useEffect } from "react";
+import { User } from "@supabase/supabase-js";
+import { supabase } from "../../lib/supabase";
 
 /**
  * Authentication state hook for managing user session state
@@ -13,13 +13,13 @@ import { supabase } from '../../lib/supabase';
  * @example
  * ```tsx
  * const { user, loading } = useAuthState();
- * 
+ *
  * if (loading) return <AuthLoadingSpinner />;
- * 
+ *
  * if (!user) {
  *   return <LoginPrompt />;
  * }
- * 
+ *
  * return (
  *   <div>
  *     <h1>Welcome, {user.email}!</h1>
@@ -40,7 +40,9 @@ export function useAuthState() {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });

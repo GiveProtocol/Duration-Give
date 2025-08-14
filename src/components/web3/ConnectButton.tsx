@@ -236,7 +236,7 @@ function isSupportedChainId(chainId: number | string): boolean {
  * ```tsx
  * // Basic usage in navigation
  * <ConnectButton />
- * 
+ *
  * // The button automatically handles all wallet states:
  * // - Shows "Connect" when disconnected
  * // - Shows wallet address or alias when connected

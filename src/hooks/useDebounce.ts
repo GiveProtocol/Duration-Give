@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 /**
  * Debounce hook for delaying state updates until input stabilizes
@@ -13,16 +13,16 @@ import { useState, useEffect } from 'react';
  * ```tsx
  * const [searchTerm, setSearchTerm] = useState('');
  * const debouncedSearchTerm = useDebounce(searchTerm, 500);
- * 
+ *
  * useEffect(() => {
  *   if (debouncedSearchTerm) {
  *     // This will only run 500ms after user stops typing
  *     searchAPI(debouncedSearchTerm);
  *   }
  * }, [debouncedSearchTerm]);
- * 
+ *
  * return (
- *   <input 
+ *   <input
  *     value={searchTerm}
  *     onChange={(e) => setSearchTerm(e.target.value)}
  *     placeholder="Search charities..."

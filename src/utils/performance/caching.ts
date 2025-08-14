@@ -1,4 +1,4 @@
-import { Logger } from '../logger';
+import { Logger } from "../logger";
 
 interface CacheConfig {
   maxSize: number;
@@ -15,12 +15,12 @@ interface CacheEntry<T> {
 /**
  * High-performance caching system with TTL, stale-while-revalidate, and automatic cleanup.
  * Implements singleton pattern with configurable cache behavior and memory management.
- * 
+ *
  * @class CacheManager
  * @description Advanced caching solution supporting time-to-live (TTL), stale-while-revalidate patterns,
  * automatic capacity management, and periodic cleanup. Designed for high-performance applications
  * requiring intelligent cache invalidation and memory efficiency.
- * 
+ *
  * @example
  * ```typescript
  * const cache = CacheManager.getInstance({
@@ -28,13 +28,13 @@ interface CacheEntry<T> {
  *   ttl: 10 * 60 * 1000, // 10 minutes
  *   staleWhileRevalidate: 60 * 60 * 1000 // 1 hour
  * });
- * 
+ *
  * // Store data
  * cache.set('user:123', userData);
- * 
+ *
  * // Retrieve data (may return stale data while revalidating)
  * const user = await cache.get<User>('user:123');
- * 
+ *
  * // Clear specific entry
  * cache.invalidate('user:123');
  * ```
@@ -45,7 +45,7 @@ export class CacheManager {
   private config: CacheConfig = {
     maxSize: 100,
     ttl: 5 * 60 * 1000, // 5 minutes
-    staleWhileRevalidate: 30 * 60 * 1000 // 30 minutes
+    staleWhileRevalidate: 30 * 60 * 1000, // 30 minutes
   };
 
   private constructor() {
@@ -56,7 +56,7 @@ export class CacheManager {
 
   /**
    * Gets the singleton instance of CacheManager with optional configuration.
-   * 
+   *
    * @function getInstance
    * @param {Partial<CacheConfig>} [config] - Optional cache configuration
    * @returns {CacheManager} The singleton instance
@@ -82,7 +82,7 @@ export class CacheManager {
   /**
    * Resets the singleton instance for testing purposes.
    * Only available in test and development environments.
-   * 
+   *
    * @function resetInstanceForTesting
    * @returns {void}
    * @example
@@ -92,14 +92,17 @@ export class CacheManager {
    * ```
    */
   static resetInstanceForTesting(): void {
-    if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+    if (
+      process.env.NODE_ENV === "test" ||
+      process.env.NODE_ENV === "development"
+    ) {
       this.instance = undefined as unknown as CacheManager;
     }
   }
 
   /**
    * Retrieves data from cache with stale-while-revalidate support.
-   * 
+   *
    * @function get
    * @template T - The expected return type
    * @param {string} key - The cache key
@@ -125,7 +128,7 @@ export class CacheManager {
 
     // Return stale data if within staleWhileRevalidate window
     if (now < entry.expiresAt + this.config.staleWhileRevalidate) {
-      Logger.info('Serving stale data', { key, age: now - entry.timestamp });
+      Logger.info("Serving stale data", { key, age: now - entry.timestamp });
       return entry.data as T;
     }
 
@@ -136,7 +139,7 @@ export class CacheManager {
 
   /**
    * Stores data in cache with automatic eviction if at capacity.
-   * 
+   *
    * @function set
    * @template T - The type of data being stored
    * @param {string} key - The cache key
@@ -150,21 +153,22 @@ export class CacheManager {
   set<T>(key: string, data: T): void {
     // Evict oldest if at capacity
     if (this.cache.size >= this.config.maxSize) {
-      const oldestKey = Array.from(this.cache.entries())
-        .sort(([, a], [, b]) => a.timestamp - b.timestamp)[0][0];
+      const oldestKey = Array.from(this.cache.entries()).sort(
+        ([, a], [, b]) => a.timestamp - b.timestamp,
+      )[0][0];
       this.cache.delete(oldestKey);
     }
 
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
-      expiresAt: Date.now() + this.config.ttl
+      expiresAt: Date.now() + this.config.ttl,
     });
   }
 
   /**
    * Removes a specific entry from the cache.
-   * 
+   *
    * @function invalidate
    * @param {string} key - The cache key to remove
    * @returns {void}
@@ -179,7 +183,7 @@ export class CacheManager {
 
   /**
    * Clears all entries from the cache.
-   * 
+   *
    * @function invalidateAll
    * @returns {void}
    * @example

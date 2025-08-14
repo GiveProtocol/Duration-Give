@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useToast } from '../../contexts/ToastContext';
-import { supabase } from '../../lib/supabase';
-import { validateAuthInput } from '../../utils/validation';
-import { UserType } from '../../types/auth';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "../../contexts/ToastContext";
+import { supabase } from "../../lib/supabase";
+import { validateAuthInput } from "../../utils/validation";
+import { UserType } from "../../types/auth";
 
 /**
  * Authentication actions hook for login, registration, and password management
@@ -20,7 +20,7 @@ import { UserType } from '../../types/auth';
  * @example
  * ```tsx
  * const { login, register, resetPassword, loading } = useAuthActions();
- * 
+ *
  * const handleLogin = async (e: React.FormEvent) => {
  *   e.preventDefault();
  *   try {
@@ -30,14 +30,14 @@ import { UserType } from '../../types/auth';
  *     // Error toast shown automatically
  *   }
  * };
- * 
+ *
  * const handleRegister = async (email: string, password: string) => {
- *   await register(email, password, 'donor', { 
- *     firstName: 'John', 
- *     lastName: 'Doe' 
+ *   await register(email, password, 'donor', {
+ *     firstName: 'John',
+ *     lastName: 'Doe'
  *   });
  * };
- * 
+ *
  * return (
  *   <form onSubmit={handleLogin}>
  *     <input type="email" value={email} onChange={setEmail} />
@@ -58,19 +58,24 @@ export function useAuthActions() {
     try {
       setLoading(true);
       validateAuthInput(email, password);
-      
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password
+        password,
       });
 
       if (error) throw error;
-      
-      showToast('success', 'Login successful', 'Welcome back!');
-      navigate(data.user?.user_metadata?.type === 'charity' ? '/charity-portal' : '/donor-portal');
+
+      showToast("success", "Login successful", "Welcome back!");
+      navigate(
+        data.user?.user_metadata?.type === "charity"
+          ? "/charity-portal"
+          : "/donor-portal",
+      );
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to sign in';
-      showToast('error', 'Authentication Error', message);
+      const message =
+        error instanceof Error ? error.message : "Failed to sign in";
+      showToast("error", "Authentication Error", message);
       throw error;
     } finally {
       setLoading(false);
@@ -78,44 +83,47 @@ export function useAuthActions() {
   };
 
   const register = async (
-    email: string, 
-    password: string, 
+    email: string,
+    password: string,
     type: UserType,
-    metadata = {}
+    metadata = {},
   ) => {
     try {
       setLoading(true);
       validateAuthInput(email, password);
-      
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             type,
-            ...metadata
-          }
-        }
+            ...metadata,
+          },
+        },
       });
 
       if (error) throw error;
 
       if (data.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert({
-            user_id: data.user.id,
-            type
-          });
+        const { error: profileError } = await supabase.from("profiles").insert({
+          user_id: data.user.id,
+          type,
+        });
 
         if (profileError) throw profileError;
       }
 
-      showToast('success', 'Registration successful', 'Please check your email to verify your account');
-      navigate('/login');
+      showToast(
+        "success",
+        "Registration successful",
+        "Please check your email to verify your account",
+      );
+      navigate("/login");
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to register';
-      showToast('error', 'Authentication Error', message);
+      const message =
+        error instanceof Error ? error.message : "Failed to register";
+      showToast("error", "Authentication Error", message);
       throw error;
     } finally {
       setLoading(false);
@@ -127,9 +135,9 @@ export function useAuthActions() {
       setLoading(true);
       const { error } = await supabase.auth.signInWithOtp({ email });
       if (error) throw error;
-      showToast('success', 'Verification email sent');
+      showToast("success", "Verification email sent");
     } catch (error) {
-      showToast('error', 'Failed to send verification email');
+      showToast("error", "Failed to send verification email");
       throw error;
     } finally {
       setLoading(false);
@@ -141,9 +149,9 @@ export function useAuthActions() {
       setLoading(true);
       const { error } = await supabase.auth.resetPasswordForEmail(email);
       if (error) throw error;
-      showToast('success', 'Password reset email sent');
+      showToast("success", "Password reset email sent");
     } catch (error) {
-      showToast('error', 'Failed to send reset email');
+      showToast("error", "Failed to send reset email");
       throw error;
     } finally {
       setLoading(false);
@@ -155,6 +163,6 @@ export function useAuthActions() {
     register,
     sendVerificationEmail,
     resetPassword,
-    loading
+    loading,
   };
 }

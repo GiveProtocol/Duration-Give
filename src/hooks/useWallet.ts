@@ -347,7 +347,7 @@ class PolkadotWallet implements WalletProvider {
  * function WalletSelector() {
  *   const { getInstalledWallets, wallets } = useWallet();
  *   const installedWallets = getInstalledWallets();
- *   
+ *
  *   return (
  *     <div>
  *       {installedWallets.map(wallet => (

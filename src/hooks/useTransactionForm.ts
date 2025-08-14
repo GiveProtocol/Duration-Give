@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { validateAmount } from '@/utils/validation';
-import { Logger } from '@/utils/logger';
+import React, { useState } from "react";
+import { validateAmount } from "@/utils/validation";
+import { Logger } from "@/utils/logger";
 
 interface TransactionFormConfig {
   onSuccess?: () => void;
@@ -24,12 +24,12 @@ interface TransactionFormConfig {
  * const { amount, setAmount, validationError, loading, handleSubmit } = useTransactionForm({
  *   onSuccess: () => console.log('Transaction completed!')
  * });
- * 
+ *
  * const submitDonation = async (amount: string) => {
  *   // Custom transaction logic
  *   await processDonation(parseFloat(amount));
  * };
- * 
+ *
  * return (
  *   <form onSubmit={(e) => handleSubmit(e, submitDonation)}>
  *     <input value={amount} onChange={(e) => setAmount(e.target.value)} />
@@ -42,33 +42,36 @@ interface TransactionFormConfig {
  * ```
  */
 export function useTransactionForm({ onSuccess }: TransactionFormConfig) {
-  const [amount, setAmount] = useState('');
-  const [validationError, setValidationError] = useState('');
+  const [amount, setAmount] = useState("");
+  const [validationError, setValidationError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent, submitFn: (_amount: string) => Promise<void>) => {
+  const handleSubmit = async (
+    e: React.FormEvent,
+    submitFn: (_amount: string) => Promise<void>,
+  ) => {
     e.preventDefault();
-    setValidationError('');
+    setValidationError("");
 
     const numAmount = parseFloat(amount);
     if (!validateAmount(numAmount)) {
-      setValidationError('Please enter a valid amount between 0 and 1,000,000');
+      setValidationError("Please enter a valid amount between 0 and 1,000,000");
       return;
     }
 
     try {
       setLoading(true);
       await submitFn(amount);
-      setAmount('');
+      setAmount("");
       onSuccess?.();
 
-      Logger.info('Transaction successful', {
-        amount
+      Logger.info("Transaction successful", {
+        amount,
       });
     } catch (err) {
-      Logger.error('Transaction failed', {
+      Logger.error("Transaction failed", {
         error: err instanceof Error ? err.message : String(err),
-        amount
+        amount,
       });
       throw err;
     } finally {
@@ -81,6 +84,6 @@ export function useTransactionForm({ onSuccess }: TransactionFormConfig) {
     setAmount,
     validationError,
     loading,
-    handleSubmit
+    handleSubmit,
   };
 }

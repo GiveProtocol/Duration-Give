@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { useToast } from '../contexts/ToastContext';
-import { supabase } from '../lib/supabase';
-import { useProfile } from './useProfile';
+import { useState } from "react";
+import { useToast } from "../contexts/ToastContext";
+import { supabase } from "../lib/supabase";
+import { useProfile } from "./useProfile";
 
 interface _CharityVerification {
   id: string;
   charity_id: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: "pending" | "approved" | "rejected";
   documents: Array<{
     type: string;
     url: string;
@@ -25,7 +25,7 @@ interface _CharityVerification {
  * @example
  * ```tsx
  * const { fetchPendingVerifications, updateVerificationStatus, loading } = useAdminPanel();
- * 
+ *
  * useEffect(() => {
  *   const loadVerifications = async () => {
  *     try {
@@ -37,11 +37,11 @@ interface _CharityVerification {
  *   };
  *   loadVerifications();
  * }, []);
- * 
+ *
  * const handleApprove = async (verificationId: string) => {
  *   await updateVerificationStatus(verificationId, 'approved');
  * };
- * 
+ *
  * const handleReject = async (verificationId: string, reason: string) => {
  *   await updateVerificationStatus(verificationId, 'rejected', reason);
  * };
@@ -58,8 +58,9 @@ export function useAdminPanel() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('charity_verifications')
-        .select(`
+        .from("charity_verifications")
+        .select(
+          `
           id,
           charity_id,
           status,
@@ -67,13 +68,14 @@ export function useAdminPanel() {
             document_type,
             document_url
           )
-        `)
-        .eq('status', 'pending');
+        `,
+        )
+        .eq("status", "pending");
 
       if (error) throw error;
       return data;
     } catch (error) {
-      showToast('error', 'Failed to fetch verifications');
+      showToast("error", "Failed to fetch verifications");
       throw error;
     } finally {
       setLoading(false);
@@ -82,24 +84,24 @@ export function useAdminPanel() {
 
   const updateVerificationStatus = async (
     verificationId: string,
-    status: 'approved' | 'rejected',
-    reason?: string
+    status: "approved" | "rejected",
+    reason?: string,
   ) => {
     try {
       setLoading(true);
       const { error } = await supabase
-        .from('charity_verifications')
+        .from("charity_verifications")
         .update({
           status,
           reviewed_at: new Date().toISOString(),
-          review_notes: reason
+          review_notes: reason,
         })
-        .eq('id', verificationId);
+        .eq("id", verificationId);
 
       if (error) throw error;
-      showToast('success', `Verification ${status} successfully`);
+      showToast("success", `Verification ${status} successfully`);
     } catch (error) {
-      showToast('error', 'Failed to update verification status');
+      showToast("error", "Failed to update verification status");
       throw error;
     } finally {
       setLoading(false);
@@ -109,6 +111,6 @@ export function useAdminPanel() {
   return {
     fetchPendingVerifications,
     updateVerificationStatus,
-    loading
+    loading,
   };
 }

@@ -6,7 +6,7 @@ export interface AuthError extends Error {
 
 /**
  * Converts an authentication error code to a human-readable error message.
- * 
+ *
  * @function getAuthErrorMessage
  * @param {AuthErrorCode} code - The authentication error code
  * @returns {string} A user-friendly error message
@@ -30,7 +30,7 @@ export function getAuthErrorMessage(code: AuthErrorCode): string {
 
 /**
  * Creates a standardized AuthError object with a specific error code.
- * 
+ *
  * @function createAuthError
  * @param {AuthErrorCode} code - The authentication error code
  * @returns {AuthError} An error object with the code and corresponding message

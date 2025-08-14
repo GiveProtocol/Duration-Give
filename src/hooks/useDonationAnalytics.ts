@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useToast } from '../contexts/ToastContext';
-import { supabase } from '../lib/supabase';
-import { useProfile } from './useProfile';
+import { useState, useEffect, useCallback } from "react";
+import { useToast } from "../contexts/ToastContext";
+import { supabase } from "../lib/supabase";
+import { useProfile } from "./useProfile";
 
 interface DonationMetrics {
   totalDonated: number;
@@ -28,18 +28,18 @@ interface TimeseriesData {
  * @example
  * ```tsx
  * const { metrics, timeseriesData, loading, refreshAnalytics } = useDonationAnalytics();
- * 
+ *
  * if (loading) return <AnalyticsLoading />;
- * 
+ *
  * return (
  *   <div>
- *     <MetricCard 
- *       title="Total Donated" 
- *       value={metrics?.totalDonated || 0} 
+ *     <MetricCard
+ *       title="Total Donated"
+ *       value={metrics?.totalDonated || 0}
  *       format="currency"
  *     />
- *     <MetricCard 
- *       title="Donation Count" 
+ *     <MetricCard
+ *       title="Donation Count"
  *       value={metrics?.donationCount || 0}
  *     />
  *     <Chart data={timeseriesData} />
@@ -62,21 +62,23 @@ export function useDonationAnalytics() {
       setLoading(true);
 
       // Fetch aggregate metrics
-      const { data: metricsData, error: metricsError } = await supabase
-        .rpc('get_donation_metrics', { user_id: profile.id });
+      const { data: metricsData, error: metricsError } = await supabase.rpc(
+        "get_donation_metrics",
+        { user_id: profile.id },
+      );
 
       if (metricsError) throw metricsError;
 
       // Fetch timeseries data
-      const { data: timeseriesData, error: timeseriesError } = await supabase
-        .rpc('get_donation_timeseries', { user_id: profile.id });
+      const { data: timeseriesData, error: timeseriesError } =
+        await supabase.rpc("get_donation_timeseries", { user_id: profile.id });
 
       if (timeseriesError) throw timeseriesError;
 
       setMetrics(metricsData);
       setTimeseriesData(timeseriesData);
     } catch (error) {
-      showToast('error', 'Failed to fetch analytics');
+      showToast("error", "Failed to fetch analytics");
       throw error;
     } finally {
       setLoading(false);
@@ -91,6 +93,6 @@ export function useDonationAnalytics() {
     metrics,
     timeseriesData,
     loading,
-    refreshAnalytics: fetchAnalytics
+    refreshAnalytics: fetchAnalytics,
   };
 }

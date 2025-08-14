@@ -6,31 +6,32 @@ interface CacheConfig {
 /**
  * Simple caching system with TTL-based expiration and capacity management.
  * Implements singleton pattern for application-wide cache consistency.
- * 
+ *
  * @class CacheManager
  * @description Basic in-memory cache with time-to-live (TTL) support and automatic
  * eviction when capacity is reached. Uses FIFO eviction strategy to maintain performance.
- * 
+ *
  * @example
  * ```typescript
  * const cache = CacheManager.getInstance({
  *   maxSize: 50,
  *   ttl: 2 * 60 * 1000 // 2 minutes
  * });
- * 
+ *
  * // Store data
  * cache.set('api_response', { data: 'cached value' });
- * 
+ *
  * // Retrieve data
  * const result = cache.get('api_response');
- * 
+ *
  * // Clear cache
  * cache.clear();
  * ```
  */
 export class CacheManager {
   private static instance: CacheManager;
-  private readonly cache: Map<string, { value: unknown; timestamp: number }> = new Map();
+  private readonly cache: Map<string, { value: unknown; timestamp: number }> =
+    new Map();
   private readonly maxSize: number;
   private readonly ttl: number;
 
@@ -41,7 +42,7 @@ export class CacheManager {
 
   /**
    * Gets the singleton instance of CacheManager.
-   * 
+   *
    * @function getInstance
    * @param {CacheConfig} [config] - Optional cache configuration
    * @returns {CacheManager} The singleton instance
@@ -59,7 +60,7 @@ export class CacheManager {
 
   /**
    * Stores a value in the cache with automatic expiration.
-   * 
+   *
    * @function set
    * @param {string} key - The cache key
    * @param {unknown} value - The value to store
@@ -78,13 +79,13 @@ export class CacheManager {
 
     this.cache.set(key, {
       value,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
   /**
    * Retrieves a value from the cache, checking for expiration.
-   * 
+   *
    * @function get
    * @param {string} key - The cache key to retrieve
    * @returns {unknown | null} The cached value or null if not found/expired
@@ -111,7 +112,7 @@ export class CacheManager {
 
   /**
    * Clears all entries from the cache.
-   * 
+   *
    * @function clear
    * @returns {void}
    * @example

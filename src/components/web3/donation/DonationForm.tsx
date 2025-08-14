@@ -25,8 +25,8 @@ interface RadioOptionProps {
  * @returns {React.ReactElement} Labeled radio input element
  * @example
  * ```tsx
- * <RadioOption 
- *   value={DonationType.NATIVE} 
+ * <RadioOption
+ *   value={DonationType.NATIVE}
  *   checked={selectedType === DonationType.NATIVE}
  *   onChange={handleTypeChange}
  * >
@@ -66,7 +66,7 @@ interface DonationFormProps {
  * @returns {React.ReactElement} Complete donation form with type selection, amount input, and submit functionality
  * @example
  * ```tsx
- * <DonationForm 
+ * <DonationForm
  *   charityAddress="0x1234...abcd"
  *   onSuccess={() => refreshDonationList()}
  * />
