@@ -221,6 +221,29 @@ function isSupportedChainId(chainId: number | string): boolean {
   return Object.values(CHAIN_IDS).includes(Number(chainId));
 }
 
+/**
+ * Primary wallet connection component for the application
+ * @function ConnectButton
+ * @description Comprehensive Web3 wallet connection button that handles wallet selection, connection states,
+ * network switching, error handling, and account management. Supports multiple wallet providers and provides
+ * a complete user experience for blockchain interactions.
+ * @returns {React.ReactElement} Dynamic button component that shows different states:
+ *   - Connect button when no wallet is connected
+ *   - Account dropdown with address/alias when connected
+ *   - Error state with retry functionality when connection fails
+ *   - Loading state during connection attempts
+ * @example
+ * ```tsx
+ * // Basic usage in navigation
+ * <ConnectButton />
+ * 
+ * // The button automatically handles all wallet states:
+ * // - Shows "Connect" when disconnected
+ * // - Shows wallet address or alias when connected
+ * // - Provides dropdown menu with account actions
+ * // - Handles network switching and error recovery
+ * ```
+ */
 export function ConnectButton() {
   const {
     isConnected,

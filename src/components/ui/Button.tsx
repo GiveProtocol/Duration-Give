@@ -9,6 +9,38 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconPosition?: 'left' | 'right';
 }
 
+/**
+ * Reusable button component with multiple variants, sizes, and animation effects.
+ * Supports icons, full-width styling, and accessibility features.
+ * 
+ * @function Button
+ * @param {ButtonProps} props - Component props extending HTML button attributes
+ * @param {'primary' | 'secondary' | 'danger' | 'ghost'} [props.variant='primary'] - Button visual style
+ * @param {'sm' | 'md' | 'lg'} [props.size='md'] - Button size
+ * @param {boolean} [props.fullWidth=false] - Whether button spans full width
+ * @param {React.ReactNode} [props.icon] - Optional icon to display
+ * @param {'left' | 'right'} [props.iconPosition='left'] - Icon placement
+ * @param {string} [props.className] - Additional CSS classes
+ * @param {React.ReactNode} props.children - Button content
+ * @returns {JSX.Element} The rendered button component
+ * @example
+ * ```typescript
+ * // Primary button with icon
+ * <Button variant="primary" icon={<SaveIcon />}>
+ *   Save Changes
+ * </Button>
+ * 
+ * // Full-width secondary button
+ * <Button variant="secondary" fullWidth size="lg">
+ *   Cancel
+ * </Button>
+ * 
+ * // Danger button with right icon
+ * <Button variant="danger" icon={<TrashIcon />} iconPosition="right">
+ *   Delete
+ * </Button>
+ * ```
+ */
 export function Button({
   variant = 'primary',
   size = 'md',

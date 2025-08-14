@@ -18,6 +18,33 @@ interface SecurityHeaders {
   "Strict-Transport-Security": string;
 }
 
+/**
+ * Comprehensive security management system for web application protection
+ * @class SecurityManager
+ * @description Singleton class that coordinates multiple security systems including CSRF protection, input sanitization, rate limiting, and real-time security monitoring. Implements Content Security Policy headers, DOM manipulation monitoring, network request validation, and automated threat detection with comprehensive logging.
+ * @example
+ * ```typescript
+ * // Initialize security system
+ * const security = SecurityManager.getInstance();
+ * security.initialize();
+ * 
+ * // Validate incoming request
+ * const isRequestValid = await security.validateRequest(request);
+ * if (!isRequestValid) {
+ *   throw new Error('Security validation failed');
+ * }
+ * 
+ * // Sanitize user input
+ * const safeInput = security.sanitizeInput(userInput, 'description');
+ * 
+ * // All security features are automatically active:
+ * // - CSRF tokens in all requests
+ * // - Rate limiting on authentication endpoints
+ * // - DOM manipulation monitoring
+ * // - XSS attempt detection
+ * // - Untrusted domain blocking
+ * ```
+ */
 export class SecurityManager {
   private static instance: SecurityManager;
   private csrf: CSRFProtection;
@@ -92,7 +119,8 @@ export class SecurityManager {
 
   initialize(): void {
     try {
-      this.csrf.initialize();
+      // Initialize CSRF token
+      this.csrf.getToken();
       this.addSecurityHeaders();
       this.startSecurityMonitoring();
       Logger.info("Security manager initialized");

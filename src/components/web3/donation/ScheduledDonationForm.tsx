@@ -115,6 +115,27 @@ interface ScheduledDonationFormProps {
   onClose?: () => void;
 }
 
+/**
+ * Form component for creating scheduled monthly donations
+ * @function ScheduledDonationForm
+ * @description Advanced donation form that creates automated monthly payments to charities over a 12-month period.
+ * Handles token approval, contract interaction, and provides detailed confirmation feedback.
+ * @param {Object} props - Component props
+ * @param {string} props.charityAddress - The blockchain address of the charity to receive scheduled donations
+ * @param {string} props.charityName - Display name of the charity for user-friendly messaging
+ * @param {function} [props.onSuccess] - Optional callback function called after successful schedule creation
+ * @param {function} [props.onClose] - Optional callback function for closing the form modal
+ * @returns {React.ReactElement} Complete scheduled donation form with amount input, schedule preview, and transaction handling
+ * @example
+ * ```tsx
+ * <ScheduledDonationForm 
+ *   charityAddress="0x1234...abcd"
+ *   charityName="Save the Children"
+ *   onSuccess={() => refreshSchedules()}
+ *   onClose={() => setShowModal(false)}
+ * />
+ * ```
+ */
 export function ScheduledDonationForm({
   charityAddress,
   charityName,

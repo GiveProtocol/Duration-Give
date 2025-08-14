@@ -9,6 +9,19 @@ interface TestResult {
   message: string;
 }
 
+/**
+ * Development testing component for Sentry error monitoring integration.
+ * Provides UI controls to test various error scenarios and logging functionality.
+ * 
+ * @function SentryTest
+ * @returns {JSX.Element} The Sentry test interface component
+ * @example
+ * ```typescript
+ * // Used for testing Sentry integration
+ * // Available at /sentry-test route in development
+ * <Route path="/sentry-test" component={SentryTest} />
+ * ```
+ */
 export default function SentryTest() {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const { user } = useAuth();

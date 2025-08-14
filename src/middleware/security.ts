@@ -4,6 +4,24 @@ import { InputSanitizer } from '../utils/security/sanitizer';
 import { RateLimiter } from '../utils/security/rateLimiter';
 import { Logger } from '../utils/logger';
 
+/**
+ * Initializes the application's security middleware and services.
+ * Sets up SecurityManager singleton with all required security components.
+ * 
+ * @function initializeSecurity
+ * @returns {void}
+ * @throws {Error} When security initialization fails
+ * @example
+ * ```typescript
+ * // Initialize security at application startup
+ * try {
+ *   initializeSecurity();
+ *   console.log('Security middleware initialized');
+ * } catch (error) {
+ *   console.error('Failed to initialize security:', error);
+ * }
+ * ```
+ */
 export function initializeSecurity(): void {
   try {
     const securityManager = SecurityManager.getInstance();
@@ -14,6 +32,26 @@ export function initializeSecurity(): void {
   }
 }
 
+/**
+ * Security middleware wrapper that applies CSRF protection, rate limiting, and input sanitization.
+ * Wraps async handlers with comprehensive security measures.
+ * 
+ * @function withSecurity
+ * @template T - The handler function type
+ * @param {T} handler - The async handler function to wrap with security
+ * @returns {T} The wrapped handler with security middleware applied
+ * @throws {Error} When security checks fail (rate limit, CSRF, validation errors)
+ * @example
+ * ```typescript
+ * const secureHandler = withSecurity(async (req, res) => {
+ *   // Handler implementation with security applied
+ *   return await processRequest(req);
+ * });
+ * 
+ * // Use in API routes
+ * app.post('/api/secure-endpoint', secureHandler);
+ * ```
+ */
 export function withSecurity<T extends (..._args: unknown[]) => Promise<unknown>>(
   handler: T
 ): T {

@@ -3,6 +3,35 @@ import { getCharity, getCharityCauses } from '@/lib/api/queries';
 import { CharityData, CauseData } from '@/lib/api/types';
 import { Logger } from '@/utils/logger';
 
+/**
+ * Charity data management hook for fetching individual charity information and causes
+ * @function useCharity
+ * @description Fetches and manages individual charity data including basic information and associated causes.
+ * Automatically fetches data on component mount and provides refresh functionality with comprehensive error handling.
+ * @param {string} id - The unique identifier of the charity to fetch
+ * @returns {Object} Charity data and management utilities
+ * @returns {CharityData | null} returns.charity - Charity information object or null if not loaded
+ * @returns {CauseData[]} returns.causes - Array of causes associated with the charity
+ * @returns {boolean} returns.loading - Loading state for fetch operations
+ * @returns {Error | null} returns.error - Error object if fetch operations fail, null otherwise
+ * @returns {Function} returns.refresh - Manually refresh charity data: () => Promise<void>
+ * @example
+ * ```tsx
+ * const { charity, causes, loading, error, refresh } = useCharity(charityId);
+ * 
+ * if (loading) return <CharityPageSkeleton />;
+ * if (error) return <ErrorPage error={error} onRetry={refresh} />;
+ * if (!charity) return <NotFound />;
+ * 
+ * return (
+ *   <div>
+ *     <CharityHeader charity={charity} />
+ *     <CausesList causes={causes} />
+ *     <button onClick={refresh}>Refresh Data</button>
+ *   </div>
+ * );
+ * ```
+ */
 export function useCharity(id: string) {
   const [charity, setCharity] = useState<CharityData | null>(null);
   const [causes, setCauses] = useState<CauseData[]>([]);

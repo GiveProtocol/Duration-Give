@@ -7,6 +7,36 @@ interface CharityInfo {
   availableBalance: number;
 }
 
+/**
+ * Web3 charity information hook for fetching blockchain-based charity data
+ * @function useCharity
+ * @description Fetches charity financial information from the blockchain including total received donations
+ * and available balance. Currently uses simulated data but designed to integrate with smart contract queries
+ * for real charity financial metrics.
+ * @param {string} charityAddress - The blockchain address of the charity to fetch information for
+ * @returns {Object} Charity blockchain information and state
+ * @returns {CharityInfo | null} returns.charityInfo - Charity financial information with totalReceived and availableBalance
+ * @returns {boolean} returns.loading - Loading state for blockchain data fetch operations
+ * @returns {Error | null} returns.error - Error object if fetch operations fail, null otherwise
+ * @example
+ * ```tsx
+ * const { charityInfo, loading, error } = useCharity(charityAddress);
+ * 
+ * if (loading) return <FinancialDataSkeleton />;
+ * if (error) return <ErrorDisplay error={error} />;
+ * if (!charityInfo) return <NoFinancialData />;
+ * 
+ * return (
+ *   <div className="charity-financials">
+ *     <div>Total Received: {charityInfo.totalReceived} ETH</div>
+ *     <div>Available Balance: {charityInfo.availableBalance} ETH</div>
+ *     <div>Percentage Available: {
+ *       ((charityInfo.availableBalance / charityInfo.totalReceived) * 100).toFixed(1)
+ *     }%</div>
+ *   </div>
+ * );
+ * ```
+ */
 export function useCharity(charityAddress: string) {
   const { address } = useWeb3();
   const [charityInfo, setCharityInfo] = useState<CharityInfo | null>(null);

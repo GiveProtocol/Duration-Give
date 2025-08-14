@@ -1,5 +1,32 @@
 import { Logger } from '../logger';
 
+/**
+ * Input sanitization and validation utility for preventing XSS and injection attacks
+ * @class InputSanitizer
+ * @description Singleton class that provides comprehensive input sanitization including HTML filtering, text cleaning, and pattern validation. Uses secure DOM parsing and configurable whitelists to prevent malicious content injection while preserving safe formatting.
+ * @example
+ * ```typescript
+ * const sanitizer = InputSanitizer.getInstance();
+ * 
+ * // Sanitize HTML content
+ * const safeHtml = sanitizer.sanitizeHTML('<p>Safe content</p><script>alert("xss")</script>');
+ * // Returns: '<p>Safe content</p>'
+ * 
+ * // Sanitize text fields
+ * const safeText = sanitizer.sanitizeText('User <script>alert("xss")</script> input', 'description');
+ * // Returns: 'User  input' (with proper length limits and escaping)
+ * 
+ * // Validate patterns
+ * const isValidEmail = sanitizer.validatePattern('user@example.com', 'email');
+ * // Returns: true
+ * 
+ * // Bulk sanitization with schema
+ * const sanitizedData = sanitizer.sanitizeObject(
+ *   { title: '<b>Title</b>', description: 'Safe content' },
+ *   { title: 'html', description: 'text' }
+ * );
+ * ```
+ */
 export class InputSanitizer {
   private static instance: InputSanitizer;
   

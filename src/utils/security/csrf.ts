@@ -10,6 +10,35 @@ interface CookieOptions {
   path?: string;
 }
 
+/**
+ * Cross-Site Request Forgery (CSRF) protection implementation
+ * @class CSRFProtection
+ * @description Singleton class that implements CSRF protection using cryptographically secure tokens. Generates and validates tokens with timing-safe comparison to prevent timing attacks. Automatically manages secure HTTP-only cookies with proper SameSite configuration for maximum security.
+ * @example
+ * ```typescript
+ * const csrf = CSRFProtection.getInstance();
+ * 
+ * // Get CSRF token for requests
+ * const token = csrf.getToken();
+ * 
+ * // Add CSRF headers to fetch requests
+ * const headers = csrf.getHeaders();
+ * fetch('/api/secure-endpoint', {
+ *   method: 'POST',
+ *   headers: {
+ *     ...headers,
+ *     'Content-Type': 'application/json'
+ *   },
+ *   body: JSON.stringify(data)
+ * });
+ * 
+ * // Validate token on server side
+ * const isValid = await csrf.validate(receivedToken);
+ * 
+ * // Refresh token after authentication changes
+ * csrf.refreshToken();
+ * ```
+ */
 export class CSRFProtection {
   private static instance: CSRFProtection;
   private token: string | null = null;

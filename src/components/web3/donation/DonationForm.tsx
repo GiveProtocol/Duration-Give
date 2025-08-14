@@ -13,6 +13,27 @@ interface RadioOptionProps {
   children: React.ReactNode;
 }
 
+/**
+ * Radio button option component for donation type selection
+ * @function RadioOption
+ * @description Renders a styled radio button option with label for selecting donation types (GLMR or ERC20 tokens)
+ * @param {Object} props - Component props
+ * @param {DonationType} props.value - The donation type value this option represents
+ * @param {boolean} props.checked - Whether this option is currently selected
+ * @param {function} props.onChange - Event handler for when this option is selected
+ * @param {React.ReactNode} props.children - The label content to display next to the radio button
+ * @returns {React.ReactElement} Labeled radio input element
+ * @example
+ * ```tsx
+ * <RadioOption 
+ *   value={DonationType.NATIVE} 
+ *   checked={selectedType === DonationType.NATIVE}
+ *   onChange={handleTypeChange}
+ * >
+ *   GLMR
+ * </RadioOption>
+ * ```
+ */
 function RadioOption({ value, checked, onChange, children }: RadioOptionProps) {
   return (
     <label className="inline-flex items-center">
@@ -34,6 +55,23 @@ interface DonationFormProps {
   onSuccess?: () => void;
 }
 
+/**
+ * Form component for making donations to charities
+ * @function DonationForm
+ * @description Comprehensive donation form that supports both native GLMR and ERC20 token donations.
+ * Includes wallet connection check, donation type selection, amount validation, and transaction processing.
+ * @param {Object} props - Component props
+ * @param {string} props.charityAddress - The blockchain address of the charity to receive the donation
+ * @param {function} [props.onSuccess] - Optional callback function called after successful donation submission
+ * @returns {React.ReactElement} Complete donation form with type selection, amount input, and submit functionality
+ * @example
+ * ```tsx
+ * <DonationForm 
+ *   charityAddress="0x1234...abcd"
+ *   onSuccess={() => refreshDonationList()}
+ * />
+ * ```
+ */
 export function DonationForm({ charityAddress, onSuccess }: DonationFormProps) {
   const [amount, setAmount] = useState("");
   const [donationType, setDonationType] = useState<DonationType>(

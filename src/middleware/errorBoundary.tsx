@@ -11,6 +11,19 @@ interface State {
   error: Error | null;
 }
 
+/**
+ * React Error Boundary component for catching and handling runtime errors
+ * @class ErrorBoundary
+ * @extends Component
+ * @description Catches JavaScript errors anywhere in the child component tree,
+ * logs error information, and displays a fallback UI instead of crashing the app
+ * @example
+ * ```tsx
+ * <ErrorBoundary fallback={<ErrorFallback />}>
+ *   <App />
+ * </ErrorBoundary>
+ * ```
+ */
 export class ErrorBoundary extends Component<Props, State> {
   private errorCount = 0;
 

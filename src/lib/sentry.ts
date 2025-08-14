@@ -89,6 +89,23 @@ export function trackError(error: Error, context?: Record<string, unknown>) {
   }
 }
 
+/**
+ * Tracks a custom event with optional data as a breadcrumb in Sentry.
+ * Only sends data in production environment.
+ * 
+ * @function trackEvent
+ * @param {string} name - The event name
+ * @param {Record<string, unknown>} [data] - Optional event data
+ * @returns {void}
+ * @example
+ * ```typescript
+ * trackEvent('user_action', { 
+ *   action: 'button_click', 
+ *   component: 'navbar',
+ *   timestamp: Date.now() 
+ * });
+ * ```
+ */
 export function trackEvent(name: string, data?: Record<string, unknown>) {
   if (import.meta.env.PROD) {
     Sentry.addBreadcrumb({
@@ -101,6 +118,25 @@ export function trackEvent(name: string, data?: Record<string, unknown>) {
   }
 }
 
+/**
+ * Sets the current user context in Sentry for error tracking.
+ * Only active in production environment.
+ * 
+ * @function setUserContext
+ * @param {object} user - The user context object
+ * @param {string} user.id - The user's unique identifier
+ * @param {string} [user.email] - The user's email address
+ * @param {string} [user.type] - The user's account type (donor/charity)
+ * @returns {void}
+ * @example
+ * ```typescript
+ * setUserContext({
+ *   id: 'user-123',
+ *   email: 'user@example.com',
+ *   type: 'donor'
+ * });
+ * ```
+ */
 export function setUserContext(user: { id: string; email?: string; type?: string }) {
   if (import.meta.env.PROD) {
     Sentry.setUser({
@@ -111,6 +147,17 @@ export function setUserContext(user: { id: string; email?: string; type?: string
   }
 }
 
+/**
+ * Clears the current user context from Sentry.
+ * Only active in production environment.
+ * 
+ * @function clearUserContext
+ * @returns {void}
+ * @example
+ * ```typescript
+ * clearUserContext(); // Called during logout
+ * ```
+ */
 export function clearUserContext() {
   if (import.meta.env.PROD) {
     Sentry.setUser(null);

@@ -48,6 +48,26 @@ const LoadingFallback = () => (
   </div>
 );
 
+/**
+ * Main application routing component that defines all routes and navigation.
+ * Handles lazy loading, route protection, and transitions between pages.
+ * 
+ * @function AppRoutes
+ * @returns {JSX.Element} The complete application routing structure
+ * @example
+ * ```typescript
+ * // Used in App.tsx as the main router
+ * function App() {
+ *   return (
+ *     <BrowserRouter>
+ *       <Layout>
+ *         <AppRoutes />
+ *       </Layout>
+ *     </BrowserRouter>
+ *   );
+ * }
+ * ```
+ */
 export function AppRoutes() {
   const { user: _user } = useAuth(); // Prefixed as unused
 

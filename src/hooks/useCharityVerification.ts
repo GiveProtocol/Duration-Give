@@ -13,6 +13,36 @@ interface VerificationDocument {
   uploadedAt: Date;
 }
 
+/**
+ * Charity verification hook for managing charity documentation and verification process
+ * @function useCharityVerification
+ * @description Handles upload, validation, and management of charity verification documents including tax certificates,
+ * registration documents, and annual reports. Includes file validation (5MB limit, PDF/JPEG/PNG only) and automatic
+ * document list refresh after operations.
+ * @returns {Object} Charity verification utilities and state
+ * @returns {VerificationDocument[]} returns.documents - Array of verification documents for the charity
+ * @returns {Function} returns.uploadDocument - Upload document function: (file: File, type: DocumentType) => Promise<void>
+ * @returns {boolean} returns.uploading - Upload operation in progress state
+ * @returns {Function} returns.fetchDocuments - Manually refresh documents list: () => Promise<void>
+ * @example
+ * ```tsx
+ * const { documents, uploadDocument, uploading, fetchDocuments } = useCharityVerification();
+ * 
+ * // Handle file upload
+ * const handleUpload = async (file: File) => {
+ *   try {
+ *     await uploadDocument(file, 'tax_certificate');
+ *   } catch (error) {
+ *     // Upload errors are handled with toast notifications
+ *   }
+ * };
+ * 
+ * // Display documents
+ * return documents.map(doc => (
+ *   <DocumentItem key={doc.id} document={doc} verified={doc.verified} />
+ * ));
+ * ```
+ */
 export function useCharityVerification() {
   const [uploading, setUploading] = useState(false);
   const [documents, setDocuments] = useState<VerificationDocument[]>([]);

@@ -29,6 +29,50 @@ interface ContractError extends Error {
   data?: unknown;
 }
 
+/**
+ * Scheduled donation hook for managing recurring charity donations on blockchain
+ * @function useScheduledDonation
+ * @description Manages scheduled donation functionality including creating, canceling, and retrieving donation schedules.
+ * Integrates with CharityScheduledDistribution smart contract, handles token approvals, user transaction rejections,
+ * and provides comprehensive error handling with development mode detection.
+ * @returns {Object} Scheduled donation management utilities and state
+ * @returns {Function} returns.createSchedule - Create new donation schedule: (params: ScheduleParams) => Promise<string>
+ * @returns {Function} returns.cancelSchedule - Cancel existing schedule: (scheduleId: number) => Promise<string>
+ * @returns {Function} returns.getDonorSchedules - Get all donor's schedules: () => Promise<DonorSchedule[]>
+ * @returns {boolean} returns.loading - Loading state for all schedule operations
+ * @returns {string | null} returns.error - Error message or null if no error
+ * @example
+ * ```tsx
+ * const { 
+ *   createSchedule, 
+ *   cancelSchedule, 
+ *   getDonorSchedules, 
+ *   loading, 
+ *   error 
+ * } = useScheduledDonation();
+ * 
+ * const handleCreateSchedule = async () => {
+ *   try {
+ *     const txHash = await createSchedule({
+ *       charityAddress: '0x123...',
+ *       tokenAddress: '0xabc...',
+ *       totalAmount: '100'
+ *     });
+ *     console.log('Schedule created:', txHash);
+ *   } catch (error) {
+ *     // Error handling included in hook
+ *   }
+ * };
+ * 
+ * useEffect(() => {
+ *   const loadSchedules = async () => {
+ *     const schedules = await getDonorSchedules();
+ *     setUserSchedules(schedules);
+ *   };
+ *   loadSchedules();
+ * }, []);
+ * ```
+ */
 export function useScheduledDonation() {
   const { provider, address } = useWeb3();
   const [loading, setLoading] = useState(false);

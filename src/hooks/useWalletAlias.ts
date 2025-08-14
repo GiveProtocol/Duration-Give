@@ -6,6 +6,42 @@ import { WalletAlias } from '@/types/user';
 import { Logger } from '@/utils/logger';
 import { useToast } from '@/contexts/ToastContext';
 
+/**
+ * Wallet alias management hook for user-friendly wallet address naming
+ * @function useWalletAlias
+ * @description Manages wallet aliases for users, allowing them to assign friendly names to wallet addresses.
+ * Includes automatic fetching, alias validation, retry logic with exponential backoff, and comprehensive error handling.
+ * Supports CRUD operations for aliases with uniqueness validation and automatic refresh functionality.
+ * @returns {Object} Wallet alias management utilities and state
+ * @returns {string} returns.alias - Current wallet's alias (empty string if none set)
+ * @returns {WalletAlias[]} returns.aliases - Array of all user's wallet aliases
+ * @returns {boolean} returns.loading - Loading state for async operations
+ * @returns {string | null} returns.error - Error message or null if no error
+ * @returns {Function} returns.setWalletAlias - Set/update alias for current wallet: (alias: string) => Promise<boolean>
+ * @returns {Function} returns.deleteWalletAlias - Delete alias by ID: (aliasId: string) => Promise<boolean>
+ * @returns {Function} returns.getAliasForAddress - Get alias for any address: (address: string) => Promise<string | null>
+ * @returns {Function} returns.refreshAliases - Manually refresh user's aliases list: () => Promise<void>
+ * @example
+ * ```tsx
+ * const { 
+ *   alias, 
+ *   aliases, 
+ *   loading, 
+ *   error, 
+ *   setWalletAlias, 
+ *   deleteWalletAlias 
+ * } = useWalletAlias();
+ * 
+ * // Set an alias for current wallet
+ * const success = await setWalletAlias('My Main Wallet');
+ * 
+ * // Get alias for display purposes
+ * const displayName = alias || `${address?.slice(0, 6)}...${address?.slice(-4)}`;
+ * 
+ * // Delete an alias
+ * await deleteWalletAlias(aliasId);
+ * ```
+ */
 export function useWalletAlias() {
   const { user } = useAuth();
   const { address } = useWeb3();

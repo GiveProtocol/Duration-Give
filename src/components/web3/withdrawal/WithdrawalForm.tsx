@@ -9,6 +9,19 @@ interface WithdrawalFormProps {
   onSuccess?: () => void;
 }
 
+/**
+ * Form component for withdrawing funds from the blockchain
+ * @function WithdrawalForm
+ * @description Provides a user interface for withdrawing GLMR tokens from the connected wallet.
+ * Includes amount validation and transaction status feedback.
+ * @param {Object} props - Component props
+ * @param {function} [props.onSuccess] - Optional callback function called after successful withdrawal
+ * @returns {React.ReactElement} Form element with amount input and withdrawal button
+ * @example
+ * ```tsx
+ * <WithdrawalForm onSuccess={() => console.log('Withdrawal successful')} />
+ * ```
+ */
 export function WithdrawalForm({ onSuccess }: WithdrawalFormProps) {
   const [amount, setAmount] = useState("");
   const [_tokenAddress, setTokenAddress] = useState("");

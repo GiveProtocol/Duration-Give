@@ -1,5 +1,27 @@
 import { Logger } from './logger';
 
+/**
+ * Performance monitoring utility for tracking operation durations and identifying slow operations.
+ * Implements singleton pattern to maintain consistent performance tracking across the application.
+ * 
+ * @class PerformanceMonitor
+ * @description Collects and analyzes performance metrics for various operations, automatically
+ * logging slow operations and providing statistical analysis of performance data.
+ * 
+ * @example
+ * ```typescript
+ * const monitor = PerformanceMonitor.getInstance();
+ * 
+ * // Measure operation duration
+ * const startTime = performance.now();
+ * await someOperation();
+ * monitor.measureTime('database_query', performance.now() - startTime);
+ * 
+ * // Get performance statistics
+ * const stats = monitor.getMetrics('database_query');
+ * console.log(`Average: ${stats?.avg}ms, 95th percentile: ${stats?.p95}ms`);
+ * ```
+ */
 export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
   private metrics: Map<string, number[]> = new Map();
@@ -9,6 +31,16 @@ export class PerformanceMonitor {
     // Private constructor to enforce singleton pattern
   }
 
+  /**
+   * Gets the singleton instance of PerformanceMonitor.
+   * 
+   * @function getInstance
+   * @returns {PerformanceMonitor} The singleton instance
+   * @example
+   * ```typescript
+   * const monitor = PerformanceMonitor.getInstance();
+   * ```
+   */
   static getInstance(): PerformanceMonitor {
     if (!this.instance) {
       this.instance = new PerformanceMonitor();
@@ -16,6 +48,21 @@ export class PerformanceMonitor {
     return this.instance;
   }
 
+  /**
+   * Records the duration of an operation for performance tracking.
+   * Automatically logs warnings for slow operations (>1000ms).
+   * 
+   * @function measureTime
+   * @param {string} operation - The name of the operation being measured
+   * @param {number} duration - The duration of the operation in milliseconds
+   * @returns {void}
+   * @example
+   * ```typescript
+   * const startTime = performance.now();
+   * await fetchData();
+   * monitor.measureTime('api_call', performance.now() - startTime);
+   * ```
+   */
   measureTime(operation: string, duration: number): void {
     if (!this.metrics.has(operation)) {
       this.metrics.set(operation, []);
@@ -43,6 +90,20 @@ export class PerformanceMonitor {
     }
   }
 
+  /**
+   * Retrieves performance statistics for a specific operation.
+   * 
+   * @function getMetrics
+   * @param {string} operation - The operation name to get metrics for
+   * @returns {{ avg: number; p95: number; max: number } | null} Performance statistics or null if no data exists
+   * @example
+   * ```typescript
+   * const stats = monitor.getMetrics('database_query');
+   * if (stats) {
+   *   console.log(`Avg: ${stats.avg}ms, P95: ${stats.p95}ms, Max: ${stats.max}ms`);
+   * }
+   * ```
+   */
   getMetrics(operation: string): {
     avg: number;
     p95: number;

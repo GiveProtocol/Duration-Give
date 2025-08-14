@@ -14,6 +14,28 @@ export interface MonitoringMetrics {
   sessionId?: string;
 }
 
+/**
+ * Application monitoring service for performance tracking, error monitoring, and user interaction analytics.
+ * Implements singleton pattern to ensure consistent monitoring across the application.
+ * 
+ * @class MonitoringService
+ * @description Provides comprehensive monitoring capabilities including performance metrics,
+ * error tracking, and user interaction monitoring. Integrates with external monitoring services
+ * in production and provides local logging in development.
+ * 
+ * @example
+ * ```typescript
+ * const config = {
+ *   apiKey: 'your-api-key',
+ *   appId: 'your-app-id',
+ *   environment: 'production',
+ *   enabledMonitors: ['performance', 'errors', 'interactions']
+ * };
+ * 
+ * const monitor = MonitoringService.getInstance(config);
+ * monitor.trackMetric('user_action', { action: 'button_click', component: 'navbar' });
+ * ```
+ */
 export class MonitoringService {
   private static instance: MonitoringService | null = null;
   private config: MonitoringConfig | null = null;
@@ -26,6 +48,22 @@ export class MonitoringService {
     // Private constructor to enforce singleton pattern
   }
 
+  /**
+   * Gets the singleton instance of MonitoringService.
+   * 
+   * @function getInstance
+   * @param {MonitoringConfig} [config] - Optional configuration to initialize the service
+   * @returns {MonitoringService} The singleton instance
+   * @example
+   * ```typescript
+   * const monitor = MonitoringService.getInstance({
+   *   apiKey: 'key',
+   *   appId: 'app',
+   *   environment: 'production',
+   *   enabledMonitors: ['performance']
+   * });
+   * ```
+   */
   static getInstance(config?: MonitoringConfig): MonitoringService {
     if (!MonitoringService.instance) {
       MonitoringService.instance = new MonitoringService();
@@ -126,6 +164,22 @@ export class MonitoringService {
     });
   }
 
+  /**
+   * Tracks a custom metric with associated data.
+   * 
+   * @function trackMetric
+   * @param {string} event - The event name to track
+   * @param {Record<string, unknown>} data - Additional data associated with the event
+   * @returns {void}
+   * @example
+   * ```typescript
+   * monitor.trackMetric('user_action', {
+   *   action: 'click',
+   *   component: 'navigation',
+   *   timestamp: Date.now()
+   * });
+   * ```
+   */
   public trackMetric(event: string, data: Record<string, unknown>): void {
     if (!this.initialized || !this.config) return;
 
@@ -207,6 +261,17 @@ export class MonitoringService {
     }
   }
 
+  /**
+   * Exports all collected metrics for analysis or reporting.
+   * 
+   * @function exportMetrics
+   * @returns {MonitoringMetrics[]} Array of all collected metrics
+   * @example
+   * ```typescript
+   * const metrics = monitor.exportMetrics();
+   * console.log(`Collected ${metrics.length} metrics`);
+   * ```
+   */
   public exportMetrics(): MonitoringMetrics[] {
     try {
       // Return both cached metrics and persisted metrics
@@ -219,11 +284,33 @@ export class MonitoringService {
     }
   }
 
+  /**
+   * Clears all stored metrics from memory and localStorage.
+   * 
+   * @function clearMetrics
+   * @returns {void}
+   * @example
+   * ```typescript
+   * monitor.clearMetrics(); // Reset monitoring data
+   * ```
+   */
   public clearMetrics(): void {
     this.metricsCache = [];
     localStorage.removeItem("monitoring_metrics");
   }
 }
 
-// Export singleton instance getter
+/**
+ * Gets the MonitoringService singleton instance.
+ * 
+ * @function getMonitoringService
+ * @returns {MonitoringService} The singleton monitoring service instance
+ * @example
+ * ```typescript
+ * import { getMonitoringService } from './monitoring';
+ * 
+ * const monitor = getMonitoringService();
+ * monitor.trackMetric('page_view', { path: window.location.pathname });
+ * ```
+ */
 export const getMonitoringService = () => MonitoringService.getInstance();

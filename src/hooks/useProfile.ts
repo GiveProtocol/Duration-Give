@@ -10,6 +10,32 @@ interface Profile {
   created_at: string;
 }
 
+/**
+ * User profile management hook for fetching and managing user profile data
+ * @function useProfile
+ * @description Manages user profile lifecycle including automatic creation for new users, retry logic with exponential backoff,
+ * and comprehensive error handling. Automatically fetches or creates profile based on authenticated user's metadata.
+ * @returns {Object} Profile management state and data
+ * @returns {Profile | null} returns.profile - User profile object containing id, user_id, type ('donor' | 'charity'), and created_at
+ * @returns {boolean} returns.loading - Loading state for profile fetch/create operations
+ * @returns {Error | null} returns.error - Error object if profile operations fail, null otherwise
+ * @example
+ * ```tsx
+ * const { profile, loading, error } = useProfile();
+ * 
+ * if (loading) return <ProfileSkeleton />;
+ * if (error) return <ErrorMessage error={error} />;
+ * if (!profile) return <NoProfile />;
+ * 
+ * return (
+ *   <div>
+ *     <h2>Profile Type: {profile.type}</h2>
+ *     <p>User ID: {profile.user_id}</p>
+ *     <p>Created: {new Date(profile.created_at).toLocaleDateString()}</p>
+ *   </div>
+ * );
+ * ```
+ */
 export function useProfile() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);

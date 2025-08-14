@@ -5,6 +5,50 @@ import { supabase } from '../../lib/supabase';
 import { validateAuthInput } from '../../utils/validation';
 import { UserType } from '../../types/auth';
 
+/**
+ * Authentication actions hook for login, registration, and password management
+ * @function useAuthActions
+ * @description Provides comprehensive authentication actions including login, registration, email verification,
+ * and password reset functionality. Includes input validation, automatic profile creation, and navigation handling
+ * with toast notifications for all operations.
+ * @returns {Object} Authentication action functions and loading state
+ * @returns {Function} returns.login - User login function: (email: string, password: string) => Promise<void>
+ * @returns {Function} returns.register - User registration function: (email: string, password: string, type: UserType, metadata?: object) => Promise<void>
+ * @returns {Function} returns.sendVerificationEmail - Send verification email: (email: string) => Promise<void>
+ * @returns {Function} returns.resetPassword - Send password reset email: (email: string) => Promise<void>
+ * @returns {boolean} returns.loading - Loading state for all authentication operations
+ * @example
+ * ```tsx
+ * const { login, register, resetPassword, loading } = useAuthActions();
+ * 
+ * const handleLogin = async (e: React.FormEvent) => {
+ *   e.preventDefault();
+ *   try {
+ *     await login(email, password);
+ *     // Navigation and success toast handled automatically
+ *   } catch (error) {
+ *     // Error toast shown automatically
+ *   }
+ * };
+ * 
+ * const handleRegister = async (email: string, password: string) => {
+ *   await register(email, password, 'donor', { 
+ *     firstName: 'John', 
+ *     lastName: 'Doe' 
+ *   });
+ * };
+ * 
+ * return (
+ *   <form onSubmit={handleLogin}>
+ *     <input type="email" value={email} onChange={setEmail} />
+ *     <input type="password" value={password} onChange={setPassword} />
+ *     <button type="submit" disabled={loading}>
+ *       {loading ? 'Signing In...' : 'Sign In'}
+ *     </button>
+ *   </form>
+ * );
+ * ```
+ */
 export function useAuthActions() {
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();

@@ -23,6 +23,54 @@ interface DonationParams {
   poolType?: PoolType;
 }
 
+/**
+ * Donation hook for processing blockchain-based charitable donations and withdrawals
+ * @function useDonation
+ * @description Handles direct and equity pool donations using smart contracts on the blockchain.
+ * Integrates with Sentry transaction tracking, supports native token donations, and provides
+ * comprehensive error handling with withdrawal functionality for charities.
+ * @returns {Object} Donation processing utilities and state
+ * @returns {Function} returns.donate - Process donation: (params: DonationParams) => Promise<void>
+ * @returns {Function} returns.withdraw - Process withdrawal: (amount: string) => Promise<string>
+ * @returns {boolean} returns.loading - Loading state for donation/withdrawal operations
+ * @returns {string | null} returns.error - Error message or null if no error
+ * @example
+ * ```tsx
+ * const { donate, withdraw, loading, error } = useDonation();
+ * 
+ * const handleDonation = async () => {
+ *   try {
+ *     await donate({
+ *       charityAddress: '0x123...',
+ *       amount: '0.1',
+ *       type: DonationType.NATIVE,
+ *       poolType: PoolType.DIRECT
+ *     });
+ *     console.log('Donation successful!');
+ *   } catch (error) {
+ *     // Error handling included in hook
+ *   }
+ * };
+ * 
+ * const handleWithdrawal = async () => {
+ *   try {
+ *     const txHash = await withdraw('0.05');
+ *     console.log('Withdrawal successful:', txHash);
+ *   } catch (error) {
+ *     // Error handling included in hook
+ *   }
+ * };
+ * 
+ * return (
+ *   <div>
+ *     <button onClick={handleDonation} disabled={loading}>
+ *       {loading ? 'Processing...' : 'Donate'}
+ *     </button>
+ *     {error && <p className="error">{error}</p>}
+ *   </div>
+ * );
+ * ```
+ */
 export function useDonation() {
   const { contract } = useContract('donation');
   const { address } = useWeb3();

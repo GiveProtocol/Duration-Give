@@ -13,6 +13,27 @@ export interface Transaction {
   metadata?: Record<string, unknown>;
 }
 
+/**
+ * Transaction tracking hook for managing user financial transactions
+ * @function useTransactionTracking
+ * @description Provides functionality to track, fetch, and manage user transactions including donations and withdrawals.
+ * Automatically fetches transactions on profile changes and provides methods to track new transactions with toast notifications.
+ * @returns {Object} Transaction tracking utilities and state
+ * @returns {Transaction[]} returns.transactions - Array of user's transactions ordered by creation date (newest first)
+ * @returns {Function} returns.trackTransaction - Function to track a new transaction: (type, amount, txHash?, metadata?) => Promise<void>
+ * @returns {boolean} returns.loading - Loading state for fetch operations
+ * @example
+ * ```tsx
+ * const { transactions, trackTransaction, loading } = useTransactionTracking();
+ * 
+ * // Track a new donation
+ * await trackTransaction('donation', 100, '0x123...', { charityId: 'abc' });
+ * 
+ * // Display transactions
+ * if (loading) return <Spinner />;
+ * return transactions.map(tx => <TransactionItem key={tx.id} transaction={tx} />);
+ * ```
+ */
 export function useTransactionTracking() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(false);

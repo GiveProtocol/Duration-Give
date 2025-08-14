@@ -6,6 +6,41 @@ interface TransactionFormConfig {
   onSuccess?: () => void;
 }
 
+/**
+ * Transaction form hook for handling financial transaction forms with validation
+ * @function useTransactionForm
+ * @description Manages transaction form state, amount validation, loading states, and form submission logic.
+ * Validates amounts between 0 and 1,000,000, provides automatic form reset on success, and comprehensive error logging.
+ * @param {TransactionFormConfig} config - Configuration object with success callback
+ * @param {Function} [config.onSuccess] - Optional callback executed after successful transaction
+ * @returns {Object} Transaction form utilities and state
+ * @returns {string} returns.amount - Current amount input value as string
+ * @returns {Function} returns.setAmount - Set amount value: (amount: string) => void
+ * @returns {string} returns.validationError - Amount validation error message or empty string
+ * @returns {boolean} returns.loading - Form submission loading state
+ * @returns {Function} returns.handleSubmit - Form submission handler: (event: React.FormEvent, submitFn: (amount: string) => Promise<void>) => Promise<void>
+ * @example
+ * ```tsx
+ * const { amount, setAmount, validationError, loading, handleSubmit } = useTransactionForm({
+ *   onSuccess: () => console.log('Transaction completed!')
+ * });
+ * 
+ * const submitDonation = async (amount: string) => {
+ *   // Custom transaction logic
+ *   await processDonation(parseFloat(amount));
+ * };
+ * 
+ * return (
+ *   <form onSubmit={(e) => handleSubmit(e, submitDonation)}>
+ *     <input value={amount} onChange={(e) => setAmount(e.target.value)} />
+ *     {validationError && <span className="error">{validationError}</span>}
+ *     <button type="submit" disabled={loading}>
+ *       {loading ? 'Processing...' : 'Submit'}
+ *     </button>
+ *   </form>
+ * );
+ * ```
+ */
 export function useTransactionForm({ onSuccess }: TransactionFormConfig) {
   const [amount, setAmount] = useState('');
   const [validationError, setValidationError] = useState('');

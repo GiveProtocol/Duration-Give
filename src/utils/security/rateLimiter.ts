@@ -12,6 +12,30 @@ interface RateLimitRecord {
   blockedUntil?: number;
 }
 
+/**
+ * Rate limiting service for preventing abuse and brute force attacks
+ * @class RateLimiter
+ * @description Singleton class that implements configurable rate limiting with automatic cleanup. Supports different rate limit profiles for authentication vs public endpoints. Uses sliding window algorithm with automatic blocking for exceeded attempts and periodic cleanup of expired records.
+ * @example
+ * ```typescript
+ * const rateLimiter = RateLimiter.getInstance();
+ * 
+ * // Check if IP is rate limited for authentication
+ * const isBlocked = rateLimiter.isRateLimited('192.168.1.1', true);
+ * if (isBlocked) {
+ *   throw new Error('Rate limit exceeded, try again later');
+ * }
+ * 
+ * // Increment attempt counter after failed login
+ * rateLimiter.increment('192.168.1.1');
+ * 
+ * // Check public API rate limits (more restrictive)
+ * const isPublicBlocked = rateLimiter.isRateLimited('192.168.1.1', false);
+ * 
+ * // Reset rate limit for user after successful authentication
+ * rateLimiter.reset('192.168.1.1');
+ * ```
+ */
 export class RateLimiter {
   private static instance: RateLimiter;
   private store: Map<string, RateLimitRecord> = new Map();

@@ -11,6 +11,21 @@ export interface WalletProvider {
   switchChain: (_chainId: number | string) => Promise<void>;
 }
 
+/**
+ * Base class for EVM-compatible wallet providers
+ * @class EVMWalletBase
+ * @implements {WalletProvider}
+ * @description Provides common functionality for Ethereum Virtual Machine compatible wallets.
+ * Handles connection, disconnection, chain switching, and account management for EVM wallets.
+ * @example
+ * ```typescript
+ * class CustomWallet extends EVMWalletBase {
+ *   constructor() {
+ *     super('Custom', 'custom-icon', window.ethereum);
+ *   }
+ * }
+ * ```
+ */
 class EVMWalletBase implements WalletProvider {
   name: string;
   icon: string;
@@ -140,6 +155,21 @@ class EVMWalletBase implements WalletProvider {
   }
 }
 
+/**
+ * MetaMask wallet provider implementation
+ * @class MetaMaskWallet
+ * @extends EVMWalletBase
+ * @description Integrates with MetaMask browser extension for Ethereum transactions.
+ * Provides MetaMask-specific functionality including connection management and chain switching.
+ * @example
+ * ```typescript
+ * const metamask = new MetaMaskWallet();
+ * if (metamask.isInstalled()) {
+ *   const address = await metamask.connect();
+ *   console.log('Connected to:', address);
+ * }
+ * ```
+ */
 class MetaMaskWallet extends EVMWalletBase {
   private installationChecks = 0;
 
@@ -157,6 +187,21 @@ class MetaMaskWallet extends EVMWalletBase {
   }
 }
 
+/**
+ * Coinbase Wallet provider implementation
+ * @class CoinbaseWallet
+ * @extends EVMWalletBase
+ * @description Integrates with Coinbase Wallet browser extension for cryptocurrency transactions.
+ * Provides Coinbase-specific functionality for DeFi interactions and asset management.
+ * @example
+ * ```typescript
+ * const coinbase = new CoinbaseWallet();
+ * if (coinbase.isInstalled()) {
+ *   const address = await coinbase.connect();
+ *   await coinbase.switchChain(1287); // Moonbase Alpha
+ * }
+ * ```
+ */
 class CoinbaseWallet extends EVMWalletBase {
   private installationChecks = 0;
 
@@ -174,6 +219,21 @@ class CoinbaseWallet extends EVMWalletBase {
   }
 }
 
+/**
+ * Tally wallet provider implementation
+ * @class TallyWallet
+ * @extends EVMWalletBase
+ * @description Integrates with Tally wallet browser extension for Ethereum-based transactions.
+ * Provides privacy-focused wallet functionality with enhanced security features.
+ * @example
+ * ```typescript
+ * const tally = new TallyWallet();
+ * if (tally.isInstalled()) {
+ *   const address = await tally.connect();
+ *   await tally.switchChain(1284); // Moonbeam
+ * }
+ * ```
+ */
 class TallyWallet extends EVMWalletBase {
   private installationChecks = 0;
 
@@ -187,6 +247,21 @@ class TallyWallet extends EVMWalletBase {
   }
 }
 
+/**
+ * Brave wallet provider implementation
+ * @class BraveWallet
+ * @extends EVMWalletBase
+ * @description Integrates with Brave browser's built-in cryptocurrency wallet.
+ * Provides native browser wallet functionality with privacy-first approach.
+ * @example
+ * ```typescript
+ * const brave = new BraveWallet();
+ * if (brave.isInstalled()) {
+ *   const address = await brave.connect();
+ *   await brave.switchChain(592); // Astar
+ * }
+ * ```
+ */
 class BraveWallet extends EVMWalletBase {
   private installationChecks = 0;
 
@@ -204,6 +279,19 @@ class BraveWallet extends EVMWalletBase {
   }
 }
 
+/**
+ * Polkadot wallet provider implementation
+ * @class PolkadotWallet
+ * @implements {WalletProvider}
+ * @description Integrates with Polkadot.js extension for Substrate-based blockchain interactions.
+ * Currently serves as a placeholder with limited functionality for future Polkadot integration.
+ * @example
+ * ```typescript
+ * const polkadot = new PolkadotWallet();
+ * await polkadot.initialize();
+ * // Note: Connection functionality is not yet implemented
+ * ```
+ */
 class PolkadotWallet implements WalletProvider {
   name = "Polkadot";
   icon = "polkadot";
@@ -246,6 +334,32 @@ class PolkadotWallet implements WalletProvider {
   }
 }
 
+/**
+ * React hook for managing multiple cryptocurrency wallets
+ * @function useWallet
+ * @description Provides access to various wallet providers including MetaMask, Coinbase, Tally, Brave, and Polkadot.
+ * Returns utilities for discovering installed wallets and accessing wallet instances for connection management.
+ * @returns {Object} Object containing wallet management utilities
+ * @returns {Function} returns.getInstalledWallets - Function that returns array of installed wallet providers
+ * @returns {WalletProvider[]} returns.wallets - Array of all available wallet providers
+ * @example
+ * ```tsx
+ * function WalletSelector() {
+ *   const { getInstalledWallets, wallets } = useWallet();
+ *   const installedWallets = getInstalledWallets();
+ *   
+ *   return (
+ *     <div>
+ *       {installedWallets.map(wallet => (
+ *         <button key={wallet.name} onClick={() => wallet.connect()}>
+ *           Connect {wallet.name}
+ *         </button>
+ *       ))}
+ *     </div>
+ *   );
+ * }
+ * ```
+ */
 export function useWallet() {
   const wallets: WalletProvider[] = [
     new MetaMaskWallet(),

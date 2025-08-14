@@ -13,6 +13,40 @@ interface _CharityVerification {
   }>;
 }
 
+/**
+ * Admin panel management hook for charity verification operations
+ * @function useAdminPanel
+ * @description Provides administrative functionality for managing charity verifications including fetching pending
+ * verifications and updating their status. Includes comprehensive error handling and toast notifications for admin actions.
+ * @returns {Object} Admin panel utilities and state
+ * @returns {Function} returns.fetchPendingVerifications - Fetch pending charity verifications: () => Promise<CharityVerification[]>
+ * @returns {Function} returns.updateVerificationStatus - Update verification status: (id: string, status: 'approved' | 'rejected', reason?: string) => Promise<void>
+ * @returns {boolean} returns.loading - Loading state for admin operations
+ * @example
+ * ```tsx
+ * const { fetchPendingVerifications, updateVerificationStatus, loading } = useAdminPanel();
+ * 
+ * useEffect(() => {
+ *   const loadVerifications = async () => {
+ *     try {
+ *       const verifications = await fetchPendingVerifications();
+ *       setVerifications(verifications);
+ *     } catch (error) {
+ *       // Error handling is done in the hook with toast notifications
+ *     }
+ *   };
+ *   loadVerifications();
+ * }, []);
+ * 
+ * const handleApprove = async (verificationId: string) => {
+ *   await updateVerificationStatus(verificationId, 'approved');
+ * };
+ * 
+ * const handleReject = async (verificationId: string, reason: string) => {
+ *   await updateVerificationStatus(verificationId, 'rejected', reason);
+ * };
+ * ```
+ */
 export function useAdminPanel() {
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();

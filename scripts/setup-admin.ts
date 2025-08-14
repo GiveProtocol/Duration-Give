@@ -74,6 +74,21 @@ class UserCancelledError extends Error {
   }
 }
 
+/**
+ * Main function to set up admin privileges for a user account.
+ * Prompts for user email, validates the account, and upgrades to admin type.
+ * 
+ * @function setupAdmin
+ * @returns {Promise<void>} Resolves when admin setup is complete
+ * @throws {AdminSetupError} When setup operations fail
+ * @throws {UserCancelledError} When user cancels the operation
+ * @example
+ * ```typescript
+ * // Run the admin setup process
+ * await setupAdmin();
+ * // User will be prompted for email and confirmation
+ * ```
+ */
 async function setupAdmin() {
   console.log("🛡️  Give Protocol Admin Setup Tool");
   console.log("==================================\n");

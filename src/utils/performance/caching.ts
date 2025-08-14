@@ -12,6 +12,33 @@ interface CacheEntry<T> {
   expiresAt: number;
 }
 
+/**
+ * High-performance caching system with TTL, stale-while-revalidate, and automatic cleanup.
+ * Implements singleton pattern with configurable cache behavior and memory management.
+ * 
+ * @class CacheManager
+ * @description Advanced caching solution supporting time-to-live (TTL), stale-while-revalidate patterns,
+ * automatic capacity management, and periodic cleanup. Designed for high-performance applications
+ * requiring intelligent cache invalidation and memory efficiency.
+ * 
+ * @example
+ * ```typescript
+ * const cache = CacheManager.getInstance({
+ *   maxSize: 200,
+ *   ttl: 10 * 60 * 1000, // 10 minutes
+ *   staleWhileRevalidate: 60 * 60 * 1000 // 1 hour
+ * });
+ * 
+ * // Store data
+ * cache.set('user:123', userData);
+ * 
+ * // Retrieve data (may return stale data while revalidating)
+ * const user = await cache.get<User>('user:123');
+ * 
+ * // Clear specific entry
+ * cache.invalidate('user:123');
+ * ```
+ */
 export class CacheManager {
   private static instance: CacheManager;
   private readonly cache: Map<string, CacheEntry<unknown>>;
@@ -27,6 +54,20 @@ export class CacheManager {
     setInterval(() => this.cleanup(), 60 * 1000);
   }
 
+  /**
+   * Gets the singleton instance of CacheManager with optional configuration.
+   * 
+   * @function getInstance
+   * @param {Partial<CacheConfig>} [config] - Optional cache configuration
+   * @returns {CacheManager} The singleton instance
+   * @example
+   * ```typescript
+   * const cache = CacheManager.getInstance({
+   *   maxSize: 500,
+   *   ttl: 15 * 60 * 1000 // 15 minutes
+   * });
+   * ```
+   */
   static getInstance(config?: Partial<CacheConfig>): CacheManager {
     if (!this.instance) {
       this.instance = new CacheManager();
@@ -38,12 +79,39 @@ export class CacheManager {
   }
 
   // Test utility method to reset singleton instance
+  /**
+   * Resets the singleton instance for testing purposes.
+   * Only available in test and development environments.
+   * 
+   * @function resetInstanceForTesting
+   * @returns {void}
+   * @example
+   * ```typescript
+   * // In test setup
+   * CacheManager.resetInstanceForTesting();
+   * ```
+   */
   static resetInstanceForTesting(): void {
     if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
       this.instance = undefined as unknown as CacheManager;
     }
   }
 
+  /**
+   * Retrieves data from cache with stale-while-revalidate support.
+   * 
+   * @function get
+   * @template T - The expected return type
+   * @param {string} key - The cache key
+   * @returns {Promise<T | null>} The cached data or null if not found/expired
+   * @example
+   * ```typescript
+   * const userData = await cache.get<User>('user:123');
+   * if (userData) {
+   *   console.log('Found user:', userData.name);
+   * }
+   * ```
+   */
   async get<T>(key: string): Promise<T | null> {
     const entry = this.cache.get(key);
     const now = Date.now();
@@ -66,6 +134,19 @@ export class CacheManager {
     return null;
   }
 
+  /**
+   * Stores data in cache with automatic eviction if at capacity.
+   * 
+   * @function set
+   * @template T - The type of data being stored
+   * @param {string} key - The cache key
+   * @param {T} data - The data to store
+   * @returns {void}
+   * @example
+   * ```typescript
+   * cache.set('user:123', { id: 123, name: 'John Doe' });
+   * ```
+   */
   set<T>(key: string, data: T): void {
     // Evict oldest if at capacity
     if (this.cache.size >= this.config.maxSize) {
@@ -81,10 +162,31 @@ export class CacheManager {
     });
   }
 
+  /**
+   * Removes a specific entry from the cache.
+   * 
+   * @function invalidate
+   * @param {string} key - The cache key to remove
+   * @returns {void}
+   * @example
+   * ```typescript
+   * cache.invalidate('user:123'); // Remove specific user
+   * ```
+   */
   invalidate(key: string): void {
     this.cache.delete(key);
   }
 
+  /**
+   * Clears all entries from the cache.
+   * 
+   * @function invalidateAll
+   * @returns {void}
+   * @example
+   * ```typescript
+   * cache.invalidateAll(); // Clear entire cache
+   * ```
+   */
   invalidateAll(): void {
     this.cache.clear();
   }
