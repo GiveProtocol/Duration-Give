@@ -49,15 +49,27 @@ interface ApplicationFormContentProps {
     handlePhoneChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
     handleEmailChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
     handleDateOfBirthChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleDaysChange: (_day: string) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleTimesChange: (_time: string) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleDaysChange: (
+      _day: string,
+    ) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleTimesChange: (
+      _time: string,
+    ) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
     handleCommitmentChange: (_e: React.ChangeEvent<HTMLSelectElement>) => void;
-    handleExperienceChange: (_e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleExperienceChange: (
+      _e: React.ChangeEvent<HTMLTextAreaElement>,
+    ) => void;
     handleSkillsChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleCertificationsChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleCertificationsChange: (
+      _e: React.ChangeEvent<HTMLInputElement>,
+    ) => void;
     handleInterestsChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleReferenceNameChange: (_index: number) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleReferenceContactChange: (_index: number) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleReferenceNameChange: (
+      _index: number,
+    ) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleReferenceContactChange: (
+      _index: number,
+    ) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
     handleWorkSamplesChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
   };
 }
@@ -76,7 +88,9 @@ const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
   <form onSubmit={onSubmit} className="space-y-6">
     {/* Personal Information */}
     <div className="space-y-4">
-      <h3 className="text-lg font-medium text-gray-900">Personal Information</h3>
+      <h3 className="text-lg font-medium text-gray-900">
+        Personal Information
+      </h3>
       <Input
         label="Full Name *"
         value={formData.fullName}
@@ -115,9 +129,19 @@ const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
     {/* Availability */}
     <div className="space-y-4">
       <h3 className="text-lg font-medium text-gray-900">Availability</h3>
-      <p className="block text-sm font-medium text-gray-700 mb-1">Preferred Days</p>
+      <p className="block text-sm font-medium text-gray-700 mb-1">
+        Preferred Days
+      </p>
       <div className="grid grid-cols-2 gap-2">
-        {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
+        {[
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ].map((day) => (
           <label key={day} className="flex items-center space-x-2">
             <input
               type="checkbox"
@@ -130,9 +154,13 @@ const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
         ))}
       </div>
       {validationErrors["availability.days"] && (
-        <p className="text-sm text-red-600 mb-1">{validationErrors["availability.days"]}</p>
+        <p className="text-sm text-red-600 mb-1">
+          {validationErrors["availability.days"]}
+        </p>
       )}
-      <p className="block text-sm font-medium text-gray-700 mb-1 mt-4">Preferred Times</p>
+      <p className="block text-sm font-medium text-gray-700 mb-1 mt-4">
+        Preferred Times
+      </p>
       <div className="grid grid-cols-2 gap-2">
         {["Morning", "Afternoon", "Evening"].map((time) => (
           <label key={time} className="flex items-center space-x-2">
@@ -147,7 +175,9 @@ const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
         ))}
       </div>
       {validationErrors["availability.times"] && (
-        <p className="text-sm text-red-600 mb-1">{validationErrors["availability.times"]}</p>
+        <p className="text-sm text-red-600 mb-1">
+          {validationErrors["availability.times"]}
+        </p>
       )}
       <label className="block text-sm font-medium text-gray-700 mb-1 mt-4">
         Commitment Level
@@ -167,7 +197,9 @@ const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
     <div className="space-y-4">
       <h3 className="text-lg font-medium text-gray-900">Skills & Experience</h3>
       <label className="block">
-        <span className="text-sm font-medium text-gray-700 mb-1 block">Relevant Experience *</span>
+        <span className="text-sm font-medium text-gray-700 mb-1 block">
+          Relevant Experience *
+        </span>
         <textarea
           value={formData.experience}
           onChange={handlers.handleExperienceChange}
@@ -176,7 +208,9 @@ const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
           required
         />
         {validationErrors["experience"] && (
-          <p className="text-sm text-red-600 mb-1">{validationErrors["experience"]}</p>
+          <p className="text-sm text-red-600 mb-1">
+            {validationErrors["experience"]}
+          </p>
         )}
       </label>
       <Input
@@ -195,7 +229,9 @@ const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
 
     {/* Interests */}
     <div className="space-y-4">
-      <h3 className="text-lg font-medium text-gray-900">Interests & Preferences</h3>
+      <h3 className="text-lg font-medium text-gray-900">
+        Interests & Preferences
+      </h3>
       <Input
         label="Areas of Interest (comma-separated)"
         value={formData.interests}
