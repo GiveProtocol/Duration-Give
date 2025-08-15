@@ -41,7 +41,7 @@ const ClimateActionNow: React.FC = () => {
           <span className="text-sm opacity-90 mb-2">{charity.country}</span>
           <h1 className="text-4xl font-bold mb-2">{charity.name}</h1>
           <p className="text-lg opacity-90">{charity.description}</p>
-          </div>
+        </div>
         </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

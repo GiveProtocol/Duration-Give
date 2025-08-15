@@ -8,11 +8,11 @@ export const Footer: React.FC = () => {
     <footer className="bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="col-span-1">
-          <Link to="/" className="flex items-center">
-            <Logo className="h-6 w-6" />
-            <span className="ml-2 text-xl font-bold text-gray-900">Give Protocol</span>
+          <Link to="/" className="flex items-center mb-4">
+            <Logo className="h-6 w-6 mr-2" />
+            <span className="text-xl font-bold text-gray-900">Give Protocol</span>
           </Link>
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="text-sm text-gray-600">
             Empowering charitable giving through transparent and efficient blockchain technology.
           </p>
         </div>

@@ -39,13 +39,11 @@ const EducationForAll: React.FC = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 text-white">
-          <span className="px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full self-start mb-2">
-            Verified
-          </span>
+          <span className="px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full self-start mb-2">Verified</span>
           <span className="text-sm opacity-90 mb-2">{charity.country}</span>
           <h1 className="text-4xl font-bold mb-2">{charity.name}</h1>
           <p className="text-lg opacity-90">{charity.description}</p>
-          </div>
+        </div>
         </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

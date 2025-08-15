@@ -128,49 +128,45 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-background-primary border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 flex justify-between h-16">
-        <div className="flex items-center">
-          <Link to="/" className="flex items-center">
-            <Logo className="h-8 w-8" />
-            <span className="ml-2 text-2xl font-bold text-primary-900">
-              Give Protocol
-            </span>
-          </Link>
+      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
+        <Link to="/" className="flex items-center">
+          <Logo className="h-8 w-8" />
+          <span className="ml-2 text-2xl font-bold text-primary-900">
+            Give Protocol
+          </span>
+        </Link>
 
-          <DesktopNavLinks isActive={isActive} t={t} />
-        </div>
+        <DesktopNavLinks isActive={isActive} t={t} />
 
-        <div className="flex items-center">
-          <SettingsMenu />
-          {!isLimitedNavPage && (
-            <Link
-              to="/give-dashboard"
-              className="inline-flex items-center px-4 py-2 border border-transparent 
-                         text-sm font-medium rounded-md text-white bg-indigo-600 
-                         hover:bg-indigo-700 shadow-sm hover:shadow-md transition-all 
-                         duration-200 transform hover:-translate-y-0.5 active:translate-y-0 
-                         active:shadow-sm focus:outline-none focus:ring-2 
-                         focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              {t("nav.launchApp")}
-            </Link>
-          )}
-
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            className="sm:hidden inline-flex items-center justify-center ml-2 p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-            aria-controls="mobile-menu"
-            aria-expanded={isMenuOpen}
-            onClick={handleMenuToggle}
+        <SettingsMenu />
+        {!isLimitedNavPage && (
+          <Link
+            to="/give-dashboard"
+            className="inline-flex items-center px-4 py-2 border border-transparent 
+                       text-sm font-medium rounded-md text-white bg-indigo-600 
+                       hover:bg-indigo-700 shadow-sm hover:shadow-md transition-all 
+                       duration-200 transform hover:-translate-y-0.5 active:translate-y-0 
+                       active:shadow-sm focus:outline-none focus:ring-2 
+                       focus:ring-offset-2 focus:ring-indigo-500"
           >
-            {isMenuOpen ? (
-              <X className="block h-6 w-6" aria-hidden="true" />
-            ) : (
-              <Menu className="block h-6 w-6" aria-hidden="true" />
-            )}
-          </button>
-        </div>
+            {t("nav.launchApp")}
+          </Link>
+        )}
+
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          className="sm:hidden inline-flex items-center justify-center ml-2 p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          aria-controls="mobile-menu"
+          aria-expanded={isMenuOpen}
+          onClick={handleMenuToggle}
+        >
+          {isMenuOpen ? (
+            <X className="block h-6 w-6" aria-hidden="true" />
+          ) : (
+            <Menu className="block h-6 w-6" aria-hidden="true" />
+          )}
+        </button>
       </div>
 
       {isMenuOpen && (
