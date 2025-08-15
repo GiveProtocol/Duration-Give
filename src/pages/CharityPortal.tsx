@@ -737,10 +737,9 @@ export const CharityPortal: React.FC = () => {
             </Button>
           </div>
           {transactions.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
+            <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
+              <thead className="bg-gray-50">
+                <tr>
                     <th
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
                       onClick={handleSortByDate}
@@ -848,8 +847,7 @@ export const CharityPortal: React.FC = () => {
                     </tr>
                   ))}
                 </tbody>
-              </table>
-            </div>
+            </table>
           ) : (
             <div className="text-center py-8 text-gray-500">
               No transactions found.

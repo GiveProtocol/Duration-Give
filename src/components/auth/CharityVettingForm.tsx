@@ -170,10 +170,8 @@ export const CharityVettingForm: React.FC = () => {
           error={validationErrors['organizationName']}
         />
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Description
-          </label>
+        <label className="block">
+          <span className="text-sm font-medium text-gray-700 mb-1 block">Description</span>
           <textarea
             name="description"
             value={formData.description}
@@ -185,7 +183,7 @@ export const CharityVettingForm: React.FC = () => {
           {validationErrors['description'] && (
             <p className="mt-1 text-sm text-red-600">{validationErrors['description']}</p>
           )}
-        </div>
+        </label>
 
         <Input
           label="Category of Entity"
@@ -237,10 +235,8 @@ export const CharityVettingForm: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Country
-            </label>
+          <label className="block">
+            <span className="text-sm font-medium text-gray-700 mb-1 block">Country</span>
             <select
               name="country"
               value={formData.country}
@@ -258,7 +254,7 @@ export const CharityVettingForm: React.FC = () => {
             {validationErrors['country'] && (
               <p className="mt-1 text-sm text-red-600">{validationErrors['country']}</p>
             )}
-          </div>
+          </label>
           <Input
             label="Postal Code"
             name="postalCode"

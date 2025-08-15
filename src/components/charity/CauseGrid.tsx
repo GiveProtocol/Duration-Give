@@ -67,7 +67,7 @@ export const CauseGrid: React.FC<CauseGridProps> = ({ searchTerm, category }) =>
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {filteredCauses.map((cause) => (
-        <Link key={cause.id} to={`/causes/${getCauseSlug(cause.name)}`}>
+        <Link key={cause.id} to={`/causes/${getCauseSlug(cause.name)}`} className="block">
           <Card className="overflow-hidden">
             <img
               src={cause.image}

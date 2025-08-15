@@ -91,7 +91,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
           Volunteer Application Consent Form
         </h2>
 
-          <div className="prose prose-sm max-w-none mb-6">
+        <div className="prose prose-sm max-w-none mb-6">
             <h3 className="text-lg font-semibold mb-4">
               CONSENT TO PROCESS PERSONAL INFORMATION
             </h3>

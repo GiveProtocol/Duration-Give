@@ -58,9 +58,8 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
       <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
         <h2 className="text-xl font-semibold text-gray-900">Donation History</h2>
         <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <Calendar className="h-5 w-5 text-gray-400" />
-            <select
+          <Calendar className="h-5 w-5 text-gray-400" />
+          <select
               value={timeFilter}
               onChange={handleTimeFilterChange}
               className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -71,7 +70,6 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
               <option value="month">Past Month</option>
               <option value="year">Past Year</option>
             </select>
-          </div>
           <Button
             onClick={handleShowExportModal}
             variant="secondary"
