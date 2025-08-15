@@ -19,6 +19,238 @@ interface ApplicationFormProps {
   onSuccess?: () => void;
 }
 
+interface ApplicationFormContentProps {
+  formData: {
+    fullName: string;
+    phoneNumber: string;
+    email: string;
+    dateOfBirth: string;
+    availability: {
+      days: string[];
+      times: string[];
+    };
+    commitmentType: string;
+    experience: string;
+    skills: string;
+    certifications: string;
+    interests: string;
+    references: { id: string; name: string; contact: string }[];
+    workSamples: string;
+  };
+  validationErrors: Record<string, string>;
+  loading: boolean;
+  inputClasses: string;
+  textareaClasses: string;
+  selectClasses: string;
+  onSubmit: (_e: React.FormEvent) => void;
+  onClose: () => void;
+  handlers: {
+    handleFullNameChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handlePhoneChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleEmailChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleDateOfBirthChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleDaysChange: (_day: string) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleTimesChange: (_time: string) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleCommitmentChange: (_e: React.ChangeEvent<HTMLSelectElement>) => void;
+    handleExperienceChange: (_e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleSkillsChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleCertificationsChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleInterestsChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleReferenceNameChange: (_index: number) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleReferenceContactChange: (_index: number) => (_e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleWorkSamplesChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+}
+
+const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
+  formData,
+  validationErrors,
+  loading,
+  inputClasses,
+  textareaClasses,
+  selectClasses,
+  onSubmit,
+  onClose,
+  handlers,
+}) => (
+  <form onSubmit={onSubmit} className="space-y-6">
+    {/* Personal Information */}
+    <div className="space-y-4">
+      <h3 className="text-lg font-medium text-gray-900">Personal Information</h3>
+      <Input
+        label="Full Name *"
+        value={formData.fullName}
+        onChange={handlers.handleFullNameChange}
+        required
+        className={inputClasses}
+        error={validationErrors["fullName"]}
+      />
+      <Input
+        label="Phone Number *"
+        type="tel"
+        value={formData.phoneNumber}
+        onChange={handlers.handlePhoneChange}
+        required
+        className={inputClasses}
+        error={validationErrors["phoneNumber"]}
+      />
+      <Input
+        label="Email Address *"
+        type="email"
+        value={formData.email}
+        onChange={handlers.handleEmailChange}
+        required
+        className={inputClasses}
+        error={validationErrors["email"]}
+      />
+      <Input
+        label="Date of Birth"
+        type="date"
+        value={formData.dateOfBirth}
+        onChange={handlers.handleDateOfBirthChange}
+        className={inputClasses}
+      />
+    </div>
+
+    {/* Availability */}
+    <div className="space-y-4">
+      <h3 className="text-lg font-medium text-gray-900">Availability</h3>
+      <div>
+        <p className="block text-sm font-medium text-gray-700 mb-1">Preferred Days</p>
+        <div className="grid grid-cols-2 gap-2">
+          {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
+            <label key={day} className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={formData.availability.days.includes(day)}
+                onChange={handlers.handleDaysChange(day)}
+                className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <span className="text-sm text-gray-700">{day}</span>
+            </label>
+          ))}
+        </div>
+        {validationErrors["availability.days"] && (
+          <p className="text-sm text-red-600 mb-1">{validationErrors["availability.days"]}</p>
+        )}
+      </div>
+      <div>
+        <p className="block text-sm font-medium text-gray-700 mb-1">Preferred Times</p>
+        <div className="grid grid-cols-2 gap-2">
+          {["Morning", "Afternoon", "Evening"].map((time) => (
+            <label key={time} className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={formData.availability.times.includes(time)}
+                onChange={handlers.handleTimesChange(time)}
+                className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <span className="text-sm text-gray-700">{time}</span>
+            </label>
+          ))}
+        </div>
+        {validationErrors["availability.times"] && (
+          <p className="text-sm text-red-600 mb-1">{validationErrors["availability.times"]}</p>
+        )}
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Commitment Level</label>
+        <select
+          value={formData.commitmentType}
+          onChange={handlers.handleCommitmentChange}
+          className={selectClasses}
+        >
+          <option value="one-time">One-time</option>
+          <option value="short-term">Short-term</option>
+          <option value="long-term">Long-term</option>
+        </select>
+      </div>
+    </div>
+
+    {/* Skills & Experience */}
+    <div className="space-y-4">
+      <h3 className="text-lg font-medium text-gray-900">Skills & Experience</h3>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Relevant Experience *</label>
+        <textarea
+          value={formData.experience}
+          onChange={handlers.handleExperienceChange}
+          rows={4}
+          className={textareaClasses}
+          required
+        />
+        {validationErrors["experience"] && (
+          <p className="text-sm text-red-600 mb-1">{validationErrors["experience"]}</p>
+        )}
+      </div>
+      <Input
+        label="Skills (comma-separated)"
+        value={formData.skills}
+        onChange={handlers.handleSkillsChange}
+        className={inputClasses}
+      />
+      <Input
+        label="Certifications (comma-separated)"
+        value={formData.certifications}
+        onChange={handlers.handleCertificationsChange}
+        className={inputClasses}
+      />
+    </div>
+
+    {/* Interests */}
+    <div className="space-y-4">
+      <h3 className="text-lg font-medium text-gray-900">Interests & Preferences</h3>
+      <Input
+        label="Areas of Interest (comma-separated)"
+        value={formData.interests}
+        onChange={handlers.handleInterestsChange}
+        className={inputClasses}
+      />
+    </div>
+
+    {/* References */}
+    <div className="space-y-4">
+      <h3 className="text-lg font-medium text-gray-900">References</h3>
+      {formData.references.map((ref, index) => (
+        <div key={ref.id} className="space-y-2">
+          <Input
+            label={`Reference ${index + 1} Name`}
+            value={ref.name}
+            onChange={handlers.handleReferenceNameChange(index)}
+            className={inputClasses}
+          />
+          <Input
+            label={`Reference ${index + 1} Contact`}
+            value={ref.contact}
+            onChange={handlers.handleReferenceContactChange(index)}
+            className={inputClasses}
+          />
+        </div>
+      ))}
+    </div>
+
+    {/* Work Samples */}
+    <div>
+      <h3 className="text-lg font-medium text-gray-900 mb-2">Work Samples</h3>
+      <Input
+        label="Links to Work Samples (comma-separated)"
+        value={formData.workSamples}
+        onChange={handlers.handleWorkSamplesChange}
+        className={inputClasses}
+      />
+    </div>
+
+    <div className="flex justify-end space-x-3">
+      <Button variant="secondary" onClick={onClose} disabled={loading}>
+        Cancel
+      </Button>
+      <Button type="submit" disabled={loading}>
+        {loading ? "Submitting..." : "Submit Application"}
+      </Button>
+    </div>
+  </form>
+);
+
 export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   opportunityId,
   opportunityTitle,
@@ -329,6 +561,23 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   const selectClasses =
     "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50 font-sans";
 
+  const handlers = {
+    handleFullNameChange,
+    handlePhoneChange,
+    handleEmailChange,
+    handleDateOfBirthChange,
+    handleDaysChange,
+    handleTimesChange,
+    handleCommitmentChange,
+    handleExperienceChange,
+    handleSkillsChange,
+    handleCertificationsChange,
+    handleInterestsChange,
+    handleReferenceNameChange,
+    handleReferenceContactChange,
+    handleWorkSamplesChange,
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
@@ -336,221 +585,24 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
           Apply for: {opportunityTitle}
         </h2>
 
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md flex items-start">
-              <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
-              <span>{error}</span>
-            </div>
-          )}
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md flex items-start">
+            <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Personal Information */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">
-                Personal Information
-              </h3>
-              <Input
-                label="Full Name *"
-                value={formData.fullName}
-                onChange={handleFullNameChange}
-                required
-                className={inputClasses}
-                error={validationErrors["fullName"]}
-              />
-              <Input
-                label="Phone Number *"
-                type="tel"
-                value={formData.phoneNumber}
-                onChange={handlePhoneChange}
-                required
-                className={inputClasses}
-                error={validationErrors["phoneNumber"]}
-              />
-              <Input
-                label="Email Address *"
-                type="email"
-                value={formData.email}
-                onChange={handleEmailChange}
-                required
-                className={inputClasses}
-                error={validationErrors["email"]}
-              />
-              <Input
-                label="Date of Birth"
-                type="date"
-                value={formData.dateOfBirth}
-                onChange={handleDateOfBirthChange}
-                className={inputClasses}
-              />
-            </div>
-
-            {/* Availability */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">
-                Availability
-              </h3>
-              <div>
-                <p className="block text-sm font-medium text-gray-700 mb-1">
-                  Preferred Days
-                </p>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                    "Sunday",
-                  ].map((day) => (
-                    <label key={day} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={formData.availability.days.includes(day)}
-                        onChange={handleDaysChange(day)}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <span className="text-sm text-gray-700">{day}</span>
-                    </label>
-                  ))}
-                </div>
-                {validationErrors["availability.days"] && (
-                  <p className="text-sm text-red-600 mb-1">
-                    {validationErrors["availability.days"]}
-                  </p>
-                )}
-              </div>
-              <div>
-                <p className="block text-sm font-medium text-gray-700 mb-1">
-                  Preferred Times
-                </p>
-                <div className="grid grid-cols-2 gap-2">
-                  {["Morning", "Afternoon", "Evening"].map((time) => (
-                    <label key={time} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={formData.availability.times.includes(time)}
-                        onChange={handleTimesChange(time)}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <span className="text-sm text-gray-700">{time}</span>
-                    </label>
-                  ))}
-                </div>
-                {validationErrors["availability.times"] && (
-                  <p className="text-sm text-red-600 mb-1">
-                    {validationErrors["availability.times"]}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Commitment Level
-                </label>
-                <select
-                  value={formData.commitmentType}
-                  onChange={handleCommitmentChange}
-                  className={selectClasses}
-                >
-                  <option value="one-time">One-time</option>
-                  <option value="short-term">Short-term</option>
-                  <option value="long-term">Long-term</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Skills & Experience */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">
-                Skills & Experience
-              </h3>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Relevant Experience *
-                </label>
-                <textarea
-                  value={formData.experience}
-                  onChange={handleExperienceChange}
-                  rows={4}
-                  className={textareaClasses}
-                  required
-                />
-                {validationErrors["experience"] && (
-                  <p className="text-sm text-red-600 mb-1">
-                    {validationErrors["experience"]}
-                  </p>
-                )}
-              </div>
-              <Input
-                label="Skills (comma-separated)"
-                value={formData.skills}
-                onChange={handleSkillsChange}
-                className={inputClasses}
-              />
-              <Input
-                label="Certifications (comma-separated)"
-                value={formData.certifications}
-                onChange={handleCertificationsChange}
-                className={inputClasses}
-              />
-            </div>
-
-            {/* Interests */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">
-                Interests & Preferences
-              </h3>
-              <Input
-                label="Areas of Interest (comma-separated)"
-                value={formData.interests}
-                onChange={handleInterestsChange}
-                className={inputClasses}
-              />
-            </div>
-
-            {/* References */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">References</h3>
-              {formData.references.map((ref, index) => (
-                <div key={ref.id} className="space-y-2">
-                  <Input
-                    label={`Reference ${index + 1} Name`}
-                    value={ref.name}
-                    onChange={handleReferenceNameChange(index)}
-                    className={inputClasses}
-                  />
-                  <Input
-                    label={`Reference ${index + 1} Contact`}
-                    value={ref.contact}
-                    onChange={handleReferenceContactChange(index)}
-                    className={inputClasses}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Work Samples */}
-            <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Work Samples
-              </h3>
-              <Input
-                label="Links to Work Samples (comma-separated)"
-                value={formData.workSamples}
-                onChange={handleWorkSamplesChange}
-                className={inputClasses}
-              />
-            </div>
-
-            <div className="flex justify-end space-x-3">
-              <Button variant="secondary" onClick={onClose} disabled={loading}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? "Submitting..." : "Submit Application"}
-              </Button>
-            </div>
-          </form>
+        <ApplicationFormContent
+          formData={formData}
+          validationErrors={validationErrors}
+          loading={loading}
+          inputClasses={inputClasses}
+          textareaClasses={textareaClasses}
+          selectClasses={selectClasses}
+          onSubmit={handleSubmit}
+          onClose={onClose}
+          handlers={handlers}
+        />
       </div>
     </div>
   );
