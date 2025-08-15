@@ -43,18 +43,14 @@ export const About: React.FC = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-indigo-100 rounded-full p-6 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-                <Users className="h-10 w-10 text-indigo-600" />
-              </div>
+              <Users className="h-10 w-10 text-indigo-600 bg-indigo-100 rounded-full p-6 w-20 h-20 mx-auto mb-6" />
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Volunteer Connection</h3>
               <p className="text-gray-600">
                 Connect volunteers with meaningful opportunities and track verified volunteer hours on the blockchain.
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-indigo-100 rounded-full p-6 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-                <TrendingUp className="h-10 w-10 text-indigo-600" />
-              </div>
+              <TrendingUp className="h-10 w-10 text-indigo-600 bg-indigo-100 rounded-full p-6 w-20 h-20 mx-auto mb-6" />
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Portfolio Funds</h3>
               <p className="text-gray-600">
                 Support multiple organizations in the same sector through diversified giving portfolios.
@@ -68,40 +64,40 @@ export const About: React.FC = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Our Values</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <div className="flex items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                 <Shield className="h-6 w-6 text-indigo-600 mr-3" />
-                <h3 className="text-xl font-semibold text-gray-900">Transparency</h3>
-              </div>
+                Transparency
+              </h3>
               <p className="text-gray-600">
                 Every donation and volunteer hour is recorded on the blockchain, providing unprecedented 
                 transparency in charitable giving.
               </p>
             </div>
             <div>
-              <div className="flex items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                 <Target className="h-6 w-6 text-indigo-600 mr-3" />
-                <h3 className="text-xl font-semibold text-gray-900">Impact</h3>
-              </div>
+                Impact
+              </h3>
               <p className="text-gray-600">
                 We focus on measurable outcomes and ensure that every contribution creates meaningful, 
                 lasting change in communities worldwide.
               </p>
             </div>
             <div>
-              <div className="flex items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                 <Users className="h-6 w-6 text-indigo-600 mr-3" />
-                <h3 className="text-xl font-semibold text-gray-900">Community</h3>
-              </div>
+                Community
+              </h3>
               <p className="text-gray-600">
                 Building a global community of donors, volunteers, and organizations working together 
                 for positive social change.
               </p>
             </div>
             <div>
-              <div className="flex items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                 <TrendingUp className="h-6 w-6 text-indigo-600 mr-3" />
-                <h3 className="text-xl font-semibold text-gray-900">Innovation</h3>
-              </div>
+                Innovation
+              </h3>
               <p className="text-gray-600">
                 Leveraging cutting-edge blockchain technology to solve traditional challenges 
                 in charitable giving and volunteer coordination.

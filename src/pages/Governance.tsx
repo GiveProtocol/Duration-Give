@@ -90,26 +90,26 @@ export const Governance: React.FC = () => {
             Proposal Process
           </h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <div className="space-y-2">
-              <h4 className="font-semibold text-gray-900">1. Creation</h4>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-2">1. Creation</h4>
               <p className="text-gray-600">
                 Any account with minimum voting power can submit detailed proposals with implementation plans.
               </p>
             </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold text-gray-900">2. Discussion</h4>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-2">2. Discussion</h4>
               <p className="text-gray-600">
                 7-day minimum discussion period for community feedback and refinement.
               </p>
             </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold text-gray-900">3. Voting</h4>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-2">3. Voting</h4>
               <p className="text-gray-600">
                 48-hour voting period with weighted voting based on participation metrics.
               </p>
             </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold text-gray-900">4. Execution</h4>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-2">4. Execution</h4>
               <p className="text-gray-600">
                 Successful proposals are implemented after meeting all required thresholds.
               </p>
@@ -125,7 +125,7 @@ export const Governance: React.FC = () => {
           <div className="grid gap-6 md:grid-cols-2">
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Standard Changes</h4>
-              <div className="space-y-2 text-gray-600">
+              <div className="text-gray-600 space-y-2">
                 <div>• 7 days discussion period</div>
                 <div>• 48 hours voting period</div>
                 <div>• 24 hours timelock before execution</div>
@@ -133,7 +133,7 @@ export const Governance: React.FC = () => {
             </div>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Emergency Actions</h4>
-              <div className="space-y-2 text-gray-600">
+              <div className="text-gray-600 space-y-2">
                 <div>• No discussion period required</div>
                 <div>• 4/7 council signatures needed</div>
                 <div>• 24 hours maximum timelock</div>

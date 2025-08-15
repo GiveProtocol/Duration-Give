@@ -358,32 +358,30 @@ export const GiveDashboard: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              {t("dashboard.title")}
-            </h1>
-            <p className="mt-2 text-gray-600">{t("dashboard.subtitle")}</p>
-          </div>
-          <div className="flex space-x-3">
-            <Button
-              variant="secondary"
-              onClick={toggleScheduledDonations}
-              className="flex items-center"
-            >
-              <Calendar className="h-4 w-4 mr-2" />
-              {showScheduledDonations ? "Hide" : "View"} Monthly Donations
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={toggleWalletSettings}
-              className="flex items-center"
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              Wallet Settings
-            </Button>
-          </div>
+      <div className="mb-8 flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">
+            {t("dashboard.title")}
+          </h1>
+          <p className="mt-2 text-gray-600">{t("dashboard.subtitle")}</p>
+        </div>
+        <div className="flex space-x-3">
+          <Button
+            variant="secondary"
+            onClick={toggleScheduledDonations}
+            className="flex items-center"
+          >
+            <Calendar className="h-4 w-4 mr-2" />
+            {showScheduledDonations ? "Hide" : "View"} Monthly Donations
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={toggleWalletSettings}
+            className="flex items-center"
+          >
+            <Settings className="h-4 w-4 mr-2" />
+            Wallet Settings
+          </Button>
         </div>
       </div>
 

@@ -41,8 +41,7 @@ const CharityDetail: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <div className="relative h-80 rounded-xl overflow-hidden mb-6">
+      <div className="relative h-80 rounded-xl overflow-hidden mb-6">
           <img
             src={charity.image}
             alt={charity.name}
@@ -59,9 +58,9 @@ const CharityDetail: React.FC = () => {
             <h1 className="text-4xl font-bold mb-2">{charity.name}</h1>
             <p className="text-lg opacity-90">{charity.description}</p>
           </div>
-        </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Impact Statistics
@@ -111,29 +110,28 @@ const CharityDetail: React.FC = () => {
               </Link>
             </div>
           </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Our Mission
+          </h2>
+          <p className="text-gray-600">{charity.mission}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Our Mission
-            </h2>
-            <p className="text-gray-600">{charity.mission}</p>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Impact Highlights
-            </h2>
-            <ul className="space-y-2">
-              {charity.impact.map((item) => (
-                <li key={item} className="flex items-center text-gray-600">
-                  <span className="w-2 h-2 bg-green-500 rounded-full mr-3" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Impact Highlights
+          </h2>
+          <ul className="space-y-2">
+            {charity.impact.map((item) => (
+              <li key={item} className="flex items-center text-gray-600">
+                <span className="w-2 h-2 bg-green-500 rounded-full mr-3" />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

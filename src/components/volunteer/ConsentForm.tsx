@@ -86,11 +86,10 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-            Volunteer Application Consent Form
-          </h2>
+      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          Volunteer Application Consent Form
+        </h2>
 
           <div className="prose prose-sm max-w-none mb-6">
             <h3 className="text-lg font-semibold mb-4">
@@ -244,7 +243,6 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
             </Button>
             <Button onClick={handleAccept}>Accept and Continue</Button>
           </div>
-        </div>
       </div>
     </div>
   );

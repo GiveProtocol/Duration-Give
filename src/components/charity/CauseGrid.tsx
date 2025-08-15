@@ -79,17 +79,15 @@ export const CauseGrid: React.FC<CauseGridProps> = ({ searchTerm, category }) =>
               <p className="text-gray-600 mb-4">{cause.description}</p>
               
               <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between text-sm text-gray-500 mb-1">
-                    <span>Progress</span>
-                    <span>{formatCurrency(cause.raisedAmount)} of {formatCurrency(cause.targetAmount)}</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-indigo-600 h-2 rounded-full"
-                      style={{ width: `${(cause.raisedAmount / cause.targetAmount) * 100}%` }}
-                    />
-                  </div>
+                <div className="flex justify-between text-sm text-gray-500 mb-1">
+                  <span>Progress</span>
+                  <span>{formatCurrency(cause.raisedAmount)} of {formatCurrency(cause.targetAmount)}</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
+                  <div
+                    className="bg-indigo-600 h-2 rounded-full"
+                    style={{ width: `${(cause.raisedAmount / cause.targetAmount) * 100}%` }}
+                  />
                 </div>
 
                 <DonationButton
