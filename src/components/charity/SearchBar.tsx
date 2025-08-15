@@ -170,10 +170,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       {showFilters && (
         <div className="p-4 bg-white rounded-lg shadow-lg border border-gray-200 space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="country-filter" className="block text-sm font-medium text-gray-700 mb-1">
-                Country
-              </label>
+            <label htmlFor="country-filter" className="block">
+              <span className="text-sm font-medium text-gray-700 mb-1 block">Country</span>
               <select
                 id="country-filter"
                 value={filters.country}
@@ -183,12 +181,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <option value="">All Countries</option>
                 {countries.map(renderCountryOption)}
               </select>
-            </div>
+            </label>
 
-            <div>
-              <label htmlFor="category-filter" className="block text-sm font-medium text-gray-700 mb-1">
-                Category
-              </label>
+            <label htmlFor="category-filter" className="block">
+              <span className="text-sm font-medium text-gray-700 mb-1 block">Category</span>
               <select
                 id="category-filter"
                 value={filters.category}
@@ -202,14 +198,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                   </option>
                 ))}
               </select>
-            </div>
+            </label>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="status-filter" className="block text-sm font-medium text-gray-700 mb-1">
-                Status
-              </label>
+            <label htmlFor="status-filter" className="block">
+              <span className="text-sm font-medium text-gray-700 mb-1 block">Status</span>
               <select
                 id="status-filter"
                 value={filters.status}
@@ -220,12 +214,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <option value="active">Active</option>
                 <option value="completed">Completed</option>
               </select>
-            </div>
+            </label>
 
-            <div>
-              <label htmlFor="sort-filter" className="block text-sm font-medium text-gray-700 mb-1">
-                Sort By
-              </label>
+            <label htmlFor="sort-filter" className="block">
+              <span className="text-sm font-medium text-gray-700 mb-1 block">Sort By</span>
               <select
                 id="sort-filter"
                 value={filters.sortBy}
@@ -236,7 +228,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <option value="date">Date</option>
                 <option value="name">Name</option>
               </select>
-            </div>
+            </label>
           </div>
         </div>
       )}

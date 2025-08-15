@@ -187,42 +187,40 @@ export const ScheduledDonations: React.FC = () => {
       {/* Cancel Confirmation Modal */}
       {isCancelModalOpen && selectedSchedule && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-            <div className="p-6">
-              <div className="flex items-center justify-center mb-4">
-                <div className="bg-red-100 rounded-full p-3">
-                  <AlertTriangle className="h-6 w-6 text-red-600" />
-                </div>
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div className="flex items-center justify-center mb-4">
+              <div className="bg-red-100 rounded-full p-3">
+                <AlertTriangle className="h-6 w-6 text-red-600" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 text-center mb-2">
-                Confirm Cancellation
-              </h3>
-              <p className="text-sm text-gray-500 text-center mb-6">
-                Are you sure you want to cancel your monthly donation schedule?
-                The remaining funds (
-                {parseFloat(selectedSchedule.amountPerMonth) *
-                  selectedSchedule.monthsRemaining}{" "}
-                tokens) will be returned to your wallet.
-              </p>
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 text-center mb-2">
+              Confirm Cancellation
+            </h3>
+            <p className="text-sm text-gray-500 text-center mb-6">
+              Are you sure you want to cancel your monthly donation schedule?
+              The remaining funds (
+              {parseFloat(selectedSchedule.amountPerMonth) *
+                selectedSchedule.monthsRemaining}{" "}
+              tokens) will be returned to your wallet.
+            </p>
 
-              {cancelError && (
-                <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md">
-                  {cancelError}
-                </div>
-              )}
-
-              <div className="flex justify-center space-x-3">
-                <Button variant="secondary" onClick={handleCloseModal}>
-                  Keep Schedule
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={handleConfirmCancel}
-                  disabled={loading}
-                >
-                  {loading ? "Processing..." : "Cancel Schedule"}
-                </Button>
+            {cancelError && (
+              <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md">
+                {cancelError}
               </div>
+            )}
+
+            <div className="flex justify-center space-x-3">
+              <Button variant="secondary" onClick={handleCloseModal}>
+                Keep Schedule
+              </Button>
+              <Button
+                variant="danger"
+                onClick={handleConfirmCancel}
+                disabled={loading}
+              >
+                {loading ? "Processing..." : "Cancel Schedule"}
+              </Button>
             </div>
           </div>
         </div>

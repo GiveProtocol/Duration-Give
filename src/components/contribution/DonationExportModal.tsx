@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Calendar, Download, X } from "lucide-react";
+import { Download, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Transaction, TransactionExportOptions } from "@/types/contribution";
@@ -124,27 +124,21 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="space-y-1">
+            <label className="block text-sm font-medium text-gray-700">
               {t("export.dateRange")}
             </label>
             <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
-                <Input
-                  type="date"
-                  value={options.dateRange?.start || ""}
-                  onChange={handleStartDateChange}
-                />
-                <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              </div>
-              <div className="relative">
-                <Input
-                  type="date"
-                  value={options.dateRange?.end || ""}
-                  onChange={handleEndDateChange}
-                />
-                <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              </div>
+              <Input
+                type="date"
+                value={options.dateRange?.start || ""}
+                onChange={handleStartDateChange}
+              />
+              <Input
+                type="date"
+                value={options.dateRange?.end || ""}
+                onChange={handleEndDateChange}
+              />
             </div>
           </div>
 

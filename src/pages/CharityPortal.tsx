@@ -739,45 +739,53 @@ export const CharityPortal: React.FC = () => {
           {transactions.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead>
+                <thead className="bg-gray-50">
                   <tr>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
                       onClick={handleSortByDate}
                     >
-                      {t("contributions.date")}
-                      {getSortIcon("date")}
+                      <div className="flex items-center space-x-1">
+                        {t("contributions.date")}
+                        {getSortIcon("date")}
+                      </div>
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
                       onClick={handleSortByType}
                     >
-                      {t("contributions.type")}
-                      {getSortIcon("type")}
+                      <div className="flex items-center space-x-1">
+                        {t("contributions.type")}
+                        {getSortIcon("type")}
+                      </div>
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
                       onClick={handleSortByOrganization}
                     >
-                      {t("donor.volunteer", "Donor/Volunteer")}
-                      {getSortIcon("organization")}
+                      <div className="flex items-center space-x-1">
+                        {t("donor.volunteer", "Donor/Volunteer")}
+                        {getSortIcon("organization")}
+                      </div>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t("contributions.details")}
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
                       onClick={handleSortByStatus}
                     >
-                      {t("contributions.status")}
-                      {getSortIcon("status")}
+                      <div className="flex items-center space-x-1">
+                        {t("contributions.status")}
+                        {getSortIcon("status")}
+                      </div>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t("contributions.verification")}
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="bg-white divide-y divide-gray-200">
                   {sortedTransactions().map((transaction) => (
                     <tr key={transaction.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
