@@ -39,12 +39,14 @@ const EducationForAll: React.FC = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 text-white">
-          <span className="px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full self-start mb-2">Verified</span>
+          <span className="px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full self-start mb-2">
+            Verified
+          </span>
           <span className="text-sm opacity-90 mb-2">{charity.country}</span>
           <h1 className="text-4xl font-bold mb-2">{charity.name}</h1>
           <p className="text-lg opacity-90">{charity.description}</p>
         </div>
-        </div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -54,15 +56,21 @@ const EducationForAll: React.FC = () => {
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-sm text-gray-500 mb-1">Total Donated</p>
-              <p className="text-xl font-bold text-gray-900">{formatCurrency(charity.stats.totalDonated)}</p>
+              <p className="text-xl font-bold text-gray-900">
+                {formatCurrency(charity.stats.totalDonated)}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500 mb-1">Donors</p>
-              <p className="text-xl font-bold text-gray-900">{charity.stats.donorCount}</p>
+              <p className="text-xl font-bold text-gray-900">
+                {charity.stats.donorCount}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500 mb-1">Projects</p>
-              <p className="text-xl font-bold text-gray-900">{charity.stats.projectsCompleted}</p>
+              <p className="text-xl font-bold text-gray-900">
+                {charity.stats.projectsCompleted}
+              </p>
             </div>
           </div>
         </div>
