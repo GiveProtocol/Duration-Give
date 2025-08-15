@@ -1,7 +1,7 @@
-import React from 'react';
-import { DollarSign, Clock, Users, Award } from 'lucide-react';
-import { Card } from '@/components/ui/Card';
-import { formatCurrency } from '@/utils/money';
+import React from "react";
+import { DollarSign, Clock, Users, Award } from "lucide-react";
+import { Card } from "@/components/ui/Card";
+import { formatCurrency } from "@/utils/money";
 
 export const GlobalStats: React.FC = () => {
   // Sample data - replace with real API data
@@ -9,7 +9,7 @@ export const GlobalStats: React.FC = () => {
     totalDonated: 1245392,
     totalVolunteers: 3427,
     totalHours: 24568,
-    totalSkills: 156
+    totalSkills: 156,
   };
 
   return (
