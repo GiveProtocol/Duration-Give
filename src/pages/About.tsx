@@ -13,20 +13,16 @@ export const About: React.FC = () => {
         <section>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-200">
-              <div className="flex items-center mb-6">
-                <Target className="h-8 w-8 text-indigo-600 mr-3" />
-                <h2 className="text-2xl font-semibold text-gray-900">Our Mission</h2>
-              </div>
+              <Target className="h-8 w-8 text-indigo-600 mb-3" />
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Our Mission</h2>
               <p className="text-gray-600 leading-relaxed">
                 To revolutionize charitable giving by leveraging blockchain technology, ensuring transparency, 
                 efficiency, and lasting impact for both donors and charitable organizations.
               </p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-200">
-              <div className="flex items-center mb-6">
-                <Globe className="h-8 w-8 text-indigo-600 mr-3" />
-                <h2 className="text-2xl font-semibold text-gray-900">Our Vision</h2>
-              </div>
+              <Globe className="h-8 w-8 text-indigo-600 mb-3" />
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Our Vision</h2>
               <p className="text-gray-600 leading-relaxed">
                 A world where every charitable donation creates maximum impact through transparent, 
                 efficient, and sustainable giving mechanisms.
@@ -40,9 +36,7 @@ export const About: React.FC = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">What We Do</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-indigo-100 rounded-full p-6 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-                <Heart className="h-10 w-10 text-indigo-600" />
-              </div>
+              <Heart className="h-10 w-10 text-indigo-600 bg-indigo-100 rounded-full p-6 w-20 h-20 mx-auto mb-6" />
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Direct Donations</h3>
               <p className="text-gray-600">
                 Enable cryptocurrency donations directly to verified charitable organizations with complete transparency.

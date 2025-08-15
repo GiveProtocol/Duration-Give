@@ -402,9 +402,7 @@ export const GiveDashboard: React.FC = () => {
       {/* Metrics Grid - Flattened from 4 to 3 levels */}
       <div className="grid gap-6 mb-8 md:grid-cols-3">
         <Card className="p-6 flex items-center">
-          <div className="p-3 rounded-full bg-indigo-100 text-indigo-600 mr-4">
-            <DollarSign className="h-6 w-6" />
-          </div>
+          <DollarSign className="h-6 w-6 p-3 rounded-full bg-indigo-100 text-indigo-600 mr-4" />
           <div>
             <p className="text-sm font-medium text-gray-600">
               {t("dashboard.totalDonations")}
@@ -416,9 +414,7 @@ export const GiveDashboard: React.FC = () => {
         </Card>
 
         <Card className="p-6 flex items-center">
-          <div className="p-3 rounded-full bg-green-100 text-green-600 mr-4">
-            <Clock className="h-6 w-6" />
-          </div>
+          <Clock className="h-6 w-6 p-3 rounded-full bg-green-100 text-green-600 mr-4" />
           <div>
             <p className="text-sm font-medium text-gray-600">
               {t("dashboard.volunteerHours")}
@@ -428,9 +424,7 @@ export const GiveDashboard: React.FC = () => {
         </Card>
 
         <Card className="p-6 flex items-center">
-          <div className="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
-            <Award className="h-6 w-6" />
-          </div>
+          <Award className="h-6 w-6 p-3 rounded-full bg-purple-100 text-purple-600 mr-4" />
           <div>
             <p className="text-sm font-medium text-gray-600">
               {t("dashboard.skillsEndorsed")}

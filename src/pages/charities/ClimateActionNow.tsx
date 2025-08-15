@@ -31,38 +31,35 @@ const ClimateActionNow: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <div className="relative h-80 rounded-xl overflow-hidden mb-6">
-          <img
-            src={charity.image}
-            alt={charity.name}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 text-white">
-            <div className="flex items-center mb-2">
-              <span className="ml-3 text-sm opacity-90">{charity.country}</span>
-            </div>
-            <h1 className="text-4xl font-bold mb-2">{charity.name}</h1>
-            <p className="text-lg opacity-90">{charity.description}</p>
+      <div className="relative h-80 rounded-xl overflow-hidden mb-6">
+        <img
+          src={charity.image}
+          alt={charity.name}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 text-white">
+          <span className="text-sm opacity-90 mb-2">{charity.country}</span>
+          <h1 className="text-4xl font-bold mb-2">{charity.name}</h1>
+          <p className="text-lg opacity-90">{charity.description}</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Impact Statistics
-            </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Impact Statistics
+          </h2>
             <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="space-y-1">
-                <p className="text-sm text-gray-500">Total Donated</p>
+              <div>
+                <p className="text-sm text-gray-500 mb-1">Total Donated</p>
                 <p className="text-xl font-bold text-gray-900">{formatCurrency(charity.stats.totalDonated)}</p>
               </div>
-              <div className="space-y-1">
-                <p className="text-sm text-gray-500">Donors</p>
+              <div>
+                <p className="text-sm text-gray-500 mb-1">Donors</p>
                 <p className="text-xl font-bold text-gray-900">{charity.stats.donorCount}</p>
               </div>
-              <div className="space-y-1">
-                <p className="text-sm text-gray-500">Projects</p>
+              <div>
+                <p className="text-sm text-gray-500 mb-1">Projects</p>
                 <p className="text-xl font-bold text-gray-900">{charity.stats.projectsCompleted}</p>
               </div>
             </div>
@@ -93,27 +90,26 @@ const ClimateActionNow: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Our Mission
-            </h2>
-            <p className="text-gray-600">{charity.mission}</p>
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Our Mission
+          </h2>
+          <p className="text-gray-600">{charity.mission}</p>
+        </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Impact Highlights
-            </h2>
-            <ul className="space-y-2">
-              {charity.impact.map((item) => (
-                <li key={item} className="flex items-center text-gray-600">
-                  <span className="w-2 h-2 bg-green-500 rounded-full mr-3" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Impact Highlights
+          </h2>
+          <ul className="space-y-2">
+            {charity.impact.map((item) => (
+              <li key={item} className="flex items-center text-gray-600">
+                <span className="w-2 h-2 bg-green-500 rounded-full mr-3" />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

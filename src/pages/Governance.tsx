@@ -4,12 +4,10 @@ import { Shield, Users, Vote, Scale, Clock, AlertTriangle } from 'lucide-react';
 export const Governance: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Protocol Governance</h1>
-        <p className="text-xl text-gray-600">
-          Empowering our community through transparent and decentralized decision-making
-        </p>
-      </div>
+      <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center">Protocol Governance</h1>
+      <p className="text-xl text-gray-600 text-center mb-12">
+        Empowering our community through transparent and decentralized decision-making
+      </p>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-12">
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -20,20 +18,20 @@ export const Governance: React.FC = () => {
           <p className="text-gray-600 mb-4">
             Voting power is earned through active participation:
           </p>
-          <ul className="space-y-2 text-gray-600">
-            <li className="flex items-center">
+          <div className="space-y-2 text-gray-600">
+            <div className="flex items-center">
               <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
               Donations contribute to base voting power
-            </li>
-            <li className="flex items-center">
+            </div>
+            <div className="flex items-center">
               <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
               Volunteer hours add additional weight
-            </li>
-            <li className="flex items-center">
+            </div>
+            <div className="flex items-center">
               <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
               Verified organizations receive multipliers
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -44,20 +42,20 @@ export const Governance: React.FC = () => {
           <p className="text-gray-600 mb-4">
             Core protocol changes require:
           </p>
-          <ul className="space-y-2 text-gray-600">
-            <li className="flex items-center">
+          <div className="space-y-2 text-gray-600">
+            <div className="flex items-center">
               <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
               66% supermajority approval
-            </li>
-            <li className="flex items-center">
+            </div>
+            <div className="flex items-center">
               <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
               50% minimum participation
-            </li>
-            <li className="flex items-center">
+            </div>
+            <div className="flex items-center">
               <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
               48-hour voting period
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -68,20 +66,20 @@ export const Governance: React.FC = () => {
           <p className="text-gray-600 mb-4">
             A multi-signature council provides:
           </p>
-          <ul className="space-y-2 text-gray-600">
-            <li className="flex items-center">
+          <div className="space-y-2 text-gray-600">
+            <div className="flex items-center">
               <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
               Emergency response capabilities
-            </li>
-            <li className="flex items-center">
+            </div>
+            <div className="flex items-center">
               <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
               4/7 signatures for critical actions
-            </li>
-            <li className="flex items-center">
+            </div>
+            <div className="flex items-center">
               <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
               24-hour maximum timelock
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -127,19 +125,19 @@ export const Governance: React.FC = () => {
           <div className="grid gap-6 md:grid-cols-2">
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Standard Changes</h4>
-              <ul className="space-y-2 text-gray-600">
-                <li>• 7 days discussion period</li>
-                <li>• 48 hours voting period</li>
-                <li>• 24 hours timelock before execution</li>
-              </ul>
+              <div className="space-y-2 text-gray-600">
+                <div>• 7 days discussion period</div>
+                <div>• 48 hours voting period</div>
+                <div>• 24 hours timelock before execution</div>
+              </div>
             </div>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Emergency Actions</h4>
-              <ul className="space-y-2 text-gray-600">
-                <li>• No discussion period required</li>
-                <li>• 4/7 council signatures needed</li>
-                <li>• 24 hours maximum timelock</li>
-              </ul>
+              <div className="space-y-2 text-gray-600">
+                <div>• No discussion period required</div>
+                <div>• 4/7 council signatures needed</div>
+                <div>• 24 hours maximum timelock</div>
+              </div>
             </div>
           </div>
         </div>

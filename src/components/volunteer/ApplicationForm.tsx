@@ -391,30 +391,30 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                 Availability
               </h3>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      "Monday",
-                      "Tuesday",
-                      "Wednesday",
-                      "Thursday",
-                      "Friday",
-                      "Saturday",
-                      "Sunday",
-                    ].map((day) => (
-                      <label key={day} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          checked={formData.availability.days.includes(day)}
-                          onChange={handleDaysChange(day)}
-                          className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <span className="text-sm text-gray-700">{day}</span>
-                      </label>
-                    ))}
-                  </div>
+                <p className="block text-sm font-medium text-gray-700 mb-1">
                   Preferred Days
-                </label>
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday",
+                  ].map((day) => (
+                    <label key={day} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.availability.days.includes(day)}
+                        onChange={handleDaysChange(day)}
+                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      <span className="text-sm text-gray-700">{day}</span>
+                    </label>
+                  ))}
+                </div>
                 {validationErrors["availability.days"] && (
                   <p className="text-sm text-red-600 mb-1">
                     {validationErrors["availability.days"]}
@@ -422,22 +422,22 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  <div className="grid grid-cols-2 gap-2">
-                    {["Morning", "Afternoon", "Evening"].map((time) => (
-                      <label key={time} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          checked={formData.availability.times.includes(time)}
-                          onChange={handleTimesChange(time)}
-                          className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <span className="text-sm text-gray-700">{time}</span>
-                      </label>
-                    ))}
-                  </div>
+                <p className="block text-sm font-medium text-gray-700 mb-1">
                   Preferred Times
-                </label>
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  {["Morning", "Afternoon", "Evening"].map((time) => (
+                    <label key={time} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.availability.times.includes(time)}
+                        onChange={handleTimesChange(time)}
+                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      <span className="text-sm text-gray-700">{time}</span>
+                    </label>
+                  ))}
+                </div>
                 {validationErrors["availability.times"] && (
                   <p className="text-sm text-red-600 mb-1">
                     {validationErrors["availability.times"]}
@@ -446,17 +446,17 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  <select
-                    value={formData.commitmentType}
-                    onChange={handleCommitmentChange}
-                    className={selectClasses}
-                  >
-                    <option value="one-time">One-time</option>
-                    <option value="short-term">Short-term</option>
-                    <option value="long-term">Long-term</option>
-                  </select>
                   Commitment Level
                 </label>
+                <select
+                  value={formData.commitmentType}
+                  onChange={handleCommitmentChange}
+                  className={selectClasses}
+                >
+                  <option value="one-time">One-time</option>
+                  <option value="short-term">Short-term</option>
+                  <option value="long-term">Long-term</option>
+                </select>
               </div>
             </div>
 
@@ -467,15 +467,15 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
               </h3>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  <textarea
-                    value={formData.experience}
-                    onChange={handleExperienceChange}
-                    rows={4}
-                    className={textareaClasses}
-                    required
-                  />
                   Relevant Experience *
                 </label>
+                <textarea
+                  value={formData.experience}
+                  onChange={handleExperienceChange}
+                  rows={4}
+                  className={textareaClasses}
+                  required
+                />
                 {validationErrors["experience"] && (
                   <p className="text-sm text-red-600 mb-1">
                     {validationErrors["experience"]}
