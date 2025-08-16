@@ -82,9 +82,9 @@ export const CauseGrid: React.FC<CauseGridProps> = ({ searchTerm, category }) =>
                 <span>Progress</span>
                 <span>{formatCurrency(cause.raisedAmount)} of {formatCurrency(cause.targetAmount)}</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-4 relative overflow-hidden">
                 <div
-                  className="bg-indigo-600 h-2 rounded-full"
+                  className="absolute inset-y-0 left-0 bg-indigo-600"
                   style={{ width: `${(cause.raisedAmount / cause.targetAmount) * 100}%` }}
                 />
               </div>

@@ -47,8 +47,7 @@ const CharityDetail: React.FC = () => {
           alt={charity.name}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-40" />
-        <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+        <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 text-white">
           <span className="px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full mb-2 inline-block">Verified</span>
           <span className="ml-3 text-sm opacity-90">{charity.country}</span>
           <h1 className="text-4xl font-bold mb-2 mt-2">{charity.name}</h1>

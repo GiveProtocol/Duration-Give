@@ -616,9 +616,7 @@ export const CharityPortal: React.FC = () => {
       {/* Metrics Grid */}
       <div className="grid gap-6 mb-8 md:grid-cols-4">
         <Card className="p-6 flex items-center">
-          <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
-            <DollarSign className="h-6 w-6" />
-          </div>
+          <DollarSign className="h-12 w-12 p-3 rounded-full bg-indigo-100 text-indigo-600" />
           <div className="ml-4">
             <p className="text-sm font-medium text-gray-600">
               {t("dashboard.totalDonations")}
@@ -630,9 +628,7 @@ export const CharityPortal: React.FC = () => {
         </Card>
 
         <Card className="p-6 flex items-center">
-          <div className="p-3 rounded-full bg-green-100 text-green-600">
-            <Users className="h-6 w-6" />
-          </div>
+          <Users className="h-12 w-12 p-3 rounded-full bg-green-100 text-green-600" />
           <div className="ml-4">
             <p className="text-sm font-medium text-gray-600">
               {t("charity.activeVolunteers")}
@@ -644,9 +640,7 @@ export const CharityPortal: React.FC = () => {
         </Card>
 
         <Card className="p-6 flex items-center">
-          <div className="p-3 rounded-full bg-purple-100 text-purple-600">
-            <Clock className="h-6 w-6" />
-          </div>
+          <Clock className="h-12 w-12 p-3 rounded-full bg-purple-100 text-purple-600" />
           <div className="ml-4">
             <p className="text-sm font-medium text-gray-600">
               {t("dashboard.volunteerHours")}
@@ -658,9 +652,7 @@ export const CharityPortal: React.FC = () => {
         </Card>
 
         <Card className="p-6 flex items-center">
-          <div className="p-3 rounded-full bg-amber-100 text-amber-600">
-            <Award className="h-6 w-6" />
-          </div>
+          <Award className="h-12 w-12 p-3 rounded-full bg-amber-100 text-amber-600" />
           <div className="ml-4">
             <p className="text-sm font-medium text-gray-600">
               {t("dashboard.skillsEndorsed")}
