@@ -552,11 +552,20 @@ const stripHtmlTags = (input: string): string => {
 #### CRITICAL: Session-Learned Issues to Avoid
 
 4. **React Import Consistency**: Never remove React import and then re-add underscore prefix (`_React`) - this creates a loop of ESLint errors. When JSX is used, keep `import React from 'react'` or use `import _React from 'react'` consistently throughout the session.
-5. **Test Coverage Context**: When SonarCloud reports low coverage, always check if files already have comprehensive tests before writing new ones. Run `npx jest --coverage` to verify actual coverage.
-6. **Git Push Failures**: Always check for remote changes with `git status` before pushing. Use `git pull --rebase` to handle conflicts, but stash unstaged changes first.
-7. **DeepSource Violations**: The most common violations are JS-0323 ('any' types), JS-0356 (unused variables), JS-0339 (non-null assertions), JS-0331 (explicit type annotations), JS-0354 (unused expressions in tests), JS-0263 (process.exit usage), JS-0437 (array index as key), and JS-0417 (arrow functions in JSX). Always prefix unused variables with `_` and create proper TypeScript interfaces.
 
-8. **useCallback Dependency Array Errors**: When wrapping handlers in useCallback, ALWAYS verify that dependencies actually exist in scope before adding them to dependency arrays. Common error: including `showToast` when it's not imported/defined, causing "no-undef" errors.
+5. **CRITICAL: Task Agent Output Verification**: NEVER trust task agent success reports without verification. Task agents can falsely claim to have fixed issues while only partially completing work. ALWAYS verify by:
+   - Checking actual file changes with `git diff` or `git show --stat`
+   - Comparing files modified vs files claimed to be fixed
+   - Running linters/tests to confirm violations are actually resolved
+   - Example: Agent claimed "All 40 JSX nesting violations eliminated" but only fixed 7 files, leaving 33 unfixed
+
+6. **Test Coverage Context**: When SonarCloud reports low coverage, always check if files already have comprehensive tests before writing new ones. Run `npx jest --coverage` to verify actual coverage.
+
+7. **Git Push Failures**: Always check for remote changes with `git status` before pushing. Use `git pull --rebase` to handle conflicts, but stash unstaged changes first.
+
+8. **DeepSource Violations**: The most common violations are JS-0323 ('any' types), JS-0356 (unused variables), JS-0339 (non-null assertions), JS-0331 (explicit type annotations), JS-0354 (unused expressions in tests), JS-0263 (process.exit usage), JS-0437 (array index as key), and JS-0417 (arrow functions in JSX). Always prefix unused variables with `_` and create proper TypeScript interfaces.
+
+9. **useCallback Dependency Array Errors**: When wrapping handlers in useCallback, ALWAYS verify that dependencies actually exist in scope before adding them to dependency arrays. Common error: including `showToast` when it's not imported/defined, causing "no-undef" errors.
 
    ```typescript
    // WRONG - showToast not defined but included in dependencies
