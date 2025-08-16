@@ -239,18 +239,20 @@ export const WalletAliasSettings: React.FC = () => {
 
       {deleteConfirmId && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
-            <div className="flex items-center mb-4">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4 space-y-4">
+            <header className="flex items-center">
               <AlertCircle className="h-6 w-6 text-red-500 mr-3" />
               <h3 className="text-lg font-medium text-gray-900">
                 Confirm Deletion
               </h3>
-            </div>
-            <p className="text-gray-600 mb-6">
+            </header>
+            
+            <p className="text-gray-600">
               Are you sure you want to delete this wallet alias? This action
               cannot be undone.
             </p>
-            <div className="flex justify-end space-x-3">
+            
+            <footer className="flex justify-end space-x-3">
               <Button
                 type="button"
                 variant="secondary"
@@ -266,7 +268,7 @@ export const WalletAliasSettings: React.FC = () => {
               >
                 Delete
               </Button>
-            </div>
+            </footer>
           </div>
         </div>
       )}

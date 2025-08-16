@@ -205,27 +205,29 @@ export const ContributionTracker: React.FC = () => {
       {/* Alias Modal */}
       {showAliasModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 space-y-4">
+            <h2 className="text-xl font-semibold text-gray-900">
               Set Wallet Alias
             </h2>
-            <p className="text-gray-600 mb-4">
+            
+            <p className="text-gray-600">
               Your alias will be displayed on the contribution tracker instead
               of your wallet address.
             </p>
+            
             <Input
               label="Alias"
               value={newAlias}
               onChange={handleNewAliasChange}
               placeholder="Enter your preferred alias"
-              className="mb-4"
             />
-            <div className="flex justify-end space-x-3">
+            
+            <footer className="flex justify-end space-x-3">
               <Button variant="secondary" onClick={handleHideAliasModal}>
                 Cancel
               </Button>
               <Button onClick={handleSetAlias}>Save Alias</Button>
-            </div>
+            </footer>
           </div>
         </div>
       )}

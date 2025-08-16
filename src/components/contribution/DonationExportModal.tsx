@@ -99,8 +99,8 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-        <div className="flex justify-between items-center p-6 border-b border-gray-200">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full divide-y divide-gray-200">
+        <header className="flex justify-between items-center p-6">
           <h2 className="text-xl font-semibold text-gray-900">
             {t("export.title")}
           </h2>
@@ -110,24 +110,24 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
           >
             <X className="h-5 w-5" />
           </button>
-        </div>
+        </header>
 
-        <div className="p-6 space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+        <main className="p-6 space-y-4">
+          <label className="block">
+            <span className="text-sm font-medium text-gray-700 mb-1 block">
               {t("export.filename")}
-            </label>
+            </span>
             <Input
               value={filename}
               onChange={handleFilenameChange}
               placeholder="contributions_export"
             />
-          </div>
+          </label>
 
-          <div className="space-y-1">
-            <label className="block text-sm font-medium text-gray-700">
+          <label className="block space-y-1">
+            <span className="text-sm font-medium text-gray-700">
               {t("export.dateRange")}
-            </label>
+            </span>
             <div className="grid grid-cols-2 gap-4">
               <Input
                 type="date"
@@ -140,23 +140,20 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
                 onChange={handleEndDateChange}
               />
             </div>
-          </div>
+          </label>
 
-          <div className="flex items-center">
+          <label className="flex items-center">
             <input
               type="checkbox"
               id="includePersonalInfo"
               checked={options.includePersonalInfo}
               onChange={handleIncludePersonalInfoChange}
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded mr-2"
             />
-            <label
-              htmlFor="includePersonalInfo"
-              className="ml-2 block text-sm text-gray-900"
-            >
+            <span className="text-sm text-gray-900">
               {t("export.includePersonal")}
-            </label>
-          </div>
+            </span>
+          </label>
 
           <div className="text-sm text-gray-500">
             <p>{t("export.willInclude")}</p>
@@ -187,9 +184,9 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
               </li>
             </ul>
           </div>
-        </div>
+        </main>
 
-        <div className="flex justify-end space-x-3 p-6 border-t border-gray-200">
+        <footer className="flex justify-end space-x-3 p-6">
           <Button variant="secondary" onClick={handleClose}>
             {t("export.cancel")}
           </Button>
@@ -197,7 +194,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
             <Download className="h-4 w-4 mr-2" />
             {t("export.download")}
           </Button>
-        </div>
+        </footer>
       </div>
     </div>
   );

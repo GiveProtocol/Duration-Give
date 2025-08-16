@@ -612,13 +612,13 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-4">
+        <h2 className="text-2xl font-semibold text-gray-900">
           Apply for: {opportunityTitle}
         </h2>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md flex items-start">
+          <div className="p-3 bg-red-50 text-red-600 rounded-md flex items-start">
             <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
             <span>{error}</span>
           </div>

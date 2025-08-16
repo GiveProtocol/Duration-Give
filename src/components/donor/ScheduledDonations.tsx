@@ -187,16 +187,16 @@ export const ScheduledDonations: React.FC = () => {
       {/* Cancel Confirmation Modal */}
       {isCancelModalOpen && selectedSchedule && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-            <div className="flex items-center justify-center mb-4">
-              <div className="bg-red-100 rounded-full p-3">
-                <AlertTriangle className="h-6 w-6 text-red-600" />
-              </div>
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 space-y-4 text-center">
+            <div className="bg-red-100 rounded-full p-3 mx-auto w-fit">
+              <AlertTriangle className="h-6 w-6 text-red-600" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 text-center mb-2">
+            
+            <h3 className="text-lg font-medium text-gray-900">
               Confirm Cancellation
             </h3>
-            <p className="text-sm text-gray-500 text-center mb-6">
+            
+            <p className="text-sm text-gray-500">
               Are you sure you want to cancel your monthly donation schedule?
               The remaining funds (
               {parseFloat(selectedSchedule.amountPerMonth) *
@@ -205,7 +205,7 @@ export const ScheduledDonations: React.FC = () => {
             </p>
 
             {cancelError && (
-              <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md">
+              <div className="p-3 bg-red-50 text-red-600 rounded-md">
                 {cancelError}
               </div>
             )}
