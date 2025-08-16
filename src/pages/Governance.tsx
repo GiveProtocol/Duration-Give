@@ -89,26 +89,26 @@ export const Governance: React.FC = () => {
               <p className="text-gray-600">
                 Any account with minimum voting power can submit detailed proposals with implementation plans.
               </p>
-            </p>
+            </div>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">2. Discussion</h4>
               <p className="text-gray-600">
                 7-day minimum discussion period for community feedback and refinement.
               </p>
-            </p>
+            </div>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">3. Voting</h4>
               <p className="text-gray-600">
                 48-hour voting period with weighted voting based on participation metrics.
               </p>
-            </p>
+            </div>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">4. Execution</h4>
               <p className="text-gray-600">
                 Successful proposals are implemented after meeting all required thresholds.
               </p>
-            </p>
-          </p>
+            </div>
+          </div>
         </div>
 
         <div className="bg-white p-8 rounded-lg shadow-md">
@@ -122,14 +122,14 @@ export const Governance: React.FC = () => {
               <div className="text-gray-600 mb-2">• 7 days discussion period</div>
               <div className="text-gray-600 mb-2">• 48 hours voting period</div>
               <div className="text-gray-600">• 24 hours timelock before execution</div>
-            </p>
+            </div>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Emergency Actions</h4>
               <div className="text-gray-600 mb-2">• No discussion period required</div>
               <div className="text-gray-600 mb-2">• 4/7 council signatures needed</div>
               <div className="text-gray-600">• 24 hours maximum timelock</div>
-            </p>
-          </p>
+            </div>
+          </div>
         </div>
 
         <div className="bg-indigo-50 p-8 rounded-lg flex items-start">
@@ -139,7 +139,7 @@ export const Governance: React.FC = () => {
             <p className="text-indigo-700">
               All governance participants are required to review and understand the complete governance documentation before participating in proposals or voting. This ensures informed decision-making and maintains the integrity of our governance process.
             </p>
-          </p>
+          </div>
         </div>
       </div>
     </div>
