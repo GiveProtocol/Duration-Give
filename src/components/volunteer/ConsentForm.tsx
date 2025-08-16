@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/Button";
 import { AlertCircle } from "lucide-react";
-import { Modal } from "@/components/ui/Modal";
 
 interface ConsentFormProps {
   onAccept: () => void;
@@ -86,8 +85,8 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
   );
 
   return (
-    <Modal>
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 prose prose-sm max-w-none">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <main className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 prose prose-sm max-w-none">
         <h2 className="text-2xl font-semibold text-gray-900">
           Volunteer Application Consent Form
         </h2>
@@ -144,10 +143,8 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
             </div>
 
             <h3 className="text-lg font-semibold">SPECIFIC CONSENTS</h3>
-            <p>Please review and indicate your consent to each of the following:</p>
-
-            <div className="space-y-4 mt-4">
-                <label className="flex items-start space-x-3" htmlFor="essential-processing">
+            <p className="mb-4">Please review and indicate your consent to each of the following:</p>
+                <div className="flex items-start space-x-3">
                   <input
                     type="checkbox"
                     id="essential-processing"
@@ -155,23 +152,23 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                     onChange={handleEssentialProcessingChange}
                     className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   />
-                  <span className="text-sm">
-                    <strong className="font-semibold mb-1 block">
-                      Essential Processing (Required)
-                    </strong>
+                  <label htmlFor="essential-processing" className="text-sm">
+                    <strong className="font-semibold">Essential Processing (Required)</strong>
+                    <br />
                     I consent to GIVE PROTOCOL collecting and processing my
                     personal information for the purpose of evaluating my
                     volunteer application and, if successful, managing my
                     volunteer engagement.
-                    <em className="mt-1 text-gray-500 italic block">
+                    <br />
+                    <em className="text-gray-500 italic">
                       Note: This consent is necessary to process your volunteer
                       application. If you do not provide this consent, we will not
                       be able to consider your application.
                     </em>
-                  </span>
-                </label>
+                  </label>
+                </div>
 
-                <label className="flex items-start space-x-3" htmlFor="international-transfers">
+                <div className="flex items-start space-x-3 mt-4">
                   <input
                     type="checkbox"
                     id="international-transfers"
@@ -179,18 +176,16 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                     onChange={handleInternationalTransfersChange}
                     className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   />
-                  <span className="text-sm">
-                    <strong className="font-semibold mb-1 block">
-                      International Transfers (if applicable)
-                    </strong>
+                  <label htmlFor="international-transfers" className="text-sm">
+                    <strong className="font-semibold">International Transfers (if applicable)</strong>
+                    <br />
                     I consent to GIVE PROTOCOL transferring my personal
                     information to countries outside my country of residence,
                     including countries that may not provide the same level of
                     data protection, with appropriate safeguards in place as
                     described in the Privacy Notice.
-                  </span>
-                </label>
-              </div>
+                  </label>
+                </div>
 
             <h3 className="text-lg font-semibold">ACKNOWLEDGMENT</h3>
             <div className="space-y-4">
@@ -237,7 +232,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
             </Button>
             <Button onClick={handleAccept}>Accept and Continue</Button>
           </footer>
-      </div>
-    </Modal>
+      </main>
+    </div>
   );
 };

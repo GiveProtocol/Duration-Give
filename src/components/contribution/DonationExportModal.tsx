@@ -6,7 +6,6 @@ import { Transaction, TransactionExportOptions } from "@/types/contribution";
 import { exportDonationsToCSV } from "@/utils/export";
 import { formatDateForInput } from "@/utils/date";
 import { useTranslation } from "@/hooks/useTranslation";
-import { Modal } from "@/components/ui/Modal";
 
 interface DonationExportModalProps {
   donations: Transaction[];
@@ -99,19 +98,20 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
   }, [onClose]);
 
   return (
-    <Modal>
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full divide-y divide-gray-200">
-        <header className="flex justify-between items-center p-6">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <article className="bg-white rounded-lg shadow-xl max-w-md w-full divide-y divide-gray-200">
+        <div className="flex justify-between items-center p-6">
           <h2 className="text-xl font-semibold text-gray-900">
             {t("export.title")}
           </h2>
           <button
             onClick={handleClose}
             className="text-gray-400 hover:text-gray-500"
+            aria-label="Close"
           >
             <X className="h-5 w-5" />
           </button>
-        </header>
+        </div>
 
         <main className="p-6 space-y-4">
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -191,7 +191,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
             {t("export.download")}
           </Button>
         </footer>
-      </div>
-    </Modal>
+      </article>
+    </div>
   );
 };
