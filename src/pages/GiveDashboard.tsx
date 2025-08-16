@@ -358,14 +358,14 @@ export const GiveDashboard: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8 flex justify-between items-center">
+      <div className="mb-8 flex justify-between items-start">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">
             {t("dashboard.title")}
           </h1>
           <p className="mt-2 text-gray-600">{t("dashboard.subtitle")}</p>
         </div>
-        <div className="flex space-x-3">
+        <div className="flex space-x-3 flex-shrink-0">
           <Button
             variant="secondary"
             onClick={toggleScheduledDonations}
@@ -438,7 +438,7 @@ export const GiveDashboard: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-900">
             {t("dashboard.contributions")}
           </h2>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 flex-wrap gap-2">
             <Filter className="h-5 w-5 text-gray-400" />
             <select
               value={selectedYear}
@@ -492,34 +492,28 @@ export const GiveDashboard: React.FC = () => {
                   {getSortIcon("date")}
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                   onClick={handleSortByType}
                 >
-                  <span className="flex items-center space-x-1">
-                    <span>{t("contributions.type")}</span>
-                    {getSortIcon("type")}
-                  </span>
+                  {t("contributions.type")}
+                  {getSortIcon("type")}
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                   onClick={handleSortByOrganization}
                 >
-                  <span className="flex items-center space-x-1">
-                    <span>{t("contributions.organization")}</span>
-                    {getSortIcon("organization")}
-                  </span>
+                  {t("contributions.organization")}
+                  {getSortIcon("organization")}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   {t("contributions.details")}
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
                   onClick={handleSortByStatus}
                 >
-                  <span className="flex items-center space-x-1">
-                    <span>{t("contributions.status")}</span>
-                    {getSortIcon("status")}
-                  </span>
+                  {t("contributions.status")}
+                  {getSortIcon("status")}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   {t("contributions.verification")}

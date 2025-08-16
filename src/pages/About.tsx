@@ -60,49 +60,47 @@ export const About: React.FC = () => {
         </section>
 
         {/* Our Values */}
-        <section className="bg-gray-50 rounded-lg p-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Our Values</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                <Shield className="h-6 w-6 text-indigo-600 mr-3" />
-                Transparency
-              </h3>
-              <p className="text-gray-600">
-                Every donation and volunteer hour is recorded on the blockchain, providing unprecedented 
-                transparency in charitable giving.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                <Target className="h-6 w-6 text-indigo-600 mr-3" />
-                Impact
-              </h3>
-              <p className="text-gray-600">
-                We focus on measurable outcomes and ensure that every contribution creates meaningful, 
-                lasting change in communities worldwide.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                <Users className="h-6 w-6 text-indigo-600 mr-3" />
-                Community
-              </h3>
-              <p className="text-gray-600">
-                Building a global community of donors, volunteers, and organizations working together 
-                for positive social change.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                <TrendingUp className="h-6 w-6 text-indigo-600 mr-3" />
-                Innovation
-              </h3>
-              <p className="text-gray-600">
-                Leveraging cutting-edge blockchain technology to solve traditional challenges 
-                in charitable giving and volunteer coordination.
-              </p>
-            </div>
+        <section className="bg-gray-50 rounded-lg p-8 grid md:grid-cols-2 gap-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center md:col-span-2">Our Values</h2>
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+              <Shield className="h-6 w-6 text-indigo-600 mr-3" />
+              Transparency
+            </h3>
+            <p className="text-gray-600">
+              Every donation and volunteer hour is recorded on the blockchain, providing unprecedented 
+              transparency in charitable giving.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+              <Target className="h-6 w-6 text-indigo-600 mr-3" />
+              Impact
+            </h3>
+            <p className="text-gray-600">
+              We focus on measurable outcomes and ensure that every contribution creates meaningful, 
+              lasting change in communities worldwide.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+              <Users className="h-6 w-6 text-indigo-600 mr-3" />
+              Community
+            </h3>
+            <p className="text-gray-600">
+              Building a global community of donors, volunteers, and organizations working together 
+              for positive social change.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+              <TrendingUp className="h-6 w-6 text-indigo-600 mr-3" />
+              Innovation
+            </h3>
+            <p className="text-gray-600">
+              Leveraging cutting-edge blockchain technology to solve traditional challenges 
+              in charitable giving and volunteer coordination.
+            </p>
           </div>
         </section>
 

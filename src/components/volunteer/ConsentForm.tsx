@@ -91,7 +91,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
           Volunteer Application Consent Form
         </h2>
 
-        <main className="prose prose-sm max-w-none space-y-6">
+        <div className="prose prose-sm max-w-none space-y-6">
             <h3 className="text-lg font-semibold">
               CONSENT TO PROCESS PERSONAL INFORMATION
             </h3>
@@ -228,7 +228,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                 </label>
               </div>
             </section>
-          </main>
+          </div>
 
           {validationError && (
             <div className="p-4 bg-red-50 rounded-lg flex items-start">
