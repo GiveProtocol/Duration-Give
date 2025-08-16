@@ -23,6 +23,7 @@ npm run test         # Run Hardhat tests
 ## Environment Setup
 
 `.env` file required:
+
 - `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
 - `VITE_MOONBASE_RPC_URL`
 - Private keys for deployment (never commit!)
@@ -32,10 +33,11 @@ npm run test         # Run Hardhat tests
 ### Top 10 DeepSource Violations (CI/CD Failures)
 
 1. **JS-0356: Unused variables** - Prefix with `_` or use the variable
+
    ```typescript
    // WRONG
    const mockSpy = jest.spyOn(module, "method");
-   
+
    // CORRECT
    const _mockSpy = jest.spyOn(module, "method");
    // OR use it
@@ -43,20 +45,22 @@ npm run test         # Run Hardhat tests
    ```
 
 2. **JS-0323: `any` type** - Create proper TypeScript interfaces
+
    ```typescript
    // WRONG
    const props: any = { ... };
-   
+
    // CORRECT
    interface Props { onClose: () => void; children: React.ReactNode; }
    ```
 
 3. **JS-0417: Arrow functions in JSX props** - Creates new function every render
+
    ```typescript
    // WRONG
    <button onClick={() => handleClick(id)}>Click</button>
    <input onChange={(e) => setValue(e.target.value)} />
-   
+
    // CORRECT - Always use useCallback
    const handleClick = useCallback((e: React.MouseEvent) => {
      const id = e.currentTarget.dataset.id;
@@ -66,28 +70,31 @@ npm run test         # Run Hardhat tests
    ```
 
 4. **JS-0415: JSX nesting >4 levels** - Combine CSS classes to flatten
+
    ```typescript
    // WRONG - 5 levels: table > thead > tr > th > div
    <table><thead><tr><th><div className="flex">Content</div></th></tr></thead></table>
-   
+
    // CORRECT - Apply classes directly (4 levels)
    <table><thead><tr><th className="flex">Content</th></tr></thead></table>
    ```
 
 5. **JS-0359: `require()` statements** - Use ES6 imports
+
    ```typescript
    // WRONG
    const module = require("./module");
-   
+
    // CORRECT
    import * as module from "./module";
    ```
 
 6. **JS-0321: Empty functions** - Add explanatory comments
+
    ```typescript
    // WRONG
    jest.spyOn(obj, "method").mockImplementation(() => {});
-   
+
    // CORRECT
    jest.spyOn(obj, "method").mockImplementation(() => {
      // Empty mock to prevent actual execution
@@ -95,38 +102,42 @@ npm run test         # Run Hardhat tests
    ```
 
 7. **JS-0339: Non-null assertions** - Add explicit checks
+
    ```typescript
    // WRONG
    const timestamp = block!.timestamp;
-   
+
    // CORRECT
    if (!block) throw new Error("Could not get latest block");
    const timestamp = block.timestamp;
    ```
 
 8. **JS-0437: Array index as React key** - Use stable IDs
+
    ```typescript
    // WRONG
    {items.map((item, index) => <Item key={index} />)}
-   
+
    // CORRECT
    {items.map((item) => <Item key={item.id} />)}
    ```
 
 9. **JS-0246: String concatenation** - Use template literals
+
    ```typescript
    // WRONG
    url = "/" + url;
-   
+
    // CORRECT
    url = `/${url}`;
    ```
 
 10. **JS-0066: `!!` type coercion** - Use explicit conversion
+
     ```typescript
     // WRONG
     const isConnected = !!address;
-    
+
     // CORRECT
     const isConnected = Boolean(address);
     ```
@@ -134,6 +145,7 @@ npm run test         # Run Hardhat tests
 ### Security Patterns
 
 **HTML Sanitization (CodeQL js/incomplete-multi-character-sanitization)**
+
 ```typescript
 // WRONG - Vulnerable to incomplete sanitization
 const sanitized = input.replace(/<[^>]*>/g, "");

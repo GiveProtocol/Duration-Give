@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "./Logo";
 import { ConnectButton } from "./web3/ConnectButton";
@@ -102,7 +108,14 @@ const MobileNavLinks: React.FC<{
   handleDashboardClick: () => void;
   handleLinkClick: () => void;
   t: (_key: string) => string;
-}> = ({ isLimitedNavPage, isActive, userType, handleDashboardClick, handleLinkClick, t }) => {
+}> = ({
+  isLimitedNavPage,
+  isActive,
+  userType,
+  handleDashboardClick,
+  handleLinkClick,
+  t,
+}) => {
   const handleDashboardAndClose = useCallback(() => {
     handleLinkClick();
     handleDashboardClick();
@@ -201,7 +214,7 @@ const MobileMenu: React.FC<{
   children: React.ReactNode;
 }> = ({ isMenuOpen, children }) => {
   if (!isMenuOpen) return null;
-  
+
   return (
     <div
       className="md:hidden"
@@ -241,11 +254,7 @@ const MobileMenuButton: React.FC<{
 
 // Nav header component to reduce nesting
 const NavHeader: React.FC = () => (
-  <Link
-    to="/"
-    className="flex items-center"
-    aria-label="Give Protocol home"
-  >
+  <Link to="/" className="flex items-center" aria-label="Give Protocol home">
     <Logo className="h-8 w-8" />
     <span className="ml-2 text-2xl font-bold text-primary-900">
       Give Protocol
@@ -279,18 +288,21 @@ export const AppNavbar: React.FC = () => {
   const { userType } = useAuth();
 
   // Check if current page should only show limited navigation
-  const isLimitedNavPage = useMemo(() => [
-    "/about",
-    "/legal",
-    "/privacy",
-    "/governance",
-  ].includes(location.pathname), [location.pathname]);
+  const isLimitedNavPage = useMemo(
+    () =>
+      ["/about", "/legal", "/privacy", "/governance"].includes(
+        location.pathname,
+      ),
+    [location.pathname],
+  );
 
-  const isActive = useCallback((path: string) =>
-    location.pathname === path
-      ? "bg-primary-100 text-primary-900"
-      : "text-gray-700 hover:bg-primary-50"
-  , [location.pathname]);
+  const isActive = useCallback(
+    (path: string) =>
+      location.pathname === path
+        ? "bg-primary-100 text-primary-900"
+        : "text-gray-700 hover:bg-primary-50",
+    [location.pathname],
+  );
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen(!isMenuOpen);
@@ -328,7 +340,7 @@ export const AppNavbar: React.FC = () => {
       className="bg-background-primary border-b border-gray-200 shadow-sm"
       aria-label="Application navigation"
     >
-      <div 
+      <div
         className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16"
         onKeyDown={handleKeyDown}
         role="menubar"
@@ -346,7 +358,7 @@ export const AppNavbar: React.FC = () => {
             />
           </div>
         </div>
-        <NavActions 
+        <NavActions
           isMenuOpen={isMenuOpen}
           toggleMenu={toggleMenu}
           menuButtonRef={menuButtonRef}
