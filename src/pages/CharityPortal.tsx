@@ -732,105 +732,102 @@ export const CharityPortal: React.FC = () => {
             <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
               <thead className="bg-gray-50">
                 <tr>
-                    <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
-                      onClick={handleSortByDate}
-                    >
-                      {t("contributions.date")}
-                      {getSortIcon("date")}
-                    </th>
-                    <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
-                      onClick={handleSortByType}
-                    >
-                      {t("contributions.type")}
-                      {getSortIcon("type")}
-                    </th>
-                    <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
-                      onClick={handleSortByOrganization}
-                    >
-                      {t("donor.volunteer", "Donor/Volunteer")}
-                      {getSortIcon("organization")}
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      {t("contributions.details")}
-                    </th>
-                    <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
-                      onClick={handleSortByStatus}
-                    >
-                      {t("contributions.status")}
-                      {getSortIcon("status")}
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      {t("contributions.verification")}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {sortedTransactions().map((transaction) => (
-                    <tr key={transaction.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {formatDate(transaction.timestamp, true)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <th
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
+                    onClick={handleSortByDate}
+                  >
+                    {t("contributions.date")}
+                    {getSortIcon("date")}
+                  </th>
+                  <th
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
+                    onClick={handleSortByType}
+                  >
+                    {t("contributions.type")}
+                    {getSortIcon("type")}
+                  </th>
+                  <th
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
+                    onClick={handleSortByOrganization}
+                  >
+                    {t("donor.volunteer", "Donor/Volunteer")}
+                    {getSortIcon("organization")}
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    {t("contributions.details")}
+                  </th>
+                  <th
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
+                    onClick={handleSortByStatus}
+                  >
+                    {t("contributions.status")}
+                    {getSortIcon("status")}
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    {t("contributions.verification")}
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {sortedTransactions().map((transaction) => (
+                  <tr key={transaction.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {formatDate(transaction.timestamp, true)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {t(
+                        `contribution.type.${transaction.purpose.toLowerCase().replace(" ", "")}`,
+                        transaction.purpose,
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaction.metadata?.organization ||
+                        transaction.metadata?.donor ||
+                        t("donor.anonymous", "Anonymous")}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <span>
+                        {transaction.amount} {transaction.cryptoType} (
+                        <CurrencyDisplay amount={transaction.fiatValue || 0} />)
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span
+                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          transaction.status === "completed"
+                            ? "bg-green-100 text-green-800"
+                            : transaction.status === "pending"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : "bg-red-100 text-red-800"
+                        }`}
+                      >
                         {t(
-                          `contribution.type.${transaction.purpose.toLowerCase().replace(" ", "")}`,
-                          transaction.purpose,
+                          `status.${transaction.status}`,
+                          transaction.status.charAt(0).toUpperCase() +
+                            transaction.status.slice(1),
                         )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {transaction.metadata?.organization ||
-                          transaction.metadata?.donor ||
-                          t("donor.anonymous", "Anonymous")}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <span>
-                          {transaction.amount} {transaction.cryptoType} (
-                          <CurrencyDisplay
-                            amount={transaction.fiatValue || 0}
-                          />
-                          )
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            transaction.status === "completed"
-                              ? "bg-green-100 text-green-800"
-                              : transaction.status === "pending"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : "bg-red-100 text-red-800"
-                          }`}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {transaction.hash ? (
+                        <a
+                          href={`https://moonscan.io/tx/${transaction.hash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-indigo-600 hover:text-indigo-900 flex items-center"
                         >
-                          {t(
-                            `status.${transaction.status}`,
-                            transaction.status.charAt(0).toUpperCase() +
-                              transaction.status.slice(1),
-                          )}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {transaction.hash ? (
-                          <a
-                            href={`https://moonscan.io/tx/${transaction.hash}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-indigo-600 hover:text-indigo-900 flex items-center"
-                          >
-                            <span className="truncate max-w-[100px]">
-                              {transaction.hash.substring(0, 10)}...
-                            </span>
-                            <ExternalLink className="h-3 w-3 ml-1" />
-                          </a>
-                        ) : (
-                          t("common.notAvailable", "N/A")
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                          <span className="truncate max-w-[100px]">
+                            {transaction.hash.substring(0, 10)}...
+                          </span>
+                          <ExternalLink className="h-3 w-3 ml-1" />
+                        </a>
+                      ) : (
+                        t("common.notAvailable", "N/A")
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           ) : (
             <div className="text-center py-8 text-gray-500">
