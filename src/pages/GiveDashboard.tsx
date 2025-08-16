@@ -481,126 +481,125 @@ export const GiveDashboard: React.FC = () => {
           </div>
         </div>
         <table className="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr>
-                <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
-                  onClick={handleSortByDate}
-                >
-                  <span>{t("contributions.date")}</span>
-                  {getSortIcon("date")}
-                </th>
-                <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
-                  onClick={handleSortByType}
-                >
-                  {t("contributions.type")}
-                  {getSortIcon("type")}
-                </th>
-                <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
-                  onClick={handleSortByOrganization}
-                >
-                  {t("contributions.organization")}
-                  {getSortIcon("organization")}
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {t("contributions.details")}
-                </th>
-                <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
-                  onClick={handleSortByStatus}
-                >
-                  {t("contributions.status")}
-                  {getSortIcon("status")}
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {t("contributions.verification")}
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {filteredContributions.map((contribution) => (
-                <tr key={contribution.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {formatDate(contribution.timestamp, true)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {t(
-                      `contribution.type.${contribution.purpose.toLowerCase().replace(" ", "")}`,
-                      contribution.purpose,
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {contribution.metadata?.organization ||
-                      t("common.unknown", "Unknown")}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {contribution.purpose === "Donation" ? (
-                      <span>
-                        {contribution.amount} {contribution.cryptoType} (
-                        <CurrencyDisplay amount={contribution.fiatValue || 0} />
-                        )
-                      </span>
-                    ) : contribution.purpose === "Volunteer Hours" ? (
-                      <span>
-                        {contribution.metadata?.hours} {t("volunteer.hours")} -{" "}
-                        {contribution.metadata?.description}
-                      </span>
-                    ) : (
-                      <span>{contribution.metadata?.opportunity}</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        contribution.status === "completed"
-                          ? "bg-green-100 text-green-800"
-                          : contribution.status === "pending"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {t(
-                        `status.${contribution.status}`,
-                        contribution.status.charAt(0).toUpperCase() +
-                          contribution.status.slice(1),
-                      )}
+          <thead>
+            <tr>
+              <th
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                onClick={handleSortByDate}
+              >
+                <span>{t("contributions.date")}</span>
+                {getSortIcon("date")}
+              </th>
+              <th
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                onClick={handleSortByType}
+              >
+                {t("contributions.type")}
+                {getSortIcon("type")}
+              </th>
+              <th
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                onClick={handleSortByOrganization}
+              >
+                {t("contributions.organization")}
+                {getSortIcon("organization")}
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {t("contributions.details")}
+              </th>
+              <th
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                onClick={handleSortByStatus}
+              >
+                {t("contributions.status")}
+                {getSortIcon("status")}
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {t("contributions.verification")}
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {filteredContributions.map((contribution) => (
+              <tr key={contribution.id}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {formatDate(contribution.timestamp, true)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {t(
+                    `contribution.type.${contribution.purpose.toLowerCase().replace(" ", "")}`,
+                    contribution.purpose,
+                  )}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {contribution.metadata?.organization ||
+                    t("common.unknown", "Unknown")}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {contribution.purpose === "Donation" ? (
+                    <span>
+                      {contribution.amount} {contribution.cryptoType} (
+                      <CurrencyDisplay amount={contribution.fiatValue || 0} />)
                     </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {contribution.hash ||
-                    contribution.metadata?.verificationHash ? (
-                      <a
-                        href={`https://moonscan.io/tx/${contribution.hash || contribution.metadata?.verificationHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-indigo-600 hover:text-indigo-900 flex items-center"
-                      >
-                        <span className="truncate max-w-[100px] mr-1">
-                          {(
-                            contribution.hash ||
-                            contribution.metadata?.verificationHash ||
-                            ""
-                          ).substring(0, 10)}
-                          ...
-                        </span>
-                        <ExternalLink className="h-3 w-3" />
-                      </a>
-                    ) : (
-                      t("common.notAvailable", "N/A")
+                  ) : contribution.purpose === "Volunteer Hours" ? (
+                    <span>
+                      {contribution.metadata?.hours} {t("volunteer.hours")} -{" "}
+                      {contribution.metadata?.description}
+                    </span>
+                  ) : (
+                    <span>{contribution.metadata?.opportunity}</span>
+                  )}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      contribution.status === "completed"
+                        ? "bg-green-100 text-green-800"
+                        : contribution.status === "pending"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {t(
+                      `status.${contribution.status}`,
+                      contribution.status.charAt(0).toUpperCase() +
+                        contribution.status.slice(1),
                     )}
-                    {contribution.metadata?.blockNumber && (
-                      <div className="text-xs text-gray-500 mt-1">
-                        {t("blockchain.block", "Block")} #
-                        {contribution.metadata.blockNumber}
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {contribution.hash ||
+                  contribution.metadata?.verificationHash ? (
+                    <a
+                      href={`https://moonscan.io/tx/${contribution.hash || contribution.metadata?.verificationHash}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-indigo-600 hover:text-indigo-900 flex items-center"
+                    >
+                      <span className="truncate max-w-[100px] mr-1">
+                        {(
+                          contribution.hash ||
+                          contribution.metadata?.verificationHash ||
+                          ""
+                        ).substring(0, 10)}
+                        ...
+                      </span>
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
+                  ) : (
+                    t("common.notAvailable", "N/A")
+                  )}
+                  {contribution.metadata?.blockNumber && (
+                    <div className="text-xs text-gray-500 mt-1">
+                      {t("blockchain.block", "Block")} #
+                      {contribution.metadata.blockNumber}
+                    </div>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Skills & Endorsements - Flattened from 4 to 3 levels */}
