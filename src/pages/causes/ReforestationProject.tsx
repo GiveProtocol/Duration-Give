@@ -75,13 +75,16 @@ const ReforestationProject: React.FC = () => {
             Project Details
           </h2>
           <dl className="space-y-4">
-            <dt className="text-sm text-gray-500">Timeline
+            <dt className="text-sm text-gray-500">
+              Timeline
               <dd className="font-medium mb-3">{cause.timeline}</dd>
             </dt>
-            <dt className="text-sm text-gray-500">Location
+            <dt className="text-sm text-gray-500">
+              Location
               <dd className="font-medium mb-3">{cause.location}</dd>
             </dt>
-            <dt className="text-sm text-gray-500 mb-1">Key Partners
+            <dt className="text-sm text-gray-500 mb-1">
+              Key Partners
               <dd>
                 <ul className="list-disc list-inside space-y-1">
                   {cause.partners.map((partner) => (

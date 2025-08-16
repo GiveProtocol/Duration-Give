@@ -1,43 +1,54 @@
-import React, { useState, useCallback } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { useCountries } from '@/hooks/useCountries';
-import { validateEmail, validatePassword, validateName, validatePhoneNumber } from '@/utils/validation';
-import { AlertCircle } from 'lucide-react';
+import React, { useState, useCallback } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { useCountries } from "@/hooks/useCountries";
+import {
+  validateEmail,
+  validatePassword,
+  validateName,
+  validatePhoneNumber,
+} from "@/utils/validation";
+import { AlertCircle } from "lucide-react";
 
 export const CharityVettingForm: React.FC = () => {
   const { register, loading } = useAuth();
   const { countries } = useCountries();
-  const [error, setError] = useState('');
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [error, setError] = useState("");
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({});
 
   const [formData, setFormData] = useState({
-    organizationName: '',
-    description: '',
-    category: '',
-    streetAddress: '',
-    city: '',
-    state: '',
-    country: '',
-    postalCode: '',
-    taxId: '',
-    contactName: '',
-    contactEmail: '',
-    contactPhone: '',
-    password: '',
-    confirmPassword: ''
+    organizationName: "",
+    description: "",
+    category: "",
+    streetAddress: "",
+    city: "",
+    state: "",
+    country: "",
+    postalCode: "",
+    taxId: "",
+    contactName: "",
+    contactEmail: "",
+    contactPhone: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+      >,
+    ) => {
       const { name, value } = e.target;
-      setFormData(prev => ({ ...prev, [name]: value }));
-      setError('');
-      
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      setError("");
+
       // Clear validation error for this field
       if (validationErrors[name]) {
-        setValidationErrors(prev => {
+        setValidationErrors((prev) => {
           const { [name]: _, ...rest } = prev;
           return rest;
         });
@@ -48,102 +59,111 @@ export const CharityVettingForm: React.FC = () => {
 
   const validateField = (name: string, value: string): string => {
     switch (name) {
-      case 'organizationName':
-        return validateName(value) ? '' : 'Organization name must be between 2 and 100 characters';
-      case 'contactName':
-        return validateName(value) ? '' : 'Contact name must be between 2 and 100 characters';
-      case 'contactEmail':
-        return validateEmail(value) ? '' : 'Please enter a valid email address';
-      case 'contactPhone':
-        return validatePhoneNumber(value) ? '' : 'Please enter a valid phone number';
-      case 'password':
-        return validatePassword(value) ? '' : 'Password must be at least 8 characters long';
-      case 'confirmPassword':
-        return value === formData.password ? '' : 'Passwords do not match';
+      case "organizationName":
+        return validateName(value)
+          ? ""
+          : "Organization name must be between 2 and 100 characters";
+      case "contactName":
+        return validateName(value)
+          ? ""
+          : "Contact name must be between 2 and 100 characters";
+      case "contactEmail":
+        return validateEmail(value) ? "" : "Please enter a valid email address";
+      case "contactPhone":
+        return validatePhoneNumber(value)
+          ? ""
+          : "Please enter a valid phone number";
+      case "password":
+        return validatePassword(value)
+          ? ""
+          : "Password must be at least 8 characters long";
+      case "confirmPassword":
+        return value === formData.password ? "" : "Passwords do not match";
       default:
-        return '';
+        return "";
     }
   };
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      setError('');
+      setError("");
       setValidationErrors({});
 
       // Validate all fields
       const errors: Record<string, string> = {};
-      
+
       // Required fields to validate
       const fieldsToValidate = [
-        { name: 'organizationName', value: formData.organizationName },
-        { name: 'contactName', value: formData.contactName },
-        { name: 'contactEmail', value: formData.contactEmail },
-        { name: 'contactPhone', value: formData.contactPhone },
-        { name: 'password', value: formData.password },
-        { name: 'confirmPassword', value: formData.confirmPassword }
+        { name: "organizationName", value: formData.organizationName },
+        { name: "contactName", value: formData.contactName },
+        { name: "contactEmail", value: formData.contactEmail },
+        { name: "contactPhone", value: formData.contactPhone },
+        { name: "password", value: formData.password },
+        { name: "confirmPassword", value: formData.confirmPassword },
       ];
-      
+
       fieldsToValidate.forEach(({ name, value }) => {
         const error = validateField(name, value);
         if (error) {
           errors[name] = error;
         }
       });
-      
+
       // Additional required fields
       if (!formData.description.trim()) {
-        errors['description'] = 'Description is required';
+        errors["description"] = "Description is required";
       }
-      
+
       if (!formData.category.trim()) {
-        errors['category'] = 'Category is required';
+        errors["category"] = "Category is required";
       }
-      
+
       if (!formData.taxId.trim()) {
-        errors['taxId'] = 'Tax ID is required';
+        errors["taxId"] = "Tax ID is required";
       }
-      
+
       if (!formData.streetAddress.trim()) {
-        errors['streetAddress'] = 'Street address is required';
+        errors["streetAddress"] = "Street address is required";
       }
-      
+
       if (!formData.city.trim()) {
-        errors['city'] = 'City is required';
+        errors["city"] = "City is required";
       }
-      
+
       if (!formData.country) {
-        errors['country'] = 'Country is required';
+        errors["country"] = "Country is required";
       }
 
       // If there are validation errors, don't submit
       if (Object.keys(errors).length > 0) {
         setValidationErrors(errors);
-        setError('Please correct the validation errors');
+        setError("Please correct the validation errors");
         return;
       }
 
       try {
-        await register(formData.contactEmail, formData.password, 'charity', {
+        await register(formData.contactEmail, formData.password, "charity", {
           organizationName: formData.organizationName,
           description: formData.description,
           category: formData.category,
-          type: 'charity', // Explicitly set type to ensure it's stored in metadata
+          type: "charity", // Explicitly set type to ensure it's stored in metadata
           address: {
             street: formData.streetAddress,
             city: formData.city,
             state: formData.state,
             country: formData.country,
-            postalCode: formData.postalCode
+            postalCode: formData.postalCode,
           },
           taxId: formData.taxId,
           contact: {
             name: formData.contactName,
-            phone: formData.contactPhone
-          }
+            phone: formData.contactPhone,
+          },
         });
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Failed to submit application';
+        const message =
+          err instanceof Error ? err.message : "Failed to submit application";
         setError(message);
       }
     },
@@ -160,14 +180,16 @@ export const CharityVettingForm: React.FC = () => {
       )}
 
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900">Organization Details</h3>
+        <h3 className="text-lg font-semibold text-gray-900">
+          Organization Details
+        </h3>
         <Input
           label="Organization Name"
           name="organizationName"
           value={formData.organizationName}
           onChange={handleChange}
           required
-          error={validationErrors['organizationName']}
+          error={validationErrors["organizationName"]}
         />
 
         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -180,8 +202,10 @@ export const CharityVettingForm: React.FC = () => {
             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50 mt-1"
             required
           />
-          {validationErrors['description'] && (
-            <p className="mt-1 text-sm text-red-600">{validationErrors['description']}</p>
+          {validationErrors["description"] && (
+            <p className="mt-1 text-sm text-red-600">
+              {validationErrors["description"]}
+            </p>
           )}
         </label>
 
@@ -191,7 +215,7 @@ export const CharityVettingForm: React.FC = () => {
           value={formData.category}
           onChange={handleChange}
           required
-          error={validationErrors['category']}
+          error={validationErrors["category"]}
         />
 
         <Input
@@ -200,7 +224,7 @@ export const CharityVettingForm: React.FC = () => {
           value={formData.taxId}
           onChange={handleChange}
           required
-          error={validationErrors['taxId']}
+          error={validationErrors["taxId"]}
         />
       </div>
 
@@ -212,7 +236,7 @@ export const CharityVettingForm: React.FC = () => {
           value={formData.streetAddress}
           onChange={handleChange}
           required
-          error={validationErrors['streetAddress']}
+          error={validationErrors["streetAddress"]}
         />
 
         <div className="grid grid-cols-2 gap-4">
@@ -222,7 +246,7 @@ export const CharityVettingForm: React.FC = () => {
             value={formData.city}
             onChange={handleChange}
             required
-            error={validationErrors['city']}
+            error={validationErrors["city"]}
           />
           <Input
             label="State/Province"
@@ -230,13 +254,15 @@ export const CharityVettingForm: React.FC = () => {
             value={formData.state}
             onChange={handleChange}
             required
-            error={validationErrors['state']}
+            error={validationErrors["state"]}
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <label className="block">
-            <span className="text-sm font-medium text-gray-700 mb-1 block">Country</span>
+            <span className="text-sm font-medium text-gray-700 mb-1 block">
+              Country
+            </span>
             <select
               name="country"
               value={formData.country}
@@ -245,14 +271,16 @@ export const CharityVettingForm: React.FC = () => {
               required
             >
               <option value="">Select Country</option>
-              {countries.map(country => (
+              {countries.map((country) => (
                 <option key={country.code} value={country.code}>
                   {country.name}
                 </option>
               ))}
             </select>
-            {validationErrors['country'] && (
-              <p className="mt-1 text-sm text-red-600">{validationErrors['country']}</p>
+            {validationErrors["country"] && (
+              <p className="mt-1 text-sm text-red-600">
+                {validationErrors["country"]}
+              </p>
             )}
           </label>
           <Input
@@ -261,20 +289,22 @@ export const CharityVettingForm: React.FC = () => {
             value={formData.postalCode}
             onChange={handleChange}
             required
-            error={validationErrors['postalCode']}
+            error={validationErrors["postalCode"]}
           />
         </div>
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900">Contact Information</h3>
+        <h3 className="text-lg font-semibold text-gray-900">
+          Contact Information
+        </h3>
         <Input
           label="Contact Name"
           name="contactName"
           value={formData.contactName}
           onChange={handleChange}
           required
-          error={validationErrors['contactName']}
+          error={validationErrors["contactName"]}
         />
         <Input
           label="Contact Email"
@@ -283,7 +313,7 @@ export const CharityVettingForm: React.FC = () => {
           value={formData.contactEmail}
           onChange={handleChange}
           required
-          error={validationErrors['contactEmail']}
+          error={validationErrors["contactEmail"]}
         />
         <Input
           label="Contact Phone"
@@ -292,12 +322,14 @@ export const CharityVettingForm: React.FC = () => {
           value={formData.contactPhone}
           onChange={handleChange}
           required
-          error={validationErrors['contactPhone']}
+          error={validationErrors["contactPhone"]}
         />
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900">Account Security</h3>
+        <h3 className="text-lg font-semibold text-gray-900">
+          Account Security
+        </h3>
         <Input
           label="Password"
           type="password"
@@ -305,7 +337,7 @@ export const CharityVettingForm: React.FC = () => {
           value={formData.password}
           onChange={handleChange}
           required
-          error={validationErrors['password']}
+          error={validationErrors["password"]}
         />
         <Input
           label="Confirm Password"
@@ -314,16 +346,12 @@ export const CharityVettingForm: React.FC = () => {
           value={formData.confirmPassword}
           onChange={handleChange}
           required
-          error={validationErrors['confirmPassword']}
+          error={validationErrors["confirmPassword"]}
         />
       </div>
 
-      <Button
-        type="submit"
-        className="w-full"
-        disabled={loading}
-      >
-        {loading ? 'Submitting Application...' : 'Submit Charity Application'}
+      <Button type="submit" className="w-full" disabled={loading}>
+        {loading ? "Submitting Application..." : "Submit Charity Application"}
       </Button>
     </form>
   );
