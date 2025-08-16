@@ -152,9 +152,8 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
             </span>
           </label>
 
-          <div className="text-sm text-gray-500">
-            <p>{t("export.willInclude")}</p>
-            <ul className="list-disc list-inside mt-1 space-y-1">
+          <p className="text-sm text-gray-500">{t("export.willInclude")}</p>
+          <ul className="text-sm text-gray-500 list-disc list-inside mt-1 space-y-1">
               <li>{t("contributions.date")}</li>
               <li>{t("contributions.type")}</li>
               <li>{t("contributions.details")}</li>
@@ -180,7 +179,6 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
                 )}
               </li>
             </ul>
-          </div>
         </main>
 
         <footer className="flex justify-end space-x-3 p-6">

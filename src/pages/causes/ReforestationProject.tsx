@@ -31,8 +31,8 @@ const ReforestationProject: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="relative h-80 rounded-xl overflow-hidden mb-6">
+    <>
+      <div className="relative h-80 rounded-xl overflow-hidden mb-6 mx-4 sm:mx-6 lg:mx-8 mt-8">
         <img
           src={cause.image}
           alt={cause.name}
@@ -43,8 +43,9 @@ const ReforestationProject: React.FC = () => {
           <p className="text-lg opacity-90">{cause.description}</p>
         </div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-white p-6 rounded-lg shadow-md space-y-4">
           <h2 className="text-xl font-semibold text-gray-900">
             Funding Progress
@@ -108,8 +109,9 @@ const ReforestationProject: React.FC = () => {
             </p>
           ))}
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
