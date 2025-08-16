@@ -3,13 +3,13 @@ version = 1
 [[analyzers]]
 name = "javascript"
 enabled = true
+exclude_patterns = ["JS-0415"]
 
   [analyzers.meta]
   plugins = ["react"]
   environment = ["nodejs"]
   style_guide = "standard"
   skip_doc_coverage = ["function-expression", "arrow-function-expression", "class-expression", "method-definition"]
-  exclude_patterns = ["JS-0415"]
 
 [[analyzers]]
 name = "secrets"
