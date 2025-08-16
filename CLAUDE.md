@@ -662,10 +662,10 @@ const handleLinkSubmit = useCallback((e: React.FormEvent) => {
 
 ```typescript
 // WRONG - Using let for never-reassigned variable
-let sanitized = input.trim().slice(0, max).replace(/[<>]/g, '');
+let sanitized = input.trim().slice(0, max).replace(/[<>]/g, "");
 
 // CORRECT - Use const for immutable references
-const sanitized = input.trim().slice(0, max).replace(/[<>]/g, '');
+const sanitized = input.trim().slice(0, max).replace(/[<>]/g, "");
 ```
 
 20. **CRITICAL: Arrow Functions in JSX (JS-0417)**: NEVER use arrow functions directly in JSX props:
@@ -797,7 +797,7 @@ rg "<form.*>[\s\S]*?<div.*>[\s\S]*?<div.*>[\s\S]*?<div.*>[\s\S]*?<label" src/ --
 <table>
   <thead>
     <tr>
-      <th 
+      <th
         onClick={handleSort}
         className="flex items-center space-x-1"
       >
@@ -883,18 +883,21 @@ rg "<form.*>[\s\S]*?<div.*>[\s\S]*?<div.*>[\s\S]*?<div.*>[\s\S]*?<label" src/ --
 **Systematic JSX Nesting Prevention Strategy:**
 
 1. **CSS Class Combination (PREFERRED)**: Merge multiple wrapper div responsibilities
+
    ```typescript
    // Instead of: <div><div className="a"><div className="b">content</div></div></div>
    // Use: <div className="a b">content</div>
    ```
 
 2. **Direct Property Application**: Apply flex/grid classes directly to semantic elements
+
    ```typescript
    // Instead of: <th><div className="flex">content</div></th>
    // Use: <th className="flex">content</th>
    ```
 
 3. **Conditional Structure Flattening**: Move conditionals outside containers
+
    ```typescript
    // Instead of: <wrapper>{condition && <deep><structure /></deep>}</wrapper>
    // Use: {condition && <wrapper><structure /></wrapper>}
@@ -909,6 +912,7 @@ rg "<form.*>[\s\S]*?<div.*>[\s\S]*?<div.*>[\s\S]*?<div.*>[\s\S]*?<label" src/ --
 **CRITICAL: Component Extraction Anti-Pattern**
 
 ⚠️ **WARNING**: Component extraction WITHOUT proper memoization creates cascade failures:
+
 - 1 JS-0415 (nesting) violation becomes 16+ JS-0417 (arrow function) violations
 - ALWAYS wrap event handlers in useCallback BEFORE extracting components
 
