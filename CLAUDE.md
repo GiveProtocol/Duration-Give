@@ -579,22 +579,22 @@ const stripHtmlTags = (input: string): string => {
    }, [amount, charityAddress]);
    ```
 
-9. **Production Comment Standards**: NEVER use TODO/FIXME/XXX comments in production code (DeepSource JS-0099). Replace with descriptive comments about current implementation status:
+10. **Production Comment Standards**: NEVER use TODO/FIXME/XXX comments in production code (DeepSource JS-0099). Replace with descriptive comments about current implementation status:
 
-   ```typescript
-   // WRONG - Flagged by DeepSource JS-0099
-   const handleOAuth = useCallback(() => {
-     // TODO: Implement Google OAuth
-   }, []);
+    ```typescript
+    // WRONG - Flagged by DeepSource JS-0099
+    const handleOAuth = useCallback(() => {
+      // TODO: Implement Google OAuth
+    }, []);
 
-   // CORRECT - Descriptive without warning terms
-   const handleOAuth = useCallback(() => {
-     // Google OAuth integration placeholder
-     // Full implementation pending OAuth provider configuration
-   }, []);
-   ```
+    // CORRECT - Descriptive without warning terms
+    const handleOAuth = useCallback(() => {
+      // Google OAuth integration placeholder
+      // Full implementation pending OAuth provider configuration
+    }, []);
+    ```
 
-10. **useCallback Consistency**: When fixing JS-0417 violations, wrap ALL event handlers in useCallback for consistency, even simple ones. Missing patterns create inconsistent performance characteristics:
+11. **useCallback Consistency**: When fixing JS-0417 violations, wrap ALL event handlers in useCallback for consistency, even simple ones. Missing patterns create inconsistent performance characteristics:
 
     ```typescript
     // WRONG - Inconsistent memoization patterns
