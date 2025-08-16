@@ -130,7 +130,7 @@ export const ContributionTracker: React.FC = () => {
       <GlobalStats />
 
       {/* Filters */}
-      <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
+      <div className="mb-8 bg-white p-6 rounded-lg shadow-md flex flex-col gap-4">
         <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
           <div className="flex-grow relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />

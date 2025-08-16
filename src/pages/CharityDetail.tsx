@@ -60,26 +60,23 @@ const CharityDetail: React.FC = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Impact Statistics
             </h2>
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <p className="text-sm text-gray-500">Total Donated</p>
-                <p className="text-xl font-bold text-gray-900">
+            <dl className="grid grid-cols-3 gap-4 text-center">
+              <dt className="text-sm text-gray-500">Total Donated
+                <dd className="text-xl font-bold text-gray-900 mt-1">
                   {formatCurrency(charity.stats.totalDonated)}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Donors</p>
-                <p className="text-xl font-bold text-gray-900">
+                </dd>
+              </dt>
+              <dt className="text-sm text-gray-500">Donors
+                <dd className="text-xl font-bold text-gray-900 mt-1">
                   {charity.stats.donorCount}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Projects</p>
-                <p className="text-xl font-bold text-gray-900">
+                </dd>
+              </dt>
+              <dt className="text-sm text-gray-500">Projects
+                <dd className="text-xl font-bold text-gray-900 mt-1">
                   {charity.stats.projectsCompleted}
-                </p>
-              </div>
-            </div>
+                </dd>
+              </dt>
+            </dl>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">

@@ -18,18 +18,18 @@ export const Governance: React.FC = () => {
           <p className="text-gray-600 mb-4">
             Voting power is earned through active participation:
           </p>
-          <div className="flex items-center space-y-0 mb-2 text-gray-600">
-            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+          <p className="flex items-center mb-2 text-gray-600">
+            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2 flex-shrink-0" />
             Donations contribute to base voting power
-          </div>
-          <div className="flex items-center space-y-0 mb-2 text-gray-600">
-            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+          </p>
+          <p className="flex items-center mb-2 text-gray-600">
+            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2 flex-shrink-0" />
             Volunteer hours add additional weight
-          </div>
-          <div className="flex items-center space-y-0 text-gray-600">
-            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+          </p>
+          <p className="flex items-center text-gray-600">
+            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2 flex-shrink-0" />
             Verified organizations receive multipliers
-          </div>
+          </p>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -40,18 +40,18 @@ export const Governance: React.FC = () => {
           <p className="text-gray-600 mb-4">
             Core protocol changes require:
           </p>
-          <div className="flex items-center space-y-0 mb-2 text-gray-600">
-            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+          <p className="flex items-center mb-2 text-gray-600">
+            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2 flex-shrink-0" />
             66% supermajority approval
-          </div>
-          <div className="flex items-center space-y-0 mb-2 text-gray-600">
-            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+          </p>
+          <p className="flex items-center mb-2 text-gray-600">
+            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2 flex-shrink-0" />
             50% minimum participation
-          </div>
-          <div className="flex items-center space-y-0 text-gray-600">
-            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+          </p>
+          <p className="flex items-center text-gray-600">
+            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2 flex-shrink-0" />
             48-hour voting period
-          </div>
+          </p>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -62,18 +62,18 @@ export const Governance: React.FC = () => {
           <p className="text-gray-600 mb-4">
             A multi-signature council provides:
           </p>
-          <div className="flex items-center space-y-0 mb-2 text-gray-600">
-            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+          <p className="flex items-center mb-2 text-gray-600">
+            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2 flex-shrink-0" />
             Emergency response capabilities
-          </div>
-          <div className="flex items-center space-y-0 mb-2 text-gray-600">
-            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+          </p>
+          <p className="flex items-center mb-2 text-gray-600">
+            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2 flex-shrink-0" />
             4/7 signatures for critical actions
-          </div>
-          <div className="flex items-center space-y-0 text-gray-600">
-            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+          </p>
+          <p className="flex items-center text-gray-600">
+            <span className="w-2 h-2 bg-indigo-600 rounded-full mr-2 flex-shrink-0" />
             24-hour maximum timelock
-          </div>
+          </p>
         </div>
       </div>
 
@@ -89,26 +89,26 @@ export const Governance: React.FC = () => {
               <p className="text-gray-600">
                 Any account with minimum voting power can submit detailed proposals with implementation plans.
               </p>
-            </div>
+            </p>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">2. Discussion</h4>
               <p className="text-gray-600">
                 7-day minimum discussion period for community feedback and refinement.
               </p>
-            </div>
+            </p>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">3. Voting</h4>
               <p className="text-gray-600">
                 48-hour voting period with weighted voting based on participation metrics.
               </p>
-            </div>
+            </p>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">4. Execution</h4>
               <p className="text-gray-600">
                 Successful proposals are implemented after meeting all required thresholds.
               </p>
-            </div>
-          </div>
+            </p>
+          </p>
         </div>
 
         <div className="bg-white p-8 rounded-lg shadow-md">
@@ -122,14 +122,14 @@ export const Governance: React.FC = () => {
               <div className="text-gray-600 mb-2">• 7 days discussion period</div>
               <div className="text-gray-600 mb-2">• 48 hours voting period</div>
               <div className="text-gray-600">• 24 hours timelock before execution</div>
-            </div>
+            </p>
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Emergency Actions</h4>
               <div className="text-gray-600 mb-2">• No discussion period required</div>
               <div className="text-gray-600 mb-2">• 4/7 council signatures needed</div>
               <div className="text-gray-600">• 24 hours maximum timelock</div>
-            </div>
-          </div>
+            </p>
+          </p>
         </div>
 
         <div className="bg-indigo-50 p-8 rounded-lg flex items-start">
@@ -139,7 +139,7 @@ export const Governance: React.FC = () => {
             <p className="text-indigo-700">
               All governance participants are required to review and understand the complete governance documentation before participating in proposals or voting. This ensures informed decision-making and maintains the integrity of our governance process.
             </p>
-          </div>
+          </p>
         </div>
       </div>
     </div>
