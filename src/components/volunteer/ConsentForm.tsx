@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/Button";
 import { AlertCircle } from "lucide-react";
+import { Modal } from "@/components/ui/Modal";
 
 interface ConsentFormProps {
   onAccept: () => void;
@@ -85,7 +86,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <Modal>
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 prose prose-sm max-w-none">
         <h2 className="text-2xl font-semibold text-gray-900">
           Volunteer Application Consent Form
@@ -237,6 +238,6 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
             <Button onClick={handleAccept}>Accept and Continue</Button>
           </footer>
       </div>
-    </div>
+    </Modal>
   );
 };

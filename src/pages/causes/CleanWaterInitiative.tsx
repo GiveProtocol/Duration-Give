@@ -1,6 +1,7 @@
 import React from "react";
 import { DonationButton } from "@/components/web3/donation/DonationButton";
 import { formatCurrency } from "@/utils/money";
+import { HeroSection } from "@/components/ui/HeroSection";
 
 const CleanWaterInitiative: React.FC = () => {
   const cause = {
@@ -31,17 +32,11 @@ const CleanWaterInitiative: React.FC = () => {
 
   return (
     <>
-      <div className="relative h-80 rounded-xl overflow-hidden mb-6 mx-4 sm:mx-6 lg:mx-8 mt-8">
-        <img
-          src={cause.image}
-          alt={cause.name}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 text-white">
-          <h1 className="text-4xl font-bold mb-2">{cause.name}</h1>
-          <p className="text-lg opacity-90">{cause.description}</p>
-        </div>
-      </div>
+      <HeroSection
+        image={cause.image}
+        title={cause.name}
+        description={cause.description}
+      />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

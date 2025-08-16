@@ -3,6 +3,7 @@ import { DonationButton } from "@/components/web3/donation/DonationButton";
 import { ScheduledDonationButton } from "@/components/web3/donation/ScheduledDonationButton";
 import { formatCurrency } from "@/utils/money";
 import { Link } from "react-router-dom";
+import { CharityHeroSection } from "@/components/ui/CharityHeroSection";
 
 const ClimateActionNow: React.FC = () => {
   const charity = {
@@ -31,18 +32,12 @@ const ClimateActionNow: React.FC = () => {
 
   return (
     <>
-      <div className="relative h-80 rounded-xl overflow-hidden mb-6 mx-4 sm:mx-6 lg:mx-8 mt-8">
-        <img
-          src={charity.image}
-          alt={charity.name}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8 text-white">
-          <span className="text-sm opacity-90 mb-2">{charity.country}</span>
-          <h1 className="text-4xl font-bold mb-2">{charity.name}</h1>
-          <p className="text-lg opacity-90">{charity.description}</p>
-        </div>
-        </div>
+      <CharityHeroSection
+        image={charity.image}
+        title={charity.name}
+        description={charity.description}
+        country={charity.country}
+      />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
