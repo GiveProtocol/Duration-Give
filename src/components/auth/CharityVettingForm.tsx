@@ -159,8 +159,7 @@ export const CharityVettingForm: React.FC = () => {
         </div>
       )}
 
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900">Organization Details</h3>
+      <h3 className="text-lg font-semibold text-gray-900">Organization Details</h3>
         <Input
           label="Organization Name"
           name="organizationName"
@@ -202,10 +201,8 @@ export const CharityVettingForm: React.FC = () => {
           required
           error={validationErrors['taxId']}
         />
-      </div>
-
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900">Address</h3>
+      
+      <h3 className="text-lg font-semibold text-gray-900">Address</h3>
         <Input
           label="Street Address"
           name="streetAddress"
@@ -264,10 +261,8 @@ export const CharityVettingForm: React.FC = () => {
             error={validationErrors['postalCode']}
           />
         </div>
-      </div>
-
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900">Contact Information</h3>
+      
+      <h3 className="text-lg font-semibold text-gray-900">Contact Information</h3>
         <Input
           label="Contact Name"
           name="contactName"
@@ -294,10 +289,8 @@ export const CharityVettingForm: React.FC = () => {
           required
           error={validationErrors['contactPhone']}
         />
-      </div>
-
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900">Account Security</h3>
+      
+      <h3 className="text-lg font-semibold text-gray-900">Account Security</h3>
         <Input
           label="Password"
           type="password"
@@ -316,8 +309,7 @@ export const CharityVettingForm: React.FC = () => {
           required
           error={validationErrors['confirmPassword']}
         />
-      </div>
-
+      
       <Button
         type="submit"
         className="w-full"
