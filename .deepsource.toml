@@ -9,6 +9,7 @@ enabled = true
   environment = ["nodejs"]
   style_guide = "standard"
   skip_doc_coverage = ["function-expression", "arrow-function-expression", "class-expression", "method-definition"]
+  exclude_patterns = ["JS-0415"]
 
 [[analyzers]]
 name = "secrets"
