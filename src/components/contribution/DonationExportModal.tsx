@@ -98,19 +98,19 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <article className="bg-white rounded-lg shadow-xl max-w-md w-full divide-y divide-gray-200">
+    <section className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <form className="bg-white rounded-lg shadow-xl max-w-md w-full divide-y divide-gray-200" onSubmit={(e) => { e.preventDefault(); handleExport(); }}>
         <div className="flex justify-between items-center p-6">
           <h2 className="text-xl font-semibold text-gray-900">
             {t("export.title")}
           </h2>
-          <button
+          <X 
             onClick={handleClose}
-            className="text-gray-400 hover:text-gray-500"
+            className="h-5 w-5 text-gray-400 hover:text-gray-500 cursor-pointer"
             aria-label="Close"
-          >
-            <X className="h-5 w-5" />
-          </button>
+            role="button"
+            tabIndex={0}
+          />
         </div>
 
         <main className="p-6 space-y-4">
@@ -182,7 +182,7 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
             </ul>
         </main>
 
-        <footer className="flex justify-end space-x-3 p-6">
+        <div className="flex justify-end space-x-3 p-6">
           <Button variant="secondary" onClick={handleClose}>
             {t("export.cancel")}
           </Button>
@@ -190,8 +190,8 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
             <Download className="h-4 w-4 mr-2" />
             {t("export.download")}
           </Button>
-        </footer>
-      </article>
-    </div>
+        </div>
+      </form>
+    </section>
   );
 };
