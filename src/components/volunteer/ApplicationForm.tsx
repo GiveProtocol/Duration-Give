@@ -184,7 +184,7 @@ const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
         <select
           value={formData.commitmentType}
           onChange={handlers.handleCommitmentChange}
-          className={selectClasses + " mt-1"}
+          className={`${selectClasses} mt-1`}
         >
           <option value="one-time">One-time</option>
           <option value="short-term">Short-term</option>
