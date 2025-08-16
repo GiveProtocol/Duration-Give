@@ -10,8 +10,7 @@ export const About: React.FC = () => {
     >
       <div className="space-y-16">
         {/* Mission & Vision */}
-        <section>
-          <div className="grid md:grid-cols-2 gap-8">
+        <section className="grid md:grid-cols-2 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-200">
               <Target className="h-8 w-8 text-indigo-600 mb-3" />
               <h2 className="text-2xl font-semibold text-gray-900 mb-6">Our Mission</h2>
@@ -28,7 +27,6 @@ export const About: React.FC = () => {
                 efficient, and sustainable giving mechanisms.
               </p>
             </div>
-          </div>
         </section>
 
         {/* What We Do */}

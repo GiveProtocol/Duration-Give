@@ -432,8 +432,8 @@ export const GiveDashboard: React.FC = () => {
         </Card>
       </div>
 
-      {/* Contributions - Flattened header from 5 to 3 levels */}
-      <div className="bg-white rounded-lg shadow-md mb-8">
+      {/* Contributions - Flattened to reduce nesting */}
+      <div className="bg-white rounded-lg shadow-md mb-8 overflow-x-auto">
         <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
           <h2 className="text-xl font-semibold text-gray-900">
             {t("dashboard.contributions")}
@@ -480,8 +480,7 @@ export const GiveDashboard: React.FC = () => {
             </Button>
           </div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200">
             <thead>
               <tr>
                 <th
@@ -602,7 +601,6 @@ export const GiveDashboard: React.FC = () => {
               ))}
             </tbody>
           </table>
-        </div>
       </div>
 
       {/* Skills & Endorsements - Flattened from 4 to 3 levels */}
