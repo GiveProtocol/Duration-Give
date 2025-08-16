@@ -191,11 +191,11 @@ export const ScheduledDonations: React.FC = () => {
             <div className="bg-red-100 rounded-full p-3 mx-auto w-fit">
               <AlertTriangle className="h-6 w-6 text-red-600" />
             </div>
-            
+
             <h3 className="text-lg font-medium text-gray-900">
               Confirm Cancellation
             </h3>
-            
+
             <p className="text-sm text-gray-500">
               Are you sure you want to cancel your monthly donation schedule?
               The remaining funds (

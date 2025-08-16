@@ -246,12 +246,12 @@ export const WalletAliasSettings: React.FC = () => {
                 Confirm Deletion
               </h3>
             </header>
-            
+
             <p className="text-gray-600">
               Are you sure you want to delete this wallet alias? This action
               cannot be undone.
             </p>
-            
+
             <footer className="flex justify-end space-x-3">
               <Button
                 type="button"
