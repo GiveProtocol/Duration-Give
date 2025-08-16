@@ -49,7 +49,9 @@ const CharityDetail: React.FC = () => {
         />
         <div className="absolute inset-0 bg-black bg-opacity-40" />
         <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-          <span className="px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full mb-2 inline-block">Verified</span>
+          <span className="px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full mb-2 inline-block">
+            Verified
+          </span>
           <span className="ml-3 text-sm opacity-90">{charity.country}</span>
           <h1 className="text-4xl font-bold mb-2 mt-2">{charity.name}</h1>
           <p className="text-lg opacity-90">{charity.description}</p>
@@ -57,54 +59,54 @@ const CharityDetail: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Impact Statistics
-            </h2>
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <p className="text-sm text-gray-500">Total Donated</p>
-                <p className="text-xl font-bold text-gray-900">
-                  {formatCurrency(charity.stats.totalDonated)}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Donors</p>
-                <p className="text-xl font-bold text-gray-900">
-                  {charity.stats.donorCount}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Projects</p>
-                <p className="text-xl font-bold text-gray-900">
-                  {charity.stats.projectsCompleted}
-                </p>
-              </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Impact Statistics
+          </h2>
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <p className="text-sm text-gray-500">Total Donated</p>
+              <p className="text-xl font-bold text-gray-900">
+                {formatCurrency(charity.stats.totalDonated)}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Donors</p>
+              <p className="text-xl font-bold text-gray-900">
+                {charity.stats.donorCount}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Projects</p>
+              <p className="text-xl font-bold text-gray-900">
+                {charity.stats.projectsCompleted}
+              </p>
             </div>
           </div>
+        </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Giving Options
-            </h2>
-            <div className="space-y-4">
-              <DonationButton
-                charityName={charity.name}
-                charityAddress={charity.id}
-                buttonText="Give Once"
-              />
-              <ScheduledDonationButton
-                charityName={charity.name}
-                charityAddress={charity.id}
-                buttonText="Give Monthly"
-              />
-              <Link
-                to="/docs/giving-options"
-                className="block text-sm text-indigo-600 hover:text-indigo-800 mt-2 text-center"
-              >
-                Learn about the difference in giving options →
-              </Link>
-            </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Giving Options
+          </h2>
+          <div className="space-y-4">
+            <DonationButton
+              charityName={charity.name}
+              charityAddress={charity.id}
+              buttonText="Give Once"
+            />
+            <ScheduledDonationButton
+              charityName={charity.name}
+              charityAddress={charity.id}
+              buttonText="Give Monthly"
+            />
+            <Link
+              to="/docs/giving-options"
+              className="block text-sm text-indigo-600 hover:text-indigo-800 mt-2 text-center"
+            >
+              Learn about the difference in giving options →
+            </Link>
+          </div>
         </div>
       </div>
 
