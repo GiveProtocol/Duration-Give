@@ -155,31 +155,31 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
 
           <p className="text-sm text-gray-500">{t("export.willInclude")}</p>
           <ul className="text-sm text-gray-500 list-disc list-inside mt-1 space-y-1">
-              <li>{t("contributions.date")}</li>
-              <li>{t("contributions.type")}</li>
-              <li>{t("contributions.details")}</li>
-              <li>{t("contributions.status")}</li>
-              {options.includePersonalInfo && (
-                <li>
-                  {t(
-                    "export.walletAddresses",
-                    "Wallet addresses (sender and recipient)",
-                  )}
-                </li>
+            <li>{t("contributions.date")}</li>
+            <li>{t("contributions.type")}</li>
+            <li>{t("contributions.details")}</li>
+            <li>{t("contributions.status")}</li>
+            {options.includePersonalInfo && (
+              <li>
+                {t(
+                  "export.walletAddresses",
+                  "Wallet addresses (sender and recipient)",
+                )}
+              </li>
+            )}
+            <li>
+              {t(
+                "export.volunteerDetails",
+                "Volunteer contribution details (when applicable)",
               )}
-              <li>
-                {t(
-                  "export.volunteerDetails",
-                  "Volunteer contribution details (when applicable)",
-                )}
-              </li>
-              <li>
-                {t(
-                  "export.verificationHashes",
-                  "Verification hashes (when applicable)",
-                )}
-              </li>
-            </ul>
+            </li>
+            <li>
+              {t(
+                "export.verificationHashes",
+                "Verification hashes (when applicable)",
+              )}
+            </li>
+          </ul>
         </main>
 
         <footer className="flex justify-end space-x-3 p-6">

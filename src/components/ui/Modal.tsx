@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ModalProps {
   isOpen?: boolean;
@@ -7,12 +7,11 @@ interface ModalProps {
   className?: string;
 }
 
-export const Modal: React.FC<ModalProps> = ({
-  children,
-  className = ''
-}) => {
+export const Modal: React.FC<ModalProps> = ({ children, className = "" }) => {
   return (
-    <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 ${className}`}>
+    <div
+      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 ${className}`}
+    >
       {children}
     </div>
   );
