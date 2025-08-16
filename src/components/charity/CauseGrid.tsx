@@ -74,27 +74,25 @@ export const CauseGrid: React.FC<CauseGridProps> = ({ searchTerm, category }) =>
               alt={cause.name}
               className="w-full h-48 object-cover"
             />
-            <div className="p-6">
+            <div className="p-6 space-y-4">
               <h3 className="text-xl font-semibold text-gray-900 mb-2">{cause.name}</h3>
               <p className="text-gray-600 mb-4">{cause.description}</p>
               
-              <div className="space-y-4">
-                <div className="flex justify-between text-sm text-gray-500 mb-1">
-                  <span>Progress</span>
-                  <span>{formatCurrency(cause.raisedAmount)} of {formatCurrency(cause.targetAmount)}</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                  <div
-                    className="bg-indigo-600 h-2 rounded-full"
-                    style={{ width: `${(cause.raisedAmount / cause.targetAmount) * 100}%` }}
-                  />
-                </div>
-
-                <DonationButton
-                  charityName={cause.name}
-                  charityAddress={cause.charityId}
+              <div className="flex justify-between text-sm text-gray-500 mb-1">
+                <span>Progress</span>
+                <span>{formatCurrency(cause.raisedAmount)} of {formatCurrency(cause.targetAmount)}</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
+                <div
+                  className="bg-indigo-600 h-2 rounded-full"
+                  style={{ width: `${(cause.raisedAmount / cause.targetAmount) * 100}%` }}
                 />
               </div>
+
+              <DonationButton
+                charityName={cause.name}
+                charityAddress={cause.charityId}
+              />
             </div>
           </Card>
         </Link>

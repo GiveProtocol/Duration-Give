@@ -741,43 +741,35 @@ export const CharityPortal: React.FC = () => {
               <thead className="bg-gray-50">
                 <tr>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
                       onClick={handleSortByDate}
                     >
-                      <div className="flex items-center space-x-1">
-                        {t("contributions.date")}
-                        {getSortIcon("date")}
-                      </div>
+                      {t("contributions.date")}
+                      {getSortIcon("date")}
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
                       onClick={handleSortByType}
                     >
-                      <div className="flex items-center space-x-1">
-                        {t("contributions.type")}
-                        {getSortIcon("type")}
-                      </div>
+                      {t("contributions.type")}
+                      {getSortIcon("type")}
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
                       onClick={handleSortByOrganization}
                     >
-                      <div className="flex items-center space-x-1">
-                        {t("donor.volunteer", "Donor/Volunteer")}
-                        {getSortIcon("organization")}
-                      </div>
+                      {t("donor.volunteer", "Donor/Volunteer")}
+                      {getSortIcon("organization")}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t("contributions.details")}
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none flex items-center space-x-1"
                       onClick={handleSortByStatus}
                     >
-                      <div className="flex items-center space-x-1">
-                        {t("contributions.status")}
-                        {getSortIcon("status")}
-                      </div>
+                      {t("contributions.status")}
+                      {getSortIcon("status")}
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t("contributions.verification")}
