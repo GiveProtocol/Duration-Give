@@ -537,18 +537,18 @@ export const GiveDashboard: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {contribution.purpose === "Donation" ? (
-                      <span>
+                      <>
                         {contribution.amount} {contribution.cryptoType} (
                         <CurrencyDisplay amount={contribution.fiatValue || 0} />
                         )
-                      </span>
+                      </>
                     ) : contribution.purpose === "Volunteer Hours" ? (
-                      <span>
+                      <>
                         {contribution.metadata?.hours} {t("volunteer.hours")} -{" "}
                         {contribution.metadata?.description}
-                      </span>
+                      </>
                     ) : (
-                      <span>{contribution.metadata?.opportunity}</span>
+                      contribution.metadata?.opportunity
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -575,17 +575,16 @@ export const GiveDashboard: React.FC = () => {
                         href={`https://moonscan.io/tx/${contribution.hash || contribution.metadata?.verificationHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-indigo-600 hover:text-indigo-900 flex items-center"
+                        className="text-indigo-600 hover:text-indigo-900 flex items-center truncate max-w-[100px] mr-1"
+                        title={contribution.hash || contribution.metadata?.verificationHash}
                       >
-                        <span className="truncate max-w-[100px] mr-1">
-                          {(
-                            contribution.hash ||
-                            contribution.metadata?.verificationHash ||
-                            ""
-                          ).substring(0, 10)}
-                          ...
-                        </span>
-                        <ExternalLink className="h-3 w-3" />
+                        {(
+                          contribution.hash ||
+                          contribution.metadata?.verificationHash ||
+                          ""
+                        ).substring(0, 10)}
+                        ...
+                        <ExternalLink className="h-3 w-3 ml-1" />
                       </a>
                     ) : (
                       t("common.notAvailable", "N/A")

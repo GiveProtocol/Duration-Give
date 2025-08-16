@@ -142,11 +142,10 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
               </ol>
             </div>
 
-            <section>
-              <h3 className="text-lg font-semibold">SPECIFIC CONSENTS</h3>
-              <p>Please review and indicate your consent to each of the following:</p>
+            <h3 className="text-lg font-semibold">SPECIFIC CONSENTS</h3>
+            <p>Please review and indicate your consent to each of the following:</p>
 
-              <div className="space-y-4 mt-4">
+            <div className="space-y-4 mt-4">
                 <label className="flex items-start space-x-3" htmlFor="essential-processing">
                   <input
                     type="checkbox"
@@ -155,20 +154,20 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                     onChange={handleEssentialProcessingChange}
                     className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   />
-                  <div className="text-sm">
-                    <div className="font-semibold mb-1">
+                  <span className="text-sm">
+                    <strong className="font-semibold mb-1 block">
                       Essential Processing (Required)
-                    </div>
+                    </strong>
                     I consent to GIVE PROTOCOL collecting and processing my
                     personal information for the purpose of evaluating my
                     volunteer application and, if successful, managing my
                     volunteer engagement.
-                    <div className="mt-1 text-gray-500 italic">
+                    <em className="mt-1 text-gray-500 italic block">
                       Note: This consent is necessary to process your volunteer
                       application. If you do not provide this consent, we will not
                       be able to consider your application.
-                    </div>
-                  </div>
+                    </em>
+                  </span>
                 </label>
 
                 <label className="flex items-start space-x-3" htmlFor="international-transfers">
@@ -179,23 +178,21 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                     onChange={handleInternationalTransfersChange}
                     className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   />
-                  <div className="text-sm">
-                    <div className="font-semibold mb-1">
+                  <span className="text-sm">
+                    <strong className="font-semibold mb-1 block">
                       International Transfers (if applicable)
-                    </div>
+                    </strong>
                     I consent to GIVE PROTOCOL transferring my personal
                     information to countries outside my country of residence,
                     including countries that may not provide the same level of
                     data protection, with appropriate safeguards in place as
                     described in the Privacy Notice.
-                  </div>
+                  </span>
                 </label>
               </div>
-            </section>
 
-            <section>
-              <h3 className="text-lg font-semibold">ACKNOWLEDGMENT</h3>
-              <div className="space-y-4">
+            <h3 className="text-lg font-semibold">ACKNOWLEDGMENT</h3>
+            <div className="space-y-4">
                 <label className="flex items-start space-x-3" htmlFor="age-confirmation">
                   <input
                     type="checkbox"
@@ -224,8 +221,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                     Application Privacy Notice dated 29/03/2025.
                   </span>
                 </label>
-              </div>
-            </section>
+            </div>
 
           {validationError && (
             <div className="p-4 bg-red-50 rounded-lg flex items-start">
