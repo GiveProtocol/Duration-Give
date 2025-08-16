@@ -170,14 +170,14 @@ export const CharityVettingForm: React.FC = () => {
           error={validationErrors['organizationName']}
         />
 
-        <label className="block">
-          <span className="text-sm font-medium text-gray-700 mb-1 block">Description</span>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Description
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50 mt-1"
             required
           />
           {validationErrors['description'] && (

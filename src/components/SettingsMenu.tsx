@@ -112,12 +112,10 @@ export const SettingsMenu: React.FC = () => {
 
           {/* Language Selection */}
           <div className="py-3 px-4 border-b border-gray-100">
-            <div className="flex items-center mb-2">
+            <h4 className="flex items-center mb-2 text-sm font-medium text-gray-700">
               <Globe className="h-4 w-4 text-gray-500 mr-2" />
-              <h4 className="text-sm font-medium text-gray-700">
-                {t("settings.language")}
-              </h4>
-            </div>
+              {t("settings.language")}
+            </h4>
             <div className="grid grid-cols-2 gap-2 mt-2">
               {languageOptions.map((option) => (
                 <button
@@ -142,12 +140,10 @@ export const SettingsMenu: React.FC = () => {
 
           {/* Currency Selection */}
           <div className="py-3 px-4">
-            <div className="flex items-center mb-2">
+            <h4 className="flex items-center mb-2 text-sm font-medium text-gray-700">
               <DollarSign className="h-4 w-4 text-gray-500 mr-2" />
-              <h4 className="text-sm font-medium text-gray-700">
-                {t("settings.currency")}
-              </h4>
-            </div>
+              {t("settings.currency")}
+            </h4>
             <div className="grid grid-cols-2 gap-2 mt-2">
               {currencyOptions.map((option) => (
                 <button

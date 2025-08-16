@@ -47,54 +47,49 @@ export const VolunteerVerificationCard: React.FC<VolunteerVerificationCardProps>
 
       <div className="space-y-4">
         {verification.applicantName && (
-          <div className="flex items-start">
+          <dl className="flex items-start">
             <User className="h-5 w-5 text-gray-400 mt-0.5 mr-2" />
-            <div>
-              <p className="text-sm font-medium text-gray-500">Volunteer</p>
-              <p className="text-base text-gray-900">{verification.applicantName}</p>
-            </div>
-          </div>
+            <dt className="text-sm font-medium text-gray-500">Volunteer
+              <dd className="text-base text-gray-900 mt-1">{verification.applicantName}</dd>
+            </dt>
+          </dl>
         )}
 
         {verification.opportunityTitle && (
-          <div className="flex items-start">
+          <dl className="flex items-start">
             <Clock className="h-5 w-5 text-gray-400 mt-0.5 mr-2" />
-            <div>
-              <p className="text-sm font-medium text-gray-500">Opportunity</p>
-              <p className="text-base text-gray-900">{verification.opportunityTitle}</p>
-            </div>
-          </div>
+            <dt className="text-sm font-medium text-gray-500">Opportunity
+              <dd className="text-base text-gray-900 mt-1">{verification.opportunityTitle}</dd>
+            </dt>
+          </dl>
         )}
 
         {verification.charityName && (
-          <div className="flex items-start">
+          <dl className="flex items-start">
             <Building className="h-5 w-5 text-gray-400 mt-0.5 mr-2" />
-            <div>
-              <p className="text-sm font-medium text-gray-500">Organization</p>
-              <p className="text-base text-gray-900">{verification.charityName}</p>
-            </div>
-          </div>
+            <dt className="text-sm font-medium text-gray-500">Organization
+              <dd className="text-base text-gray-900 mt-1">{verification.charityName}</dd>
+            </dt>
+          </dl>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {verification.acceptedAt && (
-            <div className="flex items-start">
+            <dl className="flex items-start">
               <Calendar className="h-5 w-5 text-gray-400 mt-0.5 mr-2" />
-              <div>
-                <p className="text-sm font-medium text-gray-500">Accepted On</p>
-                <p className="text-base text-gray-900">{formatDate(verification.acceptedAt, true)}</p>
-              </div>
-            </div>
+              <dt className="text-sm font-medium text-gray-500">Accepted On
+                <dd className="text-base text-gray-900 mt-1">{formatDate(verification.acceptedAt, true)}</dd>
+              </dt>
+            </dl>
           )}
 
           {verification.verifiedAt && (
-            <div className="flex items-start">
+            <dl className="flex items-start">
               <Calendar className="h-5 w-5 text-gray-400 mt-0.5 mr-2" />
-              <div>
-                <p className="text-sm font-medium text-gray-500">Verified On</p>
-                <p className="text-base text-gray-900">{formatDate(verification.verifiedAt, true)}</p>
-              </div>
-            </div>
+              <dt className="text-sm font-medium text-gray-500">Verified On
+                <dd className="text-base text-gray-900 mt-1">{formatDate(verification.verifiedAt, true)}</dd>
+              </dt>
+            </dl>
           )}
         </div>
 

@@ -55,9 +55,9 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
 
   return (
     <div className="bg-white rounded-lg shadow-md">
-      <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+      <header className="p-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
         <h2 className="text-xl font-semibold text-gray-900">Donation History</h2>
-        <div className="flex items-center space-x-4">
+        <nav className="flex items-center space-x-4">
           <Calendar className="h-5 w-5 text-gray-400" />
           <select
               value={timeFilter}
@@ -65,11 +65,11 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
               className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               aria-label="Filter by time period"
             >
-              <option value="all">All Time</option>
-              <option value="week">Past Week</option>
-              <option value="month">Past Month</option>
-              <option value="year">Past Year</option>
-            </select>
+            <option value="all">All Time</option>
+            <option value="week">Past Week</option>
+            <option value="month">Past Month</option>
+            <option value="year">Past Year</option>
+          </select>
           <Button
             onClick={handleShowExportModal}
             variant="secondary"
@@ -78,8 +78,8 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
             <Download className="h-4 w-4 mr-2" />
             Export CSV
           </Button>
-        </div>
-      </div>
+        </nav>
+      </header>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead>

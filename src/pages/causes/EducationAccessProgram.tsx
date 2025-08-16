@@ -74,24 +74,25 @@ const EducationAccessProgram: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-900">
             Project Details
           </h2>
-          <div>
-            <p className="text-sm text-gray-500">Timeline</p>
-            <p className="font-medium mb-3">{cause.timeline}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Location</p>
-            <p className="font-medium mb-3">{cause.location}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500 mb-1">Key Partners</p>
-            <ul className="list-disc list-inside space-y-1">
-              {cause.partners.map((partner) => (
-                <li key={partner} className="text-gray-700">
-                  {partner}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <dl className="space-y-4">
+            <dt className="text-sm text-gray-500">Timeline
+              <dd className="font-medium mb-3">{cause.timeline}</dd>
+            </dt>
+            <dt className="text-sm text-gray-500">Location
+              <dd className="font-medium mb-3">{cause.location}</dd>
+            </dt>
+            <dt className="text-sm text-gray-500 mb-1">Key Partners
+              <dd>
+                <ul className="list-disc list-inside space-y-1">
+                  {cause.partners.map((partner) => (
+                    <li key={partner} className="text-gray-700">
+                      {partner}
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </dt>
+          </dl>
         </div>
       </div>
 

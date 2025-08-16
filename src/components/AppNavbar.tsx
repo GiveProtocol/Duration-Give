@@ -23,25 +23,25 @@ const DesktopNavLinks: React.FC<{
           to="/about"
           className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/about")}`}
         >
-          <span>{t("nav.about")}</span>
+          {t("nav.about")}
         </Link>
         <a
           href={DOCS_CONFIG.url}
           className="flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-700 hover:bg-primary-50"
         >
-          <span>{t("nav.docs")}</span>
+          {t("nav.docs")}
         </a>
         <Link
           to="/legal"
           className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/legal")}`}
         >
-          <span>{t("nav.legal")}</span>
+          {t("nav.legal")}
         </Link>
         <Link
           to="/privacy"
           className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/privacy")}`}
         >
-          <span>Privacy</span>
+          Privacy
         </Link>
       </>
     );
@@ -53,19 +53,19 @@ const DesktopNavLinks: React.FC<{
         to="/browse"
         className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/browse")}`}
       >
-        <span>{t("nav.browse")}</span>
+        {t("nav.browse")}
       </Link>
       <Link
         to="/opportunities"
         className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/opportunities")}`}
       >
-        <span>{t("nav.opportunities")}</span>
+        {t("nav.opportunities")}
       </Link>
       <Link
         to="/contributions"
         className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/contributions")}`}
       >
-        <span>{t("nav.contributions")}</span>
+        {t("nav.contributions")}
       </Link>
       <button
         onClick={handleDashboardClick}
@@ -73,7 +73,7 @@ const DesktopNavLinks: React.FC<{
           isActive("/give-dashboard") || isActive("/charity-portal")
         }`}
       >
-        <span>{t("nav.dashboard")}</span>
+        {t("nav.dashboard")}
       </button>
       {userType === "donor" && (
         <Link
@@ -88,7 +88,7 @@ const DesktopNavLinks: React.FC<{
         to="/governance"
         className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/governance")}`}
       >
-        <span>{t("nav.governance")}</span>
+        {t("nav.governance")}
       </Link>
     </>
   );

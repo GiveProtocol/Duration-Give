@@ -113,22 +113,19 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
         </header>
 
         <main className="p-6 space-y-4">
-          <label className="block">
-            <span className="text-sm font-medium text-gray-700 mb-1 block">
-              {t("export.filename")}
-            </span>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            {t("export.filename")}
             <Input
               value={filename}
               onChange={handleFilenameChange}
               placeholder="contributions_export"
+              className="mt-1"
             />
           </label>
 
-          <label className="block space-y-1">
-            <span className="text-sm font-medium text-gray-700">
-              {t("export.dateRange")}
-            </span>
-            <div className="grid grid-cols-2 gap-4">
+          <label className="block space-y-1 text-sm font-medium text-gray-700">
+            {t("export.dateRange")}
+            <div className="grid grid-cols-2 gap-4 mt-1">
               <Input
                 type="date"
                 value={options.dateRange?.start || ""}
