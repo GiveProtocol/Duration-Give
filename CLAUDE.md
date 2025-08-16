@@ -754,48 +754,194 @@ const toggleMenu = useCallback(() => {
 <Form onSuccess={() => { setShowForm(false); refetch(); }}>
 ```
 
-16. **CRITICAL: JSX Nesting Prevention Rules**:
+16. **CRITICAL: JSX Nesting Prevention Rules (JS-0415)**:
+
+**Maximum JSX Tree Depth: 4 levels (DeepSource requirement)**
+
+**MANDATORY: Pre-Fix Verification Process**
+
+Before declaring JSX nesting fixes complete, ALWAYS run this systematic check:
+
+```bash
+# 1. Find all React component files
+find src -name "*.tsx" -o -name "*.jsx" | head -20
+
+# 2. Search for potential 5+ level nesting patterns
+rg -U --multiline ">\s*<\w+[^>]*>[\s\S]*?<\w+[^>]*>[\s\S]*?<\w+[^>]*>[\s\S]*?<\w+[^>]*>" --type tsx src/
+
+# 3. Check specific violation hotspots
+rg "<th.*>\s*<div" src/ --type tsx  # Table headers with wrapper divs
+rg "<Card.*>[\s\S]*?<div.*>[\s\S]*?<div.*>[\s\S]*?<div" src/ --type tsx  # Card nesting
+rg "<form.*>[\s\S]*?<div.*>[\s\S]*?<div.*>[\s\S]*?<div.*>[\s\S]*?<label" src/ --type tsx  # Form nesting
+```
+
+**Common JSX Nesting Violation Patterns and Fixes:**
 
 ```typescript
-// WRONG - 6+ levels cause violations
-<div>                           {/* Level 1 */}
-  <div className="container">   {/* Level 2 */}
-    <div className="wrapper">   {/* Level 3 */}
-      <div className="content">  {/* Level 4 */}
-        <div className="inner">  {/* Level 5 */}
-          <span>Text</span>      {/* Level 6 - VIOLATION */}
+// PATTERN 1: Table Headers with Wrapper Divs (5 levels)
+// WRONG - table > thead > tr > th > div
+<table>
+  <thead>
+    <tr>
+      <th onClick={handleSort}>
+        <div className="flex items-center space-x-1">
+          Header Text
+          {getSortIcon()}
+        </div>
+      </th>
+    </tr>
+  </thead>
+</table>
+
+// CORRECT - Apply flex classes directly to th (4 levels)
+<table>
+  <thead>
+    <tr>
+      <th 
+        onClick={handleSort}
+        className="flex items-center space-x-1"
+      >
+        Header Text
+        {getSortIcon()}
+      </th>
+    </tr>
+  </thead>
+</table>
+
+// PATTERN 2: Card Content with Multiple Wrappers (6 levels)
+// WRONG - Link > Card > div > div > div > content
+<Link>
+  <Card>
+    <div className="p-6">
+      <div className="space-y-4">
+        <div className="content">
+          Content here
+        </div>
+      </div>
+    </div>
+  </Card>
+</Link>
+
+// CORRECT - Combine wrapper div responsibilities (4 levels)
+<Link>
+  <Card>
+    <div className="p-6 space-y-4">
+      <div className="content">
+        Content here
+      </div>
+    </div>
+  </Card>
+</Link>
+
+// PATTERN 3: Form Structure with Nested Containers (6 levels)
+// WRONG - form > div > div > div > label > input
+<form>
+  <div className="container">
+    <div className="section">
+      <div className="field-group">
+        <label>
+          <input />
+        </label>
+      </div>
+    </div>
+  </div>
+</form>
+
+// CORRECT - Flatten structure, combine CSS classes (4 levels)
+<form>
+  <div className="container section">
+    <label className="field-group">
+      <input />
+    </label>
+  </div>
+</form>
+
+// PATTERN 4: Modal with Deep Container Nesting (6 levels)
+// WRONG - modal > backdrop > container > content > section > elements
+<div className="modal">
+  <div className="backdrop">
+    <div className="container">
+      <div className="content">
+        <div className="section">
+          <button>Close</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-// CORRECT - Combine CSS classes to flatten
-<div className="container wrapper content">  {/* Level 1 */}
-  <div className="inner">                    {/* Level 2 */}
-    <span>Text</span>                        {/* Level 3 */}
+// CORRECT - Combine container classes (4 levels)
+<div className="modal">
+  <div className="backdrop">
+    <div className="container content section">
+      <button>Close</button>
+    </div>
   </div>
 </div>
-
-// CORRECT - Move conditionals outside containers
-{/* WRONG */}
-<div className="table-wrapper">
-  {data.length > 0 ? (
-    <table>
-      <thead><tr><th><span>Header</span></th></tr></thead>
-    </table>
-  ) : null}
-</div>
-
-{/* CORRECT */}
-{data.length > 0 ? (
-  <div className="table-wrapper">
-    <table>
-      <thead><tr><th>Header</th></tr></thead>
-    </table>
-  </div>
-) : null}
 ```
+
+**Systematic JSX Nesting Prevention Strategy:**
+
+1. **CSS Class Combination (PREFERRED)**: Merge multiple wrapper div responsibilities
+   ```typescript
+   // Instead of: <div><div className="a"><div className="b">content</div></div></div>
+   // Use: <div className="a b">content</div>
+   ```
+
+2. **Direct Property Application**: Apply flex/grid classes directly to semantic elements
+   ```typescript
+   // Instead of: <th><div className="flex">content</div></th>
+   // Use: <th className="flex">content</th>
+   ```
+
+3. **Conditional Structure Flattening**: Move conditionals outside containers
+   ```typescript
+   // Instead of: <wrapper>{condition && <deep><structure /></deep>}</wrapper>
+   // Use: {condition && <wrapper><structure /></wrapper>}
+   ```
+
+4. **Component Extraction (LAST RESORT)**: Only when structure cannot be flattened
+   ```typescript
+   // Extract complex nested content into separate components
+   // But ALWAYS memoize callbacks first to prevent JS-0417 violations
+   ```
+
+**CRITICAL: Component Extraction Anti-Pattern**
+
+⚠️ **WARNING**: Component extraction WITHOUT proper memoization creates cascade failures:
+- 1 JS-0415 (nesting) violation becomes 16+ JS-0417 (arrow function) violations
+- ALWAYS wrap event handlers in useCallback BEFORE extracting components
+
+**JSX Nesting Violation Hotspots (Check These First):**
+
+1. **Tables**: `table > thead > tr > th > div` → Apply classes directly to `th`
+2. **Cards**: `Card > div > div > div > content` → Combine wrapper classes
+3. **Forms**: `form > div > div > label > input` → Flatten form structure
+4. **Modals**: `modal > container > content > section > elements` → Merge containers
+5. **Navigation**: `nav > div > div > ul > li > a` → Combine layout divs
+6. **Grids**: `grid > item > card > content > section > text` → Flatten card structure
+
+**Post-Fix Verification Checklist:**
+
+- [ ] Run comprehensive file scan with regex patterns
+- [ ] Check all table structures for th > div patterns
+- [ ] Verify all Card components have ≤4 levels
+- [ ] Confirm all form structures are flattened
+- [ ] Test that extracted components have memoized callbacks
+- [ ] Run `npm run lint` to catch any new violations
+
+**MANDATORY: Final Verification Command**
+
+After fixing JSX nesting violations, ALWAYS run this command to catch missed patterns:
+
+```bash
+# Search for remaining 5+ level JSX nesting
+rg -U --multiline "className=\"[^\"]*\">\s*<\w+[^>]*>[\s\S]*?<\w+[^>]*>[\s\S]*?<\w+[^>]*>[\s\S]*?<\w+[^>]*>" src/ --type tsx -A 2 -B 2
+
+# If ANY results found, you missed violations - fix them before declaring complete
+```
+
+**Root Cause of Missed Violations**: Incomplete file coverage and insufficient pattern recognition. JSX nesting violations require systematic scanning of ALL React files, not just fixing reported instances. Complex components often contain multiple nesting patterns requiring comprehensive review.
 
 #### CRITICAL: SonarCloud/DeepSource Issue Patterns (Session Learned)
 
