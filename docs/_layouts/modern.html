@@ -828,6 +828,35 @@
           gap: 1rem;
         }
       }
+
+      /* Hide Google Translate elements */
+      .goog-te-banner-frame,
+      .goog-te-gadget,
+      .goog-te-ftab,
+      .goog-logo-link,
+      .goog-te-balloon-frame,
+      .goog-te-combo,
+      div:has(> [aria-label*="Google Translate"]),
+      [aria-label*="Google Translate"],
+      [aria-label*="Original text"],
+      [aria-label*="Rate this translation"],
+      div[style*="position: fixed"][style*="z-index"]:has([aria-label*="Google"]),
+      iframe[src*="translate.googleapis.com"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+      }
+
+      /* Hide any text containing Google Translate feedback */
+      *:contains("Original text"),
+      *:contains("Rate this translation"),
+      *:contains("Your feedback will be used to help improve Google Translate") {
+        display: none !important;
+      }
     </style>
 
     <!-- Enhanced Search Scripts -->
