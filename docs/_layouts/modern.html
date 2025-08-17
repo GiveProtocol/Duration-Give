@@ -536,7 +536,7 @@
             {% endif %}
 
             <div class="last-updated">
-              Last updated: {{ page.last_modified_at | date: "%B %d, %Y" }}
+              Last updated: {% if page.last_modified_at %}{{ page.last_modified_at | date: "%B %d, %Y" }}{% elsif page.date %}{{ page.date | date: "%B %d, %Y" }}{% else %}{{ site.time | date: "%B %d, %Y" }}{% endif %}
             </div>
           </div>
         </div>
@@ -763,34 +763,52 @@
       /* Footer Styling */
       .modern-footer {
         margin-top: 3rem;
-        padding: 2rem 0;
+        padding: 3rem 0;
         border-top: 1px solid #e5e7eb;
         background-color: #f9fafb;
+        width: 100%;
       }
 
       .footer-content {
-        max-width: 1200px;
+        max-width: 1280px;
         margin: 0 auto;
-        padding: 0 1rem;
+        padding: 0 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
       }
 
       .footer-links {
         display: flex;
         flex-wrap: wrap;
-        gap: 2rem;
-        margin-bottom: 1rem;
+        gap: 2.5rem;
         justify-content: center;
+        align-items: center;
       }
 
       .footer-links a {
         color: #6b7280;
         text-decoration: none;
         font-size: 0.875rem;
+        font-weight: 500;
         transition: color 0.2s ease;
+        position: relative;
       }
 
       .footer-links a:hover {
         color: #2563eb;
+      }
+
+      .footer-links a:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: -1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 1rem;
+        background-color: #e5e7eb;
       }
 
       .footer-text {
@@ -817,6 +835,10 @@
         color: #60a5fa;
       }
 
+      body.dark-mode .footer-links a:not(:last-child)::after {
+        background-color: #374151;
+      }
+
       body.dark-mode .footer-text {
         color: #9ca3af;
       }
@@ -826,6 +848,14 @@
           flex-direction: column;
           align-items: center;
           gap: 1rem;
+        }
+        
+        .footer-links a:not(:last-child)::after {
+          display: none;
+        }
+        
+        .footer-content {
+          padding: 0 1.5rem;
         }
       }
 

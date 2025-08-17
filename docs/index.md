@@ -3,6 +3,7 @@ title: Documentation
 description: Complete documentation for Give Protocol
 layout: modern
 permalink: /
+date: 2025-08-17
 ---
 
 <div class="search-callout">
@@ -102,5 +103,4 @@ permalink: /
 
 <div class="newsletter-signup">
   <p>If you want to stay in touch with our updates, you can subscribe to our <a href="https://giveprotocol.us21.list-manage.com/subscribe?u=your-mailchimp-id&id=your-list-id" target="_blank">newsletter</a>.</p>
-  <div class="last-updated">Last Updated: {{ site.time | date: "%B %Y" }}</div>
 </div>
