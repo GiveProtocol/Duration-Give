@@ -536,7 +536,10 @@
             {% endif %}
 
             <div class="last-updated">
-              Last updated: {% if page.last_modified_at %}{{ page.last_modified_at | date: "%B %d, %Y" }}{% elsif page.date %}{{ page.date | date: "%B %d, %Y" }}{% else %}{{ site.time | date: "%B %d, %Y" }}{% endif %}
+              Last updated: {% if page.last_modified_at %}{{
+              page.last_modified_at | date: "%B %d, %Y" }}{% elsif page.date
+              %}{{ page.date | date: "%B %d, %Y" }}{% else %}{{ site.time |
+              date: "%B %d, %Y" }}{% endif %}
             </div>
           </div>
         </div>
@@ -849,11 +852,11 @@
           align-items: center;
           gap: 1rem;
         }
-        
+
         .footer-links a:not(:last-child)::after {
           display: none;
         }
-        
+
         .footer-content {
           padding: 0 1.5rem;
         }
