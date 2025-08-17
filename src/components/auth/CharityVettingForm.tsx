@@ -46,7 +46,7 @@ export const CharityVettingForm: React.FC = () => {
     [validationErrors],
   );
 
-  const validateField = (name: string, value: string): string => {
+  const validateField = useCallback((name: string, value: string): string => {
     switch (name) {
       case 'organizationName':
         return validateName(value) ? '' : 'Organization name must be between 2 and 100 characters';
@@ -63,7 +63,7 @@ export const CharityVettingForm: React.FC = () => {
       default:
         return '';
     }
-  };
+  }, [formData.password]);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -147,7 +147,7 @@ export const CharityVettingForm: React.FC = () => {
         setError(message);
       }
     },
-    [formData, register],
+    [formData, register, validateField],
   );
 
   return (

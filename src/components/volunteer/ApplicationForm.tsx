@@ -368,28 +368,28 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       handleInputChange("fullName", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handlePhoneChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       handleInputChange("phoneNumber", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handleEmailChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       handleInputChange("email", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handleDateOfBirthChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       handleInputChange("dateOfBirth", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handleDaysChange = useCallback(
@@ -402,7 +402,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
         days,
       });
     },
-    [formData.availability, validationErrors],
+    [formData.availability, handleInputChange],
   );
 
   const handleTimesChange = useCallback(
@@ -415,42 +415,42 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
         times,
       });
     },
-    [formData.availability, validationErrors],
+    [formData.availability, handleInputChange],
   );
 
   const handleCommitmentChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       handleInputChange("commitmentType", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handleExperienceChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       handleInputChange("experience", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handleSkillsChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       handleInputChange("skills", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handleCertificationsChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       handleInputChange("certifications", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handleInterestsChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       handleInputChange("interests", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handleReferenceNameChange = useCallback(
@@ -459,7 +459,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
       newReferences[index] = { ...newReferences[index], name: e.target.value };
       handleInputChange("references", newReferences);
     },
-    [formData.references, validationErrors],
+    [formData.references, handleInputChange],
   );
 
   const handleReferenceContactChange = useCallback(
@@ -471,14 +471,14 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
       };
       handleInputChange("references", newReferences);
     },
-    [formData.references, validationErrors],
+    [formData.references, handleInputChange],
   );
 
   const handleWorkSamplesChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       handleInputChange("workSamples", e.target.value);
     },
-    [],
+    [handleInputChange],
   );
 
   const handleSubmit = useCallback(

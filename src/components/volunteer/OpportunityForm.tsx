@@ -51,7 +51,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
     return input.replace(/[<>]/g, "");
   };
 
-  const validateField = (name: string, value: string): string => {
+  const validateField = useCallback((name: string, value: string): string => {
     switch (name) {
       case "title":
         return value.trim().length > 0 ? "" : "Title is required";
@@ -67,7 +67,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
       default:
         return "";
     }
-  };
+  }, []);
 
   const handleChange = useCallback(
     (
@@ -183,7 +183,7 @@ export const OpportunityForm: React.FC<OpportunityFormProps> = ({
         setLoading(false);
       }
     },
-    [formData, profile?.id, onSuccess, navigate],
+    [formData, profile?.id, onSuccess, navigate, validateField],
   );
 
   const formatLanguageName = (language: string): string => {

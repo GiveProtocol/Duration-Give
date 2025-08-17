@@ -115,6 +115,7 @@
     "postcss": "^8.4.35",
     "solhint": "^5.2.0",
     "solidity-coverage": "^0.8.16",
+    "sonarqube-scanner": "^4.3.0",
     "tailwindcss": "^3.4.1",
     "terser": "^5.27.2",
     "ts-jest": "^29.4.0",
