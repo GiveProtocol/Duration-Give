@@ -840,7 +840,9 @@
       [aria-label*="Google Translate"],
       [aria-label*="Original text"],
       [aria-label*="Rate this translation"],
-      div[style*="position: fixed"][style*="z-index"]:has([aria-label*="Google"]),
+      div[style*="position: fixed"][style*="z-index"]:has(
+          [aria-label*="Google"]
+        ),
       iframe[src*="translate.googleapis.com"] {
         display: none !important;
         visibility: hidden !important;
@@ -854,7 +856,9 @@
       /* Hide any text containing Google Translate feedback */
       *:contains("Original text"),
       *:contains("Rate this translation"),
-      *:contains("Your feedback will be used to help improve Google Translate") {
+      *:contains(
+        "Your feedback will be used to help improve Google Translate"
+      ) {
         display: none !important;
       }
     </style>
