@@ -1048,22 +1048,24 @@
           document.body,
           NodeFilter.SHOW_TEXT,
           null,
-          false
+          false,
         );
-        
+
         const nodesToRemove = [];
         const textsToRemove = [
           "Original text",
           "Rate this translation",
-          "Your feedback will be used to help improve Google Translate"
+          "Your feedback will be used to help improve Google Translate",
         ];
-        
+
         // Find text nodes containing unwanted text
         while (walker.nextNode()) {
           const node = walker.currentNode;
           const text = node.textContent.trim();
-          
-          if (textsToRemove.some(unwantedText => text.includes(unwantedText))) {
+
+          if (
+            textsToRemove.some((unwantedText) => text.includes(unwantedText))
+          ) {
             // Mark the parent element for removal
             let parent = node.parentElement;
             while (parent && parent !== document.body) {
@@ -1076,36 +1078,40 @@
             }
           }
         }
-        
+
         // Remove the elements
-        nodesToRemove.forEach(node => {
+        nodesToRemove.forEach((node) => {
           if (node && node.parentNode) {
             node.parentNode.removeChild(node);
           }
         });
-        
+
         // Also hide any elements with specific Google Translate attributes
-        document.querySelectorAll('[id*="goog-gt-"], [class*="goog-te-"], [class*="goog-gt-"]').forEach(el => {
-          el.style.display = 'none';
-        });
+        document
+          .querySelectorAll(
+            '[id*="goog-gt-"], [class*="goog-te-"], [class*="goog-gt-"]',
+          )
+          .forEach((el) => {
+            el.style.display = "none";
+          });
       }
-      
+
       // Run on page load
-      window.addEventListener('load', function() {
+      window.addEventListener("load", function () {
         removeGoogleTranslateFeedback();
-        
+
         // Run again after a delay to catch dynamically added elements
         setTimeout(removeGoogleTranslateFeedback, 1000);
         setTimeout(removeGoogleTranslateFeedback, 3000);
-        
+
         // Watch for DOM changes
-        const observer = new MutationObserver(function(mutations) {
+        const observer = new MutationObserver(function (mutations) {
           removeGoogleTranslateFeedback();
         });
-        
+
         observer.observe(document.body, {
           childList: true,
-          subtree: true
+          subtree: true,
         });
       });
     </script>
