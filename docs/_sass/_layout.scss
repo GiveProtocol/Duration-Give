@@ -192,51 +192,7 @@
   }
 }
 
-// Footer
-.site-footer {
-  background-color: var(--brand-background-secondary);
-  border-top: 1px solid var(--primary-200);
-  padding: var(--spacing-xl) 0;
-  margin-top: auto;
-
-  .footer-content {
-    @include container;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    @include mobile {
-      flex-direction: column;
-      gap: var(--spacing-md);
-      text-align: center;
-    }
-  }
-
-  .footer-text {
-    @include text-body-small;
-    color: var(--brand-text-muted);
-  }
-
-  .footer-links {
-    display: flex;
-    gap: var(--spacing-lg);
-
-    @include mobile {
-      gap: var(--spacing-md);
-    }
-
-    a {
-      @include text-body-small;
-      color: var(--brand-text-secondary);
-      text-decoration: none;
-
-      &:hover {
-        color: var(--indigo-600);
-        text-decoration: underline;
-      }
-    }
-  }
-}
+// Footer styles are now handled in main.scss to avoid duplication
 
 // Breadcrumbs
 .breadcrumbs {
