@@ -852,15 +852,6 @@
         position: absolute !important;
         left: -9999px !important;
       }
-
-      /* Hide any text containing Google Translate feedback */
-      *:contains("Original text"),
-      *:contains("Rate this translation"),
-      *:contains(
-        "Your feedback will be used to help improve Google Translate"
-      ) {
-        display: none !important;
-      }
     </style>
 
     <!-- Enhanced Search Scripts -->
@@ -1047,5 +1038,76 @@
 
     <!-- i18n Helper -->
     <script src="{{ '/assets/js/i18n-helper.js' | relative_url }}"></script>
+
+    <!-- Remove Google Translate feedback elements -->
+    <script>
+      // Function to remove Google Translate feedback elements
+      function removeGoogleTranslateFeedback() {
+        // Get all text nodes in the document
+        const walker = document.createTreeWalker(
+          document.body,
+          NodeFilter.SHOW_TEXT,
+          null,
+          false
+        );
+        
+        const nodesToRemove = [];
+        const textsToRemove = [
+          "Original text",
+          "Rate this translation",
+          "Your feedback will be used to help improve Google Translate"
+        ];
+        
+        // Find text nodes containing unwanted text
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          const text = node.textContent.trim();
+          
+          if (textsToRemove.some(unwantedText => text.includes(unwantedText))) {
+            // Mark the parent element for removal
+            let parent = node.parentElement;
+            while (parent && parent !== document.body) {
+              // If this is a small container with only this text, remove it
+              if (parent.textContent.trim() === text) {
+                nodesToRemove.push(parent);
+                break;
+              }
+              parent = parent.parentElement;
+            }
+          }
+        }
+        
+        // Remove the elements
+        nodesToRemove.forEach(node => {
+          if (node && node.parentNode) {
+            node.parentNode.removeChild(node);
+          }
+        });
+        
+        // Also hide any elements with specific Google Translate attributes
+        document.querySelectorAll('[id*="goog-gt-"], [class*="goog-te-"], [class*="goog-gt-"]').forEach(el => {
+          el.style.display = 'none';
+        });
+      }
+      
+      // Run on page load
+      window.addEventListener('load', function() {
+        removeGoogleTranslateFeedback();
+        
+        // Run again after a delay to catch dynamically added elements
+        setTimeout(removeGoogleTranslateFeedback, 1000);
+        setTimeout(removeGoogleTranslateFeedback, 3000);
+        
+        // Watch for DOM changes
+        const observer = new MutationObserver(function(mutations) {
+          removeGoogleTranslateFeedback();
+        });
+        
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      });
+    </script>
   </body>
 </html>
