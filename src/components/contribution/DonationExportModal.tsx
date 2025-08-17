@@ -97,19 +97,25 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
     onClose();
   }, [onClose]);
 
-  const handleFormSubmit = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
-    handleExport();
-  }, [handleExport]);
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      handleExport();
+    },
+    [handleExport],
+  );
 
   return (
     <section className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <form className="bg-white rounded-lg shadow-xl max-w-md w-full divide-y divide-gray-200" onSubmit={handleFormSubmit}>
+      <form
+        className="bg-white rounded-lg shadow-xl max-w-md w-full divide-y divide-gray-200"
+        onSubmit={handleFormSubmit}
+      >
         <div className="flex justify-between items-center p-6">
           <h2 className="text-xl font-semibold text-gray-900">
             {t("export.title")}
           </h2>
-          <X 
+          <X
             onClick={handleClose}
             className="h-5 w-5 text-gray-400 hover:text-gray-500 cursor-pointer"
             aria-label="Close"
@@ -160,31 +166,31 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
 
           <p className="text-sm text-gray-500">{t("export.willInclude")}</p>
           <ul className="text-sm text-gray-500 list-disc list-inside mt-1 space-y-1">
-              <li>{t("contributions.date")}</li>
-              <li>{t("contributions.type")}</li>
-              <li>{t("contributions.details")}</li>
-              <li>{t("contributions.status")}</li>
-              {options.includePersonalInfo && (
-                <li>
-                  {t(
-                    "export.walletAddresses",
-                    "Wallet addresses (sender and recipient)",
-                  )}
-                </li>
+            <li>{t("contributions.date")}</li>
+            <li>{t("contributions.type")}</li>
+            <li>{t("contributions.details")}</li>
+            <li>{t("contributions.status")}</li>
+            {options.includePersonalInfo && (
+              <li>
+                {t(
+                  "export.walletAddresses",
+                  "Wallet addresses (sender and recipient)",
+                )}
+              </li>
+            )}
+            <li>
+              {t(
+                "export.volunteerDetails",
+                "Volunteer contribution details (when applicable)",
               )}
-              <li>
-                {t(
-                  "export.volunteerDetails",
-                  "Volunteer contribution details (when applicable)",
-                )}
-              </li>
-              <li>
-                {t(
-                  "export.verificationHashes",
-                  "Verification hashes (when applicable)",
-                )}
-              </li>
-            </ul>
+            </li>
+            <li>
+              {t(
+                "export.verificationHashes",
+                "Verification hashes (when applicable)",
+              )}
+            </li>
+          </ul>
         </main>
 
         <div className="flex justify-end space-x-3 p-6">
