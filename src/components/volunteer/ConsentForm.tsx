@@ -84,9 +84,26 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
     [ageConfirmation, validationError],
   );
 
+  const handleBackdropClick = useCallback(() => {
+    onDecline();
+  }, [onDecline]);
+
+  const handleBackdropKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      onDecline();
+    }
+  }, [onDecline]);
+
   return (
     <>
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50" onClick={onDecline} />
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50 z-50" 
+        onClick={handleBackdropClick}
+        onKeyDown={handleBackdropKeyDown}
+        role="button"
+        tabIndex={0}
+        aria-label="Close modal"
+      />
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 prose prose-sm max-w-none z-50">
         <h2 className="text-2xl font-semibold text-gray-900">
           Volunteer Application Consent Form

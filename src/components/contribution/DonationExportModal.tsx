@@ -97,9 +97,14 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
     onClose();
   }, [onClose]);
 
+  const handleFormSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    handleExport();
+  }, [handleExport]);
+
   return (
     <section className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <form className="bg-white rounded-lg shadow-xl max-w-md w-full divide-y divide-gray-200" onSubmit={(e) => { e.preventDefault(); handleExport(); }}>
+      <form className="bg-white rounded-lg shadow-xl max-w-md w-full divide-y divide-gray-200" onSubmit={handleFormSubmit}>
         <div className="flex justify-between items-center p-6">
           <h2 className="text-xl font-semibold text-gray-900">
             {t("export.title")}
