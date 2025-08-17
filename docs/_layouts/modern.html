@@ -763,65 +763,77 @@
         color: #fbbf24;
       }
 
-      /* Footer Styling */
+      /* Footer Styling - Enhanced for proper alignment */
       .modern-footer {
-        margin-top: 3rem;
+        margin-top: 4rem;
         padding: 3rem 0;
         border-top: 1px solid #e5e7eb;
         background-color: #f9fafb;
-        width: 100%;
+        width: 100% !important;
+        position: relative;
+        left: 0;
+        right: 0;
+        clear: both;
       }
 
-      .footer-content {
+      .modern-footer .footer-content {
         max-width: 1280px;
         margin: 0 auto;
         padding: 0 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 2rem;
+        text-align: center !important;
       }
 
-      .footer-links {
-        display: flex;
+      .modern-footer .footer-links {
+        display: flex !important;
         flex-wrap: wrap;
-        gap: 2.5rem;
-        justify-content: center;
+        gap: 3rem;
+        justify-content: center !important;
         align-items: center;
+        margin: 0 auto;
+        padding: 0;
       }
 
-      .footer-links a {
+      .modern-footer .footer-links a {
         color: #6b7280;
         text-decoration: none;
-        font-size: 0.875rem;
+        font-size: 0.9rem;
         font-weight: 500;
         transition: color 0.2s ease;
         position: relative;
+        display: inline-block;
+        white-space: nowrap;
       }
 
-      .footer-links a:hover {
+      .modern-footer .footer-links a:hover {
         color: #2563eb;
       }
 
-      .footer-links a:not(:last-child)::after {
-        content: "";
+      .modern-footer .footer-links a:not(:last-child)::after {
+        content: "•";
         position: absolute;
-        right: -1.25rem;
+        right: -1.5rem;
         top: 50%;
         transform: translateY(-50%);
-        width: 1px;
-        height: 1rem;
-        background-color: #e5e7eb;
+        color: #d1d5db;
+        font-size: 0.75rem;
       }
 
-      .footer-text {
-        text-align: center;
+      .modern-footer .footer-text {
+        text-align: center !important;
         color: #6b7280;
         font-size: 0.875rem;
+        width: 100%;
+        margin: 0 auto;
       }
 
-      .footer-text p {
+      .modern-footer .footer-text p {
         margin: 0;
+        text-align: center !important;
       }
 
       /* Dark mode footer */
@@ -838,8 +850,8 @@
         color: #60a5fa;
       }
 
-      body.dark-mode .footer-links a:not(:last-child)::after {
-        background-color: #374151;
+      body.dark-mode .modern-footer .footer-links a:not(:last-child)::after {
+        color: #4b5563;
       }
 
       body.dark-mode .footer-text {
@@ -847,17 +859,17 @@
       }
 
       @media (max-width: 768px) {
-        .footer-links {
-          flex-direction: column;
+        .modern-footer .footer-links {
+          flex-direction: column !important;
           align-items: center;
           gap: 1rem;
         }
-
-        .footer-links a:not(:last-child)::after {
+        
+        .modern-footer .footer-links a:not(:last-child)::after {
           display: none;
         }
-
-        .footer-content {
+        
+        .modern-footer .footer-content {
           padding: 0 1.5rem;
         }
       }
@@ -884,6 +896,39 @@
         width: 0 !important;
         position: absolute !important;
         left: -9999px !important;
+      }
+      
+      /* Override any conflicting styles from main.scss */
+      footer.modern-footer {
+        display: block !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        text-align: center !important;
+      }
+      
+      footer.modern-footer .footer-content {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        max-width: 1280px !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+      }
+      
+      footer.modern-footer .footer-links {
+        display: flex !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        margin: 0 auto !important;
+        width: auto !important;
+      }
+      
+      footer.modern-footer .footer-text {
+        width: 100% !important;
+        text-align: center !important;
+        margin: 0 !important;
       }
     </style>
 
