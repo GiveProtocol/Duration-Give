@@ -547,17 +547,90 @@
     </div>
 
     <!-- Footer -->
-    <footer class="modern-footer" style="width: 100%; margin-top: 4rem; padding: 3rem 0; border-top: 1px solid #e5e7eb; background-color: #f9fafb; text-align: center;">
-      <div class="footer-content" style="max-width: 1280px; margin: 0 auto; padding: 0 2rem; text-align: center;">
-        <div class="footer-links" style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-          <a href="{{ '/safety-security/cookie-policy/' | relative_url }}" style="color: #6b7280; text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 0 1rem; border-right: 1px solid #e5e7eb;">Cookie Policy</a>
-          <a href="{{ '/safety-security/platform-security/' | relative_url }}" style="color: #6b7280; text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 0 1rem; border-right: 1px solid #e5e7eb;">Privacy Policy</a>
-          <a href="{{ '/help-center/need-help/' | relative_url }}" style="color: #6b7280; text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 0 1rem; border-right: 1px solid #e5e7eb;">Contact Us</a>
-          <a href="https://giveprotocol.io" target="_blank" style="color: #6b7280; text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 0 1rem;">Main Website</a>
+    <footer
+      class="modern-footer"
+      style="
+        width: 100%;
+        margin-top: 4rem;
+        padding: 3rem 0;
+        border-top: 1px solid #e5e7eb;
+        background-color: #f9fafb;
+        text-align: center;
+      "
+    >
+      <div
+        class="footer-content"
+        style="
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 2rem;
+          text-align: center;
+        "
+      >
+        <div
+          class="footer-links"
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+          "
+        >
+          <a
+            href="{{ '/safety-security/cookie-policy/' | relative_url }}"
+            style="
+              color: #6b7280;
+              text-decoration: none;
+              font-size: 0.9rem;
+              font-weight: 500;
+              padding: 0 1rem;
+              border-right: 1px solid #e5e7eb;
+            "
+            >Cookie Policy</a
+          >
+          <a
+            href="{{ '/safety-security/platform-security/' | relative_url }}"
+            style="
+              color: #6b7280;
+              text-decoration: none;
+              font-size: 0.9rem;
+              font-weight: 500;
+              padding: 0 1rem;
+              border-right: 1px solid #e5e7eb;
+            "
+            >Privacy Policy</a
+          >
+          <a
+            href="{{ '/help-center/need-help/' | relative_url }}"
+            style="
+              color: #6b7280;
+              text-decoration: none;
+              font-size: 0.9rem;
+              font-weight: 500;
+              padding: 0 1rem;
+              border-right: 1px solid #e5e7eb;
+            "
+            >Contact Us</a
+          >
+          <a
+            href="https://giveprotocol.io"
+            target="_blank"
+            style="
+              color: #6b7280;
+              text-decoration: none;
+              font-size: 0.9rem;
+              font-weight: 500;
+              padding: 0 1rem;
+            "
+            >Main Website</a
+          >
         </div>
-        <div class="footer-text" style="text-align: center;">
-          <p style="margin: 0; color: #6b7280; font-size: 0.875rem;">
-            {{ site.footer_content | default: "Copyright &copy; 2025 Give Protocol. All rights reserved." }}
+        <div class="footer-text" style="text-align: center">
+          <p style="margin: 0; color: #6b7280; font-size: 0.875rem">
+            {{ site.footer_content | default: "Copyright &copy; 2025 Give
+            Protocol. All rights reserved." }}
           </p>
         </div>
       </div>
