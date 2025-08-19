@@ -145,3 +145,5 @@ export const Governance: React.FC = () => {
     </div>
   );
 };
+
+export default Governance;

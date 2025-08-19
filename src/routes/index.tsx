@@ -34,24 +34,12 @@ const ContributionTracker = lazy(() => import("@/pages/ContributionTracker"));
 const VolunteerOpportunities = lazy(
   () => import("@/pages/VolunteerOpportunities"),
 );
-const About = lazy(() =>
-  import("@/pages/About").then((m) => ({ default: m.About })),
-);
-const Legal = lazy(() =>
-  import("@/pages/Legal").then((m) => ({ default: m.Legal })),
-);
-const Privacy = lazy(() =>
-  import("@/pages/Privacy").then((m) => ({ default: m.Privacy })),
-);
-const Governance = lazy(() =>
-  import("@/pages/Governance").then((m) => ({ default: m.Governance })),
-);
-const GiveDashboard = lazy(() =>
-  import("@/pages/GiveDashboard").then((m) => ({ default: m.GiveDashboard })),
-);
-const CharityPortal = lazy(() =>
-  import("@/pages/CharityPortal").then((m) => ({ default: m.CharityPortal })),
-);
+const About = lazy(() => import("@/pages/About"));
+const Legal = lazy(() => import("@/pages/Legal"));
+const Privacy = lazy(() => import("@/pages/Privacy"));
+const Governance = lazy(() => import("@/pages/Governance"));
+const GiveDashboard = lazy(() => import("@/pages/GiveDashboard"));
+const CharityPortal = lazy(() => import("@/pages/CharityPortal"));
 const CreateOpportunity = lazy(
   () => import("@/pages/charity/CreateOpportunity"),
 );
