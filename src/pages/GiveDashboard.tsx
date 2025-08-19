@@ -7,6 +7,7 @@ import {
   Clock,
   Award,
   Download,
+  Calendar,
   ExternalLink,
   Settings,
   ChevronUp,
