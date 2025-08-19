@@ -7,8 +7,6 @@ import {
   Clock,
   Award,
   Download,
-  Filter,
-  Calendar,
   ExternalLink,
   Settings,
   ChevronUp,
@@ -439,11 +437,10 @@ export const GiveDashboard: React.FC = () => {
             {t("dashboard.contributions")}
           </h2>
           <div className="flex items-center space-x-4 flex-wrap gap-2">
-            <Filter className="h-5 w-5 text-gray-400" />
             <select
               value={selectedYear}
               onChange={handleYearChange}
-              className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               aria-label="Filter by year"
             >
               {years.map((year) => (
@@ -452,11 +449,10 @@ export const GiveDashboard: React.FC = () => {
                 </option>
               ))}
             </select>
-            <Calendar className="h-5 w-5 text-gray-400" />
             <select
               value={selectedType}
               onChange={handleTypeChange}
-              className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               aria-label="Filter by type"
             >
               <option value="all">{t("filter.allTypes", "All Types")}</option>
@@ -484,35 +480,43 @@ export const GiveDashboard: React.FC = () => {
             <thead>
               <tr>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
                   onClick={handleSortByDate}
                 >
-                  <span>{t("contributions.date")}</span>
-                  {getSortIcon("date")}
+                  <div className="flex items-center space-x-1">
+                    <span>{t("contributions.date")}</span>
+                    {getSortIcon("date")}
+                  </div>
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
                   onClick={handleSortByType}
                 >
-                  {t("contributions.type")}
-                  {getSortIcon("type")}
+                  <div className="flex items-center space-x-1">
+                    <span>{t("contributions.type")}</span>
+                    {getSortIcon("type")}
+                  </div>
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
                   onClick={handleSortByOrganization}
                 >
-                  {t("contributions.organization")}
-                  {getSortIcon("organization")}
+                  <div className="flex items-center space-x-1">
+                    <span>{t("contributions.organization")}</span>
+                    {getSortIcon("organization")}
+                  </div>
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   {t("contributions.details")}
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none flex items-center space-x-1"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 select-none"
                   onClick={handleSortByStatus}
                 >
-                  {t("contributions.status")}
-                  {getSortIcon("status")}
+                  <div className="flex items-center space-x-1">
+                    <span>{t("contributions.status")}</span>
+                    {getSortIcon("status")}
+                  </div>
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   {t("contributions.verification")}
