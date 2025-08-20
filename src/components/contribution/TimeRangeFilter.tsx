@@ -1,14 +1,20 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
 interface TimeRangeFilterProps {
   value: string;
   onChange: (_value: string) => void;
 }
 
-export const TimeRangeFilter: React.FC<TimeRangeFilterProps> = ({ value, onChange }) => {
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(e.target.value);
-  }, [onChange]);
+export const TimeRangeFilter: React.FC<TimeRangeFilterProps> = ({
+  value,
+  onChange,
+}) => {
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      onChange(e.target.value);
+    },
+    [onChange],
+  );
 
   return (
     <select
