@@ -4,58 +4,79 @@ pragma solidity 0.8.20;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
  * @title DurationDonation
- * @dev A contract for managing charitable donations in native tokens (GLMR/DOT.xc)
+ * @dev Enhanced donation contract with integrated platform tip functionality
+ * All donations (including platform tips) are tax-deductible
  */
 contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
-    using Address for address payable;
+    using SafeERC20 for IERC20;
 
     struct Charity {
         bool isRegistered;
-        address payable walletAddress;
+        address walletAddress;
         uint256 totalReceived;
-        uint256 availableBalance;
         bool isActive;
-        uint256 lastWithdrawal;
     }
-    
+
+    struct TaxReceipt {
+        address donor;
+        address primaryBeneficiary;      // The charity
+        uint256 charityAmount;
+        uint256 giveProtocolAmount;      // Platform tip
+        uint256 totalTaxDeductible;      // Sum of both
+        address tokenAddress;
+        uint256 timestamp;
+        string receiptType;              // "DUAL_BENEFICIARY" or "SINGLE_BENEFICIARY"
+    }
+
+    // State variables
+    address public giveProtocolTreasury;
     mapping(address => Charity) public charities;
     mapping(address => mapping(address => uint256)) public donations; // donor => charity => amount
+    mapping(bytes32 => TaxReceipt) public taxReceipts;
     
-    uint256 public constant MINIMUM_DONATION = 0.0001 ether; // Minimum donation amount
-    uint256 public constant MAXIMUM_DONATION = 1e6 ether; // Maximum donation amount (1M)
-    uint256 public constant WITHDRAWAL_COOLDOWN = 1 days; // Minimum time between withdrawals
+    // Pre-set tip percentages (in basis points)
+    uint256[] public suggestedTipRates = [500, 1000, 2000]; // 5%, 10%, 20%
+    uint256 public constant BASIS_POINTS = 10000;
+    uint256 public constant MINIMUM_DONATION = 1e15; // 0.001 tokens minimum
     
+    // Events
     event CharityRegistered(address indexed charity, uint256 timestamp);
     event CharityStatusUpdated(address indexed charity, bool isActive);
-    event DonationReceived(
+    event DonationProcessed(
         address indexed donor,
         address indexed charity,
-        uint256 amount,
-        uint256 timestamp
+        address token,
+        uint256 charityAmount,
+        uint256 platformTip,
+        uint256 totalTaxDeductible,
+        uint256 timestamp,
+        bytes32 donationId
     );
-    event WithdrawalProcessed(
-        address indexed charity,
-        uint256 amount,
-        uint256 timestamp
-    );
+    event TaxReceiptGenerated(bytes32 indexed receiptId, address indexed donor);
+    event TreasuryUpdated(address indexed oldTreasury, address indexed newTreasury);
     
-    error InvalidAmount(uint256 amount, string reason);
+    // Errors
     error CharityNotRegistered(address charity);
     error CharityNotActive(address charity);
-    error WithdrawalTooSoon(uint256 timeRemaining);
-    error InsufficientBalance(uint256 requested, uint256 available);
+    error InvalidAmount(uint256 amount, string reason);
+    error InvalidTipOption(uint8 tipOption);
+    error TransferFailed(address token, address from, address to, uint256 amount);
     
-    constructor() Ownable(msg.sender) {}
+    constructor(address _giveProtocolTreasury) Ownable(msg.sender) {
+        require(_giveProtocolTreasury != address(0), "Invalid treasury address");
+        giveProtocolTreasury = _giveProtocolTreasury;
+    }
     
     /**
      * @dev Register a new charity
      * @param charityAddress The address of the charity to register
      */
-    function registerCharity(address payable charityAddress) external onlyOwner {
+    function registerCharity(address charityAddress) external onlyOwner {
         require(charityAddress != address(0), "Invalid charity address");
         require(!charities[charityAddress].isRegistered, "Charity already registered");
         
@@ -63,9 +84,7 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
             isRegistered: true,
             walletAddress: charityAddress,
             totalReceived: 0,
-            availableBalance: 0,
-            isActive: true,
-            lastWithdrawal: 0
+            isActive: true
         });
         
         emit CharityRegistered(charityAddress, block.timestamp);
@@ -84,67 +103,160 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
         charities[charityAddress].isActive = isActive;
         emit CharityStatusUpdated(charityAddress, isActive);
     }
-    
+
     /**
-     * @dev Make a donation to a charity
-     * @param charityAddress The address of the charity to donate to
+     * @dev Update Give Protocol treasury address
+     * @param newTreasury New treasury address
      */
-    function donate(address charityAddress) external payable nonReentrant whenNotPaused {
-        if (!charities[charityAddress].isRegistered) {
-            revert CharityNotRegistered(charityAddress);
-        }
-        
-        if (!charities[charityAddress].isActive) {
-            revert CharityNotActive(charityAddress);
-        }
-        
-        if (msg.value < MINIMUM_DONATION || msg.value > MAXIMUM_DONATION) {
-            revert InvalidAmount(msg.value, "Amount outside allowed range");
-        }
-        
-        Charity storage charity = charities[charityAddress];
-        
-        // Update balances
-        charity.totalReceived += msg.value;
-        charity.availableBalance += msg.value;
-        donations[msg.sender][charityAddress] += msg.value;
-        
-        emit DonationReceived(msg.sender, charityAddress, msg.value, block.timestamp);
+    function updateTreasury(address newTreasury) external onlyOwner {
+        require(newTreasury != address(0), "Invalid treasury address");
+        address oldTreasury = giveProtocolTreasury;
+        giveProtocolTreasury = newTreasury;
+        emit TreasuryUpdated(oldTreasury, newTreasury);
     }
     
     /**
-     * @dev Withdraw funds from charity balance
-     * @param amount Amount to withdraw
+     * @dev Process donation with integrated optional platform tip
+     * @param charity The verified charity receiving the donation
+     * @param token The ERC20 token being donated
+     * @param charityAmount Amount going to the charity
+     * @param platformTip Amount supporting Give Protocol (also tax-deductible)
      */
-    function withdraw(uint256 amount) external nonReentrant whenNotPaused {
-        Charity storage charity = charities[msg.sender];
-        
-        if (!charity.isRegistered) {
-            revert CharityNotRegistered(msg.sender);
+    function processDonation(
+        address charity,
+        address token,
+        uint256 charityAmount,
+        uint256 platformTip
+    ) public nonReentrant whenNotPaused {
+        if (!charities[charity].isRegistered) {
+            revert CharityNotRegistered(charity);
         }
         
-        if (!charity.isActive) {
-            revert CharityNotActive(msg.sender);
+        if (!charities[charity].isActive) {
+            revert CharityNotActive(charity);
         }
         
-        if (amount == 0 || amount > charity.availableBalance) {
-            revert InsufficientBalance(amount, charity.availableBalance);
+        if (charityAmount < MINIMUM_DONATION) {
+            revert InvalidAmount(charityAmount, "Donation amount too small");
         }
         
-        // Check withdrawal cooldown
-        if (block.timestamp < charity.lastWithdrawal + WITHDRAWAL_COOLDOWN) {
-            revert WithdrawalTooSoon(
-                (charity.lastWithdrawal + WITHDRAWAL_COOLDOWN) - block.timestamp
-            );
+        uint256 totalAmount = charityAmount + platformTip;
+        
+        // Transfer to charity
+        IERC20(token).safeTransferFrom(msg.sender, charity, charityAmount);
+        
+        // Transfer tip to Give Protocol if provided
+        if (platformTip > 0) {
+            IERC20(token).safeTransferFrom(msg.sender, giveProtocolTreasury, platformTip);
         }
         
-        charity.availableBalance -= amount;
-        charity.lastWithdrawal = block.timestamp;
+        // Update tracking
+        charities[charity].totalReceived += charityAmount;
+        donations[msg.sender][charity] += charityAmount;
         
-        // Transfer using Address library's sendValue for safety
-        charity.walletAddress.sendValue(amount);
+        // Generate donation ID
+        bytes32 donationId = keccak256(
+            abi.encode(msg.sender, charity, totalAmount, block.timestamp)
+        );
         
-        emit WithdrawalProcessed(msg.sender, amount, block.timestamp);
+        // Generate tax receipt
+        _generateTaxReceipt(
+            donationId,
+            msg.sender,
+            charity,
+            charityAmount,
+            platformTip,
+            token
+        );
+        
+        // Emit event - ENTIRE amount is tax-deductible
+        emit DonationProcessed(
+            msg.sender,
+            charity,
+            token,
+            charityAmount,
+            platformTip,
+            totalAmount,
+            block.timestamp,
+            donationId
+        );
+    }
+    
+    /**
+     * @dev Process donation with percentage-based tip
+     * @param charity The verified charity
+     * @param token The token being donated
+     * @param charityAmount Amount for charity
+     * @param tipPercentage Tip as basis points (e.g., 500 = 5%)
+     */
+    function processDonationWithPercentageTip(
+        address charity,
+        address token,
+        uint256 charityAmount,
+        uint256 tipPercentage
+    ) external {
+        uint256 platformTip = (charityAmount * tipPercentage) / BASIS_POINTS;
+        processDonation(charity, token, charityAmount, platformTip);
+    }
+
+    /**
+     * @dev Process donation with suggested tip option
+     * @param charity The verified charity
+     * @param token The token being donated
+     * @param charityAmount Amount for charity
+     * @param tipOption 0 = 5%, 1 = 10%, 2 = 20%
+     */
+    function processDonationWithSuggestedTip(
+        address charity,
+        address token,
+        uint256 charityAmount,
+        uint8 tipOption
+    ) external {
+        if (tipOption >= suggestedTipRates.length) {
+            revert InvalidTipOption(tipOption);
+        }
+        uint256 platformTip = calculateSuggestedTip(charityAmount, tipOption);
+        processDonation(charity, token, charityAmount, platformTip);
+    }
+    
+    /**
+     * @dev Convenience function to calculate suggested tip amounts
+     * @param donationAmount The base donation amount
+     * @param tipOption 0 = 5%, 1 = 10%, 2 = 20%
+     */
+    function calculateSuggestedTip(
+        uint256 donationAmount,
+        uint8 tipOption
+    ) public view returns (uint256) {
+        if (tipOption >= suggestedTipRates.length) {
+            revert InvalidTipOption(tipOption);
+        }
+        return (donationAmount * suggestedTipRates[tipOption]) / BASIS_POINTS;
+    }
+
+    /**
+     * @dev Generate comprehensive tax receipt
+     */
+    function _generateTaxReceipt(
+        bytes32 receiptId,
+        address donor,
+        address charity,
+        uint256 charityAmount,
+        uint256 platformTip,
+        address token
+    ) internal {
+        taxReceipts[receiptId] = TaxReceipt({
+            donor: donor,
+            primaryBeneficiary: charity,
+            charityAmount: charityAmount,
+            giveProtocolAmount: platformTip,
+            totalTaxDeductible: charityAmount + platformTip,
+            tokenAddress: token,
+            timestamp: block.timestamp,
+            receiptType: platformTip > 0 ? "DUAL_BENEFICIARY" : "SINGLE_BENEFICIARY"
+        });
+        
+        emit TaxReceiptGenerated(receiptId, donor);
     }
     
     /**
@@ -155,18 +267,14 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
         bool isRegistered,
         address walletAddress,
         uint256 totalReceived,
-        uint256 availableBalance,
-        bool isActive,
-        uint256 lastWithdrawal
+        bool isActive
     ) {
         Charity storage charity = charities[charityAddress];
         return (
             charity.isRegistered,
             charity.walletAddress,
             charity.totalReceived,
-            charity.availableBalance,
-            charity.isActive,
-            charity.lastWithdrawal
+            charity.isActive
         );
     }
     
@@ -183,8 +291,41 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
     }
 
     /**
+     * @dev Get all suggested tip rates
+     */
+    function getSuggestedTipRates() external view returns (uint256[] memory) {
+        return suggestedTipRates;
+    }
+
+    /**
+     * @dev Get tax receipt details
+     * @param receiptId The receipt ID
+     */
+    function getTaxReceipt(bytes32 receiptId) external view returns (
+        address donor,
+        address primaryBeneficiary,
+        uint256 charityAmount,
+        uint256 giveProtocolAmount,
+        uint256 totalTaxDeductible,
+        address tokenAddress,
+        uint256 timestamp,
+        string memory receiptType
+    ) {
+        TaxReceipt storage receipt = taxReceipts[receiptId];
+        return (
+            receipt.donor,
+            receipt.primaryBeneficiary,
+            receipt.charityAmount,
+            receipt.giveProtocolAmount,
+            receipt.totalTaxDeductible,
+            receipt.tokenAddress,
+            receipt.timestamp,
+            receipt.receiptType
+        );
+    }
+
+    /**
      * @dev Pause the contract
-     * Only owner can call this function
      */
     function pause() external onlyOwner {
         _pause();
@@ -192,23 +333,8 @@ contract DurationDonation is Ownable, ReentrancyGuard, Pausable {
 
     /**
      * @dev Unpause the contract
-     * Only owner can call this function
      */
     function unpause() external onlyOwner {
         _unpause();
-    }
-
-    /**
-     * @dev Fallback function to accept native token donations
-     */
-    receive() external payable {
-        revert("Use donate() function to make donations");
-    }
-
-    /**
-     * @dev Fallback function for unknown function calls
-     */
-    fallback() external {
-        revert("Function not found");
     }
 }
