@@ -15,7 +15,9 @@ async function main() {
 
   if (balance === 0n) {
     console.error("❌ Error: Deployer account has no DEV tokens");
-    console.log("Get testnet DEV tokens from: https://faucet.moonbeam.network/");
+    console.log(
+      "Get testnet DEV tokens from: https://faucet.moonbeam.network/",
+    );
     process.exit(1);
   }
 
@@ -33,7 +35,8 @@ async function main() {
 
   // Deploy DurationDonation contract with treasury
   console.log("\n📄 Deploying DurationDonation contract...");
-  const DurationDonation = await hre.ethers.getContractFactory("DurationDonation");
+  const DurationDonation =
+    await hre.ethers.getContractFactory("DurationDonation");
   const donation = await DurationDonation.deploy(treasuryAddress);
   await donation.waitForDeployment();
   const donationAddress = await donation.getAddress();
@@ -41,7 +44,9 @@ async function main() {
 
   // Deploy VolunteerVerification contract
   console.log("\n📄 Deploying VolunteerVerification contract...");
-  const VolunteerVerification = await hre.ethers.getContractFactory("VolunteerVerification");
+  const VolunteerVerification = await hre.ethers.getContractFactory(
+    "VolunteerVerification",
+  );
   const verification = await VolunteerVerification.deploy();
   await verification.waitForDeployment();
   const verificationAddress = await verification.getAddress();
@@ -49,15 +54,22 @@ async function main() {
 
   // Deploy CharityScheduledDistribution contract
   console.log("\n📄 Deploying CharityScheduledDistribution contract...");
-  const CharityScheduledDistribution = await hre.ethers.getContractFactory("CharityScheduledDistribution");
+  const CharityScheduledDistribution = await hre.ethers.getContractFactory(
+    "CharityScheduledDistribution",
+  );
   const distribution = await CharityScheduledDistribution.deploy();
   await distribution.waitForDeployment();
   const distributionAddress = await distribution.getAddress();
-  console.log("✅ CharityScheduledDistribution deployed to:", distributionAddress);
+  console.log(
+    "✅ CharityScheduledDistribution deployed to:",
+    distributionAddress,
+  );
 
   // Deploy DistributionExecutor contract
   console.log("\n📄 Deploying DistributionExecutor contract...");
-  const DistributionExecutor = await hre.ethers.getContractFactory("DistributionExecutor");
+  const DistributionExecutor = await hre.ethers.getContractFactory(
+    "DistributionExecutor",
+  );
   const executor = await DistributionExecutor.deploy(distributionAddress);
   await executor.waitForDeployment();
   const executorAddress = await executor.getAddress();
@@ -80,8 +92,8 @@ async function main() {
       DurationDonation: donationAddress,
       VolunteerVerification: verificationAddress,
       CharityScheduledDistribution: distributionAddress,
-      DistributionExecutor: executorAddress
-    }
+      DistributionExecutor: executorAddress,
+    },
   };
 
   const deploymentPath = path.join(__dirname, "..", "deployments");
@@ -111,38 +123,38 @@ async function main() {
 
 async function verifyContracts(contracts) {
   console.log("Waiting 30 seconds for Moonscan to index contracts...");
-  await new Promise(resolve => setTimeout(resolve, 30000));
+  await new Promise((resolve) => setTimeout(resolve, 30000));
 
   for (const [name, address] of Object.entries(contracts)) {
     try {
       console.log(`\nVerifying ${name} at ${address}...`);
-      
+
       if (name === "DistributionExecutor") {
         // DistributionExecutor has constructor arguments
         await hre.run("verify:verify", {
           address: address,
-          constructorArguments: [contracts.CharityScheduledDistribution]
+          constructorArguments: [contracts.CharityScheduledDistribution],
         });
       } else if (name === "MockERC20") {
         // MockERC20 has constructor arguments
         await hre.run("verify:verify", {
           address: address,
-          constructorArguments: ["Test Token", "TEST"]
+          constructorArguments: ["Test Token", "TEST"],
         });
       } else if (name === "DurationDonation") {
         // DurationDonation has treasury address as constructor argument
         await hre.run("verify:verify", {
           address: address,
-          constructorArguments: ["0x8cFc24Ad1CDc3B80338392f17f6e6ab40552e1C0"]
+          constructorArguments: ["0x8cFc24Ad1CDc3B80338392f17f6e6ab40552e1C0"],
         });
       } else {
         // Other contracts have no constructor arguments
         await hre.run("verify:verify", {
           address: address,
-          constructorArguments: []
+          constructorArguments: [],
         });
       }
-      
+
       console.log(`✅ ${name} verified successfully`);
     } catch (error) {
       if (error.message.includes("already verified")) {

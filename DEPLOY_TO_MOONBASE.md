@@ -14,13 +14,14 @@
 
 3. **Set up environment variables**
    Create or update your `.env` file with:
+
    ```bash
    # Required for deployment
    PRIVATE_KEY=your_wallet_private_key_here
-   
+
    # Optional - for Moonscan verification
    MOONSCAN_API_KEY=your_moonscan_api_key_here
-   
+
    # Optional - if you have an OnFinality API key
    MOONBEAM_API_KEY=your_onfinality_api_key_here
    ```
@@ -30,29 +31,33 @@
 ## Deployment Steps
 
 1. **Install dependencies** (if not already done)
+
    ```bash
    npm install
    ```
 
 2. **Compile contracts**
+
    ```bash
    npm run compile
    ```
 
 3. **Deploy to Moonbase Alpha**
+
    ```bash
    npx hardhat run scripts/deploy-moonbase.js --network moonbase
    ```
 
 4. **Save the contract addresses**
    The script will output contract addresses like:
+
    ```
    VITE_TOKEN_CONTRACT_ADDRESS=0x...
    VITE_DONATION_CONTRACT_ADDRESS=0x...
    VITE_VERIFICATION_CONTRACT_ADDRESS=0x...
    VITE_DISTRIBUTION_CONTRACT_ADDRESS=0x...
    ```
-   
+
    Add these to your `.env` file for the frontend to use.
 
 ## After Deployment
@@ -64,6 +69,7 @@
 ## Viewing Deployed Contracts
 
 You can view your deployed contracts on Moonscan:
+
 - https://moonbase.moonscan.io/address/YOUR_CONTRACT_ADDRESS
 
 ## Getting a Moonscan API Key
