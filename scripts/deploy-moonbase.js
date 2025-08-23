@@ -2,6 +2,60 @@ const hre = require("hardhat");
 const fs = require("fs");
 const path = require("path");
 
+/**
+ * Verifies deployed contracts on Moonscan block explorer
+ * @param {Object} contracts - Object containing contract names and addresses
+ * @returns {Promise<void>}
+ */
+async function verifyContracts(contracts) {
+  console.log("Waiting 30 seconds for Moonscan to index contracts...");
+  await new Promise(resolve => setTimeout(resolve, 30000));
+
+  for (const [name, address] of Object.entries(contracts)) {
+    try {
+      console.log(`\nVerifying ${name} at ${address}...`);
+      
+      if (name === "DistributionExecutor") {
+        // DistributionExecutor has constructor arguments
+        await hre.run("verify:verify", {
+          address,
+          constructorArguments: [contracts.CharityScheduledDistribution]
+        });
+      } else if (name === "MockERC20") {
+        // MockERC20 has constructor arguments
+        await hre.run("verify:verify", {
+          address,
+          constructorArguments: ["Test Token", "TEST"]
+        });
+      } else if (name === "DurationDonation") {
+        // DurationDonation has treasury address as constructor argument
+        await hre.run("verify:verify", {
+          address,
+          constructorArguments: ["0x8cFc24Ad1CDc3B80338392f17f6e6ab40552e1C0"]
+        });
+      } else {
+        // Other contracts have no constructor arguments
+        await hre.run("verify:verify", {
+          address,
+          constructorArguments: []
+        });
+      }
+      
+      console.log(`✅ ${name} verified successfully`);
+    } catch (error) {
+      if (error.message.includes("already verified")) {
+        console.log(`✅ ${name} is already verified`);
+      } else {
+        console.log(`❌ Failed to verify ${name}:`, error.message);
+      }
+    }
+  }
+}
+
+/**
+ * Main deployment function for Moonbase Alpha testnet
+ * @returns {Promise<void>}
+ */
 async function main() {
   console.log("🚀 Starting deployment to Moonbase Alpha...");
 
@@ -16,7 +70,7 @@ async function main() {
   if (balance === 0n) {
     console.error("❌ Error: Deployer account has no DEV tokens");
     console.log("Get testnet DEV tokens from: https://faucet.moonbeam.network/");
-    process.exit(1);
+    throw new Error("Deployer account has no DEV tokens");
   }
 
   // Deploy MockERC20 token for testing donations
@@ -92,14 +146,14 @@ async function main() {
   const deploymentFile = path.join(deploymentPath, "moonbase.json");
   fs.writeFileSync(deploymentFile, JSON.stringify(deploymentInfo, null, 2));
 
-  console.log("\n📝 Deployment info saved to:", deploymentFile);
+  console.log(`\n📝 Deployment info saved to: ${deploymentFile}`);
   console.log("\n🎉 Deployment complete!");
   console.log("\n📋 Contract Addresses:");
-  console.log("VITE_TOKEN_CONTRACT_ADDRESS=" + mockTokenAddress);
-  console.log("VITE_DONATION_CONTRACT_ADDRESS=" + donationAddress);
-  console.log("VITE_VERIFICATION_CONTRACT_ADDRESS=" + verificationAddress);
-  console.log("VITE_DISTRIBUTION_CONTRACT_ADDRESS=" + distributionAddress);
-  console.log("VITE_EXECUTOR_CONTRACT_ADDRESS=" + executorAddress);
+  console.log(`VITE_TOKEN_CONTRACT_ADDRESS=${mockTokenAddress}`);
+  console.log(`VITE_DONATION_CONTRACT_ADDRESS=${donationAddress}`);
+  console.log(`VITE_VERIFICATION_CONTRACT_ADDRESS=${verificationAddress}`);
+  console.log(`VITE_DISTRIBUTION_CONTRACT_ADDRESS=${distributionAddress}`);
+  console.log(`VITE_EXECUTOR_CONTRACT_ADDRESS=${executorAddress}`);
   console.log("\n📌 Add these addresses to your .env file");
 
   // Verify contracts on Moonscan if API key is available
@@ -109,54 +163,12 @@ async function main() {
   }
 }
 
-async function verifyContracts(contracts) {
-  console.log("Waiting 30 seconds for Moonscan to index contracts...");
-  await new Promise(resolve => setTimeout(resolve, 30000));
-
-  for (const [name, address] of Object.entries(contracts)) {
-    try {
-      console.log(`\nVerifying ${name} at ${address}...`);
-      
-      if (name === "DistributionExecutor") {
-        // DistributionExecutor has constructor arguments
-        await hre.run("verify:verify", {
-          address: address,
-          constructorArguments: [contracts.CharityScheduledDistribution]
-        });
-      } else if (name === "MockERC20") {
-        // MockERC20 has constructor arguments
-        await hre.run("verify:verify", {
-          address: address,
-          constructorArguments: ["Test Token", "TEST"]
-        });
-      } else if (name === "DurationDonation") {
-        // DurationDonation has treasury address as constructor argument
-        await hre.run("verify:verify", {
-          address: address,
-          constructorArguments: ["0x8cFc24Ad1CDc3B80338392f17f6e6ab40552e1C0"]
-        });
-      } else {
-        // Other contracts have no constructor arguments
-        await hre.run("verify:verify", {
-          address: address,
-          constructorArguments: []
-        });
-      }
-      
-      console.log(`✅ ${name} verified successfully`);
-    } catch (error) {
-      if (error.message.includes("already verified")) {
-        console.log(`✅ ${name} is already verified`);
-      } else {
-        console.log(`❌ Failed to verify ${name}:`, error.message);
-      }
-    }
-  }
-}
 
 main()
-  .then(() => process.exit(0))
+  .then(() => {
+    console.log("Deployment completed successfully");
+  })
   .catch((error) => {
     console.error("❌ Deployment failed:", error);
-    process.exit(1);
+    throw error;
   });
