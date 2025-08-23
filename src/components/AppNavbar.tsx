@@ -51,25 +51,25 @@ const DesktopNavLinks: React.FC<{
     <>
       <Link
         to="/browse"
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/browse")}`}
+        className={`flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-center ${isActive("/browse")}`}
       >
         {t("nav.browse")}
       </Link>
       <Link
         to="/opportunities"
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/opportunities")}`}
+        className={`flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-center ${isActive("/opportunities")}`}
       >
         {t("nav.opportunities")}
       </Link>
       <Link
         to="/contributions"
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/contributions")}`}
+        className={`flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-center ${isActive("/contributions")}`}
       >
         {t("nav.contributions")}
       </Link>
       <button
         onClick={handleDashboardClick}
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${
+        className={`flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-center ${
           isActive("/give-dashboard") || isActive("/charity-portal")
         }`}
       >
@@ -78,15 +78,14 @@ const DesktopNavLinks: React.FC<{
       {userType === "donor" && (
         <Link
           to="/scheduled-donations"
-          className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/scheduled-donations")}`}
+          className={`flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-center ${isActive("/scheduled-donations")}`}
         >
-          <Calendar className="h-4 w-4 mr-1" />
-          <span>Monthly Donations</span>
+          Monthly Donations
         </Link>
       )}
       <Link
         to="/governance"
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${isActive("/governance")}`}
+        className={`flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-center ${isActive("/governance")}`}
       >
         {t("nav.governance")}
       </Link>
@@ -336,7 +335,7 @@ export const AppNavbar: React.FC = () => {
       >
         <div className="flex items-center">
           <NavHeader />
-          <div className="hidden md:ml-6 md:flex md:space-x-2">
+          <div className="hidden md:ml-6 md:flex md:gap-6">
             <DesktopNavLinks
               isLimitedNavPage={isLimitedNavPage}
               isActive={isActive}
