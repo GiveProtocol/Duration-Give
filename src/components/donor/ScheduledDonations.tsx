@@ -11,7 +11,9 @@ import { Logger } from "@/utils/logger";
 interface ScheduledDonation {
   id: number;
   charity: string;
+  charityName?: string;
   token: string;
+  tokenSymbol?: string;
   totalAmount: string;
   amountPerMonth: string;
   monthsRemaining: number;
@@ -149,35 +151,96 @@ export const ScheduledDonations: React.FC = () => {
         </div>
         <div className="divide-y divide-gray-200">
           {schedules.map((schedule) => (
-            <div key={schedule.id} className="p-6">
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start">
-                <div>
-                  <div className="flex items-center mb-2">
-                    <Calendar className="h-5 w-5 text-indigo-500 mr-2" />
-                    <h3 className="text-lg font-medium text-gray-900">
-                      Monthly Donation to {schedule.charity.substring(0, 6)}
-                      &hellip;{schedule.charity.substring(38)}
-                    </h3>
+            <div key={schedule.id} className="p-6 hover:bg-gray-50 transition-colors">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+                <div className="flex-1">
+                  {/* Charity Name and Icon */}
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="p-2 bg-indigo-100 rounded-lg">
+                      <Calendar className="h-5 w-5 text-indigo-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {schedule.charityName || `Charity ${schedule.charity.substring(0, 6)}...${schedule.charity.substring(38)}`}
+                      </h3>
+                      <p className="text-sm text-gray-500 font-mono">
+                        {schedule.charity}
+                      </p>
+                    </div>
                   </div>
-                  <div className="space-y-1 text-sm text-gray-500">
-                    <p>Total Amount: {schedule.totalAmount} tokens</p>
-                    <p>Monthly Payment: {schedule.amountPerMonth} tokens</p>
-                    <p>Months Remaining: {schedule.monthsRemaining} of 12</p>
-                    <p>
-                      Next Distribution:{" "}
-                      {formatDate(schedule.nextDistribution.toISOString())}
+
+                  {/* Schedule Details Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {/* Total Commitment */}
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+                        Total Commitment
+                      </p>
+                      <p className="text-base font-semibold text-gray-900">
+                        {schedule.totalAmount} {schedule.tokenSymbol || 'tokens'}
+                      </p>
+                    </div>
+
+                    {/* Monthly Amount */}
+                    <div className="bg-green-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+                        Monthly Payment
+                      </p>
+                      <p className="text-base font-semibold text-green-700">
+                        {schedule.amountPerMonth} {schedule.tokenSymbol || 'tokens'}
+                      </p>
+                    </div>
+
+                    {/* Progress */}
+                    <div className="bg-blue-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+                        Progress
+                      </p>
+                      <p className="text-base font-semibold text-blue-700">
+                        {12 - schedule.monthsRemaining} of 12 months
+                      </p>
+                      <div className="mt-1 w-full bg-gray-200 rounded-full h-1.5">
+                        <div 
+                          className="bg-blue-600 h-1.5 rounded-full" 
+                          style={{ width: `${((12 - schedule.monthsRemaining) / 12) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Next Payment */}
+                    <div className="bg-amber-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+                        Next Payment
+                      </p>
+                      <p className="text-base font-semibold text-amber-700">
+                        {formatDate(schedule.nextDistribution.toISOString())}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Token Address */}
+                  <div className="mt-3 flex items-center gap-2">
+                    <p className="text-xs text-gray-500">
+                      Token Contract: 
+                    </p>
+                    <p className="text-xs text-gray-600 font-mono">
+                      {schedule.token.substring(0, 6)}...{schedule.token.substring(38)}
                     </p>
                   </div>
                 </div>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={createCancelHandler(schedule)}
-                  disabled={loading}
-                  className="mt-4 md:mt-0"
-                >
-                  Cancel Schedule
-                </Button>
+
+                {/* Cancel Button */}
+                <div className="flex items-center">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={createCancelHandler(schedule)}
+                    disabled={loading}
+                    className="whitespace-nowrap"
+                  >
+                    Cancel Schedule
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
@@ -196,13 +259,27 @@ export const ScheduledDonations: React.FC = () => {
               Confirm Cancellation
             </h3>
             
-            <p className="text-sm text-gray-500">
-              Are you sure you want to cancel your monthly donation schedule?
-              The remaining funds (
-              {parseFloat(selectedSchedule.amountPerMonth) *
-                selectedSchedule.monthsRemaining}{" "}
-              tokens) will be returned to your wallet.
-            </p>
+            <div className="space-y-3">
+              <p className="text-sm text-gray-600">
+                Are you sure you want to cancel your monthly donation schedule to:
+              </p>
+              <div className="bg-gray-50 rounded-lg p-3">
+                <p className="font-medium text-gray-900">
+                  {selectedSchedule.charityName || `Charity ${selectedSchedule.charity.substring(0, 6)}...`}
+                </p>
+                <p className="text-sm text-gray-500 mt-1">
+                  {selectedSchedule.monthsRemaining} payments remaining
+                </p>
+              </div>
+              <p className="text-sm text-gray-600">
+                The remaining funds will be returned to your wallet:
+              </p>
+              <div className="bg-blue-50 rounded-lg p-3 text-center">
+                <p className="text-lg font-semibold text-blue-700">
+                  {(parseFloat(selectedSchedule.amountPerMonth) * selectedSchedule.monthsRemaining).toFixed(2)} {selectedSchedule.tokenSymbol || 'tokens'}
+                </p>
+              </div>
+            </div>
 
             {cancelError && (
               <div className="p-3 bg-red-50 text-red-600 rounded-md">
