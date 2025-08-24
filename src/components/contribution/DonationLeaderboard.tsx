@@ -6,7 +6,6 @@ import { LeaderboardEntry } from "@/types/contribution";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { FixedSizeList } from "react-window";
 import { useWalletAlias } from "@/hooks/useWalletAlias";
-import { Input } from "@/components/ui/Input";
 
 const fetchLeaderboardData = async (): Promise<LeaderboardEntry[]> => {
   // Simulated API call
@@ -160,13 +159,14 @@ export const DonationLeaderboard: React.FC = () => {
   return (
     <div className="space-y-4">
       <div className="relative mb-4">
-        <Input
+        <input
+          type="text"
           value={searchTerm}
           onChange={handleSearchChange}
           placeholder="Search contributors..."
-          className="pl-10"
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
         />
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+        <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
       </div>
 
       <div className="h-[400px]">
