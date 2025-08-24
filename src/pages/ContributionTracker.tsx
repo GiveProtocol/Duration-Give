@@ -208,12 +208,12 @@ export const ContributionTracker: React.FC = () => {
             <h2 className="text-xl font-semibold text-gray-900">
               Set Wallet Alias
             </h2>
-            
+
             <p className="text-gray-600">
               Your alias will be displayed on the contribution tracker instead
               of your wallet address.
             </p>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Alias
@@ -226,7 +226,7 @@ export const ContributionTracker: React.FC = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
-            
+
             <footer className="flex justify-end space-x-3">
               <Button variant="secondary" onClick={handleHideAliasModal}>
                 Cancel
