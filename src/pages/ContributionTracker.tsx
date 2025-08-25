@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { Search, Download } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
@@ -13,6 +13,13 @@ import { useWalletAlias } from "@/hooks/useWalletAlias";
 import { useWeb3 } from "@/contexts/Web3Context";
 import { useToast } from "@/contexts/ToastContext";
 import { Logger } from "@/utils/logger";
+import { 
+  exportLeaderboardToPDF, 
+  exportDonationLeaderboardToCSV, 
+  exportVolunteerLeaderboardToCSV,
+  DonationLeaderData,
+  VolunteerLeaderData 
+} from "@/utils/leaderboardExport";
 
 type TimeRange = "all" | "year" | "month" | "week";
 type Region = "all" | "na" | "eu" | "asia" | "africa" | "sa" | "oceania";
@@ -32,16 +39,88 @@ export const ContributionTracker: React.FC = () => {
     (location.state?.activeTab as "donations" | "volunteer") || "donations",
   );
 
+  // Refs to access leaderboard components for export
+  const donationLeaderboardRef = useRef<HTMLDivElement>(null);
+  const volunteerLeaderboardRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (location.state?.activeTab) {
       setActiveTab(location.state.activeTab);
     }
   }, [location.state]);
 
-  const handleExport = useCallback((format: "csv" | "pdf") => {
-    // Implement export functionality
-    Logger.info(`Exporting contributions as ${format}`, { format });
-  }, []);
+  const handleExport = useCallback(async (format: "csv" | "pdf") => {
+    try {
+      Logger.info(`Exporting contributions as ${format}`, { format });
+      
+      const exportOptions = {
+        timeRange,
+        region,
+        includeTimestamp: true
+      };
+
+      if (format === "csv") {
+        // For CSV, we need to get mock data since the components use mock data
+        // In a real implementation, we'd extract data from the components or API
+        if (activeTab === "donations") {
+          // Mock donation leaderboard data for export
+          const donationData: DonationLeaderData[] = [
+            { rank: 1, displayName: "Anonymous Hero", totalDonated: 50000, alias: "Anonymous Hero" },
+            { rank: 2, displayName: "Giving Soul", totalDonated: 35000, alias: "Giving Soul" },
+            { rank: 3, displayName: "Kind Heart", totalDonated: 25000, alias: "Kind Heart" },
+            { rank: 4, displayName: "Hope Giver", totalDonated: 15000, alias: "Hope Giver" },
+            { rank: 5, displayName: "Change Maker", totalDonated: 10000, alias: "Change Maker" }
+          ];
+          exportDonationLeaderboardToCSV(donationData, exportOptions);
+          showToast("success", "Export Complete", "Donation leaderboard exported as CSV");
+        } else {
+          // Mock volunteer leaderboard data for export
+          const volunteerData: VolunteerLeaderData[] = [
+            { 
+              rank: 1, 
+              displayName: "Community Builder", 
+              hours: 120, 
+              endorsements: 45, 
+              skills: ["Web Development", "Project Management", "Community Building"],
+              alias: "Community Builder" 
+            },
+            { 
+              rank: 2, 
+              displayName: "Helping Hand", 
+              hours: 95, 
+              endorsements: 38, 
+              skills: ["Event Planning", "Fundraising", "Social Media"],
+              alias: "Helping Hand" 
+            },
+            { 
+              rank: 3, 
+              displayName: "Skill Sharer", 
+              hours: 85, 
+              endorsements: 32, 
+              skills: ["Web Development", "Teaching", "Mentoring"],
+              alias: "Skill Sharer" 
+            }
+          ];
+          exportVolunteerLeaderboardToCSV(volunteerData, exportOptions);
+          showToast("success", "Export Complete", "Volunteer leaderboard exported as CSV");
+        }
+      } else if (format === "pdf") {
+        // For PDF, capture the visible leaderboard elements
+        const donationElement = activeTab === "donations" ? donationLeaderboardRef.current : null;
+        const volunteerElement = activeTab === "volunteer" ? volunteerLeaderboardRef.current : null;
+        
+        if (donationElement || volunteerElement) {
+          await exportLeaderboardToPDF(donationElement, volunteerElement, exportOptions);
+          showToast("success", "Export Complete", "Leaderboard exported as PDF");
+        } else {
+          showToast("error", "Export Failed", "No data available to export");
+        }
+      }
+    } catch (error) {
+      Logger.error("Export failed", { error, format });
+      showToast("error", "Export Failed", "An error occurred while exporting data");
+    }
+  }, [timeRange, region, activeTab, showToast]);
 
   const handleExportCsv = useCallback(
     () => handleExport("csv"),
@@ -251,23 +330,27 @@ export const ContributionTracker: React.FC = () => {
 
         <TabsContent value="donations">
           <Card className="p-6">
-            <DonationLeaderboard
-              timeRange={timeRange}
-              region={region}
-              searchTerm={searchTerm}
-            />
+            <div ref={donationLeaderboardRef}>
+              <DonationLeaderboard
+                timeRange={timeRange}
+                region={region}
+                searchTerm={searchTerm}
+              />
+            </div>
           </Card>
         </TabsContent>
 
         <TabsContent value="volunteer">
           <Card className="p-6">
-            <VolunteerLeaderboard
-              timeRange={timeRange}
-              region={region}
-              searchTerm={searchTerm}
-              highlightSkill={location.state?.skill}
-              section={location.state?.section}
-            />
+            <div ref={volunteerLeaderboardRef}>
+              <VolunteerLeaderboard
+                timeRange={timeRange}
+                region={region}
+                searchTerm={searchTerm}
+                highlightSkill={location.state?.skill}
+                section={location.state?.section}
+              />
+            </div>
           </Card>
         </TabsContent>
       </Tabs>
