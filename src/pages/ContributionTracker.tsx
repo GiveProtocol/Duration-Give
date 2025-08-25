@@ -13,12 +13,12 @@ import { useWalletAlias } from "@/hooks/useWalletAlias";
 import { useWeb3 } from "@/contexts/Web3Context";
 import { useToast } from "@/contexts/ToastContext";
 import { Logger } from "@/utils/logger";
-import { 
-  exportLeaderboardToPDF, 
-  exportDonationLeaderboardToCSV, 
+import {
+  exportLeaderboardToPDF,
+  exportDonationLeaderboardToCSV,
   exportVolunteerLeaderboardToCSV,
   DonationLeaderData,
-  VolunteerLeaderData 
+  VolunteerLeaderData,
 } from "@/utils/leaderboardExport";
 
 type TimeRange = "all" | "year" | "month" | "week";
@@ -49,78 +49,132 @@ export const ContributionTracker: React.FC = () => {
     }
   }, [location.state]);
 
-  const handleExport = useCallback(async (format: "csv" | "pdf") => {
-    try {
-      Logger.info(`Exporting contributions as ${format}`, { format });
-      
-      const exportOptions = {
-        timeRange,
-        region,
-        includeTimestamp: true
-      };
+  const handleExport = useCallback(
+    async (format: "csv" | "pdf") => {
+      try {
+        Logger.info(`Exporting contributions as ${format}`, { format });
 
-      if (format === "csv") {
-        // For CSV, we need to get mock data since the components use mock data
-        // In a real implementation, we'd extract data from the components or API
-        if (activeTab === "donations") {
-          // Mock donation leaderboard data for export
-          const donationData: DonationLeaderData[] = [
-            { rank: 1, displayName: "Anonymous Hero", totalDonated: 50000, alias: "Anonymous Hero" },
-            { rank: 2, displayName: "Giving Soul", totalDonated: 35000, alias: "Giving Soul" },
-            { rank: 3, displayName: "Kind Heart", totalDonated: 25000, alias: "Kind Heart" },
-            { rank: 4, displayName: "Hope Giver", totalDonated: 15000, alias: "Hope Giver" },
-            { rank: 5, displayName: "Change Maker", totalDonated: 10000, alias: "Change Maker" }
-          ];
-          exportDonationLeaderboardToCSV(donationData, exportOptions);
-          showToast("success", "Export Complete", "Donation leaderboard exported as CSV");
-        } else {
-          // Mock volunteer leaderboard data for export
-          const volunteerData: VolunteerLeaderData[] = [
-            { 
-              rank: 1, 
-              displayName: "Community Builder", 
-              hours: 120, 
-              endorsements: 45, 
-              skills: ["Web Development", "Project Management", "Community Building"],
-              alias: "Community Builder" 
-            },
-            { 
-              rank: 2, 
-              displayName: "Helping Hand", 
-              hours: 95, 
-              endorsements: 38, 
-              skills: ["Event Planning", "Fundraising", "Social Media"],
-              alias: "Helping Hand" 
-            },
-            { 
-              rank: 3, 
-              displayName: "Skill Sharer", 
-              hours: 85, 
-              endorsements: 32, 
-              skills: ["Web Development", "Teaching", "Mentoring"],
-              alias: "Skill Sharer" 
-            }
-          ];
-          exportVolunteerLeaderboardToCSV(volunteerData, exportOptions);
-          showToast("success", "Export Complete", "Volunteer leaderboard exported as CSV");
+        const exportOptions = {
+          timeRange,
+          region,
+          includeTimestamp: true,
+        };
+
+        if (format === "csv") {
+          // For CSV, we need to get mock data since the components use mock data
+          // In a real implementation, we'd extract data from the components or API
+          if (activeTab === "donations") {
+            // Mock donation leaderboard data for export
+            const donationData: DonationLeaderData[] = [
+              {
+                rank: 1,
+                displayName: "Anonymous Hero",
+                totalDonated: 50000,
+                alias: "Anonymous Hero",
+              },
+              {
+                rank: 2,
+                displayName: "Giving Soul",
+                totalDonated: 35000,
+                alias: "Giving Soul",
+              },
+              {
+                rank: 3,
+                displayName: "Kind Heart",
+                totalDonated: 25000,
+                alias: "Kind Heart",
+              },
+              {
+                rank: 4,
+                displayName: "Hope Giver",
+                totalDonated: 15000,
+                alias: "Hope Giver",
+              },
+              {
+                rank: 5,
+                displayName: "Change Maker",
+                totalDonated: 10000,
+                alias: "Change Maker",
+              },
+            ];
+            exportDonationLeaderboardToCSV(donationData, exportOptions);
+            showToast(
+              "success",
+              "Export Complete",
+              "Donation leaderboard exported as CSV",
+            );
+          } else {
+            // Mock volunteer leaderboard data for export
+            const volunteerData: VolunteerLeaderData[] = [
+              {
+                rank: 1,
+                displayName: "Community Builder",
+                hours: 120,
+                endorsements: 45,
+                skills: [
+                  "Web Development",
+                  "Project Management",
+                  "Community Building",
+                ],
+                alias: "Community Builder",
+              },
+              {
+                rank: 2,
+                displayName: "Helping Hand",
+                hours: 95,
+                endorsements: 38,
+                skills: ["Event Planning", "Fundraising", "Social Media"],
+                alias: "Helping Hand",
+              },
+              {
+                rank: 3,
+                displayName: "Skill Sharer",
+                hours: 85,
+                endorsements: 32,
+                skills: ["Web Development", "Teaching", "Mentoring"],
+                alias: "Skill Sharer",
+              },
+            ];
+            exportVolunteerLeaderboardToCSV(volunteerData, exportOptions);
+            showToast(
+              "success",
+              "Export Complete",
+              "Volunteer leaderboard exported as CSV",
+            );
+          }
+        } else if (format === "pdf") {
+          // For PDF, capture the visible leaderboard elements
+          const donationElement =
+            activeTab === "donations" ? donationLeaderboardRef.current : null;
+          const volunteerElement =
+            activeTab === "volunteer" ? volunteerLeaderboardRef.current : null;
+
+          if (donationElement || volunteerElement) {
+            await exportLeaderboardToPDF(
+              donationElement,
+              volunteerElement,
+              exportOptions,
+            );
+            showToast(
+              "success",
+              "Export Complete",
+              "Leaderboard exported as PDF",
+            );
+          } else {
+            showToast("error", "Export Failed", "No data available to export");
+          }
         }
-      } else if (format === "pdf") {
-        // For PDF, capture the visible leaderboard elements
-        const donationElement = activeTab === "donations" ? donationLeaderboardRef.current : null;
-        const volunteerElement = activeTab === "volunteer" ? volunteerLeaderboardRef.current : null;
-        
-        if (donationElement || volunteerElement) {
-          await exportLeaderboardToPDF(donationElement, volunteerElement, exportOptions);
-          showToast("success", "Export Complete", "Leaderboard exported as PDF");
-        } else {
-          showToast("error", "Export Failed", "No data available to export");
-        }
+      } catch (error) {
+        Logger.error("Export failed", { error, format });
+        showToast(
+          "error",
+          "Export Failed",
+          "An error occurred while exporting data",
+        );
       }
-    } catch (error) {
-      Logger.error("Export failed", { error, format });
-      showToast("error", "Export Failed", "An error occurred while exporting data");
-    }
-  }, [timeRange, region, activeTab, showToast]);
+    },
+    [timeRange, region, activeTab, showToast],
+  );
 
   const handleExportCsv = useCallback(
     () => handleExport("csv"),
@@ -287,12 +341,12 @@ export const ContributionTracker: React.FC = () => {
             <h2 className="text-xl font-semibold text-gray-900">
               Set Wallet Alias
             </h2>
-            
+
             <p className="text-gray-600">
               Your alias will be displayed on the contribution tracker instead
               of your wallet address.
             </p>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Alias
@@ -305,7 +359,7 @@ export const ContributionTracker: React.FC = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
-            
+
             <footer className="flex justify-end space-x-3">
               <Button variant="secondary" onClick={handleHideAliasModal}>
                 Cancel
