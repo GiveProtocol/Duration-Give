@@ -51,6 +51,10 @@ const MOCK_SCHEDULES: DonorSchedule[] = [
   }
 ];
 
+/**
+ * Hook for managing scheduled charitable donations on the blockchain
+ * @returns Object containing functions to create, cancel, and retrieve scheduled donations
+ */
 export function useScheduledDonation() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

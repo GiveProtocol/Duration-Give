@@ -45,6 +45,10 @@ const MOCK_SCHEDULES: DonorSchedule[] = [
   }
 ];
 
+/**
+ * Mock implementation of useScheduledDonation hook for testing purposes
+ * @returns Object containing functions to manage scheduled donations and state
+ */
 export function useScheduledDonation() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

@@ -138,6 +138,11 @@ export function useScheduledDonation() {
   return mockHookCode;
 }
 
+/**
+ * Main function to set up mock scheduled donations for testing
+ * Creates mock hook files and replaces the original hook temporarily
+ * @returns {void}
+ */
 function main() {
   console.log("🧪 Creating mock scheduled donations for testing...");
 
