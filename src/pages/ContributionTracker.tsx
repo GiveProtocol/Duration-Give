@@ -294,10 +294,11 @@ export const ContributionTracker: React.FC = () => {
             </p>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="alias-input" className="block text-sm font-medium text-gray-700 mb-2">
                 Alias
               </label>
               <input
+                id="alias-input"
                 type="text"
                 value={newAlias}
                 onChange={handleNewAliasChange}

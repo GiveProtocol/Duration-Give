@@ -138,7 +138,7 @@ export function useScheduledDonation() {
   return mockHookCode;
 }
 
-async function main() {
+function main() {
   console.log("🧪 Creating mock scheduled donations for testing...");
 
   // Create the mock hook override
@@ -190,11 +190,10 @@ if (require.main === module) {
   main()
     .then(() => {
       console.log("\n✅ Mock setup completed successfully");
-      process.exit(0);
     })
     .catch((error) => {
       console.error("\n❌ Mock setup failed:", error);
-      process.exit(1);
+      throw error;
     });
 }
 
