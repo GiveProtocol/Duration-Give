@@ -51,9 +51,9 @@ async function main() {
   try {
     const tx = await distribution.setTokenPrice(mockTokenAddress, tokenPrice);
     await tx.wait();
-    console.log(`✅ Set token price to $50 USD`);
+    console.log("✅ Set token price to $50 USD");
   } catch (error) {
-    console.log(`⚠️  Token price might already be set`);
+    console.log("⚠️  Token price might already be set");
   }
 
   console.log("\n🪙 Step 3: Minting test tokens to donors...");

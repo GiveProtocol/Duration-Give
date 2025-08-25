@@ -171,14 +171,14 @@ async function main() {
       console.log(`  - Next Distribution: ${schedule.nextDistribution.toDateString()}`);
     });
 
-    console.log(`\n✨ Mock data setup complete!`);
-    console.log(`\nTo test:`);
-    console.log(`1. Start the development server: npm run dev`);
-    console.log(`2. Navigate to http://localhost:5173/scheduled-donations`);
-    console.log(`3. Connect any wallet to see the mock scheduled donations`);
-    console.log(`\nTo restore original functionality:`);
-    console.log(`1. Run: cp src/hooks/web3/useScheduledDonation.original.ts src/hooks/web3/useScheduledDonation.ts`);
-    console.log(`2. Delete the .mock.ts file`);
+    console.log("\n✨ Mock data setup complete!");
+    console.log("\nTo test:");
+    console.log("1. Start the development server: npm run dev");
+    console.log("2. Navigate to http://localhost:5173/scheduled-donations");
+    console.log("3. Connect any wallet to see the mock scheduled donations");
+    console.log("\nTo restore original functionality:");
+    console.log("1. Run: cp src/hooks/web3/useScheduledDonation.original.ts src/hooks/web3/useScheduledDonation.ts");
+    console.log("2. Delete the .mock.ts file");
 
   } catch (error) {
     console.error("❌ Error creating mock data:", error);
