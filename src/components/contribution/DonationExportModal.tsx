@@ -47,10 +47,10 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
     }
 
     // Export the filtered donations with enhanced fields for volunteer transactions
-    const hasVolunteerTransactions = filteredDonations.some(d => 
-      d.purpose && d.purpose !== 'Donation'
+    const hasVolunteerTransactions = filteredDonations.some(
+      (d) => d.purpose && d.purpose !== "Donation",
     );
-    
+
     if (hasVolunteerTransactions) {
       // Use enhanced export for mixed transaction types
       exportEnhancedTransactionsToCSV(filteredDonations, `${filename}.csv`);

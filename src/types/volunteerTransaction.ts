@@ -5,21 +5,22 @@
 export const VolunteerTransactionType = {
   // Volunteer solicitations (donor/volunteer accounts)
   VOLUNTEER_SOLICITATION: "Volunteer Solicitation",
-  
+
   // Volunteer acceptance (charity accounts)
   VOLUNTEER_ACCEPTANCE: "Volunteer Acceptance",
-  
+
   // Volunteer hour records (donor/volunteer accounts)
   VOLUNTEER_HOURS_RECORD: "Volunteer Hours Record",
-  
+
   // Volunteer hour approvals (charity accounts)
   VOLUNTEER_HOURS_APPROVAL: "Volunteer Hours Approval",
-  
+
   // Volunteer endorsements (charities)
   VOLUNTEER_ENDORSEMENT: "Volunteer Endorsement",
 } as const;
 
-export type VolunteerTransactionType = typeof VolunteerTransactionType[keyof typeof VolunteerTransactionType];
+export type VolunteerTransactionType =
+  (typeof VolunteerTransactionType)[keyof typeof VolunteerTransactionType];
 
 /**
  * Extended metadata for volunteer transactions
@@ -30,26 +31,26 @@ export interface VolunteerTransactionMetadata {
   description?: string;
   verificationHash?: string;
   blockNumber?: number;
-  
+
   // For hour records and approvals
   hours?: number;
   startTime?: string;
   endTime?: string;
-  
+
   // For endorsements
   skills?: string[];
   endorsementText?: string;
-  
+
   // For solicitations
   applicationText?: string;
   availability?: string;
-  
+
   // For acceptances
   acceptanceDate?: string;
   acceptedBy?: string;
-  
+
   // Common fields
-  transactionInitiator?: 'volunteer' | 'charity';
+  transactionInitiator?: "volunteer" | "charity";
   relatedTransactionId?: string; // Links related transactions
 }
 
@@ -57,22 +58,26 @@ export interface VolunteerTransactionMetadata {
  * Helper function to determine if a transaction purpose is a volunteer type
  */
 export function isVolunteerTransaction(purpose: string): boolean {
-  return Object.values(VolunteerTransactionType).includes(purpose as VolunteerTransactionType);
+  return Object.values(VolunteerTransactionType).includes(
+    purpose as VolunteerTransactionType,
+  );
 }
 
 /**
  * Helper function to get the initiator type for a volunteer transaction
  */
-export function getVolunteerTransactionInitiator(type: VolunteerTransactionType): 'volunteer' | 'charity' {
+export function getVolunteerTransactionInitiator(
+  type: VolunteerTransactionType,
+): "volunteer" | "charity" {
   switch (type) {
     case VolunteerTransactionType.VOLUNTEER_SOLICITATION:
     case VolunteerTransactionType.VOLUNTEER_HOURS_RECORD:
-      return 'volunteer';
+      return "volunteer";
     case VolunteerTransactionType.VOLUNTEER_ACCEPTANCE:
     case VolunteerTransactionType.VOLUNTEER_HOURS_APPROVAL:
     case VolunteerTransactionType.VOLUNTEER_ENDORSEMENT:
-      return 'charity';
+      return "charity";
     default:
-      return 'volunteer';
+      return "volunteer";
   }
 }
