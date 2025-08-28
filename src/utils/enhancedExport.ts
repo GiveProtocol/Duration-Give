@@ -1,6 +1,6 @@
-import { Transaction } from '@/types/contribution';
-import { VolunteerTransactionType } from '@/types/volunteerTransaction';
-import { formatDate } from './date';
+import { Transaction } from "@/types/contribution";
+import { VolunteerTransactionType } from "@/types/volunteerTransaction";
+import { formatDate } from "./date";
 
 /**
  * Enhanced export data structure that includes all transaction types
@@ -20,7 +20,7 @@ export interface EnhancedExportData {
   organization: string;
   verificationHash: string;
   blockNumber: string;
-  
+
   // Volunteer-specific fields
   volunteerHours?: string;
   startTime?: string;
@@ -45,15 +45,17 @@ export interface EnhancedExportData {
 function formatCommonFields(transaction: Transaction) {
   return {
     date: formatDate(transaction.timestamp, true),
-    type: transaction.purpose || 'Donation',
-    cryptoType: transaction.cryptoType || '',
-    amount: transaction.amount ? transaction.amount.toString() : '0',
-    purpose: transaction.purpose || 'Donation',
-    transactionHash: transaction.hash || '',
-    fiatValue: transaction.fiatValue ? `$${transaction.fiatValue.toFixed(2)}` : '$0.00',
-    transactionFee: transaction.fee ? transaction.fee.toString() : '0',
-    senderAddress: transaction.from || '',
-    recipientAddress: transaction.to || '',
+    type: transaction.purpose || "Donation",
+    cryptoType: transaction.cryptoType || "",
+    amount: transaction.amount ? transaction.amount.toString() : "0",
+    purpose: transaction.purpose || "Donation",
+    transactionHash: transaction.hash || "",
+    fiatValue: transaction.fiatValue
+      ? `$${transaction.fiatValue.toFixed(2)}`
+      : "$0.00",
+    transactionFee: transaction.fee ? transaction.fee.toString() : "0",
+    senderAddress: transaction.from || "",
+    recipientAddress: transaction.to || "",
   };
 }
 
@@ -64,10 +66,10 @@ function formatCommonFields(transaction: Transaction) {
  */
 function formatMetadataFields(metadata: Record<string, unknown>) {
   return {
-    organization: metadata.organization || '',
-    verificationHash: metadata.verificationHash || '',
-    blockNumber: metadata.blockNumber ? metadata.blockNumber.toString() : '',
-    description: metadata.description || metadata.category || '',
+    organization: metadata.organization || "",
+    verificationHash: metadata.verificationHash || "",
+    blockNumber: metadata.blockNumber ? metadata.blockNumber.toString() : "",
+    description: metadata.description || metadata.category || "",
   };
 }
 
@@ -78,18 +80,18 @@ function formatMetadataFields(metadata: Record<string, unknown>) {
  */
 function formatVolunteerFields(metadata: Record<string, unknown>) {
   return {
-    volunteerHours: metadata.hours ? metadata.hours.toString() : '',
-    startTime: metadata.startTime || '',
-    endTime: metadata.endTime || '',
-    skills: Array.isArray(metadata.skills) ? metadata.skills.join('; ') : '',
-    opportunity: metadata.opportunity || '',
-    applicationText: metadata.applicationText || '',
-    availability: metadata.availability || '',
-    acceptanceDate: metadata.acceptanceDate || '',
-    acceptedBy: metadata.acceptedBy || '',
-    endorsementText: metadata.endorsementText || '',
-    transactionInitiator: metadata.transactionInitiator || '',
-    relatedTransactionId: metadata.relatedTransactionId || '',
+    volunteerHours: metadata.hours ? metadata.hours.toString() : "",
+    startTime: metadata.startTime || "",
+    endTime: metadata.endTime || "",
+    skills: Array.isArray(metadata.skills) ? metadata.skills.join("; ") : "",
+    opportunity: metadata.opportunity || "",
+    applicationText: metadata.applicationText || "",
+    availability: metadata.availability || "",
+    acceptanceDate: metadata.acceptanceDate || "",
+    acceptedBy: metadata.acceptedBy || "",
+    endorsementText: metadata.endorsementText || "",
+    transactionInitiator: metadata.transactionInitiator || "",
+    relatedTransactionId: metadata.relatedTransactionId || "",
   };
 }
 
@@ -98,10 +100,12 @@ function formatVolunteerFields(metadata: Record<string, unknown>) {
  * @param transactions Array of transactions (donations and volunteer activities)
  * @returns Formatted data ready for CSV export with all fields
  */
-export function formatTransactionsForEnhancedExport(transactions: Transaction[]): EnhancedExportData[] {
-  return transactions.map(transaction => {
+export function formatTransactionsForEnhancedExport(
+  transactions: Transaction[],
+): EnhancedExportData[] {
+  return transactions.map((transaction) => {
     const metadata = transaction.metadata || {};
-    
+
     return {
       ...formatCommonFields(transaction),
       ...formatMetadataFields(metadata),
@@ -115,15 +119,19 @@ export function formatTransactionsForEnhancedExport(transactions: Transaction[])
  * @param transactions Array of transactions
  * @returns Object with field names as keys and whether to include them as values
  */
-export function getFieldsToInclude(transactions: Transaction[]): Record<string, boolean> {
-  const hasVolunteerTransactions = transactions.some(t => 
-    Object.values(VolunteerTransactionType).includes(t.purpose as VolunteerTransactionType)
+export function getFieldsToInclude(
+  transactions: Transaction[],
+): Record<string, boolean> {
+  const hasVolunteerTransactions = transactions.some((t) =>
+    Object.values(VolunteerTransactionType).includes(
+      t.purpose as VolunteerTransactionType,
+    ),
   );
-  
-  const hasDonations = transactions.some(t => 
-    t.purpose === 'Donation' || (t.amount && t.amount > 0)
+
+  const hasDonations = transactions.some(
+    (t) => t.purpose === "Donation" || (t.amount && t.amount > 0),
   );
-  
+
   return {
     // Always include these
     date: true,
@@ -132,13 +140,13 @@ export function getFieldsToInclude(transactions: Transaction[]): Record<string, 
     transactionHash: true,
     verificationHash: true,
     blockNumber: true,
-    
+
     // Include for donations
     cryptoType: hasDonations,
     amount: hasDonations,
     fiatValue: hasDonations,
     transactionFee: hasDonations,
-    
+
     // Include for volunteer transactions
     volunteerHours: hasVolunteerTransactions,
     startTime: hasVolunteerTransactions,
@@ -153,7 +161,7 @@ export function getFieldsToInclude(transactions: Transaction[]): Record<string, 
     transactionInitiator: hasVolunteerTransactions,
     relatedTransactionId: hasVolunteerTransactions,
     description: true,
-    
+
     // Always include addresses for transparency
     senderAddress: true,
     recipientAddress: true,
@@ -168,28 +176,31 @@ export function getFieldsToInclude(transactions: Transaction[]): Record<string, 
  */
 export function convertToCSVWithFields<T extends Record<string, unknown>>(
   data: T[],
-  includeFields?: Record<string, boolean>
+  includeFields?: Record<string, boolean>,
 ): string {
-  if (data.length === 0) return '';
-  
+  if (data.length === 0) return "";
+
   let headers = Object.keys(data[0]);
-  
+
   // Filter headers based on includeFields if provided
   if (includeFields) {
-    headers = headers.filter(header => includeFields[header]);
+    headers = headers.filter((header) => includeFields[header]);
   }
-  
-  const headerRow = headers.join(',');
-  
-  const rows = data.map(row => {
-    return headers.map(header => {
-      const value = row[header] === null || row[header] === undefined ? '' : row[header];
-      const escaped = String(value).replace(/"/g, '""');
-      return `"${escaped}"`;
-    }).join(',');
+
+  const headerRow = headers.join(",");
+
+  const rows = data.map((row) => {
+    return headers
+      .map((header) => {
+        const value =
+          row[header] === null || row[header] === undefined ? "" : row[header];
+        const escaped = String(value).replace(/"/g, '""');
+        return `"${escaped}"`;
+      })
+      .join(",");
   });
-  
-  return [headerRow, ...rows].join('\n');
+
+  return [headerRow, ...rows].join("\n");
 }
 
 /**
@@ -198,14 +209,14 @@ export function convertToCSVWithFields<T extends Record<string, unknown>>(
  * @param filename Filename for the downloaded file
  */
 export function downloadCSV(data: string, filename: string): void {
-  const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+  const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  
-  link.setAttribute('href', url);
-  link.setAttribute('download', filename);
-  link.style.visibility = 'hidden';
-  
+  const link = document.createElement("a");
+
+  link.setAttribute("href", url);
+  link.setAttribute("download", filename);
+  link.style.visibility = "hidden";
+
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -221,12 +232,14 @@ export function downloadCSV(data: string, filename: string): void {
 export function exportEnhancedTransactionsToCSV(
   transactions: Transaction[],
   filename?: string,
-  includeAllFields = false
+  includeAllFields = false,
 ): void {
   const formattedData = formatTransactionsForEnhancedExport(transactions);
-  const fieldsToInclude = includeAllFields ? undefined : getFieldsToInclude(transactions);
+  const fieldsToInclude = includeAllFields
+    ? undefined
+    : getFieldsToInclude(transactions);
   const csvData = convertToCSVWithFields(formattedData, fieldsToInclude);
-  const defaultFilename = `contributions_${new Date().toISOString().split('T')[0]}.csv`;
-  
+  const defaultFilename = `contributions_${new Date().toISOString().split("T")[0]}.csv`;
+
   downloadCSV(csvData, filename || defaultFilename);
 }
