@@ -3,8 +3,8 @@
  * This bypasses smart contract deployment and creates mock data for testing the UI
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 // Mock scheduled donations data
 const mockScheduledDonations = [
@@ -20,7 +20,7 @@ const mockScheduledDonations = [
     monthsRemaining: 8,
     nextDistribution: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
     active: true,
-    created: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000) // 120 days ago
+    created: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000), // 120 days ago
   },
   {
     id: 2,
@@ -28,14 +28,14 @@ const mockScheduledDonations = [
     charity: "0x2345678901234567890123456789012345678901",
     charityName: "Education for All Foundation",
     token: "0xMockTokenAddress",
-    tokenSymbol: "TEST", 
+    tokenSymbol: "TEST",
     totalAmount: "360.0",
     amountPerMonth: "30.0",
     monthsRemaining: 5,
     nextDistribution: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), // 15 days from now
     active: true,
-    created: new Date(Date.now() - 210 * 24 * 60 * 60 * 1000) // 210 days ago
-  }
+    created: new Date(Date.now() - 210 * 24 * 60 * 60 * 1000), // 210 days ago
+  },
 ];
 
 /**
@@ -66,16 +66,20 @@ interface DonorSchedule {
 }
 
 // Mock data for testing
-const MOCK_SCHEDULES: DonorSchedule[] = ${JSON.stringify(mockScheduledDonations.map(schedule => ({
-  id: schedule.id,
-  charity: schedule.charity,
-  token: schedule.token,
-  totalAmount: schedule.totalAmount,
-  amountPerMonth: schedule.amountPerMonth,
-  monthsRemaining: schedule.monthsRemaining,
-  nextDistribution: schedule.nextDistribution,
-  active: schedule.active
-})), null, 2)};
+const MOCK_SCHEDULES: DonorSchedule[] = ${JSON.stringify(
+    mockScheduledDonations.map((schedule) => ({
+      id: schedule.id,
+      charity: schedule.charity,
+      token: schedule.token,
+      totalAmount: schedule.totalAmount,
+      amountPerMonth: schedule.amountPerMonth,
+      monthsRemaining: schedule.monthsRemaining,
+      nextDistribution: schedule.nextDistribution,
+      active: schedule.active,
+    })),
+    null,
+    2,
+  )};
 
 export function useScheduledDonation() {
   const [loading, setLoading] = useState(false);
@@ -147,10 +151,31 @@ function main() {
   console.log("🧪 Creating mock scheduled donations for testing...");
 
   // Create the mock hook override
-  const mockHookPath = path.join(__dirname, "..", "src", "hooks", "web3", "useScheduledDonation.mock.ts");
-  const originalHookPath = path.join(__dirname, "..", "src", "hooks", "web3", "useScheduledDonation.ts");
-  const backupHookPath = path.join(__dirname, "..", "src", "hooks", "web3", "useScheduledDonation.original.ts");
-  
+  const mockHookPath = path.join(
+    __dirname,
+    "..",
+    "src",
+    "hooks",
+    "web3",
+    "useScheduledDonation.mock.ts",
+  );
+  const originalHookPath = path.join(
+    __dirname,
+    "..",
+    "src",
+    "hooks",
+    "web3",
+    "useScheduledDonation.ts",
+  );
+  const backupHookPath = path.join(
+    __dirname,
+    "..",
+    "src",
+    "hooks",
+    "web3",
+    "useScheduledDonation.original.ts",
+  );
+
   try {
     // Create backup of original hook
     if (fs.existsSync(originalHookPath)) {
@@ -171,9 +196,13 @@ function main() {
       console.log(`\nSchedule ${index + 1}:`);
       console.log(`  - Charity: ${schedule.charityName} (${schedule.charity})`);
       console.log(`  - Total: ${schedule.totalAmount} ${schedule.tokenSymbol}`);
-      console.log(`  - Monthly: ${schedule.amountPerMonth} ${schedule.tokenSymbol}`);
+      console.log(
+        `  - Monthly: ${schedule.amountPerMonth} ${schedule.tokenSymbol}`,
+      );
       console.log(`  - Remaining: ${schedule.monthsRemaining} months`);
-      console.log(`  - Next Distribution: ${schedule.nextDistribution.toDateString()}`);
+      console.log(
+        `  - Next Distribution: ${schedule.nextDistribution.toDateString()}`,
+      );
     });
 
     console.log("\n✨ Mock data setup complete!");
@@ -182,9 +211,10 @@ function main() {
     console.log("2. Navigate to http://localhost:5173/scheduled-donations");
     console.log("3. Connect any wallet to see the mock scheduled donations");
     console.log("\nTo restore original functionality:");
-    console.log("1. Run: cp src/hooks/web3/useScheduledDonation.original.ts src/hooks/web3/useScheduledDonation.ts");
+    console.log(
+      "1. Run: cp src/hooks/web3/useScheduledDonation.original.ts src/hooks/web3/useScheduledDonation.ts",
+    );
     console.log("2. Delete the .mock.ts file");
-
   } catch (error) {
     console.error("❌ Error creating mock data:", error);
     throw error;

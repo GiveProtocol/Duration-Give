@@ -144,9 +144,12 @@ export const VolunteerLeaderboard: React.FC<VolunteerLeaderboardProps> = ({
     setActiveTab("endorsements");
   }, []);
 
-  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalSearchTerm(e.target.value);
-  }, []);
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setLocalSearchTerm(e.target.value);
+    },
+    [],
+  );
 
   // Filter leaders based on search term
   const filteredLeaders = displayLeaders.filter((leader) => {
