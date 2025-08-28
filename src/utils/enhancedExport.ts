@@ -38,6 +38,62 @@ export interface EnhancedExportData {
 }
 
 /**
+ * Helper function to format common transaction fields
+ * @param transaction Transaction object
+ * @returns Object with formatted common fields
+ */
+function formatCommonFields(transaction: Transaction) {
+  return {
+    date: formatDate(transaction.timestamp, true),
+    type: transaction.purpose || 'Donation',
+    cryptoType: transaction.cryptoType || '',
+    amount: transaction.amount ? transaction.amount.toString() : '0',
+    purpose: transaction.purpose || 'Donation',
+    transactionHash: transaction.hash || '',
+    fiatValue: transaction.fiatValue ? `$${transaction.fiatValue.toFixed(2)}` : '$0.00',
+    transactionFee: transaction.fee ? transaction.fee.toString() : '0',
+    senderAddress: transaction.from || '',
+    recipientAddress: transaction.to || '',
+  };
+}
+
+/**
+ * Helper function to format metadata fields
+ * @param metadata Transaction metadata object
+ * @returns Object with formatted metadata fields
+ */
+function formatMetadataFields(metadata: Record<string, unknown>) {
+  return {
+    organization: metadata.organization || '',
+    verificationHash: metadata.verificationHash || '',
+    blockNumber: metadata.blockNumber ? metadata.blockNumber.toString() : '',
+    description: metadata.description || metadata.category || '',
+  };
+}
+
+/**
+ * Helper function to format volunteer-specific fields
+ * @param metadata Transaction metadata object
+ * @returns Object with formatted volunteer fields
+ */
+function formatVolunteerFields(metadata: Record<string, unknown>) {
+  return {
+    volunteerHours: metadata.hours ? metadata.hours.toString() : '',
+    startTime: metadata.startTime || '',
+    endTime: metadata.endTime || '',
+    skills: Array.isArray(metadata.skills) ? metadata.skills.join('; ') : '',
+    opportunity: metadata.opportunity || '',
+    applicationText: metadata.applicationText || '',
+    availability: metadata.availability || '',
+    acceptanceDate: metadata.acceptanceDate || '',
+    acceptedBy: metadata.acceptedBy || '',
+    endorsementText: metadata.endorsementText || '',
+    transactionInitiator: metadata.transactionInitiator || '',
+    relatedTransactionId: metadata.relatedTransactionId || '',
+  };
+}
+
+/**
  * Formats all transaction types for enhanced CSV export
  * @param transactions Array of transactions (donations and volunteer activities)
  * @returns Formatted data ready for CSV export with all fields
@@ -47,35 +103,9 @@ export function formatTransactionsForEnhancedExport(transactions: Transaction[])
     const metadata = transaction.metadata || {};
     
     return {
-      // Common fields
-      date: formatDate(transaction.timestamp, true),
-      type: transaction.purpose || 'Donation',
-      cryptoType: transaction.cryptoType || '',
-      amount: transaction.amount ? transaction.amount.toString() : '0',
-      purpose: transaction.purpose || 'Donation',
-      transactionHash: transaction.hash || '',
-      fiatValue: transaction.fiatValue ? `$${transaction.fiatValue.toFixed(2)}` : '$0.00',
-      transactionFee: transaction.fee ? transaction.fee.toString() : '0',
-      senderAddress: transaction.from || '',
-      recipientAddress: transaction.to || '',
-      organization: metadata.organization || '',
-      verificationHash: metadata.verificationHash || '',
-      blockNumber: metadata.blockNumber ? metadata.blockNumber.toString() : '',
-      
-      // Volunteer-specific fields
-      volunteerHours: metadata.hours ? metadata.hours.toString() : '',
-      startTime: metadata.startTime || '',
-      endTime: metadata.endTime || '',
-      skills: Array.isArray(metadata.skills) ? metadata.skills.join('; ') : '',
-      opportunity: metadata.opportunity || '',
-      applicationText: metadata.applicationText || '',
-      availability: metadata.availability || '',
-      acceptanceDate: metadata.acceptanceDate || '',
-      acceptedBy: metadata.acceptedBy || '',
-      endorsementText: metadata.endorsementText || '',
-      transactionInitiator: metadata.transactionInitiator || '',
-      relatedTransactionId: metadata.relatedTransactionId || '',
-      description: metadata.description || metadata.category || '',
+      ...formatCommonFields(transaction),
+      ...formatMetadataFields(metadata),
+      ...formatVolunteerFields(metadata),
     };
   });
 }
@@ -191,7 +221,7 @@ export function downloadCSV(data: string, filename: string): void {
 export function exportEnhancedTransactionsToCSV(
   transactions: Transaction[],
   filename?: string,
-  includeAllFields: boolean = false
+  includeAllFields = false
 ): void {
   const formattedData = formatTransactionsForEnhancedExport(transactions);
   const fieldsToInclude = includeAllFields ? undefined : getFieldsToInclude(transactions);
