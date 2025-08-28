@@ -69,7 +69,31 @@ export interface Transaction {
   timestamp: string;
   status: 'pending' | 'completed' | 'failed';
   purpose?: string;
-  metadata?: Record<string, unknown>;
+  metadata?: TransactionMetadata;
+}
+
+// Enhanced metadata structure for all transaction types
+export interface TransactionMetadata extends Record<string, unknown> {
+  // Common fields
+  organization?: string;
+  category?: string;
+  description?: string;
+  verificationHash?: string;
+  blockNumber?: number;
+  
+  // Volunteer-specific fields
+  opportunity?: string;
+  hours?: number;
+  startTime?: string;
+  endTime?: string;
+  skills?: string[];
+  endorsementText?: string;
+  applicationText?: string;
+  availability?: string;
+  acceptanceDate?: string;
+  acceptedBy?: string;
+  transactionInitiator?: 'volunteer' | 'charity';
+  relatedTransactionId?: string;
 }
 
 export interface TransactionExportOptions {

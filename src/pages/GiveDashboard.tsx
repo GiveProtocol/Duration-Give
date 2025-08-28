@@ -108,46 +108,130 @@ export const GiveDashboard: React.FC = () => {
         category: "Education",
       },
     },
-    // Volunteer contribution examples
+    // Volunteer contribution examples - All 5 types
+    
+    // Type 1: Volunteer Solicitation (donor/volunteer initiated)
     {
       id: "4",
       hash: "0xef89012345678901234567890123456789012345678901234567890123456789",
-      from: "0x1234567890123456789012345678901234567890",
-      to: "0x4567890123456789012345678901234567890123",
+      from: "0x1234567890123456789012345678901234567890", // Volunteer address
+      to: "0x4567890123456789012345678901234567890123", // Charity address
       amount: 0,
       cryptoType: "",
       fiatValue: 0,
       fee: 0,
       timestamp: "2024-04-05T13:20:00Z",
       status: "completed",
-      purpose: "Volunteer Application",
+      purpose: "Volunteer Solicitation",
       metadata: {
         organization: "Education for All",
         opportunity: "Web Development for Education Platform",
-        verificationHash:
-          "0xef89012345678901234567890123456789012345678901234567890123456789",
+        applicationText: "I have 5 years of React experience and would love to help build your education platform.",
+        availability: "10-15 hours per week",
+        transactionInitiator: "volunteer",
+        verificationHash: "0xef89012345678901234567890123456789012345678901234567890123456789",
         blockNumber: 1234567,
       },
     },
+    
+    // Type 2: Volunteer Acceptance (charity initiated)
     {
       id: "5",
+      hash: "0x98765432109876543210987654321098765432109876543210987654321098",
+      from: "0x4567890123456789012345678901234567890123", // Charity address
+      to: "0x1234567890123456789012345678901234567890", // Volunteer address
+      amount: 0,
+      cryptoType: "",
+      fiatValue: 0,
+      fee: 0,
+      timestamp: "2024-04-07T10:00:00Z",
+      status: "completed",
+      purpose: "Volunteer Acceptance",
+      metadata: {
+        organization: "Education for All",
+        opportunity: "Web Development for Education Platform",
+        acceptanceDate: "2024-04-07",
+        acceptedBy: "Jane Smith, Volunteer Coordinator",
+        transactionInitiator: "charity",
+        relatedTransactionId: "4", // Links to the solicitation
+        verificationHash: "0x98765432109876543210987654321098765432109876543210987654321098",
+        blockNumber: 1234590,
+      },
+    },
+    
+    // Type 3: Volunteer Hours Record (volunteer initiated)
+    {
+      id: "6",
       hash: "0x23456789012345678901234567890123456789012345678901234567890123ef",
-      from: "0x1234567890123456789012345678901234567890",
-      to: "0x5678901234567890123456789012345678901234",
+      from: "0x1234567890123456789012345678901234567890", // Volunteer address
+      to: "0x4567890123456789012345678901234567890123", // Charity address
       amount: 0,
       cryptoType: "",
       fiatValue: 0,
       fee: 0,
       timestamp: "2024-04-10T15:45:00Z",
       status: "completed",
-      purpose: "Volunteer Hours",
+      purpose: "Volunteer Hours Record",
       metadata: {
-        organization: "Global Water Foundation",
+        organization: "Education for All",
+        opportunity: "Web Development for Education Platform",
         hours: 8,
-        description: "Website development for donation portal",
-        verificationHash:
-          "0x23456789012345678901234567890123456789012345678901234567890123ef",
+        startTime: "2024-04-10T08:00:00Z",
+        endTime: "2024-04-10T16:00:00Z",
+        description: "Implemented user authentication system and created login/signup pages",
+        transactionInitiator: "volunteer",
+        verificationHash: "0x23456789012345678901234567890123456789012345678901234567890123ef",
         blockNumber: 1235678,
+      },
+    },
+    
+    // Type 4: Volunteer Hours Approval (charity initiated)
+    {
+      id: "7",
+      hash: "0xabcdef123456789abcdef123456789abcdef123456789abcdef123456789abc",
+      from: "0x4567890123456789012345678901234567890123", // Charity address
+      to: "0x1234567890123456789012345678901234567890", // Volunteer address
+      amount: 0,
+      cryptoType: "",
+      fiatValue: 0,
+      fee: 0,
+      timestamp: "2024-04-11T09:00:00Z",
+      status: "completed",
+      purpose: "Volunteer Hours Approval",
+      metadata: {
+        organization: "Education for All",
+        opportunity: "Web Development for Education Platform",
+        hours: 8,
+        acceptedBy: "Jane Smith, Volunteer Coordinator",
+        transactionInitiator: "charity",
+        relatedTransactionId: "6", // Links to the hours record
+        description: "Hours verified and approved for authentication system implementation",
+        verificationHash: "0xabcdef123456789abcdef123456789abcdef123456789abcdef123456789abc",
+        blockNumber: 1235700,
+      },
+    },
+    
+    // Type 5: Volunteer Endorsement (charity initiated)
+    {
+      id: "8",
+      hash: "0x11111111222222223333333344444444555555556666666677777777888888",
+      from: "0x4567890123456789012345678901234567890123", // Charity address
+      to: "0x1234567890123456789012345678901234567890", // Volunteer address
+      amount: 0,
+      cryptoType: "",
+      fiatValue: 0,
+      fee: 0,
+      timestamp: "2024-04-15T14:30:00Z",
+      status: "completed",
+      purpose: "Volunteer Endorsement",
+      metadata: {
+        organization: "Education for All",
+        skills: ["React", "Node.js", "TypeScript"], // Top 3 skills
+        endorsementText: "Outstanding volunteer who delivered high-quality authentication system. Highly skilled in React and modern web development.",
+        transactionInitiator: "charity",
+        hours: 32, // Total hours contributed
+        verificationHash: "0x11111111222222223333333344444444555555556666666677777777888888",
+        blockNumber: 1236000,
       },
     },
   ]);

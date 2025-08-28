@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Transaction, TransactionExportOptions } from "@/types/contribution";
 import { exportDonationsToCSV } from "@/utils/export";
+import { exportEnhancedTransactionsToCSV } from "@/utils/enhancedExport";
 import { formatDateForInput } from "@/utils/date";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -45,8 +46,18 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
       });
     }
 
-    // Export the filtered donations
-    exportDonationsToCSV(filteredDonations, `${filename}.csv`);
+    // Export the filtered donations with enhanced fields for volunteer transactions
+    const hasVolunteerTransactions = filteredDonations.some(d => 
+      d.purpose && d.purpose !== 'Donation'
+    );
+    
+    if (hasVolunteerTransactions) {
+      // Use enhanced export for mixed transaction types
+      exportEnhancedTransactionsToCSV(filteredDonations, `${filename}.csv`);
+    } else {
+      // Use standard export for donation-only exports
+      exportDonationsToCSV(filteredDonations, `${filename}.csv`);
+    }
     onClose();
   }, [donations, options.dateRange, filename, onClose]);
 
