@@ -1,320 +1,538 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Give Protocol - Volunteer Application Preview</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
         }
-        .animate-fadeIn {
-            animation: fadeIn 0.3s ease-in-out;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.3s ease-in-out;
+      }
     </style>
-</head>
-<body class="bg-gray-100">
+  </head>
+  <body class="bg-gray-100">
     <div class="min-h-screen p-4">
-        <!-- Modal backdrop -->
-        <div class="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
-        
-        <!-- Modal -->
-        <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 text-center">
-                <h1 class="text-3xl font-light mb-2">Volunteer Opportunity Application</h1>
-                <p class="text-lg opacity-90">Help create sustainable impact through verified contributions</p>
-            </div>
+      <!-- Modal backdrop -->
+      <div class="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
 
-            <!-- Form Content -->
-            <div class="p-8 overflow-y-auto max-h-[calc(90vh-200px)]">
-                <!-- Personal Information Section -->
-                <div class="mb-8">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                        <span class="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
-                        Personal Information
-                    </h2>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                First Name <span class="text-red-500">*</span>
-                            </label>
-                            <input type="text" class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none" placeholder="John">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Last Name <span class="text-red-500">*</span>
-                            </label>
-                            <input type="text" class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none" placeholder="Doe">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Email Address <span class="text-red-500">*</span>
-                            </label>
-                            <input type="email" class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none" placeholder="john@example.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Phone Number
-                            </label>
-                            <input type="tel" class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none" placeholder="+1 (555) 123-4567">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Location/City
-                            </label>
-                            <input type="text" class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none" placeholder="San Francisco, CA">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Time Zone
-                            </label>
-                            <select class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none bg-white">
-                                <option value="">Select Time Zone</option>
-                                <option value="UTC-12">UTC-12 (Baker Island)</option>
-                                <option value="UTC-11">UTC-11 (Hawaii-Aleutian)</option>
-                                <option value="UTC-10">UTC-10 (Hawaii)</option>
-                                <option value="UTC-9">UTC-9 (Alaska)</option>
-                                <option value="UTC-8">UTC-8 (Pacific Time)</option>
-                                <option value="UTC-7">UTC-7 (Mountain Time)</option>
-                                <option value="UTC-6">UTC-6 (Central Time)</option>
-                                <option value="UTC-5">UTC-5 (Eastern Time)</option>
-                                <option value="UTC-4">UTC-4 (Atlantic Time)</option>
-                                <option value="UTC-3">UTC-3 (Argentina, Brazil)</option>
-                                <option value="UTC-2">UTC-2 (South Georgia)</option>
-                                <option value="UTC-1">UTC-1 (Azores)</option>
-                                <option value="UTC+0">UTC+0 (GMT/London)</option>
-                                <option value="UTC+1">UTC+1 (Central Europe)</option>
-                                <option value="UTC+2">UTC+2 (Eastern Europe)</option>
-                                <option value="UTC+3">UTC+3 (Moscow, East Africa)</option>
-                                <option value="UTC+4">UTC+4 (Gulf States)</option>
-                                <option value="UTC+5">UTC+5 (Pakistan)</option>
-                                <option value="UTC+5.5">UTC+5:30 (India)</option>
-                                <option value="UTC+6">UTC+6 (Bangladesh)</option>
-                                <option value="UTC+7">UTC+7 (Southeast Asia)</option>
-                                <option value="UTC+8">UTC+8 (China, Singapore)</option>
-                                <option value="UTC+9">UTC+9 (Japan, Korea)</option>
-                                <option value="UTC+9.5">UTC+9:30 (Central Australia)</option>
-                                <option value="UTC+10">UTC+10 (Eastern Australia)</option>
-                                <option value="UTC+11">UTC+11 (Solomon Islands)</option>
-                                <option value="UTC+12">UTC+12 (New Zealand)</option>
-                                <option value="UTC+13">UTC+13 (Tonga)</option>
-                                <option value="UTC+14">UTC+14 (Line Islands)</option>
-                            </select>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Age Range <span class="text-red-500">*</span>
-                            </label>
-                            <select class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none bg-white">
-                                <option value="">Select Age Range</option>
-                                <option value="under-18">Under 18</option>
-                                <option value="18-24">18-24</option>
-                                <option value="25-34">25-34</option>
-                                <option value="35-44">35-44</option>
-                                <option value="45-54">45-54</option>
-                                <option value="55-64">55-64</option>
-                                <option value="65+">65+</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Skills & Interests Section -->
-                <div class="mb-8">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                        <span class="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
-                        Skills & Interests
-                    </h2>
-                    
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Skills and Areas of Interest <span class="text-red-500">*</span>
-                        </label>
-                        <div class="relative border-2 border-gray-200 rounded-xl p-3 bg-gray-50 cursor-text">
-                            <div class="flex flex-wrap gap-2 mb-2" id="skillTags">
-                                <!-- Skill tags will be added here dynamically -->
-                            </div>
-                            <input type="text" id="skillInput" class="w-full bg-transparent border-none outline-none text-gray-700 placeholder-gray-500" placeholder="Type a skill and press Enter..." onkeydown="handleSkillInput(event)">
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Commitment Level <span class="text-red-500">*</span>
-                        </label>
-                        <div class="grid md:grid-cols-3 gap-3">
-                            <label class="relative border-2 border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4 cursor-pointer">
-                                <input type="radio" name="commitmentType" value="one-time" class="sr-only" checked>
-                                <div class="text-center">
-                                    <div class="font-semibold text-gray-900 mb-1">One-time</div>
-                                    <div class="text-sm text-gray-600">Single project or short-duration tasks</div>
-                                </div>
-                            </label>
-                            <label class="relative border-2 border-gray-200 hover:border-gray-300 rounded-xl p-4 cursor-pointer">
-                                <input type="radio" name="commitmentType" value="short-term" class="sr-only">
-                                <div class="text-center">
-                                    <div class="font-semibold text-gray-900 mb-1">Short-Term</div>
-                                    <div class="text-sm text-gray-600">Few weeks to a few months</div>
-                                </div>
-                            </label>
-                            <label class="relative border-2 border-gray-200 hover:border-gray-300 rounded-xl p-4 cursor-pointer">
-                                <input type="radio" name="commitmentType" value="long-term" class="sr-only">
-                                <div class="text-center">
-                                    <div class="font-semibold text-gray-900 mb-1">Long-Term</div>
-                                    <div class="text-sm text-gray-600">Ongoing commitment of several months or more</div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Tell us about your relevant experience <span class="text-red-500">*</span>
-                        </label>
-                        <textarea class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none resize-vertical min-h-[100px]" placeholder="Describe your background, skills, and what motivates you to volunteer with Give Protocol..."></textarea>
-                    </div>
-                </div>
-
-                <!-- Consent & Agreement Section -->
-                <div class="mb-8">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                        <span class="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
-                        Consent & Agreement
-                    </h2>
-
-                    <div class="bg-gray-50 rounded-xl p-6 border-l-4 border-indigo-600">
-                        <h3 class="font-semibold text-gray-900 mb-4">Volunteer Application Consent</h3>
-                        
-                        <div class="mb-4 text-gray-700 leading-relaxed">
-                            <p>By completing and submitting this form, I consent to GIVE PROTOCOL collecting, processing, and storing my personal information as described in the Volunteer Application Privacy Notice, which I have read and understood.</p>
-                        </div>
-
-                        <div class="mb-4">
-                            <p class="font-semibold text-gray-900 mb-3">I understand that:</p>
-                            <ol class="list-decimal pl-6 space-y-2 text-gray-700 text-sm">
-                                <li>My personal information will be processed for the purposes of evaluating my volunteer application, managing volunteer assignments, and related activities.</li>
-                                <li>GIVE PROTOCOL may collect various categories of my personal information, including identity information, contact details, background information, availability, references, and where relevant and permitted by law, certain special categories of data.</li>
-                                <li>My personal information may be shared with authorized personnel within the charity organization offering the volunteer opportunity, service providers, and third parties as outlined in the Privacy Notice.</li>
-                                <li>My personal information may be transferred internationally with appropriate safeguards in place.</li>
-                                <li>I have certain rights regarding my personal information, which vary depending on my location, including the rights to access, rectify, delete, restrict processing, data portability, and object to processing.</li>
-                                <li>I can withdraw my consent at any time by contacting legal@giveprotocol.io, though this will not affect the lawfulness of processing based on my consent before withdrawal. Withdrawing consent may impact the organization's ability to consider my volunteer application.</li>
-                            </ol>
-                        </div>
-
-                        <div class="border-t border-gray-200 pt-4">
-                            <p class="font-semibold text-gray-900 mb-3">SPECIFIC CONSENTS</p>
-                            <p class="text-gray-600 text-sm mb-4">Please review and indicate your consent to each of the following:</p>
-                            
-                            <div class="space-y-3">
-                                <label class="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
-                                    <input type="checkbox" class="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" checked>
-                                    <div class="ml-3">
-                                        <strong class="font-semibold text-gray-900">Essential Processing (Required):</strong>
-                                        <p class="text-gray-700 text-sm mt-1">I consent to GIVE PROTOCOL collecting and processing my personal information for the purpose of evaluating my volunteer application and, if successful, managing my volunteer engagement.</p>
-                                        <p class="text-gray-500 italic text-xs mt-1">Note: This consent is necessary to process your volunteer application. If you do not provide this consent, we will not be able to consider your application.</p>
-                                    </div>
-                                </label>
-
-                                <label class="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
-                                    <input type="checkbox" class="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                    <div class="ml-3">
-                                        <strong class="font-semibold text-gray-900">International Transfers (if applicable):</strong>
-                                        <p class="text-gray-700 text-sm mt-1">I consent to GIVE PROTOCOL transferring my personal information to countries outside my country of residence, including countries that may not provide the same level of data protection, with appropriate safeguards in place as described in the Privacy Notice.</p>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="border-t border-gray-200 pt-4 mt-4">
-                            <p class="font-semibold text-gray-900 mb-3">ACKNOWLEDGMENT</p>
-                            
-                            <label class="flex items-start mb-3 hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
-                                <input type="checkbox" class="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" checked>
-                                <div class="ml-3">
-                                    <strong class="font-semibold text-gray-900">Age Confirmation:</strong>
-                                    <p class="text-gray-700 text-sm mt-1">I confirm that I am at least 16 years of age.</p>
-                                    <p class="text-gray-500 italic text-xs mt-1">(If you are under 16 years of age, parental or guardian consent is required)</p>
-                                </div>
-                            </label>
-
-                            <label class="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
-                                <input type="checkbox" class="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" checked>
-                                <div class="ml-3">
-                                    <strong class="font-semibold text-gray-900">Privacy Notice:</strong>
-                                    <p class="text-gray-700 text-sm mt-1">I confirm that I have read and understood the Privacy Notice.</p>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-t border-gray-200 pt-6">
-                    <button class="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-full transition-all duration-200">
-                        Submit Volunteer Application
-                    </button>
-
-                    <div class="mt-4 text-center text-xs text-gray-500">
-                        <p>By submitting this application, you acknowledge that you have read and understood Give Protocol's privacy policy and volunteer guidelines. Your data will be processed in accordance with applicable data protection regulations.</p>
-                    </div>
-                </div>
-            </div>
+      <!-- Modal -->
+      <div
+        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50"
+      >
+        <!-- Header -->
+        <div
+          class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 text-center"
+        >
+          <h1 class="text-3xl font-light mb-2">
+            Volunteer Opportunity Application
+          </h1>
+          <p class="text-lg opacity-90">
+            Help create sustainable impact through verified contributions
+          </p>
         </div>
+
+        <!-- Form Content -->
+        <div class="p-8 overflow-y-auto max-h-[calc(90vh-200px)]">
+          <!-- Personal Information Section -->
+          <div class="mb-8">
+            <h2
+              class="text-xl font-semibold text-gray-900 mb-4 flex items-center"
+            >
+              <span
+                class="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3"
+                >1</span
+              >
+              Personal Information
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  First Name <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none"
+                  placeholder="John"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Last Name <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none"
+                  placeholder="Doe"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none"
+                  placeholder="john@example.com"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none"
+                  placeholder="+1 (555) 123-4567"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Location/City
+                </label>
+                <input
+                  type="text"
+                  class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none"
+                  placeholder="San Francisco, CA"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Time Zone
+                </label>
+                <select
+                  class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none bg-white"
+                >
+                  <option value="">Select Time Zone</option>
+                  <option value="UTC-12">UTC-12 (Baker Island)</option>
+                  <option value="UTC-11">UTC-11 (Hawaii-Aleutian)</option>
+                  <option value="UTC-10">UTC-10 (Hawaii)</option>
+                  <option value="UTC-9">UTC-9 (Alaska)</option>
+                  <option value="UTC-8">UTC-8 (Pacific Time)</option>
+                  <option value="UTC-7">UTC-7 (Mountain Time)</option>
+                  <option value="UTC-6">UTC-6 (Central Time)</option>
+                  <option value="UTC-5">UTC-5 (Eastern Time)</option>
+                  <option value="UTC-4">UTC-4 (Atlantic Time)</option>
+                  <option value="UTC-3">UTC-3 (Argentina, Brazil)</option>
+                  <option value="UTC-2">UTC-2 (South Georgia)</option>
+                  <option value="UTC-1">UTC-1 (Azores)</option>
+                  <option value="UTC+0">UTC+0 (GMT/London)</option>
+                  <option value="UTC+1">UTC+1 (Central Europe)</option>
+                  <option value="UTC+2">UTC+2 (Eastern Europe)</option>
+                  <option value="UTC+3">UTC+3 (Moscow, East Africa)</option>
+                  <option value="UTC+4">UTC+4 (Gulf States)</option>
+                  <option value="UTC+5">UTC+5 (Pakistan)</option>
+                  <option value="UTC+5.5">UTC+5:30 (India)</option>
+                  <option value="UTC+6">UTC+6 (Bangladesh)</option>
+                  <option value="UTC+7">UTC+7 (Southeast Asia)</option>
+                  <option value="UTC+8">UTC+8 (China, Singapore)</option>
+                  <option value="UTC+9">UTC+9 (Japan, Korea)</option>
+                  <option value="UTC+9.5">UTC+9:30 (Central Australia)</option>
+                  <option value="UTC+10">UTC+10 (Eastern Australia)</option>
+                  <option value="UTC+11">UTC+11 (Solomon Islands)</option>
+                  <option value="UTC+12">UTC+12 (New Zealand)</option>
+                  <option value="UTC+13">UTC+13 (Tonga)</option>
+                  <option value="UTC+14">UTC+14 (Line Islands)</option>
+                </select>
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Age Range <span class="text-red-500">*</span>
+                </label>
+                <select
+                  class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none bg-white"
+                >
+                  <option value="">Select Age Range</option>
+                  <option value="under-18">Under 18</option>
+                  <option value="18-24">18-24</option>
+                  <option value="25-34">25-34</option>
+                  <option value="35-44">35-44</option>
+                  <option value="45-54">45-54</option>
+                  <option value="55-64">55-64</option>
+                  <option value="65+">65+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skills & Interests Section -->
+          <div class="mb-8">
+            <h2
+              class="text-xl font-semibold text-gray-900 mb-4 flex items-center"
+            >
+              <span
+                class="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3"
+                >2</span
+              >
+              Skills & Interests
+            </h2>
+
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Skills and Areas of Interest <span class="text-red-500">*</span>
+              </label>
+              <div
+                class="relative border-2 border-gray-200 rounded-xl p-3 bg-gray-50 cursor-text"
+              >
+                <div class="flex flex-wrap gap-2 mb-2" id="skillTags">
+                  <!-- Skill tags will be added here dynamically -->
+                </div>
+                <input
+                  type="text"
+                  id="skillInput"
+                  class="w-full bg-transparent border-none outline-none text-gray-700 placeholder-gray-500"
+                  placeholder="Type a skill and press Enter..."
+                  onkeydown="handleSkillInput(event)"
+                />
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                Commitment Level <span class="text-red-500">*</span>
+              </label>
+              <div class="grid md:grid-cols-3 gap-3">
+                <label
+                  class="relative border-2 border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4 cursor-pointer"
+                >
+                  <input
+                    type="radio"
+                    name="commitmentType"
+                    value="one-time"
+                    class="sr-only"
+                    checked
+                  />
+                  <div class="text-center">
+                    <div class="font-semibold text-gray-900 mb-1">One-time</div>
+                    <div class="text-sm text-gray-600">
+                      Single project or short-duration tasks
+                    </div>
+                  </div>
+                </label>
+                <label
+                  class="relative border-2 border-gray-200 hover:border-gray-300 rounded-xl p-4 cursor-pointer"
+                >
+                  <input
+                    type="radio"
+                    name="commitmentType"
+                    value="short-term"
+                    class="sr-only"
+                  />
+                  <div class="text-center">
+                    <div class="font-semibold text-gray-900 mb-1">
+                      Short-Term
+                    </div>
+                    <div class="text-sm text-gray-600">
+                      Few weeks to a few months
+                    </div>
+                  </div>
+                </label>
+                <label
+                  class="relative border-2 border-gray-200 hover:border-gray-300 rounded-xl p-4 cursor-pointer"
+                >
+                  <input
+                    type="radio"
+                    name="commitmentType"
+                    value="long-term"
+                    class="sr-only"
+                  />
+                  <div class="text-center">
+                    <div class="font-semibold text-gray-900 mb-1">
+                      Long-Term
+                    </div>
+                    <div class="text-sm text-gray-600">
+                      Ongoing commitment of several months or more
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Tell us about your relevant experience
+                <span class="text-red-500">*</span>
+              </label>
+              <textarea
+                class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none resize-vertical min-h-[100px]"
+                placeholder="Describe your background, skills, and what motivates you to volunteer with Give Protocol..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Consent & Agreement Section -->
+          <div class="mb-8">
+            <h2
+              class="text-xl font-semibold text-gray-900 mb-4 flex items-center"
+            >
+              <span
+                class="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3"
+                >3</span
+              >
+              Consent & Agreement
+            </h2>
+
+            <div class="bg-gray-50 rounded-xl p-6 border-l-4 border-indigo-600">
+              <h3 class="font-semibold text-gray-900 mb-4">
+                Volunteer Application Consent
+              </h3>
+
+              <div class="mb-4 text-gray-700 leading-relaxed">
+                <p>
+                  By completing and submitting this form, I consent to GIVE
+                  PROTOCOL collecting, processing, and storing my personal
+                  information as described in the Volunteer Application Privacy
+                  Notice, which I have read and understood.
+                </p>
+              </div>
+
+              <div class="mb-4">
+                <p class="font-semibold text-gray-900 mb-3">
+                  I understand that:
+                </p>
+                <ol class="list-decimal pl-6 space-y-2 text-gray-700 text-sm">
+                  <li>
+                    My personal information will be processed for the purposes
+                    of evaluating my volunteer application, managing volunteer
+                    assignments, and related activities.
+                  </li>
+                  <li>
+                    GIVE PROTOCOL may collect various categories of my personal
+                    information, including identity information, contact
+                    details, background information, availability, references,
+                    and where relevant and permitted by law, certain special
+                    categories of data.
+                  </li>
+                  <li>
+                    My personal information may be shared with authorized
+                    personnel within the charity organization offering the
+                    volunteer opportunity, service providers, and third parties
+                    as outlined in the Privacy Notice.
+                  </li>
+                  <li>
+                    My personal information may be transferred internationally
+                    with appropriate safeguards in place.
+                  </li>
+                  <li>
+                    I have certain rights regarding my personal information,
+                    which vary depending on my location, including the rights to
+                    access, rectify, delete, restrict processing, data
+                    portability, and object to processing.
+                  </li>
+                  <li>
+                    I can withdraw my consent at any time by contacting
+                    legal@giveprotocol.io, though this will not affect the
+                    lawfulness of processing based on my consent before
+                    withdrawal. Withdrawing consent may impact the
+                    organization's ability to consider my volunteer application.
+                  </li>
+                </ol>
+              </div>
+
+              <div class="border-t border-gray-200 pt-4">
+                <p class="font-semibold text-gray-900 mb-3">
+                  SPECIFIC CONSENTS
+                </p>
+                <p class="text-gray-600 text-sm mb-4">
+                  Please review and indicate your consent to each of the
+                  following:
+                </p>
+
+                <div class="space-y-3">
+                  <label
+                    class="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      class="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      checked
+                    />
+                    <div class="ml-3">
+                      <strong class="font-semibold text-gray-900"
+                        >Essential Processing (Required):</strong
+                      >
+                      <p class="text-gray-700 text-sm mt-1">
+                        I consent to GIVE PROTOCOL collecting and processing my
+                        personal information for the purpose of evaluating my
+                        volunteer application and, if successful, managing my
+                        volunteer engagement.
+                      </p>
+                      <p class="text-gray-500 italic text-xs mt-1">
+                        Note: This consent is necessary to process your
+                        volunteer application. If you do not provide this
+                        consent, we will not be able to consider your
+                        application.
+                      </p>
+                    </div>
+                  </label>
+
+                  <label
+                    class="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      class="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <div class="ml-3">
+                      <strong class="font-semibold text-gray-900"
+                        >International Transfers (if applicable):</strong
+                      >
+                      <p class="text-gray-700 text-sm mt-1">
+                        I consent to GIVE PROTOCOL transferring my personal
+                        information to countries outside my country of
+                        residence, including countries that may not provide the
+                        same level of data protection, with appropriate
+                        safeguards in place as described in the Privacy Notice.
+                      </p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="border-t border-gray-200 pt-4 mt-4">
+                <p class="font-semibold text-gray-900 mb-3">ACKNOWLEDGMENT</p>
+
+                <label
+                  class="flex items-start mb-3 hover:bg-white rounded-lg p-3 transition-colors cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    class="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    checked
+                  />
+                  <div class="ml-3">
+                    <strong class="font-semibold text-gray-900"
+                      >Age Confirmation:</strong
+                    >
+                    <p class="text-gray-700 text-sm mt-1">
+                      I confirm that I am at least 16 years of age.
+                    </p>
+                    <p class="text-gray-500 italic text-xs mt-1">
+                      (If you are under 16 years of age, parental or guardian
+                      consent is required)
+                    </p>
+                  </div>
+                </label>
+
+                <label
+                  class="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    class="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    checked
+                  />
+                  <div class="ml-3">
+                    <strong class="font-semibold text-gray-900"
+                      >Privacy Notice:</strong
+                    >
+                    <p class="text-gray-700 text-sm mt-1">
+                      I confirm that I have read and understood the Privacy
+                      Notice.
+                    </p>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-200 pt-6">
+            <button
+              class="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-full transition-all duration-200"
+            >
+              Submit Volunteer Application
+            </button>
+
+            <div class="mt-4 text-center text-xs text-gray-500">
+              <p>
+                By submitting this application, you acknowledge that you have
+                read and understood Give Protocol's privacy policy and volunteer
+                guidelines. Your data will be processed in accordance with
+                applicable data protection regulations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
-        // Simple interactivity for the preview
-        document.querySelectorAll('input[name="commitmentType"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                document.querySelectorAll('label[class*="border-indigo"]').forEach(label => {
-                    label.className = label.className.replace(/border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50/, 'border-gray-200 hover:border-gray-300');
-                });
-                if (this.checked) {
-                    this.closest('label').className = this.closest('label').className.replace(/border-gray-200 hover:border-gray-300/, 'border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50');
-                }
-            });
+      // Simple interactivity for the preview
+      document
+        .querySelectorAll('input[name="commitmentType"]')
+        .forEach((radio) => {
+          radio.addEventListener("change", function () {
+            document
+              .querySelectorAll('label[class*="border-indigo"]')
+              .forEach((label) => {
+                label.className = label.className.replace(
+                  /border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50/,
+                  "border-gray-200 hover:border-gray-300",
+                );
+              });
+            if (this.checked) {
+              this.closest("label").className = this.closest(
+                "label",
+              ).className.replace(
+                /border-gray-200 hover:border-gray-300/,
+                "border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50",
+              );
+            }
+          });
         });
 
-        // Demo skill tag functionality for preview
-        function handleSkillInput(event) {
-            if (event.key === 'Enter' || event.key === ',') {
-                event.preventDefault();
-                const input = event.target;
-                const skill = input.value.trim();
-                if (skill) {
-                    addSkillTag(skill);
-                    input.value = '';
-                }
-            }
+      // Demo skill tag functionality for preview
+      function handleSkillInput(event) {
+        if (event.key === "Enter" || event.key === ",") {
+          event.preventDefault();
+          const input = event.target;
+          const skill = input.value.trim();
+          if (skill) {
+            addSkillTag(skill);
+            input.value = "";
+          }
         }
+      }
 
-        function addSkillTag(skill) {
-            const container = document.getElementById('skillTags');
-            const newTag = document.createElement('div');
-            newTag.className = 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-full flex items-center gap-2 animate-fadeIn';
-            newTag.innerHTML = `
+      function addSkillTag(skill) {
+        const container = document.getElementById("skillTags");
+        const newTag = document.createElement("div");
+        newTag.className =
+          "bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-full flex items-center gap-2 animate-fadeIn";
+        newTag.innerHTML = `
                 <span class="text-sm">${skill}</span>
                 <button onclick="removeSkillTag(this)" class="bg-white/20 hover:bg-white/30 rounded-full w-5 h-5 flex items-center justify-center transition-colors">×</button>
             `;
-            container.appendChild(newTag);
-        }
+        container.appendChild(newTag);
+      }
 
-        function removeSkillTag(button) {
-            button.closest('div').remove();
-        }
+      function removeSkillTag(button) {
+        button.closest("div").remove();
+      }
 
-        // Add demo message
-        setTimeout(() => {
-            const skillsContainer = document.querySelector('[class*="min-h-"][class*="bg-gray-50"]');
-            if (skillsContainer) {
-                const demoNote = document.createElement('div');
-                demoNote.className = 'text-xs text-blue-600 mt-2 font-medium';
-                demoNote.textContent = '💡 Try typing a skill and pressing Enter to see the interactive functionality!';
-                skillsContainer.appendChild(demoNote);
-            }
-        }, 1000);
+      // Add demo message
+      setTimeout(() => {
+        const skillsContainer = document.querySelector(
+          '[class*="min-h-"][class*="bg-gray-50"]',
+        );
+        if (skillsContainer) {
+          const demoNote = document.createElement("div");
+          demoNote.className = "text-xs text-blue-600 mt-2 font-medium";
+          demoNote.textContent =
+            "💡 Try typing a skill and pressing Enter to see the interactive functionality!";
+          skillsContainer.appendChild(demoNote);
+        }
+      }, 1000);
     </script>
-</body>
+  </body>
 </html>
