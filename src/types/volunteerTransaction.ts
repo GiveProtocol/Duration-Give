@@ -2,7 +2,7 @@
  * Volunteer transaction types for the blockchain
  */
 
-export const VolunteerTransactionType = {
+export const VolunteerTransactionTypes = {
   // Volunteer solicitations (donor/volunteer accounts)
   VOLUNTEER_SOLICITATION: "Volunteer Solicitation",
   
@@ -19,7 +19,7 @@ export const VolunteerTransactionType = {
   VOLUNTEER_ENDORSEMENT: "Volunteer Endorsement",
 } as const;
 
-export type VolunteerTransactionType = typeof VolunteerTransactionType[keyof typeof VolunteerTransactionType];
+export type VolunteerTransactionType = typeof VolunteerTransactionTypes[keyof typeof VolunteerTransactionTypes];
 
 /**
  * Extended metadata for volunteer transactions
@@ -57,7 +57,7 @@ export interface VolunteerTransactionMetadata {
  * Helper function to determine if a transaction purpose is a volunteer type
  */
 export function isVolunteerTransaction(purpose: string): boolean {
-  return Object.values(VolunteerTransactionType).includes(purpose as VolunteerTransactionType);
+  return Object.values(VolunteerTransactionTypes).includes(purpose as VolunteerTransactionType);
 }
 
 /**
@@ -65,12 +65,12 @@ export function isVolunteerTransaction(purpose: string): boolean {
  */
 export function getVolunteerTransactionInitiator(type: VolunteerTransactionType): 'volunteer' | 'charity' {
   switch (type) {
-    case VolunteerTransactionType.VOLUNTEER_SOLICITATION:
-    case VolunteerTransactionType.VOLUNTEER_HOURS_RECORD:
+    case VolunteerTransactionTypes.VOLUNTEER_SOLICITATION:
+    case VolunteerTransactionTypes.VOLUNTEER_HOURS_RECORD:
       return 'volunteer';
-    case VolunteerTransactionType.VOLUNTEER_ACCEPTANCE:
-    case VolunteerTransactionType.VOLUNTEER_HOURS_APPROVAL:
-    case VolunteerTransactionType.VOLUNTEER_ENDORSEMENT:
+    case VolunteerTransactionTypes.VOLUNTEER_ACCEPTANCE:
+    case VolunteerTransactionTypes.VOLUNTEER_HOURS_APPROVAL:
+    case VolunteerTransactionTypes.VOLUNTEER_ENDORSEMENT:
       return 'charity';
     default:
       return 'volunteer';

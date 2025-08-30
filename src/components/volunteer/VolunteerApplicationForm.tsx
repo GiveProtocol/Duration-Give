@@ -286,9 +286,6 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
     }
   }, [loading, onClose]);
 
-  const handleModalClick = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-  }, []);
 
   const handleBackdropKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "Escape" && !loading) {
@@ -317,7 +314,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
         tabIndex={0}
         aria-label="Close modal"
       />
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50" onClick={handleModalClick} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 text-center">
           <h1 id="modal-title" className="text-3xl font-light mb-2">Volunteer Opportunity Application</h1>
           <p className="text-lg opacity-90">Help create sustainable impact through verified contributions</p>
@@ -534,9 +531,10 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Commitment Level <span className="text-red-500">*</span>
-              </label>
+              <fieldset>
+                <legend className="block text-sm font-medium text-gray-700 mb-2">
+                  Commitment Level <span className="text-red-500">*</span>
+                </legend>
               <div className="grid md:grid-cols-3 gap-3">
                 <label
                   htmlFor="commitment-one-time"
@@ -605,6 +603,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   </div>
                 </label>
               </div>
+              </fieldset>
             </div>
 
             <div>
