@@ -20,7 +20,14 @@ interface VolunteerApplicationFormProps {
   onSuccess?: () => void;
 }
 
-type AgeRange = "under-18" | "18-24" | "25-34" | "35-44" | "45-54" | "55-64" | "65+";
+type AgeRange =
+  | "under-18"
+  | "18-24"
+  | "25-34"
+  | "35-44"
+  | "45-54"
+  | "55-64"
+  | "65+";
 type CommitmentType = "one-time" | "short-term" | "long-term";
 
 interface FormData {
@@ -32,12 +39,12 @@ interface FormData {
   location: string;
   timezone: string;
   ageRange: AgeRange | "";
-  
+
   // Skills & Experience
   skills: string[];
   commitmentType: CommitmentType;
   experience: string;
-  
+
   // Consent
   essentialProcessing: boolean;
   internationalTransfers: boolean;
@@ -62,7 +69,9 @@ const initialFormData: FormData = {
   privacyNotice: false,
 };
 
-export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> = ({
+export const VolunteerApplicationForm: React.FC<
+  VolunteerApplicationFormProps
+> = ({
   opportunityId,
   opportunityTitle: _opportunityTitle,
   charityId,
@@ -73,9 +82,11 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
   const { profile } = useProfile();
   const { showToast } = useToast();
   const tagInputRef = useRef<HTMLInputElement>(null);
-  
+
   const [formData, setFormData] = useState<FormData>(initialFormData);
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({});
   const [loading, setLoading] = useState(false);
   const [currentSkillInput, setCurrentSkillInput] = useState("");
   const [showSkillPlaceholder, setShowSkillPlaceholder] = useState(true);
@@ -83,7 +94,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
   // Initialize form with user profile data
   useEffect(() => {
     if (profile) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         email: profile.email || "",
         phoneNumber: profile.phone_number || "",
@@ -93,80 +104,102 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
 
   // Update placeholder visibility
   useEffect(() => {
-    setShowSkillPlaceholder(formData.skills.length === 0 && currentSkillInput.length === 0);
+    setShowSkillPlaceholder(
+      formData.skills.length === 0 && currentSkillInput.length === 0,
+    );
   }, [formData.skills.length, currentSkillInput.length]);
 
   // Form field handlers
-  const handleFieldChange = useCallback((field: keyof FormData) => 
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-      const value = e.target.value;
-      setFormData(prev => ({ ...prev, [field]: value }));
-      
-      // Clear validation error for the field
-      if (validationErrors[field]) {
-        setValidationErrors(prev => {
-          const newErrors = { ...prev };
-          // Delete the error property
-          const { [field]: _, ...rest } = newErrors;
-          return rest;
-        });
-      }
-    }, [validationErrors]
+  const handleFieldChange = useCallback(
+    (field: keyof FormData) =>
+      (
+        e: React.ChangeEvent<
+          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >,
+      ) => {
+        const value = e.target.value;
+        setFormData((prev) => ({ ...prev, [field]: value }));
+
+        // Clear validation error for the field
+        if (validationErrors[field]) {
+          setValidationErrors((prev) => {
+            const newErrors = { ...prev };
+            // Delete the error property
+            const { [field]: _, ...rest } = newErrors;
+            return rest;
+          });
+        }
+      },
+    [validationErrors],
   );
 
-  const handleCheckboxChange = useCallback((field: keyof FormData) => 
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setFormData(prev => ({ ...prev, [field]: e.target.checked }));
-      
+  const handleCheckboxChange = useCallback(
+    (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, [field]: e.target.checked }));
+
       // Clear consent validation errors
       if (validationErrors.consent) {
-        setValidationErrors(prev => {
+        setValidationErrors((prev) => {
           const { consent: _, ...rest } = prev;
           return rest;
         });
       }
-    }, [validationErrors]
+    },
+    [validationErrors],
   );
 
   // Skill tag handlers
-  const handleSkillInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentSkillInput(e.target.value);
-  }, []);
+  const handleSkillInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrentSkillInput(e.target.value);
+    },
+    [],
+  );
 
-  const addSkill = useCallback((skillText: string) => {
-    const trimmed = skillText.trim();
-    if (trimmed && !formData.skills.includes(trimmed)) {
-      setFormData(prev => ({
-        ...prev,
-        skills: [...prev.skills, trimmed]
-      }));
-      setCurrentSkillInput("");
-      
-      // Clear skills validation error
-      if (validationErrors.skills) {
-        setValidationErrors(prev => {
-          const { skills: _, ...rest } = prev;
-          return rest;
-        });
+  const addSkill = useCallback(
+    (skillText: string) => {
+      const trimmed = skillText.trim();
+      if (trimmed && !formData.skills.includes(trimmed)) {
+        setFormData((prev) => ({
+          ...prev,
+          skills: [...prev.skills, trimmed],
+        }));
+        setCurrentSkillInput("");
+
+        // Clear skills validation error
+        if (validationErrors.skills) {
+          setValidationErrors((prev) => {
+            const { skills: _, ...rest } = prev;
+            return rest;
+          });
+        }
       }
-    }
-  }, [formData.skills, validationErrors]);
+    },
+    [formData.skills, validationErrors],
+  );
 
   const removeSkill = useCallback((index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      skills: prev.skills.filter((_, i) => i !== index)
+      skills: prev.skills.filter((_, i) => i !== index),
     }));
   }, []);
 
-  const handleSkillInputKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      addSkill(currentSkillInput);
-    } else if (e.key === "Backspace" && currentSkillInput === "" && formData.skills.length > 0) {
-      removeSkill(formData.skills.length - 1);
-    }
-  }, [currentSkillInput, formData.skills.length, addSkill, removeSkill]);
+  const handleSkillInputKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter" || e.key === ",") {
+        e.preventDefault();
+        addSkill(currentSkillInput);
+      } else if (
+        e.key === "Backspace" &&
+        currentSkillInput === "" &&
+        formData.skills.length > 0
+      ) {
+        removeSkill(formData.skills.length - 1);
+      }
+    },
+    [currentSkillInput, formData.skills.length, addSkill, removeSkill],
+  );
 
   const focusSkillInput = useCallback(() => {
     tagInputRef.current?.focus();
@@ -197,9 +230,13 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
     if (!formData.ageRange) {
       errors.ageRange = "Please select your age range";
     }
-    
+
     // Consent validation
-    if (!formData.essentialProcessing || !formData.ageConfirmation || !formData.privacyNotice) {
+    if (
+      !formData.essentialProcessing ||
+      !formData.ageConfirmation ||
+      !formData.privacyNotice
+    ) {
       errors.consent = "You must agree to all required consent items";
     }
 
@@ -208,70 +245,73 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
   }, [formData]);
 
   // Form submission
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
+      if (!validateForm()) {
+        return;
+      }
 
-    if (!user || !profile) {
-      showToast("Please log in to submit an application", "error");
-      return;
-    }
+      if (!user || !profile) {
+        showToast("Please log in to submit an application", "error");
+        return;
+      }
 
-    setLoading(true);
-    try {
-      const { error } = await supabase.from("volunteer_applications").insert({
-        opportunity_id: opportunityId,
-        applicant_id: user.id,
-        charity_id: charityId,
-        full_name: `${formData.firstName} ${formData.lastName}`,
-        email: formData.email,
-        phone_number: formData.phoneNumber || null,
-        location: formData.location || null,
-        timezone: formData.timezone || null,
-        age_range: formData.ageRange || null,
-        commitment_type: formData.commitmentType,
-        experience: formData.experience,
-        skills: formData.skills,
-        interests: [],
-        certifications: [],
-        availability: {
-          days: [],
-          times: []
-        },
-        consent_given: true,
-        international_transfers_consent: formData.internationalTransfers,
-      });
+      setLoading(true);
+      try {
+        const { error } = await supabase.from("volunteer_applications").insert({
+          opportunity_id: opportunityId,
+          applicant_id: user.id,
+          charity_id: charityId,
+          full_name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          phone_number: formData.phoneNumber || null,
+          location: formData.location || null,
+          timezone: formData.timezone || null,
+          age_range: formData.ageRange || null,
+          commitment_type: formData.commitmentType,
+          experience: formData.experience,
+          skills: formData.skills,
+          interests: [],
+          certifications: [],
+          availability: {
+            days: [],
+            times: [],
+          },
+          consent_given: true,
+          international_transfers_consent: formData.internationalTransfers,
+        });
 
-      if (error) throw error;
+        if (error) throw error;
 
-      Logger.info("Volunteer application submitted", {
-        opportunityId,
-        userId: user.id,
-      });
+        Logger.info("Volunteer application submitted", {
+          opportunityId,
+          userId: user.id,
+        });
 
-      showToast("Application submitted successfully!", "success");
-      onSuccess?.();
-      onClose();
-    } catch (error) {
-      Logger.error("Failed to submit volunteer application", error);
-      showToast("Failed to submit application. Please try again.", "error");
-    } finally {
-      setLoading(false);
-    }
-  }, [
-    formData,
-    validateForm,
-    user,
-    profile,
-    opportunityId,
-    charityId,
-    showToast,
-    onSuccess,
-    onClose,
-  ]);
+        showToast("Application submitted successfully!", "success");
+        onSuccess?.();
+        onClose();
+      } catch (error) {
+        Logger.error("Failed to submit volunteer application", error);
+        showToast("Failed to submit application. Please try again.", "error");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [
+      formData,
+      validateForm,
+      user,
+      profile,
+      opportunityId,
+      charityId,
+      showToast,
+      onSuccess,
+      onClose,
+    ],
+  );
 
   const handleBackdropClick = useCallback(() => {
     if (!loading) {
@@ -283,9 +323,12 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
     e.stopPropagation();
   }, []);
 
-  const inputClasses = "w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none focus:ring-3 focus:ring-indigo-600/10 transition-all duration-200";
-  const textareaClasses = "w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none focus:ring-3 focus:ring-indigo-600/10 transition-all duration-200 resize-vertical min-h-[100px]";
-  const selectClasses = "w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none focus:ring-3 focus:ring-indigo-600/10 transition-all duration-200 bg-white";
+  const inputClasses =
+    "w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none focus:ring-3 focus:ring-indigo-600/10 transition-all duration-200";
+  const textareaClasses =
+    "w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none focus:ring-3 focus:ring-indigo-600/10 transition-all duration-200 resize-vertical min-h-[100px]";
+  const selectClasses =
+    "w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none focus:ring-3 focus:ring-indigo-600/10 transition-all duration-200 bg-white";
 
   return (
     <>
@@ -293,17 +336,29 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
         className="fixed inset-0 bg-black bg-opacity-50 z-50"
         onClick={handleBackdropClick}
       />
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50" onClick={handleModalClick}>
+      <div
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50"
+        onClick={handleModalClick}
+      >
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 text-center">
-          <h1 className="text-3xl font-light mb-2">Volunteer Opportunity Application</h1>
-          <p className="text-lg opacity-90">Help create sustainable impact through verified contributions</p>
+          <h1 className="text-3xl font-light mb-2">
+            Volunteer Opportunity Application
+          </h1>
+          <p className="text-lg opacity-90">
+            Help create sustainable impact through verified contributions
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 overflow-y-auto max-h-[calc(90vh-200px)]">
+        <form
+          onSubmit={handleSubmit}
+          className="p-8 overflow-y-auto max-h-[calc(90vh-200px)]"
+        >
           {/* Personal Information Section */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                1
+              </span>
               Personal Information
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
@@ -319,7 +374,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   required
                 />
                 {validationErrors.firstName && (
-                  <p className="text-sm text-red-600 mt-1">{validationErrors.firstName}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {validationErrors.firstName}
+                  </p>
                 )}
               </div>
               <div>
@@ -334,7 +391,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   required
                 />
                 {validationErrors.lastName && (
-                  <p className="text-sm text-red-600 mt-1">{validationErrors.lastName}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {validationErrors.lastName}
+                  </p>
                 )}
               </div>
               <div>
@@ -349,7 +408,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   required
                 />
                 {validationErrors.email && (
-                  <p className="text-sm text-red-600 mt-1">{validationErrors.email}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {validationErrors.email}
+                  </p>
                 )}
               </div>
               <div>
@@ -363,7 +424,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   className={inputClasses}
                 />
                 {validationErrors.phoneNumber && (
-                  <p className="text-sm text-red-600 mt-1">{validationErrors.phoneNumber}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {validationErrors.phoneNumber}
+                  </p>
                 )}
               </div>
               <div>
@@ -439,7 +502,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   <option value="65+">65+</option>
                 </select>
                 {validationErrors.ageRange && (
-                  <p className="text-sm text-red-600 mt-1">{validationErrors.ageRange}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {validationErrors.ageRange}
+                  </p>
                 )}
               </div>
             </div>
@@ -448,13 +513,16 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
           {/* Skills & Interests Section */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
+              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                2
+              </span>
               Skills & Interests
             </h2>
-            
+
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Skills and Areas of Interest <span className="text-red-500">*</span>
+                Skills and Areas of Interest{" "}
+                <span className="text-red-500">*</span>
               </label>
               <div
                 className="relative border-2 border-gray-200 rounded-xl p-3 bg-gray-50 cursor-text transition-all duration-200 focus-within:border-indigo-600 focus-within:ring-3 focus-within:ring-indigo-600/10"
@@ -491,12 +559,16 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 />
                 {showSkillPlaceholder && (
                   <div className="absolute top-3 left-3 text-gray-400 italic pointer-events-none">
-                    Start typing your skills (e.g., &ldquo;Python programming&rdquo;, &ldquo;Public speaking&rdquo;, &ldquo;Grant writing&rdquo;)
+                    Start typing your skills (e.g., &ldquo;Python
+                    programming&rdquo;, &ldquo;Public speaking&rdquo;,
+                    &ldquo;Grant writing&rdquo;)
                   </div>
                 )}
               </div>
               {validationErrors.skills && (
-                <p className="text-sm text-red-600 mt-1">{validationErrors.skills}</p>
+                <p className="text-sm text-red-600 mt-1">
+                  {validationErrors.skills}
+                </p>
               )}
             </div>
 
@@ -521,8 +593,12 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                     className="sr-only"
                   />
                   <div className="text-center">
-                    <div className="font-semibold text-gray-900 mb-1">One-time</div>
-                    <div className="text-sm text-gray-600">Single project or short-duration tasks</div>
+                    <div className="font-semibold text-gray-900 mb-1">
+                      One-time
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      Single project or short-duration tasks
+                    </div>
                   </div>
                 </label>
                 <label
@@ -541,8 +617,12 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                     className="sr-only"
                   />
                   <div className="text-center">
-                    <div className="font-semibold text-gray-900 mb-1">Short-Term</div>
-                    <div className="text-sm text-gray-600">Few weeks to a few months</div>
+                    <div className="font-semibold text-gray-900 mb-1">
+                      Short-Term
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      Few weeks to a few months
+                    </div>
                   </div>
                 </label>
                 <label
@@ -561,8 +641,12 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                     className="sr-only"
                   />
                   <div className="text-center">
-                    <div className="font-semibold text-gray-900 mb-1">Long-Term</div>
-                    <div className="text-sm text-gray-600">Ongoing commitment of several months or more</div>
+                    <div className="font-semibold text-gray-900 mb-1">
+                      Long-Term
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      Ongoing commitment of several months or more
+                    </div>
                   </div>
                 </label>
               </div>
@@ -570,7 +654,8 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Tell us about your relevant experience <span className="text-red-500">*</span>
+                Tell us about your relevant experience{" "}
+                <span className="text-red-500">*</span>
               </label>
               <textarea
                 value={formData.experience}
@@ -580,7 +665,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 required
               />
               {validationErrors.experience && (
-                <p className="text-sm text-red-600 mt-1">{validationErrors.experience}</p>
+                <p className="text-sm text-red-600 mt-1">
+                  {validationErrors.experience}
+                </p>
               )}
             </div>
           </div>
@@ -588,33 +675,84 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
           {/* Consent & Agreement Section */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                3
+              </span>
               Consent & Agreement
             </h2>
 
             <div className="bg-gray-50 rounded-xl p-6 border-l-4 border-indigo-600">
-              <h3 className="font-semibold text-gray-900 mb-4">Volunteer Application Consent</h3>
-              
+              <h3 className="font-semibold text-gray-900 mb-4">
+                Volunteer Application Consent
+              </h3>
+
               <div className="mb-4 text-gray-700 leading-relaxed">
-                <p>By completing and submitting this form, I consent to GIVE PROTOCOL collecting, processing, and storing my personal information as described in the Volunteer Application Privacy Notice, which I have read and understood.</p>
+                <p>
+                  By completing and submitting this form, I consent to GIVE
+                  PROTOCOL collecting, processing, and storing my personal
+                  information as described in the Volunteer Application Privacy
+                  Notice, which I have read and understood.
+                </p>
               </div>
 
               <div className="mb-4">
-                <p className="font-semibold text-gray-900 mb-3">I understand that:</p>
+                <p className="font-semibold text-gray-900 mb-3">
+                  I understand that:
+                </p>
                 <ol className="list-decimal pl-6 space-y-2 text-gray-700 text-sm">
-                  <li>My personal information will be processed for the purposes of evaluating my volunteer application, managing volunteer assignments, and related activities.</li>
-                  <li>GIVE PROTOCOL may collect various categories of my personal information, including identity information, contact details, background information, availability, references, and where relevant and permitted by law, certain special categories of data.</li>
-                  <li>My personal information may be shared with authorized personnel within the charity organization offering the volunteer opportunity, service providers, and third parties as outlined in the Privacy Notice.</li>
-                  <li>My personal information may be transferred internationally with appropriate safeguards in place.</li>
-                  <li>I have certain rights regarding my personal information, which vary depending on my location, including the rights to access, rectify, delete, restrict processing, data portability, and object to processing.</li>
-                  <li>I can withdraw my consent at any time by contacting <a href="mailto:legal@giveprotocol.io" className="text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1">legal@giveprotocol.io <Mail className="w-3 h-3" /></a>, though this will not affect the lawfulness of processing based on my consent before withdrawal. Withdrawing consent may impact the organization&apos;s ability to consider my volunteer application.</li>
+                  <li>
+                    My personal information will be processed for the purposes
+                    of evaluating my volunteer application, managing volunteer
+                    assignments, and related activities.
+                  </li>
+                  <li>
+                    GIVE PROTOCOL may collect various categories of my personal
+                    information, including identity information, contact
+                    details, background information, availability, references,
+                    and where relevant and permitted by law, certain special
+                    categories of data.
+                  </li>
+                  <li>
+                    My personal information may be shared with authorized
+                    personnel within the charity organization offering the
+                    volunteer opportunity, service providers, and third parties
+                    as outlined in the Privacy Notice.
+                  </li>
+                  <li>
+                    My personal information may be transferred internationally
+                    with appropriate safeguards in place.
+                  </li>
+                  <li>
+                    I have certain rights regarding my personal information,
+                    which vary depending on my location, including the rights to
+                    access, rectify, delete, restrict processing, data
+                    portability, and object to processing.
+                  </li>
+                  <li>
+                    I can withdraw my consent at any time by contacting{" "}
+                    <a
+                      href="mailto:legal@giveprotocol.io"
+                      className="text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
+                    >
+                      legal@giveprotocol.io <Mail className="w-3 h-3" />
+                    </a>
+                    , though this will not affect the lawfulness of processing
+                    based on my consent before withdrawal. Withdrawing consent
+                    may impact the organization&apos;s ability to consider my
+                    volunteer application.
+                  </li>
                 </ol>
               </div>
 
               <div className="border-t border-gray-200 pt-4">
-                <p className="font-semibold text-gray-900 mb-3">SPECIFIC CONSENTS</p>
-                <p className="text-gray-600 text-sm mb-4">Please review and indicate your consent to each of the following:</p>
-                
+                <p className="font-semibold text-gray-900 mb-3">
+                  SPECIFIC CONSENTS
+                </p>
+                <p className="text-gray-600 text-sm mb-4">
+                  Please review and indicate your consent to each of the
+                  following:
+                </p>
+
                 <div className="space-y-3">
                   <label className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                     <input
@@ -624,9 +762,21 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                       className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
                     <div className="ml-3">
-                      <strong className="font-semibold text-gray-900">Essential Processing (Required):</strong>
-                      <p className="text-gray-700 text-sm mt-1">I consent to GIVE PROTOCOL collecting and processing my personal information for the purpose of evaluating my volunteer application and, if successful, managing my volunteer engagement.</p>
-                      <p className="text-gray-500 italic text-xs mt-1">Note: This consent is necessary to process your volunteer application. If you do not provide this consent, we will not be able to consider your application.</p>
+                      <strong className="font-semibold text-gray-900">
+                        Essential Processing (Required):
+                      </strong>
+                      <p className="text-gray-700 text-sm mt-1">
+                        I consent to GIVE PROTOCOL collecting and processing my
+                        personal information for the purpose of evaluating my
+                        volunteer application and, if successful, managing my
+                        volunteer engagement.
+                      </p>
+                      <p className="text-gray-500 italic text-xs mt-1">
+                        Note: This consent is necessary to process your
+                        volunteer application. If you do not provide this
+                        consent, we will not be able to consider your
+                        application.
+                      </p>
                     </div>
                   </label>
 
@@ -638,16 +788,26 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                       className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
                     <div className="ml-3">
-                      <strong className="font-semibold text-gray-900">International Transfers (if applicable):</strong>
-                      <p className="text-gray-700 text-sm mt-1">I consent to GIVE PROTOCOL transferring my personal information to countries outside my country of residence, including countries that may not provide the same level of data protection, with appropriate safeguards in place as described in the Privacy Notice.</p>
+                      <strong className="font-semibold text-gray-900">
+                        International Transfers (if applicable):
+                      </strong>
+                      <p className="text-gray-700 text-sm mt-1">
+                        I consent to GIVE PROTOCOL transferring my personal
+                        information to countries outside my country of
+                        residence, including countries that may not provide the
+                        same level of data protection, with appropriate
+                        safeguards in place as described in the Privacy Notice.
+                      </p>
                     </div>
                   </label>
                 </div>
               </div>
 
               <div className="border-t border-gray-200 pt-4 mt-4">
-                <p className="font-semibold text-gray-900 mb-3">ACKNOWLEDGMENT</p>
-                
+                <p className="font-semibold text-gray-900 mb-3">
+                  ACKNOWLEDGMENT
+                </p>
+
                 <label className="flex items-start mb-3 hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                   <input
                     type="checkbox"
@@ -656,9 +816,16 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                     className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   />
                   <div className="ml-3">
-                    <strong className="font-semibold text-gray-900">Age Confirmation:</strong>
-                    <p className="text-gray-700 text-sm mt-1">I confirm that I am at least 16 years of age.</p>
-                    <p className="text-gray-500 italic text-xs mt-1">(If you are under 16 years of age, parental or guardian consent is required)</p>
+                    <strong className="font-semibold text-gray-900">
+                      Age Confirmation:
+                    </strong>
+                    <p className="text-gray-700 text-sm mt-1">
+                      I confirm that I am at least 16 years of age.
+                    </p>
+                    <p className="text-gray-500 italic text-xs mt-1">
+                      (If you are under 16 years of age, parental or guardian
+                      consent is required)
+                    </p>
                   </div>
                 </label>
 
@@ -670,8 +837,13 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                     className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   />
                   <div className="ml-3">
-                    <strong className="font-semibold text-gray-900">Privacy Notice:</strong>
-                    <p className="text-gray-700 text-sm mt-1">I confirm that I have read and understood the Privacy Notice.</p>
+                    <strong className="font-semibold text-gray-900">
+                      Privacy Notice:
+                    </strong>
+                    <p className="text-gray-700 text-sm mt-1">
+                      I confirm that I have read and understood the Privacy
+                      Notice.
+                    </p>
                   </div>
                 </label>
               </div>
@@ -695,7 +867,12 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
             </Button>
 
             <div className="mt-4 text-center text-xs text-gray-500">
-              <p>By submitting this application, you acknowledge that you have read and understood Give Protocol&apos;s privacy policy and volunteer guidelines. Your data will be processed in accordance with applicable data protection regulations.</p>
+              <p>
+                By submitting this application, you acknowledge that you have
+                read and understood Give Protocol&apos;s privacy policy and
+                volunteer guidelines. Your data will be processed in accordance
+                with applicable data protection regulations.
+              </p>
             </div>
           </div>
         </form>
