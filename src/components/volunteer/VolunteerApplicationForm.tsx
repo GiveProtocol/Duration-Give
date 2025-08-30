@@ -283,6 +283,19 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
     e.stopPropagation();
   }, []);
 
+  const handleBackdropKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Escape" && !loading) {
+      onClose();
+    }
+  }, [loading, onClose]);
+
+  const handleSkillContainerKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      focusSkillInput();
+    }
+  }, [focusSkillInput]);
+
   const inputClasses = "w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none focus:ring-3 focus:ring-indigo-600/10 transition-all duration-200";
   const textareaClasses = "w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none focus:ring-3 focus:ring-indigo-600/10 transition-all duration-200 resize-vertical min-h-[100px]";
   const selectClasses = "w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none focus:ring-3 focus:ring-indigo-600/10 transition-all duration-200 bg-white";
@@ -292,10 +305,14 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
       <div
         className="fixed inset-0 bg-black bg-opacity-50 z-50"
         onClick={handleBackdropClick}
+        onKeyDown={handleBackdropKeyDown}
+        role="button"
+        tabIndex={0}
+        aria-label="Close modal"
       />
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50" onClick={handleModalClick}>
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50" onClick={handleModalClick} role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 text-center">
-          <h1 className="text-3xl font-light mb-2">Volunteer Opportunity Application</h1>
+          <h1 id="modal-title" className="text-3xl font-light mb-2">Volunteer Opportunity Application</h1>
           <p className="text-lg opacity-90">Help create sustainable impact through verified contributions</p>
         </div>
 
@@ -466,6 +483,10 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
               <div
                 className="relative border-2 border-gray-200 rounded-xl p-3 bg-gray-50 cursor-text transition-all duration-200 focus-within:border-indigo-600 focus-within:ring-3 focus-within:ring-indigo-600/10"
                 onClick={focusSkillInput}
+                onKeyDown={handleSkillContainerKeyDown}
+                role="button"
+                tabIndex={0}
+                aria-label="Click to add skills"
               >
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.skills.map((skill, index) => (
