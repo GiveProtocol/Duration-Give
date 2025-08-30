@@ -495,7 +495,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.skills.map((skill, index) => (
                     <div
-                      key={`skill-${skill}-${index}`}
+                      key={skill}
                       className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-full flex items-center gap-2 animate-fadeIn"
                     >
                       <span className="text-sm">{skill}</span>
