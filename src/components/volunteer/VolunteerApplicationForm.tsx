@@ -308,10 +308,11 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
                   First Name <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="firstName"
                   type="text"
                   value={formData.firstName}
                   onChange={handleFieldChange("firstName")}
@@ -323,10 +324,11 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
                   Last Name <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="lastName"
                   type="text"
                   value={formData.lastName}
                   onChange={handleFieldChange("lastName")}
@@ -338,10 +340,11 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                   Email Address <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="email"
                   type="email"
                   value={formData.email}
                   onChange={handleFieldChange("email")}
@@ -353,10 +356,11 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
                   Phone Number
                 </label>
                 <input
+                  id="phoneNumber"
                   type="tel"
                   value={formData.phoneNumber}
                   onChange={handleFieldChange("phoneNumber")}
@@ -367,10 +371,11 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
                   Location/City
                 </label>
                 <input
+                  id="location"
                   type="text"
                   value={formData.location}
                   onChange={handleFieldChange("location")}
@@ -379,10 +384,11 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="timezone" className="block text-sm font-medium text-gray-700 mb-1">
                   Time Zone
                 </label>
                 <select
+                  id="timezone"
                   value={formData.timezone}
                   onChange={handleFieldChange("timezone")}
                   className={selectClasses}
@@ -420,10 +426,11 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 </select>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="ageRange" className="block text-sm font-medium text-gray-700 mb-1">
                   Age Range <span className="text-red-500">*</span>
                 </label>
                 <select
+                  id="ageRange"
                   value={formData.ageRange}
                   onChange={handleFieldChange("ageRange")}
                   className={selectClasses}
@@ -453,7 +460,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
             </h2>
             
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="skillInput" className="block text-sm font-medium text-gray-700 mb-1">
                 Skills and Areas of Interest <span className="text-red-500">*</span>
               </label>
               <div
@@ -481,6 +488,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   ))}
                 </div>
                 <input
+                  id="skillInput"
                   ref={tagInputRef}
                   type="text"
                   value={currentSkillInput}
@@ -506,6 +514,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
               </label>
               <div className="grid md:grid-cols-3 gap-3">
                 <label
+                  htmlFor="commitment-one-time"
                   className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 ${
                     formData.commitmentType === "one-time"
                       ? "border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50"
@@ -513,6 +522,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   }`}
                 >
                   <input
+                    id="commitment-one-time"
                     type="radio"
                     name="commitmentType"
                     value="one-time"
@@ -526,6 +536,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   </div>
                 </label>
                 <label
+                  htmlFor="commitment-short-term"
                   className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 ${
                     formData.commitmentType === "short-term"
                       ? "border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50"
@@ -533,6 +544,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   }`}
                 >
                   <input
+                    id="commitment-short-term"
                     type="radio"
                     name="commitmentType"
                     value="short-term"
@@ -546,6 +558,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   </div>
                 </label>
                 <label
+                  htmlFor="commitment-long-term"
                   className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 ${
                     formData.commitmentType === "long-term"
                       ? "border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50"
@@ -553,6 +566,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   }`}
                 >
                   <input
+                    id="commitment-long-term"
                     type="radio"
                     name="commitmentType"
                     value="long-term"
@@ -569,10 +583,11 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">
                 Tell us about your relevant experience <span className="text-red-500">*</span>
               </label>
               <textarea
+                id="experience"
                 value={formData.experience}
                 onChange={handleFieldChange("experience")}
                 className={textareaClasses}
@@ -616,8 +631,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 <p className="text-gray-600 text-sm mb-4">Please review and indicate your consent to each of the following:</p>
                 
                 <div className="space-y-3">
-                  <label className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
+                  <label htmlFor="essential-processing" className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                     <input
+                      id="essential-processing"
                       type="checkbox"
                       checked={formData.essentialProcessing}
                       onChange={handleCheckboxChange("essentialProcessing")}
@@ -630,8 +646,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                     </div>
                   </label>
 
-                  <label className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
+                  <label htmlFor="international-transfers" className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                     <input
+                      id="international-transfers"
                       type="checkbox"
                       checked={formData.internationalTransfers}
                       onChange={handleCheckboxChange("internationalTransfers")}
@@ -648,8 +665,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
               <div className="border-t border-gray-200 pt-4 mt-4">
                 <p className="font-semibold text-gray-900 mb-3">ACKNOWLEDGMENT</p>
                 
-                <label className="flex items-start mb-3 hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
+                <label htmlFor="age-confirmation" className="flex items-start mb-3 hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                   <input
+                    id="age-confirmation"
                     type="checkbox"
                     checked={formData.ageConfirmation}
                     onChange={handleCheckboxChange("ageConfirmation")}
@@ -662,8 +680,9 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   </div>
                 </label>
 
-                <label className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
+                <label htmlFor="privacy-notice" className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                   <input
+                    id="privacy-notice"
                     type="checkbox"
                     checked={formData.privacyNotice}
                     onChange={handleCheckboxChange("privacyNotice")}
