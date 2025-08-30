@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/Button";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Mail } from "lucide-react";
 
 interface ConsentFormProps {
   onAccept: () => void;
@@ -97,6 +97,8 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
     [onDecline],
   );
 
+  const isSubmitDisabled = !essentialProcessing || !ageConfirmation || !privacyNotice;
+
   return (
     <>
       <div
@@ -107,160 +109,134 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
         tabIndex={0}
         aria-label="Close modal"
       />
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 prose prose-sm max-w-none z-50">
-        <h2 className="text-2xl font-semibold text-gray-900">
-          Volunteer Application Consent Form
-        </h2>
-        <h3 className="text-lg font-semibold">
-          CONSENT TO PROCESS PERSONAL INFORMATION
-        </h3>
-
-        <p>
-          By completing and submitting this form, I consent to GIVE PROTOCOL
-          collecting, processing, and storing my personal information as
-          described in the Volunteer Application Privacy Notice, which I have
-          read and understood.
-        </p>
-
-        <div>
-          <p className="font-medium">I understand that:</p>
-          <ol className="list-decimal pl-6 space-y-2">
-            <li>
-              My personal information will be processed for the purposes of
-              evaluating my volunteer application, managing volunteer
-              assignments, and related activities.
-            </li>
-            <li>
-              GIVE PROTOCOL may collect various categories of my personal
-              information, including identity information, contact details,
-              background information, availability, references, and where
-              relevant and permitted by law, certain special categories of data.
-            </li>
-            <li>
-              My personal information may be shared with authorized personnel
-              within the charity organization offering the volunteer
-              opportunity, service providers, and third parties as outlined in
-              the Privacy Notice.
-            </li>
-            <li>
-              My personal information may be transferred internationally with
-              appropriate safeguards in place.
-            </li>
-            <li>
-              I have certain rights regarding my personal information, which
-              vary depending on my location, including the rights to access,
-              rectify, delete, restrict processing, data portability, and object
-              to processing.
-            </li>
-            <li>
-              I can withdraw my consent at any time by contacting
-              legal@giveprotocol.io, though this will not affect the lawfulness
-              of processing based on my consent before withdrawal. Withdrawing
-              consent may impact the organization&apos;s ability to consider my
-              volunteer application.
-            </li>
-          </ol>
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50">
+        <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-8 text-center">
+          <h1 className="text-3xl font-light mb-2">Volunteer Opportunity Application</h1>
+          <p className="text-lg opacity-90">Help create sustainable impact through verified contributions</p>
         </div>
 
-        <h3 className="text-lg font-semibold">SPECIFIC CONSENTS</h3>
-        <p className="mb-4">
-          Please review and indicate your consent to each of the following:
-        </p>
-        <div className="flex items-start space-x-3">
-          <input
-            type="checkbox"
-            id="essential-processing"
-            checked={essentialProcessing}
-            onChange={handleEssentialProcessingChange}
-            className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-          />
-          <label htmlFor="essential-processing" className="text-sm">
-            <strong className="font-semibold">
-              Essential Processing (Required)
-            </strong>
-            <br />
-            I consent to GIVE PROTOCOL collecting and processing my personal
-            information for the purpose of evaluating my volunteer application
-            and, if successful, managing my volunteer engagement.
-            <br />
-            <em className="text-gray-500 italic">
-              Note: This consent is necessary to process your volunteer
-              application. If you do not provide this consent, we will not be
-              able to consider your application.
-            </em>
-          </label>
-        </div>
+        <div className="p-8 overflow-y-auto max-h-[calc(90vh-200px)]">
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Volunteer Application Consent
+            </h2>
+            
+            <div className="mb-6 text-gray-700 leading-relaxed">
+              <p>By completing and submitting this form, I consent to GIVE PROTOCOL collecting, processing, and storing my personal information as described in the Volunteer Application Privacy Notice, which I have read and understood.</p>
+            </div>
 
-        <div className="flex items-start space-x-3 mt-4">
-          <input
-            type="checkbox"
-            id="international-transfers"
-            checked={internationalTransfers}
-            onChange={handleInternationalTransfersChange}
-            className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-          />
-          <label htmlFor="international-transfers" className="text-sm">
-            <strong className="font-semibold">
-              International Transfers (if applicable)
-            </strong>
-            <br />I consent to GIVE PROTOCOL transferring my personal
-            information to countries outside my country of residence, including
-            countries that may not provide the same level of data protection,
-            with appropriate safeguards in place as described in the Privacy
-            Notice.
-          </label>
-        </div>
+            <div className="mb-6">
+              <p className="font-semibold text-gray-900 mb-3">I understand that:</p>
+              <ol className="list-decimal pl-6 space-y-2 text-gray-700">
+                <li>My personal information will be processed for the purposes of evaluating my volunteer application, managing volunteer assignments, and related activities.</li>
+                <li>GIVE PROTOCOL may collect various categories of my personal information, including identity information, contact details, background information, availability, references, and where relevant and permitted by law, certain special categories of data.</li>
+                <li>My personal information may be shared with authorized personnel within the charity organization offering the volunteer opportunity, service providers, and third parties as outlined in the Privacy Notice.</li>
+                <li>My personal information may be transferred internationally with appropriate safeguards in place.</li>
+                <li>I have certain rights regarding my personal information, which vary depending on my location, including the rights to access, rectify, delete, restrict processing, data portability, and object to processing.</li>
+                <li>I can withdraw my consent at any time by contacting <a href="mailto:legal@giveprotocol.io" className="text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1">legal@giveprotocol.io <Mail className="h-3 w-3" /></a>, though this will not affect the lawfulness of processing based on my consent before withdrawal. Withdrawing consent may impact the organization&apos;s ability to consider my volunteer application.</li>
+              </ol>
+            </div>
 
-        <h3 className="text-lg font-semibold">ACKNOWLEDGMENT</h3>
-        <div className="space-y-4">
-          <label
-            className="flex items-start space-x-3"
-            htmlFor="age-confirmation"
-          >
-            <input
-              type="checkbox"
-              id="age-confirmation"
-              checked={ageConfirmation}
-              onChange={handleAgeConfirmationChange}
-              className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-            />
-            <span className="text-sm">
-              I confirm that I am at least 16 years of age. (If you are under 16
-              years of age, parental or guardian consent is required)
-            </span>
-          </label>
+            <div className="border-t border-gray-200 pt-6 mb-6">
+              <p className="font-semibold text-gray-900 mb-4">SPECIFIC CONSENTS</p>
+              <p className="text-gray-600 text-sm mb-6">Please review and indicate your consent to each of the following:</p>
+              
+              <div className="bg-gray-50 rounded-xl p-6 mb-4 border-l-4 border-indigo-600">
+                <div className="space-y-6">
+                  <label className="flex items-start hover:bg-white rounded-lg p-4 transition-colors cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id="essential-processing"
+                      checked={essentialProcessing}
+                      onChange={handleEssentialProcessingChange}
+                      className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <div className="ml-4">
+                      <strong className="font-semibold text-gray-900">Essential Processing (Required):</strong>
+                      <p className="text-gray-700 mt-1">I consent to GIVE PROTOCOL collecting and processing my personal information for the purpose of evaluating my volunteer application and, if successful, managing my volunteer engagement.</p>
+                      <p className="text-gray-500 italic text-sm mt-2">Note: This consent is necessary to process your volunteer application. If you do not provide this consent, we will not be able to consider your application.</p>
+                    </div>
+                  </label>
 
-          <label
-            className="flex items-start space-x-3"
-            htmlFor="privacy-notice"
-          >
-            <input
-              type="checkbox"
-              id="privacy-notice"
-              checked={privacyNotice}
-              onChange={handlePrivacyNoticeChange}
-              className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-            />
-            <span className="text-sm">
-              I confirm that I have read and understood the Volunteer
-              Application Privacy Notice dated 29/03/2025.
-            </span>
-          </label>
-        </div>
+                  <label className="flex items-start hover:bg-white rounded-lg p-4 transition-colors cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id="international-transfers"
+                      checked={internationalTransfers}
+                      onChange={handleInternationalTransfersChange}
+                      className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <div className="ml-4">
+                      <strong className="font-semibold text-gray-900">International Transfers (if applicable):</strong>
+                      <p className="text-gray-700 mt-1">I consent to GIVE PROTOCOL transferring my personal information to countries outside my country of residence, including countries that may not provide the same level of data protection, with appropriate safeguards in place as described in the Privacy Notice.</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
 
-        {validationError && (
-          <div className="p-4 bg-red-50 rounded-lg flex items-start">
-            <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
-            <p className="text-red-700">{validationError}</p>
+            <div className="border-t border-gray-200 pt-6">
+              <p className="font-semibold text-gray-900 mb-4">ACKNOWLEDGMENT</p>
+              
+              <label className="flex items-start mb-4 hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer">
+                <input
+                  type="checkbox"
+                  id="age-confirmation"
+                  checked={ageConfirmation}
+                  onChange={handleAgeConfirmationChange}
+                  className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <div className="ml-4">
+                  <strong className="font-semibold text-gray-900">Age Confirmation:</strong>
+                  <p className="text-gray-700 mt-1">I confirm that I am at least 16 years of age.</p>
+                  <p className="text-gray-500 italic text-sm mt-1">(If you are under 16 years of age, parental or guardian consent is required)</p>
+                </div>
+              </label>
+
+              <label className="flex items-start hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer">
+                <input
+                  type="checkbox"
+                  id="privacy-notice"
+                  checked={privacyNotice}
+                  onChange={handlePrivacyNoticeChange}
+                  className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <div className="ml-4">
+                  <strong className="font-semibold text-gray-900">Privacy Notice:</strong>
+                  <p className="text-gray-700 mt-1">I confirm that I have read and understood the Privacy Notice.</p>
+                </div>
+              </label>
+            </div>
           </div>
-        )}
 
-        <footer className="flex justify-end space-x-3">
-          <Button variant="secondary" onClick={onDecline}>
-            Do Not Accept
-          </Button>
-          <Button onClick={handleAccept}>Accept and Continue</Button>
-        </footer>
+          {validationError && (
+            <div className="mb-6 p-4 bg-red-50 rounded-lg flex items-start">
+              <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
+              <p className="text-red-700">{validationError}</p>
+            </div>
+          )}
+
+          <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
+            <Button 
+              variant="secondary" 
+              onClick={onDecline}
+              className="px-8 py-3"
+            >
+              Do Not Accept
+            </Button>
+            <Button 
+              onClick={handleAccept}
+              disabled={isSubmitDisabled}
+              className="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              Accept and Continue
+            </Button>
+          </div>
+
+          <div className="mt-6 text-center text-sm text-gray-500">
+            <p>By submitting this application, you acknowledge that you have read and understood Give Protocol&apos;s privacy policy and volunteer guidelines. Your data will be processed in accordance with applicable data protection regulations.</p>
+          </div>
+        </div>
       </div>
     </>
   );

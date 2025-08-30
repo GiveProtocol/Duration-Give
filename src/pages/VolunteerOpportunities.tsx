@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Search, Award, Clock, Users, Globe } from "lucide-react";
 import { Card } from "../components/ui/Card";
-import { ApplicationForm } from "../components/volunteer/ApplicationForm";
-import { ConsentForm } from "../components/volunteer/ConsentForm";
+import { VolunteerApplicationForm } from "../components/volunteer/VolunteerApplicationForm";
 import { useTranslation } from "@/hooks/useTranslation";
 import { WorkLanguage } from "@/types/volunteer";
 import { useToast } from "@/contexts/ToastContext";
@@ -131,7 +130,6 @@ const VolunteerOpportunities: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedOpportunity, setSelectedOpportunity] =
     useState<Opportunity | null>(null);
-  const [showConsentForm, setShowConsentForm] = useState(false);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const { t } = useTranslation();
   const { showToast } = useToast();
@@ -151,7 +149,7 @@ const VolunteerOpportunities: React.FC = () => {
 
   const handleApply = useCallback((opportunity: Opportunity) => {
     setSelectedOpportunity(opportunity);
-    setShowConsentForm(true);
+    setShowApplicationForm(true);
   }, []);
 
   const createApplyHandler = useCallback(
@@ -161,20 +159,16 @@ const VolunteerOpportunities: React.FC = () => {
     [handleApply],
   );
 
-  const handleConsentAccept = useCallback(() => {
-    setShowConsentForm(false);
-    setShowApplicationForm(true);
-  }, []);
-
-  const handleConsentDecline = useCallback(() => {
-    setShowConsentForm(false);
-    setSelectedOpportunity(null);
-  }, []);
-
   const handleApplicationClose = useCallback(() => {
     setShowApplicationForm(false);
     setSelectedOpportunity(null);
   }, []);
+
+  const handleApplicationSuccess = useCallback(() => {
+    showToast("Application submitted successfully!", "success");
+    setShowApplicationForm(false);
+    setSelectedOpportunity(null);
+  }, [showToast]);
 
   const handleSearchChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -204,14 +198,6 @@ const VolunteerOpportunities: React.FC = () => {
     [],
   );
 
-  const handleApplicationSuccess = useCallback(() => {
-    handleApplicationClose();
-    showToast(
-      "success",
-      "Application Submitted",
-      "Your volunteer application has been submitted successfully.",
-    );
-  }, [handleApplicationClose, showToast]);
 
   const formatLanguageName = (language: string): string => {
     return language
@@ -360,17 +346,11 @@ const VolunteerOpportunities: React.FC = () => {
         )}
       </div>
 
-      {showConsentForm && selectedOpportunity && (
-        <ConsentForm
-          onAccept={handleConsentAccept}
-          onDecline={handleConsentDecline}
-        />
-      )}
-
       {showApplicationForm && selectedOpportunity && (
-        <ApplicationForm
+        <VolunteerApplicationForm
           opportunityId={selectedOpportunity.id.toString()}
           opportunityTitle={selectedOpportunity.title}
+          charityId="sample-charity-id"
           onClose={handleApplicationClose}
           onSuccess={handleApplicationSuccess}
         />
