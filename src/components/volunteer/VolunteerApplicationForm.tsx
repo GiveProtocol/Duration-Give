@@ -538,6 +538,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
               <div className="grid md:grid-cols-3 gap-3">
                 <label
                   htmlFor="commitment-one-time"
+                  aria-label="One-time commitment level"
                   className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 ${
                     formData.commitmentType === "one-time"
                       ? "border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50"
@@ -560,6 +561,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 </label>
                 <label
                   htmlFor="commitment-short-term"
+                  aria-label="Short-term commitment level"
                   className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 ${
                     formData.commitmentType === "short-term"
                       ? "border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50"
@@ -582,6 +584,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 </label>
                 <label
                   htmlFor="commitment-long-term"
+                  aria-label="Long-term commitment level"
                   className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 ${
                     formData.commitmentType === "long-term"
                       ? "border-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50"
@@ -655,7 +658,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                 <p className="text-gray-600 text-sm mb-4">Please review and indicate your consent to each of the following:</p>
                 
                 <div className="space-y-3">
-                  <label htmlFor="essential-processing" className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
+                  <label htmlFor="essential-processing" aria-label="Essential processing consent" className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                     <input
                       id="essential-processing"
                       type="checkbox"
@@ -670,7 +673,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                     </div>
                   </label>
 
-                  <label htmlFor="international-transfers" className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
+                  <label htmlFor="international-transfers" aria-label="International transfers consent" className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                     <input
                       id="international-transfers"
                       type="checkbox"
@@ -689,7 +692,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
               <div className="border-t border-gray-200 pt-4 mt-4">
                 <p className="font-semibold text-gray-900 mb-3">ACKNOWLEDGMENT</p>
                 
-                <label htmlFor="age-confirmation" className="flex items-start mb-3 hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
+                <label htmlFor="age-confirmation" aria-label="Age confirmation" className="flex items-start mb-3 hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                   <input
                     id="age-confirmation"
                     type="checkbox"
@@ -704,7 +707,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
                   </div>
                 </label>
 
-                <label htmlFor="privacy-notice" className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
+                <label htmlFor="privacy-notice" aria-label="Privacy notice acknowledgment" className="flex items-start hover:bg-white rounded-lg p-3 transition-colors cursor-pointer">
                   <input
                     id="privacy-notice"
                     type="checkbox"

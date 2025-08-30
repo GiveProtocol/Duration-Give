@@ -143,7 +143,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
               
               <div className="bg-gray-50 rounded-xl p-6 mb-4 border-l-4 border-indigo-600">
                 <div className="space-y-6">
-                  <label htmlFor="essential-processing" className="flex items-start hover:bg-white rounded-lg p-4 transition-colors cursor-pointer">
+                  <label htmlFor="essential-processing" aria-label="Essential processing consent" className="flex items-start hover:bg-white rounded-lg p-4 transition-colors cursor-pointer">
                     <input
                       type="checkbox"
                       id="essential-processing"
@@ -158,7 +158,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                     </div>
                   </label>
 
-                  <label htmlFor="international-transfers" className="flex items-start hover:bg-white rounded-lg p-4 transition-colors cursor-pointer">
+                  <label htmlFor="international-transfers" aria-label="International transfers consent" className="flex items-start hover:bg-white rounded-lg p-4 transition-colors cursor-pointer">
                     <input
                       type="checkbox"
                       id="international-transfers"
@@ -178,7 +178,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
             <div className="border-t border-gray-200 pt-6">
               <p className="font-semibold text-gray-900 mb-4">ACKNOWLEDGMENT</p>
               
-              <label htmlFor="age-confirmation" className="flex items-start mb-4 hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer">
+              <label htmlFor="age-confirmation" aria-label="Age confirmation" className="flex items-start mb-4 hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer">
                 <input
                   type="checkbox"
                   id="age-confirmation"
@@ -193,7 +193,7 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                 </div>
               </label>
 
-              <label htmlFor="privacy-notice" className="flex items-start hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer">
+              <label htmlFor="privacy-notice" aria-label="Privacy notice acknowledgment" className="flex items-start hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer">
                 <input
                   type="checkbox"
                   id="privacy-notice"
