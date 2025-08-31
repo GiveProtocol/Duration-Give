@@ -1,5 +1,5 @@
 import { Transaction } from "@/types/contribution";
-import { VolunteerTransactionType } from "@/types/volunteerTransaction";
+import { VolunteerTransactionTypes, type VolunteerTransactionType } from "@/types/volunteerTransaction";
 import { formatDate } from "./date";
 
 /**
@@ -123,7 +123,7 @@ export function getFieldsToInclude(
   transactions: Transaction[],
 ): Record<string, boolean> {
   const hasVolunteerTransactions = transactions.some((t) =>
-    Object.values(VolunteerTransactionType).includes(
+    Object.values(VolunteerTransactionTypes).includes(
       t.purpose as VolunteerTransactionType,
     ),
   );
