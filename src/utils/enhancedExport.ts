@@ -1,5 +1,8 @@
 import { Transaction } from "@/types/contribution";
-import { VolunteerTransactionTypes, type VolunteerTransactionType } from "@/types/volunteerTransaction";
+import {
+  VolunteerTransactionTypes,
+  type VolunteerTransactionType,
+} from "@/types/volunteerTransaction";
 import { formatDate } from "./date";
 
 /**
