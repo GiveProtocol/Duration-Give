@@ -28,8 +28,7 @@ export default function SentryTest() {
 
   const addResult = useCallback((result: string) => {
     const newResult: TestResult = {
-      // NOSONAR: Math.random() is safe here - only used for UI test result IDs, not security
-      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`, // NOSONAR - Safe: only for UI test result IDs
       message: `${new Date().toLocaleTimeString()}: ${result}`,
     };
     setTestResults((prev) => [...prev, newResult]);
