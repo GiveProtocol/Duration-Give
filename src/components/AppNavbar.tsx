@@ -255,9 +255,6 @@ const MobileMenuButton: React.FC<{
 const NavHeader: React.FC = () => (
   <Link to="/" className="flex items-center" aria-label="Give Protocol home">
     <Logo className="h-8 w-8" />
-    <span className="ml-2 text-2xl font-bold text-primary-900">
-      Give Protocol
-    </span>
   </Link>
 );
 
