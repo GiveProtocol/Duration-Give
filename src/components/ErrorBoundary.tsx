@@ -90,7 +90,7 @@ export class ErrorBoundary extends Component<Props, State> {
     );
   }
 
-  private attemptRecovery = async () => {
+  private readonly attemptRecovery = async () => {
     const now = Date.now();
     if (now - this.lastRecoveryAttempt < RECOVERY_COOLDOWN) {
       return;
