@@ -215,11 +215,7 @@ const MobileMenu: React.FC<{
   if (!isMenuOpen) return null;
 
   return (
-    <nav
-      className="md:hidden"
-      id="mobile-menu"
-      aria-label="Mobile navigation"
-    >
+    <nav className="md:hidden" id="mobile-menu" aria-label="Mobile navigation">
       <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg rounded-b-lg">
         {children}
       </div>
