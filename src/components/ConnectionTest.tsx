@@ -24,6 +24,20 @@ export const ConnectionTest: React.FC = () => {
     testSupabaseConnection();
   }, []);
 
+  // Extract nested ternary for status color
+  const getStatusColor = (status: 'checking' | 'success' | 'error') => {
+    if (status === 'checking') return 'bg-yellow-500';
+    if (status === 'success') return 'bg-green-500';
+    return 'bg-red-500';
+  };
+
+  // Extract nested ternary for status text
+  const getStatusText = (status: 'checking' | 'success' | 'error') => {
+    if (status === 'checking') return 'Checking connection...';
+    if (status === 'success') return 'Connected to Supabase';
+    return 'Connection failed';
+  };
+
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6">Connection Test</h2>
@@ -33,14 +47,8 @@ export const ConnectionTest: React.FC = () => {
         <div>
           <h3 className="text-lg font-semibold mb-2">Supabase Connection</h3>
           <div className="flex items-center space-x-2">
-            <div className={`w-3 h-3 rounded-full ${
-              supabaseStatus === 'checking' ? 'bg-yellow-500' :
-              supabaseStatus === 'success' ? 'bg-green-500' : 'bg-red-500'
-            }`} />
-            <span>{
-              supabaseStatus === 'checking' ? 'Checking connection...' :
-              supabaseStatus === 'success' ? 'Connected to Supabase' : 'Connection failed'
-            }</span>
+            <div className={`w-3 h-3 rounded-full ${getStatusColor(supabaseStatus)}`} />
+            <span>{getStatusText(supabaseStatus)}</span>
           </div>
           {supabaseError && (
             <p className="mt-2 text-sm text-red-600">{supabaseError}</p>
