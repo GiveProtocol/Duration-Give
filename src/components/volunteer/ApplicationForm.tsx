@@ -180,7 +180,7 @@ const ApplicationFormContent: React.FC<ApplicationFormContentProps> = ({
         </p>
       )}
       <label className="block text-sm font-medium text-gray-700 mb-1 mt-4">
-        Commitment Level
+        Commitment Level{" "}
         <select
           value={formData.commitmentType}
           onChange={handlers.handleCommitmentChange}

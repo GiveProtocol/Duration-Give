@@ -72,14 +72,14 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       />
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
+          Description{" "}
           <textarea
             value={formData.description}
             onChange={handleDescriptionChange}
             rows={4}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-indigo-50 mt-1"
             required
           />
-          Description
         </label>
       </div>
       <Input

@@ -324,7 +324,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
           {/* Personal Information Section */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>{" "}
               Personal Information
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
@@ -476,7 +476,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
           {/* Skills & Interests Section */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
+              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>{" "}
               Skills & Interests
             </h2>
             
@@ -630,7 +630,7 @@ export const VolunteerApplicationForm: React.FC<VolunteerApplicationFormProps> =
           {/* Consent & Agreement Section */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+              <span className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>{" "}
               Consent & Agreement
             </h2>
 

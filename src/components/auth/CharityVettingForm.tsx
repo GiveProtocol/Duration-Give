@@ -197,7 +197,7 @@ export const CharityVettingForm: React.FC = () => {
       />
 
       <label className="block text-sm font-medium text-gray-700 mb-1">
-        Description
+        Description{" "}
         <textarea
           name="description"
           value={formData.description}
