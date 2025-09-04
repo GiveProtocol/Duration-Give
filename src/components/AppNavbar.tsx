@@ -215,16 +215,15 @@ const MobileMenu: React.FC<{
   if (!isMenuOpen) return null;
 
   return (
-    <div
+    <nav
       className="md:hidden"
       id="mobile-menu"
-      role="navigation"
       aria-label="Mobile navigation"
     >
       <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg rounded-b-lg">
         {children}
       </div>
-    </div>
+    </nav>
   );
 };
 
