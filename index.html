@@ -14,7 +14,7 @@
     <script
       id="Cookiebot"
       src="https://consent.cookiebot.com/uc.js"
-      data-cbid="eee09be3-8e06-468d-81be-3f6a9423d310"
+      data-cbid="319f86f1-9698-4506-8ddf-e6245f77b1d6"
       data-blockingmode="auto"
       type="text/javascript"
     ></script>
@@ -35,6 +35,28 @@
       });
       gtag("set", "ads_data_redaction", true);
       gtag("set", "url_passthrough", false);
+      
+      // Listen for Cookiebot consent updates
+      window.addEventListener("CookiebotOnConsentReady", function() {
+        if (Cookiebot.consent.statistics) {
+          gtag("consent", "update", {
+            analytics_storage: "granted"
+          });
+        }
+        if (Cookiebot.consent.marketing) {
+          gtag("consent", "update", {
+            ad_storage: "granted",
+            ad_user_data: "granted",
+            ad_personalization: "granted"
+          });
+        }
+        if (Cookiebot.consent.preferences) {
+          gtag("consent", "update", {
+            functionality_storage: "granted",
+            personalization_storage: "granted"
+          });
+        }
+      });
     </script>
     <!-- Google tag (gtag.js) -->
     <script

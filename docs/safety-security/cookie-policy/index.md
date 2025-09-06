@@ -31,7 +31,7 @@ You can manage your cookie preferences using the declaration below. You have the
 <div class="cookie-declaration-container">
   <script
     id="CookieDeclaration"
-    src="https://consent.cookiebot.com/eee09be3-8e06-468d-81be-3f6a9423d310/cd.js"
+    src="https://consent.cookiebot.com/319f86f1-9698-4506-8ddf-e6245f77b1d6/cd.js"
     type="text/javascript"
   ></script>
 </div>
