@@ -35,25 +35,25 @@
       });
       gtag("set", "ads_data_redaction", true);
       gtag("set", "url_passthrough", false);
-      
+
       // Listen for Cookiebot consent updates
-      window.addEventListener("CookiebotOnConsentReady", function() {
+      window.addEventListener("CookiebotOnConsentReady", function () {
         if (Cookiebot.consent.statistics) {
           gtag("consent", "update", {
-            analytics_storage: "granted"
+            analytics_storage: "granted",
           });
         }
         if (Cookiebot.consent.marketing) {
           gtag("consent", "update", {
             ad_storage: "granted",
             ad_user_data: "granted",
-            ad_personalization: "granted"
+            ad_personalization: "granted",
           });
         }
         if (Cookiebot.consent.preferences) {
           gtag("consent", "update", {
             functionality_storage: "granted",
-            personalization_storage: "granted"
+            personalization_storage: "granted",
           });
         }
       });

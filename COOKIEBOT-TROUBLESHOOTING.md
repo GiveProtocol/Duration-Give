@@ -6,23 +6,23 @@ I've identified and fixed the main issue with your Cookiebot setup. The problem 
 
 ```javascript
 // Listen for Cookiebot consent updates
-window.addEventListener("CookiebotOnConsentReady", function() {
+window.addEventListener("CookiebotOnConsentReady", function () {
   if (Cookiebot.consent.statistics) {
     gtag("consent", "update", {
-      analytics_storage: "granted"
+      analytics_storage: "granted",
     });
   }
   if (Cookiebot.consent.marketing) {
     gtag("consent", "update", {
       ad_storage: "granted",
       ad_user_data: "granted",
-      ad_personalization: "granted"
+      ad_personalization: "granted",
     });
   }
   if (Cookiebot.consent.preferences) {
     gtag("consent", "update", {
       functionality_storage: "granted",
-      personalization_storage: "granted"
+      personalization_storage: "granted",
     });
   }
 });
@@ -58,9 +58,14 @@ Open Developer Tools (F12) and check:
 #### Banner Not Showing
 
 1. **Check Console for Errors**:
+
    ```javascript
    // In browser console, check if Cookiebot is loaded
-   console.log(typeof Cookiebot !== 'undefined' ? 'Cookiebot loaded' : 'Cookiebot NOT loaded');
+   console.log(
+     typeof Cookiebot !== "undefined"
+       ? "Cookiebot loaded"
+       : "Cookiebot NOT loaded",
+   );
    ```
 
 2. **Verify CSP Headers**: The Content Security Policy must include:
@@ -72,9 +77,10 @@ Open Developer Tools (F12) and check:
 #### Consent Not Updating
 
 1. **Test Consent Events**:
+
    ```javascript
    // Add this temporarily to test
-   window.addEventListener("CookiebotOnConsentReady", function() {
+   window.addEventListener("CookiebotOnConsentReady", function () {
      console.log("Cookiebot consent ready:", Cookiebot.consent);
    });
    ```
@@ -88,6 +94,7 @@ Open Developer Tools (F12) and check:
 #### Google Analytics Not Tracking
 
 1. **Verify Consent State**:
+
    ```javascript
    // Check current consent state
    console.log("Analytics consent:", Cookiebot.consent.statistics);
