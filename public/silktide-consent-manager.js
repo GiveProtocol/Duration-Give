@@ -36,9 +36,7 @@ class SilktideCookieBanner {
 
   destroyCookieBanner() {
     // Remove all cookie banner elements from the DOM
-    if (this.wrapper && this.wrapper.parentNode) {
-      this.wrapper.parentNode.removeChild(this.wrapper);
-    }
+    this.wrapper?.parentNode?.removeChild(this.wrapper);
 
     // Restore scrolling
     this.allowBodyScroll();
@@ -182,7 +180,7 @@ class SilktideCookieBanner {
 
     this.config.cookieTypes.forEach((type) => {
       // Set localStorage and run accept/reject callbacks
-      if (type.required == true) {
+      if (type.required === true) {
         localStorage.setItem(`silktideCookieChoice_${type.id}${this.getBannerSuffix()}`, 'true');
         if (typeof type.onAccept === 'function') { type.onAccept() }
       } else {
@@ -347,7 +345,7 @@ class SilktideCookieBanner {
   }
 
   removeBanner() {
-    if (this.banner && this.banner.parentNode) {
+    if (this.banner?.parentNode) {
       this.banner.parentNode.removeChild(this.banner);
       this.banner = null;
 
@@ -576,7 +574,7 @@ class SilktideCookieBanner {
     this.config.cookieTypes.forEach((type) => {
       let accepted = true;
       // Set localStorage and run accept/reject callbacks
-      if (type.required == true || type.defaultValue) {
+      if (type.required === true || type.defaultValue) {
         localStorage.setItem(
           `silktideCookieChoice_${type.id}${this.getBannerSuffix()}`,
           accepted.toString(),
@@ -790,6 +788,12 @@ class SilktideCookieBanner {
   let config = {};
   let cookieBanner;
 
+  function initCookieBanner() {
+    if (!cookieBanner) {
+      cookieBanner = new SilktideCookieBanner(config); // Pass config to the CookieBanner instance
+    }
+  }
+
   function updateCookieBannerConfig(userConfig = {}) {
     config = {...config, ...userConfig};
 
@@ -805,12 +809,6 @@ class SilktideCookieBanner {
     } else {
       // Wait for DOM to be ready
       document.addEventListener('DOMContentLoaded', initCookieBanner, {once: true});
-    }
-  }
-
-  function initCookieBanner() {
-    if (!cookieBanner) {
-      cookieBanner = new SilktideCookieBanner(config); // Pass config to the CookieBanner instance
     }
   }
 
@@ -843,4 +841,4 @@ class SilktideCookieBanner {
   } else {
     initCookieBanner();
   }
-})();
+}());
