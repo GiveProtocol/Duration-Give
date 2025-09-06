@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Logo } from '@/components/Logo';
-import { DOCS_CONFIG } from '@/config/docs';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Logo } from "@/components/Logo";
+import { DOCS_CONFIG } from "@/config/docs";
 
 export const Footer: React.FC = () => {
   return (
@@ -10,28 +10,37 @@ export const Footer: React.FC = () => {
         <div className="col-span-1">
           <Link to="/" className="flex items-center mb-4">
             <Logo className="h-6 w-6 mr-2" />
-            <span className="text-xl font-bold text-gray-900">Give Protocol</span>
+            <span className="text-xl font-bold text-gray-900">
+              Give Protocol
+            </span>
           </Link>
           <p className="text-sm text-gray-600">
-            Empowering charitable giving through transparent and efficient blockchain technology.
+            Empowering charitable giving through transparent and efficient
+            blockchain technology.
           </p>
         </div>
-        
+
         <div>
           <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase">
             Resources
           </h3>
           <div className="mt-4 space-y-4">
-            <a 
+            <a
               href={DOCS_CONFIG.url}
               className="block text-gray-600 hover:text-gray-900"
             >
               Documentation & FAQ
             </a>
-            <Link to="/governance" className="block text-gray-600 hover:text-gray-900">
+            <Link
+              to="/governance"
+              className="block text-gray-600 hover:text-gray-900"
+            >
               Governance
             </Link>
-            <Link to="/about" className="block text-gray-600 hover:text-gray-900">
+            <Link
+              to="/about"
+              className="block text-gray-600 hover:text-gray-900"
+            >
               About Us
             </Link>
           </div>
@@ -42,15 +51,21 @@ export const Footer: React.FC = () => {
             Legal
           </h3>
           <div className="mt-4 space-y-4">
-            <Link to="/legal" className="block text-gray-600 hover:text-gray-900">
+            <Link
+              to="/legal"
+              className="block text-gray-600 hover:text-gray-900"
+            >
               Terms of Service
             </Link>
-            <Link to="/privacy" className="block text-gray-600 hover:text-gray-900">
+            <Link
+              to="/privacy"
+              className="block text-gray-600 hover:text-gray-900"
+            >
               Privacy Policy
             </Link>
           </div>
         </div>
-        
+
         <div className="col-span-1 md:col-span-4 mt-8 border-t border-gray-200 pt-8">
           <p className="text-sm text-gray-600">
             © {new Date().getFullYear()} Give Protocol. All rights reserved.
