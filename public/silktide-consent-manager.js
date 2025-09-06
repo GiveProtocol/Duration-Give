@@ -1,4 +1,4 @@
-// Silktide Consent Manager - https://silktide.com/consent-manager/  
+// Silktide Consent Manager - https://silktide.com/consent-manager/
 
 class SilktideCookieBanner {
   constructor(config) {
@@ -53,8 +53,8 @@ class SilktideCookieBanner {
   // Wrapper
   // ----------------------------------------------------------------
   createWrapper() {
-    this.wrapper = document.createElement('div');
-    this.wrapper.id = 'silktide-wrapper';
+    this.wrapper = document.createElement("div");
+    this.wrapper.id = "silktide-wrapper";
     document.body.insertBefore(this.wrapper, document.body.firstChild);
   }
 
@@ -63,7 +63,7 @@ class SilktideCookieBanner {
   // ----------------------------------------------------------------
   createWrapperChild(htmlContent, id) {
     // Create child element
-    const child = document.createElement('div');
+    const child = document.createElement("div");
     child.id = id;
     child.innerHTML = htmlContent;
 
@@ -81,26 +81,26 @@ class SilktideCookieBanner {
   // Backdrop
   // ----------------------------------------------------------------
   createBackdrop() {
-    this.backdrop = this.createWrapperChild(null, 'silktide-backdrop');
+    this.backdrop = this.createWrapperChild(null, "silktide-backdrop");
   }
 
   showBackdrop() {
     if (this.backdrop) {
-      this.backdrop.style.display = 'block';
+      this.backdrop.style.display = "block";
     }
     // Trigger optional onBackdropOpen callback
-    if (typeof this.config.onBackdropOpen === 'function') {
+    if (typeof this.config.onBackdropOpen === "function") {
       this.config.onBackdropOpen();
     }
   }
 
   hideBackdrop() {
     if (this.backdrop) {
-      this.backdrop.style.display = 'none';
+      this.backdrop.style.display = "none";
     }
 
     // Trigger optional onBackdropClose callback
-    if (typeof this.config.onBackdropClose === 'function') {
+    if (typeof this.config.onBackdropClose === "function") {
       this.config.onBackdropClose();
     }
   }
@@ -111,34 +111,41 @@ class SilktideCookieBanner {
 
   // update the checkboxes in the modal with the values from localStorage
   updateCheckboxState(saveToStorage = false) {
-    const preferencesSection = this.modal.querySelector('#cookie-preferences');
-    const checkboxes = preferencesSection.querySelectorAll('input[type="checkbox"]');
+    const preferencesSection = this.modal.querySelector("#cookie-preferences");
+    const checkboxes = preferencesSection.querySelectorAll(
+      'input[type="checkbox"]',
+    );
 
     checkboxes.forEach((checkbox) => {
-      const [, cookieId] = checkbox.id.split('cookies-');
-      const cookieType = this.config.cookieTypes.find(type => type.id === cookieId);
-      
+      const [, cookieId] = checkbox.id.split("cookies-");
+      const cookieType = this.config.cookieTypes.find(
+        (type) => type.id === cookieId,
+      );
+
       if (!cookieType) return;
 
       if (saveToStorage) {
         // Save the current state to localStorage and run callbacks
         const currentState = checkbox.checked;
-        
+
         if (cookieType.required) {
           localStorage.setItem(
             `silktideCookieChoice_${cookieId}${this.getBannerSuffix()}`,
-            'true'
+            "true",
           );
         } else {
           localStorage.setItem(
             `silktideCookieChoice_${cookieId}${this.getBannerSuffix()}`,
-            currentState.toString()
+            currentState.toString(),
           );
-          
+
           // Run appropriate callback
-          if (currentState && typeof cookieType.onAccept === 'function') {
+          if (currentState && typeof cookieType.onAccept === "function") {
             cookieType.onAccept();
-          } else if (!currentState && typeof cookieType.onReject === 'function') {
+          } else if (
+            !currentState &&
+            typeof cookieType.onReject === "function"
+          ) {
             cookieType.onReject();
           }
         }
@@ -149,11 +156,11 @@ class SilktideCookieBanner {
           checkbox.disabled = true;
         } else {
           const storedValue = localStorage.getItem(
-            `silktideCookieChoice_${cookieId}${this.getBannerSuffix()}`
+            `silktideCookieChoice_${cookieId}${this.getBannerSuffix()}`,
           );
-          
+
           if (storedValue !== null) {
-            checkbox.checked = storedValue === 'true';
+            checkbox.checked = storedValue === "true";
           } else {
             checkbox.checked = !!cookieType.defaultValue;
           }
@@ -163,7 +170,10 @@ class SilktideCookieBanner {
   }
 
   setInitialCookieChoiceMade() {
-    window.localStorage.setItem(`silktideCookieBanner_InitialChoice${this.getBannerSuffix()}`, 1);
+    window.localStorage.setItem(
+      `silktideCookieBanner_InitialChoice${this.getBannerSuffix()}`,
+      1,
+    );
   }
 
   // ----------------------------------------------------------------
@@ -181,8 +191,13 @@ class SilktideCookieBanner {
     this.config.cookieTypes.forEach((type) => {
       // Set localStorage and run accept/reject callbacks
       if (type.required === true) {
-        localStorage.setItem(`silktideCookieChoice_${type.id}${this.getBannerSuffix()}`, 'true');
-        if (typeof type.onAccept === 'function') { type.onAccept() }
+        localStorage.setItem(
+          `silktideCookieChoice_${type.id}${this.getBannerSuffix()}`,
+          "true",
+        );
+        if (typeof type.onAccept === "function") {
+          type.onAccept();
+        }
       } else {
         localStorage.setItem(
           `silktideCookieChoice_${type.id}${this.getBannerSuffix()}`,
@@ -190,18 +205,26 @@ class SilktideCookieBanner {
         );
 
         if (accepted) {
-          if (typeof type.onAccept === 'function') { type.onAccept(); }
+          if (typeof type.onAccept === "function") {
+            type.onAccept();
+          }
         } else {
-          if (typeof type.onReject === 'function') { type.onReject(); }
+          if (typeof type.onReject === "function") {
+            type.onReject();
+          }
         }
       }
     });
 
     // Trigger optional onAcceptAll/onRejectAll callbacks
-    if (accepted && typeof this.config.onAcceptAll === 'function') {
-      if (typeof this.config.onAcceptAll === 'function') { this.config.onAcceptAll(); }
-    } else if (typeof this.config.onRejectAll === 'function') {
-      if (typeof this.config.onRejectAll === 'function') { this.config.onRejectAll(); }
+    if (accepted && typeof this.config.onAcceptAll === "function") {
+      if (typeof this.config.onAcceptAll === "function") {
+        this.config.onAcceptAll();
+      }
+    } else if (typeof this.config.onRejectAll === "function") {
+      if (typeof this.config.onRejectAll === "function") {
+        this.config.onRejectAll();
+      }
     }
 
     // finally update the checkboxes in the modal with the values from localStorage
@@ -211,8 +234,9 @@ class SilktideCookieBanner {
   getAcceptedCookies() {
     return (this.config.cookieTypes || []).reduce((acc, cookieType) => {
       acc[cookieType.id] =
-        localStorage.getItem(`silktideCookieChoice_${cookieType.id}${this.getBannerSuffix()}`) ===
-        'true';
+        localStorage.getItem(
+          `silktideCookieChoice_${cookieType.id}${this.getBannerSuffix()}`,
+        ) === "true";
       return acc;
     }, {});
   }
@@ -223,8 +247,10 @@ class SilktideCookieBanner {
     const acceptedCookies = this.getAcceptedCookies();
     this.config.cookieTypes.forEach((type) => {
       if (type.required) return; // we run required cookies separately in loadRequiredCookies
-      if (acceptedCookies[type.id] && typeof type.onAccept === 'function') {
-        if (typeof type.onAccept === 'function') { type.onAccept(); }
+      if (acceptedCookies[type.id] && typeof type.onAccept === "function") {
+        if (typeof type.onAccept === "function") {
+          type.onAccept();
+        }
       }
     });
   }
@@ -234,8 +260,10 @@ class SilktideCookieBanner {
 
     const rejectedCookies = this.getRejectedCookies();
     this.config.cookieTypes.forEach((type) => {
-      if (rejectedCookies[type.id] && typeof type.onReject === 'function') {
-        if (typeof type.onReject === 'function') { type.onReject(); }
+      if (rejectedCookies[type.id] && typeof type.onReject === "function") {
+        if (typeof type.onReject === "function") {
+          type.onReject();
+        }
       }
     });
   }
@@ -246,12 +274,18 @@ class SilktideCookieBanner {
   runStoredCookiePreferenceCallbacks() {
     this.config.cookieTypes.forEach((type) => {
       const accepted =
-        localStorage.getItem(`silktideCookieChoice_${type.id}${this.getBannerSuffix()}`) === 'true';
+        localStorage.getItem(
+          `silktideCookieChoice_${type.id}${this.getBannerSuffix()}`,
+        ) === "true";
       // Set localStorage and run accept/reject callbacks
       if (accepted) {
-        if (typeof type.onAccept === 'function') { type.onAccept(); }
+        if (typeof type.onAccept === "function") {
+          type.onAccept();
+        }
       } else {
-        if (typeof type.onReject === 'function') { type.onReject(); }
+        if (typeof type.onReject === "function") {
+          type.onReject();
+        }
       }
     });
   }
@@ -259,8 +293,10 @@ class SilktideCookieBanner {
   loadRequiredCookies() {
     if (!this.config.cookieTypes) return;
     this.config.cookieTypes.forEach((cookie) => {
-      if (cookie.required && typeof cookie.onAccept === 'function') {
-        if (typeof cookie.onAccept === 'function') { cookie.onAccept(); }
+      if (cookie.required && typeof cookie.onAccept === "function") {
+        if (typeof cookie.onAccept === "function") {
+          cookie.onAccept();
+        }
       }
     });
   }
@@ -274,32 +310,39 @@ class SilktideCookieBanner {
       "<p>We use cookies on our site to enhance your user experience, provide personalized content, and analyze our traffic.</p>";
 
     // Accept button
-    const acceptAllButtonText = this.config.text?.banner?.acceptAllButtonText || 'Accept all';
-    const acceptAllButtonLabel = this.config.text?.banner?.acceptAllButtonAccessibleLabel;
+    const acceptAllButtonText =
+      this.config.text?.banner?.acceptAllButtonText || "Accept all";
+    const acceptAllButtonLabel =
+      this.config.text?.banner?.acceptAllButtonAccessibleLabel;
     const acceptAllButton = `<button class="accept-all st-button st-button--primary"${
-      acceptAllButtonLabel && acceptAllButtonLabel !== acceptAllButtonText 
-        ? ` aria-label="${acceptAllButtonLabel}"` 
-        : ''
+      acceptAllButtonLabel && acceptAllButtonLabel !== acceptAllButtonText
+        ? ` aria-label="${acceptAllButtonLabel}"`
+        : ""
     }>${acceptAllButtonText}</button>`;
-    
+
     // Reject button
-    const rejectNonEssentialButtonText = this.config.text?.banner?.rejectNonEssentialButtonText || 'Reject non-essential';
-    const rejectNonEssentialButtonLabel = this.config.text?.banner?.rejectNonEssentialButtonAccessibleLabel;
+    const rejectNonEssentialButtonText =
+      this.config.text?.banner?.rejectNonEssentialButtonText ||
+      "Reject non-essential";
+    const rejectNonEssentialButtonLabel =
+      this.config.text?.banner?.rejectNonEssentialButtonAccessibleLabel;
     const rejectNonEssentialButton = `<button class="reject-all st-button st-button--primary"${
-      rejectNonEssentialButtonLabel && rejectNonEssentialButtonLabel !== rejectNonEssentialButtonText 
-        ? ` aria-label="${rejectNonEssentialButtonLabel}"` 
-        : ''
+      rejectNonEssentialButtonLabel &&
+      rejectNonEssentialButtonLabel !== rejectNonEssentialButtonText
+        ? ` aria-label="${rejectNonEssentialButtonLabel}"`
+        : ""
     }>${rejectNonEssentialButtonText}</button>`;
 
     // Preferences button
-    const preferencesButtonText = this.config.text?.banner?.preferencesButtonText || 'Preferences';
-    const preferencesButtonLabel = this.config.text?.banner?.preferencesButtonAccessibleLabel;
+    const preferencesButtonText =
+      this.config.text?.banner?.preferencesButtonText || "Preferences";
+    const preferencesButtonLabel =
+      this.config.text?.banner?.preferencesButtonAccessibleLabel;
     const preferencesButton = `<button class="preferences"${
-      preferencesButtonLabel && preferencesButtonLabel !== preferencesButtonText 
-        ? ` aria-label="${preferencesButtonLabel}"` 
-        : ''
+      preferencesButtonLabel && preferencesButtonLabel !== preferencesButtonText
+        ? ` aria-label="${preferencesButtonLabel}"`
+        : ""
     }><span>${preferencesButtonText}</span></button>`;
-    
 
     // Silktide logo link
     const silktideLogo = `
@@ -326,12 +369,17 @@ class SilktideCookieBanner {
   }
 
   hasSetInitialCookieChoices() {
-    return !!localStorage.getItem(`silktideCookieBanner_InitialChoice${this.getBannerSuffix()}`);
+    return !!localStorage.getItem(
+      `silktideCookieBanner_InitialChoice${this.getBannerSuffix()}`,
+    );
   }
 
   createBanner() {
     // Create banner element
-    this.banner = this.createWrapperChild(this.getBannerContent(), 'silktide-banner');
+    this.banner = this.createWrapperChild(
+      this.getBannerContent(),
+      "silktide-banner",
+    );
 
     // Add positioning class from config
     if (this.banner && this.config.position?.banner) {
@@ -339,7 +387,7 @@ class SilktideCookieBanner {
     }
 
     // Trigger optional onBannerOpen callback
-    if (this.banner && typeof this.config.onBannerOpen === 'function') {
+    if (this.banner && typeof this.config.onBannerOpen === "function") {
       this.config.onBannerOpen();
     }
   }
@@ -350,7 +398,7 @@ class SilktideCookieBanner {
       this.banner = null;
 
       // Trigger optional onBannerClose callback
-      if (typeof this.config.onBannerClose === 'function') {
+      if (typeof this.config.onBannerClose === "function") {
         this.config.onBannerClose();
       }
     }
@@ -361,7 +409,9 @@ class SilktideCookieBanner {
       return false;
     }
     return (
-      localStorage.getItem(`silktideCookieBanner_InitialChoice${this.getBannerSuffix()}`) === null
+      localStorage.getItem(
+        `silktideCookieBanner_InitialChoice${this.getBannerSuffix()}`,
+      ) === null
     );
   }
 
@@ -370,53 +420,61 @@ class SilktideCookieBanner {
   // ----------------------------------------------------------------
   getModalContent() {
     const preferencesTitle =
-      this.config.text?.preferences?.title || 'Customize your cookie preferences';
-    
+      this.config.text?.preferences?.title ||
+      "Customize your cookie preferences";
+
     const preferencesDescription =
       this.config.text?.preferences?.description ||
       "<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>";
-    
-    // Preferences button
-    const preferencesButtonLabel = this.config.text?.banner?.preferencesButtonAccessibleLabel;
 
-    const closeModalButton = `<button class="modal-close"${preferencesButtonLabel ? ` aria-label="${preferencesButtonLabel}"` : ''}>
+    // Preferences button
+    const preferencesButtonLabel =
+      this.config.text?.banner?.preferencesButtonAccessibleLabel;
+
+    const closeModalButton = `<button class="modal-close"${preferencesButtonLabel ? ` aria-label="${preferencesButtonLabel}"` : ""}>
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M19.4081 3.41559C20.189 2.6347 20.189 1.36655 19.4081 0.585663C18.6272 -0.195221 17.3591 -0.195221 16.5782 0.585663L10 7.17008L3.41559 0.59191C2.6347 -0.188974 1.36655 -0.188974 0.585663 0.59191C-0.195221 1.37279 -0.195221 2.64095 0.585663 3.42183L7.17008 10L0.59191 16.5844C-0.188974 17.3653 -0.188974 18.6335 0.59191 19.4143C1.37279 20.1952 2.64095 20.1952 3.42183 19.4143L10 12.8299L16.5844 19.4081C17.3653 20.189 18.6335 20.189 19.4143 19.4081C20.1952 18.6272 20.1952 17.3591 19.4143 16.5782L12.8299 10L19.4081 3.41559Z"/>
       </svg>
     </button>`;
-    
 
     const cookieTypes = this.config.cookieTypes || [];
     const acceptedCookieMap = this.getAcceptedCookies();
 
     // Accept button
-    const acceptAllButtonText = this.config.text?.banner?.acceptAllButtonText || 'Accept all';
-    const acceptAllButtonLabel = this.config.text?.banner?.acceptAllButtonAccessibleLabel;
+    const acceptAllButtonText =
+      this.config.text?.banner?.acceptAllButtonText || "Accept all";
+    const acceptAllButtonLabel =
+      this.config.text?.banner?.acceptAllButtonAccessibleLabel;
     const acceptAllButton = `<button class="preferences-accept-all st-button st-button--primary"${
-      acceptAllButtonLabel && acceptAllButtonLabel !== acceptAllButtonText 
-        ? ` aria-label="${acceptAllButtonLabel}"` 
-        : ''
+      acceptAllButtonLabel && acceptAllButtonLabel !== acceptAllButtonText
+        ? ` aria-label="${acceptAllButtonLabel}"`
+        : ""
     }>${acceptAllButtonText}</button>`;
-    
+
     // Reject button
-    const rejectNonEssentialButtonText = this.config.text?.banner?.rejectNonEssentialButtonText || 'Reject non-essential';
-    const rejectNonEssentialButtonLabel = this.config.text?.banner?.rejectNonEssentialButtonAccessibleLabel;
+    const rejectNonEssentialButtonText =
+      this.config.text?.banner?.rejectNonEssentialButtonText ||
+      "Reject non-essential";
+    const rejectNonEssentialButtonLabel =
+      this.config.text?.banner?.rejectNonEssentialButtonAccessibleLabel;
     const rejectNonEssentialButton = `<button class="preferences-reject-all st-button st-button--primary"${
-      rejectNonEssentialButtonLabel && rejectNonEssentialButtonLabel !== rejectNonEssentialButtonText 
-        ? ` aria-label="${rejectNonEssentialButtonLabel}"` 
-        : ''
+      rejectNonEssentialButtonLabel &&
+      rejectNonEssentialButtonLabel !== rejectNonEssentialButtonText
+        ? ` aria-label="${rejectNonEssentialButtonLabel}"`
+        : ""
     }>${rejectNonEssentialButtonText}</button>`;
-    
+
     // Credit link
-    const creditLinkText = this.config.text?.preferences?.creditLinkText || 'Get this banner for free';
-    const creditLinkAccessibleLabel = this.config.text?.preferences?.creditLinkAccessibleLabel;
+    const creditLinkText =
+      this.config.text?.preferences?.creditLinkText ||
+      "Get this banner for free";
+    const creditLinkAccessibleLabel =
+      this.config.text?.preferences?.creditLinkAccessibleLabel;
     const creditLink = `<a href="https://silktide.com/consent-manager" target="_blank" rel="noreferrer"${
       creditLinkAccessibleLabel && creditLinkAccessibleLabel !== creditLinkText
         ? ` aria-label="${creditLinkAccessibleLabel}"`
-        : ''
+        : ""
     }>${creditLinkText}</a>`;
-    
-    
 
     const modalContent = `
       <header>
@@ -447,8 +505,12 @@ class SilktideCookieBanner {
                     <div class="cookie-type-description">${type.description}</div>
                     <label class="switch" for="cookies-${type.id}">
                         <input type="checkbox" id="cookies-${type.id}" ${
-              type.required ? 'checked disabled' : isChecked ? 'checked' : ''
-            } />
+                          type.required
+                            ? "checked disabled"
+                            : isChecked
+                              ? "checked"
+                              : ""
+                        } />
                         <span class="switch__pill" aria-hidden="true"></span>
                         <span class="switch__dot" aria-hidden="true"></span>
                         <span class="switch__off" aria-hidden="true">Off</span>
@@ -458,7 +520,7 @@ class SilktideCookieBanner {
             </fieldset>
         `;
           })
-          .join('')}
+          .join("")}
       </section>
       <footer>
         ${acceptAllButton}
@@ -472,13 +534,16 @@ class SilktideCookieBanner {
 
   createModal() {
     // Create banner element
-    this.modal = this.createWrapperChild(this.getModalContent(), 'silktide-modal');
+    this.modal = this.createWrapperChild(
+      this.getModalContent(),
+      "silktide-modal",
+    );
   }
 
   toggleModal(show) {
     if (!this.modal) return;
 
-    this.modal.style.display = show ? 'flex' : 'none';
+    this.modal.style.display = show ? "flex" : "none";
 
     if (show) {
       this.showBackdrop();
@@ -487,11 +552,11 @@ class SilktideCookieBanner {
       this.preventBodyScroll();
 
       // Focus the close button
-      const modalCloseButton = this.modal.querySelector('.modal-close');
+      const modalCloseButton = this.modal.querySelector(".modal-close");
       modalCloseButton.focus();
 
       // Trigger optional onPreferencesOpen callback
-      if (typeof this.config.onPreferencesOpen === 'function') {
+      if (typeof this.config.onPreferencesOpen === "function") {
         this.config.onPreferencesOpen();
       }
 
@@ -499,7 +564,7 @@ class SilktideCookieBanner {
     } else {
       // Set that an initial choice was made when closing the modal
       this.setInitialCookieChoiceMade();
-      
+
       // Save current checkbox states to storage
       this.updateCheckboxState(true);
 
@@ -508,7 +573,7 @@ class SilktideCookieBanner {
       this.allowBodyScroll();
 
       // Trigger optional onPreferencesClose callback
-      if (typeof this.config.onPreferencesClose === 'function') {
+      if (typeof this.config.onPreferencesClose === "function") {
         this.config.onPreferencesClose();
       }
     }
@@ -526,13 +591,14 @@ class SilktideCookieBanner {
   }
 
   createCookieIcon() {
-    this.cookieIcon = document.createElement('button');
-    this.cookieIcon.id = 'silktide-cookie-icon';
-    this.cookieIcon.title = 'Manage your cookie preferences for this site';
+    this.cookieIcon = document.createElement("button");
+    this.cookieIcon.id = "silktide-cookie-icon";
+    this.cookieIcon.title = "Manage your cookie preferences for this site";
     this.cookieIcon.innerHTML = this.getCookieIconContent();
 
     if (this.config.text?.banner?.preferencesButtonAccessibleLabel) {
-      this.cookieIcon.ariaLabel = this.config.text?.banner?.preferencesButtonAccessibleLabel;
+      this.cookieIcon.ariaLabel =
+        this.config.text?.banner?.preferencesButtonAccessibleLabel;
     }
 
     // Ensure wrapper exists
@@ -556,13 +622,13 @@ class SilktideCookieBanner {
 
   showCookieIcon() {
     if (this.cookieIcon) {
-      this.cookieIcon.style.display = 'flex';
+      this.cookieIcon.style.display = "flex";
     }
   }
 
   hideCookieIcon() {
     if (this.cookieIcon) {
-      this.cookieIcon.style.display = 'none';
+      this.cookieIcon.style.display = "none";
     }
   }
 
@@ -588,9 +654,13 @@ class SilktideCookieBanner {
       }
 
       if (accepted) {
-        if (typeof type.onAccept === 'function') { type.onAccept(); }
+        if (typeof type.onAccept === "function") {
+          type.onAccept();
+        }
       } else {
-        if (typeof type.onReject === 'function') { type.onReject(); }
+        if (typeof type.onReject === "function") {
+          type.onReject();
+        }
       }
       // set the flag to say that the cookie choice has been made
       this.setInitialCookieChoiceMade();
@@ -614,14 +684,18 @@ class SilktideCookieBanner {
     // Check Banner exists before trying to add event listeners
     if (this.banner) {
       // Get the buttons
-      const acceptButton = this.banner.querySelector('.accept-all');
-      const rejectButton = this.banner.querySelector('.reject-all');
-      const preferencesButton = this.banner.querySelector('.preferences');
+      const acceptButton = this.banner.querySelector(".accept-all");
+      const rejectButton = this.banner.querySelector(".reject-all");
+      const preferencesButton = this.banner.querySelector(".preferences");
 
       // Add event listeners to the buttons
-      acceptButton?.addEventListener('click', () => this.handleCookieChoice(true));
-      rejectButton?.addEventListener('click', () => this.handleCookieChoice(false));
-      preferencesButton?.addEventListener('click', () => {
+      acceptButton?.addEventListener("click", () =>
+        this.handleCookieChoice(true),
+      );
+      rejectButton?.addEventListener("click", () =>
+        this.handleCookieChoice(false),
+      );
+      preferencesButton?.addEventListener("click", () => {
         this.showBackdrop();
         this.toggleModal(true);
       });
@@ -632,8 +706,8 @@ class SilktideCookieBanner {
       const lastFocusableEl = focusableElements[focusableElements.length - 1];
 
       // Add keydown event listener to handle tab navigation
-      this.banner.addEventListener('keydown', (e) => {
-        if (e.key === 'Tab') {
+      this.banner.addEventListener("keydown", (e) => {
+        if (e.key === "Tab") {
           if (e.shiftKey) {
             if (document.activeElement === firstFocusableEl) {
               lastFocusableEl.focus();
@@ -649,18 +723,22 @@ class SilktideCookieBanner {
       });
 
       // Set initial focus
-      if (this.config.mode !== 'wizard') {
+      if (this.config.mode !== "wizard") {
         acceptButton?.focus();
       }
     }
 
     // Check Modal exists before trying to add event listeners
     if (this.modal) {
-      const closeButton = this.modal.querySelector('.modal-close');
-      const acceptAllButton = this.modal.querySelector('.preferences-accept-all');
-      const rejectAllButton = this.modal.querySelector('.preferences-reject-all');
+      const closeButton = this.modal.querySelector(".modal-close");
+      const acceptAllButton = this.modal.querySelector(
+        ".preferences-accept-all",
+      );
+      const rejectAllButton = this.modal.querySelector(
+        ".preferences-reject-all",
+      );
 
-      closeButton?.addEventListener('click', () => {
+      closeButton?.addEventListener("click", () => {
         this.toggleModal(false);
 
         const hasMadeFirstChoice = this.hasSetInitialCookieChoices();
@@ -673,16 +751,20 @@ class SilktideCookieBanner {
           this.handleClosedWithNoChoice();
         }
       });
-      acceptAllButton?.addEventListener('click', () => this.handleCookieChoice(true));
-      rejectAllButton?.addEventListener('click', () => this.handleCookieChoice(false));
+      acceptAllButton?.addEventListener("click", () =>
+        this.handleCookieChoice(true),
+      );
+      rejectAllButton?.addEventListener("click", () =>
+        this.handleCookieChoice(false),
+      );
 
       // Banner Focus Trap
       const focusableElements = this.getFocusableElements(this.modal);
       const firstFocusableEl = focusableElements[0];
       const lastFocusableEl = focusableElements[focusableElements.length - 1];
 
-      this.modal.addEventListener('keydown', (e) => {
-        if (e.key === 'Tab') {
+      this.modal.addEventListener("keydown", (e) => {
+        if (e.key === "Tab") {
           if (e.shiftKey) {
             if (document.activeElement === firstFocusableEl) {
               lastFocusableEl.focus();
@@ -695,7 +777,7 @@ class SilktideCookieBanner {
             }
           }
         }
-        if (e.key === 'Escape') {
+        if (e.key === "Escape") {
           this.toggleModal(false);
         }
       });
@@ -703,33 +785,43 @@ class SilktideCookieBanner {
       closeButton?.focus();
 
       // Update the checkbox event listeners
-      const preferencesSection = this.modal.querySelector('#cookie-preferences');
-      const checkboxes = preferencesSection.querySelectorAll('input[type="checkbox"]');
-      
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', (event) => {
-          const [, cookieId] = event.target.id.split('cookies-');
+      const preferencesSection = this.modal.querySelector(
+        "#cookie-preferences",
+      );
+      const checkboxes = preferencesSection.querySelectorAll(
+        'input[type="checkbox"]',
+      );
+
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", (event) => {
+          const [, cookieId] = event.target.id.split("cookies-");
           const isAccepted = event.target.checked;
-          const previousValue = localStorage.getItem(
-            `silktideCookieChoice_${cookieId}${this.getBannerSuffix()}`
-          ) === 'true';
-          
+          const previousValue =
+            localStorage.getItem(
+              `silktideCookieChoice_${cookieId}${this.getBannerSuffix()}`,
+            ) === "true";
+
           // Only proceed if the value has actually changed
           if (isAccepted !== previousValue) {
             // Find the corresponding cookie type
-            const cookieType = this.config.cookieTypes.find(type => type.id === cookieId);
-            
+            const cookieType = this.config.cookieTypes.find(
+              (type) => type.id === cookieId,
+            );
+
             if (cookieType) {
               // Update localStorage
               localStorage.setItem(
                 `silktideCookieChoice_${cookieId}${this.getBannerSuffix()}`,
-                isAccepted.toString()
+                isAccepted.toString(),
               );
-              
+
               // Run the appropriate callback only if the value changed
-              if (isAccepted && typeof cookieType.onAccept === 'function') {
+              if (isAccepted && typeof cookieType.onAccept === "function") {
                 cookieType.onAccept();
-              } else if (!isAccepted && typeof cookieType.onReject === 'function') {
+              } else if (
+                !isAccepted &&
+                typeof cookieType.onReject === "function"
+              ) {
                 cookieType.onReject();
               }
             }
@@ -740,8 +832,7 @@ class SilktideCookieBanner {
 
     // Check Cookie Icon exists before trying to add event listeners
     if (this.cookieIcon) {
-
-      this.cookieIcon.addEventListener('click', () => {
+      this.cookieIcon.addEventListener("click", () => {
         // If modal is not found, create it
         if (!this.modal) {
           this.createModal();
@@ -749,7 +840,10 @@ class SilktideCookieBanner {
           this.hideCookieIcon();
         }
         // If modal is hidden, show it
-        else if (this.modal.style.display === 'none' || this.modal.style.display === '') {
+        else if (
+          this.modal.style.display === "none" ||
+          this.modal.style.display === ""
+        ) {
           this.toggleModal(true);
           this.hideCookieIcon();
         }
@@ -763,22 +857,22 @@ class SilktideCookieBanner {
 
   getBannerSuffix() {
     if (this.config.bannerSuffix) {
-      return '_' + this.config.bannerSuffix;
+      return "_" + this.config.bannerSuffix;
     }
-    return '';
+    return "";
   }
 
   preventBodyScroll() {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     // Prevent iOS Safari scrolling
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
+    document.body.style.position = "fixed";
+    document.body.style.width = "100%";
   }
 
   allowBodyScroll() {
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.width = '';
+    document.body.style.overflow = "";
+    document.body.style.position = "";
+    document.body.style.width = "";
   }
 }
 
@@ -795,7 +889,7 @@ class SilktideCookieBanner {
   }
 
   function updateCookieBannerConfig(userConfig = {}) {
-    config = {...config, ...userConfig};
+    config = { ...config, ...userConfig };
 
     // If cookie banner exists, destroy and recreate it with new config
     if (cookieBanner) {
@@ -808,7 +902,9 @@ class SilktideCookieBanner {
       initCookieBanner();
     } else {
       // Wait for DOM to be ready
-      document.addEventListener('DOMContentLoaded', initCookieBanner, {once: true});
+      document.addEventListener("DOMContentLoaded", initCookieBanner, {
+        once: true,
+      });
     }
   }
 
@@ -819,13 +915,13 @@ class SilktideCookieBanner {
       return; // Script already exists, don't add it again
     }
 
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     script.src = url;
 
     // Apply the async or defer attribute based on the loadOption parameter
-    if (loadOption === 'async') {
+    if (loadOption === "async") {
       script.async = true;
-    } else if (loadOption === 'defer') {
+    } else if (loadOption === "defer") {
       script.defer = true;
     }
 
@@ -833,12 +929,15 @@ class SilktideCookieBanner {
   }
 
   window.silktideCookieBannerManager.initCookieBanner = initCookieBanner;
-  window.silktideCookieBannerManager.updateCookieBannerConfig = updateCookieBannerConfig;
+  window.silktideCookieBannerManager.updateCookieBannerConfig =
+    updateCookieBannerConfig;
   window.silktideCookieBannerManager.injectScript = injectScript;
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCookieBanner, {once: true});
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCookieBanner, {
+      once: true,
+    });
   } else {
     initCookieBanner();
   }
-}());
+})();
