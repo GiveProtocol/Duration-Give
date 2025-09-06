@@ -357,17 +357,16 @@ export const VolunteerApplicationForm: React.FC<
 
   return (
     <>
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-50"
+      <button
+        className="fixed inset-0 bg-black bg-opacity-50 z-50 w-full h-full border-0 p-0 m-0 cursor-default"
         onClick={handleBackdropClick}
         onKeyDown={handleBackdropKeyDown}
-        role="button"
-        tabIndex={0}
         aria-label="Close modal"
+        type="button"
       />
-      <div
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50"
-        role="dialog"
+      <dialog
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50 p-0 m-0"
+        open
         aria-modal="true"
         aria-labelledby="modal-title"
       >
@@ -586,13 +585,12 @@ export const VolunteerApplicationForm: React.FC<
                 Skills and Areas of Interest{" "}
                 <span className="text-red-500">*</span>
               </label>
-              <div
-                className="relative border-2 border-gray-200 rounded-xl p-3 bg-gray-50 cursor-text transition-all duration-200 focus-within:border-indigo-600 focus-within:ring-3 focus-within:ring-indigo-600/10"
+              <button
+                className="relative border-2 border-gray-200 rounded-xl p-3 bg-gray-50 cursor-text transition-all duration-200 focus-within:border-indigo-600 focus-within:ring-3 focus-within:ring-indigo-600/10 w-full text-left"
                 onClick={focusSkillInput}
                 onKeyDown={handleSkillContainerKeyDown}
-                role="button"
-                tabIndex={0}
                 aria-label="Click to add skills"
+                type="button"
               >
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.skills.map((skill, index) => (
@@ -628,7 +626,7 @@ export const VolunteerApplicationForm: React.FC<
                     &ldquo;Grant writing&rdquo;)
                   </div>
                 )}
-              </div>
+              </button>
               {validationErrors.skills && (
                 <p className="text-sm text-red-600 mt-1">
                   {validationErrors.skills}
@@ -808,13 +806,16 @@ export const VolunteerApplicationForm: React.FC<
                     portability, and object to processing.
                   </li>
                   <li>
-                    I can withdraw my consent at any time by contacting{" "}
-                    <a
-                      href="mailto:legal@giveprotocol.io"
-                      className="text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
-                    >
-                      legal@giveprotocol.io <Mail className="w-3 h-3" />
-                    </a>
+                    I can withdraw my consent at any time by contacting
+                    <span>
+                      {" "}
+                      <a
+                        href="mailto:legal@giveprotocol.io"
+                        className="text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
+                      >
+                        legal@giveprotocol.io <Mail className="w-3 h-3" />
+                      </a>
+                    </span>
                     , though this will not affect the lawfulness of processing
                     based on my consent before withdrawal. Withdrawing consent
                     may impact the organization&apos;s ability to consider my
@@ -975,7 +976,7 @@ export const VolunteerApplicationForm: React.FC<
             </div>
           </div>
         </form>
-      </div>
+      </dialog>
     </>
   );
 };

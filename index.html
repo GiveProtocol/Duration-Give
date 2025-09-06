@@ -38,7 +38,9 @@
 
     <!-- Silktide Configuration -->
     <script>
-      silktideCookieBannerManager.updateCookieBannerConfig({
+      // Wait for Silktide to load before configuring
+      if (typeof silktideCookieBannerManager !== 'undefined') {
+        silktideCookieBannerManager.updateCookieBannerConfig({
         background: {
           showBackground: true
         },
@@ -118,6 +120,9 @@
           banner: "bottomCenter"
         }
       });
+      } else {
+        console.warn('Silktide consent manager not loaded. Please ensure the JS file is available.');
+      }
     </script>
 
     <title>Give Protocol - Smart Giving Platform</title>
