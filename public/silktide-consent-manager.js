@@ -763,7 +763,7 @@ class SilktideCookieBanner {
 
   getBannerSuffix() {
     if (this.config.bannerSuffix) {
-      return '_' + this.config.bannerSuffix;
+      return `_${this.config.bannerSuffix}`;
     }
     return '';
   }
@@ -788,6 +788,10 @@ class SilktideCookieBanner {
   let config = {};
   let cookieBanner;
 
+  /**
+   * Initializes the cookie banner if it hasn't been created yet
+   * @returns {void}
+   */
   function initCookieBanner() {
     if (!cookieBanner) {
       cookieBanner = new SilktideCookieBanner(config); // Pass config to the CookieBanner instance
