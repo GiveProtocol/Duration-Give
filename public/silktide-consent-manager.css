@@ -10,17 +10,17 @@
 -------------------------------- */
 /* Wrapper (Global) */
 #silktide-wrapper {
-              --focus: 0 0 0 2px #ffffff, 0 0 0 4px #000000, 0 0 0 6px #ffffff;
-              --boxShadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a;
-              --fontFamily: Helvetica Neue, Segoe UI, Arial, sans-serif;
-              --primaryColor: #533BE2;
-              --backgroundColor: #FFFFFF;
-              --textColor: #4B494B;
-              --backdropBackgroundColor: #00000033;
-              --backdropBackgroundBlur: 0px;
-              --cookieIconColor: #FFFFFF;
-              --cookieIconBackgroundColor: #4B494B;
-              position: fixed;
+  --focus: 0 0 0 2px #ffffff, 0 0 0 4px #000000, 0 0 0 6px #ffffff;
+  --boxShadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a;
+  --fontFamily: Helvetica Neue, Segoe UI, Arial, sans-serif;
+  --primaryColor: #533be2;
+  --backgroundColor: #ffffff;
+  --textColor: #4b494b;
+  --backdropBackgroundColor: #00000033;
+  --backdropBackgroundBlur: 0px;
+  --cookieIconColor: #ffffff;
+  --cookieIconBackgroundColor: #4b494b;
+  position: fixed;
   bottom: 0;
   right: 0;
   width: 100%;
@@ -30,8 +30,8 @@
   border: 0px;
   display: flex;
   justify-content: center;
-  align-items: center
-            }
+  align-items: center;
+}
 
 /* Backdrop (Global) */
 #silktide-backdrop-global {
@@ -135,7 +135,9 @@
   opacity: 0;
   animation: silktide-slideInDown 350ms ease-out forwards;
   animation-delay: 0.3s;
-  box-shadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a;
+  box-shadow:
+    -5px 5px 10px 0px #00000012,
+    0px 0px 50px 0px #0000001a;
 }
 
 #silktide-banner:focus {
@@ -189,7 +191,7 @@
 
 #silktide-banner .preferences:after {
   display: block;
-  content: '>';
+  content: ">";
   text-decoration: none;
 }
 
@@ -219,7 +221,6 @@
   width: 48px;
   height: 48px;
 }
-
 
 #silktide-banner .actions {
   display: flex;
@@ -258,7 +259,9 @@
   transform: translate(0px, -20px);
   opacity: 0;
   animation: silktide-slideInUp-center 350ms ease-out forwards;
-  box-shadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a;
+  box-shadow:
+    -5px 5px 10px 0px #00000012,
+    0px 0px 50px 0px #0000001a;
   font-family: var(--fontFamily);
   color: var(--textColor);
   flex-direction: column;
@@ -353,7 +356,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 24px;  
+  gap: 24px;
 }
 
 /* --------------------------------
@@ -410,7 +413,9 @@
   position: absolute;
   top: 7px;
   right: 8px;
-  transition: right 150ms ease-out, opacity 150ms ease-out;
+  transition:
+    right 150ms ease-out,
+    opacity 150ms ease-out;
 }
 
 #silktide-modal .switch__off {
