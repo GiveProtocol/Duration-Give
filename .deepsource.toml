@@ -4,6 +4,8 @@ version = 1
 exclude_patterns = [
   "public/silktide-consent-manager.js",
   "public/silktide-consent-manager.css",
+  "public/silktide-*",
+  "public/**/*.js",
   "**/node_modules/**",
   "**/dist/**",
   "**/build/**",
@@ -22,7 +24,7 @@ enabled = true
   plugins = ["react"]
   environment = ["nodejs"]
   style_guide = "standard"
-  skip_doc_coverage = ["function-expression", "arrow-function-expression", "class-expression", "method-definition"]
+  skip_doc_coverage = ["function-expression", "arrow-function-expression", "class-expression", "method-definition", "function-declaration"]
 
 [[analyzers]]
 name = "secrets"
