@@ -326,7 +326,7 @@ class SilktideCookieBanner {
   }
 
   hasSetInitialCookieChoices() {
-    return !!localStorage.getItem(`silktideCookieBanner_InitialChoice${this.getBannerSuffix()}`);
+    return Boolean(localStorage.getItem(`silktideCookieBanner_InitialChoice${this.getBannerSuffix()}`));
   }
 
   createBanner() {
