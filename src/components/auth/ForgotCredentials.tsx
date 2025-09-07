@@ -132,9 +132,13 @@ export const ForgotCredentials: React.FC<ForgotCredentialsProps> = ({
         {error && <div className="text-sm text-red-600">{error}</div>}
 
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading
-            ? "Sending..."
-            : `Send ${isPassword ? "Reset Link" : "Username"}`}
+          {(() => {
+            if (loading) {
+              return "Sending...";
+            }
+            const actionText = isPassword ? "Reset Link" : "Username";
+            return `Send ${actionText}`;
+          })()}
         </Button>
       </form>
     </div>

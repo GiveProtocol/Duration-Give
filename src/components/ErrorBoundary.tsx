@@ -135,7 +135,7 @@ export class ErrorBoundary extends Component<Props, State> {
     }
   }
 
-  private handleReset = () => {
+  private readonly handleReset = () => {
     // Reset state
     this.setState({
       hasError: false,
@@ -145,7 +145,7 @@ export class ErrorBoundary extends Component<Props, State> {
     });
   };
 
-  private handleNavigateHome = () => {
+  private readonly handleNavigateHome = () => {
     this.navigationAttempts++;
     // Navigate to home page
     window.location.href = "/";
