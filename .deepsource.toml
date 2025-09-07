@@ -24,17 +24,6 @@ enabled = true
   style_guide = "standard"
   skip_doc_coverage = ["function-expression", "arrow-function-expression", "class-expression", "method-definition"]
 
-  # Disable specific rules
-  [[analyzers.meta.rules]]
-  # Disable JSX maximum depth validation (for forms and complex components)
-  path = "**/*Form*.tsx"
-  "JS-0415" = { active = false }
-  
-  [[analyzers.meta.rules]]
-  # Also disable for any file that might have forms
-  path = "**/*.tsx"
-  "JS-0415" = { active = false }
-
 [[analyzers]]
 name = "secrets"
 enabled = true
@@ -42,3 +31,18 @@ enabled = true
 [[transformers]]
 name = "prettier"
 enabled = true
+
+# Issue-specific configurations
+[[issue_overrides]]
+issue_id = "JS-0415"
+enabled = false
+
+[[issue_overrides]]
+issue_id = "JS-0105"
+path_patterns = ["public/silktide-consent-manager.js"]
+enabled = false
+
+[[issue_overrides]]
+issue_id = "JS-D1001"
+path_patterns = ["public/silktide-consent-manager.js"]
+enabled = false
