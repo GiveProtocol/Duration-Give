@@ -126,13 +126,14 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
           <h2 className="text-xl font-semibold text-gray-900">
             {t("export.title")}
           </h2>
-          <X
+          <button
             onClick={handleClose}
-            className="h-5 w-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+            className="p-0 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded"
             aria-label="Close"
-            role="button"
-            tabIndex={0}
-          />
+            type="button"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
 
         <main className="p-6 space-y-4">

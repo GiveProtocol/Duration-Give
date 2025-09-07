@@ -101,13 +101,13 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
 
   return (
     <>
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-50"
+      <button
+        className="fixed inset-0 bg-black bg-opacity-50 z-50 cursor-default"
         onClick={handleBackdropClick}
         onKeyDown={handleBackdropKeyDown}
-        role="button"
         tabIndex={0}
         aria-label="Close modal"
+        type="button"
       />
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-4xl w-[95%] max-h-[90vh] overflow-hidden z-50">
         <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-8 text-center">
