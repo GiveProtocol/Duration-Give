@@ -1,5 +1,5 @@
-import React from 'react';
-import { jest } from '@jest/globals';
+import React from "react";
+import { jest } from "@jest/globals";
 import React from "react"; // eslint-disable-line no-unused-vars
 import { render, screen } from "@testing-library/react";
 import { GlobalContributions } from "../GlobalContributions";

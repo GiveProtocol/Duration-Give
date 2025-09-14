@@ -1,8 +1,8 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
-import { jest } from '@jest/globals';
-import { render, screen, waitFor } from '@testing-library/react';
-import { ProtocolStats } from '../ProtocolStats';
-import { setupCommonMocks } from '@/test-utils/mockSetup';
+import React from "react"; // eslint-disable-line no-unused-vars
+import { jest } from "@jest/globals";
+import { render, screen, waitFor } from "@testing-library/react";
+import { ProtocolStats } from "../ProtocolStats";
+import { setupCommonMocks } from "@/test-utils/mockSetup";
 
 // Setup common mocks
 setupCommonMocks();
@@ -11,48 +11,50 @@ setupCommonMocks();
 const mockSupabase = {
   from: jest.fn(() => ({
     select: jest.fn(() => ({
-      single: jest.fn(() => Promise.resolve({ 
-        data: { 
-          total_donations: 25000,
-          total_volunteers: 150,
-          charities_count: 12,
-          volunteer_hours: 800
-        }, 
-        error: null 
-      })),
+      single: jest.fn(() =>
+        Promise.resolve({
+          data: {
+            total_donations: 25000,
+            total_volunteers: 150,
+            charities_count: 12,
+            volunteer_hours: 800,
+          },
+          error: null,
+        }),
+      ),
     })),
   })),
 };
 
-jest.mock('@/lib/supabase', () => ({
+jest.mock("@/lib/supabase", () => ({
   supabase: mockSupabase,
 }));
 
-describe('ProtocolStats', () => {
+describe("ProtocolStats", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders loading state initially', () => {
+  it("renders loading state initially", () => {
     render(<ProtocolStats />);
-    
-    expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
+
+    expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
   });
 
-  it('displays protocol statistics after loading', async () => {
+  it("displays protocol statistics after loading", async () => {
     render(<ProtocolStats />);
-    
+
     await waitFor(() => {
-      expect(screen.getByText('$25,000')).toBeInTheDocument();
-      expect(screen.getByText('150')).toBeInTheDocument();
-      expect(screen.getByText('12')).toBeInTheDocument();
-      expect(screen.getByText('800')).toBeInTheDocument();
+      expect(screen.getByText("$25,000")).toBeInTheDocument();
+      expect(screen.getByText("150")).toBeInTheDocument();
+      expect(screen.getByText("12")).toBeInTheDocument();
+      expect(screen.getByText("800")).toBeInTheDocument();
     });
   });
 
-  it('shows stat labels', async () => {
+  it("shows stat labels", async () => {
     render(<ProtocolStats />);
-    
+
     await waitFor(() => {
       expect(screen.getByText(/total donated/i)).toBeInTheDocument();
       expect(screen.getByText(/active volunteers/i)).toBeInTheDocument();
@@ -61,37 +63,41 @@ describe('ProtocolStats', () => {
     });
   });
 
-  it('handles error state gracefully', async () => {
+  it("handles error state gracefully", async () => {
     mockSupabase.from.mockReturnValue({
       select: jest.fn(() => ({
-        single: jest.fn(() => Promise.resolve({ 
-          data: null, 
-          error: { message: 'Failed to fetch stats' } 
-        })),
+        single: jest.fn(() =>
+          Promise.resolve({
+            data: null,
+            error: { message: "Failed to fetch stats" },
+          }),
+        ),
       })),
     });
 
     render(<ProtocolStats />);
-    
+
     await waitFor(() => {
-      expect(screen.getByText('0')).toBeInTheDocument();
+      expect(screen.getByText("0")).toBeInTheDocument();
     });
   });
 
-  it('handles null data gracefully', async () => {
+  it("handles null data gracefully", async () => {
     mockSupabase.from.mockReturnValue({
       select: jest.fn(() => ({
-        single: jest.fn(() => Promise.resolve({ 
-          data: null, 
-          error: null 
-        })),
+        single: jest.fn(() =>
+          Promise.resolve({
+            data: null,
+            error: null,
+          }),
+        ),
       })),
     });
 
     render(<ProtocolStats />);
-    
+
     await waitFor(() => {
-      expect(screen.getByText('0')).toBeInTheDocument();
+      expect(screen.getByText("0")).toBeInTheDocument();
     });
   });
 });

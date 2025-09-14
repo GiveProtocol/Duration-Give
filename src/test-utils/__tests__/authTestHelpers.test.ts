@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { jest } from "@jest/globals";
 import {
   createMockAuthFlow,
   createMockWeb3Flow,
@@ -104,7 +104,7 @@ describe("authTestHelpers", () => {
       const mockSupabase = { auth: { signInWithPassword: jest.fn() } };
       const mockScreen = {
         getByTestId: jest.fn().mockReturnValue({ click: jest.fn() }),
-        __mockShowToast: jest.fn()
+        __mockShowToast: jest.fn(),
       };
       const mockResponse = { data: { user: {} }, error: null };
 
@@ -116,7 +116,7 @@ describe("authTestHelpers", () => {
         mockResponse,
         mockScreen,
         "login-button",
-        ["Success", "Login successful"]
+        ["Success", "Login successful"],
       );
 
       expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalled();
@@ -128,7 +128,7 @@ describe("authTestHelpers", () => {
       const mockSupabase = { auth: { signInWithPassword: jest.fn() } };
       const mockScreen = {
         getByTestId: jest.fn().mockReturnValue({ click: jest.fn() }),
-        __mockShowToast: jest.fn()
+        __mockShowToast: jest.fn(),
       };
       const mockError = new Error("Auth failed");
 
@@ -140,7 +140,7 @@ describe("authTestHelpers", () => {
         mockError,
         mockScreen,
         "login-button",
-        ["Error", "Auth failed"]
+        ["Error", "Auth failed"],
       );
 
       expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalled();

@@ -1,6 +1,6 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
-import { jest } from '@jest/globals';
-import { render } from '@testing-library/react';
+import React from "react"; // eslint-disable-line no-unused-vars
+import { jest } from "@jest/globals";
+import { render } from "@testing-library/react";
 import {
   createMockWeb3,
   createMockWalletAlias,
@@ -117,7 +117,7 @@ describe("mockSetup", () => {
 
     it("t function returns fallback or key", () => {
       const result = createMockTranslation();
-      
+
       expect(result.t("key")).toBe("key");
       expect(result.t("key", "fallback")).toBe("fallback");
     });
@@ -149,17 +149,17 @@ describe("mockSetup", () => {
     });
 
     it("applies overrides to default mock", () => {
-      const mockUser = { id: '123', email: 'test@example.com' };
+      const mockUser = { id: "123", email: "test@example.com" };
       const overrides = {
         user: mockUser,
-        userType: 'donor' as const,
+        userType: "donor" as const,
         loading: true,
       };
 
       const result = createMockAuth(overrides);
 
       expect(result.user).toBe(mockUser);
-      expect(result.userType).toBe('donor');
+      expect(result.userType).toBe("donor");
       expect(result.loading).toBe(true);
     });
   });
@@ -242,9 +242,9 @@ describe("mockSetup", () => {
   describe("createMockSupabase", () => {
     it("creates mock supabase client with default responses", () => {
       const client = createMockSupabase();
-      
+
       expect(client.from).toBeInstanceOf(Function);
-      
+
       const result = client.from("test_table");
       expect(result.select).toBeInstanceOf(Function);
     });
@@ -253,17 +253,17 @@ describe("mockSetup", () => {
       const customResponses = {
         users: { data: [{ id: "123", name: "Test" }], error: null },
       };
-      
+
       const client = createMockSupabase(customResponses);
       const result = client.from("users");
-      
+
       expect(result.select).toBeInstanceOf(Function);
     });
 
     it("supports chained query methods", () => {
       const client = createMockSupabase();
       const query = client.from("test_table").select();
-      
+
       expect(query.eq).toBeInstanceOf(Function);
       expect(query.order).toBeInstanceOf(Function);
       expect(query.single).toBeInstanceOf(Function);
@@ -271,8 +271,12 @@ describe("mockSetup", () => {
 
     it("supports nested eq and single methods", async () => {
       const client = createMockSupabase();
-      const result = await client.from("test_table").select().eq("id", "123").single();
-      
+      const result = await client
+        .from("test_table")
+        .select()
+        .eq("id", "123")
+        .single();
+
       expect(result).toEqual({ data: null, error: null });
     });
   });
@@ -284,7 +288,9 @@ describe("mockSetup", () => {
     });
 
     it("MockInput renders with placeholder", () => {
-      const { getByPlaceholderText } = render(<MockInput placeholder="Enter text" />);
+      const { getByPlaceholderText } = render(
+        <MockInput placeholder="Enter text" />,
+      );
       expect(getByPlaceholderText("Enter text")).toBeInTheDocument();
     });
 
