@@ -1,3 +1,5 @@
+import React from 'react';
+import { jest } from '@jest/globals';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';

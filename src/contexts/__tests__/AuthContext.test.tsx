@@ -1,3 +1,5 @@
+import React from 'react';
+import { jest } from '@jest/globals';
 import React, { useCallback } from "react"; // eslint-disable-line no-unused-vars
 import { render, screen, waitFor, act } from "@testing-library/react";
 import { AuthProvider, useAuth } from "../AuthContext";

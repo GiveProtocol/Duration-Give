@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { jest } from '@jest/globals';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ApplicationAcceptance } from '../ApplicationAcceptance';
 import { useVolunteerVerification } from '@/hooks/useVolunteerVerification';

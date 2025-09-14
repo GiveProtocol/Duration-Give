@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { formatDate, isValidDate, formatDateForInput, getDateRange } from '../date';
 
 // Mock logger to avoid dependencies

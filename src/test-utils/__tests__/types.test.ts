@@ -1,3 +1,5 @@
+import React from 'react';
+import { jest } from '@jest/globals';
 import type {
   MockUIComponentProps,
   MockButtonProps,

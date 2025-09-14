@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import {
   createMockAuthFlow,
   createMockWeb3Flow,

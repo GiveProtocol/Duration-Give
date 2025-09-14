@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { jest } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Navbar } from '../Navbar';
 import { useAuth } from '@/contexts/AuthContext';

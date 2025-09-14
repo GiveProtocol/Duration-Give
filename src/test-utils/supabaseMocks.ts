@@ -2,6 +2,7 @@
  * Shared Supabase mock utilities to reduce duplication across test files
  */
 
+import { jest } from '@jest/globals';
 import type { MockSupabaseQuery, MockSupabaseOverrides, MockCharity, MockDonation } from './types';
 
 /**

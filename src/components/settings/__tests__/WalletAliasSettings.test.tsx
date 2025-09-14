@@ -1,4 +1,5 @@
 import React from 'react';
+import { jest } from '@jest/globals';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { WalletAliasSettings } from '../WalletAliasSettings';
 import { useWalletAlias } from '@/hooks/useWalletAlias';

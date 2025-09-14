@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Test coverage for errors.ts utility functions
  */

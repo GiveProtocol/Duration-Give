@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { PerformanceMetrics } from '../metrics';
 import { Logger } from '../../logger';
 

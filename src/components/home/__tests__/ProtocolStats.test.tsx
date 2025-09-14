@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { jest } from '@jest/globals';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ProtocolStats } from '../ProtocolStats';
 import { setupCommonMocks } from '@/test-utils/mockSetup';

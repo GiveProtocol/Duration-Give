@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { CacheManager } from "../caching";
 
 // Mock the logger to avoid test noise

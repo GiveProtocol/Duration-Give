@@ -1,3 +1,5 @@
+import React from 'react';
+import { jest } from '@jest/globals';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { ConnectButton } from '../ConnectButton';
 import { useWeb3 } from '@/contexts/Web3Context';

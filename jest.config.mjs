@@ -1,5 +1,5 @@
-module.exports = {
-  preset: 'ts-jest',
+export default {
+  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'jsdom',
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   roots: ['<rootDir>/src'],
@@ -19,7 +19,7 @@ module.exports = {
         target: 'ESNext'
       }
     }],
-    '^.+\\.(js|jsx)$': ['babel-jest', {
+    '^.+\\.(js|jsx|mjs)$': ['babel-jest', {
       configFile: './babel.config.cjs'
     }]
   },
@@ -27,7 +27,8 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss|sass)$': '<rootDir>/src/test-utils/styleMock.js',
     '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/src/test-utils/fileMock.js',
-    '^(\\.{1,2}/.*)\\.js$': '$1'
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+    '^isows$': '<rootDir>/src/test-utils/isowsMock.js'
   },
   setupFilesAfterEnv: ['<rootDir>/src/test-utils/jest.setup.ts'],
   collectCoverageFrom: [
@@ -52,6 +53,9 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node', 'mjs'],
   testPathIgnorePatterns: ['/node_modules/', '/test/', '/dist/', '/build/'],
   transformIgnorePatterns: [
-    'node_modules/(?!(@supabase|@tanstack|lucide-react|viem|ethers|buffer|fp-ts)/)'
-  ]
+    'node_modules/(?!(@supabase|@tanstack|lucide-react|viem|ethers|buffer|fp-ts|isows)/)'
+  ],
+  testEnvironmentOptions: {
+    customExportConditions: ['node', 'node-addons']
+  }
 };
