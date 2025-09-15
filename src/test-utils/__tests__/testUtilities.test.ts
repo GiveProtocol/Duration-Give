@@ -1,7 +1,6 @@
 import { testValidCases, testInvalidCases } from '../validationTestData';
 import { expectBlockchainLink, renderWithRouter } from '../testHelpers';
 import { commonMocks, createHookMocks, componentMocks } from '../jestSetup';
-import React from 'react';
 import { jest } from '@jest/globals';
 
 describe('Test Utilities', () => {

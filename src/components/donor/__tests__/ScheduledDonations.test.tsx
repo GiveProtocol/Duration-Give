@@ -1,6 +1,6 @@
 import React from 'react';
 import { jest } from '@jest/globals';
-import React from "react";
+
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { ScheduledDonations } from "../ScheduledDonations";
 import { useScheduledDonation } from "@/hooks/web3/useScheduledDonation";
