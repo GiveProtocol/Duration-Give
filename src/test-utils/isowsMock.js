@@ -5,12 +5,12 @@ export const WebSocket = global.WebSocket || class MockWebSocket {
     this.listeners = {};
   }
   
-  send(data) {
+  send(_data) {
     // Empty mock implementation for WebSocket send
     if (this.readyState !== 1) {
       throw new Error('WebSocket is not in OPEN state');
     }
-    // In a real implementation, this would send data
+    // In a real implementation, this would send _data
     // For mock purposes, we just validate the state
   }
   
@@ -20,7 +20,7 @@ export const WebSocket = global.WebSocket || class MockWebSocket {
   }
   
   addEventListener(event, handler) {
-    // Empty mock implementation for addEventListener
+    // Mock implementation for addEventListener
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -28,7 +28,7 @@ export const WebSocket = global.WebSocket || class MockWebSocket {
   }
   
   removeEventListener(event, handler) {
-    // Empty mock implementation for removeEventListener
+    // Mock implementation for removeEventListener
     if (this.listeners[event]) {
       this.listeners[event] = this.listeners[event].filter(h => h !== handler);
     }
