@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { jest } from '@jest/globals';
 import { render, screen, waitFor, act } from "@testing-library/react";
 import { AuthProvider, useAuth } from "../AuthContext";
@@ -190,7 +190,7 @@ describe("AuthContext", () => {
       let authCallback: (
         _event: string,
         _session: { user: typeof MOCK_USER } | null,
-      ) => void = () => {
+      ) => void | Promise<void> = () => {
         // Initial empty callback - will be replaced by mockImplementation
       };
 
@@ -218,7 +218,7 @@ describe("AuthContext", () => {
       let authCallback: (
         _event: string,
         _session: { user: typeof MOCK_USER } | null,
-      ) => void = () => {
+      ) => void | Promise<void> = () => {
         // Initial empty callback - will be replaced by mockImplementation
       };
 
