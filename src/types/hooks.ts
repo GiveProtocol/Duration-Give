@@ -1,4 +1,3 @@
-import React from 'react';
 import { Charity, Campaign, CharityCategory } from './charity';
 import { TokenAmount, TransactionHash } from './blockchain';
 import { ApiError, QueryOptions } from './common';
