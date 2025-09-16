@@ -88,13 +88,12 @@ const fetchVolunteerLeaders = async (
   ];
 
   // Sort based on selected metric (create copy to avoid mutation)
-  const sortedLeaders = leaders
-    .toSorted((a, b) => {
-      const valueA = sortBy === "hours" ? a.hours : a.endorsements;
-      const valueB = sortBy === "hours" ? b.hours : b.endorsements;
-      return valueB - valueA;
-    });
-  
+  const sortedLeaders = leaders.toSorted((a, b) => {
+    const valueA = sortBy === "hours" ? a.hours : a.endorsements;
+    const valueB = sortBy === "hours" ? b.hours : b.endorsements;
+    return valueB - valueA;
+  });
+
   return sortedLeaders.map((leader, index) => ({ ...leader, rank: index + 1 }));
 };
 
