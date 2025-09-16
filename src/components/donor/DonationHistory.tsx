@@ -10,6 +10,16 @@ interface DonationHistoryProps {
   donations: Transaction[];
 }
 
+const getStatusStyles = (status: string): string => {
+  if (status === 'completed') {
+    return 'bg-green-100 text-green-800';
+  }
+  if (status === 'pending') {
+    return 'bg-yellow-100 text-yellow-800';
+  }
+  return 'bg-red-100 text-red-800';
+};
+
 export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) => {
   const [showExportModal, setShowExportModal] = useState(false);
   const [timeFilter, setTimeFilter] = useState('all');
@@ -122,13 +132,7 @@ export const DonationHistory: React.FC<DonationHistoryProps> = ({ donations }) =
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    donation.status === 'completed' 
-                      ? 'bg-green-100 text-green-800'
-                      : donation.status === 'pending'
-                      ? 'bg-yellow-100 text-yellow-800'
-                      : 'bg-red-100 text-red-800'
-                  }`}>
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusStyles(donation.status)}`}>
                     {donation.status.charAt(0).toUpperCase() + donation.status.slice(1)}
                   </span>
                 </td>

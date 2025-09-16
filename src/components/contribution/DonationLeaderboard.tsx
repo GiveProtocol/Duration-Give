@@ -62,6 +62,40 @@ const getRankColor = (rank: number): string => {
   }
 };
 
+interface LeaderboardRowProps {
+  index: number;
+  style: React.CSSProperties;
+  data: LeaderboardEntry[];
+}
+
+const LeaderboardRow: React.FC<LeaderboardRowProps> = ({ index, style, data }) => {
+  const entry = data[index];
+  if (!entry) return null;
+
+  return (
+    <div
+      style={style}
+      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg mb-2"
+    >
+      <div className="flex items-center space-x-4">
+        {entry.rank <= 3 ? (
+          <div className={`p-2 rounded-full ${getRankColor(entry.rank)}`}>
+            <Trophy className="h-5 w-5 text-white" aria-hidden="true" />
+          </div>
+        ) : (
+          <div className="w-9 h-9 flex items-center justify-center">
+            <span className="text-gray-500 font-medium">{entry.rank}</span>
+          </div>
+        )}
+        <span className="font-medium text-gray-900">{entry.displayName}</span>
+      </div>
+      <span className="text-gray-900 font-semibold">
+        {formatCurrency(entry.totalDonated)}
+      </span>
+    </div>
+  );
+};
+
 export const DonationLeaderboard: React.FC = () => {
   const {
     data: leaderboard,
@@ -125,40 +159,6 @@ export const DonationLeaderboard: React.FC = () => {
     );
   }
 
-  const Row = ({
-    index,
-    style,
-  }: {
-    index: number;
-    style: React.CSSProperties;
-  }) => {
-    const entry = filteredLeaderboard[index];
-    if (!entry) return null;
-
-    return (
-      <div
-        style={style}
-        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg mb-2"
-      >
-        <div className="flex items-center space-x-4">
-          {entry.rank <= 3 ? (
-            <div className={`p-2 rounded-full ${getRankColor(entry.rank)}`}>
-              <Trophy className="h-5 w-5 text-white" aria-hidden="true" />
-            </div>
-          ) : (
-            <div className="w-9 h-9 flex items-center justify-center">
-              <span className="text-gray-500 font-medium">{entry.rank}</span>
-            </div>
-          )}
-          <span className="font-medium text-gray-900">{entry.displayName}</span>
-        </div>
-        <span className="text-gray-900 font-semibold">
-          {formatCurrency(entry.totalDonated)}
-        </span>
-      </div>
-    );
-  };
-
   return (
     <div className="space-y-4">
       <div className="relative mb-4">
@@ -179,8 +179,9 @@ export const DonationLeaderboard: React.FC = () => {
             width="100%"
             itemCount={filteredLeaderboard.length}
             itemSize={70}
+            itemData={filteredLeaderboard}
           >
-            {Row}
+            {LeaderboardRow}
           </FixedSizeList>
         ) : (
           <div className="flex items-center justify-center h-full bg-gray-50 rounded-lg">

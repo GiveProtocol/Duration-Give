@@ -87,14 +87,15 @@ const fetchVolunteerLeaders = async (
     },
   ];
 
-  // Sort based on selected metric
-  return leaders
-    .sort((a, b) => {
+  // Sort based on selected metric (create copy to avoid mutation)
+  const sortedLeaders = leaders
+    .toSorted((a, b) => {
       const valueA = sortBy === "hours" ? a.hours : a.endorsements;
       const valueB = sortBy === "hours" ? b.hours : b.endorsements;
       return valueB - valueA;
-    })
-    .map((leader, index) => ({ ...leader, rank: index + 1 }));
+    });
+  
+  return sortedLeaders.map((leader, index) => ({ ...leader, rank: index + 1 }));
 };
 
 export const VolunteerLeaderboard: React.FC<VolunteerLeaderboardProps> = ({
