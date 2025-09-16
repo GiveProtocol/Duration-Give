@@ -5,8 +5,13 @@ export const WebSocket = global.WebSocket || class MockWebSocket {
     this.listeners = {};
   }
   
-  send() {
+  send(data) {
     // Empty mock implementation for WebSocket send
+    if (this.readyState !== 1) {
+      throw new Error('WebSocket is not in OPEN state');
+    }
+    // In a real implementation, this would send data
+    // For mock purposes, we just validate the state
   }
   
   close() {
