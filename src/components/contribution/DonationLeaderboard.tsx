@@ -68,7 +68,11 @@ interface LeaderboardRowProps {
   data: LeaderboardEntry[];
 }
 
-const LeaderboardRow: React.FC<LeaderboardRowProps> = ({ index, style, data }) => {
+const LeaderboardRow: React.FC<LeaderboardRowProps> = ({
+  index,
+  style,
+  data,
+}) => {
   const entry = data[index];
   if (!entry) return null;
 
