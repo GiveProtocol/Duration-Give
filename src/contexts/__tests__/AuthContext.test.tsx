@@ -1,5 +1,5 @@
-import React from 'react';
-import { jest } from '@jest/globals';
+import React from "react";
+import { jest } from "@jest/globals";
 import { render, screen, waitFor, act } from "@testing-library/react";
 import { AuthProvider, useAuth } from "../AuthContext";
 import { supabase } from "@/lib/supabase";

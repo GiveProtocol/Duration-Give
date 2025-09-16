@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { jest } from "@jest/globals";
 import { MOCK_TEMPLATE_EXAMPLES } from "../templates";
 import type {
   MockComponentTemplate,
