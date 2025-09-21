@@ -264,7 +264,7 @@ export const VolunteerApplicationForm: React.FC<
       }
 
       if (!user || !profile) {
-        showToast("Please log in to submit an application", "error");
+        showToast("error", "Please log in to submit an application");
         return;
       }
 
@@ -300,12 +300,12 @@ export const VolunteerApplicationForm: React.FC<
           userId: user.id,
         });
 
-        showToast("Application submitted successfully!", "success");
+        showToast("success", "Application submitted successfully!");
         onSuccess?.();
         onClose();
       } catch (error) {
         Logger.error("Failed to submit volunteer application", error);
-        showToast("Failed to submit application. Please try again.", "error");
+        showToast("error", "Failed to submit application. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -586,7 +586,7 @@ export const VolunteerApplicationForm: React.FC<
                 <span className="text-red-500">*</span>
               </label>
               <button
-                className="relative border-2 border-gray-200 rounded-xl p-3 bg-gray-50 cursor-text transition-all duration-200 focus-within:border-indigo-600 focus-within:ring-3 focus-within:ring-indigo-600/10 w-full text-left"
+                className="relative border-2 border-gray-200 rounded-xl p-4 bg-gray-50 cursor-text transition-all duration-200 focus-within:border-indigo-600 focus-within:ring-3 focus-within:ring-indigo-600/10 w-full text-left min-h-[100px]"
                 onClick={focusSkillInput}
                 onKeyDown={handleSkillContainerKeyDown}
                 aria-label="Click to add skills"
@@ -609,23 +609,25 @@ export const VolunteerApplicationForm: React.FC<
                     </div>
                   ))}
                 </div>
-                <input
-                  id="skillInput"
-                  ref={tagInputRef}
-                  type="text"
-                  value={currentSkillInput}
-                  onChange={handleSkillInputChange}
-                  onKeyDown={handleSkillInputKeyDown}
-                  className="w-full bg-transparent border-none outline-none text-gray-700 placeholder-gray-500"
-                  placeholder="Type a skill and press Enter..."
-                />
-                {showSkillPlaceholder && (
-                  <div className="absolute top-3 left-3 text-gray-400 italic pointer-events-none">
-                    Start typing your skills (e.g., &ldquo;Python
-                    programming&rdquo;, &ldquo;Public speaking&rdquo;,
-                    &ldquo;Grant writing&rdquo;)
-                  </div>
-                )}
+                <div className="relative">
+                  <input
+                    id="skillInput"
+                    ref={tagInputRef}
+                    type="text"
+                    value={currentSkillInput}
+                    onChange={handleSkillInputChange}
+                    onKeyDown={handleSkillInputKeyDown}
+                    className="w-full bg-transparent border-none outline-none text-gray-700 placeholder-gray-500 pt-6"
+                    placeholder="Type a skill and press Enter..."
+                  />
+                  {showSkillPlaceholder && (
+                    <div className="absolute top-0 left-0 text-gray-400 italic pointer-events-none text-sm">
+                      Start typing your skills (e.g., &ldquo;Python
+                      programming&rdquo;, &ldquo;Public speaking&rdquo;,
+                      &ldquo;Grant writing&rdquo;)
+                    </div>
+                  )}
+                </div>
               </button>
               {validationErrors.skills && (
                 <p className="text-sm text-red-600 mt-1">

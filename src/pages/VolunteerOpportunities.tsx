@@ -88,7 +88,7 @@ const SAMPLE_OPPORTUNITIES: Opportunity[] = [
     type: "onsite",
     workLanguage: WorkLanguage.GERMAN,
     image:
-      "https://images.unsplash.com/photo-1469571486292-b53601021a68?auto=format&fit=crop&w=800",
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=800",
   },
   {
     id: 6,
@@ -165,7 +165,7 @@ const VolunteerOpportunities: React.FC = () => {
   }, []);
 
   const handleApplicationSuccess = useCallback(() => {
-    showToast("Application submitted successfully!", "success");
+    showToast("success", "Application submitted successfully!");
     setShowApplicationForm(false);
     setSelectedOpportunity(null);
   }, [showToast]);
