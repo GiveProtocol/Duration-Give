@@ -36,6 +36,7 @@ export const CONTRACT_ADDRESSES: Record<
     VERIFICATION: string | undefined;
     DISTRIBUTION: string | undefined;
     TOKEN: string | undefined;
+    PORTFOLIO_FUNDS: string | undefined;
   }
 > = {
   [CHAIN_IDS.MOONBASE]: {
@@ -43,24 +44,28 @@ export const CONTRACT_ADDRESSES: Record<
     VERIFICATION: ENV.VERIFICATION_CONTRACT_ADDRESS,
     DISTRIBUTION: ENV.DISTRIBUTION_CONTRACT_ADDRESS,
     TOKEN: ENV.TOKEN_CONTRACT_ADDRESS,
+    PORTFOLIO_FUNDS: ENV.PORTFOLIO_FUNDS_CONTRACT_ADDRESS,
   },
   [CHAIN_IDS.MOONBEAM]: {
     DONATION: undefined, // To be deployed
     VERIFICATION: undefined, // To be deployed
     DISTRIBUTION: undefined, // To be deployed
     TOKEN: undefined, // To be deployed
+    PORTFOLIO_FUNDS: undefined, // To be deployed
   },
   [CHAIN_IDS.ASTAR]: {
     DONATION: undefined, // To be deployed
     VERIFICATION: undefined, // To be deployed
     DISTRIBUTION: undefined, // To be deployed
     TOKEN: undefined, // To be deployed
+    PORTFOLIO_FUNDS: undefined, // To be deployed
   },
   [CHAIN_IDS.POLYGON]: {
     DONATION: undefined, // To be deployed
     VERIFICATION: undefined, // To be deployed
     DISTRIBUTION: undefined, // To be deployed
     TOKEN: undefined, // To be deployed
+    PORTFOLIO_FUNDS: undefined, // To be deployed
   },
 } as const;
 

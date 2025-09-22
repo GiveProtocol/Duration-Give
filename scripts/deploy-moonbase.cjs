@@ -129,11 +129,8 @@ async function main() {
   const executorAddress = await executor.getAddress();
   console.log("✅ DistributionExecutor deployed to:", executorAddress);
 
-  // Set the executor in the distribution contract
-  console.log("\n🔧 Setting executor in CharityScheduledDistribution...");
-  const setExecutorTx = await distribution.setExecutor(executorAddress);
-  await setExecutorTx.wait();
-  console.log("✅ Executor set successfully");
+  // Note: DistributionExecutor works independently and doesn't need to be set
+  console.log("\n✅ All contracts deployed successfully!");
 
   // Save deployment addresses
   const deploymentInfo = {

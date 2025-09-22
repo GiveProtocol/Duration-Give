@@ -21,6 +21,8 @@ export const ENV = {
     .VITE_VERIFICATION_CONTRACT_ADDRESS,
   DISTRIBUTION_CONTRACT_ADDRESS: import.meta.env
     .VITE_DISTRIBUTION_CONTRACT_ADDRESS,
+  PORTFOLIO_FUNDS_CONTRACT_ADDRESS: import.meta.env
+    .VITE_PORTFOLIO_FUNDS_CONTRACT_ADDRESS,
 
   // Optional variables with defaults
   NETWORK: import.meta.env.VITE_NETWORK || "moonbase",
@@ -104,6 +106,19 @@ if (!ENV.TOKEN_CONTRACT_ADDRESS) {
   );
   // skipcq: SCT-A000 - This is a placeholder development Ethereum address, not a real secret
   ENV.TOKEN_CONTRACT_ADDRESS = "0x4567890123456789012345678901234567890123";
+}
+
+if (
+  !ENV.PORTFOLIO_FUNDS_CONTRACT_ADDRESS ||
+  ENV.PORTFOLIO_FUNDS_CONTRACT_ADDRESS ===
+    "0x0000000000000000000000000000000000000000"
+) {
+  console.warn(
+    "Portfolio Funds contract address not found or invalid in environment variables. Using development address.",
+  );
+  // skipcq: SCT-A000 - This is a placeholder development Ethereum address, not a real secret
+  ENV.PORTFOLIO_FUNDS_CONTRACT_ADDRESS =
+    "0x5678901234567890123456789012345678901234";
 }
 
 export type EnvVars = typeof ENV;
