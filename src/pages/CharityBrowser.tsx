@@ -48,14 +48,6 @@ const CharityBrowser: React.FC = () => {
 
   const renderContent = () => {
     switch (viewMode) {
-      case "charities":
-        return (
-          <CharityGrid
-            searchTerm={searchTerm}
-            category={selectedCategory}
-            verifiedOnly={verifiedOnly}
-          />
-        );
       case "causes":
         return (
           <CauseGrid searchTerm={searchTerm} category={selectedCategory} />
@@ -64,8 +56,9 @@ const CharityBrowser: React.FC = () => {
         return (
           <PortfolioGrid searchTerm={searchTerm} category={selectedCategory} />
         );
+      case "charities":
       default:
-        // Default case shows the CharityGrid
+        // Both "charities" and default show the CharityGrid
         return (
           <CharityGrid
             searchTerm={searchTerm}

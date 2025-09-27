@@ -65,11 +65,20 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
 
   const { fee, net } = calculateFee();
 
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      onClose();
+    }
+  }, [onClose]);
+
   return (
     <>
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-50"
+      <button 
+        className="fixed inset-0 bg-black bg-opacity-50 z-50 cursor-pointer border-none p-0 m-0"
         onClick={onClose}
+        onKeyDown={handleKeyDown}
+        aria-label="Close modal overlay"
+        type="button"
       />
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-2xl max-w-md w-[95%] z-50 p-6">
         <h2 className="text-2xl font-bold mb-4">Donate to {fund.name}</h2>
@@ -210,7 +219,7 @@ const PortfolioFunds: React.FC = () => {
           <div className="h-8 bg-gray-200 rounded w-1/3 mb-6"></div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-64 bg-gray-200 rounded-lg"></div>
+              <div key={`skeleton-fund-${i}`} className="h-64 bg-gray-200 rounded-lg"></div>
             ))}
           </div>
         </div>
