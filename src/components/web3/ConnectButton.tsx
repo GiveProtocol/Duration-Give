@@ -300,7 +300,7 @@ export function ConnectButton() {
           setShowWalletSelect(false);
         }, CONNECTION_TIMEOUT);
 
-        await connect();
+        await connect(_wallet.provider);
         clearTimeout(timeoutId);
         setShowWalletSelect(false);
 

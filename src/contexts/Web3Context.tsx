@@ -54,7 +54,7 @@ interface Web3ContextType {
   chainId: number | null;
   isConnected: boolean;
   isConnecting: boolean;
-  connect: () => Promise<void>;
+  connect: (_walletProvider?: unknown) => Promise<void>;
   disconnect: () => Promise<void>;
   error: Error | null;
   switchChain: (_chainId: number) => Promise<void>;
@@ -85,6 +85,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
   const [chainId, setChainId] = useState<number | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [currentWalletProvider, setCurrentWalletProvider] = useState<unknown | null>(null);
 
   // Handle account changes
   const handleAccountsChanged = useCallback((accounts: string[]) => {
@@ -156,47 +157,46 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
 
   // Set up event listeners
   useEffect(() => {
-    if (typeof window.ethereum !== "undefined") {
-      window.ethereum.on("accountsChanged", handleAccountsChanged);
-      window.ethereum.on("chainChanged", handleChainChanged);
-      window.ethereum.on("disconnect", () => {
-        setProvider(null);
-        setAddress(null);
-        setChainId(null);
-      });
+    const walletProvider = currentWalletProvider || window.ethereum;
+    if (!walletProvider || typeof walletProvider.on !== "function") return;
 
-      return () => {
-        if (window.ethereum?.removeListener) {
-          window.ethereum.removeListener(
-            "accountsChanged",
-            handleAccountsChanged,
-          );
-          window.ethereum.removeListener("chainChanged", handleChainChanged);
-          window.ethereum.removeListener("disconnect", () => {
-            // Empty handler for disconnect event cleanup
-          });
-        }
-      };
-    }
-    return undefined;
-  }, [handleAccountsChanged, handleChainChanged]);
+    const handleDisconnect = () => {
+      setProvider(null);
+      setAddress(null);
+      setChainId(null);
+      setCurrentWalletProvider(null);
+    };
+
+    walletProvider.on("accountsChanged", handleAccountsChanged);
+    walletProvider.on("chainChanged", handleChainChanged);
+    walletProvider.on("disconnect", handleDisconnect);
+
+    return () => {
+      if (typeof walletProvider.removeListener === "function") {
+        walletProvider.removeListener("accountsChanged", handleAccountsChanged);
+        walletProvider.removeListener("chainChanged", handleChainChanged);
+        walletProvider.removeListener("disconnect", handleDisconnect);
+      }
+    };
+  }, [handleAccountsChanged, handleChainChanged, currentWalletProvider]);
 
   const switchChain = useCallback(async (targetChainId: number) => {
-    if (typeof window.ethereum === "undefined") {
-      throw new Error("Please install MetaMask to switch networks");
+    const walletProvider = currentWalletProvider || window.ethereum;
+    if (!walletProvider) {
+      throw new Error("No wallet provider found");
     }
 
     try {
-      await window.ethereum.request({
+      await walletProvider.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: `0x${targetChainId.toString(16)}` }],
       });
       Logger.info("Switched network", { chainId: targetChainId });
     } catch (error: unknown) {
-      // If the chain hasn't been added to MetaMask
+      // If the chain hasn't been added to wallet
       if (error.code === 4902) {
         try {
-          await window.ethereum.request({
+          await walletProvider.request({
             method: "wallet_addEthereumChain",
             params: [MOONBASE_CHAIN_INFO],
           });
@@ -210,12 +210,15 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
         throw error;
       }
     }
-  }, []);
+  }, [currentWalletProvider]);
 
-  const connect = useCallback(async () => {
-    if (typeof window.ethereum === "undefined") {
-      const error = new Error("Please install MetaMask to connect");
-      Logger.error("MetaMask not found", { error });
+  const connect = useCallback(async (_walletProvider?: unknown) => {
+    // Use provided wallet provider or fallback to window.ethereum
+    const walletProvider = _walletProvider || window.ethereum;
+    
+    if (!walletProvider) {
+      const error = new Error("No wallet provider found. Please install a wallet extension.");
+      Logger.error("Wallet provider not found", { error });
       setError(error);
       throw error;
     }
@@ -225,7 +228,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
       setError(null);
 
       // Request account access
-      const accounts = await window.ethereum.request({
+      const accounts = await walletProvider.request({
         method: "eth_requestAccounts",
       });
 
@@ -234,7 +237,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
       }
 
       // Create Web3 provider
-      const provider = new ethers.BrowserProvider(window.ethereum);
+      const provider = new ethers.BrowserProvider(walletProvider);
 
       // Get connected chain ID
       const network = await provider.getNetwork();
@@ -242,6 +245,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
 
       // Set provider first so it's available for chain switching
       setProvider(provider);
+      setCurrentWalletProvider(walletProvider);
 
       // Switch to Moonbase Alpha if on wrong network
       if (currentChainId !== CHAIN_IDS.MOONBASE) {
@@ -296,6 +300,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
       setAddress(null);
       setChainId(null);
       setError(null);
+      setCurrentWalletProvider(null);
 
       // Most wallets don't have a disconnect method, but we can try various approaches
       if (window.ethereum) {

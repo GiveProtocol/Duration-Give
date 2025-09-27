@@ -4,9 +4,27 @@
 interface Window {
   ethereum?: {
     isMetaMask?: boolean;
-    isCoinbaseWallet?: boolean;
-    isTally?: boolean;
-    isBraveWallet?: boolean;
+    request: (_args: { method: string; params?: unknown[] }) => Promise<unknown>; // Prefixed as unused
+    on: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused
+    removeListener: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused
+    removeAllListeners: (_event: string) => void; // Prefixed as unused
+    disconnect?: () => Promise<void>;
+  };
+  SubWallet?: {
+    request: (_args: { method: string; params?: unknown[] }) => Promise<unknown>; // Prefixed as unused
+    on: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused
+    removeListener: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused
+    removeAllListeners: (_event: string) => void; // Prefixed as unused
+    disconnect?: () => Promise<void>;
+  };
+  talismanEth?: {
+    request: (_args: { method: string; params?: unknown[] }) => Promise<unknown>; // Prefixed as unused
+    on: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused
+    removeListener: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused
+    removeAllListeners: (_event: string) => void; // Prefixed as unused
+    disconnect?: () => Promise<void>;
+  };
+  nova?: {
     request: (_args: { method: string; params?: unknown[] }) => Promise<unknown>; // Prefixed as unused
     on: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused
     removeListener: (_event: string, _callback: (..._args: unknown[]) => void) => void; // Prefixed as unused

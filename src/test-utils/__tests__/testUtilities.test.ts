@@ -1,3 +1,4 @@
+import React from 'react';
 import { testValidCases, testInvalidCases } from '../validationTestData';
 import { expectBlockchainLink, renderWithRouter } from '../testHelpers';
 import { commonMocks, createHookMocks, componentMocks } from '../jestSetup';
