@@ -4,7 +4,6 @@ import { Button } from "../components/ui/Button";
 import { usePortfolioFunds, PortfolioFund } from "../hooks/web3/usePortfolioFunds";
 import { useToast } from "../contexts/ToastContext";
 import { useTranslation } from "../hooks/useTranslation";
-import { formatEther, parseEther } from "ethers";
 import { Heart, Users, TrendingUp, Clock, AlertCircle } from "lucide-react";
 
 interface DonationModalProps {
@@ -233,56 +232,52 @@ const PortfolioFunds: React.FC = () => {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {funds.map((fund) => (
-            <Card key={fund.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {fund.name}
-                  </h3>
-                  <div className="flex items-center text-sm text-green-600 bg-green-100 px-2 py-1 rounded-full">
-                    <Heart className="h-3 w-3 mr-1" />
-                    Active
-                  </div>
+            <Card key={fund.id} className="overflow-hidden hover:shadow-lg transition-shadow p-6">
+              <div className="flex items-start justify-between mb-4">
+                <h3 className="text-xl font-semibold text-gray-900">
+                  {fund.name}
+                </h3>
+                <div className="flex items-center text-sm text-green-600 bg-green-100 px-2 py-1 rounded-full">
+                  <Heart className="h-3 w-3 mr-1" />
+                  Active
                 </div>
-
-                <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                  {fund.description}
-                </p>
-
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Users className="h-4 w-4 mr-2" />
-                    {fund.charities.length} Verified Charities
-                  </div>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <TrendingUp className="h-4 w-4 mr-2" />
-                    {fund.totalRaised} Total Raised
-                  </div>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Clock className="h-4 w-4 mr-2" />
-                    {fund.totalDistributed} Distributed
-                  </div>
-                </div>
-
-                <div className="bg-blue-50 p-3 rounded-lg mb-4">
-                  <div className="flex items-start">
-                    <AlertCircle className="h-4 w-4 text-blue-600 mr-2 mt-0.5 flex-shrink-0" />
-                    <div className="text-sm">
-                      <p className="text-blue-800 font-medium">Equal Distribution</p>
-                      <p className="text-blue-700">
-                        Each charity receives {100 / fund.charities.length}% of donations
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <Button
-                  onClick={createDonateHandler(fund)}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                >
-                  Donate to Fund
-                </Button>
               </div>
+
+              <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                {fund.description}
+              </p>
+
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center text-sm text-gray-500">
+                  <Users className="h-4 w-4 mr-2" />
+                  {fund.charities.length} Verified Charities
+                </div>
+                <div className="flex items-center text-sm text-gray-500">
+                  <TrendingUp className="h-4 w-4 mr-2" />
+                  {fund.totalRaised} Total Raised
+                </div>
+                <div className="flex items-center text-sm text-gray-500">
+                  <Clock className="h-4 w-4 mr-2" />
+                  {fund.totalDistributed} Distributed
+                </div>
+              </div>
+
+              <div className="bg-blue-50 p-3 rounded-lg mb-4 flex items-start">
+                <AlertCircle className="h-4 w-4 text-blue-600 mr-2 mt-0.5 flex-shrink-0" />
+                <div className="text-sm">
+                  <p className="text-blue-800 font-medium">Equal Distribution</p>
+                  <p className="text-blue-700">
+                    Each charity receives {100 / fund.charities.length}% of donations
+                  </p>
+                </div>
+              </div>
+
+              <Button
+                onClick={createDonateHandler(fund)}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              >
+                Donate to Fund
+              </Button>
             </Card>
           ))}
         </div>

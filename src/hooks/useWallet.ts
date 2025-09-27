@@ -27,9 +27,9 @@ export interface WalletProvider {
  * ```
  */
 class EVMWalletBase implements WalletProvider {
-  name: string;
-  icon: string;
-  protected provider: unknown;
+  readonly name: string;
+  readonly icon: string;
+  protected readonly provider: unknown;
   private disconnectionAttempts = 0;
   private chainParams: Record<number, unknown> | null = null;
 
@@ -78,7 +78,6 @@ class EVMWalletBase implements WalletProvider {
   async disconnect(): Promise<void> {
     this.disconnectionAttempts++;
     // Most EVM wallets don't have a disconnect method
-    return Promise.resolve();
   }
 
   async switchChain(chainId: number): Promise<void> {
@@ -210,9 +209,9 @@ class MetaMaskWallet extends EVMWalletBase {
  * ```
  */
 class WalletConnect implements WalletProvider {
-  name = "WalletConnect";
-  icon = "walletconnect";
-  private provider: unknown = null;
+  readonly name = "WalletConnect";
+  readonly icon = "walletconnect";
+  private readonly provider: unknown = null;
   private connectionAttempts = 0;
 
   isInstalled(): boolean {
@@ -233,7 +232,7 @@ class WalletConnect implements WalletProvider {
   }
 
   async disconnect(): Promise<void> {
-    return Promise.resolve();
+    // WalletConnect disconnect would be implemented here
   }
 
   async switchChain(_chainId: number | string): Promise<void> {
