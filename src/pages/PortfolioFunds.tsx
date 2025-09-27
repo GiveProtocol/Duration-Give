@@ -216,11 +216,11 @@ const PortfolioFunds: React.FC = () => {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/3 mb-6"></div>
+          <div className="h-8 bg-gray-200 rounded w-1/3 mb-6" />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[...Array(3)].map((_, i) => (
-              <div key={`skeleton-fund-${i}`} className="h-64 bg-gray-200 rounded-lg"></div>
-            ))}
+            <div key="skeleton-fund-1" className="h-64 bg-gray-200 rounded-lg" />
+            <div key="skeleton-fund-2" className="h-64 bg-gray-200 rounded-lg" />
+            <div key="skeleton-fund-3" className="h-64 bg-gray-200 rounded-lg" />
           </div>
         </div>
       </div>
