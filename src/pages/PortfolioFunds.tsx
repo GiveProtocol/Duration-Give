@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
-import { usePortfolioFunds, PortfolioFund } from "../hooks/web3/usePortfolioFunds";
+import {
+  usePortfolioFunds,
+  PortfolioFund,
+} from "../hooks/web3/usePortfolioFunds";
 import { useToast } from "../contexts/ToastContext";
 import { useTranslation } from "../hooks/useTranslation";
 import { formatEther, parseEther } from "ethers";
@@ -13,10 +16,17 @@ interface DonationModalProps {
   onSuccess: () => void;
 }
 
-const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess }) => {
+const DonationModal: React.FC<DonationModalProps> = ({
+  fund,
+  onClose,
+  onSuccess,
+}) => {
   const [amount, setAmount] = useState("");
-  const [donationType, setDonationType] = useState<"native" | "token">("native");
-  const { donateToFund, donateNativeToFund, loading, getPlatformFee } = usePortfolioFunds();
+  const [donationType, setDonationType] = useState<"native" | "token">(
+    "native",
+  );
+  const { donateToFund, donateNativeToFund, loading, getPlatformFee } =
+    usePortfolioFunds();
   const { showToast } = useToast();
   const [platformFee, setPlatformFee] = useState(100); // 1% default
 
@@ -43,7 +53,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
         const tokenAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Your MockERC20
         await donateToFund(fund.id, tokenAddress, amount);
       }
-      
+
       showToast("success", "Donation successful!");
       onSuccess();
       onClose();
@@ -51,7 +61,16 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
       console.error("Donation failed:", error);
       showToast("error", "Donation failed. Please try again.");
     }
-  }, [amount, donationType, fund.id, donateToFund, donateNativeToFund, showToast, onSuccess, onClose]);
+  }, [
+    amount,
+    donationType,
+    fund.id,
+    donateToFund,
+    donateNativeToFund,
+    showToast,
+    onSuccess,
+    onClose,
+  ]);
 
   const calculateFee = () => {
     if (!amount) return { fee: "0", net: "0" };
@@ -60,7 +79,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
     const netAmount = donationAmount - feeAmount;
     return {
       fee: feeAmount.toFixed(6),
-      net: netAmount.toFixed(6)
+      net: netAmount.toFixed(6),
     };
   };
 
@@ -68,18 +87,19 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
 
   return (
     <>
-      <div 
+      <div
         className="fixed inset-0 bg-black bg-opacity-50 z-50"
         onClick={onClose}
       />
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-2xl max-w-md w-[95%] z-50 p-6">
         <h2 className="text-2xl font-bold mb-4">Donate to {fund.name}</h2>
-        
+
         <div className="mb-4">
           <p className="text-gray-600 text-sm mb-4">{fund.description}</p>
           <div className="bg-blue-50 p-3 rounded-lg">
             <p className="text-sm text-blue-800">
-              <strong>Equal Distribution:</strong> Your donation will be split equally among {fund.charities.length} verified charities.
+              <strong>Equal Distribution:</strong> Your donation will be split
+              equally among {fund.charities.length} verified charities.
             </p>
           </div>
         </div>
@@ -92,8 +112,8 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
             <button
               onClick={() => setDonationType("native")}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
-                donationType === "native" 
-                  ? "bg-blue-600 text-white" 
+                donationType === "native"
+                  ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -102,8 +122,8 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
             <button
               onClick={() => setDonationType("token")}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
-                donationType === "token" 
-                  ? "bg-blue-600 text-white" 
+                donationType === "token"
+                  ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -131,18 +151,26 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
           <div className="mb-4 bg-gray-50 p-3 rounded-md text-sm">
             <div className="flex justify-between">
               <span>Donation Amount:</span>
-              <span>{amount} {donationType === "native" ? "DEV" : "TEST"}</span>
+              <span>
+                {amount} {donationType === "native" ? "DEV" : "TEST"}
+              </span>
             </div>
             <div className="flex justify-between text-gray-600">
               <span>Platform Fee ({platformFee / 100}%):</span>
-              <span>{fee} {donationType === "native" ? "DEV" : "TEST"}</span>
+              <span>
+                {fee} {donationType === "native" ? "DEV" : "TEST"}
+              </span>
             </div>
             <div className="flex justify-between font-medium border-t pt-1">
               <span>To Charities:</span>
-              <span>{net} {donationType === "native" ? "DEV" : "TEST"}</span>
+              <span>
+                {net} {donationType === "native" ? "DEV" : "TEST"}
+              </span>
             </div>
             <div className="text-xs text-gray-500 mt-2">
-              Each charity receives: {(parseFloat(net) / fund.charities.length).toFixed(6)} {donationType === "native" ? "DEV" : "TEST"}
+              Each charity receives:{" "}
+              {(parseFloat(net) / fund.charities.length).toFixed(6)}{" "}
+              {donationType === "native" ? "DEV" : "TEST"}
             </div>
           </div>
         )}
@@ -200,9 +228,12 @@ const PortfolioFunds: React.FC = () => {
     loadFunds(); // Refresh funds after successful donation
   }, [loadFunds]);
 
-  const createDonateHandler = useCallback((fund: PortfolioFund) => {
-    return () => handleDonateClick(fund);
-  }, [handleDonateClick]);
+  const createDonateHandler = useCallback(
+    (fund: PortfolioFund) => {
+      return () => handleDonateClick(fund);
+    },
+    [handleDonateClick],
+  );
 
   if (loading) {
     return (
@@ -227,13 +258,19 @@ const PortfolioFunds: React.FC = () => {
             {t("portfolio.title", "Portfolio Funds")}
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl">
-            {t("portfolio.description", "Donate to curated groups of verified charities with equal distribution. Each fund focuses on a specific cause area with maximum impact.")}
+            {t(
+              "portfolio.description",
+              "Donate to curated groups of verified charities with equal distribution. Each fund focuses on a specific cause area with maximum impact.",
+            )}
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {funds.map((fund) => (
-            <Card key={fund.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+            <Card
+              key={fund.id}
+              className="overflow-hidden hover:shadow-lg transition-shadow"
+            >
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <h3 className="text-xl font-semibold text-gray-900">
@@ -268,9 +305,12 @@ const PortfolioFunds: React.FC = () => {
                   <div className="flex items-start">
                     <AlertCircle className="h-4 w-4 text-blue-600 mr-2 mt-0.5 flex-shrink-0" />
                     <div className="text-sm">
-                      <p className="text-blue-800 font-medium">Equal Distribution</p>
+                      <p className="text-blue-800 font-medium">
+                        Equal Distribution
+                      </p>
                       <p className="text-blue-700">
-                        Each charity receives {100 / fund.charities.length}% of donations
+                        Each charity receives {100 / fund.charities.length}% of
+                        donations
                       </p>
                     </div>
                   </div>
@@ -291,7 +331,9 @@ const PortfolioFunds: React.FC = () => {
           <div className="text-center py-12 text-gray-500">
             <Heart className="h-12 w-12 mx-auto mb-4 text-gray-300" />
             <p className="text-lg">No portfolio funds available</p>
-            <p className="text-sm">Check back later for new funding opportunities</p>
+            <p className="text-sm">
+              Check back later for new funding opportunities
+            </p>
           </div>
         )}
       </div>

@@ -260,11 +260,7 @@ class NovaWallet extends EVMWalletBase {
   private installationChecks = 0;
 
   constructor() {
-    super(
-      "Nova Wallet",
-      "nova",
-      window.nova ? window.nova : null,
-    );
+    super("Nova Wallet", "nova", window.nova ? window.nova : null);
   }
 
   isInstalled(): boolean {
@@ -292,11 +288,7 @@ class SubWallet extends EVMWalletBase {
   private installationChecks = 0;
 
   constructor() {
-    super(
-      "SubWallet",
-      "subwallet",
-      window.SubWallet ? window.SubWallet : null,
-    );
+    super("SubWallet", "subwallet", window.SubWallet ? window.SubWallet : null);
   }
 
   isInstalled(): boolean {

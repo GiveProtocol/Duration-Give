@@ -198,7 +198,6 @@ const VolunteerOpportunities: React.FC = () => {
     [],
   );
 
-
   const formatLanguageName = (language: string): string => {
     return language
       .split("_")
