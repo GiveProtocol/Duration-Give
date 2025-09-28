@@ -128,31 +128,43 @@ const DonationModal: React.FC<DonationModalProps> = ({
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2" id="donation-type-label">
-            Donation Type
-          </label>
-          <div className="flex gap-2" role="group" aria-labelledby="donation-type-label">
-            <button
-              onClick={handleSetDonationTypeNative}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
+          <fieldset>
+            <legend className="block text-sm font-medium text-gray-700 mb-2">
+              Donation Type
+            </legend>
+            <div className="flex gap-2" role="radiogroup">
+              <label className={`flex-1 py-2 px-4 rounded-md text-sm font-medium cursor-pointer text-center ${
                 donationType === "native"
                   ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              DEV (Native)
-            </button>
-            <button
-              onClick={handleSetDonationTypeToken}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
+              }`}>
+                <input
+                  type="radio"
+                  name="donationType"
+                  value="native"
+                  checked={donationType === "native"}
+                  onChange={handleSetDonationTypeNative}
+                  className="sr-only"
+                />
+                DEV (Native)
+              </label>
+              <label className={`flex-1 py-2 px-4 rounded-md text-sm font-medium cursor-pointer text-center ${
                 donationType === "token"
                   ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              TEST Token
-            </button>
-          </div>
+              }`}>
+                <input
+                  type="radio"
+                  name="donationType"
+                  value="token"
+                  checked={donationType === "token"}
+                  onChange={handleSetDonationTypeToken}
+                  className="sr-only"
+                />
+                TEST Token
+              </label>
+            </div>
+          </fieldset>
         </div>
 
         <div className="mb-4">
