@@ -32,3 +32,9 @@
     @apply bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 border border-gray-300 focus:ring-indigo-500 shadow-sm hover:shadow-md transform hover:-translate-y-0.5;
   }
 }
+
+/* Fix for Silktide consent manager backdrop-filter Safari compatibility */
+#silktide-backdrop,
+#silktide-backdrop-global {
+  -webkit-backdrop-filter: blur(var(--backdropBackgroundBlur));
+}
