@@ -24,82 +24,6 @@ const TEST_CHARITIES = {
   girlsWhoCode: "0xbcdef12345678901234567890123456789012345"
 };
 
-async function main() {
-  console.log("🚀 Starting PortfolioFunds deployment to Moonbase Alpha...");
-
-  // Get the deployer account
-  const [deployer] = await hre.ethers.getSigners();
-  console.log("Deploying contracts with account:", deployer.address);
-
-  // Check account balance
-  const balance = await deployer.provider.getBalance(deployer.address);
-  console.log("Account balance:", hre.ethers.formatEther(balance), "DEV");
-
-  if (balance === 0n) {
-    console.error("❌ Error: Deployer account has no DEV tokens");
-    console.log("Get testnet DEV tokens from: https://faucet.moonbeam.network/");
-    throw new Error("Deployer account has no DEV tokens");
-  }
-
-  // Use the same treasury address as other contracts
-  const treasuryAddress = "0x8cFc24Ad1CDc3B80338392f17f6e6ab40552e1C0";
-  console.log("🏦 Using treasury address:", treasuryAddress);
-
-  // Deploy PortfolioFunds contract
-  console.log("\n📄 Deploying PortfolioFunds contract...");
-  const PortfolioFunds = await hre.ethers.getContractFactory("PortfolioFunds");
-  const portfolioFunds = await PortfolioFunds.deploy(treasuryAddress);
-  await portfolioFunds.waitForDeployment();
-  const portfolioFundsAddress = await portfolioFunds.getAddress();
-  console.log("✅ PortfolioFunds deployed to:", portfolioFundsAddress);
-
-  // Setup initial charities and funds
-  console.log("\n🔧 Setting up verified charities...");
-  await setupVerifiedCharities(portfolioFunds);
-  
-  console.log("\n🔧 Creating portfolio funds...");
-  await createPortfolioFunds(portfolioFunds);
-
-  // Load existing deployment info if it exists
-  const deploymentPath = path.join(__dirname, "..", "deployments");
-  const deploymentFile = path.join(deploymentPath, "moonbase.json");
-  let deploymentInfo = {};
-  
-  if (fs.existsSync(deploymentFile)) {
-    deploymentInfo = JSON.parse(fs.readFileSync(deploymentFile, 'utf8'));
-  } else {
-    // Create new deployment info structure
-    deploymentInfo = {
-      network: "moonbase",
-      chainId: 1287,
-      deployer: deployer.address,
-      contracts: {}
-    };
-  }
-
-  // Update with new contract
-  deploymentInfo.contracts.PortfolioFunds = portfolioFundsAddress;
-  deploymentInfo.lastUpdated = new Date().toISOString();
-
-  // Save updated deployment info
-  if (!fs.existsSync(deploymentPath)) {
-    fs.mkdirSync(deploymentPath);
-  }
-  fs.writeFileSync(deploymentFile, JSON.stringify(deploymentInfo, null, 2));
-
-  console.log(`\n📝 Deployment info updated in: ${deploymentFile}`);
-  console.log("\n🎉 PortfolioFunds deployment complete!");
-  console.log("\n📋 Contract Address:");
-  console.log(`VITE_PORTFOLIO_FUNDS_CONTRACT_ADDRESS=${portfolioFundsAddress}`);
-  console.log("\n📌 Add this address to your .env file");
-
-  // Verify on Moonscan if API key is available
-  if (process.env.MOONSCAN_API_KEY) {
-    console.log("\n🔍 Verifying contract on Moonscan...");
-    await verifyContract(portfolioFundsAddress, [treasuryAddress]);
-  }
-}
-
 async function setupVerifiedCharities(portfolioFunds) {
   const charityList = [
     // Environmental charities
@@ -230,6 +154,82 @@ async function verifyContract(contractAddress, constructorArgs) {
     } else {
       console.log("❌ Failed to verify contract:", error.message);
     }
+  }
+}
+
+async function main() {
+  console.log("🚀 Starting PortfolioFunds deployment to Moonbase Alpha...");
+
+  // Get the deployer account
+  const [deployer] = await hre.ethers.getSigners();
+  console.log("Deploying contracts with account:", deployer.address);
+
+  // Check account balance
+  const balance = await deployer.provider.getBalance(deployer.address);
+  console.log("Account balance:", hre.ethers.formatEther(balance), "DEV");
+
+  if (balance === 0n) {
+    console.error("❌ Error: Deployer account has no DEV tokens");
+    console.log("Get testnet DEV tokens from: https://faucet.moonbeam.network/");
+    throw new Error("Deployer account has no DEV tokens");
+  }
+
+  // Use the same treasury address as other contracts
+  const treasuryAddress = "0x8cFc24Ad1CDc3B80338392f17f6e6ab40552e1C0";
+  console.log("🏦 Using treasury address:", treasuryAddress);
+
+  // Deploy PortfolioFunds contract
+  console.log("\n📄 Deploying PortfolioFunds contract...");
+  const PortfolioFunds = await hre.ethers.getContractFactory("PortfolioFunds");
+  const portfolioFunds = await PortfolioFunds.deploy(treasuryAddress);
+  await portfolioFunds.waitForDeployment();
+  const portfolioFundsAddress = await portfolioFunds.getAddress();
+  console.log("✅ PortfolioFunds deployed to:", portfolioFundsAddress);
+
+  // Setup initial charities and funds
+  console.log("\n🔧 Setting up verified charities...");
+  await setupVerifiedCharities(portfolioFunds);
+  
+  console.log("\n🔧 Creating portfolio funds...");
+  await createPortfolioFunds(portfolioFunds);
+
+  // Load existing deployment info if it exists
+  const deploymentPath = path.join(__dirname, "..", "deployments");
+  const deploymentFile = path.join(deploymentPath, "moonbase.json");
+  let deploymentInfo = {};
+  
+  if (fs.existsSync(deploymentFile)) {
+    deploymentInfo = JSON.parse(fs.readFileSync(deploymentFile, 'utf8'));
+  } else {
+    // Create new deployment info structure
+    deploymentInfo = {
+      network: "moonbase",
+      chainId: 1287,
+      deployer: deployer.address,
+      contracts: {}
+    };
+  }
+
+  // Update with new contract
+  deploymentInfo.contracts.PortfolioFunds = portfolioFundsAddress;
+  deploymentInfo.lastUpdated = new Date().toISOString();
+
+  // Save updated deployment info
+  if (!fs.existsSync(deploymentPath)) {
+    fs.mkdirSync(deploymentPath);
+  }
+  fs.writeFileSync(deploymentFile, JSON.stringify(deploymentInfo, null, 2));
+
+  console.log(`\n📝 Deployment info updated in: ${deploymentFile}`);
+  console.log("\n🎉 PortfolioFunds deployment complete!");
+  console.log("\n📋 Contract Address:");
+  console.log(`VITE_PORTFOLIO_FUNDS_CONTRACT_ADDRESS=${portfolioFundsAddress}`);
+  console.log("\n📌 Add this address to your .env file");
+
+  // Verify on Moonscan if API key is available
+  if (process.env.MOONSCAN_API_KEY) {
+    console.log("\n🔍 Verifying contract on Moonscan...");
+    await verifyContract(portfolioFundsAddress, [treasuryAddress]);
   }
 }
 

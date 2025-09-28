@@ -71,6 +71,18 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
     }
   }, [onClose]);
 
+  const handleSetDonationTypeNative = useCallback(() => {
+    setDonationType("native");
+  }, []);
+
+  const handleSetDonationTypeToken = useCallback(() => {
+    setDonationType("token");
+  }, []);
+
+  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value);
+  }, []);
+
   return (
     <>
       <button 
@@ -93,12 +105,12 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-2" id="donation-type-label">
             Donation Type
           </label>
-          <div className="flex gap-2">
+          <div className="flex gap-2" role="group" aria-labelledby="donation-type-label">
             <button
-              onClick={() => setDonationType("native")}
+              onClick={handleSetDonationTypeNative}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
                 donationType === "native" 
                   ? "bg-blue-600 text-white" 
@@ -108,7 +120,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
               DEV (Native)
             </button>
             <button
-              onClick={() => setDonationType("token")}
+              onClick={handleSetDonationTypeToken}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
                 donationType === "token" 
                   ? "bg-blue-600 text-white" 
@@ -121,13 +133,14 @@ const DonationModal: React.FC<DonationModalProps> = ({ fund, onClose, onSuccess 
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="donation-amount" className="block text-sm font-medium text-gray-700 mb-1">
             Amount ({donationType === "native" ? "DEV" : "TEST"})
           </label>
           <input
+            id="donation-amount"
             type="number"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={handleAmountChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
             placeholder="0.0"
             step="0.001"
@@ -211,6 +224,10 @@ const PortfolioFunds: React.FC = () => {
   const createDonateHandler = useCallback((fund: PortfolioFund) => {
     return () => handleDonateClick(fund);
   }, [handleDonateClick]);
+
+  const handleCloseModal = useCallback(() => {
+    setSelectedFund(null);
+  }, []);
 
   if (loading) {
     return (
@@ -303,7 +320,7 @@ const PortfolioFunds: React.FC = () => {
       {selectedFund && (
         <DonationModal
           fund={selectedFund}
-          onClose={() => setSelectedFund(null)}
+          onClose={handleCloseModal}
           onSuccess={handleDonationSuccess}
         />
       )}
