@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { ethers } from "ethers";
 import { useContract } from "./useContract";
 import { useWeb3 } from "@/contexts/Web3Context";
