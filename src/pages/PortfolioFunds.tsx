@@ -101,9 +101,12 @@ const DonationModal: React.FC<DonationModalProps> = ({
     setDonationType("token");
   }, []);
 
-  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value);
-  }, []);
+  const handleAmountChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setAmount(e.target.value);
+    },
+    [],
+  );
 
   return (
     <>
@@ -133,11 +136,13 @@ const DonationModal: React.FC<DonationModalProps> = ({
               Donation Type
             </legend>
             <div className="flex gap-2" role="radiogroup">
-              <label className={`flex-1 py-2 px-4 rounded-md text-sm font-medium cursor-pointer text-center ${
-                donationType === "native"
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}>
+              <label
+                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium cursor-pointer text-center ${
+                  donationType === "native"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
                 <input
                   type="radio"
                   name="donationType"
@@ -148,11 +153,13 @@ const DonationModal: React.FC<DonationModalProps> = ({
                 />
                 DEV (Native)
               </label>
-              <label className={`flex-1 py-2 px-4 rounded-md text-sm font-medium cursor-pointer text-center ${
-                donationType === "token"
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}>
+              <label
+                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium cursor-pointer text-center ${
+                  donationType === "token"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
                 <input
                   type="radio"
                   name="donationType"
@@ -168,7 +175,10 @@ const DonationModal: React.FC<DonationModalProps> = ({
         </div>
 
         <div className="mb-4">
-          <label htmlFor="donation-amount" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="donation-amount"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Amount ({donationType === "native" ? "DEV" : "TEST"})
           </label>
           <input
