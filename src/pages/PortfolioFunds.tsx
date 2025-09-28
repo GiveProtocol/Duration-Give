@@ -101,9 +101,12 @@ const DonationModal: React.FC<DonationModalProps> = ({
     setDonationType("token");
   }, []);
 
-  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value);
-  }, []);
+  const handleAmountChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setAmount(e.target.value);
+    },
+    [],
+  );
 
   return (
     <>
@@ -128,10 +131,17 @@ const DonationModal: React.FC<DonationModalProps> = ({
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2" id="donation-type-label">
+          <label
+            className="block text-sm font-medium text-gray-700 mb-2"
+            id="donation-type-label"
+          >
             Donation Type
           </label>
-          <div className="flex gap-2" role="group" aria-labelledby="donation-type-label">
+          <div
+            className="flex gap-2"
+            role="group"
+            aria-labelledby="donation-type-label"
+          >
             <button
               onClick={handleSetDonationTypeNative}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
@@ -156,7 +166,10 @@ const DonationModal: React.FC<DonationModalProps> = ({
         </div>
 
         <div className="mb-4">
-          <label htmlFor="donation-amount" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="donation-amount"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Amount ({donationType === "native" ? "DEV" : "TEST"})
           </label>
           <input

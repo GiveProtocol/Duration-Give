@@ -10,18 +10,18 @@ const TEST_CHARITIES = {
   rainforestAlliance: "0x2345678901234567890123456789012345678901",
   solarSister: "0x3456789012345678901234567890123456789012",
   treesForFuture: "0x4567890123456789012345678901234567890123",
-  
+
   // Poverty relief charities
   giveDirectly: "0x5678901234567890123456789012345678901234",
   grameenFoundation: "0x6789012345678901234567890123456789012345",
   oxfamInternational: "0x7890123456789012345678901234567890123456",
   heiferInternational: "0x8901234567890123456789012345678901234567",
-  
+
   // Education charities
   roomToRead: "0x9012345678901234567890123456789012345678",
   teachForAll: "0x0123456789012345678901234567890123456789",
   khanAcademy: "0xabcdef1234567890123456789012345678901234",
-  girlsWhoCode: "0xbcdef12345678901234567890123456789012345"
+  girlsWhoCode: "0xbcdef12345678901234567890123456789012345",
 };
 
 async function setupVerifiedCharities(portfolioFunds) {
@@ -31,23 +31,29 @@ async function setupVerifiedCharities(portfolioFunds) {
     { address: TEST_CHARITIES.rainforestAlliance, name: "Rainforest Alliance" },
     { address: TEST_CHARITIES.solarSister, name: "Solar Sister" },
     { address: TEST_CHARITIES.treesForFuture, name: "Trees for the Future" },
-    
+
     // Poverty relief charities
     { address: TEST_CHARITIES.giveDirectly, name: "GiveDirectly" },
     { address: TEST_CHARITIES.grameenFoundation, name: "Grameen Foundation" },
     { address: TEST_CHARITIES.oxfamInternational, name: "Oxfam International" },
-    { address: TEST_CHARITIES.heiferInternational, name: "Heifer International" },
-    
+    {
+      address: TEST_CHARITIES.heiferInternational,
+      name: "Heifer International",
+    },
+
     // Education charities
     { address: TEST_CHARITIES.roomToRead, name: "Room to Read" },
     { address: TEST_CHARITIES.teachForAll, name: "Teach for All" },
     { address: TEST_CHARITIES.khanAcademy, name: "Khan Academy" },
-    { address: TEST_CHARITIES.girlsWhoCode, name: "Girls Who Code" }
+    { address: TEST_CHARITIES.girlsWhoCode, name: "Girls Who Code" },
   ];
 
   for (const charity of charityList) {
     console.log(`  Adding ${charity.name}...`);
-    const tx = await portfolioFunds.addVerifiedCharity(charity.address, charity.name);
+    const tx = await portfolioFunds.addVerifiedCharity(
+      charity.address,
+      charity.name,
+    );
     await tx.wait();
   }
   console.log("✅ All charities verified");
@@ -60,20 +66,20 @@ async function createPortfolioFunds(portfolioFunds) {
     TEST_CHARITIES.oceanCleanup,
     TEST_CHARITIES.rainforestAlliance,
     TEST_CHARITIES.solarSister,
-    TEST_CHARITIES.treesForFuture
+    TEST_CHARITIES.treesForFuture,
   ];
   const envNames = [
     "Ocean Cleanup Foundation",
     "Rainforest Alliance",
     "Solar Sister",
-    "Trees for the Future"
+    "Trees for the Future",
   ];
-  
+
   let tx = await portfolioFunds.createPortfolioFund(
     "Environmental Impact Fund",
     "Supporting environmental sustainability and climate action worldwide through ocean cleanup, forest preservation, renewable energy access, and reforestation efforts.",
     envCharities,
-    envNames
+    envNames,
   );
   await tx.wait();
   console.log("  ✅ Environmental Impact Fund created");
@@ -84,20 +90,20 @@ async function createPortfolioFunds(portfolioFunds) {
     TEST_CHARITIES.giveDirectly,
     TEST_CHARITIES.grameenFoundation,
     TEST_CHARITIES.oxfamInternational,
-    TEST_CHARITIES.heiferInternational
+    TEST_CHARITIES.heiferInternational,
   ];
   const povertyNames = [
     "GiveDirectly",
     "Grameen Foundation",
     "Oxfam International",
-    "Heifer International"
+    "Heifer International",
   ];
-  
+
   tx = await portfolioFunds.createPortfolioFund(
     "Poverty Relief Impact Fund",
     "Fighting global poverty through direct cash transfers, microfinance, humanitarian aid, and sustainable agricultural development programs.",
     povertyCharities,
-    povertyNames
+    povertyNames,
   );
   await tx.wait();
   console.log("  ✅ Poverty Relief Impact Fund created");
@@ -108,20 +114,20 @@ async function createPortfolioFunds(portfolioFunds) {
     TEST_CHARITIES.roomToRead,
     TEST_CHARITIES.teachForAll,
     TEST_CHARITIES.khanAcademy,
-    TEST_CHARITIES.girlsWhoCode
+    TEST_CHARITIES.girlsWhoCode,
   ];
   const eduNames = [
     "Room to Read",
     "Teach for All",
     "Khan Academy",
-    "Girls Who Code"
+    "Girls Who Code",
   ];
-  
+
   tx = await portfolioFunds.createPortfolioFund(
     "Education Impact Fund",
     "Expanding access to quality education globally through literacy programs, teacher training, online learning platforms, and technology education initiatives.",
     eduCharities,
-    eduNames
+    eduNames,
   );
   await tx.wait();
   console.log("  ✅ Education Impact Fund created");
@@ -140,7 +146,7 @@ async function createPortfolioFunds(portfolioFunds) {
 
 async function verifyContract(contractAddress, constructorArgs) {
   console.log("Waiting 30 seconds for Moonscan to index contract...");
-  await new Promise(resolve => setTimeout(resolve, 30000));
+  await new Promise((resolve) => setTimeout(resolve, 30000));
 
   try {
     await hre.run("verify:verify", {
@@ -170,7 +176,9 @@ async function main() {
 
   if (balance === 0n) {
     console.error("❌ Error: Deployer account has no DEV tokens");
-    console.log("Get testnet DEV tokens from: https://faucet.moonbeam.network/");
+    console.log(
+      "Get testnet DEV tokens from: https://faucet.moonbeam.network/",
+    );
     throw new Error("Deployer account has no DEV tokens");
   }
 
@@ -189,7 +197,7 @@ async function main() {
   // Setup initial charities and funds
   console.log("\n🔧 Setting up verified charities...");
   await setupVerifiedCharities(portfolioFunds);
-  
+
   console.log("\n🔧 Creating portfolio funds...");
   await createPortfolioFunds(portfolioFunds);
 
@@ -197,16 +205,16 @@ async function main() {
   const deploymentPath = path.join(__dirname, "..", "deployments");
   const deploymentFile = path.join(deploymentPath, "moonbase.json");
   let deploymentInfo = {};
-  
+
   if (fs.existsSync(deploymentFile)) {
-    deploymentInfo = JSON.parse(fs.readFileSync(deploymentFile, 'utf8'));
+    deploymentInfo = JSON.parse(fs.readFileSync(deploymentFile, "utf8"));
   } else {
     // Create new deployment info structure
     deploymentInfo = {
       network: "moonbase",
       chainId: 1287,
       deployer: deployer.address,
-      contracts: {}
+      contracts: {},
     };
   }
 
