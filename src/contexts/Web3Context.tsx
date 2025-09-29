@@ -85,7 +85,9 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
   const [chainId, setChainId] = useState<number | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [currentWalletProvider, setCurrentWalletProvider] = useState<unknown | null>(null);
+  const [currentWalletProvider, setCurrentWalletProvider] = useState<
+    unknown | null
+  >(null);
 
   // Handle account changes
   const handleAccountsChanged = useCallback((accounts: string[]) => {
@@ -180,119 +182,127 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
     };
   }, [handleAccountsChanged, handleChainChanged, currentWalletProvider]);
 
-  const switchChain = useCallback(async (targetChainId: number) => {
-    const walletProvider = currentWalletProvider || window.ethereum;
-    if (!walletProvider) {
-      throw new Error("No wallet provider found");
-    }
-
-    try {
-      await walletProvider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: `0x${targetChainId.toString(16)}` }],
-      });
-      Logger.info("Switched network", { chainId: targetChainId });
-    } catch (error: unknown) {
-      // If the chain hasn't been added to wallet
-      if (hasErrorCode(error, 4902)) {
-        try {
-          await walletProvider.request({
-            method: "wallet_addEthereumChain",
-            params: [MOONBASE_CHAIN_INFO],
-          });
-          Logger.info("Added Moonbase Alpha network");
-        } catch (addError) {
-          Logger.error("Failed to add network", { error: addError });
-          throw new Error("Failed to add Moonbase Alpha network");
-        }
-      } else {
-        Logger.error("Failed to switch network", { error });
-        throw error;
-      }
-    }
-  }, [currentWalletProvider]);
-
-  const connect = useCallback(async (_walletProvider?: unknown) => {
-    // Use provided wallet provider or fallback to window.ethereum
-    const walletProvider = _walletProvider || window.ethereum;
-    
-    if (!walletProvider) {
-      const error = new Error("No wallet provider found. Please install a wallet extension.");
-      Logger.error("Wallet provider not found", { error });
-      setError(error);
-      throw error;
-    }
-
-    try {
-      setIsConnecting(true);
-      setError(null);
-
-      // Request account access
-      const accounts = await walletProvider.request({
-        method: "eth_requestAccounts",
-      });
-
-      if (!accounts || accounts.length === 0) {
-        throw new Error("No accounts found");
+  const switchChain = useCallback(
+    async (targetChainId: number) => {
+      const walletProvider = currentWalletProvider || window.ethereum;
+      if (!walletProvider) {
+        throw new Error("No wallet provider found");
       }
 
-      // Create Web3 provider
-      const provider = new ethers.BrowserProvider(walletProvider);
-
-      // Get connected chain ID
-      const network = await provider.getNetwork();
-      const currentChainId = Number(network.chainId);
-
-      // Set provider first so it's available for chain switching
-      setProvider(provider);
-      setCurrentWalletProvider(walletProvider);
-
-      // Switch to Moonbase Alpha if on wrong network
-      if (currentChainId !== CHAIN_IDS.MOONBASE) {
-        try {
-          await switchChain(CHAIN_IDS.MOONBASE);
-        } catch (switchError: unknown) {
-          // If user rejected the switch, throw error
-          if (hasErrorCode(switchError, 4001)) {
-            throw new Error("Please switch to Moonbase Alpha (TestNet)");
+      try {
+        await walletProvider.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: `0x${targetChainId.toString(16)}` }],
+        });
+        Logger.info("Switched network", { chainId: targetChainId });
+      } catch (error: unknown) {
+        // If the chain hasn't been added to wallet
+        if (hasErrorCode(error, 4902)) {
+          try {
+            await walletProvider.request({
+              method: "wallet_addEthereumChain",
+              params: [MOONBASE_CHAIN_INFO],
+            });
+            Logger.info("Added Moonbase Alpha network");
+          } catch (addError) {
+            Logger.error("Failed to add network", { error: addError });
+            throw new Error("Failed to add Moonbase Alpha network");
           }
-          // For other errors, log warning but continue
-          Logger.warn("Failed to switch to Moonbase Alpha", {
-            error: switchError,
-          });
-          return;
+        } else {
+          Logger.error("Failed to switch network", { error });
+          throw error;
         }
       }
+    },
+    [currentWalletProvider],
+  );
 
-      // Get chain ID again in case it changed
-      const finalNetwork = await provider.getNetwork();
-      setChainId(Number(finalNetwork.chainId));
+  const connect = useCallback(
+    async (_walletProvider?: unknown) => {
+      // Use provided wallet provider or fallback to window.ethereum
+      const walletProvider = _walletProvider || window.ethereum;
 
-      // Set connected account
-      setAddress(accounts[0]);
-
-      Logger.info("Wallet connected successfully", {
-        address: accounts[0],
-        chainId: Number(finalNetwork.chainId),
-      });
-    } catch (err: unknown) {
-      // Handle user rejected request
-      if (hasErrorCode(err, 4001)) {
-        const error = new Error("User rejected wallet connection");
+      if (!walletProvider) {
+        const error = new Error(
+          "No wallet provider found. Please install a wallet extension.",
+        );
+        Logger.error("Wallet provider not found", { error });
         setError(error);
         throw error;
       }
 
-      // Handle other errors
-      const message = err?.message || "Failed to connect wallet";
-      const error = new Error(message);
-      Logger.error("Wallet connection failed", { error });
-      setError(error);
-      throw error;
-    } finally {
-      setIsConnecting(false);
-    }
-  }, [switchChain]);
+      try {
+        setIsConnecting(true);
+        setError(null);
+
+        // Request account access
+        const accounts = await walletProvider.request({
+          method: "eth_requestAccounts",
+        });
+
+        if (!accounts || accounts.length === 0) {
+          throw new Error("No accounts found");
+        }
+
+        // Create Web3 provider
+        const provider = new ethers.BrowserProvider(walletProvider);
+
+        // Get connected chain ID
+        const network = await provider.getNetwork();
+        const currentChainId = Number(network.chainId);
+
+        // Set provider first so it's available for chain switching
+        setProvider(provider);
+        setCurrentWalletProvider(walletProvider);
+
+        // Switch to Moonbase Alpha if on wrong network
+        if (currentChainId !== CHAIN_IDS.MOONBASE) {
+          try {
+            await switchChain(CHAIN_IDS.MOONBASE);
+          } catch (switchError: unknown) {
+            // If user rejected the switch, throw error
+            if (hasErrorCode(switchError, 4001)) {
+              throw new Error("Please switch to Moonbase Alpha (TestNet)");
+            }
+            // For other errors, log warning but continue
+            Logger.warn("Failed to switch to Moonbase Alpha", {
+              error: switchError,
+            });
+            return;
+          }
+        }
+
+        // Get chain ID again in case it changed
+        const finalNetwork = await provider.getNetwork();
+        setChainId(Number(finalNetwork.chainId));
+
+        // Set connected account
+        setAddress(accounts[0]);
+
+        Logger.info("Wallet connected successfully", {
+          address: accounts[0],
+          chainId: Number(finalNetwork.chainId),
+        });
+      } catch (err: unknown) {
+        // Handle user rejected request
+        if (hasErrorCode(err, 4001)) {
+          const error = new Error("User rejected wallet connection");
+          setError(error);
+          throw error;
+        }
+
+        // Handle other errors
+        const message = err?.message || "Failed to connect wallet";
+        const error = new Error(message);
+        Logger.error("Wallet connection failed", { error });
+        setError(error);
+        throw error;
+      } finally {
+        setIsConnecting(false);
+      }
+    },
+    [switchChain],
+  );
 
   const disconnect = useCallback(async () => {
     try {
