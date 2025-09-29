@@ -7,7 +7,7 @@ function getWalletAddress() {
     
     // Add 0x prefix if missing
     if (!privateKey.startsWith('0x')) {
-      privateKey = '0x' + privateKey;
+      privateKey = `0x${privateKey}`;
     }
     
     const wallet = new ethers.Wallet(privateKey);

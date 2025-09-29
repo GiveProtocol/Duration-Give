@@ -233,10 +233,15 @@ class WalletConnect implements WalletProvider {
 
   async disconnect(): Promise<void> {
     // WalletConnect disconnect would be implemented here
+    this.connectionAttempts++;
   }
 
   async switchChain(_chainId: number | string): Promise<void> {
-    Logger.info("WalletConnect chain switch requested", { chainId: _chainId });
+    Logger.info("WalletConnect chain switch requested", { 
+      chainId: _chainId,
+      provider: this.provider,
+      connectionAttempts: this.connectionAttempts
+    });
   }
 }
 

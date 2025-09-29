@@ -260,6 +260,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
           Logger.warn("Failed to switch to Moonbase Alpha", {
             error: switchError,
           });
+          return null;
         }
       }
 
