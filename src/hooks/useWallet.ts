@@ -237,10 +237,10 @@ class WalletConnect implements WalletProvider {
   }
 
   async switchChain(_chainId: number | string): Promise<void> {
-    Logger.info("WalletConnect chain switch requested", { 
+    Logger.info("WalletConnect chain switch requested", {
       chainId: _chainId,
       provider: this.provider,
-      connectionAttempts: this.connectionAttempts
+      connectionAttempts: this.connectionAttempts,
     });
   }
 }
@@ -264,11 +264,7 @@ class NovaWallet extends EVMWalletBase {
   private installationChecks = 0;
 
   constructor() {
-    super(
-      "Nova Wallet",
-      "nova",
-      window.nova ? window.nova : null,
-    );
+    super("Nova Wallet", "nova", window.nova ? window.nova : null);
   }
 
   isInstalled(): boolean {
@@ -296,11 +292,7 @@ class SubWallet extends EVMWalletBase {
   private installationChecks = 0;
 
   constructor() {
-    super(
-      "SubWallet",
-      "subwallet",
-      window.SubWallet ? window.SubWallet : null,
-    );
+    super("SubWallet", "subwallet", window.SubWallet ? window.SubWallet : null);
   }
 
   isInstalled(): boolean {
