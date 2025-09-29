@@ -194,7 +194,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
       Logger.info("Switched network", { chainId: targetChainId });
     } catch (error: unknown) {
       // If the chain hasn't been added to wallet
-      if (error.code === 4902) {
+      if (hasErrorCode(error, 4902)) {
         try {
           await walletProvider.request({
             method: "wallet_addEthereumChain",
@@ -253,14 +253,14 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
           await switchChain(CHAIN_IDS.MOONBASE);
         } catch (switchError: unknown) {
           // If user rejected the switch, throw error
-          if (switchError?.code === 4001) {
+          if (hasErrorCode(switchError, 4001)) {
             throw new Error("Please switch to Moonbase Alpha (TestNet)");
           }
           // For other errors, log warning but continue
           Logger.warn("Failed to switch to Moonbase Alpha", {
             error: switchError,
           });
-          return null;
+          return;
         }
       }
 
