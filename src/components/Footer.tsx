@@ -9,15 +9,11 @@ export const Footer: React.FC = () => {
     <footer className="bg-gradient-to-br from-gray-50 via-white to-indigo-50/30 border-t border-indigo-100/50">
       <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8">
-        <div className="flex-1 min-w-0 lg:pr-16">
-          <div className="mb-4">
-            <Link to="/" className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded">
-              <Logo className="h-6 w-6 mr-2" />
-              <span className="text-xl font-bold text-gray-900">
-                Give Protocol
-              </span>
-            </Link>
-          </div>
+        <div className="flex-1 min-w-0 lg:pr-16 mb-4 lg:mb-0">
+          <Link to="/" className="flex items-center mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded">
+            <Logo className="h-6 w-6 mr-2" />
+            <span className="text-xl font-bold text-gray-900">Give Protocol</span>
+          </Link>
           <p className="text-sm text-gray-600">
             Empowering charitable giving through transparent and efficient
             blockchain technology.

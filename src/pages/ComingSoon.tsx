@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Github, Bird, Disc as Discord, Eye, Zap, TrendingUp, Infinity } from "lucide-react";
+import { Eye, Zap, TrendingUp, Infinity } from "lucide-react";
 import { Logger } from "@/utils/logger";
 
 const ComingSoon: React.FC = () => {
