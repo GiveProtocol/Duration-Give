@@ -1,5 +1,13 @@
 import React, { useState, useCallback } from "react";
-import { Github, Bird, Disc as Discord, Eye, Zap, TrendingUp, Infinity } from "lucide-react";
+import {
+  Github,
+  Bird,
+  Disc as Discord,
+  Eye,
+  Zap,
+  TrendingUp,
+  Infinity,
+} from "lucide-react";
 import { Logger } from "@/utils/logger";
 
 const ComingSoon: React.FC = () => {
@@ -84,7 +92,10 @@ const ComingSoon: React.FC = () => {
         </p>
 
         {/* Email Form */}
-        <form onSubmit={handleSubmit} className="relative max-w-md mx-auto animate-fade-in-up animation-delay-400">
+        <form
+          onSubmit={handleSubmit}
+          className="relative max-w-md mx-auto animate-fade-in-up animation-delay-400"
+        >
           <input
             type="email"
             value={email}
@@ -124,7 +135,9 @@ const ComingSoon: React.FC = () => {
           <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
             <Eye className="w-6 h-6" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">Transparent</h3>
+          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">
+            Transparent
+          </h3>
           <p className="text-gray-600">
             Track your impact with blockchain-verified donations
           </p>
@@ -133,7 +146,9 @@ const ComingSoon: React.FC = () => {
           <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
             <Zap className="w-6 h-6" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">Efficient</h3>
+          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">
+            Efficient
+          </h3>
           <p className="text-gray-600">
             Smart contracts ensure funds reach their destination
           </p>
@@ -142,7 +157,9 @@ const ComingSoon: React.FC = () => {
           <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
             <TrendingUp className="w-6 h-6" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">Impactful</h3>
+          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">
+            Impactful
+          </h3>
           <p className="text-gray-600">
             Maximize your giving through innovative DeFi strategies
           </p>
@@ -151,13 +168,14 @@ const ComingSoon: React.FC = () => {
           <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
             <Infinity className="w-6 h-6" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">Sustainable</h3>
+          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">
+            Sustainable
+          </h3>
           <p className="text-gray-600">
             Creating the rails for perpetual funding for charities
           </p>
         </article>
       </section>
-
     </div>
   );
 };
