@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Github, Bird, Disc as Discord } from "lucide-react";
-import { Logo } from "@/components/Logo";
+import { Github, Bird, Disc as Discord, Eye, Zap, TrendingUp, Infinity } from "lucide-react";
 import { Logger } from "@/utils/logger";
 
 const ComingSoon: React.FC = () => {
@@ -63,46 +62,49 @@ const ComingSoon: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Combined Animated Background */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.1),transparent_50%),radial-gradient(circle_at_80%_20%,rgba(167,139,250,0.1),transparent_50%)] animate-pulse" />
-      {/* Logo */}
-      <header className="py-8 flex items-center justify-center">
-        <Logo className="h-10 w-10" />
-        <span className="ml-3 text-2xl font-bold text-gray-900">
-          Give Protocol
-        </span>
-      </header>
 
       {/* Hero Section */}
-      <main className="py-20 sm:py-24 text-center">
-        <h1 className="text-6xl sm:text-8xl font-bold text-gray-900 mb-6">
-          COMING SOON
+      <main className="py-16 sm:py-24 text-center">
+        <div className="mb-8">
+          <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800 animate-fade-in">
+            Launching Q1 2026
+          </span>
+        </div>
+        <h1 className="text-5xl sm:text-7xl font-bold text-gray-900 mb-8 leading-tight animate-fade-in-up">
+          The Future of
+          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+            Transparent Giving
+          </span>
         </h1>
-        <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-          Join the future of philanthropy, with transparent, efficient and
-          impactful social investment
+        <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
+          Join the waitlist for pre-launch access
+          <span className="block font-semibold text-gray-800 mt-2">
+            Transform how charities sustain impact
+          </span>
         </p>
 
         {/* Email Form */}
-        <form onSubmit={handleSubmit} className="relative max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="relative max-w-md mx-auto animate-fade-in-up animation-delay-400">
           <input
             type="email"
             value={email}
             onChange={handleEmailChange}
-            placeholder="Enter your email address"
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            placeholder="Enter your email for pre-launch access"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 focus:outline-none hover:border-indigo-300"
             disabled={status === "loading" || status === "success"}
           />
           <button
             type="submit"
             disabled={status === "loading" || status === "success"}
-            className={`absolute right-2 top-2 px-4 py-1 rounded-md transition-all ${
+            className={`absolute right-2 top-2 px-4 py-1.5 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
               status === "loading"
                 ? "bg-gray-100 cursor-wait"
                 : status === "success"
                   ? "bg-green-500 text-white"
-                  : "bg-indigo-600 text-white hover:bg-indigo-700"
+                  : "bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500 active:bg-indigo-800"
             }`}
           >
-            Notify Me
+            Join Waitlist
           </button>
         </form>
 
@@ -117,53 +119,45 @@ const ComingSoon: React.FC = () => {
       </main>
 
       {/* Features Preview */}
-      <section className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
-        <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
-          <h3 className="text-lg font-semibold">Transparent</h3>
+      <section className="mt-16 mb-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <article className="group p-6 bg-gradient-to-br from-white/70 to-indigo-50/30 backdrop-blur-sm rounded-xl border border-indigo-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2">
+          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+            <Eye className="w-6 h-6" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">Transparent</h3>
           <p className="text-gray-600">
             Track your impact with blockchain-verified donations
           </p>
         </article>
-        <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
-          <h3 className="text-lg font-semibold">Efficient</h3>
+        <article className="group p-6 bg-gradient-to-br from-white/70 to-purple-50/30 backdrop-blur-sm rounded-xl border border-purple-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2">
+          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+            <Zap className="w-6 h-6" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">Efficient</h3>
           <p className="text-gray-600">
             Smart contracts ensure funds reach their destination
           </p>
         </article>
-        <article className="p-6 bg-white/50 backdrop-blur-sm rounded-xl shadow-sm space-y-2">
-          <h3 className="text-lg font-semibold">Impactful</h3>
+        <article className="group p-6 bg-gradient-to-br from-white/70 to-indigo-50/30 backdrop-blur-sm rounded-xl border border-indigo-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2">
+          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+            <TrendingUp className="w-6 h-6" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">Impactful</h3>
           <p className="text-gray-600">
             Maximize your giving through innovative DeFi strategies
           </p>
         </article>
+        <article className="group p-6 bg-gradient-to-br from-white/70 to-purple-50/30 backdrop-blur-sm rounded-xl border border-purple-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2">
+          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+            <Infinity className="w-6 h-6" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">Sustainable</h3>
+          <p className="text-gray-600">
+            Creating the rails for perpetual funding for charities
+          </p>
+        </article>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 text-center">
-        <div className="flex justify-center space-x-6 mb-4">
-          <a
-            href="https://giveprotocol.bsky.social"
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <Bird className="h-6 w-6" />
-          </a>
-          <a
-            href="https://github.com/giveprotocol"
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <Github className="h-6 w-6" />
-          </a>
-          <a
-            href="https://discord.gg/giveprotocol"
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <Discord className="h-6 w-6" />
-          </a>
-        </div>
-        <p className="text-sm text-gray-500">
-          © {new Date().getFullYear()} Give Protocol. All rights reserved.
-        </p>
-      </footer>
     </div>
   );
 };
