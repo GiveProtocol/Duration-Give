@@ -174,12 +174,10 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
     walletProvider.on("disconnect", handleDisconnect);
 
     return () => {
-      // Early return if removeListener is not available
-      if (typeof walletProvider.removeListener !== "function") return;
-
-      walletProvider.removeListener("accountsChanged", handleAccountsChanged);
-      walletProvider.removeListener("chainChanged", handleChainChanged);
-      walletProvider.removeListener("disconnect", handleDisconnect);
+      // Use optional chaining to safely remove listeners
+      walletProvider.removeListener?.("accountsChanged", handleAccountsChanged);
+      walletProvider.removeListener?.("chainChanged", handleChainChanged);
+      walletProvider.removeListener?.("disconnect", handleDisconnect);
     };
   }, [handleAccountsChanged, handleChainChanged, currentWalletProvider]);
 
