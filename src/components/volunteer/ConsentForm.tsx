@@ -187,8 +187,9 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
               Please review and indicate your consent to each of the
               following:
             </p>
+          </div>
 
-            <div className="bg-gray-50 rounded-xl p-6 mb-4 border-l-4 border-indigo-600 space-y-6">
+          <div className="bg-gray-50 rounded-xl p-6 mb-4 border-l-4 border-indigo-600 space-y-6">
                   <label
                     htmlFor="essential-processing"
                     aria-label="Essential processing consent"
@@ -245,7 +246,6 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                       </p>
                     </div>
                   </label>
-            </div>
           </div>
 
           <div className="border-t border-gray-200 pt-6">

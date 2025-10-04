@@ -178,8 +178,9 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
         walletProvider.removeListener("accountsChanged", handleAccountsChanged);
         walletProvider.removeListener("chainChanged", handleChainChanged);
         walletProvider.removeListener("disconnect", handleDisconnect);
+        return;
       }
-      return null;
+      // No cleanup needed if removeListener is not available
     };
   }, [handleAccountsChanged, handleChainChanged, currentWalletProvider]);
 
