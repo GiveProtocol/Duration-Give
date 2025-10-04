@@ -31,7 +31,6 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 **Solutions**:
 
 1. **Password Reset**
-
    - Click "Forgot Password" on login page
    - Enter your registered email address
    - Check email for reset link
@@ -39,7 +38,6 @@ Get the support you need to make the most of your Give Protocol experience. Our 
    - Log in with new credentials
 
 2. **Account Locked**
-
    - Wait 15 minutes for automatic unlock
    - Contact support if still locked
    - Verify identity for manual unlock
@@ -58,7 +56,6 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 **Solutions**:
 
 1. **Clear Browser Cache**
-
    - Clear cookies and cache
    - Try different browser
    - Disable ad blockers temporarily
@@ -78,10 +75,10 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 
 **Immediate Steps**:
 
-   - Report transaction ID if available
-   - Provide exact error message
-   - Include screenshots if helpful
-   - Request manual processing if needed
+- Report transaction ID if available
+- Provide exact error message
+- Include screenshots if helpful
+- Request manual processing if needed
 
 #### Recurring Donation Issues
 
@@ -90,7 +87,6 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 **Solutions**:
 
 1. **Check Subscription Settings**
-
    - Review active recurring donations
    - Verify amounts and frequencies
    - Update payment methods
@@ -111,14 +107,12 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 **Troubleshooting**:
 
 1. **Broaden Search Criteria**
-
    - Expand geographic radius
    - Consider flexible time commitments
    - Explore different cause areas
    - Remove restrictive filters
 
 2. **Check Profile Completeness**
-
    - Complete all profile sections
    - Add skills and interests
    - Verify location settings
@@ -137,14 +131,12 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 **Solutions**:
 
 1. **Technical Checks**
-
    - Verify internet connection
    - Try different browser
    - Clear cache and cookies
    - Disable browser extensions
 
 2. **Profile Requirements**
-
    - Ensure profile is complete
    - Meet minimum age requirements
    - Complete required training
@@ -163,19 +155,16 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 #### Information to Gather
 
 - **Account Details**
-
   - Email address
   - Last successful login
 
 - **Problem Description**
-
   - What were you trying to do?
   - What happened instead?
   - Any error messages received?
   - When did the problem start?
 
 - **Device Information**
-
   - Device type (computer, phone, tablet)
   - Operating system and version
   - Browser type and version
@@ -192,14 +181,12 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 #### Writing Effective Support Tickets
 
 1. **Clear Subject Line**
-
    - Be specific about the problem
    - Include relevant keywords
    - Mention urgency level
    - Reference error codes if available
 
 2. **Detailed Description**
-
    - Explain the problem clearly
    - List steps you've already tried
    - Include relevant screenshots
@@ -248,10 +235,9 @@ Get help from fellow users:
 - **Mentorship Program**: Get guidance from experienced users
 - **Beta Testing**: Help improve the platform
 
-
 ### Technical Support
 
-Report bugs on the Give Protocol Discord Server. 
+Report bugs on the Give Protocol Discord Server.
 
 **Services**:
 
@@ -287,7 +273,6 @@ Report bugs on the Give Protocol Discord Server.
 - Partnership ideas
 - Community guidelines feedback
 
-
 ### Update Notifications
 
 Stay informed via our Discord server for information about:
@@ -303,21 +288,18 @@ Stay informed via our Discord server for information about:
 ### Maximizing Your Experience
 
 1. **Complete Your Profile**
-
    - Add detailed information
    - Upload a professional photo
    - List relevant skills and interests
    - Set clear availability preferences
 
 2. **Engage with Community**
-
    - Participate in forums
    - Attend virtual events
    - Connect with other volunteers
    - Share your experiences
 
 3. **Stay Informed**
-
    - Read platform updates
    - Follow organization news
    - Attend training sessions
@@ -336,4 +318,3 @@ Stay informed via our Discord server for information about:
 3. **Be Prepared**: Have account information ready
 4. **Be Open**: Try suggested solutions
 5. **Follow Up**: Confirm when issues are resolved
-
