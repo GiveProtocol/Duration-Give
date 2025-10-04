@@ -61,9 +61,17 @@ export const DonorRegistration: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4" aria-label="Donor registration form">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4"
+        aria-label="Donor registration form"
+      >
         {error && (
-          <div className="p-3 bg-red-50 text-red-600 rounded-md" role="alert" aria-live="assertive">
+          <div
+            className="p-3 bg-red-50 text-red-600 rounded-md"
+            role="alert"
+            aria-live="assertive"
+          >
             {error}
           </div>
         )}
@@ -102,7 +110,12 @@ export const DonorRegistration: React.FC = () => {
           aria-required="true"
         />
 
-        <Button type="submit" className="w-full" disabled={loading} aria-busy={loading}>
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={loading}
+          aria-busy={loading}
+        >
           {loading ? "Creating Account..." : "Create Donor Account"}
         </Button>
       </form>
