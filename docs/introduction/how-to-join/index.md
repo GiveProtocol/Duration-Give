@@ -245,7 +245,6 @@ Welcome to Give Protocol! Join thousands of volunteers and donors who are making
 - **Be Respectful**: Treat everyone with kindness
 - **Stay Honest**: Provide accurate information
 - **Protect Privacy**: Don't share others' personal info
-- **Report Issues**: Flag inappropriate content
 - **Give Credit**: Acknowledge contributions
 
 ## Next Steps

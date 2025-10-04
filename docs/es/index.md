@@ -62,4 +62,3 @@ Si tiene preguntas o necesita asistencia:
 
 - Consulte nuestras [Preguntas Frecuentes](/es/help-center/faq/)
 - [Contáctenos](/es/help-center/need-help/) para soporte directo
-- [Reporte un problema](/es/help-center/report-issue/) si encuentra errores
