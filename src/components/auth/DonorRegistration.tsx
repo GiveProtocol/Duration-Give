@@ -11,7 +11,6 @@ export const DonorRegistration: React.FC = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    name: "",
   });
   const [error, setError] = useState("");
 
@@ -44,7 +43,6 @@ export const DonorRegistration: React.FC = () => {
 
       try {
         await register(formData.email, formData.password, "donor", {
-          name: formData.name,
           type: "donor", // Explicitly set type to ensure it's stored in metadata
         });
       } catch (error) {
@@ -61,49 +59,60 @@ export const DonorRegistration: React.FC = () => {
     // Full implementation pending OAuth provider configuration
   }, []);
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLFormElement>) => {
+      if (e.key === "Escape") {
+        setFormData({ email: "", password: "", confirmPassword: "" });
+        setError("");
+      }
+    },
+    [],
+  );
+
   return (
     <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="space-y-4" aria-label="Donor registration form">
         {error && (
-          <div className="p-3 bg-red-50 text-red-600 rounded-md">{error}</div>
+          <div className="p-3 bg-red-50 text-red-600 rounded-md" role="alert" aria-live="assertive">
+            {error}
+          </div>
         )}
-
-        <Input
-          label="Full Name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
 
         <Input
           label="Email"
           type="email"
           name="email"
+          autoComplete="email"
           value={formData.email}
           onChange={handleChange}
           required
+          aria-required="true"
         />
 
         <Input
           label="Password"
           type="password"
           name="password"
+          autoComplete="new-password"
           value={formData.password}
           onChange={handleChange}
+          helperText="Must be at least 8 characters long"
           required
+          aria-required="true"
         />
 
         <Input
           label="Confirm Password"
           type="password"
           name="confirmPassword"
+          autoComplete="new-password"
           value={formData.confirmPassword}
           onChange={handleChange}
           required
+          aria-required="true"
         />
 
-        <Button type="submit" className="w-full" disabled={loading}>
+        <Button type="submit" className="w-full" disabled={loading} aria-busy={loading}>
           {loading ? "Creating Account..." : "Create Donor Account"}
         </Button>
       </form>

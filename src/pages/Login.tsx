@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link, Navigate, useLocation, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useSearchParams, useNavigate } from "react-router-dom";
 import { Building2, Users } from "lucide-react";
-import { DonorLogin } from "../components/auth/DonorLogin";
 import { CharityLogin } from "../components/auth/CharityLogin";
 import { ForgotPassword } from "../components/auth/ForgotPassword";
 import { ForgotUsername } from "../components/auth/ForgotUsername";
 import { Button } from "../components/ui/Button";
 import { Logo } from "../components/Logo";
 import { useAuth } from "@/contexts/AuthContext";
+import { useWeb3 } from "@/contexts/Web3Context";
 
 type View =
   | "select"
-  | "donor"
   | "charity"
   | "forgotPassword"
   | "forgotUsername";
@@ -20,13 +19,11 @@ const Login: React.FC = () => {
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get("type");
   const [view, setView] = useState<View>(
-    typeParam === "charity"
-      ? "charity"
-      : typeParam === "donor"
-        ? "donor"
-        : "select",
+    typeParam === "charity" ? "charity" : "select",
   );
   const { user, userType } = useAuth();
+  const { connect, isConnecting, address } = useWeb3();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // Get the intended destination from location state, or default to dashboard
@@ -43,9 +40,15 @@ const Login: React.FC = () => {
     setView("forgotPassword");
   }, []);
 
-  const handleDonorView = useCallback(() => {
-    setView("donor");
-  }, []);
+  const handleDonorWalletConnect = useCallback(async () => {
+    try {
+      await connect();
+      // Navigation to dashboard will happen via useEffect when address is set
+    } catch (error) {
+      // Error handling is done in Web3Context
+      console.error("Failed to connect wallet:", error);
+    }
+  }, [connect]);
 
   const handleCharityView = useCallback(() => {
     setView("charity");
@@ -59,14 +62,24 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (typeParam === "charity") {
       setView("charity");
-    } else if (typeParam === "donor") {
-      setView("donor");
     }
   }, [typeParam]);
 
-  // Redirect if already logged in
+  // Navigate to dashboard when wallet is connected
+  useEffect(() => {
+    if (address && !user) {
+      // Wallet connected, navigate to donor dashboard
+      navigate("/give-dashboard");
+    }
+  }, [address, user, navigate]);
+
+  // Redirect if already logged in or wallet connected
   if (user) {
     return <Navigate to={from} replace />;
+  }
+
+  if (address && !user) {
+    return <Navigate to="/give-dashboard" replace />;
   }
 
   // LoginHelpers component that provides navigation links to help options
@@ -83,14 +96,18 @@ const Login: React.FC = () => {
 
       <div className="grid grid-cols-2 gap-4">
         <button
+          type="button"
           onClick={handleForgotUsername}
-          className="text-sm text-indigo-600 hover:text-indigo-500"
+          className="text-sm text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded px-2 py-1"
+          aria-label="Recover forgotten username"
         >
           Forgot username?
         </button>
         <button
+          type="button"
           onClick={handleForgotPassword}
-          className="text-sm text-indigo-600 hover:text-indigo-500"
+          className="text-sm text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded px-2 py-1"
+          aria-label="Recover forgotten password"
         >
           Forgot password?
         </button>
@@ -108,14 +125,17 @@ const Login: React.FC = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Button
-                onClick={handleDonorView}
+                onClick={handleDonorWalletConnect}
                 variant="secondary"
                 className="p-6 h-auto flex flex-col items-center space-y-2"
+                disabled={isConnecting}
               >
                 <Users className="h-8 w-8" />
-                <span className="text-lg font-medium">Donor Login</span>
+                <span className="text-lg font-medium">
+                  {isConnecting ? "Connecting..." : "Donor Login"}
+                </span>
                 <span className="text-sm text-gray-500">
-                  For donors and volunteers
+                  Connect wallet for donors and volunteers
                 </span>
               </Button>
 
@@ -149,27 +169,6 @@ const Login: React.FC = () => {
         return <ForgotPassword onBack={handleSelectView} />;
       case "forgotUsername":
         return <ForgotUsername onBack={handleSelectView} />;
-      case "donor":
-        return (
-          <>
-            <div className="mb-6">
-              <button
-                onClick={handleSelectView}
-                className="text-sm text-gray-600 hover:text-gray-900"
-              >
-                ← Back to selection
-              </button>
-              <h2 className="mt-4 text-2xl font-semibold text-center">
-                Donor Portal Login
-              </h2>
-              <p className="text-center text-sm text-gray-500 mt-1">
-                Access your donor dashboard and volunteer opportunities
-              </p>
-            </div>
-            <DonorLogin />
-            <LoginHelpers />
-          </>
-        );
       case "charity":
         return (
           <>

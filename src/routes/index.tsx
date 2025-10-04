@@ -297,7 +297,7 @@ export function AppRoutes() {
         <Route
           path="/give-dashboard/*"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowWalletOnly>
               <RouteTransition>
                 <Suspense fallback={<LoadingFallback />}>
                   <GiveDashboard />

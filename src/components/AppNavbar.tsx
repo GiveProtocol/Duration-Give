@@ -306,7 +306,7 @@ export const AppNavbar: React.FC = () => {
   // Close menu when route changes
   useEffect(() => {
     setIsMenuOpen(false);
-  }, [location]);
+  }, [location.pathname]);
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {

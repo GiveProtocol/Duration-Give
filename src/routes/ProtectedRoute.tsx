@@ -10,20 +10,22 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
   requiredRoles?: string[];
   requireWallet?: boolean;
+  allowWalletOnly?: boolean;
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requiredRoles = [],
-  requireWallet = false
+  requireWallet = false,
+  allowWalletOnly = false
 }) => {
   const location = useLocation();
   const { user, userType } = useAuth();
   const { loading: profileLoading } = useProfile(); // profile variable prefixed as unused
   const { isConnected: isWalletConnected, connect } = useWeb3();
 
-  // Handle loading states
-  if (profileLoading) {
+  // Handle loading states - only show loading if we need user auth and profile is loading
+  if (profileLoading && !allowWalletOnly) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <LoadingSpinner size="lg" />
@@ -31,8 +33,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  // Check authentication
-  if (!user) {
+  // Check authentication - allow wallet-only access if specified
+  if (!user && !(allowWalletOnly && isWalletConnected)) {
     Logger.info('Unauthorized access attempt', {
       path: location.pathname,
       timestamp: new Date().toISOString()
@@ -40,15 +42,15 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Check role requirements
-  if (requiredRoles.length > 0 && !requiredRoles.includes(userType || '')) {
+  // Check role requirements (skip if wallet-only access without user)
+  if (requiredRoles.length > 0 && user && !requiredRoles.includes(userType || '')) {
     Logger.warn('Invalid role access attempt', {
       path: location.pathname,
       userRole: userType,
       requiredRoles,
       timestamp: new Date().toISOString()
     });
-    
+
     // Redirect to appropriate dashboard based on user type
     if (userType === 'donor') {
       return <Navigate to="/give-dashboard" replace />;
@@ -57,7 +59,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     } else if (userType === 'admin') {
       return <Navigate to="/admin" replace />;
     }
-    
+
     return <Navigate to="/" replace />;
   }
 

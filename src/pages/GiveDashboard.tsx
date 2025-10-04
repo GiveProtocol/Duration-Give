@@ -396,7 +396,8 @@ export const GiveDashboard: React.FC = () => {
     ),
   ].sort((a, b) => b.localeCompare(a));
 
-  if (!user) {
+  // Allow access if user is authenticated OR wallet is connected
+  if (!user && !isConnected) {
     return <Navigate to="/login?type=donor" />;
   }
 

@@ -14,12 +14,15 @@ export const CharityLogin: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({ email: "", password: "" });
 
   const _from = location.state?.from?.pathname || "/charity-portal";
 
   const handleEmailChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
+      setFieldErrors((prev) => ({ ...prev, email: "" }));
+      setError("");
     },
     [],
   );
@@ -27,6 +30,20 @@ export const CharityLogin: React.FC = () => {
   const handlePasswordChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
+      setFieldErrors((prev) => ({ ...prev, password: "" }));
+      setError("");
+    },
+    [],
+  );
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLFormElement>) => {
+      if (e.key === "Escape") {
+        setEmail("");
+        setPassword("");
+        setError("");
+        setFieldErrors({ email: "", password: "" });
+      }
     },
     [],
   );
@@ -62,28 +79,40 @@ export const CharityLogin: React.FC = () => {
   );
 
   return (
-    <form onSubmit={handleEmailLogin} className="space-y-4">
+    <form onSubmit={handleEmailLogin} onKeyDown={handleKeyDown} className="space-y-4" aria-label="Charity login form">
       {error && (
-        <div className="p-3 bg-red-50 text-red-600 rounded-md flex items-start">
-          <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
+        <div
+          className="p-3 bg-red-50 text-red-600 rounded-md flex items-start"
+          role="alert"
+          aria-live="assertive"
+        >
+          <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" aria-hidden="true" />
           <span>{error}</span>
         </div>
       )}
       <Input
         label="Email"
         type="email"
+        name="email"
+        autoComplete="email"
         value={email}
         onChange={handleEmailChange}
+        error={fieldErrors.email}
         required
+        aria-required="true"
       />
       <Input
         label="Password"
         type="password"
+        name="password"
+        autoComplete="current-password"
         value={password}
         onChange={handlePasswordChange}
+        error={fieldErrors.password}
         required
+        aria-required="true"
       />
-      <Button type="submit" className="w-full" disabled={loading}>
+      <Button type="submit" className="w-full" disabled={loading} aria-busy={loading}>
         {loading ? "Signing in..." : "Sign In"}
       </Button>
     </form>
