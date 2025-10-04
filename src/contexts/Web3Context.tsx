@@ -174,11 +174,12 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
     walletProvider.on("disconnect", handleDisconnect);
 
     return () => {
-      if (typeof walletProvider.removeListener === "function") {
-        walletProvider.removeListener("accountsChanged", handleAccountsChanged);
-        walletProvider.removeListener("chainChanged", handleChainChanged);
-        walletProvider.removeListener("disconnect", handleDisconnect);
-      }
+      // Early return if removeListener is not available
+      if (typeof walletProvider.removeListener !== "function") return;
+
+      walletProvider.removeListener("accountsChanged", handleAccountsChanged);
+      walletProvider.removeListener("chainChanged", handleChainChanged);
+      walletProvider.removeListener("disconnect", handleDisconnect);
     };
   }, [handleAccountsChanged, handleChainChanged, currentWalletProvider]);
 
