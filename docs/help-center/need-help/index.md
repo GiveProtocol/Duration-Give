@@ -11,7 +11,7 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 ### Immediate Assistance
 
 - **Email Support**: support@giveprotocol.org
-- Ask on our Discord server
+- Hop over to our Discord server and reach out to a team member
 
 ### Self-Service Resources
 
