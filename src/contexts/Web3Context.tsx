@@ -174,7 +174,8 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
     walletProvider.on("disconnect", handleDisconnect);
 
     return () => {
-      // Use optional chaining to safely remove listeners
+      // deepsouce: ignore js/missing-explicit-return
+      // React cleanup functions return void/undefined by design
       walletProvider.removeListener?.("accountsChanged", handleAccountsChanged);
       walletProvider.removeListener?.("chainChanged", handleChainChanged);
       walletProvider.removeListener?.("disconnect", handleDisconnect);
