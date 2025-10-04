@@ -10,10 +10,8 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 
 ### Immediate Assistance
 
-- **Live Chat**: Available 24/7 for instant support
-- **Phone Support**: 1-800-GIVE-HELP (1-800-448-3435)
-- **Emergency Line**: 1-800-GIVE-SAFE (security and safety issues)
 - **Email Support**: support@giveprotocol.org
+- Ask on our Discord server
 
 ### Self-Service Resources
 
@@ -76,25 +74,10 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 
 #### Transaction Problems
 
-**Issues**: Failed payments, incorrect amounts, missing receipts
+**Issues**: Failed payments, incorrect amounts
 
 **Immediate Steps**:
 
-1. **Check Payment Method**
-
-   - Verify card details are correct
-   - Ensure sufficient funds available
-   - Check for expired cards
-   - Try alternative payment method
-
-2. **Contact Your Bank**
-
-   - Check if transaction was blocked
-   - Verify international transaction settings
-   - Confirm account is in good standing
-   - Request transaction authorization
-
-3. **Give Protocol Support**
    - Report transaction ID if available
    - Provide exact error message
    - Include screenshots if helpful
@@ -173,53 +156,6 @@ Get the support you need to make the most of your Give Protocol experience. Our 
    - Request manual application review
    - Seek alternative opportunities
 
-### Mobile App Issues
-
-#### App Not Working
-
-**Problems**: Crashes, won't open, features not functioning
-
-**Basic Troubleshooting**:
-
-1. **Restart App**
-
-   - Close app completely
-   - Restart device
-   - Reopen app
-   - Check for improvements
-
-2. **Update App**
-
-   - Check app store for updates
-   - Install latest version
-   - Review new features
-   - Report persistent issues
-
-3. **Device Issues**
-   - Ensure adequate storage space
-   - Check internet connection
-   - Update device operating system
-   - Restart device if necessary
-
-#### Sync Problems
-
-**Issues**: Data not syncing between devices, missing information
-
-**Resolution Steps**:
-
-1. **Force Sync**
-
-   - Pull down to refresh
-   - Log out and back in
-   - Check internet connection
-   - Wait for sync completion
-
-2. **Account Verification**
-   - Ensure same account on all devices
-   - Check login credentials
-   - Verify account permissions
-   - Contact support if needed
-
 ## Getting Better Support
 
 ### Prepare Before Contacting Support
@@ -228,8 +164,7 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 
 - **Account Details**
 
-  - Username or email address
-  - Account creation date
+  - Email address
   - Last successful login
 
 - **Problem Description**
@@ -282,29 +217,6 @@ Get the support you need to make the most of your Give Protocol experience. Our 
 - **Medium**: Feature problems, donation questions, volunteer issues
 - **Low**: General questions, feature requests, minor bugs
 
-## Support Response Times
-
-### Standard Support
-
-- **Email**: Within 24 hours
-- **Chat**: Within 15 minutes (business hours)
-- **Phone**: Immediate (business hours)
-- **Community Forums**: Within 4 hours
-
-### Priority Support
-
-- **Security Issues**: Within 1 hour
-- **Payment Problems**: Within 2 hours
-- **Account Access**: Within 4 hours
-- **Safety Concerns**: Immediate
-
-### Premium Support (Give Protocol Pro)
-
-- **All Issues**: Within 2 hours
-- **Dedicated Line**: 1-800-GIVE-PRO
-- **Video Support**: Available upon request
-- **Account Manager**: For high-volume users
-
 ## Self-Help Resources
 
 ### Knowledge Base
@@ -336,37 +248,10 @@ Get help from fellow users:
 - **Mentorship Program**: Get guidance from experienced users
 - **Beta Testing**: Help improve the platform
 
-## Specialized Support
-
-### Volunteer Support
-
-**Contact**: volunteers@giveprotocol.org
-**Phone**: 1-800-VOLUNTEER
-
-**Services**:
-
-- Opportunity matching assistance
-- Safety guidance and support
-- Skills-based volunteer connections
-- Group volunteering coordination
-- Recognition and badge issues
-
-### Organization Support
-
-**Contact**: nonprofits@giveprotocol.org
-**Phone**: 1-800-NONPROFIT
-
-**Services**:
-
-- Platform onboarding assistance
-- Volunteer management best practices
-- Fundraising campaign optimization
-- Impact reporting and analytics
-- Partnership opportunities
 
 ### Technical Support
 
-**Contact**: tech-support@giveprotocol.org
+Report bugs on the Give Protocol Discord Server. 
 
 **Services**:
 
@@ -375,108 +260,6 @@ Get help from fellow users:
 - API support
 - Data export help
 - Advanced feature configuration
-
-### Accessibility Support
-
-**Contact**: accessibility@giveprotocol.org
-
-**Services**:
-
-- Screen reader compatibility
-- Alternative navigation options
-- Visual impairment assistance
-- Hearing impairment support
-- Motor disability accommodations
-
-## Emergency Support
-
-### Safety and Security
-
-**Emergency Hotline**: 1-800-GIVE-SAFE
-**Email**: security@giveprotocol.org
-
-**When to Use**:
-
-- Account compromise or unauthorized access
-- Suspicious volunteer opportunities
-- Safety concerns during volunteering
-- Fraudulent organizations or requests
-- Personal safety threats
-
-### Crisis Response
-
-**Crisis Hotline**: 1-800-GIVE-CRISIS
-
-**Services**:
-
-- Disaster relief coordination
-- Emergency volunteer deployment
-- Crisis donation processing
-- Urgent resource allocation
-- Community emergency response
-
-## International Support
-
-### Global Help Desk
-
-**Email**: international@giveprotocol.org
-**Phone**: Available 24/7 via local numbers
-
-### Regional Support
-
-- **Americas**: support-americas@giveprotocol.org
-- **Europe**: support-europe@giveprotocol.org
-- **Asia-Pacific**: support-apac@giveprotocol.org
-- **Africa**: support-africa@giveprotocol.org
-
-### Language Support
-
-Available in 20+ languages:
-
-- English (24/7)
-- Spanish (Business hours)
-- French (Business hours)
-- German (Business hours)
-- Mandarin (Asia-Pacific hours)
-- Japanese (Asia-Pacific hours)
-- Portuguese (Latin America hours)
-- Arabic (Middle East hours)
-
-## Training and Education
-
-### Webinars
-
-**Schedule**: Weekly training sessions
-**Registration**: training@giveprotocol.org
-
-**Topics Include**:
-
-- Platform basics for new users
-- Advanced features and tips
-- Volunteer safety and best practices
-- Nonprofit management tools
-- Impact measurement and reporting
-
-### Certification Programs
-
-**Information**: education@giveprotocol.org
-
-**Available Certifications**:
-
-- Give Protocol User Certification
-- Volunteer Leadership Certification
-- Nonprofit Management Certification
-- Impact Measurement Certification
-
-### Resource Library
-
-Access educational materials:
-
-- User guides and manuals
-- Best practice documents
-- Case studies and success stories
-- Research and impact reports
-- Template and tools
 
 ## Feedback and Suggestions
 
@@ -504,31 +287,16 @@ Access educational materials:
 - Partnership ideas
 - Community guidelines feedback
 
-## Status and Updates
-
-### Platform Status
-
-Check real-time platform status:
-
-- Service availability
-- Known issues and outages
-- Maintenance schedules
-- Performance metrics
-- Resolution updates
-
-**Status Page**: status.giveprotocol.org
 
 ### Update Notifications
 
-Stay informed about:
+Stay informed via our Discord server for information about:
 
 - New feature releases
 - Security updates
 - Policy changes
 - Maintenance windows
 - Community events
-
-**Subscribe**: updates@giveprotocol.org
 
 ## Success Tips
 
@@ -569,10 +337,3 @@ Stay informed about:
 4. **Be Open**: Try suggested solutions
 5. **Follow Up**: Confirm when issues are resolved
 
-Remember, we're here to help you succeed in your charitable giving journey. Don't hesitate to reach out whenever you need assistance – your success is our priority!
-
----
-
-_Support available 24/7 through multiple channels_  
-_Response times vary by issue priority and support level_  
-_All support interactions are confidential and secure_
