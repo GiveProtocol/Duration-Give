@@ -19,7 +19,8 @@ Give Protocol is a blockchain-based charitable giving platform that connects don
 3. **For Volunteers**: Offer your time and skills, track hours, and connect with organizations needing help
 
 ### Is Give Protocol free to use?
-Give Protocol is volunteer-run, keeping our costs extremely low. With that said, to support sustained operations, there are minimal fees for the following: 
+
+Give Protocol is volunteer-run, keeping our costs extremely low. With that said, to support sustained operations, there are minimal fees for the following:
 
 - **Gas Fees**: standard fees for Moonbeam blockchain transactions
 - **Protocol Fees**: 1% of transactions are retained to cover ongoing tech costs.
@@ -174,11 +175,9 @@ Common wallet connection fixes:
 - Check popup blockers
 - Ensure wallet is unlocked
 
-
 ## More Help
 
 Can't find what you're looking for?
 
 - Email: support@giveprotocol.org
 - Chat with out team over on Discord
-
