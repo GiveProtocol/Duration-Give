@@ -15,16 +15,14 @@ Give Protocol is a blockchain-based charitable giving platform that connects don
 ### How does Give Protocol work?
 
 1. **For Donors**: Create an account, connect your wallet, search for verified organizations, and make donations using cryptocurrency
-2. **For Organizations**: Apply for verification, create campaigns, receive donations, and issue tax receipts
+2. **For Organizations**: Apply for verification, create campaigns, receive donations, and issue receipts upon request.
 3. **For Volunteers**: Offer your time and skills, track hours, and connect with organizations needing help
 
 ### Is Give Protocol free to use?
+Give Protocol is volunteer-run, keeping our costs extremely low. With that said, to support sustained operations, there are minimal fees for the following: 
 
-Give Protocol charges minimal platform fees to sustain operations:
-
-- **Platform fee**: 2.5% of donation amount
-- **Network fees**: Variable based on blockchain network (usually $1-5)
-- No fees for browsing, searching, or creating accounts
+- **Gas Fees**: standard fees for Moonbeam blockchain transactions
+- **Protocol Fees**: 1% of transactions are retained to cover ongoing tech costs.
 
 ## Account & Security
 
@@ -43,9 +41,9 @@ We support major Web3 wallets including:
 
 - MetaMask
 - WalletConnect
-- Coinbase Wallet
-- Rainbow Wallet
-- Trust Wallet
+- SubWallet
+- Talisman Wallet
+- Nova Wallet
 - Other WalletConnect-compatible wallets
 
 ### Is my information secure?
@@ -64,12 +62,11 @@ Yes, we implement industry-standard security measures:
 
 We support multiple cryptocurrencies including:
 
-- Ethereum (ETH)
-- Bitcoin (BTC)
-- USDC
 - USDT
-- DAI
-- And many other ERC-20 tokens
+- USDC
+- DOT
+- GLMR
+- Others to come
 
 ### Can I get a tax receipt?
 
@@ -111,19 +108,7 @@ Organizations must complete our verification process:
 
 ### What fees do organizations pay?
 
-Organizations benefit from low fees:
-
 - No setup or monthly fees
-- Only pay standard platform fee (2.5%)
-- Reduced fees for high-volume organizations
-- No fees for volunteer hour tracking
-
-### How quickly do organizations receive donations?
-
-- Cryptocurrency donations: Instant settlement
-- Fiat conversions: 1-3 business days
-- Direct wallet transfers available
-- Automated disbursements supported
 
 ## Volunteering
 
@@ -137,16 +122,6 @@ Our volunteer system includes:
 - Skills-based volunteer matching
 - Impact certificates for volunteers
 
-### Can I volunteer remotely?
-
-Yes! We support remote volunteering:
-
-- Virtual opportunities available
-- Skills-based remote projects
-- Online mentoring programs
-- Digital content creation
-- Remote administrative support
-
 ### Do volunteer hours have value?
 
 While volunteer hours aren't paid:
@@ -158,15 +133,6 @@ While volunteer hours aren't paid:
 - Some organizations offer rewards
 
 ## Technical Questions
-
-### What blockchain does Give Protocol use?
-
-We operate on multiple blockchains:
-
-- Primary: Ethereum mainnet
-- Layer 2: Polygon, Arbitrum, Optimism
-- Additional: Binance Smart Chain
-- Cross-chain bridges supported
 
 ### Are smart contracts audited?
 
@@ -208,21 +174,11 @@ Common wallet connection fixes:
 - Check popup blockers
 - Ensure wallet is unlocked
 
-### I didn't receive my tax receipt
-
-To retrieve tax receipts:
-
-1. Check spam/junk folder
-2. Verify email address in account
-3. Download from dashboard
-4. Request resend from support
-5. Available within 24 hours
 
 ## More Help
 
 Can't find what you're looking for?
 
 - Email: support@giveprotocol.org
-- Live Chat: Available Monday-Friday, 9 AM - 5 PM EST
-- [Community Forums]({{ '/docs/community/forums/' | relative_url }})
-- [Contact Support]({{ '/docs/help-center/need-help/' | relative_url }})
+- Chat with out team over on Discord
+
