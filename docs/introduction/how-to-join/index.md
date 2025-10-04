@@ -13,20 +13,17 @@ Welcome to Give Protocol! Join thousands of volunteers and donors who are making
 #### Sign Up Process
 
 1. **Visit Give Protocol**
-
    - Go to [giveprotocol.org](https://giveprotocol.org)
    - Click "Sign Up" or "Get Started"
    - Choose your account type
 
 2. **Choose Account Type**
-
    - **Individual**: Personal volunteer and donor account
    - **Organization**: Nonprofit organization account
    - **Corporate**: Business account for employee engagement
    - **Educational**: School or university account
 
 3. **Provide Basic Information**
-
    - Full name
    - Email address
    - Phone number (optional)
@@ -75,13 +72,11 @@ Welcome to Give Protocol! Join thousands of volunteers and donors who are making
 ### Connection Steps
 
 1. **Install Wallet Extension**
-
    - Download from official website
    - Add to your browser
    - Create new wallet or import existing
 
 2. **Connect to Give Protocol**
-
    - Click "Connect Wallet" button
    - Select your wallet type
    - Approve connection request
@@ -115,14 +110,12 @@ Welcome to Give Protocol! Join thousands of volunteers and donors who are making
 ### Making Your First Donation
 
 1. **Find an Organization**
-
    - Browse by category
    - Search by name
    - Check verification status
    - Read impact stories
 
 2. **Choose Amount**
-
    - Select cryptocurrency
    - Enter donation amount
    - Review conversion rate
@@ -149,14 +142,12 @@ Welcome to Give Protocol! Join thousands of volunteers and donors who are making
 #### Verification Process
 
 1. **Submit Application**
-
    - Complete organization profile
    - Upload required documents
    - Provide website and social media
    - Agree to terms of service
 
 2. **Review Period** (3-5 business days)
-
    - Document verification
    - Background checks
    - Compliance review
@@ -208,7 +199,6 @@ Welcome to Give Protocol! Join thousands of volunteers and donors who are making
 ### Finding Opportunities
 
 1. **Search Filters**
-
    - Location (remote available)
    - Time commitment
    - Skills needed
@@ -252,13 +242,11 @@ Welcome to Give Protocol! Join thousands of volunteers and donors who are making
 ### Immediate Actions
 
 1. **Complete Your Profile**
-
    - Add photo and bio
    - Set preferences
    - Connect social accounts
 
 2. **Explore the Platform**
-
    - Browse organizations
    - Read success stories
    - Join community forums
