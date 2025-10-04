@@ -173,8 +173,8 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
     walletProvider.on("chainChanged", handleChainChanged);
     walletProvider.on("disconnect", handleDisconnect);
 
+    // deepsource-disable-next-line JS-0045
     return () => {
-      // deepsouce: ignore js/missing-explicit-return
       // React cleanup functions return void/undefined by design
       walletProvider.removeListener?.("accountsChanged", handleAccountsChanged);
       walletProvider.removeListener?.("chainChanged", handleChainChanged);
