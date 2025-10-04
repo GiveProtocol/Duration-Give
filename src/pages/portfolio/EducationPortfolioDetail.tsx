@@ -68,9 +68,8 @@ const CHARITIES = [
 const EducationPortfolioDetail: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <div className="relative h-64 rounded-xl overflow-hidden mb-6">
-          <img
+      <div className="relative h-64 rounded-xl overflow-hidden mb-6">
+        <img
             src={PORTFOLIO.image}
             alt={PORTFOLIO.name}
             className="w-full h-full object-cover"
@@ -81,7 +80,7 @@ const EducationPortfolioDetail: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-8">
           <div>
             <p className="text-sm text-gray-500">Total Donated</p>
             <p className="text-2xl font-bold text-gray-900">
@@ -96,7 +95,6 @@ const EducationPortfolioDetail: React.FC = () => {
             />
           </div>
         </div>
-      </div>
 
       <div>
         <h2 className="text-2xl font-bold text-gray-900 mb-6">

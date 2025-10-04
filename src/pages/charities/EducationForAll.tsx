@@ -48,21 +48,24 @@ const EducationForAll: React.FC = () => {
             Impact Statistics
           </h2>
           <dl className="grid grid-cols-3 gap-4 text-center">
-            <dt className="text-sm text-gray-500">Total Donated
+            <div>
+              <dt className="text-sm text-gray-500">Total Donated</dt>
               <dd className="text-xl font-bold text-gray-900 mt-1">
                 {formatCurrency(charity.stats.totalDonated)}
               </dd>
-            </dt>
-            <dt className="text-sm text-gray-500">Donors
+            </div>
+            <div>
+              <dt className="text-sm text-gray-500">Donors</dt>
               <dd className="text-xl font-bold text-gray-900 mt-1">
                 {charity.stats.donorCount}
               </dd>
-            </dt>
-            <dt className="text-sm text-gray-500">Projects
+            </div>
+            <div>
+              <dt className="text-sm text-gray-500">Projects</dt>
               <dd className="text-xl font-bold text-gray-900 mt-1">
                 {charity.stats.projectsCompleted}
               </dd>
-            </dt>
+            </div>
           </dl>
         </div>
 

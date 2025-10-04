@@ -59,19 +59,9 @@ export const DonorRegistration: React.FC = () => {
     // Full implementation pending OAuth provider configuration
   }, []);
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLFormElement>) => {
-      if (e.key === "Escape") {
-        setFormData({ email: "", password: "", confirmPassword: "" });
-        setError("");
-      }
-    },
-    [],
-  );
-
   return (
     <div className="space-y-6">
-      <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="space-y-4" aria-label="Donor registration form">
+      <form onSubmit={handleSubmit} className="space-y-4" aria-label="Donor registration form">
         {error && (
           <div className="p-3 bg-red-50 text-red-600 rounded-md" role="alert" aria-live="assertive">
             {error}

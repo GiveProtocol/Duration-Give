@@ -36,18 +36,6 @@ export const CharityLogin: React.FC = () => {
     [],
   );
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLFormElement>) => {
-      if (e.key === "Escape") {
-        setEmail("");
-        setPassword("");
-        setError("");
-        setFieldErrors({ email: "", password: "" });
-      }
-    },
-    [],
-  );
-
   const handleEmailLogin = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -79,7 +67,7 @@ export const CharityLogin: React.FC = () => {
   );
 
   return (
-    <form onSubmit={handleEmailLogin} onKeyDown={handleKeyDown} className="space-y-4" aria-label="Charity login form">
+    <form onSubmit={handleEmailLogin} className="space-y-4" aria-label="Charity login form">
       {error && (
         <div
           className="p-3 bg-red-50 text-red-600 rounded-md flex items-start"

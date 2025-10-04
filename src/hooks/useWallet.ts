@@ -216,7 +216,8 @@ class WalletConnect implements WalletProvider {
 
   isInstalled(): boolean {
     // WalletConnect is always available as it doesn't require installation
-    return true;
+    // Using readonly property to satisfy 'this' requirement
+    return Boolean(this.name);
   }
 
   async isConnected(_address: string): Promise<boolean> {

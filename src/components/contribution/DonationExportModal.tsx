@@ -147,21 +147,23 @@ export const DonationExportModal: React.FC<DonationExportModalProps> = ({
             />
           </label>
 
-          <label className="block space-y-1 text-sm font-medium text-gray-700">
-            {t("export.dateRange")}
-            <div className="grid grid-cols-2 gap-4 mt-1">
+          <div className="block space-y-1 text-sm font-medium text-gray-700">
+            <span>{t("export.dateRange")}</span>
+            <div className="grid grid-cols-2 gap-4">
               <Input
                 type="date"
                 value={options.dateRange?.start || ""}
                 onChange={handleStartDateChange}
+                aria-label="Start date"
               />
               <Input
                 type="date"
                 value={options.dateRange?.end || ""}
                 onChange={handleEndDateChange}
+                aria-label="End date"
               />
             </div>
-          </label>
+          </div>
 
           <label className="flex items-center">
             <input

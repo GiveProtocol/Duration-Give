@@ -12,12 +12,10 @@ export const Footer: React.FC = () => {
           <div className="flex-1 min-w-0 lg:pr-16 mb-4 lg:mb-0">
             <Link
               to="/"
-              className="flex items-center mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
+              className="flex items-center mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded text-xl font-bold text-gray-900"
             >
               <Logo className="h-6 w-6 mr-2" />
-              <span className="text-xl font-bold text-gray-900">
-                Give Protocol
-              </span>
+              Give Protocol
             </Link>
             <p className="text-sm text-gray-600">
               Empowering charitable giving through transparent and efficient

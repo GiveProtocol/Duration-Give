@@ -121,25 +121,21 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
         </div>
 
         <div className="p-8 overflow-y-auto max-h-[calc(90vh-200px)]">
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Volunteer Application Consent
-            </h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Volunteer Application Consent
+          </h2>
 
-            <div className="mb-6 text-gray-700 leading-relaxed">
-              <p>
-                By completing and submitting this form, I consent to GIVE
-                PROTOCOL collecting, processing, and storing my personal
-                information as described in the Volunteer Application Privacy
-                Notice, which I have read and understood.
-              </p>
-            </div>
+          <p className="mb-6 text-gray-700 leading-relaxed">
+            By completing and submitting this form, I consent to GIVE
+            PROTOCOL collecting, processing, and storing my personal
+            information as described in the Volunteer Application Privacy
+            Notice, which I have read and understood.
+          </p>
 
-            <div className="mb-6">
-              <p className="font-semibold text-gray-900 mb-3">
-                I understand that:
-              </p>
-              <ol className="list-decimal pl-6 space-y-2 text-gray-700">
+          <p className="font-semibold text-gray-900 mb-3">
+            I understand that:
+          </p>
+          <ol className="list-decimal pl-6 space-y-2 text-gray-700 mb-6">
                 <li>
                   My personal information will be processed for the purposes of
                   evaluating my volunteer application, managing volunteer
@@ -168,33 +164,31 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                   rectify, delete, restrict processing, data portability, and
                   object to processing.
                 </li>
-                <li>
+                <li className="flex flex-wrap items-center gap-1">
                   I can withdraw my consent at any time by contacting{" "}
                   <a
                     href="mailto:legal@giveprotocol.io"
                     className="text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
                   >
-                    legal@giveprotocol.io <Mail className="h-3 w-3" />
+                    legal@giveprotocol.io <Mail className="h-3 w-3" aria-hidden="true" />
                   </a>
                   , though this will not affect the lawfulness of processing
                   based on my consent before withdrawal. Withdrawing consent may
                   impact the organization&apos;s ability to consider my
                   volunteer application.
                 </li>
-              </ol>
-            </div>
+          </ol>
 
-            <div className="border-t border-gray-200 pt-6 mb-6">
-              <p className="font-semibold text-gray-900 mb-4">
-                SPECIFIC CONSENTS
-              </p>
-              <p className="text-gray-600 text-sm mb-6">
-                Please review and indicate your consent to each of the
-                following:
-              </p>
+          <div className="border-t border-gray-200 pt-6 mb-6">
+            <p className="font-semibold text-gray-900 mb-4">
+              SPECIFIC CONSENTS
+            </p>
+            <p className="text-gray-600 text-sm mb-6">
+              Please review and indicate your consent to each of the
+              following:
+            </p>
 
-              <div className="bg-gray-50 rounded-xl p-6 mb-4 border-l-4 border-indigo-600">
-                <div className="space-y-6">
+            <div className="bg-gray-50 rounded-xl p-6 mb-4 border-l-4 border-indigo-600 space-y-6">
                   <label
                     htmlFor="essential-processing"
                     aria-label="Essential processing consent"
@@ -251,62 +245,60 @@ export const ConsentForm: React.FC<ConsentFormProps> = ({
                       </p>
                     </div>
                   </label>
-                </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-200 pt-6">
+            <p className="font-semibold text-gray-900 mb-4">ACKNOWLEDGMENT</p>
+
+            <label
+              htmlFor="age-confirmation"
+              aria-label="Age confirmation"
+              className="flex items-start mb-4 hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                id="age-confirmation"
+                checked={ageConfirmation}
+                onChange={handleAgeConfirmationChange}
+                className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <div className="ml-4">
+                <strong className="font-semibold text-gray-900">
+                  Age Confirmation:
+                </strong>
+                <p className="text-gray-700 mt-1">
+                  I confirm that I am at least 16 years of age.
+                </p>
+                <p className="text-gray-500 italic text-sm mt-1">
+                  (If you are under 16 years of age, parental or guardian
+                  consent is required)
+                </p>
               </div>
-            </div>
+            </label>
 
-            <div className="border-t border-gray-200 pt-6">
-              <p className="font-semibold text-gray-900 mb-4">ACKNOWLEDGMENT</p>
-
-              <label
-                htmlFor="age-confirmation"
-                aria-label="Age confirmation"
-                className="flex items-start mb-4 hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  id="age-confirmation"
-                  checked={ageConfirmation}
-                  onChange={handleAgeConfirmationChange}
-                  className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                />
-                <div className="ml-4">
-                  <strong className="font-semibold text-gray-900">
-                    Age Confirmation:
-                  </strong>
-                  <p className="text-gray-700 mt-1">
-                    I confirm that I am at least 16 years of age.
-                  </p>
-                  <p className="text-gray-500 italic text-sm mt-1">
-                    (If you are under 16 years of age, parental or guardian
-                    consent is required)
-                  </p>
-                </div>
-              </label>
-
-              <label
-                htmlFor="privacy-notice"
-                aria-label="Privacy notice acknowledgment"
-                className="flex items-start hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  id="privacy-notice"
-                  checked={privacyNotice}
-                  onChange={handlePrivacyNoticeChange}
-                  className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                />
-                <div className="ml-4">
-                  <strong className="font-semibold text-gray-900">
-                    Privacy Notice:
-                  </strong>
-                  <p className="text-gray-700 mt-1">
-                    I confirm that I have read and understood the Privacy
-                    Notice.
-                  </p>
-                </div>
-              </label>
-            </div>
+            <label
+              htmlFor="privacy-notice"
+              aria-label="Privacy notice acknowledgment"
+              className="flex items-start hover:bg-gray-50 rounded-lg p-4 transition-colors cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                id="privacy-notice"
+                checked={privacyNotice}
+                onChange={handlePrivacyNoticeChange}
+                className="mt-1 h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <div className="ml-4">
+                <strong className="font-semibold text-gray-900">
+                  Privacy Notice:
+                </strong>
+                <p className="text-gray-700 mt-1">
+                  I confirm that I have read and understood the Privacy
+                  Notice.
+                </p>
+              </div>
+            </label>
           </div>
 
           {validationError && (
