@@ -59,7 +59,7 @@ const ComingSoon: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background-primary relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Combined Animated Background */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.1),transparent_50%),radial-gradient(circle_at_80%_20%,rgba(167,139,250,0.1),transparent_50%)] animate-pulse" />
 
@@ -93,7 +93,7 @@ const ComingSoon: React.FC = () => {
             value={email}
             onChange={handleEmailChange}
             placeholder="Enter your email for pre-launch access"
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 focus:outline-none hover:border-indigo-300"
+            className="w-full px-4 py-3 rounded-lg border border-indigo-200 bg-indigo-100 text-indigo-800 placeholder:text-indigo-600/60 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 focus:outline-none hover:border-indigo-300"
             disabled={status === "loading" || status === "success"}
           />
           <button
@@ -123,8 +123,8 @@ const ComingSoon: React.FC = () => {
 
       {/* Features Preview */}
       <section className="mt-16 mb-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <article className="group p-6 bg-gradient-to-br from-white/70 to-indigo-50/30 backdrop-blur-sm rounded-xl border border-indigo-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2">
-          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+        <article className="group p-6 bg-gradient-to-br from-white/70 to-indigo-50/30 backdrop-blur-sm rounded-xl border border-indigo-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 text-center">
+          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors mx-auto">
             <Eye className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">
@@ -134,8 +134,8 @@ const ComingSoon: React.FC = () => {
             Track your impact with blockchain-verified donations
           </p>
         </article>
-        <article className="group p-6 bg-gradient-to-br from-white/70 to-purple-50/30 backdrop-blur-sm rounded-xl border border-purple-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2">
-          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+        <article className="group p-6 bg-gradient-to-br from-white/70 to-purple-50/30 backdrop-blur-sm rounded-xl border border-purple-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2 text-center">
+          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors mx-auto">
             <Zap className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">
@@ -145,8 +145,8 @@ const ComingSoon: React.FC = () => {
             Smart contracts ensure funds reach their destination
           </p>
         </article>
-        <article className="group p-6 bg-gradient-to-br from-white/70 to-indigo-50/30 backdrop-blur-sm rounded-xl border border-indigo-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2">
-          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+        <article className="group p-6 bg-gradient-to-br from-white/70 to-indigo-50/30 backdrop-blur-sm rounded-xl border border-indigo-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 text-center">
+          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors mx-auto">
             <TrendingUp className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">
@@ -156,8 +156,8 @@ const ComingSoon: React.FC = () => {
             Maximize your giving through innovative DeFi strategies
           </p>
         </article>
-        <article className="group p-6 bg-gradient-to-br from-white/70 to-purple-50/30 backdrop-blur-sm rounded-xl border border-purple-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2">
-          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+        <article className="group p-6 bg-gradient-to-br from-white/70 to-purple-50/30 backdrop-blur-sm rounded-xl border border-purple-100/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2 text-center">
+          <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors mx-auto">
             <Infinity className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">

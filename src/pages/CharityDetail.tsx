@@ -56,51 +56,33 @@ const CharityDetail: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Impact Statistics
-            </h2>
-            <dl className="grid grid-cols-3 gap-4 text-center">
-              <dt className="text-sm text-gray-500">Total Donated
-                <dd className="text-xl font-bold text-gray-900 mt-1">
-                  {formatCurrency(charity.stats.totalDonated)}
-                </dd>
-              </dt>
-              <dt className="text-sm text-gray-500">Donors
-                <dd className="text-xl font-bold text-gray-900 mt-1">
-                  {charity.stats.donorCount}
-                </dd>
-              </dt>
-              <dt className="text-sm text-gray-500">Projects
-                <dd className="text-xl font-bold text-gray-900 mt-1">
-                  {charity.stats.projectsCompleted}
-                </dd>
-              </dt>
-            </dl>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Giving Options
-            </h2>
-            <div className="space-y-4">
-              <DonationButton
-                charityName={charity.name}
-                charityAddress={charity.id}
-                buttonText="Give Once"
-              />
-              <ScheduledDonationButton
-                charityName={charity.name}
-                charityAddress={charity.id}
-                buttonText="Give Monthly"
-              />
-              <Link
-                to="/docs/giving-options"
-                className="block text-sm text-indigo-600 hover:text-indigo-800 mt-2 text-center"
-              >
-                Learn about the difference in giving options →
-              </Link>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Impact Statistics</h2>
+          <dl className="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <dt className="text-sm text-gray-500">Total Donated</dt>
+              <dd className="text-xl font-bold text-gray-900 mt-1">{formatCurrency(charity.stats.totalDonated)}</dd>
             </div>
+            <div>
+              <dt className="text-sm text-gray-500">Donors</dt>
+              <dd className="text-xl font-bold text-gray-900 mt-1">{charity.stats.donorCount}</dd>
+            </div>
+            <div>
+              <dt className="text-sm text-gray-500">Projects</dt>
+              <dd className="text-xl font-bold text-gray-900 mt-1">{charity.stats.projectsCompleted}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Giving Options</h2>
+          <div className="space-y-4">
+            <DonationButton charityName={charity.name} charityAddress={charity.id} buttonText="Give Once" />
+            <ScheduledDonationButton charityName={charity.name} charityAddress={charity.id} buttonText="Give Monthly" />
+            <Link to="/docs/giving-options" className="block text-sm text-indigo-600 hover:text-indigo-800 mt-2 text-center">
+              Learn about the difference in giving options →
+            </Link>
+          </div>
         </div>
       </div>
 
