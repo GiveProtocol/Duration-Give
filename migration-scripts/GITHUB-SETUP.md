@@ -10,6 +10,7 @@ cd /home/drigo/projects/Duration/migration-scripts
 ```
 
 The script will:
+
 1. Ask for your GitHub username/organization
 2. Ask for visibility preference (private/public)
 3. Guide you through creating repos on GitHub
@@ -160,6 +161,7 @@ For each repository on GitHub:
 For deployment, add these secrets in **Settings** → **Secrets and variables** → **Actions**:
 
 #### give-protocol-contracts
+
 ```
 MOONBASE_RPC_URL=<your-moonbase-rpc-url>
 PRIVATE_KEY=<your-deployment-private-key>
@@ -167,6 +169,7 @@ MOONSCAN_API_KEY=<your-moonscan-api-key>
 ```
 
 #### give-protocol-webapp
+
 ```
 VITE_SUPABASE_URL=<your-supabase-url>
 VITE_SUPABASE_ANON_KEY=<your-supabase-anon-key>
@@ -174,6 +177,7 @@ VITE_MOONBASE_RPC_URL=<your-moonbase-rpc-url>
 ```
 
 #### give-protocol-backend
+
 ```
 DATABASE_URL=<your-database-url>
 SUPABASE_SERVICE_KEY=<your-supabase-service-key>
@@ -185,6 +189,7 @@ MAILCHIMP_API_KEY=<your-mailchimp-api-key>
 Each repository has GitHub Actions workflows. They'll run automatically on push.
 
 To view:
+
 - Go to **Actions** tab in each repository
 
 ### 4. Set Up GitHub Pages (for docs)
@@ -211,6 +216,7 @@ If working with a team:
 **Problem**: SSH key not configured
 
 **Solution**:
+
 ```bash
 # Generate SSH key
 ssh-keygen -t ed25519 -C "your_email@example.com"
@@ -229,6 +235,7 @@ cat ~/.ssh/id_ed25519.pub
 **Problem**: Repository doesn't exist on GitHub or wrong name
 
 **Solution**:
+
 - Verify repository exists on GitHub
 - Check spelling of repository name
 - Ensure you have access to the repository
@@ -238,6 +245,7 @@ cat ~/.ssh/id_ed25519.pub
 **Problem**: Remote has changes you don't have locally
 
 **Solution**:
+
 ```bash
 # If you're sure your local version is correct
 git push -u origin main --force
@@ -248,6 +256,7 @@ git push -u origin main --force
 **Problem**: Git remote is already configured
 
 **Solution**:
+
 ```bash
 # Remove existing remote
 git remote remove origin
@@ -276,6 +285,7 @@ After pushing all repositories:
 ## Next Steps After GitHub Setup
 
 1. **Deploy Contracts**
+
    ```bash
    cd give-protocol-contracts
    # Configure .env

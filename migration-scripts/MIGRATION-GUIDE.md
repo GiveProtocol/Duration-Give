@@ -90,6 +90,7 @@ git push -u origin main
 ```
 
 Repeat for:
+
 - `give-protocol-webapp`
 - `give-protocol-backend`
 - `give-protocol-docs`
@@ -107,6 +108,7 @@ cp .env.example .env
 ```
 
 Required variables:
+
 - `MOONBASE_RPC_URL`
 - `PRIVATE_KEY` (for deployment)
 - `MOONSCAN_API_KEY`
@@ -120,6 +122,7 @@ cp .env.example .env
 ```
 
 Required variables:
+
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
 - `VITE_MOONBASE_RPC_URL`
@@ -134,6 +137,7 @@ cp .env.example .env
 ```
 
 Required variables:
+
 - `DATABASE_URL`
 - `SUPABASE_SERVICE_KEY`
 - `MAILCHIMP_API_KEY`
@@ -144,6 +148,7 @@ Required variables:
 #### In webapp, update contract addresses:
 
 After deploying contracts, update webapp `.env`:
+
 ```env
 VITE_DONATION_CONTRACT_ADDRESS=0x...
 VITE_VERIFICATION_CONTRACT_ADDRESS=0x...
@@ -153,6 +158,7 @@ VITE_DISTRIBUTION_CONTRACT_ADDRESS=0x...
 #### In backend, update contract addresses:
 
 Update backend `.env`:
+
 ```env
 DONATION_CONTRACT_ADDRESS=0x...
 VERIFICATION_CONTRACT_ADDRESS=0x...
@@ -177,7 +183,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
       - run: npm install
       - run: npm run compile
       - run: npm run test
@@ -200,7 +206,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
       - run: npm install
       - run: npm run lint
       - run: npm run test
@@ -288,18 +294,21 @@ graph TD
 ### Full Stack Development
 
 1. **Terminal 1 - Contracts** (optional, for local testing):
+
    ```bash
    cd give-protocol-contracts
    npm run node  # Local Hardhat node
    ```
 
 2. **Terminal 2 - Backend**:
+
    ```bash
    cd give-protocol-backend
    npm run dev
    ```
 
 3. **Terminal 3 - Frontend**:
+
    ```bash
    cd give-protocol-webapp
    npm run dev
@@ -353,6 +362,7 @@ npm run dev
 ### Issue: Port conflicts
 
 **Solution**: Update ports in each project:
+
 - Webapp: `vite.config.ts` (default 5173)
 - Backend: `.env` PORT variable (default 3001)
 - Docs: `_config.yml` (default 4000)

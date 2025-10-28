@@ -5,6 +5,7 @@ This guide documents the migration of the Give Protocol (formerly Duration) from
 ## Repository Structure
 
 ### Old Structure (Monorepo)
+
 ```
 GiveProtocol/Duration-Give
 ├── src/              # React webapp source
@@ -16,6 +17,7 @@ GiveProtocol/Duration-Give
 ```
 
 ### New Structure (Distributed)
+
 ```
 civicmastery/give-protocol-webapp      # React Progressive Web App
 civicmastery/give-protocol-contracts   # Smart contracts + Hardhat
@@ -26,17 +28,20 @@ civicmastery/give-protocol-backend     # Supabase backend
 ## Repositories
 
 ### 1. give-protocol-webapp
+
 **Purpose**: React/Vite Progressive Web Application
 
 **Location**: https://github.com/civicmastery/give-protocol-webapp
 
 **Contents**:
+
 - `/src/` - React application source code
 - `/public/` - Static assets
 - `vite.config.ts` - Vite configuration
 - GitHub Actions workflows for testing, linting, and deployment
 
 **Commands**:
+
 ```bash
 npm run dev          # Start dev server
 npm run build        # Production build
@@ -46,11 +51,13 @@ npm run lint         # Run ESLint
 ```
 
 ### 2. give-protocol-contracts
+
 **Purpose**: Solidity smart contracts and deployment infrastructure
 
 **Location**: https://github.com/civicmastery/give-protocol-contracts
 
 **Contents**:
+
 - `/contracts/` - Solidity smart contracts
 - `/scripts/` - Deployment and testing scripts
 - `/test/` - Hardhat test suites
@@ -58,6 +65,7 @@ npm run lint         # Run ESLint
 - GitHub Actions workflows for testing, compilation, and security scanning
 
 **Commands**:
+
 ```bash
 npm run compile              # Compile contracts
 npm run test                 # Run tests
@@ -67,17 +75,20 @@ npm run lint:sol             # Solidity linting
 ```
 
 ### 3. give-protocol-docs
+
 **Purpose**: Jekyll documentation website
 
 **Location**: https://github.com/civicmastery/give-protocol-docs
 
 **Contents**:
+
 - `/docs/` - Markdown documentation files
 - `/_layouts/` - Jekyll templates
 - `_config.yml` - Jekyll configuration
 - GitHub Actions workflow for automated deployment
 
 **Commands**:
+
 ```bash
 bundle install               # Install dependencies
 bundle exec jekyll serve     # Local preview
@@ -87,17 +98,20 @@ bundle exec jekyll build     # Build static site
 **Live Site**: https://civicmastery.github.io/give-protocol-docs/
 
 ### 4. give-protocol-backend
+
 **Purpose**: Private backend infrastructure and database
 
 **Location**: https://github.com/civicmastery/give-protocol-backend
 
 **Contents**:
+
 - `/src/` - Backend TypeScript code
 - `/supabase/migrations/` - Database migrations
 - `/supabase/functions/` - Edge Functions
 - GitHub Actions workflow for security scanning
 
 **Commands**:
+
 ```bash
 npm run dev              # Start local Supabase
 npm run generate-types   # Generate DB types
@@ -121,12 +135,14 @@ npm run seed             # Seed test data
 ### Repository-Specific Configurations
 
 #### Webapp
+
 - DeepSource integration configured
 - Code quality checks in CI/CD
 - E2E testing with Cypress
 - Sentry error tracking integration
 
 #### Contracts
+
 - Hardhat test suite
 - Solhint linting
 - Coverage reporting
@@ -134,11 +150,13 @@ npm run seed             # Seed test data
 - Moonscan verification scripts
 
 #### Docs
+
 - GitHub Pages deployment
 - Automatic build on push to main
 - Jekyll 3.9.x with GitHub Pages gem
 
 #### Backend
+
 - Supabase local development setup
 - Type generation from database schema
 - Mailchimp integration
@@ -149,6 +167,7 @@ npm run seed             # Seed test data
 ### Working Across Repositories
 
 1. **Clone all repositories**:
+
 ```bash
 mkdir give-protocol && cd give-protocol
 git clone https://github.com/civicmastery/give-protocol-webapp.git
@@ -158,6 +177,7 @@ git clone https://github.com/civicmastery/give-protocol-backend.git
 ```
 
 2. **Set up each repository**:
+
 ```bash
 cd give-protocol-webapp && npm install && cd ..
 cd give-protocol-contracts && npm install && cd ..
@@ -166,6 +186,7 @@ cd give-protocol-backend && npm install
 ```
 
 3. **Development servers**:
+
 ```bash
 # Terminal 1 - Webapp
 cd give-protocol-webapp && npm run dev
@@ -192,6 +213,7 @@ When making changes to smart contracts:
 Each repository needs its own `.env` file:
 
 **Webapp**:
+
 ```
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
@@ -199,6 +221,7 @@ VITE_MOONBASE_RPC_URL=
 ```
 
 **Contracts**:
+
 ```
 MOONBASE_RPC_URL=
 PRIVATE_KEY=
@@ -206,6 +229,7 @@ MOONSCAN_API_KEY=
 ```
 
 **Backend**:
+
 ```
 SUPABASE_URL=
 SUPABASE_ANON_KEY=
@@ -216,20 +240,24 @@ MAILCHIMP_API_KEY=
 ## CI/CD Pipeline
 
 ### Webapp Workflows
+
 - **Code Quality**: ESLint, TypeScript checks, tests
 - **Security Scan**: Trivy vulnerability scanning
 - **DeepSource**: Automated code quality analysis
 
 ### Contracts Workflows
+
 - **Test**: Hardhat tests and coverage
 - **Lint**: Solhint on all contracts
 - **Compile**: Contract compilation check
 - **Security**: Trivy and npm audit
 
 ### Docs Workflow
+
 - **Deploy**: Automatic GitHub Pages deployment
 
 ### Backend Workflow
+
 - **Security**: Trivy scanning and dependency audit
 
 ## Benefits of Distributed Architecture
@@ -271,16 +299,19 @@ MAILCHIMP_API_KEY=
 ## Troubleshooting
 
 ### Monorepo References Still Present
+
 - Check for hardcoded paths referencing monorepo structure
 - Update import statements that may reference old paths
 - Search for "Duration-Give" and replace with appropriate repo name
 
 ### Contract Address Mismatches
+
 - Ensure webapp config has latest deployed contract addresses
 - Check that `contracts/deployments/` contains correct addresses
 - Verify network configuration matches (Moonbase Alpha)
 
 ### GitHub Actions Failures
+
 - Check workflow files for deprecated action versions
 - Verify repository secrets are set correctly
 - Ensure npm scripts referenced in workflows exist
@@ -303,6 +334,7 @@ MAILCHIMP_API_KEY=
 ## Questions?
 
 For questions about the migration or new architecture, please:
+
 - Check repository-specific CLAUDE.md files
 - Review this migration guide
 - Open an issue in the relevant repository
@@ -313,6 +345,7 @@ For questions about the migration or new architecture, please:
 **Old Monorepo**: https://github.com/GiveProtocol/Duration-Give (archived)
 
 **New Repositories**:
+
 - Webapp: https://github.com/civicmastery/give-protocol-webapp
 - Contracts: https://github.com/civicmastery/give-protocol-contracts
 - Docs: https://github.com/civicmastery/give-protocol-docs
