@@ -1,127 +1,183 @@
-# ARCHIVED - Give Protocol Monorepo
+# Supabase CLI
 
-> This repository has been archived and migrated to a distributed multi-repository architecture.
->
-> Please use the new repositories below for active development.
+[![Coverage Status](https://coveralls.io/repos/github/supabase/cli/badge.svg?branch=main)](https://coveralls.io/github/supabase/cli?branch=main) [![Bitbucket Pipelines](https://img.shields.io/bitbucket/pipelines/supabase-cli/setup-cli/master?style=flat-square&label=Bitbucket%20Canary)](https://bitbucket.org/supabase-cli/setup-cli/pipelines) [![Gitlab Pipeline Status](https://img.shields.io/gitlab/pipeline-status/sweatybridge%2Fsetup-cli?label=Gitlab%20Canary)
+](https://gitlab.com/sweatybridge/setup-cli/-/pipelines)
 
-## Migration to Distributed Architecture
+[Supabase](https://supabase.io) is an open source Firebase alternative. We're building the features of Firebase using enterprise-grade open source tools.
 
-This monorepo has been split into four specialized repositories for better separation of concerns, faster CI/CD, and easier maintenance:
+This repository contains all the functionality for Supabase CLI.
 
-### New Repository Structure
+- [x] Running Supabase locally
+- [x] Managing database migrations
+- [x] Creating and deploying Supabase Functions
+- [x] Generating types directly from your database schema
+- [x] Making authenticated HTTP requests to [Management API](https://supabase.com/docs/reference/api/introduction)
 
-| Repository | Purpose | Link |
-|------------|---------|------|
-| **give-protocol-webapp** | React Progressive Web App | https://github.com/civicmastery/give-protocol-webapp |
-| **give-protocol-contracts** | Solidity smart contracts + Hardhat | https://github.com/civicmastery/give-protocol-contracts |
-| **give-protocol-docs** | Jekyll documentation site | https://github.com/civicmastery/give-protocol-docs |
-| **give-protocol-backend** | Supabase backend + admin functions | https://github.com/civicmastery/give-protocol-backend |
+## Getting started
 
-## Migration Guide
+### Install the CLI
 
-For detailed information about the migration, see [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)
+Available via [NPM](https://www.npmjs.com) as dev dependency. To install:
 
-## Quick Start (New Architecture)
-
-### Clone All Repositories
 ```bash
-mkdir give-protocol && cd give-protocol
-git clone https://github.com/civicmastery/give-protocol-webapp.git
-git clone https://github.com/civicmastery/give-protocol-contracts.git
-git clone https://github.com/civicmastery/give-protocol-docs.git
-git clone https://github.com/civicmastery/give-protocol-backend.git
+npm i supabase --save-dev
 ```
 
-### Install Dependencies
+To install the beta release channel:
+
 ```bash
-cd give-protocol-webapp && npm install && cd ..
-cd give-protocol-contracts && npm install && cd ..
-cd give-protocol-docs && bundle install && cd ..
-cd give-protocol-backend && npm install && cd ..
+npm i supabase@beta --save-dev
 ```
 
-### Start Development
-```bash
-# Webapp (Terminal 1)
-cd give-protocol-webapp && npm run dev
+When installing with yarn 4, you need to disable experimental fetch with the following nodejs config.
 
-# Contracts (as needed)
-cd give-protocol-contracts && npm test
-
-# Docs (Terminal 2, optional)
-cd give-protocol-docs && bundle exec jekyll serve
-
-# Backend (Terminal 3, optional)
-cd give-protocol-backend && npm run dev
+```
+NODE_OPTIONS=--no-experimental-fetch yarn add supabase
 ```
 
-## Documentation
+> **Note**
+For Bun versions below v1.0.17, you must add `supabase` as a [trusted dependency](https://bun.sh/guides/install/trusted) before running `bun add -D supabase`.
 
-- **User Documentation**: https://civicmastery.github.io/give-protocol-docs/
-- **Developer Guides**: See CLAUDE.md in each repository
-- **Migration Guide**: [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)
+<details>
+  <summary><b>macOS</b></summary>
 
-## Why Migrate?
+  Available via [Homebrew](https://brew.sh). To install:
 
-The distributed architecture provides:
+  ```sh
+  brew install supabase/tap/supabase
+  ```
 
-- Separation of Concerns: Each repo has a single, well-defined purpose
-- Independent Versioning: Components can be versioned independently
-- Faster CI/CD: Smaller repos = faster builds and deployments
-- Clearer Permissions: Fine-grained access control per repository
-- Easier Onboarding: New contributors can focus on one component
-- Better Dependencies: Dependencies scoped to what's actually needed
+  To install the beta release channel:
+  
+  ```sh
+  brew install supabase/tap/supabase-beta
+  brew link --overwrite supabase-beta
+  ```
+  
+  To upgrade:
 
-## About Give Protocol
+  ```sh
+  brew upgrade supabase
+  ```
+</details>
 
-A blockchain-based charitable giving platform built with:
+<details>
+  <summary><b>Windows</b></summary>
 
-- React + TypeScript + Vite
-- Solidity smart contracts on Moonbeam Network
-- Supabase backend
-- Jekyll documentation
+  Available via [Scoop](https://scoop.sh). To install:
 
-### Key Features
+  ```powershell
+  scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+  scoop install supabase
+  ```
 
-- Transparent donation tracking using blockchain
-- Volunteer opportunity matching
-- Skill endorsement system
-- Multiple donation methods (direct, equity pools, portfolio funds)
-- Charity verification system
-- Monthly donation scheduling
+  To upgrade:
 
-## For Existing Contributors
+  ```powershell
+  scoop update supabase
+  ```
+</details>
 
-If you have local changes in this monorepo:
+<details>
+  <summary><b>Linux</b></summary>
 
-1. **Identify which repository your changes belong to**:
-   - `src/` → give-protocol-webapp
-   - `contracts/`, `test/`, `scripts/` → give-protocol-contracts
-   - `docs/` → give-protocol-docs
-   - `supabase/` → give-protocol-backend
+  Available via [Homebrew](https://brew.sh) and Linux packages.
 
-2. **Clone the appropriate new repository**
+  #### via Homebrew
 
-3. **Apply your changes to the new repository**
+  To install:
 
-4. **Test in the new structure**
+  ```sh
+  brew install supabase/tap/supabase
+  ```
 
-5. **Submit PRs to the new repositories**
+  To upgrade:
 
-## Questions?
+  ```sh
+  brew upgrade supabase
+  ```
 
-- **Migration Questions**: See [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)
-- **Technical Issues**: Open issues in the relevant repository
-- **General Questions**: Contact the maintainers
+  #### via Linux packages
 
-## License
+  Linux packages are provided in [Releases](https://github.com/supabase/cli/releases). To install, download the `.apk`/`.deb`/`.rpm`/`.pkg.tar.zst` file depending on your package manager and run the respective commands.
 
-MIT
+  ```sh
+  sudo apk add --allow-untrusted <...>.apk
+  ```
 
----
+  ```sh
+  sudo dpkg -i <...>.deb
+  ```
 
-**Archive Date**: October 10, 2024
+  ```sh
+  sudo rpm -i <...>.rpm
+  ```
 
-**Last Active Commit**: See git history
+  ```sh
+  sudo pacman -U <...>.pkg.tar.zst
+  ```
+</details>
 
-**Migration Completed**: October 10, 2024
+<details>
+  <summary><b>Other Platforms</b></summary>
+
+  You can also install the CLI via [go modules](https://go.dev/ref/mod#go-install) without the help of package managers.
+
+  ```sh
+  go install github.com/supabase/cli@latest
+  ```
+
+  Add a symlink to the binary in `$PATH` for easier access:
+
+  ```sh
+  ln -s "$(go env GOPATH)/bin/cli" /usr/bin/supabase
+  ```
+
+  This works on other non-standard Linux distros.
+</details>
+
+<details>
+  <summary><b>Community Maintained Packages</b></summary>
+
+  Available via [pkgx](https://pkgx.sh/). Package script [here](https://github.com/pkgxdev/pantry/blob/main/projects/supabase.com/cli/package.yml).
+  To install in your working directory:
+
+  ```bash
+  pkgx install supabase
+  ```
+
+  Available via [Nixpkgs](https://nixos.org/). Package script [here](https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/supabase-cli/default.nix).
+</details>
+
+### Run the CLI
+
+```bash
+supabase bootstrap
+```
+
+Or using npx:
+
+```bash
+npx supabase bootstrap
+```
+
+The bootstrap command will guide you through the process of setting up a Supabase project using one of the [starter](https://github.com/supabase-community/supabase-samples/blob/main/samples.json) templates.
+
+## Docs
+
+Command & config reference can be found [here](https://supabase.com/docs/reference/cli/about).
+
+## Breaking changes
+
+We follow semantic versioning for changes that directly impact CLI commands, flags, and configurations.
+
+However, due to dependencies on other service images, we cannot guarantee that schema migrations, seed.sql, and generated types will always work for the same CLI major version. If you need such guarantees, we encourage you to pin a specific version of CLI in package.json.
+
+## Developing
+
+To run from source:
+
+```sh
+# Go >= 1.22
+go run . help
+```
