@@ -39,6 +39,7 @@ Run separately if needed:
 ## What's Copied
 
 ### give-protocol-contracts
+
 - `contracts/` directory
 - `hardhat.config.cjs`
 - Deployment scripts
@@ -46,6 +47,7 @@ Run separately if needed:
 - Security and fuzzing configs
 
 ### give-protocol-webapp
+
 - `src/` directory (all React code)
 - `public/` assets
 - Vite configuration
@@ -54,12 +56,14 @@ Run separately if needed:
 - Supabase configs
 
 ### give-protocol-backend
+
 - Complete copy of Duration-Backend-Private
 - API endpoints and middleware
 - Database schemas
 - Supabase functions
 
 ### give-protocol-docs
+
 - `docs/` directory (Jekyll site)
 - Documentation markdown files
 - GitHub Pages deployment config
@@ -78,6 +82,7 @@ See **MIGRATION-GUIDE.md** for detailed post-migration steps.
 ## Files Created
 
 Each repository gets:
+
 - ✅ `README.md` - Project overview
 - ✅ `package.json` - Dependencies and scripts
 - ✅ `.gitignore` - Proper ignore rules
